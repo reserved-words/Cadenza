@@ -8,13 +8,32 @@ stages:
 - stage: build
   displayName: 'Build'
   variables:
-    projects: '**/*.csproj'
     buildPlatform: 'win-x64'
     buildConfiguration: 'Release'
+    projects: '**/*.csproj'
+    test.projects: '**/*Tests/*.csproj'
   jobs:
   - job: build
-    displayName: 'Build'
-
+    displayName: 'Build Projects'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: 'restore'
+        projects: $(projects)
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        command: 'build'
+        projects: $(projects)
+        arguments: '--no-restore -c $(buildConfiguration) -r $(buildPlatform)'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet test'
+      inputs:
+        command: 'test'
+        projects: $(test.projects)
+        arguments: '--configuration $(buildConfiguration)'
+        
 - stage: export
   displayName: 'Export to GitHub'
   variables:
