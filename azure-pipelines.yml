@@ -9,8 +9,8 @@ variables:
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'
-  syncService.output: '$(Build.ArtifactStagingDirectory)/SyncService'
-  syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
+  # syncService.output: '$(Build.ArtifactStagingDirectory)/SyncService'
+  # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
 - stage: build
@@ -35,7 +35,7 @@ stages:
       inputs:
         command: 'build'
         projects: $(syncService.project)
-        arguments: '--no-restore --configuration $(buildConfiguration) --output $(syncService.output)'
+        arguments: '--no-restore --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/SyncService'
         
 - stage: test
   displayName: 'Test All'
@@ -59,14 +59,16 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive Sync Service'
       inputs:
-        rootFolderOrFile: '$(syncService.output)'
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/SyncService'
         includeRootFolder: false
         archiveType: zip
-        archiveFile: $(syncService.archive)
+        archiveFile: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
         replaceExistingArchive: true
-
-    - publish: $(syncService.archive)
-      artifact: drop
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifacts'
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: drop
 
 - stage: github
   displayName: 'Push to GitHub'
