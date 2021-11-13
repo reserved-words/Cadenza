@@ -9,8 +9,8 @@ variables:
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'
-  syncService.output: '$(System.DefaultWorkingDirectory)/SyncService'
-  syncService.archive: '$(Build.ArtifactStagingDirectory)/SyncService/$(Build.BuildId).zip'
+  syncService.output: '$(Build.ArtifactStagingDirectory)/SyncService'
+  syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
 - stage: build
