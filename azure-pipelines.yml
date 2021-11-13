@@ -35,7 +35,7 @@ stages:
       inputs:
         command: 'build'
         projects: $(syncService.project)
-        arguments: '--no-restore --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/SyncService'
+        arguments: '--no-restore --configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/SyncService'
         
 - stage: test
   displayName: 'Test All'
@@ -59,10 +59,10 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive Sync Service'
       inputs:
-        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/SyncService'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/SyncService'
         includeRootFolder: false
         archiveType: zip
-        archiveFile: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/SyncService-$(Build.BuildId).zip'
         replaceExistingArchive: true
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts'
