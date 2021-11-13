@@ -34,7 +34,7 @@ stages:
       inputs:
         command: 'build'
         projects: $(sync.service.project)
-        arguments: '--no-restore -c $(buildConfiguration) -r $(buildPlatform)'
+        arguments: '--no-restore -configuration $(buildConfiguration) -runtime $(buildPlatform) --self-contained'
         
 - stage: test
   displayName: 'Test All'
