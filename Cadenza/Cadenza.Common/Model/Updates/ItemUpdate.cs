@@ -60,7 +60,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
                 {
                     ItemType = ItemType,
                     Id = Id,
-                    PropertyName = u.Key,
+                    Property = u.Key,
                     Item = Description,
                     OriginalValue = o.Value,
                     UpdatedValue = u.Value

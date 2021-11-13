@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common", "Cadenza.Common\Cadenza.Common.csproj", "{5F1FDA78-87BB-4F8B-8C38-03108D586776}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Local", "Cadenza.Local\Cadenza.Local.csproj", "{7BCE6701-FD56-4B4D-B23D-C2CDF72A5DF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Library", "Cadenza.Library\Cadenza.Library.csproj", "{436C87C8-058F-4F28-BC36-7E23B6B58961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BCE6701-FD56-4B4D-B23D-C2CDF72A5DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCE6701-FD56-4B4D-B23D-C2CDF72A5DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCE6701-FD56-4B4D-B23D-C2CDF72A5DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCE6701-FD56-4B4D-B23D-C2CDF72A5DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436C87C8-058F-4F28-BC36-7E23B6B58961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436C87C8-058F-4F28-BC36-7E23B6B58961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436C87C8-058F-4F28-BC36-7E23B6B58961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436C87C8-058F-4F28-BC36-7E23B6B58961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
