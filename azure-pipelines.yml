@@ -33,7 +33,7 @@ stages:
       inputs:
         command: 'build'
         projects: $(sync.service.project)
-        arguments: '--no-restore -configuration $(buildConfiguration)'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
         
 - stage: test
   displayName: 'Test All'
