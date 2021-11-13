@@ -5,7 +5,6 @@ pool:
   vmImage: windows-latest
 
 variables:
-  buildPlatform: 'win-x64'
   buildConfiguration: 'Release'
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
@@ -34,7 +33,7 @@ stages:
       inputs:
         command: 'build'
         projects: $(sync.service.project)
-        arguments: '--no-restore -configuration $(buildConfiguration) -runtime $(buildPlatform) --self-contained'
+        arguments: '--no-restore -configuration $(buildConfiguration)'
         
 - stage: test
   displayName: 'Test All'
