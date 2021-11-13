@@ -4,36 +4,51 @@ trigger:
 pool:
   vmImage: windows-latest
 
+variables:
+  buildPlatform: 'win-x64'
+  buildConfiguration: 'Release'
+  test.projects: '**/*Tests/*.csproj'
+  all.projects: '**/*.csproj'
+  sync.service.project: '**/*Local.SyncService.csproj'
+
 stages:
 - stage: build
-  displayName: 'Build'
-  variables:
-    buildPlatform: 'win-x64'
-    buildConfiguration: 'Release'
-    projects: '**/*.csproj'
-    test.projects: '**/*Tests/*.csproj'
+  displayName: 'Build Apps'
   jobs:
   - job: build
     displayName: 'Build Projects'
     steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: 'sdk'
+        version: '6.0.x'
+        includePreviewVersions: false
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet restore'
+      displayName: 'Restore all'
       inputs:
         command: 'restore'
-        projects: $(projects)
+        projects: $(all.projects)
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet build'
+      displayName: 'Build Sync Service'
       inputs:
         command: 'build'
-        projects: $(projects)
+        projects: $(sync.service.project)
         arguments: '--no-restore -c $(buildConfiguration) -r $(buildPlatform)'
+        
+- stage: test
+  displayName: 'Test All'
+  jobs:
+  - job: test
+    displayName: 'Test'
+    steps:
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet test'
+      displayName: 'Test'
       inputs:
         command: 'test'
         projects: $(test.projects)
         arguments: '--configuration $(buildConfiguration)'
-        
+
 - stage: export
   displayName: 'Export to GitHub'
   variables:
