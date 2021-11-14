@@ -5,41 +5,114 @@ pool:
   vmImage: windows-latest
 
 variables:
-- group: github
+  buildConfiguration: 'Release'
+  test.projects: '**/*Tests/*.csproj'
+  all.projects: '**/*.csproj'
+  syncService.project: '**/*Local.SyncService.csproj'
+  # syncService.output: '$(Build.ArtifactStagingDirectory)/SyncService'
+  # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
-steps:
-- task: CmdLine@1
-  displayName: 'Set git user email'
-  inputs:
-    filename: git
-    arguments: 'config --global user.email "$(github.email)"'
+stages:
+- stage: build
+  displayName: 'Build Projects'
+  jobs:
+  - job: build
+    displayName: 'Build Projects'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: 'sdk'
+        version: '6.0.x'
+        includePreviewVersions: false
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore all'
+      inputs:
+        command: 'restore'
+        projects: $(all.projects)
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Sync Service'
+      inputs:
+        command: 'build'
+        projects: $(syncService.project)
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Sync Service'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: $(syncService.project)
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true'
+        zipAfterPublish: false
+        
+- stage: test
+  displayName: 'Test All'
+  jobs:
+  - job: test
+    displayName: 'Test'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Test'
+      inputs:
+        command: 'test'
+        projects: $(test.projects)
+        arguments: '--configuration $(buildConfiguration)'
 
-- task: CmdLine@1
-  displayName: 'Set git user name'
-  inputs:
-    filename: git
-    arguments: 'config --global user.name "$(github.user)"'
+# - stage: archive
+#   displayName: 'Archive Artifacts'
+#   jobs:
+#   - job: archive
+#     displayName: 'Archive'
+#     steps:
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive Sync Service'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/SyncService'
+#         includeRootFolder: false
+#         archiveType: zip
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/SyncService-$(Build.BuildId).zip'
+#         replaceExistingArchive: true
+#     - task: PublishBuildArtifacts@1
+#       displayName: 'Publish Artifacts'
+#       inputs:
+#         pathToPublish: '$(Build.ArtifactStagingDirectory)'
+#         artifactName: drop
 
-- task: CmdLine@1
-  displayName: 'Pull from GitHub'
-  inputs:
-    filename: git
-    arguments: 'pull $(github.repository.url) $(github.branch)'
-
-- task: CmdLine@1
-  displayName: 'Pull Tags from GitHub'
-  inputs:
-    filename: git
-    arguments: 'pull --tags $(github.repository.url.credentials)'
-
-- task: CmdLine@1
+- stage: github
   displayName: 'Push to GitHub'
-  inputs:
-    filename: git
-    arguments: 'push $(github.repository.url.credentials) head:$(github.branch)'
-
-- task: CmdLine@1
-  displayName: 'Push Tags to GitHub'
-  inputs:
-    filename: git
-    arguments: 'push --tags $(github.repository.url.credentials)'
+  variables:
+  - group: github
+  jobs:
+  - job: export
+    displayName: 'Push to GitHub'
+    steps:
+    - task: CmdLine@1
+      displayName: 'Set git user email'
+      inputs:
+        filename: git
+        arguments: 'config --global user.email "$(github.email)"'
+    - task: CmdLine@1
+      displayName: 'Set git user name'
+      inputs:
+        filename: git
+        arguments: 'config --global user.name "$(github.user)"'
+    - task: CmdLine@1
+      displayName: 'Pull from GitHub'
+      inputs:
+        filename: git
+        arguments: 'pull $(github.repository.url) $(github.branch)'
+    - task: CmdLine@1
+      displayName: 'Pull Tags from GitHub'
+      inputs:
+        filename: git
+        arguments: 'pull --tags $(github.repository.url.credentials)'
+    - task: CmdLine@1
+      displayName: 'Push to GitHub'
+      inputs:
+        filename: git
+        arguments: 'push $(github.repository.url.credentials) head:$(github.branch)'
+    - task: CmdLine@1
+      displayName: 'Push Tags to GitHub'
+      inputs:
+        filename: git
+        arguments: 'push --tags $(github.repository.url.credentials)'
