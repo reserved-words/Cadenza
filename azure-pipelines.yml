@@ -96,9 +96,6 @@ stages:
           # test
           "@
 
-          # sc.exe create `"${{ syncService.name }}`" start= delayed-auto binpath= `"`$(Get-Location)\${{ syncService.executable }}.exe`" displayname= `"${{ syncService.displayName }}`" obj= `"$Env:SERVICEACCOUNT`" password= `"$Env:SERVICEPASSWORD`"
-          # sc.exe description `"${{ syncService.name }}`" `"${{ syncService.description }}`"
-
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive Sync Service'
 #       inputs:
