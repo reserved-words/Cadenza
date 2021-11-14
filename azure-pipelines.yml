@@ -8,8 +8,9 @@ variables:
   buildConfiguration: 'Release'
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
+  output.directory: $(Build.BinariesDirectory)
   syncService.project: '**/*Local.SyncService.csproj'
-  syncService.output: '$(Build.BinariesDirectory)/SyncService'
+  syncService.output: '$(output.directory)/SyncService'
   # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
@@ -36,12 +37,8 @@ stages:
         command: 'build'
         projects: $(syncService.project)
         arguments: '--no-restore --configuration $(buildConfiguration)'
-        
-  - job: publishSyncService
-    displayName: 'Publish Sync Service'
-    steps:
     - task: DotNetCoreCLI@2
-      displayName: 'Publish Project'
+      displayName: 'Publish Sync Service Project'
       inputs:
         command: 'publish'
         publishWebProjects: false
@@ -49,9 +46,9 @@ stages:
         arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${syncService.output}'
         zipAfterPublish: false
       
-    - publish: ${syncService.output}
-      displayName: 'Publish Artifact'
-      artifact: 'Sync Service'
+    - publish: ${output.directory}
+      displayName: 'Publish Artifacts'
+      artifact: 'drop'
         
 - stage: test
   displayName: 'Test All'
