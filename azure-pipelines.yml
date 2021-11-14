@@ -87,9 +87,6 @@ stages:
       artifact: drop
     - task: PowerShell@2
       displayName: 'Create Sync Service Install File'
-      env:
-        SERVICEACCOUNT: $(username)
-        SERVICEPASSWORD: $(password)
       inputs:
         targetType: 'inline'
         script: |
