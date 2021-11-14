@@ -14,7 +14,7 @@ variables:
 
 stages:
 - stage: build
-  displayName: 'Build Apps'
+  displayName: 'Build Projects'
   jobs:
   - job: build
     displayName: 'Build Projects'
@@ -42,7 +42,7 @@ stages:
         command: 'publish'
         publishWebProjects: false
         projects: $(syncService.project)
-        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o "$(Build.BinariesDirectory)/SyncService"'
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true'
         zipAfterPublish: false
         
 - stage: test
