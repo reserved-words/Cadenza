@@ -10,7 +10,7 @@ variables:
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'  
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
-  syncService.executable: 'Cadenza.Local.SyncService'
+  syncService.exeName: 'Cadenza.Local.SyncService'
   syncService.name: 'CadenzaSyncService'
   syncService.displayName: 'Cadenza Sync Service'
   syncService.description: 'Description to do'
@@ -54,7 +54,7 @@ stages:
       displayName: 'Transform Sync Service App Settings'
       inputs:
         xmlTransformationRules: ''
-        folderPath: '${syncService.output}/${syncService.executable}'
+        folderPath: '${syncService.output}/${syncService.exeName}'
         jsonTargetFiles: 'appsettings.json'
     - publish: ${syncService.output}
       displayName: 'Publish Artifacts'
@@ -92,7 +92,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          Set-Content "$(Pipeline.Workspace)/drop/${{ syncService.executable }}/installService.ps1" @"
+          Set-Content "$(Pipeline.Workspace)/drop/$(syncService.exeName)/installService.ps1" @"
           # test
           "@
 
