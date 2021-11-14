@@ -9,7 +9,7 @@ variables:
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'
-  # syncService.output: '$(Build.ArtifactStagingDirectory)/SyncService'
+  syncService.output: '$(Build.BinariesDirectory)/SyncService'
   # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
@@ -42,8 +42,12 @@ stages:
         command: 'publish'
         publishWebProjects: false
         projects: $(syncService.project)
-        arguments: '--no-build -c "Release" -r win-x64 --self-contained true'
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${syncService.output}'
         zipAfterPublish: false
+      
+    - publish: ${syncService.output}
+      displayName: 'Publish Sync Service'
+      artifact: 'Sync Service'
         
 - stage: test
   displayName: 'Test All'
