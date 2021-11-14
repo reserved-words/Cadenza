@@ -47,6 +47,7 @@ stages:
         arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${syncService.output}'
         zipAfterPublish: false
     - task: FileTransform@2
+      displayName: 'Transform Sync Service App Settings'
       inputs:
         xmlTransformationRules: ''
         folderPath: '${syncService.output}/Cadenza.Local.SyncService'
@@ -68,12 +69,16 @@ stages:
         projects: $(test.projects)
         arguments: '--configuration $(buildConfiguration)'
 
-# - stage: archive
-#   displayName: 'Archive Artifacts'
-#   jobs:
-#   - job: archive
-#     displayName: 'Archive'
-#     steps:
+- stage: archive
+  displayName: 'Archive Artifacts'
+  jobs:
+  - job: archiveSyncService
+    displayName: 'Archive Sync Service'
+    steps:
+    - download: current
+      displayName: 'Download artifacts'
+      artifact: drop
+
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive Sync Service'
 #       inputs:
