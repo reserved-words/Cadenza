@@ -15,6 +15,8 @@ variables:
 stages:
 - stage: build
   displayName: 'Build Projects'
+  variables:
+    - group: appSettings
   jobs:
   - job: prepare
     displayName: 'Prepare Build'
@@ -49,7 +51,6 @@ stages:
         xmlTransformationRules: ''
         folderPath: '${syncService.output}/Cadenza.Local.SyncService'
         jsonTargetFiles: 'appsettings.json'
-      
     - publish: ${syncService.output}
       displayName: 'Publish Artifacts'
       artifact: 'drop'
