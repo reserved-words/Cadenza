@@ -71,13 +71,8 @@ stages:
 - stage: archive
   displayName: 'Archive Artifacts'
   variables:
-  - group: syncServiceAccount
-  - name: syncService.name
-    value: 'CadenzaSyncService'
-  - name: syncService.displayName
-    value: 'Cadenza Sync Service'
-  - name: syncService.description
-    value: 'Description to do'
+    syncService.name: 'CadenzaSyncService'
+    syncService.displayName: 'Cadenza Sync Service'
   jobs:
   - job: archiveSyncService
     displayName: 'Archive Sync Service'
