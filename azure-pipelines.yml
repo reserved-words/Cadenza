@@ -8,7 +8,7 @@ variables:
   buildConfiguration: 'Release'
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
-  output.directory: $(Build.BinariesDirectory)
+  output.directory: '$(Build.BinariesDirectory)'
   syncService.project: '**/*Local.SyncService.csproj'
   syncService.output: '$(output.directory)/SyncService'
   # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
@@ -46,7 +46,7 @@ stages:
         arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${syncService.output}'
         zipAfterPublish: false
       
-    - publish: ${output.directory}
+    - publish: '${output.directory}'
       displayName: 'Publish Artifacts'
       artifact: 'drop'
         
