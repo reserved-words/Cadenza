@@ -67,8 +67,6 @@ stages:
         projects: $(test.projects)
         arguments: '--configuration $(buildConfiguration)'
 
-- stage: archive
-
 # - stage: archive
 #   displayName: 'Archive Artifacts'
 #   jobs:
