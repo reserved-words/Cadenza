@@ -103,6 +103,8 @@ stages:
           Set-Content "$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService/uninstallService.ps1" @"
           sc.exe delete `"${syncService.name}`"
           "@
+    - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService'
+      artifact: 'win-x64 drop/Cadenza.Local.SyncService $(Build.BuildId)'
 
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive Sync Service'
