@@ -8,7 +8,7 @@ variables:
   buildConfiguration: 'Release'
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
-  output.directory: '$(Build.BinariesDirectory)'
+  output.directory: '$(Build.BinariesDirectory)/Binaries'
   syncService.project: '**/*Local.SyncService.csproj'
   syncService.output: '$(output.directory)/SyncService'
   # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
