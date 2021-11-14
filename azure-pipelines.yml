@@ -92,7 +92,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          Set-Content "$(Pipeline.Workspace)/drop/${{ syncService.executable }}/installService.ps1" @"
+          Set-Content "$(Pipeline.Workspace)/drop/$(syncService.executable)/installService.ps1" @"
           sc.exe create `"${{ syncService.name }}`" start= delayed-auto binpath= `"`$(Get-Location)\${{ syncService.executable }}.exe`" displayname= `"${{ syncService.displayName }}`" obj= `"$Env:SERVICEACCOUNT`" password= `"$Env:SERVICEPASSWORD`"
           sc.exe description `"${{ syncService.name }}`" `"${{ syncService.description }}`"
           "@
