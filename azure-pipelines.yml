@@ -35,7 +35,15 @@ stages:
       inputs:
         command: 'build'
         projects: $(syncService.project)
-        arguments: '--no-restore --configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/SyncService'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Sync Service'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: $(syncService.project)
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o "$(Build.BinariesDirectory)/SyncService"'
+        zipAfterPublish: false
         
 - stage: test
   displayName: 'Test All'
@@ -50,25 +58,25 @@ stages:
         projects: $(test.projects)
         arguments: '--configuration $(buildConfiguration)'
 
-- stage: archive
-  displayName: 'Archive Artifacts'
-  jobs:
-  - job: archive
-    displayName: 'Archive'
-    steps:
-    - task: ArchiveFiles@2
-      displayName: 'Archive Sync Service'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/SyncService'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: '$(Build.ArtifactStagingDirectory)/SyncService-$(Build.BuildId).zip'
-        replaceExistingArchive: true
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts'
-      inputs:
-        pathToPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: drop
+# - stage: archive
+#   displayName: 'Archive Artifacts'
+#   jobs:
+#   - job: archive
+#     displayName: 'Archive'
+#     steps:
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive Sync Service'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/SyncService'
+#         includeRootFolder: false
+#         archiveType: zip
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/SyncService-$(Build.BuildId).zip'
+#         replaceExistingArchive: true
+#     - task: PublishBuildArtifacts@1
+#       displayName: 'Publish Artifacts'
+#       inputs:
+#         pathToPublish: '$(Build.ArtifactStagingDirectory)'
+#         artifactName: drop
 
 - stage: github
   displayName: 'Push to GitHub'
