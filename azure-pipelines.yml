@@ -16,8 +16,8 @@ stages:
 - stage: build
   displayName: 'Build Projects'
   jobs:
-  - job: build
-    displayName: 'Build Projects'
+  - job: prepare
+    displayName: 'Prepare Build'
     steps:
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk'
@@ -30,6 +30,10 @@ stages:
       inputs:
         command: 'restore'
         projects: $(all.projects)
+        
+  - job: buildSyncService
+    displayName: 'Build and Publish Sync Service'
+    steps:
     - task: DotNetCoreCLI@2
       displayName: 'Build Sync Service'
       inputs:
