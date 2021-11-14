@@ -111,7 +111,7 @@ stages:
         archiveFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip' 
     - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
       displayName: 'Publish Service Deployment Files'
-      artifact: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
+      artifact: 'Cadenza.Local.SyncService-$(Build.BuildId).zip'
 
 - stage: github
   displayName: 'Push to GitHub'
