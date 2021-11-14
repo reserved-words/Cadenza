@@ -103,22 +103,15 @@ stages:
           Set-Content "$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService/uninstallService.ps1" @"
           sc.exe delete `"${syncService.name}`"
           "@
-    - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService'
-      artifact: 'win-x64 Cadenza.Local.SyncService $(Build.BuildId)'
-
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive Sync Service'
-#       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/SyncService'
-#         includeRootFolder: false
-#         archiveType: zip
-#         archiveFile: '$(Build.ArtifactStagingDirectory)/SyncService-$(Build.BuildId).zip'
-#         replaceExistingArchive: true
-#     - task: PublishBuildArtifacts@1
-#       displayName: 'Publish Artifacts'
-#       inputs:
-#         pathToPublish: '$(Build.ArtifactStagingDirectory)'
-#         artifactName: drop
+    - task: ArchiveFiles@2
+      displayName: 'Archive Service Deployment Files'
+      inputs:
+        rootFolderOrFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService' 
+        includeRootFolder: false 
+        archiveFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip' 
+    - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
+      displayName: 'Publish Service Deployment Files'
+      artifact: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
 
 - stage: github
   displayName: 'Push to GitHub'
