@@ -92,8 +92,8 @@ stages:
         targetType: 'inline'
         script: |
           Set-Content "$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService/installService.ps1" @"
-          # sc.exe create `"${{ syncService.name }}`" start= delayed-auto binpath= `"`$(Get-Location)\Cadenza.Local.SyncService.exe`" displayname= `"${{ syncService.displayName }}`" obj= `"$Env:SERVICEACCOUNT`" password= `"$Env:SERVICEPASSWORD`"
-          # sc.exe description `"${{ syncService.name }}`" `"${{ syncService.description }}`"
+          # sc.exe create `"${syncService.name}`" start= delayed-auto binpath= `"`$(Get-Location)\Cadenza.Local.SyncService.exe`" displayname= `"${syncService.displayName}`" obj= `"$Env:SERVICEACCOUNT`" password= `"$Env:SERVICEPASSWORD`"
+          # sc.exe description `"${syncService.name}`" `"${syncService.description}`"
           "@
 
 #     - task: ArchiveFiles@2
