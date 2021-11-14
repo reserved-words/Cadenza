@@ -10,9 +10,6 @@ variables:
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'  
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
-  syncService.name: 'CadenzaSyncService'
-  syncService.displayName: 'Cadenza Sync Service'
-  syncService.description: 'Description to do'
 
 stages:
 - stage: build
@@ -75,6 +72,12 @@ stages:
   displayName: 'Archive Artifacts'
   variables:
   - group: syncServiceAccount
+  - name: syncService.name
+    value: 'CadenzaSyncService'
+  - name: syncService.displayName
+    value: 'Cadenza Sync Service'
+  - name: syncService.description
+    value: 'Description to do'
   jobs:
   - job: archiveSyncService
     displayName: 'Archive Sync Service'
