@@ -85,6 +85,7 @@ stages:
     - download: current
       displayName: 'Download artifacts'
       artifact: drop
+    - script: echo $(syncService.name)
     - task: PowerShell@2
       displayName: 'Create Sync Service Install File'
       env:
