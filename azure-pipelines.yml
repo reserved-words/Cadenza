@@ -13,7 +13,6 @@ variables:
   syncService.name: 'CadenzaSyncService'
   syncService.displayName: 'Cadenza Sync Service'
   syncService.description: 'Description to do'
-  # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
 - stage: build
@@ -111,7 +110,7 @@ stages:
         archiveFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip' 
     - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
       displayName: 'Publish Service Deployment Files'
-      artifact: 'Cadenza.Local.SyncService-$(Build.BuildId).zip'
+      artifact: 'Local Sync Service Deployment Files'
 
 - stage: github
   displayName: 'Push to GitHub'
