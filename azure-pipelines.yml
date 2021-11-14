@@ -8,8 +8,12 @@ variables:
   buildConfiguration: 'Release'
   test.projects: '**/*Tests/*.csproj'
   all.projects: '**/*.csproj'
-  syncService.project: '**/*Local.SyncService.csproj'
+  syncService.project: '**/*Local.SyncService.csproj'  
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
+  syncService.executable: 'Cadenza.Local.SyncService'
+  syncService.name: 'CadenzaSyncService'
+  syncService.displayName: 'Cadenza Sync Service'
+  syncService.description: 'Description to do'
   # syncService.archive: '$(Build.ArtifactStagingDirectory)/Archive/SyncService/$(Build.BuildId).zip'
 
 stages:
@@ -50,7 +54,7 @@ stages:
       displayName: 'Transform Sync Service App Settings'
       inputs:
         xmlTransformationRules: ''
-        folderPath: '${syncService.output}/Cadenza.Local.SyncService'
+        folderPath: '${syncService.output}/${syncService.executable}'
         jsonTargetFiles: 'appsettings.json'
     - publish: ${syncService.output}
       displayName: 'Publish Artifacts'
@@ -71,6 +75,8 @@ stages:
 
 - stage: archive
   displayName: 'Archive Artifacts'
+  variables:
+  - group: syncServiceAccount
   jobs:
   - job: archiveSyncService
     displayName: 'Archive Sync Service'
@@ -78,6 +84,18 @@ stages:
     - download: current
       displayName: 'Download artifacts'
       artifact: drop
+    - task: PowerShell@2
+      displayName: 'Create Sync Service Install File'
+      env:
+        SERVICEACCOUNT: $(username)
+        SERVICEPASSWORD: $(password)
+      inputs:
+        targetType: 'inline'
+        script: |
+          Set-Content "$(Pipeline.Workspace)/drop/${syncService.executable}/installService.ps1" @"
+          sc.exe create `"${{ syncService.name }}`" start= delayed-auto binpath= `"`$(Get-Location)\${syncService.executable}.exe`" displayname= `"${{ syncService.displayName }}`" obj= `"$Env:SERVICEACCOUNT`" password= `"$Env:SERVICEPASSWORD`"
+          sc.exe description `"${{ syncService.name }}`" `"${{ syncService.description }}`"
+          "@
 
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive Sync Service'
