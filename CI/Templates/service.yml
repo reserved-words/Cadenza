@@ -9,9 +9,9 @@ parameters:
   type: string
 - name: serviceDisplayName
   type: string
- 
-variables:
-  artifactFolder: '$(Pipeline.Workspace)/$(artifactName)-$(projectName)/$(projectPath)'
+- name: artifactFolder
+  type: string
+  default: '$(Pipeline.Workspace)/$(artifactName)-$(projectName)/$(projectPath)'
 
 steps:
 - task: PowerShell@2
