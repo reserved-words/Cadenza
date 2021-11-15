@@ -30,11 +30,12 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
+- script: echo $(projectFile)
 - task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
     command: 'build'
-    projects: $(projectFile)
+    projects: '$(projectFile)'
     arguments: '--no-restore --configuration $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   displayName: 'Publish'
