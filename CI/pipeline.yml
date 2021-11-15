@@ -76,7 +76,7 @@ stages:
         artifactName: $(artifactName)
         serviceName: $(syncService.serviceName)
         serviceDisplayName: $(syncService.serviceDisplayName)
-    - template: publish.yml@self
+    - template: Templates/publish.yml@self
       parameters:
         projectName: $(syncService.projectName)
         projectPath: $(syncService.projectPath)
@@ -84,7 +84,7 @@ stages:
   - job: publishLocalApi
     displayName: 'Publish Local API'
     steps:
-    - template: publish.yml@self
+    - template: Templates/publish.yml@self
       parameters:
         projectName: $(localApi.projectName)
         projectPath: $(localApi.projectPath)
