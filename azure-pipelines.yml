@@ -106,9 +106,9 @@ stages:
     - download: current
       displayName: 'Download Sync Service Artifacts'
       artifact: drop-syncService
-    - download: current
-      displayName: 'Download Local API Artifacts'
-      artifact: drop-localApi
+    # - download: current
+    #   displayName: 'Download Local API Artifacts'
+    #   artifact: drop-localApi
     - task: PowerShell@2
       displayName: 'Create Sync Service Install File'
       inputs:
