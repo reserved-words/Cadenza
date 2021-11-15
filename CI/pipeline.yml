@@ -1,0 +1,97 @@
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+  
+variables:
+  artifactName: 'drop' 
+  syncService.projectName: 'LocalSyncService'
+  syncService.projectFile: '**/*Local.SyncService.csproj'
+  syncService.projectPath: 'Cadenza.Local.SyncService'
+  syncService.serviceName: 'CadenzaSyncService'
+  syncService.serviceDisplayName: 'Cadenza Sync Service'
+  localApi.projectName: 'LocalAPI'
+  localApi.projectFile: '**/*Local.API.csproj'
+  localApi.projectPath: 'Cadenza.Local.API'
+
+stages:
+- stage: build
+  displayName: 'Build'
+  variables:
+    - group: appSettings
+    
+  jobs:
+  - job: buildSyncService
+    displayName: 'Build Local Sync Service'
+    steps:
+    - template: templates/build.yml
+      parameters:
+        projectName: $(syncService.projectName)
+        projectFile: $(syncService.projectFile)
+        projectPath: $(syncService.projectPath)
+        isWebProject: false
+        artifactName: $(artifactName)      
+  - job: buildLocalApi
+    displayName: 'Build Local API'
+    steps:
+    - template: templates/build.yml
+      parameters:
+        projectName: $(localApi.projectName)
+        projectFile: $(localApi.projectFile)
+        projectPath: $(localApi.projectPath)
+        isWebProject: true
+        artifactName: $(artifactName)
+        
+- stage: test
+  displayName: 'Test'
+  jobs:
+  - job: test
+    displayName: 'Test'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Test'
+      inputs:
+        command: 'test'
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration "Release"'
+
+- stage: publish
+  displayName: 'Publish'
+  variables:
+    syncService.name: 'CadenzaSyncService'
+    syncService.displayName: 'Cadenza Sync Service'
+  jobs:
+  - job: publishSyncService
+    displayName: 'Publish Local Sync Service'
+    steps:
+    - template: templates/service.yml
+      parameters:
+        projectName: $(syncService.projectName)
+        projectPath: $(syncService.projectPath)
+        artifactName: $(artifactName)
+        serviceName: $(syncService.serviceName)
+        serviceDisplayName: $(syncService.serviceDisplayName)
+    - template: publish.yml
+      parameters:
+        projectName: $(syncService.projectName)
+        projectPath: $(syncService.projectPath)
+        artifactName: $(artifactName)     
+  - job: publishLocalApi
+    displayName: 'Publish Local API'
+    steps:
+    - template: publish.yml
+      parameters:
+        projectName: $(localApi.projectName)
+        projectPath: $(localApi.projectPath)
+        artifactName: $(artifactName)
+        
+- stage: github
+  displayName: 'GitHub'
+  variables:
+  - group: github
+  jobs:
+  - job: export
+    displayName: 'Push to GitHub'
+    steps:
+    - template: templates/github.yml

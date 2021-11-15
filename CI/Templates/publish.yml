@@ -1,0 +1,25 @@
+parameters:
+- name: projectName
+  type: string
+- name: projectPath
+  type: string
+- name: artifactName
+  type: string
+ 
+variables:
+  artifact: '$(artifactName)-$(projectName)'
+  artifactFolder: '$(Pipeline.Workspace)/$(artifact)'
+
+steps:
+- download: current
+  displayName: 'Download Artifacts'
+  artifact: '$(artifact)'
+- task: ArchiveFiles@2
+  displayName: 'Archive Files'
+  inputs:
+    rootFolderOrFile: '$(artifactFolder)/$(projectPath)' 
+    includeRootFolder: false 
+    archiveFile: '$(artifactFolder)/$(projectPath)-$(Build.BuildId).zip'
+- publish: '$(artifactFolder)/$(projectPath)-$(Build.BuildId).zip'
+  displayName: 'Publish Archive'
+  artifact: '$(projectName) Deployment Files'

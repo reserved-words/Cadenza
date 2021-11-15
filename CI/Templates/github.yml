@@ -1,0 +1,32 @@
+
+steps:
+  - task: CmdLine@1
+    displayName: 'Set git user email'
+    inputs:
+      filename: git
+      arguments: 'config --global user.email "$(github.email)"'
+  - task: CmdLine@1
+    displayName: 'Set git user name'
+    inputs:
+      filename: git
+      arguments: 'config --global user.name "$(github.user)"'
+  - task: CmdLine@1
+    displayName: 'Pull from GitHub'
+    inputs:
+      filename: git
+      arguments: 'pull $(github.repository.url) $(github.branch)'
+  - task: CmdLine@1
+    displayName: 'Pull Tags from GitHub'
+    inputs:
+      filename: git
+      arguments: 'pull --tags $(github.repository.url.credentials)'
+  - task: CmdLine@1
+    displayName: 'Push to GitHub'
+    inputs:
+      filename: git
+      arguments: 'push $(github.repository.url.credentials) head:$(github.branch)'
+  - task: CmdLine@1
+    displayName: 'Push Tags to GitHub'
+    inputs:
+      filename: git
+      arguments: 'push --tags $(github.repository.url.credentials)'

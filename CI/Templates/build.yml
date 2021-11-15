@@ -1,0 +1,52 @@
+parameters:
+- name: projectFile
+  type: string
+- name: projectName
+  type: string
+- name: projectPath
+  type: string
+- name: isWebProject
+  type: boolean
+- name: artifactName
+  type: string
+ 
+variables:
+  allProjects: '**/*.csproj'
+  buildConfiguration: 'Release'
+  buildPlatform: 'win-x64'
+  outputPath: '$(Build.BinariesDirectory)/$(projectName)'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+- task: DotNetCoreCLI@2
+  displayName: 'Restore'
+  inputs:
+    command: 'restore'
+    projects: $(allProjects)
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+    projects: $(projectFile)
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: $(isWebProject)
+    projects: $(projectFile)
+    arguments: '--no-build -c $(buildConfiguration) -r $(buildPlatform) --self-contained true -o $(outputPath)'
+    zipAfterPublish: false
+- task: FileTransform@2
+  displayName: 'Transform App Settings'
+  inputs:
+    xmlTransformationRules: ''
+    folderPath: '$(outputPath)/$(projectPath)'
+    jsonTargetFiles: 'appsettings.json'
+- publish: $(outputPath)
+  displayName: 'Publish Artifact'
+  artifact: '$(artifactName)-$(projectName)'

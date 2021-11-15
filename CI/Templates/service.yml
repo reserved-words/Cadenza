@@ -1,0 +1,32 @@
+parameters:
+- name: projectName
+  type: string
+- name: projectPath
+  type: string
+- name: artifactName
+  type: string
+- name: serviceName
+  type: string
+- name: serviceDisplayName
+  type: string
+ 
+variables:
+  artifactFolder: '$(Pipeline.Workspace)/$(artifactName)-$(projectName)/$(projectPath)'
+
+steps:
+- task: PowerShell@2
+  displayName: 'Create Install File'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Set-Content "$(artifactFolder)/installService.ps1" @"
+      sc.exe create `"$(serviceName)`" start= delayed-auto binpath= `"`$(Get-Location)\$(projectPath).exe`" displayname= `"$(serviceDisplayName)`"
+      "@
+- task: PowerShell@2
+  displayName: 'Create Uninstall File'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Set-Content "$(artifactFolder)/uninstallService.ps1" @"
+      sc.exe delete `"$(serviceName)`"
+      "@
