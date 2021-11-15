@@ -11,7 +11,7 @@ public class LoggerConfig : ILoggerConfig
 
     private IConfigurationSection _loggingSection => _config.GetSection("Logger");
 
-    public string ApplicationName => _loggingSection.GetValue<string>("ApplicationName");
+    public string ApplicationName => _loggingSection.GetSection("SyncService").GetValue<string>("ApplicationName");
 
     public string Url => _loggingSection.GetValue<string>("Url");
 }
