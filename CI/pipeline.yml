@@ -25,7 +25,7 @@ stages:
   - job: buildSyncService
     displayName: 'Build Local Sync Service'
     steps:
-    - template: templates/build.yml@self
+    - template: /templates/build.yml@self
       parameters:
         projectName: $(syncService.projectName)
         projectFile: $(syncService.projectFile)
@@ -35,7 +35,7 @@ stages:
   - job: buildLocalApi
     displayName: 'Build Local API'
     steps:
-    - template: templates/build.yml@self
+    - template: /templates/build.yml@self
       parameters:
         projectName: $(localApi.projectName)
         projectFile: $(localApi.projectFile)
