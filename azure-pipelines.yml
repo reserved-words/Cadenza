@@ -10,6 +10,8 @@ variables:
   all.projects: '**/*.csproj'
   syncService.project: '**/*Local.SyncService.csproj'  
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
+  localApi.project: '**/*Local.API.csproj'
+  localApi.output: '$(Build.BinariesDirectory)/LocalAPI'
 
 stages:
 - stage: build
@@ -17,8 +19,8 @@ stages:
   variables:
     - group: appSettings
   jobs:
-  - job: prepare
-    displayName: 'Prepare Build'
+  - job: build
+    displayName: 'Build'
     steps:
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk'
@@ -52,8 +54,31 @@ stages:
         folderPath: '${syncService.output}/Cadenza.Local.SyncService'
         jsonTargetFiles: 'appsettings.json'
     - publish: ${syncService.output}
-      displayName: 'Publish Artifacts'
+      displayName: 'Publish Sync Service'
       artifact: 'drop'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Local API'
+      inputs:
+        command: 'build'
+        projects: $(localApi.project)
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Local API Project'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        projects: $(localApi.project)
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${localApi.output}'
+        zipAfterPublish: false
+    - task: FileTransform@2
+      displayName: 'Transform Local API App Settings'
+      inputs:
+        xmlTransformationRules: ''
+        folderPath: '${localApi.output}/Cadenza.Local.API'
+        jsonTargetFiles: 'appsettings.json'
+    - publish: ${localApi.output}
+      displayName: 'Publish Local API'
+      artifact: 'localApi'
         
 - stage: test
   displayName: 'Test All'
