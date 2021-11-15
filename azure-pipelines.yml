@@ -12,9 +12,9 @@ variables:
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
   localApi.project: '**/*Local.API.csproj'
   localApi.output: '$(Build.BinariesDirectory)/LocalAPI'
-  publish.location: '$(Pipeline.Workspace)/PublishedApps'
 
 stages:
+
 - stage: build
   displayName: 'Build Projects'
   variables:
@@ -48,12 +48,6 @@ stages:
         projects: $(syncService.project)
         arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${syncService.output}'
         zipAfterPublish: false
-    - task: FileTransform@2
-      displayName: 'Transform Sync Service App Settings'
-      inputs:
-        xmlTransformationRules: ''
-        folderPath: '${syncService.output}/Cadenza.Local.SyncService'
-        jsonTargetFiles: 'appsettings.json'
     - publish: ${syncService.output}
       displayName: 'Publish Sync Service'
       artifact: 'drop-syncService'
@@ -69,17 +63,11 @@ stages:
         command: 'publish'
         publishWebProjects: true
         projects: $(localApi.project)
-        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${publish.location}'
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${localApi.output}'
         zipAfterPublish: false
-    - task: FileTransform@2
-      displayName: 'Transform Local API App Settings'
-      inputs:
-        xmlTransformationRules: ''
-        folderPath: '${publish.location}/Cadenza.Local.API'
-        jsonTargetFiles: 'appsettings.json'
-    # - publish: ${localApi.output}
-    #   displayName: 'Publish Local API'
-    #   artifact: 'drop-localApi'
+    - publish: ${localApi.output}
+      displayName: 'Publish Local API'
+      artifact: 'drop-localApi'
         
 - stage: test
   displayName: 'Test All'
@@ -94,21 +82,33 @@ stages:
         projects: $(test.projects)
         arguments: '--configuration $(buildConfiguration)'
 
-- stage: archive
-  displayName: 'Archive Artifacts'
+- stage: publish
+  displayName: 'Publish Artifacts'
   variables:
     syncService.name: 'CadenzaSyncService'
     syncService.displayName: 'Cadenza Sync Service'
   jobs:
-  - job: archiveSyncService
-    displayName: 'Archive Sync Service'
+  - job: archive
+    displayName: 'Archive'
     steps:
     - download: current
       displayName: 'Download Sync Service Artifacts'
       artifact: drop-syncService
-    # - download: current
-    #   displayName: 'Download Local API Artifacts'
-    #   artifact: drop-localApi
+    - download: current
+      displayName: 'Download Local API Artifacts'
+      artifact: drop-localApi
+    - task: FileTransform@2
+      displayName: 'Transform Sync Service App Settings'
+      inputs:
+        xmlTransformationRules: ''
+        folderPath: '$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService'
+        jsonTargetFiles: 'appsettings.json'
+    - task: FileTransform@2
+      displayName: 'Transform Local API App Settings'
+      inputs:
+        xmlTransformationRules: ''
+        folderPath: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API'
+        jsonTargetFiles: 'appsettings.json'
     - task: PowerShell@2
       displayName: 'Create Sync Service Install File'
       inputs:
@@ -137,10 +137,10 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive API Deployment Files'
       inputs:
-        rootFolderOrFile: '$(publish.location)/Cadenza.Local.API' 
+        rootFolderOrFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API' 
         includeRootFolder: false 
-        archiveFile: '$(publish.location)/Cadenza.Local.API-$(Build.BuildId).zip'
-    - publish: '$(publish.location)/Cadenza.Local.API-$(Build.BuildId).zip'
+        archiveFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
+    - publish: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
       displayName: 'Publish API Deployment Files'
       artifact: 'Local API Deployment Files'
 
