@@ -55,7 +55,7 @@ stages:
         jsonTargetFiles: 'appsettings.json'
     - publish: ${syncService.output}
       displayName: 'Publish Sync Service'
-      artifact: 'drop'
+      artifact: 'drop-syncService'
     - task: DotNetCoreCLI@2
       displayName: 'Build Local API'
       inputs:
@@ -78,7 +78,7 @@ stages:
         jsonTargetFiles: 'appsettings.json'
     - publish: ${localApi.output}
       displayName: 'Publish Local API'
-      artifact: 'localApi'
+      artifact: 'drop-localApi'
         
 - stage: test
   displayName: 'Test All'
@@ -103,14 +103,17 @@ stages:
     displayName: 'Archive Sync Service'
     steps:
     - download: current
-      displayName: 'Download artifacts'
-      artifact: drop
+      displayName: 'Download Sync Service Artifacts'
+      artifact: drop-syncService
+    - download: current
+      displayName: 'Download Local API Artifacts'
+      artifact: drop-localApi
     - task: PowerShell@2
       displayName: 'Create Sync Service Install File'
       inputs:
         targetType: 'inline'
         script: |
-          Set-Content "$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService/installService.ps1" @"
+          Set-Content "$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService/installService.ps1" @"
           sc.exe create `"$(syncService.name)`" start= delayed-auto binpath= `"`$(Get-Location)\Cadenza.Local.SyncService.exe`" displayname= `"$(syncService.displayName)`"
           "@
     - task: PowerShell@2
@@ -118,18 +121,27 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          Set-Content "$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService/uninstallService.ps1" @"
+          Set-Content "$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService/uninstallService.ps1" @"
           sc.exe delete `"$(syncService.name)`"
           "@
     - task: ArchiveFiles@2
       displayName: 'Archive Service Deployment Files'
       inputs:
-        rootFolderOrFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService' 
+        rootFolderOrFile: '$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService' 
         includeRootFolder: false 
-        archiveFile: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip' 
-    - publish: '$(Pipeline.Workspace)/drop/Cadenza.Local.SyncService-$(Build.BuildId).zip'
+        archiveFile: '$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService-$(Build.BuildId).zip'
+    - publish: '$(Pipeline.Workspace)/drop-syncService/Cadenza.Local.SyncService-$(Build.BuildId).zip'
       displayName: 'Publish Service Deployment Files'
       artifact: 'Local Sync Service Deployment Files'
+    - task: ArchiveFiles@2
+      displayName: 'Archive API Deployment Files'
+      inputs:
+        rootFolderOrFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API' 
+        includeRootFolder: false 
+        archiveFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
+    - publish: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
+      displayName: 'Publish API Deployment Files'
+      artifact: 'Local API Deployment Files'
 
 - stage: github
   displayName: 'Push to GitHub'
