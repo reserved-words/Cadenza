@@ -12,6 +12,7 @@ variables:
   syncService.output: '$(Build.BinariesDirectory)/SyncService'
   localApi.project: '**/*Local.API.csproj'
   localApi.output: '$(Build.BinariesDirectory)/LocalAPI'
+  publish.location: '$(Pipeline.Workspace)/PublishedApps'
 
 stages:
 - stage: build
@@ -68,17 +69,17 @@ stages:
         command: 'publish'
         publishWebProjects: true
         projects: $(localApi.project)
-        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${localApi.output}'
+        arguments: '--no-build -c "Release" -r win-x64 --self-contained true -o ${publish.location}'
         zipAfterPublish: false
     - task: FileTransform@2
       displayName: 'Transform Local API App Settings'
       inputs:
         xmlTransformationRules: ''
-        folderPath: '${localApi.output}/Cadenza.Local.API'
+        folderPath: '${publish.location}/Cadenza.Local.API'
         jsonTargetFiles: 'appsettings.json'
-    - publish: ${localApi.output}
-      displayName: 'Publish Local API'
-      artifact: 'drop-localApi'
+    # - publish: ${localApi.output}
+    #   displayName: 'Publish Local API'
+    #   artifact: 'drop-localApi'
         
 - stage: test
   displayName: 'Test All'
@@ -136,10 +137,10 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive API Deployment Files'
       inputs:
-        rootFolderOrFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API' 
+        rootFolderOrFile: '$(publish.location)/Cadenza.Local.API' 
         includeRootFolder: false 
-        archiveFile: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
-    - publish: '$(Pipeline.Workspace)/drop-localApi/Cadenza.Local.API-$(Build.BuildId).zip'
+        archiveFile: '$(publish.location)/Cadenza.Local.API-$(Build.BuildId).zip'
+    - publish: '$(publish.location)/Cadenza.Local.API-$(Build.BuildId).zip'
       displayName: 'Publish API Deployment Files'
       artifact: 'Local API Deployment Files'
 
