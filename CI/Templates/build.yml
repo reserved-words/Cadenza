@@ -9,12 +9,15 @@ parameters:
   type: boolean
 - name: artifactName
   type: string
- 
-variables:
-  allProjects: '**/*.csproj'
-  buildConfiguration: 'Release'
-  buildPlatform: 'win-x64'
-  outputPath: '$(Build.BinariesDirectory)/$(projectName)'
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+- name: buildPlatform
+  type: string
+  default: 'win-x64'
+- name: outputPath
+  type: string
+  default: '$(Build.BinariesDirectory)/$(projectName)'
 
 steps:
 - task: UseDotNet@2
@@ -26,7 +29,7 @@ steps:
   displayName: 'Restore'
   inputs:
     command: 'restore'
-    projects: $(allProjects)
+    projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
