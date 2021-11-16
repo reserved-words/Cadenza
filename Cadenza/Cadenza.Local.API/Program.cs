@@ -3,10 +3,13 @@ using Cadenza.Local.API;
 var builder = WebApplication.CreateBuilder(args)
     .BuildConfiguration()
     .RegisterDependencies()
-    .DefineCors();
+    .DefineCors()
+    .AddDocumentation();
 
 var app = builder.Build()
     .ApplyCors()
-    .MapRoutes();
+    .UseDocumentation()
+    .MapRoutes()
+    .GenerateDocumentation();
 
 app.Run();
