@@ -23,7 +23,7 @@ steps:
   artifact: '${{ parameters.artifactName }}'
 - task: PowerShell@2
   displayName: 'Create Install File'
-  condition: ne(parameters.serviceName, '')
+  condition: ne('{{ parameters.serviceName }}', '')
   inputs:
     targetType: 'inline'
     script: |
@@ -32,7 +32,7 @@ steps:
       "@
 - task: PowerShell@2
   displayName: 'Create Uninstall File'
-  condition: ne(parameters.serviceName, '')
+  condition: ne('{{ parameters.serviceName }}', '')
   inputs:
     targetType: 'inline'
     script: |
