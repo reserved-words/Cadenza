@@ -9,15 +9,28 @@ resources:
   - repository: self
 
 variables:
-  artifactName: 'drop' 
+  artifactPrefix: 'drop' 
+  
   syncService.projectName: 'LocalSyncService'
-  syncService.projectFile: '**/*Local.SyncService.csproj'
+  syncService.projectFilePattern: '**/*Local.SyncService.csproj'
   syncService.projectPath: 'Cadenza.Local.SyncService'
+  
+  localApi.projectName: 'LocalAPI'
+  localApi.projectFilePattern: '**/*Local.API.csproj'
+  localApi.projectPath: 'Cadenza.Local.API'
+  
   syncService.serviceName: 'CadenzaSyncService'
   syncService.serviceDisplayName: 'Cadenza Sync Service'
-  localApi.projectName: 'LocalAPI'
-  localApi.projectFile: '**/*Local.API.csproj'
-  localApi.projectPath: 'Cadenza.Local.API'
+  
+  syncService.artifactName: '$(artifactPrefix)-$(syncService.projectPath)'
+  syncService.artifactFolder: '$(Pipeline.Workspace)/$(syncService.artifactName)'
+  syncService.artifactLocation: '$(syncService.artifactFolder)/$(syncService.projectPath)'
+  syncService.archiveFile: '${{ syncService.projectPath }}-$(Build.BuildId).zip'
+
+  localApi.artifactName: '$(artifactPrefix)-$(localApi.projectPath)'
+  localApi.artifactFolder: '$(Pipeline.Workspace)/$(localApi.artifactName)'
+  localApi.artifactLocation: '$(localApi.artifactFolder)/$(localApi.projectPath)'
+  localApi.archiveFile: '${{ localApi.projectPath }}-$(Build.BuildId).zip'
 
 stages:
 - stage: build
@@ -31,21 +44,19 @@ stages:
     steps:
     - template: Templates/build.yml@self
       parameters:
-        projectName: $(syncService.projectName)
-        projectFile: $(syncService.projectFile)
+        projectFilePattern: $(syncService.projectFilePattern)
         projectPath: $(syncService.projectPath)
+        artifactName: $(syncService.artifactName)
         isWebProject: false
-        artifactName: $(artifactName)      
   - job: buildLocalApi
     displayName: 'Build Local API'
     steps:
     - template: Templates/build.yml@self
       parameters:
-        projectName: $(localApi.projectName)
-        projectFile: $(localApi.projectFile)
+        projectFilePattern: $(localApi.projectFilePattern)
         projectPath: $(localApi.projectPath)
+        artifactName: $(localApi.artifactName)
         isWebProject: true
-        artifactName: $(artifactName)
         
 - stage: test
   displayName: 'Test'
@@ -71,24 +82,25 @@ stages:
     steps:
     - template: Templates/service.yml@self
       parameters:
-        projectName: $(syncService.projectName)
         projectPath: $(syncService.projectPath)
-        artifactName: $(artifactName)
         serviceName: $(syncService.serviceName)
         serviceDisplayName: $(syncService.serviceDisplayName)
+        artifactLocation: $(syncService.artifactLocation)
     - template: Templates/publish.yml@self
       parameters:
         projectName: $(syncService.projectName)
-        projectPath: $(syncService.projectPath)
-        artifactName: $(artifactName)     
+        artifactName: $(syncService.artifactName) 
+        artifactLocation: $(syncService.artifactLocation)
+        archiveFile: $(syncService.archiveFile)
   - job: publishLocalApi
     displayName: 'Publish Local API'
     steps:
     - template: Templates/publish.yml@self
       parameters:
         projectName: $(localApi.projectName)
-        projectPath: $(localApi.projectPath)
-        artifactName: $(artifactName)
+        artifactName: $(localApi.artifactName) 
+        artifactLocation: $(localApi.artifactLocation)
+        archiveFile: $(localApi.archiveFile)
         
 - stage: github
   displayName: 'GitHub'

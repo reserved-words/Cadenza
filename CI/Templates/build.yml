@@ -1,14 +1,13 @@
 parameters:
-- name: projectFile
-  type: string
-- name: projectName
+- name: projectFilePattern
   type: string
 - name: projectPath
   type: string
-- name: isWebProject
-  type: boolean
 - name: artifactName
   type: string
+- name: isWebProject
+  type: boolean
+  
 - name: buildConfiguration
   type: string
   default: 'Release'
@@ -17,7 +16,7 @@ parameters:
   default: 'win-x64'
 - name: outputPath
   type: string
-  default: '$(Build.BinariesDirectory)/$(parameters.projectName)'
+  default: '$(Build.BinariesDirectory)/$(parameters.projectPath)'
 
 steps:
 - task: UseDotNet@2
@@ -34,14 +33,14 @@ steps:
   displayName: 'Build'
   inputs:
     command: 'build'
-    projects: '${{ parameters.projectFile }}'
+    projects: '${{ parameters.projectFilePattern }}'
     arguments: '--no-restore --configuration ${{ parameters.buildConfiguration }}'
 - task: DotNetCoreCLI@2
   displayName: 'Publish'
   inputs:
     command: 'publish'
     publishWebProjects: $(parameters.isWebProject)
-    projects: '${{ parameters.projectFile }}'
+    projects: '${{ parameters.projectFilePattern }}'
     arguments: '--no-build -c ${{ parameters.buildConfiguration }} -r ${{ parameters.buildPlatform }} --self-contained true -o ${{ parameters.outputPath }}'
     zipAfterPublish: false
 - task: FileTransform@2
@@ -52,4 +51,4 @@ steps:
     jsonTargetFiles: 'appsettings.json'
 - publish: '${{ parameters.outputPath }}'
   displayName: 'Publish Artifact'
-  artifact: '${{ parameters.artifactName }}-${{ parameters.projectName }}'
+  artifact: '${{ parameters.artifactName }}'

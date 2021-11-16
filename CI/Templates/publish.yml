@@ -1,27 +1,23 @@
 parameters:
 - name: projectName
   type: string
-- name: projectPath
-  type: string
 - name: artifactName
   type: string
-- name: artifact
+- name: artifactLocation
   type: string
-  default: '${{ parameters.artifactName }}-${{ parameters.projectName }}'
-- name: artifactFolder
+- name: archiveFile
   type: string
-  default: '$(Pipeline.Workspace)/${{ parameters.artifact }}'
 
 steps:
 - download: current
   displayName: 'Download Artifacts'
-  artifact: '${{ parameters.artifact }}'
+  artifact: '${{ parameters.artifactName }}'
 - task: ArchiveFiles@2
   displayName: 'Archive Files'
   inputs:
-    rootFolderOrFile: '${{ parameters.artifactFolder }}/${{ parameters.projectPath }}' 
+    rootFolderOrFile: '${{ parameters.artifactLocation }}' 
     includeRootFolder: false 
-    archiveFile: '${{ parameters.artifactFolder }}/${{ parameters.projectPath }}-$(Build.BuildId).zip'
-- publish: '${{ parameters.artifactFolder }}/${{ parameters.projectPath }}-$(Build.BuildId).zip'
+    archiveFile: '${{ parameters.artifactLocation }}/${{ parameters.archiveFile }}'
+- publish: '${{ parameters.artifactLocation }}/${{ parameters.archiveFile }}'
   displayName: 'Publish Archive'
   artifact: '${{ parameters.projectName }} Deployment Files'

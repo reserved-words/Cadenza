@@ -1,17 +1,12 @@
 parameters:
-- name: projectName
-  type: string
 - name: projectPath
-  type: string
-- name: artifactName
   type: string
 - name: serviceName
   type: string
 - name: serviceDisplayName
   type: string
-- name: artifactFolder
+- name: artifactLocation
   type: string
-  default: '$(Pipeline.Workspace)/${{ parameters.artifactName }}-${{ parameters.projectName }}/${{ parameters.projectPath }}'
 
 steps:
 - task: PowerShell@2
@@ -19,7 +14,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Set-Content "${{ parameters.artifactFolder }}/installService.ps1" @"
+      Set-Content "${{ parameters.artifactLocation }}/installService.ps1" @"
       sc.exe create `"${{ parameters.serviceName }}`" start= delayed-auto binpath= `"`$(Get-Location)\${{ parameters.projectPath }}.exe`" displayname= `"${{ parameters.serviceDisplayName }}`"
       "@
 - task: PowerShell@2
@@ -27,6 +22,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Set-Content "${{ parameters.artifactFolder }}/uninstallService.ps1" @"
+      Set-Content "${{ parameters.artifactLocation }}/uninstallService.ps1" @"
       sc.exe delete `"${{ parameters.serviceName }}`"
       "@
