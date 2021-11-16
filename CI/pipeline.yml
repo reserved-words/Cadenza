@@ -25,12 +25,12 @@ variables:
   syncService.artifactName: '$(artifactPrefix)-$(syncService.projectPath)'
   syncService.artifactFolder: '$(Pipeline.Workspace)/$(syncService.artifactName)'
   syncService.artifactLocation: '$(syncService.artifactFolder)/$(syncService.projectPath)'
-  syncService.archiveFile: '${{ syncService.projectPath }}-$(Build.BuildId).zip'
+  syncService.archiveFile: '$(syncService.projectPath)-$(Build.BuildId).zip'
 
   localApi.artifactName: '$(artifactPrefix)-$(localApi.projectPath)'
   localApi.artifactFolder: '$(Pipeline.Workspace)/$(localApi.artifactName)'
   localApi.artifactLocation: '$(localApi.artifactFolder)/$(localApi.projectPath)'
-  localApi.archiveFile: '${{ localApi.projectPath }}-$(Build.BuildId).zip'
+  localApi.archiveFile: '$(localApi.projectPath)-$(Build.BuildId).zip'
 
 stages:
 - stage: build
