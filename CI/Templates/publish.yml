@@ -7,10 +7,10 @@ parameters:
   type: string
 - name: artifact
   type: string
-  default: '$(parameters.artifactName)-$(parameters.projectName)'
+  default: '${{ parameters.artifactName }}-${{ parameters.projectName }}'
 - name: artifactFolder
   type: string
-  default: '$(Pipeline.Workspace)/$(parameters.artifact)'
+  default: '$(Pipeline.Workspace)/${{ parameters.artifact }}'
 
 steps:
 - download: current
