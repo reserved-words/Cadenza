@@ -4,6 +4,10 @@ trigger:
 pool:
   vmImage: windows-latest
   
+resources:
+  repositories:
+  - repository: self
+
 variables:
   artifactName: 'drop' 
   syncService.projectName: 'LocalSyncService'
@@ -25,7 +29,7 @@ stages:
   - job: buildSyncService
     displayName: 'Build Local Sync Service'
     steps:
-    - template: templates/build.yml
+    - template: Templates/build.yml@self
       parameters:
         projectName: $(syncService.projectName)
         projectFile: $(syncService.projectFile)
@@ -35,7 +39,7 @@ stages:
   - job: buildLocalApi
     displayName: 'Build Local API'
     steps:
-    - template: templates/build.yml
+    - template: Templates/build.yml@self
       parameters:
         projectName: $(localApi.projectName)
         projectFile: $(localApi.projectFile)
@@ -65,14 +69,14 @@ stages:
   - job: publishSyncService
     displayName: 'Publish Local Sync Service'
     steps:
-    - template: templates/service.yml
+    - template: Templates/service.yml@self
       parameters:
         projectName: $(syncService.projectName)
         projectPath: $(syncService.projectPath)
         artifactName: $(artifactName)
         serviceName: $(syncService.serviceName)
         serviceDisplayName: $(syncService.serviceDisplayName)
-    - template: publish.yml
+    - template: Templates/publish.yml@self
       parameters:
         projectName: $(syncService.projectName)
         projectPath: $(syncService.projectPath)
@@ -80,7 +84,7 @@ stages:
   - job: publishLocalApi
     displayName: 'Publish Local API'
     steps:
-    - template: publish.yml
+    - template: Templates/publish.yml@self
       parameters:
         projectName: $(localApi.projectName)
         projectPath: $(localApi.projectPath)
@@ -94,4 +98,4 @@ stages:
   - job: export
     displayName: 'Push to GitHub'
     steps:
-    - template: templates/github.yml
+    - template: Templates/github.yml@self

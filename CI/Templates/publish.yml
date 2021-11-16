@@ -5,10 +5,12 @@ parameters:
   type: string
 - name: artifactName
   type: string
- 
-variables:
-  artifact: '$(artifactName)-$(projectName)'
-  artifactFolder: '$(Pipeline.Workspace)/$(artifact)'
+- name: artifact
+  type: string
+  default: '$(artifactName)-$(projectName)'
+- name: artifactFolder
+  type: string
+  default: '$(Pipeline.Workspace)/$(artifact)'
 
 steps:
 - download: current

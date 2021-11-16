@@ -9,12 +9,15 @@ parameters:
   type: boolean
 - name: artifactName
   type: string
- 
-variables:
-  allProjects: '**/*.csproj'
-  buildConfiguration: 'Release'
-  buildPlatform: 'win-x64'
-  outputPath: '$(Build.BinariesDirectory)/$(projectName)'
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+- name: buildPlatform
+  type: string
+  default: 'win-x64'
+- name: outputPath
+  type: string
+  default: '$(Build.BinariesDirectory)/$(parameters.projectName)'
 
 steps:
 - task: UseDotNet@2
@@ -26,27 +29,27 @@ steps:
   displayName: 'Restore'
   inputs:
     command: 'restore'
-    projects: $(allProjects)
+    projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
     command: 'build'
-    projects: $(projectFile)
-    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: $(parameters.projectFile)
+    arguments: '--no-restore --configuration $(parameters.buildConfiguration)'
 - task: DotNetCoreCLI@2
   displayName: 'Publish'
   inputs:
     command: 'publish'
-    publishWebProjects: $(isWebProject)
-    projects: $(projectFile)
-    arguments: '--no-build -c $(buildConfiguration) -r $(buildPlatform) --self-contained true -o $(outputPath)'
+    publishWebProjects: $(parameters.isWebProject)
+    projects: $(parameters.projectFile)
+    arguments: '--no-build -c $(parameters.buildConfiguration) -r $(parameters.buildPlatform) --self-contained true -o $(parameters.outputPath)'
     zipAfterPublish: false
 - task: FileTransform@2
   displayName: 'Transform App Settings'
   inputs:
     xmlTransformationRules: ''
-    folderPath: '$(outputPath)/$(projectPath)'
+    folderPath: '$(parameters.outputPath)/$(parameters.projectPath)'
     jsonTargetFiles: 'appsettings.json'
-- publish: $(outputPath)
+- publish: $(parameters.outputPath)
   displayName: 'Publish Artifact'
-  artifact: '$(artifactName)-$(projectName)'
+  artifact: '$(parameters.artifactName)-$(parameters.projectName)'
