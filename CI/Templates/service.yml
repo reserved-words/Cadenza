@@ -11,7 +11,7 @@ parameters:
   type: string
 - name: artifactFolder
   type: string
-  default: '$(Pipeline.Workspace)/$(artifactName)-$(projectName)/$(projectPath)'
+  default: '$(Pipeline.Workspace)/$(parameters.artifactName)-$(parameters.projectName)/$(parameters.projectPath)'
 
 steps:
 - task: PowerShell@2
