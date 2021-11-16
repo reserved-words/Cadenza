@@ -80,15 +80,12 @@ stages:
   - job: publishSyncService
     displayName: 'Publish Local Sync Service'
     steps:
-    - template: Templates/service.yml@self
-      parameters:
-        projectPath: $(syncService.projectPath)
-        serviceName: $(syncService.serviceName)
-        serviceDisplayName: $(syncService.serviceDisplayName)
-        artifactLocation: $(syncService.artifactLocation)
     - template: Templates/publish.yml@self
       parameters:
         projectName: $(syncService.projectName)
+        projectPath: $(syncService.projectPath)
+        serviceName: $(syncService.serviceName)
+        serviceDisplayName: $(syncService.serviceDisplayName)
         artifactName: $(syncService.artifactName) 
         artifactLocation: $(syncService.artifactLocation)
         archiveFile: $(syncService.archiveFile)
