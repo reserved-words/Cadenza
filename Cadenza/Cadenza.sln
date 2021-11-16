@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Source.Local", "Cad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Source.Spotify", "Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj", "{A2F6276C-352D-42B1-86A5-59C6F300BA30}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.LastFM", "Cadenza.LastFM\Cadenza.LastFM.csproj", "{5997E112-98BB-4FE8-81E1-74964C3D9047}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A2F6276C-352D-42B1-86A5-59C6F300BA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F6276C-352D-42B1-86A5-59C6F300BA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2F6276C-352D-42B1-86A5-59C6F300BA30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5997E112-98BB-4FE8-81E1-74964C3D9047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5997E112-98BB-4FE8-81E1-74964C3D9047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5997E112-98BB-4FE8-81E1-74964C3D9047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5997E112-98BB-4FE8-81E1-74964C3D9047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
