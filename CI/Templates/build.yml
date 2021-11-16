@@ -50,6 +50,6 @@ steps:
     xmlTransformationRules: ''
     folderPath: '${{ parameters.outputPath }}/${{ parameters.projectPath }}'
     jsonTargetFiles: 'appsettings.json'
-- publish: $(parameters.outputPath)
+- publish: '${{ parameters.outputPath }}'
   displayName: 'Publish Artifact'
   artifact: '${{ parameters.artifactName }}-${{ parameters.projectName }}'

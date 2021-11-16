@@ -19,14 +19,14 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Set-Content "$(artifactFolder)/installService.ps1" @"
-      sc.exe create `"$(serviceName)`" start= delayed-auto binpath= `"`$(Get-Location)\$(projectPath).exe`" displayname= `"$(serviceDisplayName)`"
+      Set-Content "${{ parameters.artifactFolder }}/installService.ps1" @"
+      sc.exe create `"${{ parameters.serviceName }}`" start= delayed-auto binpath= `"`$(Get-Location)\${{ parameters.projectPath }}.exe`" displayname= `"${{ parameters.serviceDisplayName }}`"
       "@
 - task: PowerShell@2
   displayName: 'Create Uninstall File'
   inputs:
     targetType: 'inline'
     script: |
-      Set-Content "$(artifactFolder)/uninstallService.ps1" @"
-      sc.exe delete `"$(serviceName)`"
+      Set-Content "${{ parameters.artifactFolder }}/uninstallService.ps1" @"
+      sc.exe delete `"${{ parameters.serviceName }}`"
       "@
