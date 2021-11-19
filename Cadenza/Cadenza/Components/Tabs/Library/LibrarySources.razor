@@ -1,0 +1,33 @@
+﻿
+<MudGrid Spacing="2" @key="@EnabledSources">
+
+    @foreach (var source in Sources)
+    {
+        var isEnabled = EnabledSources.Contains(source);
+
+        var variant = isEnabled
+            ? Variant.Filled
+            : Variant.Outlined;
+
+        <MudItem xs="4" Class="pa-1">
+            <MudButton Variant="@variant"
+                       EndIcon="@source.GetIcon()"
+                       Color="@Color.Primary"
+                       FullWidth="true"
+                       OnClick="() => OnSetSource(source, !isEnabled)"
+                       Disabled="@(source == LibrarySource.Cloud)">
+                @source
+            </MudButton>
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    public List<LibrarySource> Sources => Enum.GetValues<LibrarySource>().ToList();
+
+    [Parameter]
+    public List<LibrarySource> EnabledSources { get; set; }
+
+    [Parameter]
+    public Func<LibrarySource, bool, Task> OnSetSource { get; set; }
+}

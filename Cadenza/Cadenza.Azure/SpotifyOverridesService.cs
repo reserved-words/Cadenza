@@ -14,9 +14,9 @@ public class SpotifyOverridesService : IOverridesService
         _config = config;
     }
 
-    private string AddOverrideUrl => _config.AddSpotifyOverrideUrl;
-    private string GetOverridesUrl => _config.GetSpotifyOverridesUrl;
-    private string RemoveOverrideUrl => _config.RemoveSpotifyOverrideUrl;
+    private string AddOverrideUrl => ""; // _config.AddSpotifyOverrideUrl;
+    private string GetOverridesUrl => ""; //  _config.GetSpotifyOverridesUrl;
+    private string RemoveOverrideUrl => ""; //  _config.RemoveSpotifyOverrideUrl;
 
     public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
     {

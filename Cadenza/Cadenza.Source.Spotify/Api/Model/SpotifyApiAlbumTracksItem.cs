@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApiAlbumTracksItem
+public class SpotifyApiAlbumTracksItem
 {
     public List<SpotifyApiAlbumArtist> artists { get; set; }
     public int disc_number { get; set; }

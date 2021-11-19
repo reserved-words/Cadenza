@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Components\Tabs\SystemInfo\SystemErrors.razor" />
+    <None Include="Components\Tabs\SystemInfo\SystemOverrides.razor" />
+    <None Include="Components\Tabs\SystemInfo\SystemUpdateQueue.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="MudBlazor" Version="6.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Azure\Cadenza.Azure.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Player\Cadenza.Player.csproj" />
+    <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
+    <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+</Project>

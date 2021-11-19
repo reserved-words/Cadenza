@@ -37,9 +37,9 @@ public class ValueMerger : IValueMerger
             : original;
     }
 
-    public Source Merge(Source original, Source update, bool forceUpdate)
+    public LibrarySource Merge(LibrarySource original, LibrarySource update, bool forceUpdate)
     {
-        return forceUpdate || original == 0 || original == Source.Local
+        return forceUpdate || original == 0 || original == LibrarySource.Local
             ? update
             : original;
     }

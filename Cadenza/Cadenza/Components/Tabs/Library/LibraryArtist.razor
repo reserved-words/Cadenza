@@ -1,0 +1,58 @@
+﻿@inherits LibraryArtistBase
+
+<MudCard Elevation="2"
+         Class="fixed-height-margin"
+         Style="display: flex; flex-direction: column;">
+
+    <MudCardHeader Style="flex-grow: 0;" Class="pb-0 pt-3">
+        <CardHeaderContent>
+            @if (Model == null)
+            {
+                <MudText Typo="Typo.h6">@PlaceholderText</MudText>
+            }
+            else
+            {
+                <ArtistView Model="@Model.Artist"
+                            HeaderOnly="true"/>
+            }
+            <MudDivider Class="mt-3" />
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-0">
+        @if (Model != null)
+        {
+            if (Model.Releases.Count == 1)
+            {
+                <WhipCard Padding="false"
+                          Bordered="false">
+                    @foreach (var album in Model.Releases.Single().Albums)
+                    {
+                        <LibraryAlbum Model="@album"
+                                      OnPlayAlbum="(a) => OnPlayAlbum(a)"
+                                      OnPlayTrack="(t) => OnPlayArtist(t)" />
+                    }
+                </WhipCard>
+            }
+            else
+            {
+                <MudTabs>
+                    @foreach (var releaseType in Model.Releases)
+                    {
+                        <MudTabPanel Text="@releaseType.Grouping.GetDisplayName()">
+                            <WhipCard Padding="false"
+                                      Bordered="false">
+                                @foreach (var album in releaseType.Albums)
+                                {
+                                    <LibraryAlbum Model="@album"
+                                                  OnPlayAlbum="(a) => OnPlayAlbum(a)"
+                                                  OnPlayTrack="(t) => OnPlayArtist(t)" />
+                                }
+                            </WhipCard>
+                        </MudTabPanel>
+                    }
+                </MudTabs>
+            }
+        }
+    </MudCardContent>
+</MudCard>

@@ -1,0 +1,48 @@
+﻿<MudTable Items="@Items"
+          T="T"
+          Hover="true"
+          Breakpoint="Breakpoint.Sm"
+          Dense="true"
+          RowTemplate="@RowTemplate"
+          Striped="false"
+          Class="ma-0 pa-0"
+          Filter="@Filter"
+          OnRowClick="@OnRowClick"
+          @bind-SelectedItem="@SelectedItem"
+          @ondblclick="OnDoubleClick"
+          Style="width: 100%;">
+
+</MudTable>
+
+@typeparam T
+
+@code {
+    [Parameter]
+    public List<T> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> RowTemplate { get; set; }
+
+    [Parameter]
+    public T SelectedItem { get; set; }
+
+    [Parameter]
+    public Func<T, bool> Filter { get; set; } = (t) => true;
+
+    [Parameter]
+    public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
+
+    [Parameter]
+    public Func<T, Task> OnRowDoubleClick { get; set; }
+
+    public async Task OnDoubleClick(MouseEventArgs args)
+    {
+        if (OnRowDoubleClick == null)
+            return;
+
+        if (SelectedItem == null)
+            return;
+
+        await OnRowDoubleClick(SelectedItem);
+    }
+}

@@ -112,7 +112,7 @@ public class Merger : IMerger
         return _merger.Merge(original, update, forceUpdate);
     }
 
-    private Source Merge(Source original, Source update, bool forceUpdate)
+    private LibrarySource Merge(LibrarySource original, LibrarySource update, bool forceUpdate)
     {
         return _merger.Merge(original, update, forceUpdate);
     }

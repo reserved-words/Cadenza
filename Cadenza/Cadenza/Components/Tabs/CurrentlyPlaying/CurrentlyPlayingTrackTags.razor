@@ -1,0 +1,17 @@
+﻿@if (Track.Tags != null && Track.Tags.Any())
+{
+    foreach (var tag in Track.Tags)
+    {
+        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag.Value</MudChip>
+    }
+}
+else
+{
+    <MudChip Class="my-0" Color="@Color.Default" Size="@Size.Small">no tags</MudChip>
+}
+
+
+@code {
+    [Parameter]
+    public TrackInfo Track { get; set; }
+}

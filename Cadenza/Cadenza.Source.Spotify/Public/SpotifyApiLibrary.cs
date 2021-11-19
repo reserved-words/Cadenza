@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApiLibrary : IStaticSource
+public class SpotifyApiLibrary : IStaticSource
 {
     private readonly IIdGenerator _idGenerator;
     private readonly ISpotifyLibraryApi _api;
@@ -105,7 +105,7 @@ internal class SpotifyApiLibrary : IStaticSource
         };
 
         artistInfo.Id = _idGenerator.GenerateArtistId(artistInfo.Name);
-        artistInfo.AddSourceId(Common.Source.Spotify, artist.id);
+        artistInfo.AddSourceId(LibrarySource.Spotify, artist.id);
 
         return artistInfo;
     }

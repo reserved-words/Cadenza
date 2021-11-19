@@ -4,13 +4,13 @@ public abstract class SourceLibrary : ILibrary
 {
     private readonly ILibrary _baseLibrary;
 
-    public SourceLibrary(ILibrary baseLibrary, Source source)
+    public SourceLibrary(ILibrary baseLibrary, LibrarySource source)
     {
         _baseLibrary = baseLibrary;
         Source = source;
     }
 
-    public Source Source { get; private set; }
+    public LibrarySource Source { get; private set; }
 
     public async Task<ArtistFull> GetAlbumArtist(string id)
     {

@@ -2,12 +2,12 @@
 
 public struct SourceId
 {
-    public SourceId(Source source, string id)
+    public SourceId(LibrarySource source, string id)
     {
         Source = source;
         Id = id;
     }
 
-    public Source Source { get; set; }
+    public LibrarySource Source { get; set; }
     public string Id { get; set; }
 }

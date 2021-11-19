@@ -1,0 +1,20 @@
+﻿
+<WhipSplitTable T="@PlaylistTrackViewModel"
+                Lists="@Playlist.Sections">
+    <RowTemplate>
+        <MudTd Class="px-2" Style="width: 1px;">
+            <MudIcon Class="@(context.IsCurrent ? "d-inline" : "d-none")"
+                     Icon="@Icons.Material.Filled.VolumeUp"></MudIcon>
+        </MudTd>
+        <MudTd Class="px-2">
+            <MudText Typo="@Typo.body1">@context.Model.Title</MudText>
+            <MudText Typo="@Typo.body2">@context.Model.ArtistName</MudText>
+        </MudTd>
+        <MudTd Class="px-2" Style="width: 1px;">@context.Model.DurationSeconds</MudTd>
+    </RowTemplate>
+</WhipSplitTable>
+
+@code {
+    [Parameter]
+    public IPlaylist Playlist { get; set; }
+}

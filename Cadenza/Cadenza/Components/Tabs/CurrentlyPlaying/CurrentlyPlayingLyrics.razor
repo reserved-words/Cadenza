@@ -1,0 +1,7 @@
+﻿@inherits CurrentlyPlayingLyricsBase
+
+<WhipCard Title="Lyrics">
+    <MudText Typo="@Typo.body1">
+        @((MarkupString)Track.Track.Lyrics.WithLineBreaks())
+    </MudText>
+</WhipCard>

@@ -2,7 +2,7 @@
 
 public class Track
 {
-    public Source Source { get; set; }
+    public LibrarySource Source { get; set; }
     public string Id { get; set; }
     public string ArtistId { get; set; }
 

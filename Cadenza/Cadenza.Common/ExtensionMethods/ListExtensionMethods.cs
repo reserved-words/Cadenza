@@ -52,7 +52,7 @@ public static class ListExtensionMethods
         };
     }
 
-    public static SplitList<T> Split<T>(List<T> items)
+    public static SplitList<T> Split<T>(this List<T> items)
     {
         return new SplitList<T>
         {

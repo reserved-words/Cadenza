@@ -1,0 +1,39 @@
+﻿@inherits CurrentTrackBase
+
+@if (Model != null)
+{
+    <MudCard Elevation="3" Class="pa-0 ma-0">
+        <MudCardHeader Class="pa-2">
+            <CardHeaderContent>
+                <MudText Typo="Typo.body1">@Model.Track.Title</MudText>
+                <MudText Typo="Typo.body2">@Model.Track.ArtistName</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                @if (IsFavourite)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="Unfavourite" />
+                }
+                else
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.FavoriteBorder" Color="Color.Default" OnClick="Favourite" />
+                }
+            </CardHeaderActions>
+        </MudCardHeader>
+        <img src="@Model.Album.ImageUrl" class="artwork" />
+        <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
+        <MudCardContent Class="pa-2">
+            <MudText Typo="Typo.body1">@Model.Album.Title</MudText>
+            <MudText Typo="Typo.body2">@Model.Album.ArtistName</MudText>
+            <MudContainer Class="d-flex pa-0 ma-0">
+                <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
+                    <MudText Typo="Typo.body2">@Model.Album.ReleaseType.GetDisplayName()</MudText>
+                    <MudText Typo="Typo.body2">@Model.Album.Year</MudText>
+                </MudPaper>
+                <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-end;">
+                    <MudIcon Icon="@Model.Track.Source.GetIcon()" Style="text-align: right; vertical-align: bottom;" />
+                </MudPaper>
+            </MudContainer>
+
+        </MudCardContent>
+    </MudCard>
+} 

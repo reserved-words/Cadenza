@@ -1,0 +1,11 @@
+﻿<MudItem xs="12" md="@md" Class="fixed-height" Style="display: flex; flex-direction: column;">
+    @ChildContent
+</MudItem>
+
+@code {
+    [Parameter]
+    public int md { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

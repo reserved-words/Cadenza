@@ -3,7 +3,7 @@
 public class SpotifyLibrary : SourceLibrary
 {
     public SpotifyLibrary(ILibrary libraryConsumer)
-        : base(libraryConsumer, Common.Source.Spotify)
+        : base(libraryConsumer, LibrarySource.Spotify)
     {
     }
 }

@@ -1,0 +1,10 @@
+﻿
+@foreach (var model in Links)
+{
+    <WhipIconLink Model="@model" />
+}
+
+@code {
+    [Parameter]
+    public List<LinkViewModel> Links { get; set; } = new List<LinkViewModel>();
+}

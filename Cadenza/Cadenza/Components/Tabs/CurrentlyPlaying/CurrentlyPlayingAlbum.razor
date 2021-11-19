@@ -1,0 +1,29 @@
+﻿@inherits CurrentlyPlayingAlbumBase
+
+<WhipCard>
+    <MudContainer Class="d-flex pa-0 ma-0">
+        <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
+            <MudText Typo="Typo.h6" >@Track.Album.Title</MudText>
+            <MudText Typo="Typo.body1">@Track.Album.ArtistName</MudText>
+        </MudPaper>
+        <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-start;">
+            <MenuAlbum Style="text-align: right; vertical-align: top;"
+                       Album="@Track.Album" />
+        </MudPaper>
+    </MudContainer>
+    <MudDivider Class="my-3" />
+    <MudContainer Class="d-flex pa-0 ma-0">
+        <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
+            <MudText Typo="Typo.body1">@Track.ReleaseType</MudText>
+            <MudText Typo="Typo.body1">@Track.Album.Year</MudText>
+            <MudText Typo="Typo.body1">@Track.DiscPosition</MudText>
+            <MudText Typo="Typo.body1">@Track.TrackPosition</MudText>
+        </MudPaper>
+        <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-end;">
+            <MudIcon Icon="@Track.Track.Source.GetIcon()" 
+                     Size="@Size.Large"
+                     Style="text-align: right; vertical-align: bottom;" />
+        </MudPaper>
+    </MudContainer>
+</WhipCard>
+

@@ -1,0 +1,15 @@
+﻿@inherits SystemInfoTabBase
+
+<MudTabs Outlined="true"
+         Position="Position.Left"
+         Style="width: 100%; height: 100%;">
+    <MudTabPanel Text="Errors" Style="width: 100%; height: 100%;">
+        <SystemErrors />
+    </MudTabPanel>
+    <MudTabPanel Text="Update Queue">
+        <SystemUpdateQueue />
+    </MudTabPanel>
+    <MudTabPanel Text="Data Overrides">
+        <SystemOverrides />
+    </MudTabPanel>
+</MudTabs>

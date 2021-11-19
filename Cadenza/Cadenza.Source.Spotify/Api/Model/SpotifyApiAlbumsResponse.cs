@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApiAlbumsResponse
+public class SpotifyApiAlbumsResponse
 {
     public string href { get; set; }
     public List<SpotifyApiAlbumsItem> items { get; set; }

@@ -2,7 +2,7 @@
 
 public class CombinedSourceLibrary : ICombinedSourceLibrary
 {
-    private readonly Dictionary<Source, DynamicSourceManager> _sources;
+    private readonly Dictionary<LibrarySource, DynamicSourceManager> _sources;
 
     private readonly ILibrary _cache;
     private readonly ISimpleCacher _itemCacher;
@@ -17,7 +17,7 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         _sources = dynamicSources.ToDictionary(s => s.Source, s => new DynamicSourceManager(s));
     }
 
-    public async Task<ArtistFull> GetAlbumArtist(string id, IEnumerable<Source> sources)
+    public async Task<ArtistFull> GetAlbumArtist(string id, IEnumerable<LibrarySource> sources)
     {
         foreach (var source in sources)
         {
@@ -38,7 +38,7 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         return artist;
     }
 
-    public async Task<ICollection<Artist>> GetAlbumArtists(IEnumerable<Source> sources)
+    public async Task<ICollection<Artist>> GetAlbumArtists(IEnumerable<LibrarySource> sources)
     {
         foreach (var source in sources)
         {
@@ -55,7 +55,7 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         return artists.Where(a => a.IsInAnySource(sources)).ToList();
     }
 
-    public async Task<ICollection<Track>> GetAllTracks(IEnumerable<Source> sources)
+    public async Task<ICollection<Track>> GetAllTracks(IEnumerable<LibrarySource> sources)
     {
         foreach (var source in sources)
         {
@@ -70,19 +70,19 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         return await _cache.GetAllTracks();
     }
 
-    public async Task<TrackFull> GetTrack(string id, Source source)
+    public async Task<TrackFull> GetTrack(string id, LibrarySource source)
     {
         await UpdateTrack(id, source);
         return await _cache.GetTrack(id);
     }
 
-    public async Task<TrackSummary> GetTrackSummary(string id, Source source)
+    public async Task<TrackSummary> GetTrackSummary(string id, LibrarySource source)
     {
         await UpdateTrack(id, source);
         return await _cache.GetTrackSummary(id);
     }
 
-    private async Task UpdateTrack(string id, Source source)
+    private async Task UpdateTrack(string id, LibrarySource source)
     {
         var service = _sources[source];
         var track = await service.GetTrack(id);

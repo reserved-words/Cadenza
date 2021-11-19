@@ -1,0 +1,51 @@
+﻿
+html {
+    max-height: 100vh;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+body {
+    max-height: 100vh;
+    height: 100vh;
+    overflow-y: hidden;
+    padding: 0;
+}
+
+#app,
+div.mud-main-content,
+div.mud-tabs,
+div.mud-tabs-panels {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.fixed-height {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+.fixed-height-margin {
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
+    overflow-y: hidden;
+    padding: 0;
+    margin: 10px;
+}
+
+.fixed-height-scroll {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.mud-drawer.mud-drawer-fixed.mud-drawer-responsive {
+    top: 0;
+    height: 100%;
+}

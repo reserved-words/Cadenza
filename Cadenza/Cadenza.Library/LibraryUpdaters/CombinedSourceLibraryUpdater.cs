@@ -2,10 +2,10 @@
 
 public class CombinedSourceLibraryUpdater : ICombinedSourceLibraryUpdater
 {
-    private readonly Dictionary<Source, ISourceLibraryUpdater> _sourceUpdaters;
+    private readonly Dictionary<LibrarySource, ISourceLibraryUpdater> _sourceUpdaters;
     private readonly ISimpleCacher _cacheUpdater;
 
-    public CombinedSourceLibraryUpdater(Dictionary<Source, ISourceLibraryUpdater> sourceUdpaters, IMerger merger, ICache cache)
+    public CombinedSourceLibraryUpdater(Dictionary<LibrarySource, ISourceLibraryUpdater> sourceUdpaters, IMerger merger, ICache cache)
     {
         _sourceUpdaters = sourceUdpaters;
         _cacheUpdater = new SimpleCacher(merger, cache);

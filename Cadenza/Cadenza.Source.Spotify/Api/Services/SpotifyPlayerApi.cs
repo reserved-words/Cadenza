@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyPlayerApi : ISpotifyPlayerApi
+public class SpotifyPlayerApi : ISpotifyPlayerApi
 {
     private const string PauseUrlFormat = "https://api.spotify.com/v1/me/player/pause?device_id={0}";
     private const string PlayUrlFormat = "https://api.spotify.com/v1/me/player/play?device_id={0}";

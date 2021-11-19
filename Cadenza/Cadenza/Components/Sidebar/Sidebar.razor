@@ -1,0 +1,26 @@
+﻿@inherits SidebarBase
+
+<WhipTab>
+    <WhipColumn md="12">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <CurrentlyPlayingHeader />
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <CurrentTrack />
+            </WhipContainer>
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <PlayerControls OnPause="@OnPause"
+                                OnResume="@OnResume"
+                                OnSkipNext="@OnSkipNext"
+                                OnSkipPrevious="@OnSkipPrevious" />
+            </WhipContainer>        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <FavouritePlaylists OnPlay="@OnPlay" />
+            </WhipContainer>
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>

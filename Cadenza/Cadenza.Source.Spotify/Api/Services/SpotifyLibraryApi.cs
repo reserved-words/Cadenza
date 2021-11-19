@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyLibraryApi : ISpotifyLibraryApi
+public class SpotifyLibraryApi : ISpotifyLibraryApi
 {
     private const string AlbumsUrl = "https://api.spotify.com/v1/me/albums?limit=50";
     private const string PlaylistsUrl = "https://api.spotify.com/v1/me/playlists?limit=50";

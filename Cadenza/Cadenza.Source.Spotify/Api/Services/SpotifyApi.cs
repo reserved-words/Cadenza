@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApi : ISpotifyApi
+public class SpotifyApi : ISpotifyApi
 {
     private readonly ISpotifyApiConfig _config;
     private readonly IHttpClient _httpClient;

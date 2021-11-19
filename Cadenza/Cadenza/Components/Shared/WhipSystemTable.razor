@@ -1,0 +1,46 @@
+﻿<MudTable Items="@Items"
+          Dense="true"
+          Hover="true"
+          Bordered="true"
+          Striped="true"
+          RowsPerPage="10"
+          Filter="@((log) => Filter(log, SearchString))"
+          RowTemplate="@RowTemplate"
+          HeaderContent="@HeaderContent"
+          Style="width: 100%;">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@Title</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="@SearchString"
+                      Placeholder="Search"
+                      Immediate="true"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@typeparam T
+
+@code {
+    protected string SearchString { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public List<T> Items { get; set; }
+
+    [Parameter]
+    public Func<T, string, bool> Filter { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> RowTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+}

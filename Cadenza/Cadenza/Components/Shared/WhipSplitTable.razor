@@ -1,0 +1,37 @@
+﻿
+@if (Lists.MultipleSections)
+{
+    <MudTabs Outlined="true" KeepPanelsAlive="true" Class="fixed-height">
+        @foreach (var s in Lists.Sections)
+        {
+            <MudTabPanel Text="@s.Name" Class="fixed-height">
+                <WhipTable T="T"
+                           Items="@s.Items"
+                           RowTemplate="@RowTemplate"
+                           SelectedItem="@s.SelectedItem"
+                           OnRowDoubleClick="@OnRowDoubleClick" />
+            </MudTabPanel>
+        }
+    </MudTabs>
+}
+else
+{
+    <WhipTable T="T"
+               Items="@Lists.Single"
+               RowTemplate="@RowTemplate"
+               SelectedItem="@Lists.SelectedItem"
+               OnRowDoubleClick="@OnRowDoubleClick" />
+}
+
+@typeparam T
+
+@code {
+    [Parameter]
+    public SplitList<T> Lists { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> RowTemplate { get; set; }
+
+    [Parameter]
+    public Func<T, Task> OnRowDoubleClick { get; set; }
+}

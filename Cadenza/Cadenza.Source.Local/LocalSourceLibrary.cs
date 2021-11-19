@@ -3,7 +3,7 @@
 public class LocalSourceLibrary : SourceLibrary
 {
     public LocalSourceLibrary(LocalLibrary localLibraryConsumer)
-        : base(localLibraryConsumer, Common.Source.Local)
+        : base(localLibraryConsumer, LibrarySource.Local)
     {
 
     }

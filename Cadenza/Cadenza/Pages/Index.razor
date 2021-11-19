@@ -1,0 +1,35 @@
+﻿@page  "/"
+@page  "/player"
+@inherits             IndexBase
+
+<MudLayout>
+    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <Sidebar OnPause="@OnPause"
+                 OnResume="@OnResume"
+                 OnSkipNext="@OnSkipNext"
+                 OnSkipPrevious="@OnSkipPrevious"
+                 OnPlay="@OnPlay" />
+    </MudDrawer>
+    <MudMainContent>
+        @if (!Loading)
+        {
+            <MudTabs Outlined="true" KeepPanelsAlive="true">
+                <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
+                    <LibraryTab OnPlay="@OnPlay" OnSourcesUpdated="@OnSourcesUpdated" />
+                </MudTabPanel>
+                <MudTabPanel Text="Playlists" Icon="@Icons.Material.Filled.List">
+                    <PlaylistsTab />
+                </MudTabPanel>
+                <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote">
+                    <CurrentlyPlayingTab />
+                </MudTabPanel>
+                <MudTabPanel Text="Search" Icon="@Icons.Material.Filled.Search">
+                    <SearchTab />
+                </MudTabPanel>
+                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info">
+                    <SystemInfoTab />
+                </MudTabPanel>
+            </MudTabs>
+        }
+    </MudMainContent>
+</MudLayout>

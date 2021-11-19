@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApiExternalUrls
+public class SpotifyApiExternalUrls
 {
     public string Spotify { get; set; }
 

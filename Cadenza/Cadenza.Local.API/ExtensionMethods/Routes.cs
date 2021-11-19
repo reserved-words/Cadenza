@@ -9,10 +9,10 @@ public static class Routes
         var playlists = app.Services.GetService<IPlaylistService>();
         var updater = app.Services.GetService<IUpdateService>();
 
-        app.MapGet("/Library/GetAlbumArtists", () => library.GetAlbumArtists());
-        app.MapGet("/Library/GetAlbumArtist/{id}", (string id) => library.GetAlbumArtist(id));
-        app.MapGet("/Library/GetTrackSummary/{id}", (string id) => library.GetTrackSummary(id));
-        app.MapGet("/Library/GetTrack/{id}", (string id) => library.GetTrack(id));
+        app.MapGet("/Library/AlbumArtists", () => library.GetAlbumArtists());
+        app.MapGet("/Library/Artist/{id}", (string id) => library.GetAlbumArtist(id));
+        app.MapGet("/Library/TrackSummary/{id}", (string id) => library.GetTrackSummary(id));
+        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
 
         app.MapGet("/Play/Track/{id}", async (string id) => (await play.GetTrackPlayPath(id)).Stream());
 

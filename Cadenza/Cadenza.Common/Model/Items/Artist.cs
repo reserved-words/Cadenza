@@ -16,7 +16,7 @@ public class Artist : INamed
 
     public override string ToString() => Name;
 
-    public void AddSourceId(Source source, string id)
+    public void AddSourceId(LibrarySource source, string id)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException($"Cannot add an empty source ID");

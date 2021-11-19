@@ -25,7 +25,7 @@ public class JsonLibrary : IStaticSource
             try
             {
                 var artist = _converter.ConvertArtist(jsonArtist);
-                artist.AddSourceId(Source.Local, artist.Id);
+                artist.AddSourceId(LibrarySource.Local, artist.Id);
                 library.Artists.Add(artist);
             }
             catch (System.Exception ex)
@@ -38,14 +38,14 @@ public class JsonLibrary : IStaticSource
         foreach (var jsonAlbum in jsonAlbums)
         {
             var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
-            album.Source = Source.Local;
+            album.Source = LibrarySource.Local;
             library.Albums.Add(album);
         }
 
         foreach (var jsonTrack in jsonTracks)
         {
             var track = _converter.ConvertTrack(jsonTrack, jsonArtists);
-            track.Source = Source.Local;
+            track.Source = LibrarySource.Local;
             library.Tracks.Add(track);
         }
 

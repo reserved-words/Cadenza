@@ -1,0 +1,49 @@
+﻿@inherits LibraryAlbumBase
+
+<MudContainer Class="pa-2">
+    <MudGrid Spacing="1">
+        <MudItem xs="3">
+            <MudCard Elevation="1">
+                <img class="artwork" src="@Model.Model.Album.ImageUrl" @ondblclick="@(() => OnPlayAlbum(Model))" />
+                <MudCardContent Class="pa-2">
+                    <MudContainer Class="d-flex pa-0 ma-0">
+                        <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+                            <MudText Typo="Typo.body1">@Model.Model.Album.Title</MudText>
+                            <MudText Typo="Typo.body2">@Model.Model.Album.ReleaseType.GetDisplayName()</MudText>
+                            <MudText Typo="Typo.body2">@Model.Model.Album.Year</MudText>
+                        </MudPaper>
+                        <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 d-flex flex-column align-self-stretch align-content-space-between">
+                            <MudIcon Icon="@Model.Model.Album.Source.GetIcon()" />
+                            <MenuAlbum Class="mt-auto"
+                                       Album="@Model.Model.Album"
+                                       Size="@Size.Medium"/>
+                        </MudPaper>
+                    </MudContainer>
+
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="9">
+            <WhipSplitTable T="@AlbumTrackViewModel" 
+                            Lists="@Model.Tracks"
+                            OnRowDoubleClick="@((t) => OnPlayTrack(t))">
+                <RowTemplate>
+                    <MudTd Class="px-2" Style="width: 1px;">
+                        <MudIcon Class="@(context.IsCurrent ? "d-inline" : "d-none")"
+                                 Icon="@Icons.Material.Filled.VolumeUp" />
+                    </MudTd>
+                    <MudTd Class="px-2" DataLabel="No" Style="width: 1px;">@context.Model.Position.TrackNo</MudTd>
+                    <MudTd Class="px-2" DataLabel="Title">@context.Model.Track.Title</MudTd>
+                    <MudTd Class="px-2" DataLabel="Duration" Style="width: 1px;">@context.Model.Track.Duration</MudTd>
+                    <MudTd Class="px-2"
+                           Style="min-width: 5px;">
+                        <MenuTrack Class="show-on-hover"
+                                   Style="text-align: right; vertical-align: top;"
+                                   Size="Size.Small" />
+                    </MudTd>
+                </RowTemplate>
+            </WhipSplitTable>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

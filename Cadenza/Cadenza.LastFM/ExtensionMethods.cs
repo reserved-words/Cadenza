@@ -17,6 +17,13 @@ internal static class ExtensionMethods
         return $"{url}&{key}={encodedValue}";
     }
 
+    public static string Add(this string baseUrl, Dictionary<string, string> parameters)
+    {
+        var pairs = parameters.Select(p => $"{p.Key}={HttpUtility.UrlEncode(p.Value)}");
+        var queryString = string.Join("&", pairs);
+        return $"{baseUrl}?{queryString}";
+    }
+
     public static async Task<XElement> ToXml(this HttpResponseMessage response)
     {
         var contentAsString = await response.Content.ReadAsStringAsync();

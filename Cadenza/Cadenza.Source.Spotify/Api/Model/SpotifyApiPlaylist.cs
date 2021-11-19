@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-internal class SpotifyApiPlaylist
+public class SpotifyApiPlaylist
 {
     public bool collaborative { get; set; }
     public SpotifyApiExternalUrls external_urls { get; set; }

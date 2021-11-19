@@ -1,0 +1,41 @@
+﻿@inherits CurrentlyPlayingTabBase
+
+<WhipTab>
+    @if (NotCurrentlyPlaying)
+    {
+        <WhipColumn md="12">
+            <WhipRow RowHeight="@RowHeight.Full">
+                <WhipCard>
+                    <MudText Typo="@Typo.body1">Not currently playing</MudText>
+                </WhipCard>
+            </WhipRow>
+        </WhipColumn>
+    }
+    else
+    {
+        <WhipColumn md="4">
+            <WhipRow RowHeight="@RowHeight.Fixed">
+                <CurrentlyPlayingTrack Track="@Track" />
+            </WhipRow>
+            <WhipRow RowHeight="@RowHeight.Fixed">
+                <ArtistView Model="@Track.Artist" />
+            </WhipRow>
+            <WhipRow RowHeight="@RowHeight.Fixed">
+                <CurrentlyPlayingAlbum Track="@Track" />
+            </WhipRow>
+        </WhipColumn>
+
+        <WhipColumn md="4">
+            <WhipRow RowHeight="@RowHeight.Fixed">
+                <CurrentlyPlayingArtwork Track="@Track" />
+            </WhipRow>
+        </WhipColumn>
+
+        <WhipColumn md="4">
+            <WhipRow RowHeight="@RowHeight.Stretch">
+                <CurrentlyPlayingLyrics Track="@Track" />
+            </WhipRow>
+        </WhipColumn>
+    }
+
+</WhipTab>

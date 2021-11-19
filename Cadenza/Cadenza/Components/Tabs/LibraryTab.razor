@@ -1,0 +1,63 @@
+﻿@inherits LibraryTabBase
+
+<WhipTab>
+    <WhipColumn md="3">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <WhipCard>
+                <MudContainer Class="pa-0 ma-0">
+                   <LibrarySources EnabledSources="@EnabledSources"
+                                    OnSetSource="@OnSetSource" />
+                </MudContainer>
+
+                <MudSelect Label="Grouping"
+                           Class="mt-2"
+                           Dense="true"
+                           @bind-Value="@SelectedGrouping">
+                    @foreach (var gr in Groupings)
+                    {
+                        <MudSelectItem Value="@gr" />
+                    }
+                </MudSelect>
+
+                <MudTextField @bind-Value="@SearchText"
+                            Label="Filter"
+                            Immediate="true"
+                            Adornment="Adornment.End"
+                            AdornmentIcon="@Icons.Filled.FilterAlt"
+                            AdornmentColor="Color.Default" />
+
+            </WhipCard>
+        </WhipRow>
+
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <WhipCard Padding="false">
+                @if (Loading)
+                {
+                    <MudText Typo="@Typo.body1" Class="pa-3">Loading artists...</MudText>
+                }
+                else
+                {
+                    <WhipTable Items="@Artists"
+                               T="@Artist"
+                               SelectedItem="@SelectedArtist"
+                               Filter="new Func<Artist, bool>(FilterFunc)"
+                               OnRowClick="@((args) => SelectArtist(args.Item))"
+                               OnRowDoubleClick="@((a) => OnPlayArtist(a.Id))">
+                        <RowTemplate>
+                            <MudTd>
+                                <MudText Typo="@Typo.body1">@context.Name</MudText>
+                            </MudTd>
+                        </RowTemplate>
+                    </WhipTable>
+                }
+            </WhipCard>
+        </WhipRow>
+    </WhipColumn>
+
+    <WhipColumn md="9">
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <LibraryArtist ArtistId="@SelectedArtistId"
+                           OnPlay="@OnPlay" />
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>

@@ -1,0 +1,59 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.mud-typography-body1 {
+    font-size: 12px;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+.mud-icon-button {
+    flex: auto;
+}
+
+.mud-button-group-root.mud-button-group-override-styles.mud-button-group-filled.mud-button-group-filled-size-medium.mud-button-group-horizontal {
+    width: 100%;
+}
+
+img.artwork {
+    width: 100%;
+    height: auto;
+}
+
+img.artist {
+    width: 100%;
+    height: auto;
+}
+
+.mud-menu .mud-icon-button {
+    padding: 0;
+    margin: 0;
+}
+
+table tbody tr td .show-on-hover {
+    display:none;
+}
