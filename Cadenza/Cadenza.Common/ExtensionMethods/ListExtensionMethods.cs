@@ -4,7 +4,7 @@ public static class ListExtensionMethods
 {
     public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
     {
-        return items == null || items.Any();
+        return items == null || !items.Any();
     }
 
     public static void AddIfNotPresent<T>(this List<T> items, T item)
