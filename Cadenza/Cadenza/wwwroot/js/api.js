@@ -14,26 +14,26 @@ function getFromApi(endpoint, onSuccess) {
 }
 
 function getLastFmSessionKeyUrl(token, onSuccess) {
-    var endpoint = settings.LastFmSessionKeyUrl + token;
+    var endpoint = apiSettings.Endpoints.LastFmSessionKeyUrl + token;
     getFromApi(endpoint, onSuccess);
 }
 
 function getLastFmAuthUrl(redirectUri, onSuccess) {
-    var endpoint = settings.LastFmAuthUrl + redirectUri;
+    var endpoint = apiSettings.Endpoints.LastFmAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }
 
 function getSpotifyAuthUrl(redirectUri, onSuccess) {
-    var endpoint = settings.SpotifyAuthUrl + redirectUri;
+    var endpoint = apiSettings.Endpoints.SpotifyAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }
 
 function getSpotifyAuthHeader (onSuccess) {
-    var endpoint = settings.SpotifyAuthHeader;
+    var endpoint = apiSettings.Endpoints.SpotifyAuthHeader;
     getFromApi(endpoint, onSuccess);
 }
 
 function getSpotifyTokenUrl(onSuccess) {
-    var endpoint = settings.SpotifyTokenUrl;
+    var endpoint = apiSettings.Endpoints.SpotifyTokenUrl;
     getFromApi(endpoint, onSuccess);
 }
