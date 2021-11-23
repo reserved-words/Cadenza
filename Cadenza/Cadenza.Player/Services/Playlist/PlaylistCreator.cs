@@ -1,14 +1,18 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Database;
+
+namespace Cadenza.Player;
 
 public class PlaylistCreator : IPlaylistCreator
 {
     private readonly IViewModelLibrary _library;
     private readonly IShuffler _shuffler;
+    private readonly IPlayTrackRepository _repository;
 
-    public PlaylistCreator(IShuffler shuffler, IViewModelLibrary library)
+    public PlaylistCreator(IShuffler shuffler, IViewModelLibrary library, IPlayTrackRepository repository)
     {
         _shuffler = shuffler;
         _library = library;
+        _repository = repository;
     }
 
     public async Task<PlaylistDefinition> CreateArtistPlaylist(string artistId, string first = null)
@@ -38,41 +42,47 @@ public class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(AlbumFull album)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(LibraryAlbum album)
     {
-        var sections = album.Discs.Split(
-            d => d.Name,
-            d => d.Tracks
-                .OrderBy(t => t.Position.TrackNo)
-                .Select(t => new PlaylistTrackViewModel(t.Track))
-                .ToList());
+        throw new NotImplementedException();
 
-        return new PlaylistDefinition
-        {
-            Type = PlaylistType.Album,
-            Name = $"{album.Album.Title} by {album.Album.ArtistName}",
-            Sections = sections,
-            First = sections.First
-        };
+        //var sections = album.Discs.Split(
+        //    d => d.Name,
+        //    d => d.Tracks
+        //        .OrderBy(t => t.Position.TrackNo)
+        //        .Select(t => new PlaylistTrackViewModel(t.Track))
+        //        .ToList());
+
+        //return new PlaylistDefinition
+        //{
+        //    Type = PlaylistType.Album,
+        //    Name = $"{album.Album.Title} by {album.Album.ArtistName}",
+        //    Sections = sections,
+        //    First = sections.First
+        //};
     }
 
     public async Task<PlaylistDefinition> CreateLibraryPlaylist(string first = null)
     {
-        var tracks = await _library.GetAllTracks();
+        //var ts = await _repository.GetAll();
 
-        var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
+        //var tracks = ts.Select(t => new PlaylistTrackViewModel(t));
 
-        var firstTrack = first != null
-           ? tracks.SingleOrDefault(t => t.Model.Id == first)
-           : null;
+        //var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
 
-        return new PlaylistDefinition
-        {
-            Type = PlaylistType.All,
-            Name = "All Library",
-            Sections = shuffledTracks.Split(),
-            First = firstTrack
-        };
+        //var firstTrack = first != null
+        //   ? tracks.SingleOrDefault(t => t.Model.Id == first)
+        //   : null;
+
+        //return new PlaylistDefinition
+        //{
+        //    Type = PlaylistType.All,
+        //    Name = "All Library",
+        //    Sections = shuffledTracks.Split(),
+        //    First = firstTrack
+        //};
+
+        throw new NotImplementedException();
     }
 
     private Dictionary<int, List<PlaylistTrackViewModel>> GetAsDictionary(IEnumerable<PlaylistTrackViewModel> tracks)

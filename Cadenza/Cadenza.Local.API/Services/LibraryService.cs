@@ -5,11 +5,14 @@ public class LibraryService : ILibraryService
 {
     private readonly IImageSrcGenerator _imageSrcGenerator;
     private readonly ILibrary _library;
+    private readonly IStaticSource _jsonLibrary;
 
-    public LibraryService(ILibrary library, IImageSrcGenerator imageSrcGenerator)
+
+    public LibraryService(ILibrary library, IImageSrcGenerator imageSrcGenerator, IStaticSource jsonLibrary)
     {
         _library = library;
         _imageSrcGenerator = imageSrcGenerator;
+        _jsonLibrary = jsonLibrary;
     }
 
     public async Task<ICollection<Artist>> GetAlbumArtists()
@@ -51,5 +54,29 @@ public class LibraryService : ILibraryService
     private string UrlDecode(string text)
     {
         return HttpUtility.UrlDecode(text);
+    }
+
+    public async Task<ICollection<ArtistInfo>> GetArtists()
+    {
+        var library = await _jsonLibrary.GetStaticLibrary();
+        return library.Artists;
+    }
+
+    public async Task<ICollection<AlbumInfo>> GetAlbums()
+    {
+        var library = await _jsonLibrary.GetStaticLibrary();
+        return library.Albums;
+    }
+
+    public async Task<ICollection<TrackInfo>> GetTracks()
+    {
+        var library = await _jsonLibrary.GetStaticLibrary();
+        return library.Tracks;
+    }
+
+    public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()
+    {
+        var library = await _jsonLibrary.GetStaticLibrary();
+        return library.AlbumTrackLinks;
     }
 }

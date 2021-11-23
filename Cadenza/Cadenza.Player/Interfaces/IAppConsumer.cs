@@ -13,5 +13,7 @@ public interface IAppConsumer
 
     event PlaylistEventHandler PlaylistUpdated;
 
+    event LibraryEventHandler LibraryUpdated;
+
     IPlaylist CurrentPlaylist { get; }
 }

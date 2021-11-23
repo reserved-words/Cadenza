@@ -12,7 +12,7 @@
             }
             else
             {
-                <ArtistView Model="@Model.Artist"
+                <ArtistView Model="@Model"
                             HeaderOnly="true"/>
             }
             <MudDivider Class="mt-3" />
@@ -26,7 +26,7 @@
             {
                 <WhipCard Padding="false"
                           Bordered="false">
-                    @foreach (var album in Model.Releases.Single().Albums)
+                    @foreach (var album in Model.Releases.Single().Value)
                     {
                         <LibraryAlbum Model="@album"
                                       OnPlayAlbum="(a) => OnPlayAlbum(a)"
@@ -37,12 +37,12 @@
             else
             {
                 <MudTabs>
-                    @foreach (var releaseType in Model.Releases)
+                    @foreach (var group in Model.Releases)
                     {
-                        <MudTabPanel Text="@releaseType.Grouping.GetDisplayName()">
+                        <MudTabPanel Text="@group.Key.GetDisplayName()">
                             <WhipCard Padding="false"
                                       Bordered="false">
-                                @foreach (var album in releaseType.Albums)
+                                @foreach (var album in group.Value)
                                 {
                                     <LibraryAlbum Model="@album"
                                                   OnPlayAlbum="(a) => OnPlayAlbum(a)"

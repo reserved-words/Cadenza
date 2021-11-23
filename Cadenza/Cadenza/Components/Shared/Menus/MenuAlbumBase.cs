@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Database;
+
+namespace Cadenza;
 
 public class MenuAlbumBase : ComponentBase
 {
@@ -21,26 +23,26 @@ public class MenuAlbumBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public AlbumInfo Album { get; set; }
+    public LibraryAlbum Album { get; set; }
 
     public async Task OnEdit()
     {
-        var albumUpdate = new AlbumUpdate(Album);
+        //var albumUpdate = new AlbumUpdate(Album);
 
-        var (saved, data) = await DialogService.DisplayForm<EditAlbum, AlbumUpdate>(albumUpdate, "Edit Album");
+        //var (saved, data) = await DialogService.DisplayForm<EditAlbum, AlbumUpdate>(albumUpdate, "Edit Album");
 
-        if (!saved || !data.IsUpdated)
-            return;
+        //if (!saved || !data.IsUpdated)
+        //    return;
 
-        var success = await LibraryController.UpdateAlbum(data);
+        //var success = await LibraryController.UpdateAlbum(data);
 
-        if (success)
-        {
-            Alert.Success("Album updated");
-        }
-        else
-        {
-            Alert.Error("Error updating album");
-        }
+        //if (success)
+        //{
+        //    Alert.Success("Album updated");
+        //}
+        //else
+        //{
+        //    Alert.Error("Error updating album");
+        //}
     }
 }

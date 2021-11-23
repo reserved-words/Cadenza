@@ -9,14 +9,18 @@ public static class Routes
         var playlists = app.Services.GetService<IPlaylistService>();
         var updater = app.Services.GetService<IUpdateService>();
 
-        app.MapGet("/Library/AlbumArtists", () => library.GetAlbumArtists());
-        app.MapGet("/Library/Artist/{id}", (string id) => library.GetAlbumArtist(id));
-        app.MapGet("/Library/TrackSummary/{id}", (string id) => library.GetTrackSummary(id));
-        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
+        app.MapGet("/Library/Artists", () => library.GetArtists());
+        app.MapGet("/Library/Albums", () => library.GetAlbums());
+        app.MapGet("/Library/Tracks", () => library.GetTracks());
+        app.MapGet("/Library/AlbumTrackLinks", () => library.GetAlbumTrackLinks());
+
+        //app.MapGet("/Library/Artist/{id}", (string id) => library.GetAlbumArtist(id));
+        //app.MapGet("/Library/TrackSummary/{id}", (string id) => library.GetTrackSummary(id));
+        //app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
 
         app.MapGet("/Play/Track/{id}", async (string id) => (await play.GetTrackPlayPath(id)).Stream());
 
-        app.MapGet("/Playlist/All", () => playlists.All());
+        //app.MapGet("/Playlist/All", () => playlists.All());
 
         app.MapPost("/Update/Album", (AlbumUpdate update) => updater.UpdateAlbum(update));
         app.MapPost("/Update/Artist", (ArtistUpdate update) => updater.UpdateArtist(update));

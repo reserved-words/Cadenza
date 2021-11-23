@@ -1,9 +1,11 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Database;
+
+namespace Cadenza;
 
 public class LibraryTabBase : ComponentBase
 {
     [Inject]
-    public IViewModelLibrary Library { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public IAppConsumer App { get; set; }
@@ -14,27 +16,29 @@ public class LibraryTabBase : ComponentBase
     [Parameter]
     public Func<PlaylistDefinition, Task> OnPlay { get; set; }
 
-    [Parameter]
-    public Func<List<LibrarySource>, Task> OnSourcesUpdated { get; set; }
-
     public Grouping? SelectedGrouping { get; set; }
 
     public List<Grouping?> Groupings => GetGroupings();
 
     public bool Loading => Artists == null || !Artists.Any();
 
-    public List<Artist> Artists { get; set; }
+    public List<LibraryArtist> Artists { get; set; }
 
-    public Artist SelectedArtist { get; set; }
+    public LibraryArtist SelectedArtist { get; set; }
 
     public string SelectedArtistId { get; set; }
 
-    public List<LibrarySource> EnabledSources { get; set; } = new List<LibrarySource>();
-
     protected override async Task OnInitializedAsync()
     {
-        Library.ArtistUpdated += OnArtistUpdated;
+        App.LibraryUpdated += App_LibraryUpdated;
 
+        // Library.ArtistUpdated += OnArtistUpdated;
+
+        // await Update();
+    }
+
+    private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)
+    {
         await Update();
     }
 
@@ -42,7 +46,6 @@ public class LibraryTabBase : ComponentBase
     {
         var artist = Artists.SingleOrDefault(a => a.Id == e.Update.Id);
         artist.Grouping = e.Update.Grouping;
-        artist.Genre = e.Update.Genre;
     }
 
     private List<Grouping?> GetGroupings()
@@ -56,12 +59,12 @@ public class LibraryTabBase : ComponentBase
     {
         var currentlySelected = SelectedArtistId;
 
-        EnabledSources = await Library.GetEnabledSources();
-
         SelectedArtist = null;
         SelectedArtistId = null;
 
-        Artists = await Library.GetAlbumArtists();
+        Artists = await Repository.GetAlbumArtists();
+
+        StateHasChanged();
 
         if (Artists != null && currentlySelected != null)
         {
@@ -72,7 +75,7 @@ public class LibraryTabBase : ComponentBase
         }
     }
 
-    protected void SelectArtist(Artist artist)
+    protected void SelectArtist(LibraryArtist artist)
     {
         SelectedArtist = artist;
         SelectedArtistId = artist?.Id;
@@ -84,25 +87,9 @@ public class LibraryTabBase : ComponentBase
         await OnPlay(playlist);
     }
 
-    public async Task OnSetSource(LibrarySource source, bool enable)
-    {
-        if (enable)
-        {
-            EnabledSources.Add(source);
-        }
-        else
-        {
-            EnabledSources.Remove(source);
-        }
-
-        await OnSourcesUpdated(EnabledSources);
-        await Update();
-        StateHasChanged();
-    }
-
     public string SearchText { get; set; }
 
-    public bool FilterFunc(Artist element)
+    public bool FilterFunc(LibraryArtist element)
     {
         return (SelectedGrouping == null || element.Grouping == SelectedGrouping)
             && (string.IsNullOrEmpty(SearchText) || element.Name.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase));

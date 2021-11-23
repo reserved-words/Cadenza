@@ -1,0 +1,13 @@
+﻿@inherits StartupSyncDialogBase
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo=@Typo.body1>@ProgressMessage</MudText>
+        <MudProgressLinear Indeterminate="@(SyncState == SyncState.Running || SyncState == SyncState.Cancelling)" Value="@(SyncState == SyncState.Completed ? 100 : 0)" Color="@Color.Primary" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Disabled="@(SyncState != SyncState.Cancelled)" Color="@Color.Primary" OnClick="@StartSync">Sync</MudButton>
+        <MudButton Disabled="@(SyncState != SyncState.Running)" Color="@Color.Error" OnClick="@OnCancel">Cancel</MudButton>
+        <MudButton Disabled="@(SyncState == SyncState.Running || SyncState == SyncState.Cancelling)" Color="@Color.Success" OnClick="@OnClose">Close</MudButton>
+    </DialogActions>
+</MudDialog>

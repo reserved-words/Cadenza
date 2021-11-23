@@ -1,3 +1,5 @@
+using Cadenza.Database;
+using IndexedDB.Blazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 
@@ -29,6 +31,14 @@ public class Program
             .AddSingletons();
 
         builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>();
+
+        builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
+        builder.Services.AddTransient<IMainRepository, MainRepository>();
+        builder.Services.AddTransient<IArtistRepository, ArtistRepository>();
+        builder.Services.AddTransient<ITrackRepository, TrackRepository>();
+        builder.Services.AddTransient<IPlayTrackRepository, PlayTrackRepository>();
+
+        builder.Services.AddTransient<IStartupSyncService, StartupSyncService>();
 
         var settingsPath = Environment.GetEnvironmentVariable("SETTINGS_PATH")
             ?? "appsettings.json";

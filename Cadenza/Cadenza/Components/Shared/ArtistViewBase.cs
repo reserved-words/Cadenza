@@ -1,9 +1,11 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Database;
+
+namespace Cadenza;
 
 public class ArtistViewBase : ComponentBase
 {
     [Parameter]
-    public ArtistInfo Model { get; set; }
+    public LibraryArtistDetails Model { get; set; }
 
     [Parameter]
     public List<LibrarySource> Sources { get; set; }

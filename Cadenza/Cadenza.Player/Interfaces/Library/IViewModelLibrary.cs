@@ -6,11 +6,11 @@ public interface IViewModelLibrary
     event ArtistUpdatedEventHandler ArtistUpdated;
     event TrackUpdatedEventHandler TrackUpdated;
 
-    Task<List<LibrarySource>> GetEnabledSources();
-    Task<List<Artist>> GetAlbumArtists();
+    //Task<List<LibrarySource>> GetEnabledSources();
+    //Task<List<Artist>> GetAlbumArtists();
     Task<ArtistViewModel> GetArtist(string artistId);
     Task<TrackSummary> GetTrackSummary(LibrarySource source, string id);
-    Task<List<PlaylistTrackViewModel>> GetAllTracks();
+    //Task<List<PlaylistTrackViewModel>> GetAllTracks();
     Task<TrackFull> GetTrack(LibrarySource source, string id);
     Task<List<PlaylistTrackViewModel>> GetPlaylistTracks(string name);
 }

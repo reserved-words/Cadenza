@@ -44,6 +44,8 @@ public class SpotifyOverridesService : IOverridesService
 
     public async Task<List<MetaDataUpdate>> GetOverrides()
     {
+        return new List<MetaDataUpdate>();
+
         var response = await _httpClient.Get(GetOverridesUrl);
         if (!response.IsSuccessStatusCode)
             return new List<MetaDataUpdate>();

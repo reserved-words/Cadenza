@@ -1,20 +1,14 @@
-﻿using Cadenza.Player;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public class IndexBase : ComponentBase
 {
     [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Inject]
     public IAppController App { get; set; }
 
-    public bool Loading { get; private set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Loading = true;
-        await App.Initialise();
-        Loading = false;
-    }
+    public bool ClientSideStartUpDone => NavigationManager.Uri.Contains("/player");
 
     public async Task OnPlay(PlaylistDefinition playlistDefinition)
     {

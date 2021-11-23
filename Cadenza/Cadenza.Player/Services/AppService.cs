@@ -1,4 +1,5 @@
-﻿namespace Cadenza.Player;
+﻿
+namespace Cadenza.Player;
 
 public class AppService : IAppConsumer, IAppController
 {
@@ -18,6 +19,7 @@ public class AppService : IAppConsumer, IAppController
     public event TrackEventHandler TrackResumed;
     public event TrackEventHandler TrackFinished;
     public event PlaylistEventHandler PlaylistUpdated;
+    public event LibraryEventHandler LibraryUpdated;
 
     public IPlaylist CurrentPlaylist { get; private set; }
 
@@ -27,6 +29,8 @@ public class AppService : IAppConsumer, IAppController
         await _storeSetter.SetValue(StoreKey.CurrentTrackId, null);
 
         _trackFinishedConsumer.TrackFinished += OnTrackFinished;
+
+        LibraryUpdated?.Invoke(this, new LibraryEventArgs());
     }
 
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)

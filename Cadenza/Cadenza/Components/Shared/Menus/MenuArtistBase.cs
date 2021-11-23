@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Database;
+
+namespace Cadenza;
 
 public class MenuArtistBase : ComponentBase
 {
@@ -21,26 +23,26 @@ public class MenuArtistBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public ArtistInfo Artist { get; set; }
+    public LibraryArtistDetails Artist { get; set; }
 
     public async Task OnEdit()
     {
-        var artistUpdate = new ArtistUpdate(Artist);
+        //var artistUpdate = new ArtistUpdate(Artist);
 
-        var (saved, data) = await DialogService.DisplayForm<EditArtist, ArtistUpdate>(artistUpdate, "Edit Artist");
+        //var (saved, data) = await DialogService.DisplayForm<EditArtist, ArtistUpdate>(artistUpdate, "Edit Artist");
 
-        if (!saved)
-            return;
+        //if (!saved)
+        //    return;
 
-        var success = await Library.UpdateArtist(data);
+        //var success = await Library.UpdateArtist(data);
 
-        if (success)
-        {
-            Alert.Success("Artist updated");
-        }
-        else
-        {
-            Alert.Error("Error updating artist");
-        }
+        //if (success)
+        //{
+        //    Alert.Success("Artist updated");
+        //}
+        //else
+        //{
+        //    Alert.Error("Error updating artist");
+        //}
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Database;
+
+namespace Cadenza;
 
 public class LibraryArtistBase : ComponentBase
 {
     [Inject]
-    public IViewModelLibrary Library { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public IPlaylistCreator PlaylistCreator { get; set; }
@@ -17,7 +19,7 @@ public class LibraryArtistBase : ComponentBase
     [Parameter]
     public Func<PlaylistDefinition, Task> OnPlay { get; set; }
 
-    public ArtistViewModel Model { get; set; }
+    public LibraryArtistDetails Model { get; set; }
 
     public string PlaceholderText { get; set; }
 
@@ -25,13 +27,13 @@ public class LibraryArtistBase : ComponentBase
     {
         PlaceholderText = "No artist selected";
 
-        Library.AlbumUpdated += OnAlbumUpdated;
-        Library.ArtistUpdated += OnArtistUpdated;
+        //Repository.AlbumUpdated += OnAlbumUpdated;
+        //Repository.ArtistUpdated += OnArtistUpdated;
     }
 
     private async Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs e)
     {
-        if (Model == null || Model.Artist.Id != e.Update.Id)
+        if (Model == null || Model.Id != e.Update.Id)
             return;
 
         await UpdateArtist();
@@ -39,7 +41,7 @@ public class LibraryArtistBase : ComponentBase
 
     private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
     {
-        if (Model == null || Model.Artist.Id != e.Update.Id)
+        if (Model == null || Model.Id != e.Update.Id)
             return;
 
         await UpdateArtist();
@@ -61,19 +63,19 @@ public class LibraryArtistBase : ComponentBase
 
     private async Task UpdateArtist()
     {
-        Model = await Library.GetArtist(ArtistId);
+        Model = await Repository.GetArtist(ArtistId);
         StateHasChanged();
     }
 
-    public async Task OnPlayAlbum(AlbumViewModel album)
+    public async Task OnPlayAlbum(LibraryAlbum album)
     {
-        var playlist = await PlaylistCreator.CreateAlbumPlaylist(album.Model);
+        var playlist = await PlaylistCreator.CreateAlbumPlaylist(album);
         await OnPlay(playlist);
     }
 
     public async Task OnPlayArtist(AlbumTrackViewModel track)
     {
-        var playlist = await PlaylistCreator.CreateArtistPlaylist(Model.Artist.Id, track.Model.Track.Id);
+        var playlist = await PlaylistCreator.CreateArtistPlaylist(Model.Id, track.Model.Track.Id);
         await OnPlay(playlist);
     }
 }

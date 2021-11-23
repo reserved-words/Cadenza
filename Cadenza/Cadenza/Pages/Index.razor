@@ -1,24 +1,27 @@
-﻿@page  "/"
-@page  "/player"
-@inherits             IndexBase
+﻿@page "/"
+@page "/player"
+@inherits IndexBase
 
-<MudLayout>
-    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <Sidebar OnPause="@OnPause"
+
+@if (ClientSideStartUpDone)
+{
+    <Cadenza.Components.Startup />
+
+    <MudLayout>
+        <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <Sidebar OnPause="@OnPause"
                  OnResume="@OnResume"
                  OnSkipNext="@OnSkipNext"
                  OnSkipPrevious="@OnSkipPrevious"
                  OnPlay="@OnPlay" />
-    </MudDrawer>
-    <MudMainContent>
-        @if (!Loading)
-        {
+        </MudDrawer>
+        <MudMainContent>
             <MudTabs Outlined="true" KeepPanelsAlive="true">
                 <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
-                    <LibraryTab OnPlay="@OnPlay" OnSourcesUpdated="@OnSourcesUpdated" />
+                    <LibraryTab OnPlay="@OnPlay" />
                 </MudTabPanel>
                 <MudTabPanel Text="Playlists" Icon="@Icons.Material.Filled.List">
-                    <PlaylistsTab />
+                    @*<PlaylistsTab />*@
                 </MudTabPanel>
                 <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote">
                     <CurrentlyPlayingTab />
@@ -30,6 +33,7 @@
                     <SystemInfoTab />
                 </MudTabPanel>
             </MudTabs>
-        }
-    </MudMainContent>
-</MudLayout>
+        </MudMainContent>
+    </MudLayout>
+}
+

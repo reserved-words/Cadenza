@@ -49,6 +49,7 @@ public static class DependencyInjection
                 sp.GetService<Id3UpdateQueuer>()
             });
 
+        services.AddTransient<IStaticSource, JsonLibrary>();
         services.AddTransient<ILibraryService, LibraryService>();
         services.AddTransient<IPlayService, PlayService>();
         services.AddTransient<IPlaylistService, PlaylistService>();

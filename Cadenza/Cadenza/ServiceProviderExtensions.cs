@@ -158,7 +158,17 @@ internal static class ServiceProviderExtensions
         return services
             .AddTransient(sp => GetPlayers(sp))
             .AddTransient(sp => sp.GetUpdaters())
-            .AddTransient(sp => GetOverriders(sp));
+            .AddTransient(sp => GetOverriders(sp))
+            .AddTransient(sp => GetSourceRepositories(sp));
+    }
+
+    private static Dictionary<LibrarySource, ISourceRepository> GetSourceRepositories(IServiceProvider sp)
+    {
+        return new Dictionary<LibrarySource, ISourceRepository>
+            {
+                { LibrarySource.Local, sp.GetService<LocalLibrary>() },
+                { LibrarySource.Spotify, sp.GetService<SpotifyLibrary>() }
+            };
     }
 
     private static Dictionary<LibrarySource, IAudioPlayer> GetPlayers(IServiceProvider sp)

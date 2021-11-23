@@ -4,11 +4,6 @@
     <WhipColumn md="3">
         <WhipRow RowHeight="@RowHeight.Fixed">
             <WhipCard>
-                <MudContainer Class="pa-0 ma-0">
-                   <LibrarySources EnabledSources="@EnabledSources"
-                                    OnSetSource="@OnSetSource" />
-                </MudContainer>
-
                 <MudSelect Label="Grouping"
                            Class="mt-2"
                            Dense="true"
@@ -38,9 +33,9 @@
                 else
                 {
                     <WhipTable Items="@Artists"
-                               T="@Artist"
+                               T="@Database.LibraryArtist"
                                SelectedItem="@SelectedArtist"
-                               Filter="new Func<Artist, bool>(FilterFunc)"
+                               Filter="new Func<Database.LibraryArtist, bool>(FilterFunc)"
                                OnRowClick="@((args) => SelectArtist(args.Item))"
                                OnRowDoubleClick="@((a) => OnPlayArtist(a.Id))">
                         <RowTemplate>

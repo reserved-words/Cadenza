@@ -4,18 +4,18 @@
     <MudGrid Spacing="1">
         <MudItem xs="3">
             <MudCard Elevation="1">
-                <img class="artwork" src="@Model.Model.Album.ImageUrl" @ondblclick="@(() => OnPlayAlbum(Model))" />
+                <img class="artwork" src="@Model.Artwork" @ondblclick="@(() => OnPlayAlbum(Model))" />
                 <MudCardContent Class="pa-2">
                     <MudContainer Class="d-flex pa-0 ma-0">
                         <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-                            <MudText Typo="Typo.body1">@Model.Model.Album.Title</MudText>
-                            <MudText Typo="Typo.body2">@Model.Model.Album.ReleaseType.GetDisplayName()</MudText>
-                            <MudText Typo="Typo.body2">@Model.Model.Album.Year</MudText>
+                            <MudText Typo="Typo.body1">@Model.Title</MudText>
+                            <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+                            <MudText Typo="Typo.body2">@Model.Year</MudText>
                         </MudPaper>
                         <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 d-flex flex-column align-self-stretch align-content-space-between">
-                            <MudIcon Icon="@Model.Model.Album.Source.GetIcon()" />
+                            <MudIcon Icon="@Model.Source.GetIcon()" />
                             <MenuAlbum Class="mt-auto"
-                                       Album="@Model.Model.Album"
+                                       Album="@Model"
                                        Size="@Size.Medium"/>
                         </MudPaper>
                     </MudContainer>
@@ -25,7 +25,7 @@
         </MudItem>
 
         <MudItem xs="9">
-            <WhipSplitTable T="@AlbumTrackViewModel" 
+           @* <WhipSplitTable T="@AlbumTrackViewModel" 
                             Lists="@Model.Tracks"
                             OnRowDoubleClick="@((t) => OnPlayTrack(t))">
                 <RowTemplate>
@@ -43,7 +43,7 @@
                                    Size="Size.Small" />
                     </MudTd>
                 </RowTemplate>
-            </WhipSplitTable>
+            </WhipSplitTable>*@
         </MudItem>
     </MudGrid>
 </MudContainer>
