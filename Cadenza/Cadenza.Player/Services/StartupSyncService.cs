@@ -36,15 +36,15 @@ public class StartupSyncService : IStartupSyncService
                 Update($"Copying albums from {source.Key} library to repository", cancellationToken);
                 await _repository.AddAlbums(albums);
 
-                Update($"Fetching tracks from {source.Key} library", cancellationToken);
-                var tracks = await source.Value.GetTracks();
-                Update($"Copying tracks from {source.Key} library to repository", cancellationToken);
-                await _repository.AddTracks(tracks);
+                //Update($"Fetching tracks from {source.Key} library", cancellationToken);
+                //var tracks = await source.Value.GetTracks();
+                //Update($"Copying tracks from {source.Key} library to repository", cancellationToken);
+                //await _repository.AddTracks(tracks);
 
-                Update($"Fetching album track links from {source.Key} library", cancellationToken);
-                var albumTrackLinks = await source.Value.GetAlbumTrackLinks();
-                Update($"Copying album track links from {source.Key} library to repository", cancellationToken);
-                await _repository.AddAlbumTrackLinks(albumTrackLinks);
+                //Update($"Fetching album track links from {source.Key} library", cancellationToken);
+                //var albumTrackLinks = await source.Value.GetAlbumTrackLinks();
+                //Update($"Copying album track links from {source.Key} library to repository", cancellationToken);
+                //await _repository.AddAlbumTrackLinks(albumTrackLinks);
             }
 
             ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync complete", Completed = true });

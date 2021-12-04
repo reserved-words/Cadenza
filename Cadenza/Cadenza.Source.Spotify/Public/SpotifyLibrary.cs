@@ -2,19 +2,40 @@
 
 public class SpotifyLibrary : SourceLibrary, ISourceRepository
 {
-    public SpotifyLibrary(ILibrary libraryConsumer)
-        : base(libraryConsumer, LibrarySource.Spotify)
+    private readonly ILibrary _library;
+
+    public SpotifyLibrary(ILibrary library)
+        :base(library, LibrarySource.Spotify)
     {
+        _library = library;
     }
 
     public async Task<ICollection<ArtistInfo>> GetArtists()
     {
-        return new List<ArtistInfo>();
+        var artists = await _library.GetAlbumArtists();
+        var result = new List<ArtistInfo>();
+        foreach (var artist in artists)
+        {
+            var artistInfo = await _library.GetAlbumArtist(artist.Id);
+            // this includes albums, don't need them at this point
+            result.Add(artistInfo.Artist);
+        }
+        return result;
     }
 
     public async Task<ICollection<AlbumInfo>> GetAlbums()
     {
-        return new List<AlbumInfo>();
+        var artists = await _library.GetAlbumArtists();
+        var result = new List<AlbumInfo>();
+        foreach (var artist in artists)
+        {
+            var artistInfo = await _library.GetAlbumArtist(artist.Id);
+            foreach (var album in artistInfo.Albums)
+            {
+                result.Add(album.Album);
+            }
+        }
+        return result;
     }
 
     public async Task<ICollection<TrackInfo>> GetTracks()
