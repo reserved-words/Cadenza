@@ -63,7 +63,14 @@ public class LocalLibrary : ILibrary, ISourceRepository
     public async Task<ICollection<AlbumInfo>> GetAlbums()
     {
         var response = await _httpClient.Get(_apiConfig.AlbumsUrl);
-        return await response.Content.ReadFromJsonAsync<List<AlbumInfo>>();
+        var albums = await response.Content.ReadFromJsonAsync<List<AlbumInfo>>();
+
+        foreach (var album in albums)
+        {
+            album.ImageUrl = $"{_apiConfig.BaseUrl}{album.ImageUrl}";
+        }
+
+        return albums;
     }
 
     public async Task<ICollection<TrackInfo>> GetTracks()

@@ -28,8 +28,18 @@ public class ImageSrcGenerator : IImageSrcGenerator
 
     private string GetImageSrc(Track track)
     {
-        var trackPath = _base64Converter.FromBase64(track.Id);
-        var artworkBytes = _id3TagsService.GetArtworkBytes(trackPath);
-        return _base64Converter.ToImageSrc(artworkBytes);
+        return GetImageSrc(track.Id);
+    }
+
+    public string GetImageSrc(string trackId)
+    {
+        var artwork = GetArtwork(trackId);
+        return _base64Converter.ToImageSrc(artwork.Bytes);
+    }
+
+    public (byte[] Bytes, string Type) GetArtwork(string id)
+    {
+        var trackPath = _base64Converter.FromBase64(id);
+        return _id3TagsService.GetArtwork(trackPath);
     }
 }

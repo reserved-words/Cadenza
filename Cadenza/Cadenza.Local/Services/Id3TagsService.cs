@@ -84,14 +84,19 @@ public class Id3TagsService : IId3TagsService
             : GetValue(firstArtist);
     }
 
-    public byte[] GetArtworkBytes(string filepath)
+    public (byte[] Bytes, string Type) GetArtwork(string filepath)
     {
         using (TagLib.File f = TagLib.File.Create(filepath))
         {
             TagLib.Id3v2.Tag.DefaultVersion = 3;
             TagLib.Id3v2.Tag.ForceDefaultVersion = true;
 
-            return f.Tag.Pictures.Count() > 0 ? f.Tag.Pictures.First().Data.Data : null;
+            var image = f.Tag.Pictures.FirstOrDefault();
+
+            if (image == null)
+                return (null, null);
+
+            return (image.Data.Data, image.MimeType);
         }
     }
 

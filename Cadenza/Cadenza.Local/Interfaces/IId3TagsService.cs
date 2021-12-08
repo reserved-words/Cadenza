@@ -6,6 +6,5 @@ public interface IId3TagsService
 
     void SaveId3Data(string filepath, Id3Data data);
 
-    byte[] GetArtworkBytes(string filepath);
-
+    (byte[] Bytes, string Type) GetArtwork(string filepath);
 }

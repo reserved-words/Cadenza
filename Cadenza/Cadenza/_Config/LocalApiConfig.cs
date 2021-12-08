@@ -4,8 +4,16 @@ namespace Cadenza._Config;
 
 public class LocalApiConfig : ILocalApiConfig
 {
-    private const string BaseUrl = "http://localhost:19213"; // put in app settings
+    private readonly IConfiguration _config;
+
+    public LocalApiConfig(IConfiguration config)
+    {
+        _config = config;
+    }
+
     private const string Placeholder = "{0}";
+
+    public string BaseUrl => _config.GetSection("LocalApi").GetValue<string>("BaseUrl");
 
     public string AlbumArtistsUrl => $"{BaseUrl}/Library/AlbumArtists";
     public string AlbumsUrl => $"{BaseUrl}/Library/Albums";

@@ -62,9 +62,16 @@ public class LibraryService : ILibraryService
         return library.Artists;
     }
 
-    public async Task<ICollection<AlbumInfo>> GetAlbums()
+    public async Task<ICollection<AlbumInfo>> GetAlbums(string artworkUrlFormat)
     {
         var library = await _jsonLibrary.GetStaticLibrary();
+
+        foreach (var album in library.Albums)
+        {
+            var firstTrack = library.AlbumTrackLinks.First(a => a.AlbumId == album.Id);
+            album.ImageUrl = string.Format(artworkUrlFormat, firstTrack.TrackId);
+        }
+
         return library.Albums;
     }
 
@@ -78,5 +85,10 @@ public class LibraryService : ILibraryService
     {
         var library = await _jsonLibrary.GetStaticLibrary();
         return library.AlbumTrackLinks;
+    }
+
+    public async Task<(byte[] Bytes, string Type)> GetArtwork(string id)
+    {
+        return _imageSrcGenerator.GetArtwork(id);
     }
 }

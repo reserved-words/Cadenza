@@ -2,6 +2,7 @@
 
 public interface ILocalApiConfig
 {
+    string BaseUrl { get; }
     string AlbumArtistsUrl { get; }
     string AlbumsUrl { get; }
     string AlbumTrackLinksUrl { get; }
