@@ -2,6 +2,6 @@
 
 public interface IFavouritesController
 {
-    Task Favourite(TrackSummary track);
-    Task Unfavourite(TrackSummary track);
+    Task Favourite(PlayingTrack track);
+    Task Unfavourite(PlayingTrack track);
 }

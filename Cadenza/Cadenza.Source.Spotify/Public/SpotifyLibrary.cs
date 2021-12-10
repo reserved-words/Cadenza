@@ -38,14 +38,30 @@ public class SpotifyLibrary : SourceLibrary, ISourceRepository
         return result;
     }
 
-    public async Task<ICollection<TrackInfo>> GetTracks()
+    public async Task<TrackInfo> GetTrack(string id)
     {
-        return new List<TrackInfo>();
+        return (await _library.GetTrack(id)).Track;
     }
 
-    public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()
+    public async Task<List<string>> GetAlbumTracks(string artistId, string albumId)
     {
-        return new List<AlbumTrackLink>();
+        var artist = await _library.GetAlbumArtist(artistId);
+
+        return artist.Albums
+            .Single(a => a.Album.Id == albumId)
+            .AlbumTracks
+            .Select(t => t.Track.Id)
+            .ToList();
+    }
+
+    public async Task<List<string>> GetArtistTracks(string id)
+    {
+        var tracks = await _library.GetAllTracks();
+
+        return tracks
+            .Where(t => t.ArtistId == id)
+            .Select(t => t.Id)
+            .ToList();
     }
 }
 

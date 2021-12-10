@@ -37,7 +37,7 @@
                                SelectedItem="@SelectedArtist"
                                Filter="new Func<Database.LibraryArtist, bool>(FilterFunc)"
                                OnRowClick="@((args) => SelectArtist(args.Item))"
-                               OnRowDoubleClick="@((a) => OnPlayArtist(a.Id))">
+                               OnRowDoubleClick="@((a) => OnPlayArtist(a))">
                         <RowTemplate>
                             <MudTd>
                                 <MudText Typo="@Typo.body1">@context.Name</MudText>

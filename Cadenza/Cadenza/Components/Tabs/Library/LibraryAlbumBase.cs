@@ -8,8 +8,5 @@ public class LibraryAlbumBase : ComponentBase
     public LibraryAlbum Model { get; set; }
 
     [Parameter]
-    public Func<AlbumTrackViewModel, Task> OnPlayTrack { get; set; }
-
-    [Parameter]
     public Func<LibraryAlbum, Task> OnPlayAlbum { get; set; }
 }

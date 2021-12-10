@@ -1,7 +1,13 @@
-﻿namespace Cadenza.Database;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Database;
 
 public interface ITrackRepository
 {
-    Task<TrackSummary> GetSummary(string id);
-    Task<TrackDetail> GetDetail(string id);
+    Task<PlayingTrack> GetSummary(LibrarySource source, string id);
+}
+
+public interface ITrackRepositoryUpdater : ITrackRepository
+{
+    Task AddTrack(TrackInfo track);
 }

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Database;
+
+namespace Cadenza.Player;
 
 public interface IViewModelLibrary
 {
@@ -9,8 +11,8 @@ public interface IViewModelLibrary
     //Task<List<LibrarySource>> GetEnabledSources();
     //Task<List<Artist>> GetAlbumArtists();
     Task<ArtistViewModel> GetArtist(string artistId);
-    Task<TrackSummary> GetTrackSummary(LibrarySource source, string id);
+   // Task<TrackSummary> GetTrackSummary(LibrarySource source, string id);
     //Task<List<PlaylistTrackViewModel>> GetAllTracks();
     Task<TrackFull> GetTrack(LibrarySource source, string id);
-    Task<List<PlaylistTrackViewModel>> GetPlaylistTracks(string name);
+    //Task<List<PlayTrack>> GetPlaylistTracks(string name);
 }

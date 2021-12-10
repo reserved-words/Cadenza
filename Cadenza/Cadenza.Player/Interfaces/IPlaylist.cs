@@ -1,13 +1,15 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Database;
+
+namespace Cadenza.Player;
 
 public interface IPlaylist
 {
     PlaylistType Type { get; }
     string Name { get; }
-    PlaylistTrackViewModel Current { get; }
-    PlaylistTrackViewModel MoveNext();
-    PlaylistTrackViewModel MovePrevious();
+    Task<PlayTrack> MoveNext();
+    Task<PlayTrack> MovePrevious();
+    PlayTrack Current { get; }
     bool CurrentIsFirst { get; }
     bool CurrentIsLast { get; }
-    SplitList<PlaylistTrackViewModel> Sections { get; }
+    List<PlayTrack> Tracks { get; }
 }

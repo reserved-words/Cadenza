@@ -59,12 +59,12 @@ public abstract class SourceLibrary : ILibrary
         return track;
     }
 
-    public async Task<TrackSummary> GetTrackSummary(string id)
-    {
-        var track = await _baseLibrary.GetTrackSummary(id);
-        track.Track.Source = Source;
-        track.Album.Source = Source;
-        track.Artist.AddSourceId(Source, track.Artist.Id);
-        return track;
-    }
+    //public async Task<TrackSummary> GetTrackSummary(string id)
+    //{
+    //    var track = await _baseLibrary.GetTrackSummary(id);
+    //    track.Track.Source = Source;
+    //    track.Album.Source = Source;
+    //    track.Artist.AddSourceId(Source, track.Artist.Id);
+    //    return track;
+    //}
 }

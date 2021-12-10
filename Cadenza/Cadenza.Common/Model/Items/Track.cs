@@ -10,6 +10,7 @@ public class Track
     public string Title { get; set; }
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }
+    public string AlbumId { get; set; }
 
     public TimeSpan DurationTimeSpan => TimeSpan.FromSeconds(DurationSeconds);
     public string Duration => DurationTimeSpan.ToString(DurationFormat);

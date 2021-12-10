@@ -35,8 +35,10 @@ public class Program
         builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
         builder.Services.AddTransient<IMainRepository, MainRepository>();
         builder.Services.AddTransient<IArtistRepository, ArtistRepository>();
-        builder.Services.AddTransient<ITrackRepository, TrackRepository>();
-        builder.Services.AddTransient<IPlayTrackRepository, PlayTrackRepository>();
+        builder.Services.AddTransient<ITrackRepositoryUpdater, Database.TrackRepository>();
+        builder.Services.AddTransient<ITrackRepository, Player.TrackRepository>();
+        builder.Services.AddTransient<IPlayTrackRepositoryUpdater, Database.PlayTrackRepository>();
+        builder.Services.AddTransient<IPlayTrackRepository, Player.PlayTrackRepository>();
 
         builder.Services.AddTransient<IStartupSyncService, StartupSyncService>();
 

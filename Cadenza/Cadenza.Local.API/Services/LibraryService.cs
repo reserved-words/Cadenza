@@ -35,12 +35,12 @@ public class LibraryService : ILibraryService
         return artist;
     }
 
-    public async Task<TrackSummary> GetTrackSummary(string id)
+    public async Task<TrackInfo> GetTrackSummary(string id)
     {
         id = UrlDecode(id);
-        var track = await _library.GetTrackSummary(id);
-        track.Album.ImageUrl ??= _imageSrcGenerator.GetImageSrc(track);
-        return track;
+        var track = await _library.GetTrack(id);
+        track.Track.AlbumId = track.Album.Id;
+        return track.Track;
     }
 
     public async Task<TrackFull> GetTrack(string id)
@@ -90,5 +90,25 @@ public class LibraryService : ILibraryService
     public async Task<(byte[] Bytes, string Type)> GetArtwork(string id)
     {
         return _imageSrcGenerator.GetArtwork(id);
+    }
+
+    public async Task<ICollection<string>> GetArtistTracks(string id)
+    {
+        var tracks = await GetTracks();
+
+        return tracks
+            .Where(t => t.ArtistId == id)
+            .Select(t => t.Id)
+            .ToList();
+    }    
+
+    public async Task<ICollection<string>> GetAlbumTracks(string id)
+    {
+        var albumTrackLinks = await GetAlbumTrackLinks();
+
+        return albumTrackLinks
+            .Where(a => a.AlbumId == id)
+            .Select(t => t.TrackId)
+            .ToList();
     }
 }

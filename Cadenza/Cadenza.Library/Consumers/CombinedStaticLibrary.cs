@@ -40,11 +40,11 @@ public class CombinedStaticLibrary : ILibrary
         return await _cache.GetTrack(id);
     }
 
-    public async Task<TrackSummary> GetTrackSummary(string id)
-    {
-        await PopulateStaticSources();
-        return await _cache.GetTrackSummary(id);
-    }
+    //public async Task<TrackSummary> GetTrackSummary(string id)
+    //{
+    //    await PopulateStaticSources();
+    //    return await _cache.GetTrackSummary(id);
+    //}
 
     private async Task PopulateStaticSources()
     {

@@ -15,7 +15,4 @@ public class DbTrack
     public LibrarySource Source { get; set; }
     public string Lyrics { get; set; }
     public ICollection<string> Tags { get; set; } = new List<string>();
-
-    public virtual DbArtist Artist { get; set; }
-    public virtual DbAlbum Album { get; set; }
 }

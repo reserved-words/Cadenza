@@ -15,53 +15,53 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         _api = api;
     }
 
-    public async Task RecordPlay(TrackSummary track, DateTime timestamp)
+    public async Task RecordPlay(PlayingTrack track, DateTime timestamp)
     {
         var model = await GetScrobble(track, null, timestamp);
         await _httpClient.Post(_api.Scrobble, null, model);
     }
 
-    public async Task UpdateNowPlaying(TrackSummary track, int duration)
+    public async Task UpdateNowPlaying(PlayingTrack track, int duration)
     {
         var model = await GetScrobble(track, duration, null);
         await _httpClient.Post(_api.UpdateNowPlaying, null, model);
     }
 
-    public async Task<bool> IsFavourite(TrackSummary track)
+    public async Task<bool> IsFavourite(PlayingTrack track)
     {
         var url = _api.IsFavourite;
-        url = $"{url}?artist={track.Artist.Name}";
-        url = $"{url}&title={track.Track.Title}";
+        url = $"{url}?artist={track.Artist}";
+        url = $"{url}&title={track.Title}";
         var response = await _httpClient.Get(url);
         var isFavourite = await response.Content.ReadFromJsonAsync<bool>();
         return isFavourite;
     }
 
-    public async Task Favourite(TrackSummary track)
+    public async Task Favourite(PlayingTrack track)
     {
         var model = GetTrack(track);
         await _httpClient.Post(_api.Favourite, null, model);
     }
 
-    public async Task Unfavourite(TrackSummary track)
+    public async Task Unfavourite(PlayingTrack track)
     {
         var model = GetTrack(track);
         await _httpClient.Post(_api.Unfavourite, null, model);
     }
 
-    public async Task<object> GetTrack(TrackSummary track)
+    public async Task<object> GetTrack(PlayingTrack track)
     {
         var sessionKey = await _store.GetValue(StoreKey.LastFmSessionKey);
 
         return new
         {
             SessionKey = sessionKey,
-            Artist = track.Artist.Name,
-            Title = track.Track.Title
+            Artist = track.Artist,
+            Title = track.Title
         };
     }
 
-    public async Task<object> GetScrobble(TrackSummary track, int? duration, DateTime? timestamp)
+    public async Task<object> GetScrobble(PlayingTrack track, int? duration, DateTime? timestamp)
     {
         var sessionKey = await _store.GetValue(StoreKey.LastFmSessionKey);
 
@@ -69,11 +69,11 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         {
             SessionKey = sessionKey,
             Timestamp = timestamp ?? DateTime.Now,
-            Artist = track.Artist.Name,
-            Title = track.Track.Title,
-            AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName,
-            Duration = duration ?? track.Track.DurationSeconds
+            Artist = track.Artist,
+            Title = track.Title,
+            AlbumTitle = track.AlbumTitle,
+            AlbumArtist = track.AlbumArtist,
+            Duration = duration ?? track.DurationSeconds
         };
     }
 }

@@ -41,7 +41,7 @@ public class SpotifyApiLibrary : IStaticSource
                     library.Artists.Add(trackArtistInfo);
                 }
 
-                var trackInfo = GetTrackInfo(track, trackArtistInfo);
+                var trackInfo = GetTrackInfo(track, trackArtistInfo, album.id);
                 var albumTrack = GetAlbumTrack(album.id, track);
 
                 library.Tracks.Add(trackInfo);
@@ -52,7 +52,7 @@ public class SpotifyApiLibrary : IStaticSource
         return library;
     }
 
-    private static TrackInfo GetTrackInfo(SpotifyApiAlbumTracksItem track, ArtistInfo trackArtist)
+    private static TrackInfo GetTrackInfo(SpotifyApiAlbumTracksItem track, ArtistInfo trackArtist, string albumId)
     {
         return new TrackInfo
         {
@@ -60,7 +60,8 @@ public class SpotifyApiLibrary : IStaticSource
             Title = track.name,
             DurationSeconds = track.duration_ms / 1000,
             ArtistId = trackArtist.Id,
-            ArtistName = trackArtist.Name
+            ArtistName = trackArtist.Name,
+            AlbumId = albumId
         };
     }
 

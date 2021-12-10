@@ -4,7 +4,7 @@ namespace Cadenza.Player;
 
 public interface IPlaylistCreator
 {
-    Task<PlaylistDefinition> CreateArtistPlaylist(string artist, string first = null);
+    Task<PlaylistDefinition> CreateArtistPlaylist(LibraryArtist artist);
 
     Task<PlaylistDefinition> CreateAlbumPlaylist(LibraryAlbum album);
 

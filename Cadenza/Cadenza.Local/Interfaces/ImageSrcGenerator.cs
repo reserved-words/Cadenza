@@ -21,10 +21,10 @@ public class ImageSrcGenerator : IImageSrcGenerator
         return GetImageSrc(track.Track);
     }
 
-    public string GetImageSrc(TrackSummary track)
-    {
-        return GetImageSrc(track.Track);
-    }
+    //public string GetImageSrc(TrackSummary track)
+    //{
+    //    return GetImageSrc(track.Track);
+    //}
 
     private string GetImageSrc(Track track)
     {

@@ -18,10 +18,10 @@ public class TimingPlayer : IPlayer
         return secondsPlayed;
     }
 
-    public async Task Play(PlaylistTrackViewModel track)
+    public async Task Play(PlayingTrack track)
     {
         await _player.Play(track);
-        _timer.OnSetTrack(GetTotalSeconds(track));
+        _timer.OnSetTrack(track?.DurationSeconds ?? 0);
         _timer.OnPlay();
     }
 
@@ -37,12 +37,5 @@ public class TimingPlayer : IPlayer
         var secondsPlayed = await _player.Stop();
         _timer.OnStop(secondsPlayed);
         return secondsPlayed;
-    }
-
-    private static int GetTotalSeconds(PlaylistTrackViewModel track)
-    {
-        return track == null
-            ? 0
-            : track.Model.DurationSeconds;
     }
 }

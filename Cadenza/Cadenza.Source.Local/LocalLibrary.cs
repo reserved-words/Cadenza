@@ -29,13 +29,6 @@ public class LocalLibrary : ILibrary, ISourceRepository
         return artist;
     }
 
-    public async Task<TrackSummary> GetTrackSummary(string id)
-    {
-        var url = Url(_apiConfig.TrackSummaryUrl, id);
-        var response = await _httpClient.Get(url);
-        return await response.Content.ReadFromJsonAsync<TrackSummary>();
-    }
-
     public async Task<TrackFull> GetTrack(string id)
     {
         var url = Url(_apiConfig.TrackUrl, id);
@@ -73,15 +66,29 @@ public class LocalLibrary : ILibrary, ISourceRepository
         return albums;
     }
 
-    public async Task<ICollection<TrackInfo>> GetTracks()
+    async Task<TrackInfo> ISourceRepository.GetTrack(string id)
     {
-        var response = await _httpClient.Get(_apiConfig.TracksUrl);
-        return await response.Content.ReadFromJsonAsync<List<TrackInfo>>();
+        var response = await _httpClient.Get(Url(_apiConfig.TrackUrl, id));
+        return await response.Content.ReadFromJsonAsync<TrackInfo>();
     }
 
     public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()
     {
         var response = await _httpClient.Get(_apiConfig.AlbumTrackLinksUrl);
         return await response.Content.ReadFromJsonAsync<List<AlbumTrackLink>>();
+    }
+
+    public async Task<List<string>> GetArtistTracks(string id)
+    {
+        var response = await _httpClient.Get(Url(_apiConfig.ArtistTracksUrl, id));
+        var tracks = await response.Content.ReadFromJsonAsync<string[]>();
+        return tracks.ToList();
+    }
+
+    public async Task<List<string>> GetAlbumTracks(string artistId, string albumId)
+    {
+        var response = await _httpClient.Get(Url(_apiConfig.AlbumTracksUrl, albumId));
+        var tracks = await response.Content.ReadFromJsonAsync<string[]>();
+        return tracks.ToList();
     }
 }

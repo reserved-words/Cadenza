@@ -3,6 +3,9 @@
 public interface ILocalApiConfig
 {
     string BaseUrl { get; }
+    string AlbumTracksUrl { get; }
+    string ArtistTracksUrl { get; }
+
     string AlbumArtistsUrl { get; }
     string AlbumsUrl { get; }
     string AlbumTrackLinksUrl { get; }
@@ -10,7 +13,6 @@ public interface ILocalApiConfig
     string ArtistsUrl { get; }
     string PlaylistAllUrl { get; }
     string QueuedUpdatesUrl { get; }
-    string TrackSummaryUrl { get; }
     string TrackUrl { get; }
     string TracksUrl { get; }
     string TrackUriFormat { get; }

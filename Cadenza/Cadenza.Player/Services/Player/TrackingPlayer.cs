@@ -6,7 +6,7 @@ public class TrackingPlayer : IPlayer
     private readonly IPlayTracker _tracker;
     private readonly IViewModelLibrary _library;
 
-    private TrackSummary _currentTrack;
+    private PlayingTrack _currentTrack;
 
     public TrackingPlayer(IPlayer player, IPlayTracker tracker, IViewModelLibrary library)
     {
@@ -15,7 +15,7 @@ public class TrackingPlayer : IPlayer
         _library = library;
     }
 
-    public async Task Play(PlaylistTrackViewModel playlistTrack)
+    public async Task Play(PlayingTrack playlistTrack)
     {
         await _player.Play(playlistTrack);
         await UpdateTrackDetails(playlistTrack);
@@ -43,9 +43,9 @@ public class TrackingPlayer : IPlayer
         return secondsPlayed;
     }
 
-    private async Task UpdateTrackDetails(PlaylistTrackViewModel playlistTrack)
+    private async Task UpdateTrackDetails(PlayingTrack playlistTrack)
     {
-        _currentTrack = await _library.GetTrackSummary(playlistTrack.Model.Source, playlistTrack.Model.Id);
+        _currentTrack = playlistTrack;
     }
 
     private async Task RecordPlay(int secondsPlayed)
@@ -53,10 +53,10 @@ public class TrackingPlayer : IPlayer
         if (_currentTrack == null)
             return;
 
-        if (_currentTrack.Track.Source == LibrarySource.Spotify)
+        if (_currentTrack.Source == LibrarySource.Spotify)
             return; // Need a better way to do this - source profile
 
-        var percentagePlayed = GetPercentagePlayed(secondsPlayed, _currentTrack.Track.DurationSeconds);
+        var percentagePlayed = GetPercentagePlayed(secondsPlayed, _currentTrack.DurationSeconds);
 
         if (secondsPlayed < 4 * 60 && percentagePlayed < 50)
             return;
@@ -69,7 +69,7 @@ public class TrackingPlayer : IPlayer
         if (_currentTrack == null)
             return;
 
-        if (_currentTrack.Track.Source == LibrarySource.Spotify)
+        if (_currentTrack.Source == LibrarySource.Spotify)
             return; // Need a better way to do this - source profile
 
         var secondsRemaining = GetSecondsRemaining(secondsPlayed);
@@ -81,7 +81,7 @@ public class TrackingPlayer : IPlayer
         if (!secondsPlayed.HasValue)
             return 1;
 
-        var totalSeconds = _currentTrack.Track.DurationSeconds;
+        var totalSeconds = _currentTrack.DurationSeconds;
 
         return totalSeconds - secondsPlayed.Value;
     }

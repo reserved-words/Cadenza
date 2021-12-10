@@ -3,7 +3,7 @@ using IndexedDB.Blazor;
 
 namespace Cadenza.Database;
 
-public class TrackRepository : ITrackRepository
+public class TrackRepository : ITrackRepositoryUpdater
 {
     private readonly IIndexedDbFactory _dbFactory;
 
@@ -12,83 +12,51 @@ public class TrackRepository : ITrackRepository
         _dbFactory = dbFactory;
     }
 
-    public async Task<bool> IsPopulated()
+    public async Task AddTrack(TrackInfo track)
     {
         using (var db = await _dbFactory.Create<LibraryDb>())
         {
-            var info = db.Info.SingleOrDefault();
-            if (info == null)
-            {
-                info = new DbInfo();
-                db.Info.Add(info);
-                await db.SaveChanges();
-            }
-            return info.AreTracksPopulated;
-        }
-    }
-
-    public async Task AddTracks(ICollection<Track> tracks)
-    {
-        using (var db = await _dbFactory.Create<LibraryDb>())
-        {
-            foreach (var track in tracks)
-            {
-                //db.Tracks.Add(new DbTrack
-                //{
-                //    Id = track.Id,
-                //    Title = track.Title,
-                //    ArtistName = track.Artist.Name,
-                //    ArtistId = track.ArtistId,
-                //    DurationSeconds = track.DurationSeconds,
-                //    Source = track.Source
-                //});
-
-            }
-
-            await db.SaveChanges();
-
-
-
-            //using (var db = await _dbFactory.Create<LibraryDb>())
-            //{
-            //    var firstPerson = db.People.First();
-            //    db.People.Remove(firstPerson);
-            //    await db.SaveChanges();
-            //}
-
-            //using (var db = await _dbFactory.Create<LibraryDb>())
-            //{
-            //    var personWithId1 = db.People.Single(x => x.Id == 1);
-            //    personWithId1.FirstName = "This is 100% a first name";
-            //    await db.SaveChanges();
-            //}
-        }
-    }
-
-    public async Task<List<Track>> GetTracks()
-    {
-        using (var db = await _dbFactory.Create<LibraryDb>())
-        {
-            return db.Tracks.Select(track => new Track
+            db.Tracks.Add(new DbTrack
             {
                 Id = track.Id,
+                Source = track.Source,
                 Title = track.Title,
-//                ArtistName = track.ArtistName,
                 ArtistId = track.ArtistId,
+                AlbumId = track.AlbumId,
                 DurationSeconds = track.DurationSeconds,
-                Source = track.Source
-            })
-            .ToList();
+                Year = track.Year,
+                Lyrics = track.Lyrics,
+                // Tags
+                // TrackNo
+                // DiscNo
+            });
+
+            await db.SaveChanges();
         }
     }
 
-    public Task<TrackSummary> GetSummary(string id)
+    public async Task<PlayingTrack> GetSummary(LibrarySource source, string id)
     {
-        throw new NotImplementedException();
-    }
+        using (var db = await _dbFactory.Create<LibraryDb>())
+        {
+            var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
 
-    public Task<TrackDetail> GetDetail(string id)
-    {
-        throw new NotImplementedException();
+            if (dbTrack == null)
+                return null;
+
+            var dbAlbum = db.Albums.Single(a => a.Id == dbTrack.AlbumId);
+            var dbArtist = db.Artists.Single(a => a.Id == dbTrack.ArtistId);
+
+            return new PlayingTrack
+            {
+                Id = dbTrack.Id,
+                Source = dbAlbum.Source,
+                DurationSeconds = dbTrack.DurationSeconds,
+                Title = dbTrack.Title,
+                Artist = dbArtist.Name,
+                AlbumTitle = dbAlbum.Title,
+                AlbumArtist = dbAlbum.ArtistName
+            };
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Database;
+
+namespace Cadenza.Player;
 
 public class NewLibrary : IViewModelLibrary, ILibraryController
 {
@@ -26,12 +28,12 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
             .ToList();
     }
 
-    public async Task<List<PlaylistTrackViewModel>> GetAllTracks()
-    {
-        var enabledSources = await GetEnabledSources();
-        var tracks = await _library.GetAllTracks(enabledSources);
-        return tracks.Select(t => new PlaylistTrackViewModel(t)).ToList();
-    }
+    //public async Task<List<PlayTrack>> GetAllTracks()
+    //{
+    //    var enabledSources = await GetEnabledSources();
+    //    var tracks = await _library.GetAllTracks(enabledSources);
+    //    return tracks.Select(t => new PlaylistTrackViewModel(t)).ToList();
+    //}
 
     public async Task<ArtistViewModel> GetArtist(string artistId)
     {
@@ -61,10 +63,10 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
         };
     }
 
-    public async Task<TrackSummary> GetTrackSummary(LibrarySource source, string id)
-    {
-        return await _library.GetTrackSummary(id, source);
-    }
+    //public async Task<TrackSummary> GetTrackSummary(LibrarySource source, string id)
+    //{
+    //    return await _library.GetTrackSummary(id, source);
+    //}
 
     public async Task<List<LibrarySource>> GetEnabledSources()
     {
@@ -72,10 +74,10 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
         return libraries.Select(s => Enum.Parse<LibrarySource>(s)).ToList();
     }
 
-    public async Task<List<PlaylistTrackViewModel>> GetPlaylistTracks(string name)
-    {
-        return new List<PlaylistTrackViewModel>();
-    }
+    //public async Task<List<PlaylistTrackViewModel>> GetPlaylistTracks(string name)
+    //{
+    //    return new List<PlaylistTrackViewModel>();
+    //}
 
     public async Task<TrackFull> GetTrack(LibrarySource source, string id)
     {

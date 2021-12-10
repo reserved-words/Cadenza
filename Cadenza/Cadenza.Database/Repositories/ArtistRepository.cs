@@ -53,11 +53,12 @@ public class ArtistRepository : IArtistRepository
                         {
                             Id = a.Id,
                             Title = a.Title,
+                            ArtistId = a.ArtistId,
+                            Artist = artist.Name,
                             Artwork = a.Artwork,
                             Year = a.Year,
                             ReleaseType = a.ReleaseType,
-                            Group = a.ReleaseType.GetGroup(),
-                            Discs = new List<LibraryDisc>()
+                            Group = a.ReleaseType.GetGroup()
                         })
                         .ToList())
             };

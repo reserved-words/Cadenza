@@ -61,6 +61,7 @@ public class MainRepository : IMainRepository
         {
             Id = album.Id,
             ArtistId = album.ArtistId,
+            ArtistName = album.ArtistName,
             Title = album.Title,
             Year = album.Year,
             ReleaseType = album.ReleaseType,
@@ -113,7 +114,8 @@ public class MainRepository : IMainRepository
         db.Artists.ToList().ForEach(a => db.Artists.Remove(a));
         db.Albums.ToList().ForEach(a => db.Albums.Remove(a));
         db.Tracks.ToList().ForEach(a => db.Tracks.Remove(a));
-        db.PlayTracks.ToList().ForEach(a => db.PlayTracks.Remove(a));
+        db.AlbumTracks.ToList().ForEach(a => db.AlbumTracks.Remove(a));
+        db.ArtistTracks.ToList().ForEach(a => db.ArtistTracks.Remove(a));
         await db.SaveChanges();
     }
 }

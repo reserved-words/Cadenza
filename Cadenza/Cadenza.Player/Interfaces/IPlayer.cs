@@ -1,8 +1,10 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Database;
+
+namespace Cadenza.Player;
 
 public interface IPlayer
 {
-    Task Play(PlaylistTrackViewModel track);
+    Task Play(PlayingTrack track);
     Task<int> Pause();
     Task<int> Resume();
     Task<int> Stop();

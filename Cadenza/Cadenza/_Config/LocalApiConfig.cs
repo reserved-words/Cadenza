@@ -20,7 +20,6 @@ public class LocalApiConfig : ILocalApiConfig
     public string AlbumTrackLinksUrl => $"{BaseUrl}/Library/AlbumTrackLinks";
     public string ArtistUrl => $"{BaseUrl}/Library/Artist/{Placeholder}";
     public string ArtistsUrl => $"{BaseUrl}/Library/Artists";
-    public string TrackSummaryUrl => $"{BaseUrl}/Library/TrackSummary/{Placeholder}";
     public string TrackUrl => $"{BaseUrl}/Library/Track/{Placeholder}";
     public string TracksUrl => $"{BaseUrl}/Library/Tracks";
 
@@ -33,4 +32,8 @@ public class LocalApiConfig : ILocalApiConfig
     public string UpdateTrackUrl => $"{BaseUrl}/Update/Track";
     public string QueuedUpdatesUrl => $"{BaseUrl}/Update/Queue";
     public string UnqueueUrl => $"{BaseUrl}/Update/Unqueue";
+
+    public string AlbumTracksUrl => $"{BaseUrl}/Library/AlbumTracks/{Placeholder}";
+
+    public string ArtistTracksUrl => $"{BaseUrl}/Library/ArtistTracks/{Placeholder}";
 }

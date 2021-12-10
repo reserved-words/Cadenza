@@ -2,5 +2,5 @@
 
 public interface IFavouritesConsumer
 {
-    Task<bool> IsFavourite(TrackSummary track);
+    Task<bool> IsFavourite(PlayingTrack track);
 }

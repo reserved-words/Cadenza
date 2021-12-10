@@ -25,7 +25,7 @@ public class ArtistViewBase : ComponentBase
 
     private LinkViewModel GetLinkViewModel(LinkType linkType)
     {
-        var link = Model.Links.FirstOrDefault(l => l.Type == linkType);
+        var link = Model.Links?.FirstOrDefault(l => l.Type == linkType);
         var name = link?.Name ?? linkType.GetDefault(Model.Name);
         var url = linkType.GetUrl(name);
 

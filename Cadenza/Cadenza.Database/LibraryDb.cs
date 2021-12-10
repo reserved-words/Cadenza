@@ -15,7 +15,7 @@ public class LibraryDb : IndexedDb
     public IndexedSet<DbArtist> Artists { get; set; }
     public IndexedSet<DbAlbum> Albums { get; set; }
     public IndexedSet<DbTrack> Tracks { get; set; }
-    public IndexedSet<DbPlayTrack> PlayTracks { get; set; }
-    public IndexedSet<DbInfo> Info { get; set; }
+    public IndexedSet<DbAlbumTrack> AlbumTracks { get; set; }
+    public IndexedSet<DbArtistTrack> ArtistTracks { get; set; }
 }
 

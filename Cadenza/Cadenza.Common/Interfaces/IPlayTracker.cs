@@ -2,6 +2,6 @@
 
 public interface IPlayTracker
 {
-    Task RecordPlay(TrackSummary track, DateTime timestamp);
-    Task UpdateNowPlaying(TrackSummary track, int duration);
+    Task RecordPlay(PlayingTrack track, DateTime timestamp);
+    Task UpdateNowPlaying(PlayingTrack track, int duration);
 }

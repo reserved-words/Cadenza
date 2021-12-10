@@ -81,9 +81,9 @@ public class LibraryTabBase : ComponentBase
         SelectedArtistId = artist?.Id;
     }
 
-    protected async Task OnPlayArtist(string artistId)
+    protected async Task OnPlayArtist(LibraryArtist artist)
     {
-        var playlist = await PlaylistCreator.CreateArtistPlaylist(artistId);
+        var playlist = await PlaylistCreator.CreateArtistPlaylist(artist);
         await OnPlay(playlist);
     }
 

@@ -2,7 +2,7 @@
 
 public class SidebarViewModel
 {
-    public TrackSummary CurrentTrack { get; set; }
+    public PlayingTrack CurrentTrack { get; set; }
 
     public bool CanPause { get; set; }
 

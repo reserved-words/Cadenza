@@ -13,25 +13,29 @@
             else
             {
                 <ArtistView Model="@Model"
-                            HeaderOnly="true"/>
+                            HeaderOnly="true" />
             }
             <MudDivider Class="mt-3" />
         </CardHeaderContent>
     </MudCardHeader>
 
-    <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-0">
+    <MudCardContent Style="flex-grow: 1;" 
+                    Class="fixed-height-scroll">
         @if (Model != null)
         {
             if (Model.Releases.Count == 1)
             {
                 <WhipCard Padding="false"
                           Bordered="false">
-                    @foreach (var album in Model.Releases.Single().Value)
-                    {
-                        <LibraryAlbum Model="@album"
-                                      OnPlayAlbum="(a) => OnPlayAlbum(a)"
-                                      OnPlayTrack="(t) => OnPlayArtist(t)" />
-                    }
+                    <MudGrid Spacing="2">
+                        @foreach (var album in Model.Releases.Single().Value)
+                        {
+                            <MudItem xs="6" sm="3">
+                                <LibraryAlbum Model="@album"
+                                              OnPlayAlbum="(a) => OnPlayAlbum(a)" />
+                            </MudItem>
+                        }
+                    </MudGrid>
                 </WhipCard>
             }
             else
@@ -42,12 +46,15 @@
                         <MudTabPanel Text="@group.Key.GetDisplayName()">
                             <WhipCard Padding="false"
                                       Bordered="false">
-                                @foreach (var album in group.Value)
-                                {
-                                    <LibraryAlbum Model="@album"
-                                                  OnPlayAlbum="(a) => OnPlayAlbum(a)"
-                                                  OnPlayTrack="(t) => OnPlayArtist(t)" />
-                                }
+                                <MudGrid Spacing="2">
+                                    @foreach (var album in group.Value)
+                                    {
+                                        <MudItem xs="6" sm="3">
+                                            <LibraryAlbum Model="@album"
+                                                          OnPlayAlbum="(a) => OnPlayAlbum(a)" />
+                                        </MudItem>
+                                    }
+                                </MudGrid>
                             </WhipCard>
                         </MudTabPanel>
                     }

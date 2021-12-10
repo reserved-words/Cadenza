@@ -13,12 +13,30 @@ public static class Routes
 
         app.MapGet("/Library/Artists", () => library.GetArtists());
         app.MapGet("/Library/Albums", () => library.GetAlbums(artworkUrlFormat));
-        app.MapGet("/Library/Tracks", () => library.GetTracks());
-        app.MapGet("/Library/AlbumTrackLinks", () => library.GetAlbumTrackLinks());
+        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrackSummary(id));
+
+        app.MapGet("/Library/ArtistTracks/{id}", (string id) => library.GetArtistTracks(id));
+        app.MapGet("/Library/AlbumTracks/{id}", (string id) => library.GetAlbumTracks(id));
+
         app.MapGet("/Library/Artwork", async (HttpContext context) =>
         {
             var id = context.Request.Query["id"];
             var artwork = await library.GetArtwork(id);
+
+            if (artwork.Bytes == null || artwork.Bytes.Length == 0)
+            {
+                try
+                {
+                    var bytes = File.ReadAllBytes("Images/default.png");
+                    artwork = new(bytes, "image/png");
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+
             context.Response.ContentType = artwork.Type;
             context.Response.ContentLength = artwork.Bytes.Length;
             await context.Response.BodyWriter.WriteAsync(new ReadOnlyMemory<byte>(artwork.Bytes));

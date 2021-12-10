@@ -73,9 +73,9 @@ public class LibraryArtistBase : ComponentBase
         await OnPlay(playlist);
     }
 
-    public async Task OnPlayArtist(AlbumTrackViewModel track)
+    public async Task OnPlayArtist()
     {
-        var playlist = await PlaylistCreator.CreateArtistPlaylist(Model.Id, track.Model.Track.Id);
+        var playlist = await PlaylistCreator.CreateArtistPlaylist(Model);
         await OnPlay(playlist);
     }
 }
