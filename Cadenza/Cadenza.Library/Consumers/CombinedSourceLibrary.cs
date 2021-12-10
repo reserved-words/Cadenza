@@ -76,12 +76,6 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         return await _cache.GetTrack(id);
     }
 
-    //public async Task<TrackSummary> GetTrackSummary(string id, LibrarySource source)
-    //{
-    //    await UpdateTrack(id, source);
-    //    return await _cache.GetTrackSummary(id);
-    //}
-
     private async Task UpdateTrack(string id, LibrarySource source)
     {
         var service = _sources[source];

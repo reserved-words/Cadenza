@@ -52,7 +52,6 @@ public static class DependencyInjection
         services.AddTransient<IStaticSource, JsonLibrary>();
         services.AddTransient<ILibraryService, LibraryService>();
         services.AddTransient<IPlayService, PlayService>();
-        services.AddTransient<IPlaylistService, PlaylistService>();
         services.AddTransient<IUpdateService, UpdateService>();
 
         return services;

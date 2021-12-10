@@ -17,35 +17,28 @@ public class StartupSyncService : IStartupSyncService
 
     public async Task SyncLibrary(CancellationToken cancellationToken)
     {
-        // For now maybe need to clear all repositories before starting sync - later change to a sync process
-
         try
         {
             Update("Sync started", cancellationToken);
-            await _repository.Clear();
 
-            foreach (var source in _sources)
-            {
-                Update($"Fetching artists from {source.Key} library", cancellationToken);
-                var artists = await source.Value.GetArtists();
-                Update($"Copying artists from {source.Key} library to repository", cancellationToken);
-                await _repository.AddArtists(artists);
+            // UNCOMMENT TO SYNC ON STARTUP
+            // TODO - ADD BUTTON TO SYNC ON DEMAND
+            // TODO - ADD SYNC LOGIC SO DON'T HAVE TO CLEAR ALL FIRST
 
-                Update($"Fetching albums from {source.Key} library", cancellationToken);
-                var albums = await source.Value.GetAlbums();
-                Update($"Copying albums from {source.Key} library to repository", cancellationToken);
-                await _repository.AddAlbums(albums);
+            //await _repository.Clear();
 
-                //Update($"Fetching tracks from {source.Key} library", cancellationToken);
-                //var tracks = await source.Value.GetTracks();
-                //Update($"Copying tracks from {source.Key} library to repository", cancellationToken);
-                //await _repository.AddTracks(tracks);
+            //foreach (var source in _sources)
+            //{
+            //    Update($"Fetching artists from {source.Key} library", cancellationToken);
+            //    var artists = await source.Value.GetArtists();
+            //    Update($"Copying artists from {source.Key} library to repository", cancellationToken);
+            //    await _repository.AddArtists(artists);
 
-                //Update($"Fetching album track links from {source.Key} library", cancellationToken);
-                //var albumTrackLinks = await source.Value.GetAlbumTrackLinks();
-                //Update($"Copying album track links from {source.Key} library to repository", cancellationToken);
-                //await _repository.AddAlbumTrackLinks(albumTrackLinks);
-            }
+            //    Update($"Fetching albums from {source.Key} library", cancellationToken);
+            //    var albums = await source.Value.GetAlbums();
+            //    Update($"Copying albums from {source.Key} library to repository", cancellationToken);
+            //    await _repository.AddAlbums(albums);
+            //}
 
             ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync complete", Completed = true });
 

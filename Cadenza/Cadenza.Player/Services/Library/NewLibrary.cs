@@ -1,6 +1,4 @@
-﻿using Cadenza.Database;
-
-namespace Cadenza.Player;
+﻿namespace Cadenza.Player;
 
 public class NewLibrary : IViewModelLibrary, ILibraryController
 {
@@ -28,56 +26,11 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
             .ToList();
     }
 
-    //public async Task<List<PlayTrack>> GetAllTracks()
-    //{
-    //    var enabledSources = await GetEnabledSources();
-    //    var tracks = await _library.GetAllTracks(enabledSources);
-    //    return tracks.Select(t => new PlaylistTrackViewModel(t)).ToList();
-    //}
-
-    public async Task<ArtistViewModel> GetArtist(string artistId)
-    {
-        var enabledSources = await GetEnabledSources();
-
-        var artist = await _library.GetAlbumArtist(artistId, enabledSources);
-
-        var sorted = artist.Albums
-            .Select(a => new AlbumViewModel(a))
-            .OrderBy(a => a.Model.Album.ArtistName)
-            .ThenBy(a => a.Model.Album.ReleaseType)
-            .ThenBy(a => a.Model.Album.Year)
-            .ToList();
-
-        var groupedReleases = sorted.GroupBy(a => a.Model.Album.ReleaseType.GetGroup())
-            .Select(r => new ReleaseGroup
-            {
-                Grouping = r.Key,
-                Albums = r.ToList()
-            })
-            .ToList();
-
-        return new ArtistViewModel
-        {
-            Artist = artist.Artist,
-            Releases = groupedReleases
-        };
-    }
-
-    //public async Task<TrackSummary> GetTrackSummary(LibrarySource source, string id)
-    //{
-    //    return await _library.GetTrackSummary(id, source);
-    //}
-
     public async Task<List<LibrarySource>> GetEnabledSources()
     {
         var libraries = await _storeGetter.GetValues(StoreKey.Libraries);
         return libraries.Select(s => Enum.Parse<LibrarySource>(s)).ToList();
     }
-
-    //public async Task<List<PlaylistTrackViewModel>> GetPlaylistTracks(string name)
-    //{
-    //    return new List<PlaylistTrackViewModel>();
-    //}
 
     public async Task<TrackFull> GetTrack(LibrarySource source, string id)
     {

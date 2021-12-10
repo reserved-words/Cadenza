@@ -52,14 +52,4 @@ internal class CachedLibrary : ILibrary
             Position = _cache.GetAlbumPosition(trackId)
         };
     }
-
-    //public async Task<TrackSummary> GetTrackSummary(string trackId)
-    //{
-    //    return new TrackSummary
-    //    {
-    //        Track = _cache.GetTrack(trackId),
-    //        Album = _cache.GetTrackAlbum(trackId),
-    //        Artist = _cache.GetTrackArtist(trackId)
-    //    };
-    //}
 }
