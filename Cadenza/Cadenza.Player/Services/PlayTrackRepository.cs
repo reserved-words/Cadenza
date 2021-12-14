@@ -21,6 +21,8 @@ namespace Cadenza.Player
 
         public async Task<List<PlayTrack>> GetByAlbum(LibrarySource source, string artistId, string albumId)
         {
+            // speed this up - inserting could be done in the background
+
             var tracks = await _baseRepository.GetByAlbum(source, artistId, albumId);
 
             if (tracks == null || !tracks.Any())
@@ -36,6 +38,8 @@ namespace Cadenza.Player
 
         public async Task<List<PlayTrack>> GetByArtist(string id)
         {
+            // speed this up - inserting could be done in the background
+
             var tracks = await _baseRepository.GetByArtist(id);
 
             if (tracks == null || !tracks.Any())

@@ -18,6 +18,12 @@
 
         private async Task Service_ProgressChanged(object sender, ProgressEventArgs e)
         {
+            if (e.Completed)
+            {
+                Submit();
+                return;
+            }
+
             ProgressMessage = e.Message;
 
             SyncState = e.Completed
