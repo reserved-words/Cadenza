@@ -13,8 +13,4 @@ public class DbArtist
     public string Country { get; set; }
     public string State { get; set; }
     public string City { get; set; }
-    public ICollection<LibrarySource> Sources { get; set; }
-
-    public virtual ICollection<DbTrack> Tracks { get; set; }
-    public virtual ICollection<DbAlbum> Albums { get; set; }
 }

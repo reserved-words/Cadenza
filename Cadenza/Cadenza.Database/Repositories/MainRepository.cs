@@ -24,13 +24,6 @@ public class MainRepository : IMainRepository
         await db.SaveChanges();
     }
 
-    public async Task AddAlbumTrackLinks(ICollection<AlbumTrackLink> tracks)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
-
-        await db.SaveChanges();
-    }
-
     public async Task AddArtists(ICollection<ArtistInfo> artists)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
@@ -99,13 +92,6 @@ public class MainRepository : IMainRepository
         existing.Country = string.IsNullOrEmpty(existing.Country) ? artist.Country : existing.Country;
         existing.State = string.IsNullOrEmpty(existing.State) ? artist.State : existing.State;
         existing.City = string.IsNullOrEmpty(existing.City) ? artist.City : existing.City;
-    }
-
-    public async Task AddTracks(ICollection<TrackInfo> tracks)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
-
-        await db.SaveChanges();
     }
 
     public async Task Clear()
