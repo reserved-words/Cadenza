@@ -1,9 +1,11 @@
 ﻿using Cadenza.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cadenza.Database;
 
 public class DbTrack
 {
+    [Key]
     public string Id { get; set; }
     public string Title { get; set; }
     public string ArtistId { get; set; }

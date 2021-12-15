@@ -25,20 +25,20 @@ public class StartupSyncService : IStartupSyncService
             // TODO - ADD BUTTON TO SYNC ON DEMAND
             // TODO - ADD SYNC LOGIC SO DON'T HAVE TO CLEAR ALL FIRST
 
-            //await _repository.Clear();
+            await _repository.Clear();
 
-            //foreach (var source in _sources)
-            //{
-            //    Update($"Fetching artists from {source.Key} library", cancellationToken);
-            //    var artists = await source.Value.GetArtists();
-            //    Update($"Copying artists from {source.Key} library to repository", cancellationToken);
-            //    await _repository.AddArtists(artists);
+            foreach (var source in _sources)
+            {
+                Update($"Fetching artists from {source.Key} library", cancellationToken);
+                var artists = await source.Value.GetArtists();
+                Update($"Copying artists from {source.Key} library to repository", cancellationToken);
+                await _repository.AddArtists(artists);
 
-            //    Update($"Fetching albums from {source.Key} library", cancellationToken);
-            //    var albums = await source.Value.GetAlbums();
-            //    Update($"Copying albums from {source.Key} library to repository", cancellationToken);
-            //    await _repository.AddAlbums(albums);
-            //}
+                Update($"Fetching albums from {source.Key} library", cancellationToken);
+                var albums = await source.Value.GetAlbums();
+                Update($"Copying albums from {source.Key} library to repository", cancellationToken);
+                await _repository.AddAlbums(albums);
+            }
 
             ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync complete", Completed = true });
 
