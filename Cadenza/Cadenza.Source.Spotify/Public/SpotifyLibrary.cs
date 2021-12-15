@@ -1,11 +1,10 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-public class SpotifyLibrary : SourceLibrary, ISourceRepository
+public class SpotifyLibrary : ISourceRepository
 {
     private readonly ILibrary _library;
 
     public SpotifyLibrary(ILibrary library)
-        :base(library, LibrarySource.Spotify)
     {
         _library = library;
     }
@@ -60,6 +59,15 @@ public class SpotifyLibrary : SourceLibrary, ISourceRepository
 
         return tracks
             .Where(t => t.ArtistId == id)
+            .Select(t => t.Id)
+            .ToList();
+    }
+
+    public async Task<List<string>> GetAllTracks()
+    {
+        var tracks = await _library.GetAllTracks();
+
+        return tracks
             .Select(t => t.Id)
             .ToList();
     }

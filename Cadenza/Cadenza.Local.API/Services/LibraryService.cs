@@ -111,4 +111,13 @@ public class LibraryService : ILibraryService
             .Select(t => t.TrackId)
             .ToList();
     }
+
+    public async Task<ICollection<string>> GetAllTracks()
+    {
+        var tracks = await GetTracks();
+
+        return tracks
+            .Select(t => t.Id)
+            .ToList();
+    }
 }

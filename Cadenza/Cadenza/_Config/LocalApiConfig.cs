@@ -34,6 +34,6 @@ public class LocalApiConfig : ILocalApiConfig
     public string UnqueueUrl => $"{BaseUrl}/Update/Unqueue";
 
     public string AlbumTracksUrl => $"{BaseUrl}/Library/AlbumTracks/{Placeholder}";
-
     public string ArtistTracksUrl => $"{BaseUrl}/Library/ArtistTracks/{Placeholder}";
+    public string AllTracksUrl => $"{BaseUrl}/Library/AllTracks";
 }

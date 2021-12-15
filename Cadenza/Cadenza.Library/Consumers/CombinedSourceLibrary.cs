@@ -55,20 +55,20 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
         return artists.Where(a => a.IsInAnySource(sources)).ToList();
     }
 
-    public async Task<ICollection<Track>> GetAllTracks(IEnumerable<LibrarySource> sources)
-    {
-        foreach (var source in sources)
-        {
-            var service = _sources[source];
-            var tracks = await service.GetAllTracks();
-            if (tracks == null)
-                continue;
+    //public async Task<ICollection<Track>> GetAllTracks(IEnumerable<LibrarySource> sources)
+    //{
+    //    foreach (var source in sources)
+    //    {
+    //        var service = _sources[source];
+    //        var tracks = await service.GetAllTracks();
+    //        if (tracks == null)
+    //            continue;
 
-            _syncer.AddTracks(tracks);
-        }
+    //        _syncer.AddTracks(tracks);
+    //    }
 
-        return await _cache.GetAllTracks();
-    }
+    //    return await _cache.GetAllTracks();
+    //}
 
     public async Task<TrackFull> GetTrack(string id, LibrarySource source)
     {

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Local;
 
-public class LocalLibrary : ILibrary, ISourceRepository
+public class LocalLibrary : ISourceRepository
 {
     private readonly ILocalApiConfig _apiConfig;
     private readonly IHttpClient _httpClient;
@@ -36,10 +36,11 @@ public class LocalLibrary : ILibrary, ISourceRepository
         return await response.Content.ReadFromJsonAsync<TrackFull>();
     }
 
-    public async Task<ICollection<Track>> GetAllTracks()
+    public async Task<List<string>> GetAllTracks()
     {
-        var response = await _httpClient.Get(_apiConfig.PlaylistAllUrl);
-        return await response.Content.ReadFromJsonAsync<List<Track>>();
+        var response = await _httpClient.Get(_apiConfig.AllTracksUrl);
+        var tracks = await response.Content.ReadFromJsonAsync<string[]>();
+        return tracks.ToList();
     }
 
     private static string Url(string format, string text)

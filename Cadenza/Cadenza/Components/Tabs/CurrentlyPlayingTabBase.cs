@@ -59,7 +59,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     private async Task SetTrack(LibrarySource source, string trackId)
     {
-        Track = await Library.GetTrack(source, trackId);
-        StateHasChanged();
+        //Track = await Library.GetTrack(source, trackId);
+        //StateHasChanged();
     }
 }

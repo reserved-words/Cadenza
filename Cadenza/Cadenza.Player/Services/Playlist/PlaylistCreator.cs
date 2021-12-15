@@ -25,8 +25,7 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.Artist,
             Name = artist.Name,
-            Tracks = shuffledTracks,
-            First = tracks.First()
+            Tracks = shuffledTracks
         };
     }
 
@@ -38,39 +37,21 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.Album,
             Name = $"{album.Title} by {album.Artist}",
-            Tracks = tracks,
-            First = tracks.First()
+            Tracks = tracks
         };
     }
 
     public async Task<PlaylistDefinition> CreateLibraryPlaylist(string first = null)
     {
-        //var ts = await _repository.GetAll();
+        var tracks = await _repository.GetAll();
 
-        //var tracks = ts.Select(t => new PlaylistTrackViewModel(t));
+        var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
 
-        //var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
-
-        //var firstTrack = first != null
-        //   ? tracks.SingleOrDefault(t => t.Model.Id == first)
-        //   : null;
-
-        //return new PlaylistDefinition
-        //{
-        //    Type = PlaylistType.All,
-        //    Name = "All Library",
-        //    Sections = shuffledTracks.Split(),
-        //    First = firstTrack
-        //};
-
-        throw new NotImplementedException();
-    }
-
-    private Dictionary<int, List<PlayTrack>> GetAsDictionary(IEnumerable<PlayTrack> tracks)
-    {
-        return new Dictionary<int, List<PlayTrack>>
-            {
-                { 1, tracks.ToList() }
-            };
+        return new PlaylistDefinition
+        {
+            Type = PlaylistType.All,
+            Name = $"All Library",
+            Tracks = shuffledTracks
+        };
     }
 }

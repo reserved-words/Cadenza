@@ -19,14 +19,10 @@ public class Playlist : IPlaylist
 
         _allTracks = def.Tracks;
 
-        var firstIndex = def.First == null
-            ? 0
-            : _allTracks.IndexOf(def.First);
-
-        _played = new Stack<PlayTrack>(_allTracks.Take(firstIndex));
-        _playing = _allTracks[firstIndex];
+        _played = new Stack<PlayTrack>(_allTracks);
+        _playing = _allTracks[0];
         //_playing.IsCurrent = true;
-        _toPlay = new Stack<PlayTrack>(_allTracks.Skip(firstIndex + 1).Reverse());
+        _toPlay = new Stack<PlayTrack>(_allTracks);
     }
 
     //public PlayingTrack Current { get; private set; }

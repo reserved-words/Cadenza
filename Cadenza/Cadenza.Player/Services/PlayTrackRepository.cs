@@ -14,9 +14,24 @@ namespace Cadenza.Player
             _sources = sources;
         }
 
-        public Task<List<PlayTrack>> GetAll()
+        public async Task<List<PlayTrack>> GetAll()
         {
-            throw new NotImplementedException();
+            var tracks = await _baseRepository.GetAll();
+
+            if (tracks == null || !tracks.Any())
+            {
+                foreach (var source in _sources.Keys)
+                {
+                    var sourceRepository = _sources[source];
+                    var dbTracks = await sourceRepository.GetAllTracks();
+                    await _baseRepository.AddAllTracks(source, dbTracks);
+                }
+
+                tracks = await _baseRepository.GetAll();
+            }
+
+            return tracks;
+
         }
 
         public async Task<List<PlayTrack>> GetByAlbum(LibrarySource source, string artistId, string albumId)

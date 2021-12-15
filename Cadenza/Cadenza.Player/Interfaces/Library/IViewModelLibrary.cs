@@ -6,5 +6,4 @@ public interface IViewModelLibrary
     event ArtistUpdatedEventHandler ArtistUpdated;
     event TrackUpdatedEventHandler TrackUpdated;
 
-    Task<TrackFull> GetTrack(LibrarySource source, string id);
 }

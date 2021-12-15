@@ -15,14 +15,14 @@ internal static class ServiceProviderExtensions
         var mainCache = new Cache();
 
         services
-            .AddTransient<ICombinedSourceLibrary>(sp => new CombinedSourceLibrary(
-                mainCache,
-                sp.GetRequiredService<IMerger>(),
-                new List<SourceLibrary>
-                {
-                        sp.GetRequiredService<LocalSourceLibrary>(),
-                        sp.GetRequiredService<SpotifyLibrary>()
-                }))
+            //.AddTransient<ICombinedSourceLibrary>(sp => new CombinedSourceLibrary(
+            //    mainCache,
+            //    sp.GetRequiredService<IMerger>(),
+            //    new List<SourceLibrary>
+            //    {
+            //            sp.GetRequiredService<LocalSourceLibrary>(),
+            //            sp.GetRequiredService<SpotifyLibrary>()
+            //    }))
             .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
                 sp.GetUpdaters(),
                 sp.GetRequiredService<IMerger>(),
@@ -141,7 +141,7 @@ internal static class ServiceProviderExtensions
     {
         return services
             .AddTransient<LocalLibrary>()
-            .AddTransient<LocalSourceLibrary>()
+            //.AddTransient<LocalSourceLibrary>()
             .AddTransient<IViewModelLibrary>(sp => sp.GetRequiredService<NewLibrary>())
             .AddTransient<ILibraryController>(sp => sp.GetRequiredService<NewLibrary>());
     }

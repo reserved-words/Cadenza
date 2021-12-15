@@ -13,6 +13,8 @@ public interface ILibraryService
     Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks();
 
     Task<(byte[] Bytes, string Type)> GetArtwork(string id);
+
+    Task<ICollection<string>> GetAllTracks();
     Task<ICollection<string>> GetArtistTracks(string id);
     Task<ICollection<string>> GetAlbumTracks(string id);
 }

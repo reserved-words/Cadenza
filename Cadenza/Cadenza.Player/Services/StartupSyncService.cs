@@ -49,10 +49,6 @@ public class StartupSyncService : IStartupSyncService
             await _repository.Clear();
             ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync cancelled", Cancelled = true });
         }
-        catch (Exception ex)
-        {
-
-        }
     }
 
     private void Update(string message, CancellationToken cancellationToken)

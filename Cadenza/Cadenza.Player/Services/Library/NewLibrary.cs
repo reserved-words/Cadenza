@@ -7,34 +7,18 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
     public event TrackUpdatedEventHandler TrackUpdated;
 
     private readonly IStoreGetter _storeGetter;
-    private readonly ICombinedSourceLibrary _library;
     private readonly ICombinedSourceLibraryUpdater _updater;
 
-    public NewLibrary(IStoreGetter store, ICombinedSourceLibrary library, ICombinedSourceLibraryUpdater updater)
+    public NewLibrary(IStoreGetter store, ICombinedSourceLibraryUpdater updater)
     {
         _storeGetter = store;
-        _library = library;
         _updater = updater;
-    }
-
-    public async Task<List<Artist>> GetAlbumArtists()
-    {
-        var enabledSources = await GetEnabledSources();
-        var artists = await _library.GetAlbumArtists(enabledSources);
-        return artists
-            .OrderBy(a => a.Id)
-            .ToList();
     }
 
     public async Task<List<LibrarySource>> GetEnabledSources()
     {
         var libraries = await _storeGetter.GetValues(StoreKey.Libraries);
         return libraries.Select(s => Enum.Parse<LibrarySource>(s)).ToList();
-    }
-
-    public async Task<TrackFull> GetTrack(LibrarySource source, string id)
-    {
-        return await _library.GetTrack(id, source);
     }
 
     public async Task<bool> UpdateAlbum(AlbumUpdate update)
