@@ -46,8 +46,7 @@ internal static class ServiceProviderExtensions
             .AddSingleton<SpotifyPlayer>()
             .AddSingleton<IPlayer>(sp => new TrackingPlayer(
                 sp.GetRequiredService<TimingPlayer>(),
-                sp.GetRequiredService<IPlayTracker>(),
-                sp.GetRequiredService<IViewModelLibrary>()))
+                sp.GetRequiredService<IPlayTracker>()))
             .AddSingleton<LocalPlayer>()
             .AddSingleton<NewLibrary>();
         ;

@@ -35,12 +35,22 @@ public class LibraryService : ILibraryService
         return artist;
     }
 
-    public async Task<TrackInfo> GetTrackSummary(string id)
+    public async Task<PlayingTrack> GetTrackSummary(string id)
     {
         id = UrlDecode(id);
+
         var track = await _library.GetTrack(id);
-        track.Track.AlbumId = track.Album.Id;
-        return track.Track;
+
+        return new PlayingTrack
+        {
+            Id = id,
+            Source = LibrarySource.Local,
+            DurationSeconds = track.Track.DurationSeconds,
+            Title = track.Track.Title,
+            Artist = track.Artist.Name,
+            AlbumTitle = track.Album.Title,
+            AlbumArtist = track.Album.ArtistName
+        };
     }
 
     public async Task<TrackFull> GetTrack(string id)
@@ -100,7 +110,7 @@ public class LibraryService : ILibraryService
             .Where(t => t.ArtistId == id)
             .Select(t => t.Id)
             .ToList();
-    }    
+    }
 
     public async Task<ICollection<string>> GetAlbumTracks(string id)
     {

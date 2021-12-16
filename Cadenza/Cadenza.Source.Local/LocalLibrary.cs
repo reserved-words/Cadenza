@@ -67,10 +67,10 @@ public class LocalLibrary : ISourceRepository
         return albums;
     }
 
-    async Task<TrackInfo> ISourceRepository.GetTrack(string id)
+    async Task<PlayingTrack> ISourceRepository.GetTrack(string id)
     {
         var response = await _httpClient.Get(Url(_apiConfig.TrackUrl, id));
-        return await response.Content.ReadFromJsonAsync<TrackInfo>();
+        return await response.Content.ReadFromJsonAsync<PlayingTrack>();
     }
 
     public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()

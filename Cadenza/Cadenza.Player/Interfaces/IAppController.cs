@@ -2,11 +2,10 @@
 
 public interface IAppController
 {
-    Task Initialise();
+    void Initialise();
     Task Play(PlaylistDefinition playlistDefinition);
     Task Pause();
     Task Resume();
     Task SkipNext();
     Task SkipPrevious();
-    Task UpdateSources(List<LibrarySource> enabledSources);
 }

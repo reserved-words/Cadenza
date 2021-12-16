@@ -34,9 +34,4 @@ public class IndexBase : ComponentBase
     {
         await App.SkipPrevious();
     }
-
-    public async Task OnSourcesUpdated(List<LibrarySource> enabledSources)
-    {
-        await App.UpdateSources(enabledSources);
-    }
 }

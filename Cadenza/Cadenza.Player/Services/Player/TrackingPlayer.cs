@@ -4,21 +4,19 @@ public class TrackingPlayer : IPlayer
 {
     private readonly IPlayer _player;
     private readonly IPlayTracker _tracker;
-    private readonly IViewModelLibrary _library;
 
     private PlayingTrack _currentTrack;
 
-    public TrackingPlayer(IPlayer player, IPlayTracker tracker, IViewModelLibrary library)
+    public TrackingPlayer(IPlayer player, IPlayTracker tracker)
     {
         _player = player;
         _tracker = tracker;
-        _library = library;
     }
 
     public async Task Play(PlayingTrack playlistTrack)
     {
         await _player.Play(playlistTrack);
-        await UpdateTrackDetails(playlistTrack);
+        UpdateTrackDetails(playlistTrack);
         await UpdateNowPlaying(0);
     }
 
@@ -43,7 +41,7 @@ public class TrackingPlayer : IPlayer
         return secondsPlayed;
     }
 
-    private async Task UpdateTrackDetails(PlayingTrack playlistTrack)
+    private void UpdateTrackDetails(PlayingTrack playlistTrack)
     {
         _currentTrack = playlistTrack;
     }

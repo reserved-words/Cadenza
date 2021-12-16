@@ -37,9 +37,20 @@ public class SpotifyLibrary : ISourceRepository
         return result;
     }
 
-    public async Task<TrackInfo> GetTrack(string id)
+    public async Task<PlayingTrack> GetTrack(string id)
     {
-        return (await _library.GetTrack(id)).Track;
+        var track = await _library.GetTrack(id);
+
+        return new PlayingTrack
+        {
+            Id = id,
+            Source = LibrarySource.Local,
+            DurationSeconds = track.Track.DurationSeconds,
+            Title = track.Track.Title,
+            Artist = track.Artist.Name,
+            AlbumTitle = track.Album.Title,
+            AlbumArtist = track.Album.ArtistName
+        };
     }
 
     public async Task<List<string>> GetAlbumTracks(string artistId, string albumId)

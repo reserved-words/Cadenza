@@ -5,14 +5,12 @@ namespace Cadenza.Player;
 public class AppService : IAppConsumer, IAppController
 {
     private readonly IPlayer _player;
-    private readonly IStoreSetter _storeSetter;
     private readonly ITrackFinishedConsumer _trackFinishedConsumer;
     private readonly ITrackRepository _trackRepository;
 
-    public AppService(IStoreSetter storeSetter, IPlayer player, ITrackFinishedConsumer trackFinishedConsumer, ITrackRepository trackRepository)
+    public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer, ITrackRepository trackRepository)
     {
         _player = player;
-        _storeSetter = storeSetter;
         _trackFinishedConsumer = trackFinishedConsumer;
         _trackRepository = trackRepository;
     }
@@ -27,11 +25,8 @@ public class AppService : IAppConsumer, IAppController
     private IPlaylist _currentPlaylist;
     private PlayingTrack _playingTrack;
 
-    public async Task Initialise()
+    public void Initialise()
     {
-        await _storeSetter.SetValue(StoreKey.Libraries, LibrarySource.Local);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackId, null);
-
         _trackFinishedConsumer.TrackFinished += OnTrackFinished;
 
         LibraryUpdated?.Invoke(this, new LibraryEventArgs());
@@ -96,11 +91,6 @@ public class AppService : IAppConsumer, IAppController
     {
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
-    }
-
-    public async Task UpdateSources(List<LibrarySource> enabledSources)
-    {
-        await _storeSetter.SetValues(StoreKey.Libraries, enabledSources);
     }
 
     private TrackEventArgs GetArgs(int? secondsPlayed = null)

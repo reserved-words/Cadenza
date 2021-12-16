@@ -22,9 +22,13 @@ namespace Cadenza.Player
             if (track == null)
             {
                 var sourceRepository = _sources[source];
+
                 var dbTrack = await sourceRepository.GetTrack(id);
+
+                // Can I do this in bg after returning track
                 await _baseRepository.AddTrack(dbTrack);
-                track = await _baseRepository.GetSummary(source, id);
+
+                return dbTrack;
             }
 
             return track;

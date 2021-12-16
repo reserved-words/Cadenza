@@ -1,6 +1,4 @@
-﻿using Cadenza.Database;
-
-namespace Cadenza.Player;
+﻿namespace Cadenza.Player;
 
 public class CorePlayer : IPlayer
 {
@@ -17,7 +15,6 @@ public class CorePlayer : IPlayer
 
     public async Task Play(PlayingTrack track)
     {
-        await _storeSetter.SetValue(StoreKey.CurrentTrackId, track.Id);
         await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track.Source);
 
         var service = await GetCurrentService();

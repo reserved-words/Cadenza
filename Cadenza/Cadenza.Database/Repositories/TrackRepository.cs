@@ -1,5 +1,6 @@
 ﻿using Cadenza.Common;
 using IndexedDB.Blazor;
+using Newtonsoft.Json;
 
 namespace Cadenza.Database;
 
@@ -12,23 +13,14 @@ public class TrackRepository : ITrackRepositoryUpdater
         _dbFactory = dbFactory;
     }
 
-    public async Task AddTrack(TrackInfo track)
+    public async Task AddTrack(PlayingTrack track)
     {
         using (var db = await _dbFactory.Create<LibraryDb>())
         {
             db.Tracks.Add(new DbTrack
             {
                 Id = track.Id,
-                Source = track.Source,
-                Title = track.Title,
-                ArtistId = track.ArtistId,
-                AlbumId = track.AlbumId,
-                DurationSeconds = track.DurationSeconds,
-                Year = track.Year,
-                Lyrics = track.Lyrics,
-                // Tags
-                // TrackNo
-                // DiscNo
+                Details = JsonConvert.SerializeObject(track)
             });
 
             await db.SaveChanges();
@@ -37,26 +29,13 @@ public class TrackRepository : ITrackRepositoryUpdater
 
     public async Task<PlayingTrack> GetSummary(LibrarySource source, string id)
     {
-        using (var db = await _dbFactory.Create<LibraryDb>())
-        {
-            var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
+        using var db = await _dbFactory.Create<LibraryDb>();
 
-            if (dbTrack == null)
-                return null;
+        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
 
-            var dbAlbum = db.Albums.Single(a => a.Id == dbTrack.AlbumId);
-            var dbArtist = db.Artists.Single(a => a.Id == dbTrack.ArtistId);
+        if (dbTrack == null)
+            return null;
 
-            return new PlayingTrack
-            {
-                Id = dbTrack.Id,
-                Source = dbAlbum.Source,
-                DurationSeconds = dbTrack.DurationSeconds,
-                Title = dbTrack.Title,
-                Artist = dbArtist.Name,
-                AlbumTitle = dbAlbum.Title,
-                AlbumArtist = dbAlbum.ArtistName
-            };
-        }
+        return JsonConvert.DeserializeObject<PlayingTrack>(dbTrack.Details);
     }
 }

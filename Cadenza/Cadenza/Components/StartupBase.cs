@@ -21,7 +21,7 @@ public class StartupBase : ComponentBase
 
         if (!result.Cancelled)
         {
-            await App.Initialise();
+            App.Initialise();
         }
     }
 }

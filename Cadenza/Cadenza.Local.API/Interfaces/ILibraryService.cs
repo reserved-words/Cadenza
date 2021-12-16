@@ -5,7 +5,7 @@ public interface ILibraryService
     Task<ArtistFull> GetAlbumArtist(string artistId);
     Task<ICollection<Artist>> GetAlbumArtists();
     Task<TrackFull> GetTrack(string id);
-    Task<TrackInfo> GetTrackSummary(string id);
+    Task<PlayingTrack> GetTrackSummary(string id);
 
     Task<ICollection<ArtistInfo>> GetArtists();
     Task<ICollection<AlbumInfo>> GetAlbums(string artworkUrlFormat);

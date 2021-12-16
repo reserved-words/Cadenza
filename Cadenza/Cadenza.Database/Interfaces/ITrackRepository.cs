@@ -9,5 +9,5 @@ public interface ITrackRepository
 
 public interface ITrackRepositoryUpdater : ITrackRepository
 {
-    Task AddTrack(TrackInfo track);
+    Task AddTrack(PlayingTrack track);
 }
