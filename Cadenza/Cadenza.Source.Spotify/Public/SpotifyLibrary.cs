@@ -31,6 +31,7 @@ public class SpotifyLibrary : ISourceRepository
             var artistInfo = await _library.GetAlbumArtist(artist.Id);
             foreach (var album in artistInfo.Albums)
             {
+                album.Album.Source = LibrarySource.Spotify;
                 result.Add(album.Album);
             }
         }
@@ -44,12 +45,15 @@ public class SpotifyLibrary : ISourceRepository
         return new PlayingTrack
         {
             Id = id,
-            Source = LibrarySource.Local,
+            Source = LibrarySource.Spotify,
             DurationSeconds = track.Track.DurationSeconds,
             Title = track.Track.Title,
             Artist = track.Artist.Name,
             AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName
+            AlbumArtist = track.Album.ArtistName,
+            ArtworkUrl = track.Album.ArtworkUrl,
+            ReleaseType = track.Album.ReleaseType,
+            Year = track.Track.Year
         };
     }
 

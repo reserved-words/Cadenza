@@ -58,7 +58,8 @@ public class ArtistRepository : IArtistRepository
                             Artwork = a.Artwork,
                             Year = a.Year,
                             ReleaseType = a.ReleaseType,
-                            Group = a.ReleaseType.GetGroup()
+                            Group = a.ReleaseType.GetGroup(),
+                            Source = a.Source
                         })
                         .ToList())
             };

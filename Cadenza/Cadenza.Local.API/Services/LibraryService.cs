@@ -30,12 +30,12 @@ public class LibraryService : ILibraryService
 
         foreach (var album in artist.Albums)
         {
-            album.Album.ImageUrl ??= _imageSrcGenerator.GetImageSrc(album);
+            album.Album.ArtworkUrl ??= _imageSrcGenerator.GetImageSrc(album);
         }
         return artist;
     }
 
-    public async Task<PlayingTrack> GetTrackSummary(string id)
+    public async Task<PlayingTrack> GetTrackSummary(string artworkUrlFormat, string id)
     {
         id = UrlDecode(id);
 
@@ -49,7 +49,10 @@ public class LibraryService : ILibraryService
             Title = track.Track.Title,
             Artist = track.Artist.Name,
             AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName
+            AlbumArtist = track.Album.ArtistName,
+            ArtworkUrl = string.Format(artworkUrlFormat, id),
+            ReleaseType = track.Album.ReleaseType,
+            Year = track.Track.Year ?? track.Album.Year
         };
     }
 
@@ -57,7 +60,7 @@ public class LibraryService : ILibraryService
     {
         id = UrlDecode(id);
         var track = await _library.GetTrack(id);
-        track.Album.ImageUrl ??= _imageSrcGenerator.GetImageSrc(track);
+        track.Album.ArtworkUrl ??= _imageSrcGenerator.GetImageSrc(track);
         return track;
     }
 
@@ -79,7 +82,7 @@ public class LibraryService : ILibraryService
         foreach (var album in library.Albums)
         {
             var firstTrack = library.AlbumTrackLinks.First(a => a.AlbumId == album.Id);
-            album.ImageUrl = string.Format(artworkUrlFormat, firstTrack.TrackId);
+            album.ArtworkUrl = string.Format(artworkUrlFormat, firstTrack.TrackId);
         }
 
         return library.Albums;

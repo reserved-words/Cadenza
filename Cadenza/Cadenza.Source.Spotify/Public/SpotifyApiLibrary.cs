@@ -75,7 +75,7 @@ public class SpotifyApiLibrary : IStaticSource
             Title = album.name,
             ReleaseType = ReleaseType.Album, // check - possibly Spotify has ones that correspond
             Year = GetReleaseYear(album),
-            ImageUrl = album.images.FirstOrDefault()?.url,
+            ArtworkUrl = album.images.FirstOrDefault()?.url,
             DiscCount = album.tracks.items.Max(t => t.disc_number)
         };
     }

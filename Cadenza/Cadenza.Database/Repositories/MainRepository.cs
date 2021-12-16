@@ -58,7 +58,7 @@ public class MainRepository : IMainRepository
             Title = album.Title,
             Year = album.Year,
             ReleaseType = album.ReleaseType,
-            Artwork = album.ImageUrl,
+            Artwork = album.ArtworkUrl,
             Source = album.Source
         });
     }

@@ -39,7 +39,7 @@ public class Merger : IMerger
         album.ArtistName = Merge(album.ArtistName, update.ArtistName, forceUpdate);
         album.Title = Merge(album.Title, update.Title, forceUpdate);
         album.Year = Merge(album.Year, update.Year, forceUpdate);
-        album.ImageUrl = Merge(album.ImageUrl, update.ImageUrl, forceUpdate);
+        album.ArtworkUrl = Merge(album.ArtworkUrl, update.ArtworkUrl, forceUpdate);
         album.DiscCount = Merge(album.DiscCount, update.DiscCount, forceUpdate);
         album.ReleaseType = Merge(album.ReleaseType, update.ReleaseType, forceUpdate);
         album.Source = Merge(album.Source, update.Source, forceUpdate);

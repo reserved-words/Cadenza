@@ -61,7 +61,7 @@ public class LocalLibrary : ISourceRepository
 
         foreach (var album in albums)
         {
-            album.ImageUrl = $"{_apiConfig.BaseUrl}{album.ImageUrl}";
+            album.ArtworkUrl = $"{_apiConfig.BaseUrl}{album.ArtworkUrl}";
         }
 
         return albums;
@@ -70,7 +70,9 @@ public class LocalLibrary : ISourceRepository
     async Task<PlayingTrack> ISourceRepository.GetTrack(string id)
     {
         var response = await _httpClient.Get(Url(_apiConfig.TrackUrl, id));
-        return await response.Content.ReadFromJsonAsync<PlayingTrack>();
+        var track = await response.Content.ReadFromJsonAsync<PlayingTrack>();
+        track.ArtworkUrl = $"{_apiConfig.BaseUrl}{track.ArtworkUrl}";
+        return track;
     }
 
     public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()

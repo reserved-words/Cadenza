@@ -9,4 +9,7 @@ public class PlayingTrack
     public string Artist { get; set; }
     public string AlbumTitle { get; set; }
     public string AlbumArtist { get; set; }
+    public string ArtworkUrl { get; set; }
+    public ReleaseType ReleaseType { get; set; }
+    public string Year { get; set; }
 }

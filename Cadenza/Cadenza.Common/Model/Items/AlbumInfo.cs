@@ -5,7 +5,7 @@ public class AlbumInfo : Album
     [ItemProperty(ItemProperty.ReleaseYear)]
     public string Year { get; set; }
 
-    public string ImageUrl { get; set; }
+    public string ArtworkUrl { get; set; }
 
     [ItemProperty(ItemProperty.DiscCount)]
     public int DiscCount { get; set; }
