@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cadenza.Azure\Cadenza.Azure.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.csproj" />
     <ProjectReference Include="..\Cadenza.Player\Cadenza.Player.csproj" />

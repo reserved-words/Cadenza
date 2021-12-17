@@ -2,7 +2,7 @@
 
 public interface IAzureConfig
 {
-    //string AddSpotifyOverrideUrl { get; }
-    //string GetSpotifyOverridesUrl { get; }
-    //string RemoveSpotifyOverrideUrl { get; }
+    string AddSpotifyOverrideUrl { get; }
+    string GetSpotifyOverridesUrl { get; }
+    string RemoveSpotifyOverrideUrl { get; }
 }

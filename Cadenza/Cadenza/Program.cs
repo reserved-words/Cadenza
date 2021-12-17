@@ -23,7 +23,6 @@ public class Program
             .AddTimers()
             .AddLastFm()
             .AddSpotify()
-            .AddAzure()
             .AddLocalLibrary()
             .AddLibraries()
             .AddPlayers()

@@ -1,12 +1,12 @@
 ﻿using Cadenza.Azure;
 
-namespace Cadenza;
+namespace Cadenza.API.Azure;
 
-public class AzureConfig : IAzureConfig
+public class Config : IAzureConfig
 {
     private readonly IConfiguration _config;
 
-    public AzureConfig(IConfiguration config)
+    public Config(IConfiguration config)
     {
         _config = config;
     }

@@ -1,5 +1,4 @@
 ﻿using Cadenza._Config;
-using Cadenza.Azure;
 using Cadenza.Library;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
@@ -15,14 +14,6 @@ internal static class ServiceProviderExtensions
         var mainCache = new Cache();
 
         services
-            //.AddTransient<ICombinedSourceLibrary>(sp => new CombinedSourceLibrary(
-            //    mainCache,
-            //    sp.GetRequiredService<IMerger>(),
-            //    new List<SourceLibrary>
-            //    {
-            //            sp.GetRequiredService<LocalSourceLibrary>(),
-            //            sp.GetRequiredService<SpotifyLibrary>()
-            //    }))
             .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
                 sp.GetUpdaters(),
                 sp.GetRequiredService<IMerger>(),
@@ -96,19 +87,13 @@ internal static class ServiceProviderExtensions
             .AddTransient<IFavouritesController, LastFmService>();
     }
 
-    public static IServiceCollection AddAzure(this IServiceCollection services)
-    {
-        return services.AddTransient<IAzureConfig, AzureConfig>()
-            .AddTransient<IOverridesService, SpotifyOverridesService>();
-    }
-
     public static IServiceCollection AddSpotify(this IServiceCollection services)
     {
         services.AddTransient<ISpotifyApiConfig, SpotifyConfig>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
-            .AddTransient<SpotifyOverridesService>();
+            .AddTransient<IOverridesService, SpotifyOverridesService>();
 
         return services
             .AddTransient<SpotifyOverrides>()
@@ -140,7 +125,6 @@ internal static class ServiceProviderExtensions
     {
         return services
             .AddTransient<LocalLibrary>()
-            //.AddTransient<LocalSourceLibrary>()
             .AddTransient<IViewModelLibrary>(sp => sp.GetRequiredService<NewLibrary>())
             .AddTransient<ILibraryController>(sp => sp.GetRequiredService<NewLibrary>());
     }

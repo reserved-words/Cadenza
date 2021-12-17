@@ -14,9 +14,9 @@ public class SpotifyOverridesService : IOverridesService
         _config = config;
     }
 
-    private string AddOverrideUrl => ""; // _config.AddSpotifyOverrideUrl;
-    private string GetOverridesUrl => ""; //  _config.GetSpotifyOverridesUrl;
-    private string RemoveOverrideUrl => ""; //  _config.RemoveSpotifyOverrideUrl;
+    private string AddOverrideUrl => _config.AddSpotifyOverrideUrl;
+    private string GetOverridesUrl => _config.GetSpotifyOverridesUrl;
+    private string RemoveOverrideUrl => _config.RemoveSpotifyOverrideUrl;
 
     public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
     {
@@ -44,11 +44,11 @@ public class SpotifyOverridesService : IOverridesService
 
     public async Task<List<MetaDataUpdate>> GetOverrides()
     {
-        return new List<MetaDataUpdate>();
-
         var response = await _httpClient.Get(GetOverridesUrl);
         if (!response.IsSuccessStatusCode)
             return new List<MetaDataUpdate>();
+
+        var test = await response.Content.ReadAsStringAsync();
 
         var overrides = await response.Content.ReadFromJsonAsync<List<AzureOverride>>();
         return overrides.Select(o => new MetaDataUpdate
