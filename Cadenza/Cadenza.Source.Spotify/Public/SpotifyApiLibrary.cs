@@ -13,11 +13,11 @@ public class SpotifyApiLibrary : IStaticSource
 
     public async Task<StaticLibrary> GetStaticLibrary()
     {
-        var response = await _api.GetUserAlbums();
-
         var library = new StaticLibrary();
 
-        foreach (var item in response.items)
+        var albumsResponse = await _api.GetUserAlbums();
+
+        foreach (var item in albumsResponse.items)
         {
             var album = item.album;
             var albumArtist = album.artists.First();
@@ -47,6 +47,38 @@ public class SpotifyApiLibrary : IStaticSource
                 library.Tracks.Add(trackInfo);
                 library.AlbumTrackLinks.Add(albumTrack);
             }
+        }
+
+        var playlistsResponse = await _api.GetUserPlaylists();
+
+        var playlistArtistName = "Various Artists";
+        var playlistArtistId = _idGenerator.GenerateArtistId(playlistArtistName);
+
+        foreach (var item in playlistsResponse.items)
+        {
+            // if all tracks by same artist, change to that artist
+
+            var albumArtistInfo = new ArtistInfo
+            {
+                Id = playlistArtistId,
+                Name = playlistArtistName,
+                Grouping = Grouping.None
+            };
+
+            var albumInfo = new AlbumInfo
+            {
+                Id = item.id,
+                ArtistId = albumArtistInfo.Id,
+                ArtistName = albumArtistInfo.Name,
+                Title = item.name,
+                ReleaseType = ReleaseType.Playlist,
+                Year = "",
+                ArtworkUrl = item.images.FirstOrDefault()?.url,
+                DiscCount = 1
+            };
+
+            library.Artists.Add(albumArtistInfo);
+            library.Albums.Add(albumInfo);
         }
 
         return library;

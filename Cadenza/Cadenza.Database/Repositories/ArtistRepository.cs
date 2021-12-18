@@ -47,6 +47,7 @@ public class ArtistRepository : IArtistRepository
                 City = artist.City,
                 Releases = albums
                     .GroupBy(a => a.ReleaseType.GetGroup())
+                    .OrderBy(g => g.Key)
                     .ToDictionary(
                         grp => grp.Key,
                         grp => grp.Select(a => new LibraryAlbum

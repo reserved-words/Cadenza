@@ -14,5 +14,7 @@ public enum ReleaseTypeGroup
     [Display(Name = "Other Releases")]
     Other = 4,
     [Display(Name = "By Other Artists")]
-    ByOtherArtists = 5
+    ByOtherArtists = 5,
+    [Display(Name = "Playlists")]
+    Playlists = 6
 }
