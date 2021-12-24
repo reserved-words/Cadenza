@@ -1,6 +1,4 @@
-﻿using Cadenza.Database;
-
-namespace Cadenza.Player
+﻿namespace Cadenza.Player
 {
     public class PlayTrackRepository : IPlayTrackRepository
     {

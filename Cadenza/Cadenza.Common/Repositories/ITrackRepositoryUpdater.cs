@@ -1,6 +1,4 @@
-﻿using Cadenza.Common;
-
-namespace Cadenza.Database;
+﻿namespace Cadenza.Common;
 
 public interface ITrackRepositoryUpdater : ITrackRepository
 {

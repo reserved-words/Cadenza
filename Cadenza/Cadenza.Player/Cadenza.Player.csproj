@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.csproj" />
     <ProjectReference Include="..\Cadenza.Library\Cadenza.Library.csproj" />
   </ItemGroup>
 

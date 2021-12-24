@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database;
+﻿namespace Cadenza.Common;
 
 public interface IArtistRepository
 {
