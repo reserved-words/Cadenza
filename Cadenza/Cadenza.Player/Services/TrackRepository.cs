@@ -2,7 +2,6 @@
 
 namespace Cadenza.Player
 {
-
     public class TrackRepository : ITrackRepository
     {
         private readonly ITrackRepositoryUpdater _baseRepository;

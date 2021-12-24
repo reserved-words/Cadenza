@@ -13,13 +13,6 @@ public static class ExtensionMethods
         };
     }
 
-    public static string Display(this TimeSpan ts)
-    {
-        return ts.Hours > 0
-            ? ts.ToString(@"hh\:mm\:ss")
-            : ts.ToString(@"mm\:ss");
-    }
-
     public static string GetIcon(this LinkViewModel link)
     {
         return link.Type switch

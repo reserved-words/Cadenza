@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Player;
 
-public class NewLibrary : IViewModelLibrary, ILibraryController
+public class PlayerLibrary : ILibraryConsumer, ILibraryController
 {
     public event AlbumUpdatedEventHandler AlbumUpdated;
     public event ArtistUpdatedEventHandler ArtistUpdated;
@@ -8,7 +8,7 @@ public class NewLibrary : IViewModelLibrary, ILibraryController
 
     private readonly ICombinedSourceLibraryUpdater _updater;
 
-    public NewLibrary(ICombinedSourceLibraryUpdater updater)
+    public PlayerLibrary(ICombinedSourceLibraryUpdater updater)
     {
         _updater = updater;
     }

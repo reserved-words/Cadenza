@@ -7,8 +7,6 @@ public class SystemOverridesBase : ComponentBase
 
     public List<OverrideViewModel> Items { get; set; } = new();
 
-    public OverrideViewModel SelectedItem { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         foreach (var source in Services.Keys)

@@ -21,29 +21,21 @@ public class Playlist : IPlaylist
 
         _played = new Stack<PlayTrack>(_allTracks);
         _playing = _allTracks[0];
-        //_playing.IsCurrent = true;
         _toPlay = new Stack<PlayTrack>(_allTracks);
     }
 
-    //public PlayingTrack Current { get; private set; }
-    
-    public bool CurrentIsFirst => _played.Count == 0;
     public bool CurrentIsLast => _toPlay.Count == 0;
 
     public PlaylistType Type => _definition.Type;
     public string Name => _definition.Name;
-    public List<PlayTrack> Tracks => _definition.Tracks;
 
     public async Task<PlayTrack> MoveNext()
     {
-        //_playing.IsCurrent = false;
         _played.Push(_playing);
+
         _playing = _toPlay.Count == 0
             ? null
             : _toPlay.Pop();
-        //_playing.IsCurrent = true;
-
-       // Current = await GetCurrent();
 
         return _playing;
     }
@@ -54,20 +46,11 @@ public class Playlist : IPlaylist
         {
             if (_playing != null)
             {
-                //_playing.IsCurrent = false;
                 _toPlay.Push(_playing);
             }
             _playing = _played.Pop();
         }
 
-        //Current = await GetCurrent();
-
-        //_playing.IsCurrent = true;
         return _playing;
     }
-
-    //private async Task<PlayingTrack> GetCurrent()
-    //{
-    //    return await _trackRepository.GetSummary(_playing.Source, _playing.Id);
-    //}
 }

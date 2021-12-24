@@ -33,8 +33,6 @@ public class LibraryTabBase : ComponentBase
         App.LibraryUpdated += App_LibraryUpdated;
 
         // Library.ArtistUpdated += OnArtistUpdated;
-
-        // await Update();
     }
 
     private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)

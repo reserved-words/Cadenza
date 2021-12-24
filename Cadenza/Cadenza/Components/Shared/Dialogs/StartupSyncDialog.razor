@@ -5,7 +5,9 @@
         @if (Sync)
         {
             <MudText Typo=@Typo.body1>@ProgressMessage</MudText>
-            <MudProgressLinear Indeterminate="@(SyncState == SyncState.Running || SyncState == SyncState.Cancelling)" Value="@(SyncState == SyncState.Completed ? 100 : 0)" Color="@Color.Primary" />
+            <MudProgressLinear Indeterminate="@(SyncState == SyncState.Running || SyncState == SyncState.Cancelling)"
+                           Value="@(SyncState == SyncState.Completed ? 100 : 0)"
+                           Color="@Color.Primary" />
 
             @foreach (var source in SyncSources)
             {

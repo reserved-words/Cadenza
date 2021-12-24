@@ -1,6 +1,6 @@
-﻿using Cadenza.Database;
+﻿namespace Cadenza.Player;
 
-namespace Cadenza.Player;
+public delegate Task TrackEventHandler(object sender, TrackEventArgs e);
 
 public class TrackEventArgs : EventArgs
 {

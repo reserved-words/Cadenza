@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Player;
 
-public interface IViewModelLibrary
+public interface ILibraryConsumer
 {
     event AlbumUpdatedEventHandler AlbumUpdated;
     event ArtistUpdatedEventHandler ArtistUpdated;

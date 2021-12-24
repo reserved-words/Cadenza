@@ -10,9 +10,6 @@ public class LibraryArtistBase : ComponentBase
     [Inject]
     public IPlaylistCreator PlaylistCreator { get; set; }
 
-    [Inject]
-    public INameComparer Comparer { get; set; }
-
     [Parameter]
     public string ArtistId { get; set; }
 
@@ -73,12 +70,6 @@ public class LibraryArtistBase : ComponentBase
     public async Task OnPlayAlbum(LibraryAlbum album)
     {
         var playlist = await PlaylistCreator.CreateAlbumPlaylist(album);
-        await OnPlay(playlist);
-    }
-
-    public async Task OnPlayArtist()
-    {
-        var playlist = await PlaylistCreator.CreateArtistPlaylist(Model);
         await OnPlay(playlist);
     }
 }

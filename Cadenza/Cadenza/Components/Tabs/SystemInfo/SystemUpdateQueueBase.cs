@@ -7,8 +7,6 @@ public class SystemUpdateQueueBase : ComponentBase
 
     public List<FileUpdateViewModel> Items { get; set; } = new();
 
-    public FileUpdate SelectedItem { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         var queue = await UpdateQueue.GetQueuedUpdates();

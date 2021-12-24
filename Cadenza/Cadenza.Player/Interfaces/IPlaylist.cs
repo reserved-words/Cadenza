@@ -9,7 +9,5 @@ public interface IPlaylist
     Task<PlayTrack> MoveNext();
     Task<PlayTrack> MovePrevious();
     PlayTrack Current { get; }
-    bool CurrentIsFirst { get; }
     bool CurrentIsLast { get; }
-    List<PlayTrack> Tracks { get; }
 }

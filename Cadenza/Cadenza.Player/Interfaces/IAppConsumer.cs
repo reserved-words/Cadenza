@@ -1,9 +1,5 @@
 ﻿namespace Cadenza.Player;
 
-public delegate Task TrackEventHandler(object sender, TrackEventArgs e);
-public delegate Task LibraryEventHandler(object sender, LibraryEventArgs e);
-public delegate Task PlaylistEventHandler(object sender, PlaylistEventArgs e);
-
 public interface IAppConsumer
 {
     event TrackEventHandler TrackStarted;

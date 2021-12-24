@@ -7,9 +7,6 @@ public class CurrentlyPlayingTabBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    //[Inject]
-    //public IViewModelLibrary Library { get; set; }
-
     [Inject]
     public ITrackRepository TrackRepository { get; set; }
 

@@ -8,10 +8,7 @@ public interface ILocalApiConfig
     string AlbumTracksUrl { get; }
     string ArtistTracksUrl { get; }
 
-    string AlbumArtistsUrl { get; }
     string AlbumsUrl { get; }
-    string AlbumTrackLinksUrl { get; }
-    string ArtistUrl { get; }
     string ArtistsUrl { get; }
     string QueuedUpdatesUrl { get; }
     string TrackUrl { get; }

@@ -8,7 +8,6 @@ public static class Routes
 
         var library = app.Services.GetService<ILibraryService>();
         var play = app.Services.GetService<IPlayService>();
-        var playlists = app.Services.GetService<IPlaylistService>();
         var updater = app.Services.GetService<IUpdateService>();
 
         app.MapGet("/Library/Artists", () => library.GetArtists());

@@ -42,7 +42,7 @@ internal static class ServiceProviderExtensions
                 sp.GetRequiredService<TimingPlayer>(),
                 sp.GetRequiredService<IPlayTracker>()))
             .AddSingleton<LocalPlayer>()
-            .AddSingleton<NewLibrary>();
+            .AddSingleton<PlayerLibrary>();
         ;
     }
 
@@ -127,16 +127,9 @@ internal static class ServiceProviderExtensions
     {
         return services
             .AddTransient<LocalLibrary>()
-            .AddTransient<IViewModelLibrary>(sp => sp.GetRequiredService<NewLibrary>())
-            .AddTransient<ILibraryController>(sp => sp.GetRequiredService<NewLibrary>());
+            .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
+            .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
     }
-
-    //public static IServiceCollection AddUpdaters(this IServiceCollection services)
-    //{
-    //    return services
-    //        .AddTransient<ILibraryUpdater, LibraryUpdater>()
-    //        .AddTransient<IUpdater, Updater>();
-    //}
 
     public static IServiceCollection AddSourceFactories(this IServiceCollection services)
     {

@@ -15,18 +15,12 @@ public class LocalApiConfig : ILocalApiConfig
 
     public string BaseUrl => _config.GetSection("LocalApi").GetValue<string>("BaseUrl");
 
-    public string AlbumArtistsUrl => $"{BaseUrl}/Library/AlbumArtists";
     public string AlbumsUrl => $"{BaseUrl}/Library/Albums";
-    public string AlbumTrackLinksUrl => $"{BaseUrl}/Library/AlbumTrackLinks";
-    public string ArtistUrl => $"{BaseUrl}/Library/Artist/{Placeholder}";
     public string ArtistsUrl => $"{BaseUrl}/Library/Artists";
     public string TrackUrl => $"{BaseUrl}/Library/Track/{Placeholder}";
     public string FullTrackUrl => $"{BaseUrl}/Library/FullTrack/{Placeholder}";
-    public string TracksUrl => $"{BaseUrl}/Library/Tracks";
 
     public string TrackUriFormat => $"{BaseUrl}/Play/Track/{Placeholder}";
-
-    public string PlaylistAllUrl => $"{BaseUrl}/Playlist/All";
 
     public string UpdateAlbumUrl => $"{BaseUrl}/Update/Album";
     public string UpdateArtistUrl => $"{BaseUrl}/Update/Artist";
