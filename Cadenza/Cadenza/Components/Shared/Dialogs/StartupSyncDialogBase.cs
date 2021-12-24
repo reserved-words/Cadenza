@@ -1,9 +1,18 @@
 ﻿namespace Cadenza.Components.Shared.Dialogs
 {
+    public class SyncSource
+    {
+        public LibrarySource Source { get; set; }
+        public string ProgressMessage { get; set; }
+        public SyncState SyncState { get; set; } = SyncState.None;
+    }
+
     public class StartupSyncDialogBase : DialogBase
     {
         [Inject]
         public IStartupSyncService Service { get; set; }
+
+        public List<SyncSource> SyncSources { get; set; }
 
         public string ProgressMessage { get; set; }
         public SyncState SyncState { get; set; } = SyncState.None;
@@ -13,7 +22,12 @@
 
         protected override async Task OnInitializedAsync()
         {
+            SyncSources = new List<SyncSource>();
+            SyncSources.Add(new SyncSource { Source = LibrarySource.Local });
+            SyncSources.Add(new SyncSource { Source = LibrarySource.Spotify });
+
             Service.ProgressChanged += Service_ProgressChanged;
+            Service.SyncProgressChanged += Service_SyncProgressChanged;
         }
 
         private async Task Service_ProgressChanged(object sender, ProgressEventArgs e)
@@ -27,6 +41,21 @@
             ProgressMessage = e.Message;
 
             SyncState = e.Completed
+                ? SyncState.Completed
+                : e.Cancelled
+                ? SyncState.Cancelled
+                : SyncState.Running;
+
+            StateHasChanged();
+        }
+
+        private async Task Service_SyncProgressChanged(object sender, SyncProgressEventArgs e)
+        {
+            var syncSource = SyncSources.Single(s => s.Source == e.Source);
+
+            syncSource.ProgressMessage = e.Message;
+
+            syncSource.SyncState = e.Completed
                 ? SyncState.Completed
                 : e.Cancelled
                 ? SyncState.Cancelled
