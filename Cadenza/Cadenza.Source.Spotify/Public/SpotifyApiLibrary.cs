@@ -51,19 +51,53 @@ public class SpotifyApiLibrary : IStaticSource
 
         var playlistsResponse = await _api.GetUserPlaylists();
 
-        var playlistArtistName = "Various Artists";
-        var playlistArtistId = _idGenerator.GenerateArtistId(playlistArtistName);
-
         foreach (var item in playlistsResponse.items)
         {
-            // if all tracks by same artist, change to that artist
+            var tracks = await _api.GetPlaylistTracks(item.id);
+            var trackArtists = new List<ArtistInfo>();
 
-            var albumArtistInfo = new ArtistInfo
+            foreach (var playlistItem in tracks.items)
             {
-                Id = playlistArtistId,
-                Name = playlistArtistName,
-                Grouping = Grouping.None
-            };
+                var trackArtist = playlistItem.track.artists.First();
+
+                var trackArtistInfo = trackArtists
+                    .SingleOrDefault(a => 
+                        a.SourceIds.Any(s => s.Source == LibrarySource.Spotify && s.Id == trackArtist.id));
+
+                if (trackArtistInfo == null)
+                {
+                    trackArtistInfo = GetArtistInfo(trackArtist);
+                    trackArtists.Add(trackArtistInfo);
+                    library.Artists.Add(trackArtistInfo);
+                }
+
+                var trackInfo = GetTrackInfo(playlistItem, trackArtistInfo, item.id);
+                var albumTrack = GetPlaylistTrack(item.id, playlistItem);
+
+                library.Tracks.Add(trackInfo);
+                library.AlbumTrackLinks.Add(albumTrack);
+            }
+
+            ArtistInfo albumArtistInfo;
+
+            if (trackArtists.Count > 1)
+            {
+                var playlistArtistName = "Various Artists";
+                var playlistArtistId = _idGenerator.GenerateArtistId(playlistArtistName);
+
+                albumArtistInfo = new ArtistInfo
+                {
+                    Id = playlistArtistId,
+                    Name = playlistArtistName,
+                    Grouping = Grouping.None
+                };
+
+                library.Artists.Add(albumArtistInfo);
+            }
+            else
+            {
+                albumArtistInfo = trackArtists.Single();
+            }
 
             var albumInfo = new AlbumInfo
             {
@@ -77,24 +111,7 @@ public class SpotifyApiLibrary : IStaticSource
                 DiscCount = 1
             };
 
-            library.Artists.Add(albumArtistInfo);
             library.Albums.Add(albumInfo);
-
-            var tracks = await _api.GetPlaylistTracks(item.id);
-
-            foreach (var playlistItem in tracks.items)
-            {
-                var trackArtist = playlistItem.track.artists.First();
-                var trackArtistInfo = GetArtistInfo(trackArtist);
-
-                library.Artists.Add(trackArtistInfo);
-
-                var trackInfo = GetTrackInfo(playlistItem, trackArtistInfo, item.id);
-                var albumTrack = GetPlaylistTrack(item.id, playlistItem);
-
-                library.Tracks.Add(trackInfo);
-                library.AlbumTrackLinks.Add(albumTrack);
-            }
         }
 
         return library;

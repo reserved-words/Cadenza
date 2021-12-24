@@ -29,7 +29,7 @@ public enum ReleaseType
     [Display(Name = "Various Artists")]
     [ReleaseTypeGroup(ReleaseTypeGroup.ByOtherArtists)]
     VariousArtists = 8,
-    [Display(Name = "Playlists")]
+    [Display(Name = "Playlist")]
     [ReleaseTypeGroup(ReleaseTypeGroup.Playlists)]
     Playlist = 9
 }

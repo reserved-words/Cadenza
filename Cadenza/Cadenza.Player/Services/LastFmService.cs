@@ -65,15 +65,25 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
     {
         var sessionKey = await _store.GetValue(StoreKey.LastFmSessionKey);
 
-        return new
-        {
-            SessionKey = sessionKey,
-            Timestamp = timestamp ?? DateTime.Now,
-            Artist = track.Artist,
-            Title = track.Title,
-            AlbumTitle = track.AlbumTitle,
-            AlbumArtist = track.AlbumArtist,
-            Duration = duration ?? track.DurationSeconds
-        };
+        // Might be a better way to do this in future but for now omit album details for Spotify playlists
+        return track.ReleaseType == ReleaseType.Playlist
+            ? new
+            {
+                SessionKey = sessionKey,
+                Timestamp = timestamp ?? DateTime.Now,
+                Artist = track.Artist,
+                Title = track.Title,
+                Duration = duration ?? track.DurationSeconds
+            }
+            : new
+            {
+                SessionKey = sessionKey,
+                Timestamp = timestamp ?? DateTime.Now,
+                Artist = track.Artist,
+                Title = track.Title,
+                AlbumTitle = track.AlbumTitle,
+                AlbumArtist = track.AlbumArtist,
+                Duration = duration ?? track.DurationSeconds
+            };
     }
 }
