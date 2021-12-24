@@ -38,14 +38,6 @@ internal class CacheSyncer : IComplexCacher
         }
     }
 
-    public void AddTracks(ICollection<Track> tracks)
-    {
-        foreach (var track in tracks)
-        {
-            _itemCacher.AddTrack(GetTrackInfo(track), false);
-        }
-    }
-
     private TrackInfo GetTrackInfo(Track track)
     {
         return new TrackInfo

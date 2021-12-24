@@ -10,12 +10,10 @@ internal class CacheReader : ICacheReader
     }
 
     public ArtistInfo GetArtist(string artistId) => _cache.Artists.ValueOrDefault(artistId);
-    public AlbumInfo GetAlbum(string albumId) => _cache.Albums[albumId];
     public TrackInfo GetTrack(string trackId) => _cache.Tracks[trackId];
 
     public ArtistInfo GetTrackArtist(string trackId) => _cache.Artists[_cache.TrackLinks[trackId].ArtistId];
     public AlbumInfo GetTrackAlbum(string trackId) => _cache.Albums[_cache.TrackLinks[trackId].AlbumId];
-    public ArtistInfo GetAlbumArtist(string albumId) => _cache.Artists[_cache.AlbumLinks[albumId].ArtistId];
 
     public AlbumTrackPosition GetAlbumPosition(string trackId) => _cache.TrackLinks[trackId].Position;
 
@@ -24,14 +22,6 @@ internal class CacheReader : ICacheReader
         return _cache.ArtistLinks[artistId]
             .Albums
             .Select(a => _cache.Albums[a])
-            .ToList();
-    }
-
-    public ICollection<TrackInfo> GetArtistTracks(string artistId)
-    {
-        return _cache.ArtistLinks[artistId]
-            .Tracks
-            .Select(t => _cache.Tracks[t])
             .ToList();
     }
 
