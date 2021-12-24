@@ -12,6 +12,7 @@
         [Inject]
         public IStartupSyncService Service { get; set; }
 
+        public bool Sync { get; set; }
         public List<SyncSource> SyncSources { get; set; }
 
         public string ProgressMessage { get; set; }
@@ -32,11 +33,11 @@
 
         private async Task Service_ProgressChanged(object sender, ProgressEventArgs e)
         {
-            if (e.Completed)
-            {
-                Submit();
-                return;
-            }
+            //if (e.Completed)
+            //{
+            //    Submit();
+            //    return;
+            //}
 
             ProgressMessage = e.Message;
 
@@ -64,13 +65,10 @@
             StateHasChanged();
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected async Task OnStartSync()
         {
-            await StartSync();
-        }
+            Sync = true;
 
-        protected async Task StartSync()
-        {
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
 
