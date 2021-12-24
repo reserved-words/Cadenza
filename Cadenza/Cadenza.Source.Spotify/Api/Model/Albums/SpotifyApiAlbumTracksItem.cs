@@ -11,6 +11,5 @@ public class SpotifyApiAlbumTracksItem
     public string name { get; set; }
     public int track_number { get; set; }
     public string type { get; set; } // e.g. "track"
-    // public string uri { get; set; } // e.g. "spotify:track:3VNWq8rTnQG6fM1eldSpZ0"
-
+    public string uri { get; set; }
 }

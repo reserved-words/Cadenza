@@ -3,14 +3,10 @@
 public class SpotifyLibrary : ISourceRepository
 {
     private readonly ILibrary _library;
-    private readonly ISpotifyLibraryApi _api;
-    private readonly IIdGenerator _idGenerator;
 
     public SpotifyLibrary(ILibrary library, ISpotifyLibraryApi api, IIdGenerator idGenerator)
     {
         _library = library;
-        _api = api;
-        _idGenerator = idGenerator;
     }
 
     public async Task<ICollection<ArtistInfo>> GetArtists()
@@ -20,7 +16,6 @@ public class SpotifyLibrary : ISourceRepository
         foreach (var artist in artists)
         {
             var artistInfo = await _library.GetAlbumArtist(artist.Id);
-            // this includes albums, don't need them at this point
             result.Add(artistInfo.Artist);
         }
         return result;

@@ -7,6 +7,6 @@ public class SpotifyApiAlbumTracks
     public int limit { get; set; }
     public string next { get; set; } // api url
     public int offset { get; set; }
-    public string previous { get; set; }// api url
+    public string previous { get; set; } // api url
     public int total { get; set; }
 }

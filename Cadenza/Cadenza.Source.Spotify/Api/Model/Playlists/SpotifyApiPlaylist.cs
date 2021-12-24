@@ -13,5 +13,5 @@ public class SpotifyApiPlaylist
     public string snapshot_id { get; set; }
     public SpotifyApiPlaylistTracks tracks { get; set; }
     public string type { get; set; }
-    //public string uri { get; set; }
+    public string uri { get; set; }
 }

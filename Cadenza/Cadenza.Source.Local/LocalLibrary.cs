@@ -11,31 +11,6 @@ public class LocalLibrary : ISourceRepository
         _apiConfig = apiConfig;
     }
 
-    public async Task<ICollection<Artist>> GetAlbumArtists()
-    {
-        var response = await _httpClient.Get(_apiConfig.AlbumArtistsUrl);
-        return await response.Content.ReadFromJsonAsync<List<Artist>>();
-    }
-
-    public async Task<ArtistFull> GetAlbumArtist(string id)
-    {
-        var url = Url(_apiConfig.ArtistUrl, id);
-        var response = await _httpClient.Get(url);
-
-        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            return null;
-
-        var artist = await response.Content.ReadFromJsonAsync<ArtistFull>();
-        return artist;
-    }
-
-    public async Task<FullTrack> GetTrack(string id)
-    {
-        var url = Url(_apiConfig.TrackUrl, id);
-        var response = await _httpClient.Get(url);
-        return await response.Content.ReadFromJsonAsync<FullTrack>();
-    }
-
     public async Task<List<string>> GetAllTracks()
     {
         var response = await _httpClient.Get(_apiConfig.AllTracksUrl);
@@ -81,12 +56,6 @@ public class LocalLibrary : ISourceRepository
         var track = await response.Content.ReadFromJsonAsync<FullTrack>();
         track.ArtworkUrl = $"{_apiConfig.BaseUrl}{track.ArtworkUrl}";
         return track;
-    }
-
-    public async Task<ICollection<AlbumTrackLink>> GetAlbumTrackLinks()
-    {
-        var response = await _httpClient.Get(_apiConfig.AlbumTrackLinksUrl);
-        return await response.Content.ReadFromJsonAsync<List<AlbumTrackLink>>();
     }
 
     public async Task<List<string>> GetArtistTracks(string id)
