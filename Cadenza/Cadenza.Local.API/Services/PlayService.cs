@@ -13,20 +13,13 @@ public class PlayService : IPlayService
 
     public async Task<string> GetTrackPlayPath(string id)
     {
-        try
-        {
-            var filepath = _converter.FromBase64(id);
-            var copyFilename = CreatePlayingFilepath(filepath);
-            var copyLocation = GetCopyLocation();
-            var copyFilepath = Path.Combine(copyLocation, copyFilename);
-            System.IO.File.Copy(filepath, copyFilepath);
-            return copyFilepath;
-        }
-        catch (Exception ex)
-        {
+        var filepath = _converter.FromBase64(id);
+        var copyFilename = CreatePlayingFilepath(filepath);
+        var copyLocation = GetCopyLocation();
+        var copyFilepath = Path.Combine(copyLocation, copyFilename);
+        File.Copy(filepath, copyFilepath);
+        return copyFilepath;
 
-            throw;
-        }
     }
 
     private string GetCopyLocation()

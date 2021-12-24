@@ -1,6 +1,5 @@
 ﻿namespace Cadenza.Local;
 
-
 public class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
 {
     private readonly IBase64Converter _base64Converter;
@@ -11,7 +10,6 @@ public class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
         _base64Converter = base64Converter;
         _idGenerator = idGenerator;
     }
-
 
     public AlbumTrackLink ToAppModel(JsonAlbumTrackLink link)
     {

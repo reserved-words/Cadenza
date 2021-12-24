@@ -11,14 +11,6 @@ public class MusicDirectoryAccess : IMusicDirectory
         _fileAccess = fileAccess;
     }
 
-    public List<string> GetAddedFiles(DateTime sinceDate)
-    {
-        return GetFiles()
-            .Where(f => f.DateCreated > sinceDate)
-            .Select(f => f.Path)
-            .ToList();
-    }
-
     public List<string> GetAllFiles()
     {
         return GetFiles()

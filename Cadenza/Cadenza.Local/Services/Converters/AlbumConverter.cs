@@ -11,25 +11,17 @@ public class AlbumConverter : IAlbumConverter
 
     public AlbumInfo ToAppModel(JsonAlbum album, ICollection<JsonArtist> artists)
     {
-        try
+        return new AlbumInfo
         {
-            return new AlbumInfo
-            {
-                Id = album.Id,
-                ArtistId = album.ArtistId,
-                ArtistName = artists.Single(a => a.Id == album.ArtistId).Name,
-                Title = album.Title,
-                ReleaseType = album.ReleaseType.Parse<ReleaseType>(),
-                Year = album.Year,
-                DiscCount = album.TrackCounts.Count,
-                TrackCounts = album.TrackCounts
-            };
-        }
-        catch (System.Exception ex)
-        {
-
-            throw;
-        }
+            Id = album.Id,
+            ArtistId = album.ArtistId,
+            ArtistName = artists.Single(a => a.Id == album.ArtistId).Name,
+            Title = album.Title,
+            ReleaseType = album.ReleaseType.Parse<ReleaseType>(),
+            Year = album.Year,
+            DiscCount = album.TrackCounts.Count,
+            TrackCounts = album.TrackCounts
+        };
     }
 
     public JsonAlbum ToJsonModel(AlbumInfo album)

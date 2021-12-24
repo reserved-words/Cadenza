@@ -35,7 +35,6 @@ public static class DependencyInjection
         services.AddTransient<ITrackConverter, TrackConverter>();
         services.AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>();
         services.AddTransient<IJsonToModelConverter, JsonToModelConverter>();
-        services.AddTransient<IModelToJsonConverter, ModelToJsonConverter>();
         services.AddTransient<IMerger, Merger>();
         services.AddTransient<IValueMerger, ValueMerger>();
 

@@ -14,27 +14,7 @@ public class LibraryService : ILibraryService
         _imageSrcGenerator = imageSrcGenerator;
         _jsonLibrary = jsonLibrary;
     }
-
-    public async Task<ICollection<Artist>> GetAlbumArtists()
-    {
-        return await _library.GetAlbumArtists();
-    }
-
-    public async Task<ArtistFull> GetAlbumArtist(string artistId)
-    {
-        artistId = UrlDecode(artistId);
-
-        var artist = await _library.GetAlbumArtist(artistId);
-        if (artist == null)
-            return null;
-
-        foreach (var album in artist.Albums)
-        {
-            album.Album.ArtworkUrl ??= _imageSrcGenerator.GetImageSrc(album);
-        }
-        return artist;
-    }
-
+    
     public async Task<PlayingTrack> GetTrackSummary(string artworkUrlFormat, string id)
     {
         id = UrlDecode(id);

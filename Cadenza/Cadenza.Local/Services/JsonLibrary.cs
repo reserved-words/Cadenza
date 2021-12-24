@@ -22,17 +22,9 @@ public class JsonLibrary : IStaticSource
 
         foreach (var jsonArtist in jsonArtists)
         {
-            try
-            {
-                var artist = _converter.ConvertArtist(jsonArtist);
-                artist.AddSourceId(LibrarySource.Local, artist.Id);
-                library.Artists.Add(artist);
-            }
-            catch (System.Exception ex)
-            {
-
-                throw;
-            }
+            var artist = _converter.ConvertArtist(jsonArtist);
+            artist.AddSourceId(LibrarySource.Local, artist.Id);
+            library.Artists.Add(artist);
         }
 
         foreach (var jsonAlbum in jsonAlbums)
