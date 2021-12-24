@@ -26,7 +26,10 @@ internal static class ServiceProviderExtensions
                         sp.GetService<SpotifyApiLibrary>()
                 };
                 var combinedLibrary = new CombinedStaticLibrary(spotifyCache, merger, staticSources);
-                return new SpotifyLibrary(combinedLibrary);
+                return new SpotifyLibrary(
+                    combinedLibrary, 
+                    sp.GetService<ISpotifyLibraryApi>(),
+                    sp.GetService<IIdGenerator>());
             })
             .AddTransient<SpotifyUpdater>(sp => new SpotifyUpdater(
                 new LibraryUpdater(sp.GetRequiredService<IMerger>(), spotifyCache),

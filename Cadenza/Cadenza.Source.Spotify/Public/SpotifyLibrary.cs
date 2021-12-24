@@ -3,10 +3,14 @@
 public class SpotifyLibrary : ISourceRepository
 {
     private readonly ILibrary _library;
+    private readonly ISpotifyLibraryApi _api;
+    private readonly IIdGenerator _idGenerator;
 
-    public SpotifyLibrary(ILibrary library)
+    public SpotifyLibrary(ILibrary library, ISpotifyLibraryApi api, IIdGenerator idGenerator)
     {
         _library = library;
+        _api = api;
+        _idGenerator = idGenerator;
     }
 
     public async Task<ICollection<ArtistInfo>> GetArtists()
@@ -59,10 +63,40 @@ public class SpotifyLibrary : ISourceRepository
 
     public async Task<List<string>> GetAlbumTracks(string artistId, string albumId)
     {
-        var artist = await _library.GetAlbumArtist(artistId);
+        var albumArtist = await _library.GetAlbumArtist(artistId);
 
-        return artist.Albums
-            .Single(a => a.Album.Id == albumId)
+        var album = albumArtist.Albums
+            .Single(a => a.Album.Id == albumId);
+
+        //if (album.Album.ReleaseType == ReleaseType.Playlist && !album.AlbumTracks.Any())
+        //{
+        //    var playlistTracks = await _api.GetPlaylistTracks(albumId);
+
+        //    foreach (var item in playlistTracks.items)
+        //    {
+        //        var artist = item.track.artists.First();
+
+        //        album.AlbumTracks
+        //            .Add(new AlbumTrack
+        //            {
+        //                Track = new Track
+        //                {
+        //                    Id = item.track.uri,
+        //                    Title = item.track.name,
+        //                    DurationSeconds = item.track.duration_ms / 1000,
+        //                    ArtistId = _idGenerator.GenerateArtistId(artist.name),
+        //                    ArtistName = artist.name,
+        //                    AlbumId = albumId,
+        //                    Source = LibrarySource.Spotify
+        //                },
+        //                Position = new AlbumTrackPosition(1, item.track.track_number)
+        //            });
+
+
+        //    }
+        //}
+
+        return album
             .AlbumTracks
             .Select(t => t.Track.Id)
             .ToList();

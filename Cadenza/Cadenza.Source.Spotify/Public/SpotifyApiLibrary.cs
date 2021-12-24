@@ -79,6 +79,22 @@ public class SpotifyApiLibrary : IStaticSource
 
             library.Artists.Add(albumArtistInfo);
             library.Albums.Add(albumInfo);
+
+            var tracks = await _api.GetPlaylistTracks(item.id);
+
+            foreach (var playlistItem in tracks.items)
+            {
+                var trackArtist = playlistItem.track.artists.First();
+                var trackArtistInfo = GetArtistInfo(trackArtist);
+
+                library.Artists.Add(trackArtistInfo);
+
+                var trackInfo = GetTrackInfo(playlistItem, trackArtistInfo, item.id);
+                var albumTrack = GetPlaylistTrack(item.id, playlistItem);
+
+                library.Tracks.Add(trackInfo);
+                library.AlbumTrackLinks.Add(albumTrack);
+            }
         }
 
         return library;
@@ -129,7 +145,30 @@ public class SpotifyApiLibrary : IStaticSource
         };
     }
 
-    private ArtistInfo GetArtistInfo(SpotifyApiAlbumArtist artist)
+    private static TrackInfo GetTrackInfo(SpotifyApiPlaylistItem item, ArtistInfo trackArtist, string albumId)
+    {
+        return new TrackInfo
+        {
+            Id = item.track.uri,
+            Title = item.track.name,
+            DurationSeconds = item.track.duration_ms / 1000,
+            ArtistId = trackArtist.Id,
+            ArtistName = trackArtist.Name,
+            AlbumId = albumId
+        };
+    }
+
+    private AlbumTrackLink GetPlaylistTrack(string playlistId, SpotifyApiPlaylistItem item)
+    {
+        return new AlbumTrackLink
+        {
+            TrackId = item.track.uri,
+            AlbumId = playlistId,
+            Position = new AlbumTrackPosition(1, item.track.track_number)
+        };
+    }
+
+    private ArtistInfo GetArtistInfo(SpotifyApiArtist artist)
     {
         var artistInfo = new ArtistInfo
         {

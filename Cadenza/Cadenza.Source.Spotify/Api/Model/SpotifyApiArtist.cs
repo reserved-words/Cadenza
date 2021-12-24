@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-public class SpotifyApiAlbumArtist
+public class SpotifyApiArtist
 {
     public SpotifyApiExternalUrls external_urls { get; set; }
     public string href { get; set; } // e.g. "https://api.spotify.com/v1/artists/58RMTlPJKbmpmVk1AmRK3h"

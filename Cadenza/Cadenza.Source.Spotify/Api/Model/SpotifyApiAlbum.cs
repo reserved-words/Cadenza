@@ -3,7 +3,7 @@
 public class SpotifyApiAlbum
 {
     public string album_type { get; set; }
-    public List<SpotifyApiAlbumArtist> artists { get; set; }
+    public List<SpotifyApiArtist> artists { get; set; }
     public SpotifyApiExternalUrls external_urls { get; set; }
     public List<string> genres { get; set; }
     public string href { get; set; }

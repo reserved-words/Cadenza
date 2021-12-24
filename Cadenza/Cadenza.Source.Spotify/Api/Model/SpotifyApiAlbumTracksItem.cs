@@ -2,7 +2,7 @@
 
 public class SpotifyApiAlbumTracksItem
 {
-    public List<SpotifyApiAlbumArtist> artists { get; set; }
+    public List<SpotifyApiArtist> artists { get; set; }
     public int disc_number { get; set; }
     public int duration_ms { get; set; }
     public SpotifyApiExternalUrls external_urls { get; set; }
