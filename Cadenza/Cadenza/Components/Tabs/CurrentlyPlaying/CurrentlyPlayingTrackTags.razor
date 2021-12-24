@@ -2,7 +2,7 @@
 {
     foreach (var tag in Track.Tags)
     {
-        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag.Value</MudChip>
+        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag</MudChip>
     }
 }
 else
@@ -13,5 +13,5 @@ else
 
 @code {
     [Parameter]
-    public TrackInfo Track { get; set; }
+    public FullTrack Track { get; set; }
 }

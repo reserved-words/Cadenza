@@ -53,6 +53,8 @@ public class SpotifyApiLibrary : IStaticSource
 
         foreach (var item in playlistsResponse.items)
         {
+            // This will only get first 50 tracks, will need to redo to get all
+
             var tracks = await _api.GetPlaylistTracks(item.id);
             var trackArtists = new List<ArtistInfo>();
 
@@ -101,6 +103,7 @@ public class SpotifyApiLibrary : IStaticSource
 
             var albumInfo = new AlbumInfo
             {
+                Source = LibrarySource.Spotify,
                 Id = item.id,
                 ArtistId = albumArtistInfo.Id,
                 ArtistName = albumArtistInfo.Name,
@@ -108,7 +111,8 @@ public class SpotifyApiLibrary : IStaticSource
                 ReleaseType = ReleaseType.Playlist,
                 Year = "",
                 ArtworkUrl = item.images.FirstOrDefault()?.url,
-                DiscCount = 1
+                DiscCount = 1,
+                TrackCounts = new List<int> { item.tracks.total }
             };
 
             library.Albums.Add(albumInfo);
@@ -121,7 +125,8 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new TrackInfo
         {
-            Id = track.uri,
+            Source = LibrarySource.Spotify,
+            Id = track.id,
             Title = track.name,
             DurationSeconds = track.duration_ms / 1000,
             ArtistId = trackArtist.Id,
@@ -134,6 +139,7 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new AlbumInfo
         {
+            Source = LibrarySource.Spotify,
             Id = album.id,
             ArtistId = albumArtist.Id,
             ArtistName = albumArtist.Name,
@@ -156,7 +162,7 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new AlbumTrackLink
         {
-            TrackId = track.uri,
+            TrackId = track.id,
             AlbumId = albumId,
             Position = new AlbumTrackPosition(track.disc_number, track.track_number)
         };
@@ -166,7 +172,8 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new TrackInfo
         {
-            Id = item.track.uri,
+            Source = LibrarySource.Spotify,
+            Id = item.track.id,
             Title = item.track.name,
             DurationSeconds = item.track.duration_ms / 1000,
             ArtistId = trackArtist.Id,
@@ -179,7 +186,7 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new AlbumTrackLink
         {
-            TrackId = item.track.uri,
+            TrackId = item.track.id,
             AlbumId = playlistId,
             Position = new AlbumTrackPosition(1, item.track.track_number)
         };

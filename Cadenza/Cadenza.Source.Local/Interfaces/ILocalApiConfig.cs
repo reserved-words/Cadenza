@@ -16,6 +16,7 @@ public interface ILocalApiConfig
     string PlaylistAllUrl { get; }
     string QueuedUpdatesUrl { get; }
     string TrackUrl { get; }
+    string FullTrackUrl { get; }
     string TracksUrl { get; }
     string TrackUriFormat { get; }
     string UpdateAlbumUrl { get; }

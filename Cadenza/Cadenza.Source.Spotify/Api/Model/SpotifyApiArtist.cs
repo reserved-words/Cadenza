@@ -7,5 +7,5 @@ public class SpotifyApiArtist
     public string id { get; set; } // e.g. "58RMTlPJKbmpmVk1AmRK3h"
     public string name { get; set; }
     public string type { get; set; } // e.g. "artist"
-    public string uri { get; set; } // e.g. "spotify:artist:58RMTlPJKbmpmVk1AmRK3h"
+    // public string uri { get; set; } // e.g. "spotify:artist:58RMTlPJKbmpmVk1AmRK3h"
 }

@@ -15,5 +15,5 @@ public class SpotifyApiAlbum
     public string release_date_precision { get; set; } // e.g. "day"
     public SpotifyApiAlbumTracks tracks { get; set; }
     public string type { get; set; } // e.g. "album"
-    public string uri { get; set; } // e.g. "spotify:album:5m4VYOPoIpkV0XgOiRKkWC"
+    //public string uri { get; set; } // e.g. "spotify:album:5m4VYOPoIpkV0XgOiRKkWC"
 }

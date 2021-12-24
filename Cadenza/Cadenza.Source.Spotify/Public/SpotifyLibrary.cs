@@ -44,21 +44,12 @@ public class SpotifyLibrary : ISourceRepository
 
     public async Task<PlayingTrack> GetTrack(string id)
     {
-        var track = await _library.GetTrack(id);
+        return await _library.GetTrack(id);
+    }
 
-        return new PlayingTrack
-        {
-            Id = id,
-            Source = LibrarySource.Spotify,
-            DurationSeconds = track.Track.DurationSeconds,
-            Title = track.Track.Title,
-            Artist = track.Artist.Name,
-            AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName,
-            ArtworkUrl = track.Album.ArtworkUrl,
-            ReleaseType = track.Album.ReleaseType,
-            Year = track.Track.Year
-        };
+    public async Task<FullTrack> GetFullTrack(string id)
+    {
+        return await _library.GetFullTrack(id);
     }
 
     public async Task<List<string>> GetAlbumTracks(string artistId, string albumId)

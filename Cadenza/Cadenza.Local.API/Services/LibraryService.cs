@@ -41,26 +41,22 @@ public class LibraryService : ILibraryService
 
         var track = await _library.GetTrack(id);
 
-        return new PlayingTrack
-        {
-            Id = id,
-            Source = LibrarySource.Local,
-            DurationSeconds = track.Track.DurationSeconds,
-            Title = track.Track.Title,
-            Artist = track.Artist.Name,
-            AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName,
-            ArtworkUrl = string.Format(artworkUrlFormat, id),
-            ReleaseType = track.Album.ReleaseType,
-            Year = track.Track.Year ?? track.Album.Year
-        };
+        // needed?
+        track.ArtworkUrl = string.Format(artworkUrlFormat, id);
+        track.Source = LibrarySource.Local;
+
+        return track;
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<FullTrack> GetTrack(string artworkUrlFormat, string id)
     {
         id = UrlDecode(id);
-        var track = await _library.GetTrack(id);
-        track.Album.ArtworkUrl ??= _imageSrcGenerator.GetImageSrc(track);
+        var track = await _library.GetFullTrack(id);
+
+        // needed?
+        track.ArtworkUrl = string.Format(artworkUrlFormat, id);
+        track.Source = LibrarySource.Local;
+
         return track;
     }
 

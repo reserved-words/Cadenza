@@ -21,26 +21,26 @@ public class MenuTrackBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public TrackInfo Track { get; set; }
+    public string TrackId { get; set; }
 
     public async Task OnEdit()
     {
-        var update = new TrackUpdate(Track);
+        //var update = new TrackUpdate(Track);
 
-        var (saved, data) = await DialogService.DisplayForm<EditTrack, TrackUpdate>(update, "Edit Track");
+        //var (saved, data) = await DialogService.DisplayForm<EditTrack, TrackUpdate>(update, "Edit Track");
 
-        if (!saved)
-            return;
+        //if (!saved)
+        //    return;
 
-        var success = await Library.UpdateTrack(data);
+        //var success = await Library.UpdateTrack(data);
 
-        if (success)
-        {
-            Alert.Success("Track updated");
-        }
-        else
-        {
-            Alert.Error("Error updating track");
-        }
+        //if (success)
+        //{
+        //    Alert.Success("Track updated");
+        //}
+        //else
+        //{
+        //    Alert.Error("Error updating track");
+        //}
     }
 }

@@ -34,7 +34,7 @@ public class SpotifyPlayerApi : ISpotifyPlayerApi
         return trackId != null
             ? new
             {
-                uris = new string[] { trackId }
+                uris = new string[] { $"spotify:track:{trackId}" }
             }
             : null;
     }

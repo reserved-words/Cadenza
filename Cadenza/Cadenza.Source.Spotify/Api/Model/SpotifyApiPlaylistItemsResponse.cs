@@ -18,7 +18,8 @@ public class SpotifyApiPlaylistItem
 
 public class SpotifyApiPlaylistItemTrack
 {
-    public string uri { get; set; }
+    public string id { get; set; }
+    // public string uri { get; set; }
     public string name { get; set; }
     public List<SpotifyApiArtist> artists { get; set; }
     public int duration_ms { get; set; }

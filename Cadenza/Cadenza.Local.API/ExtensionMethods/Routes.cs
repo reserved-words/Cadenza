@@ -14,6 +14,7 @@ public static class Routes
         app.MapGet("/Library/Artists", () => library.GetArtists());
         app.MapGet("/Library/Albums", () => library.GetAlbums(artworkUrlFormat));
         app.MapGet("/Library/Track/{id}", (string id) => library.GetTrackSummary(artworkUrlFormat, id));
+        app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetTrack(artworkUrlFormat, id));
 
         app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
         app.MapGet("/Library/ArtistTracks/{id}", (string id) => library.GetArtistTracks(id));

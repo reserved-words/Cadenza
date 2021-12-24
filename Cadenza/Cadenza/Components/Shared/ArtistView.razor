@@ -14,7 +14,7 @@
             </MudContainer>
             <MudDivider Vertical="true"
                         Class="my-0 ml-0 mr-2"/>
-            <MenuArtist Artist="@Model"
+            <MenuArtist ArtistId="@Model.Id"
                         Style="margin-left: 3px; margin-top: 6px;"
                         Class="pa-0" />
         </MudPaper>
@@ -31,7 +31,7 @@ else
             </MudPaper>
             <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-start;">
                 <MenuArtist Style="text-align: right; vertical-align: top;"
-                            Artist="@Model" />
+                            ArtistId="@Model.Id" />
             </MudPaper>
         </MudContainer>
         <MudDivider Class="mt-3" />

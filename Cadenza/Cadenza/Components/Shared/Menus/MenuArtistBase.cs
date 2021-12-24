@@ -23,7 +23,7 @@ public class MenuArtistBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public LibraryArtistDetails Artist { get; set; }
+    public string ArtistId { get; set; }
 
     public async Task OnEdit()
     {

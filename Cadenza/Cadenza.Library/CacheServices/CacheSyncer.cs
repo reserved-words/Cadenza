@@ -38,19 +38,6 @@ internal class CacheSyncer : IComplexCacher
         }
     }
 
-    public void AddTrack(TrackFull track)
-    {
-        _itemCacher.AddTrack(track.Track, false);
-        _itemCacher.AddAlbum(track.Album, false);
-        _itemCacher.AddArtist(track.Artist, false, false);
-        _itemCacher.AddAlbumTrack(new AlbumTrackLink
-        {
-            AlbumId = track.Album.Id,
-            TrackId = track.Track.Id,
-            Position = track.Position
-        });
-    }
-
     public void AddTracks(ICollection<Track> tracks)
     {
         foreach (var track in tracks)

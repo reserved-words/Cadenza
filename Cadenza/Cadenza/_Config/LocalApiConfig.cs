@@ -21,6 +21,7 @@ public class LocalApiConfig : ILocalApiConfig
     public string ArtistUrl => $"{BaseUrl}/Library/Artist/{Placeholder}";
     public string ArtistsUrl => $"{BaseUrl}/Library/Artists";
     public string TrackUrl => $"{BaseUrl}/Library/Track/{Placeholder}";
+    public string FullTrackUrl => $"{BaseUrl}/Library/FullTrack/{Placeholder}";
     public string TracksUrl => $"{BaseUrl}/Library/Tracks";
 
     public string TrackUriFormat => $"{BaseUrl}/Play/Track/{Placeholder}";

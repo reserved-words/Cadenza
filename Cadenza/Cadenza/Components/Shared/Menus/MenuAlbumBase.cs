@@ -23,7 +23,7 @@ public class MenuAlbumBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public LibraryAlbum Album { get; set; }
+    public string AlbumId { get; set; }
 
     public async Task OnEdit()
     {

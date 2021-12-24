@@ -15,20 +15,56 @@ public class TrackRepository : ITrackRepositoryUpdater
 
     public async Task AddTrack(PlayingTrack track)
     {
-        using (var db = await _dbFactory.Create<LibraryDb>())
+        using var db = await _dbFactory.Create<LibraryDb>();
+
+        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
+
+        var summary = JsonConvert.SerializeObject(track);
+
+        if (dbTrack == null)
         {
             db.Tracks.Add(new DbTrack
             {
                 Id = track.Id,
-                Details = JsonConvert.SerializeObject(track)
+                Summary = summary
             });
-
-            await db.SaveChanges();
         }
+        else
+        {
+            dbTrack.Summary = summary;
+        }
+
+        await db.SaveChanges();
     }
 
-    public async Task<PlayingTrack> GetSummary(LibrarySource source, string id)
+    public async Task AddTrack(FullTrack track)
     {
+        using var db = await _dbFactory.Create<LibraryDb>();
+
+        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
+
+        var details = JsonConvert.SerializeObject(track);
+
+        if (dbTrack == null)
+        {
+            db.Tracks.Add(new DbTrack
+            {
+                Id = track.Id,
+                Details = details
+            });
+        }
+        else
+        {
+            dbTrack.Details = details;
+        }
+
+        await db.SaveChanges();
+    }
+
+    public async Task<PlayingTrack?> GetSummary(LibrarySource source, string id)
+    {
+        // If Details are there can use that instead of summary
+
         using var db = await _dbFactory.Create<LibraryDb>();
 
         var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
@@ -36,6 +72,18 @@ public class TrackRepository : ITrackRepositoryUpdater
         if (dbTrack == null)
             return null;
 
-        return JsonConvert.DeserializeObject<PlayingTrack>(dbTrack.Details);
+        return JsonConvert.DeserializeObject<PlayingTrack>(dbTrack.Details ?? dbTrack.Summary);
+    }
+
+    public async Task<FullTrack?> GetDetails(LibrarySource source, string id)
+    {
+        using var db = await _dbFactory.Create<LibraryDb>();
+
+        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
+
+        if (dbTrack?.Details == null)
+            return null;
+
+        return JsonConvert.DeserializeObject<FullTrack>(dbTrack.Details);
     }
 }

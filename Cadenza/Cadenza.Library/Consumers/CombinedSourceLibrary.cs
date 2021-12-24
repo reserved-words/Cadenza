@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class CombinedSourceLibrary : ICombinedSourceLibrary
+public class CombinedSourceLibrary // : ICombinedSourceLibrary
 {
     private readonly Dictionary<LibrarySource, DynamicSourceManager> _sources;
 
@@ -70,19 +70,19 @@ public class CombinedSourceLibrary : ICombinedSourceLibrary
     //    return await _cache.GetAllTracks();
     //}
 
-    public async Task<TrackFull> GetTrack(string id, LibrarySource source)
-    {
-        await UpdateTrack(id, source);
-        return await _cache.GetTrack(id);
-    }
+    //public async Task<TrackFull> GetTrack(string id, LibrarySource source)
+    //{
+    //    await UpdateTrack(id, source);
+    //    return await _cache.GetTrack(id);
+    //}
 
-    private async Task UpdateTrack(string id, LibrarySource source)
-    {
-        var service = _sources[source];
-        var track = await service.GetTrack(id);
-        if (track == null)
-            return;
+    //private async Task UpdateTrack(string id, LibrarySource source)
+    //{
+    //    var service = _sources[source];
+    //    var track = await service.GetTrack(id);
+    //    if (track == null)
+    //        return;
 
-        _syncer.AddTrack(track);
-    }
+    //    _syncer.AddTrack(track);
+    //}
 }

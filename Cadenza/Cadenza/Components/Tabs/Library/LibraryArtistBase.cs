@@ -49,6 +49,9 @@ public class LibraryArtistBase : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
+        if (ArtistId == Model?.Id)
+            return;
+
         PlaceholderText = "Loading artist...";
 
         Model = null;

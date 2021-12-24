@@ -29,11 +29,11 @@ public class LocalLibrary : ISourceRepository
         return artist;
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<FullTrack> GetTrack(string id)
     {
         var url = Url(_apiConfig.TrackUrl, id);
         var response = await _httpClient.Get(url);
-        return await response.Content.ReadFromJsonAsync<TrackFull>();
+        return await response.Content.ReadFromJsonAsync<FullTrack>();
     }
 
     public async Task<List<string>> GetAllTracks()
@@ -71,6 +71,14 @@ public class LocalLibrary : ISourceRepository
     {
         var response = await _httpClient.Get(Url(_apiConfig.TrackUrl, id));
         var track = await response.Content.ReadFromJsonAsync<PlayingTrack>();
+        track.ArtworkUrl = $"{_apiConfig.BaseUrl}{track.ArtworkUrl}";
+        return track;
+    }
+
+    async Task<FullTrack> ISourceRepository.GetFullTrack(string id)
+    {
+        var response = await _httpClient.Get(Url(_apiConfig.FullTrackUrl, id));
+        var track = await response.Content.ReadFromJsonAsync<FullTrack>();
         track.ArtworkUrl = $"{_apiConfig.BaseUrl}{track.ArtworkUrl}";
         return track;
     }

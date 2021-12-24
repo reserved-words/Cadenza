@@ -16,15 +16,10 @@ public class ImageSrcGenerator : IImageSrcGenerator
         return GetImageSrc(album.AlbumTracks.First().Track);
     }
 
-    public string GetImageSrc(TrackFull track)
+    public string GetImageSrc(FullTrack track)
     {
-        return GetImageSrc(track.Track);
+        return GetImageSrc(track);
     }
-
-    //public string GetImageSrc(TrackSummary track)
-    //{
-    //    return GetImageSrc(track.Track);
-    //}
 
     private string GetImageSrc(Track track)
     {

@@ -33,6 +33,11 @@ public class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.GetByAlbum(album.Source, album.ArtistId, album.Id);
 
+        if (album.ReleaseType == ReleaseType.Playlist)
+        {
+            tracks = _shuffler.Shuffle(tracks).ToList();
+        }
+
         return new PlaylistDefinition
         {
             Type = PlaylistType.Album,

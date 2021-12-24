@@ -50,12 +50,17 @@ public abstract class SourceLibrary : ILibrary
         return tracks;
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<PlayingTrack> GetTrack(string id)
     {
         var track = await _baseLibrary.GetTrack(id);
-        track.Track.Source = Source;
-        track.Album.Source = Source;
-        track.Artist.AddSourceId(Source, track.Artist.Id);
+        track.Source = Source;
+        return track;
+    }
+
+    public async Task<FullTrack> GetFullTrack(string id)
+    {
+        var track = await _baseLibrary.GetFullTrack(id);
+        track.Source = Source;
         return track;
     }
 }

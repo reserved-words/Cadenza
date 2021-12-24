@@ -34,12 +34,22 @@ internal class DynamicSourceManager
         return artists;
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<PlayingTrack> GetTrack(string id)
     {
         if (_trackDetailsFetched.Contains(id))
             return null;
 
         var track = await _source.GetTrack(id);
+        _trackDetailsFetched.Add(id);
+        return track;
+    }
+
+    public async Task<FullTrack> GetFullTrack(string id)
+    {
+        if (_trackDetailsFetched.Contains(id))
+            return null;
+
+        var track = await _source.GetFullTrack(id);
         _trackDetailsFetched.Add(id);
         return track;
     }

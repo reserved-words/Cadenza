@@ -8,4 +8,5 @@ public interface ISourceRepository
     Task<List<string>> GetAlbumTracks(string artistId, string albumId);
     Task<List<string>> GetArtistTracks(string id);
     Task<List<string>> GetAllTracks();
+    Task<FullTrack> GetFullTrack(string id);
 }

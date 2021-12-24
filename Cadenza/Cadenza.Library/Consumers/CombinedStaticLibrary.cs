@@ -34,10 +34,16 @@ public class CombinedStaticLibrary : ILibrary
         return await _cache.GetAllTracks();
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<PlayingTrack> GetTrack(string id)
     {
         await PopulateStaticSources();
         return await _cache.GetTrack(id);
+    }
+
+    public async Task<FullTrack> GetFullTrack(string id)
+    {
+        await PopulateStaticSources();
+        return await _cache.GetFullTrack(id);
     }
 
     private async Task PopulateStaticSources()
