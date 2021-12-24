@@ -63,8 +63,6 @@ public class TrackRepository : ITrackRepositoryUpdater
 
     public async Task<PlayingTrack?> GetSummary(LibrarySource source, string id)
     {
-        // If Details are there can use that instead of summary
-
         using var db = await _dbFactory.Create<LibraryDb>();
 
         var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);

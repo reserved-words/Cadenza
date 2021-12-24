@@ -9,8 +9,4 @@ public interface INameComparer
     string GetSortName(string name);
 
     string GetStandardisedName(string name);
-
-    T GetMatch<T>(Dictionary<string, T> dictionary, string name) where T : class, INamed;
-
-    T GetMatch<T>(List<T> items, string name) where T : INamed;
 }

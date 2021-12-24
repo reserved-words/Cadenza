@@ -66,7 +66,6 @@ internal static class ServiceProviderExtensions
             .AddTransient<INameComparer, NameComparer>()
             .AddTransient<INotificationService, MudNotificationService>()
             .AddTransient<IRandomGenerator, RandomGenerator>()
-            .AddTransient<ISorter, Sorter>()
             .AddTransient<IStoreGetter, Store>()
             .AddTransient<IStoreSetter, Store>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()

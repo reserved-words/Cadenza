@@ -16,11 +16,6 @@ public class TimeSpanConverter : ITimeSpanConverter
         return TimeSpan.ParseExact(timeSpan, Format, CultureInfo.InvariantCulture);
     }
 
-    public int StringToSeconds(string timeSpan)
-    {
-        return TimeSpanToSeconds(StringToTimeSpan(timeSpan));
-    }
-
     public int TimeSpanToSeconds(TimeSpan timeSpan)
     {
         return (int)Math.Ceiling(timeSpan.TotalSeconds);
@@ -29,10 +24,5 @@ public class TimeSpanConverter : ITimeSpanConverter
     public TimeSpan SecondsToTimeSpan(int seconds)
     {
         return TimeSpan.FromSeconds(seconds);
-    }
-
-    public string SecondsToString(int seconds)
-    {
-        return TimeSpanToString(SecondsToTimeSpan(seconds));
     }
 }
