@@ -15,13 +15,4 @@ public class Base64Converter : IBase64Converter
         var textBytes = Encoding.UTF8.GetBytes(text);
         return Convert.ToBase64String(textBytes);
     }
-
-    public string ToImageSrc(byte[] bytes)
-    {
-        if (bytes == null)
-            return "";
-
-        var artworkBase64 = Convert.ToBase64String(bytes);
-        return $"data:image/png;base64,{artworkBase64}";
-    }
 }

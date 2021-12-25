@@ -2,7 +2,7 @@
 
 public class LibraryUpdater : ILibraryUpdater
 {
-    private readonly ISimpleCacher _cache;
+    private readonly ICacher _cache;
 
     public LibraryUpdater(IMerger merger, ICache cache)
     {

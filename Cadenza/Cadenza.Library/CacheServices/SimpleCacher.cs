@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-internal class SimpleCacher : ISimpleCacher
+internal class SimpleCacher : ICacher
 {
     private readonly ICache _cache;
     private readonly IMerger _merger;

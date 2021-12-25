@@ -2,9 +2,9 @@
 
 public class StaticLibraryCacher : IStaticLibraryCacher
 {
-    private readonly ISimpleCacher _itemCacher;
+    private readonly ICacher _itemCacher;
 
-    public StaticLibraryCacher(ISimpleCacher itemCacher)
+    public StaticLibraryCacher(ICacher itemCacher)
     {
         _itemCacher = itemCacher;
     }

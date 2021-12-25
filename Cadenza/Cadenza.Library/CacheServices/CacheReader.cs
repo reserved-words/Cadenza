@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-internal class CacheReader : ICacheReader
+internal class CacheReader : ICacheConsumer
 {
     private readonly ICache _cache;
 

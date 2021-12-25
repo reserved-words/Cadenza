@@ -2,7 +2,7 @@
 
 internal class CachedLibrary : ILibrary
 {
-    private readonly ICacheReader _cache;
+    private readonly ICacheConsumer _cache;
 
     public CachedLibrary(ICache cache)
     {

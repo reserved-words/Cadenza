@@ -3,7 +3,7 @@
 public class CombinedSourceLibraryUpdater : ICombinedSourceLibraryUpdater
 {
     private readonly Dictionary<LibrarySource, ISourceLibraryUpdater> _sourceUpdaters;
-    private readonly ISimpleCacher _cacheUpdater;
+    private readonly ICacher _cacheUpdater;
 
     public CombinedSourceLibraryUpdater(Dictionary<LibrarySource, ISourceLibraryUpdater> sourceUdpaters, IMerger merger, ICache cache)
     {

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public interface ISimpleCacher
+public interface ICacher
 {
     void AddArtist(ArtistInfo artist, bool asAlbumArtist, bool forceUpdate);
     void AddAlbum(AlbumInfo album, bool forceUpdate);

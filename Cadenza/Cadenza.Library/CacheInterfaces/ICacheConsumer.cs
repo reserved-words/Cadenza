@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public interface ICacheReader
+public interface ICacheConsumer
 {
     ArtistInfo GetArtist(string artistId);
     TrackInfo GetTrack(string trackId);

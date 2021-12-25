@@ -11,27 +11,6 @@ public class ImageSrcGenerator : IImageSrcGenerator
         _id3TagsService = id3TagsService;
     }
 
-    public string GetImageSrc(AlbumFull album)
-    {
-        return GetImageSrc(album.AlbumTracks.First().Track);
-    }
-
-    public string GetImageSrc(FullTrack track)
-    {
-        return GetImageSrc(track);
-    }
-
-    private string GetImageSrc(Track track)
-    {
-        return GetImageSrc(track.Id);
-    }
-
-    public string GetImageSrc(string trackId)
-    {
-        var artwork = GetArtwork(trackId);
-        return _base64Converter.ToImageSrc(artwork.Bytes);
-    }
-
     public (byte[] Bytes, string Type) GetArtwork(string id)
     {
         var trackPath = _base64Converter.FromBase64(id);

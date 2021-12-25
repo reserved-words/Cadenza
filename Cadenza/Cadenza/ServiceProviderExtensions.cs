@@ -46,12 +46,11 @@ internal static class ServiceProviderExtensions
         ;
     }
 
-    public static IServiceCollection AddAppServices(this IServiceCollection sc)
+    public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        sc.AddSingleton<AppService>();
-        sc.AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>());
-        sc.AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>());
-        return sc;
+        return services.AddSingleton<AppService>()
+            .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>())
+            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>());
     }
 
     public static IServiceCollection AddUtilities(this IServiceCollection services)
@@ -70,7 +69,6 @@ internal static class ServiceProviderExtensions
             .AddTransient<IStoreSetter, Store>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IShuffler, Shuffler>()
-            .AddTransient<ITimeSpanConverter, TimeSpanConverter>()
             .AddTransient<IValueMerger, ValueMerger>();
     }
 
@@ -91,27 +89,21 @@ internal static class ServiceProviderExtensions
 
     public static IServiceCollection AddSpotify(this IServiceCollection services)
     {
-        services.AddTransient<ISpotifyApiConfig, SpotifyConfig>()
+        return services.AddTransient<ISpotifyApiConfig, SpotifyConfig>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
-            .AddTransient<IOverridesService, SpotifyOverridesService>();
-
-        return services
+            .AddTransient<IOverridesService, SpotifyOverridesService>()
             .AddTransient<SpotifyOverrides>()
             .AddTransient<SpotifyApiLibrary>();
     }
 
     public static IServiceCollection AddPlayers(this IServiceCollection services)
     {
-        services.AddTransient<CorePlayer>();
-
-        services.AddTransient<TimingPlayer>(sp => new TimingPlayer(
-            sp.GetRequiredService<CorePlayer>(),
-            sp.GetRequiredService<ITrackTimerController>()));
-
-
-        return services;
+        return services.AddTransient<CorePlayer>()
+            .AddTransient<TimingPlayer>(sp => new TimingPlayer(
+                sp.GetRequiredService<CorePlayer>(),
+                sp.GetRequiredService<ITrackTimerController>()));
     }
 
     public static IServiceCollection AddLocalLibrary(this IServiceCollection services)
@@ -143,35 +135,35 @@ internal static class ServiceProviderExtensions
     private static Dictionary<LibrarySource, ISourceRepository> GetSourceRepositories(IServiceProvider sp)
     {
         return new Dictionary<LibrarySource, ISourceRepository>
-            {
-                { LibrarySource.Local, sp.GetService<LocalLibrary>() },
-                { LibrarySource.Spotify, sp.GetService<SpotifyLibrary>() }
-            };
+        {
+            { LibrarySource.Local, sp.GetService<LocalLibrary>() },
+            { LibrarySource.Spotify, sp.GetService<SpotifyLibrary>() }
+        };
     }
 
     private static Dictionary<LibrarySource, IAudioPlayer> GetPlayers(IServiceProvider sp)
     {
         return new Dictionary<LibrarySource, IAudioPlayer>
-            {
-                { LibrarySource.Local, sp.GetService<LocalPlayer>() },
-                { LibrarySource.Spotify, sp.GetService<SpotifyPlayer>() }
-            };
+        {
+            { LibrarySource.Local, sp.GetService<LocalPlayer>() },
+            { LibrarySource.Spotify, sp.GetService<SpotifyPlayer>() }
+        };
     }
 
     private static Dictionary<LibrarySource, ISourceLibraryUpdater> GetUpdaters(this IServiceProvider sp)
     {
         return new Dictionary<LibrarySource, ISourceLibraryUpdater>
-            {
-                { LibrarySource.Local, sp.GetService<LocalLibraryUpdater>() },
-                { LibrarySource.Spotify, sp.GetService<SpotifyUpdater>() }
-            };
+        {
+            { LibrarySource.Local, sp.GetService<LocalLibraryUpdater>() },
+            { LibrarySource.Spotify, sp.GetService<SpotifyUpdater>() }
+        };
     }
 
     private static Dictionary<LibrarySource, IOverridesService> GetOverriders(IServiceProvider sp)
     {
         return new Dictionary<LibrarySource, IOverridesService>
-            {
-                { LibrarySource.Spotify, sp.GetService<SpotifyOverridesService>() }
-            };
+        {
+            { LibrarySource.Spotify, sp.GetService<SpotifyOverridesService>() }
+        };
     }
 }

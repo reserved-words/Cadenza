@@ -2,18 +2,18 @@
 
 public class CombinedStaticLibrary : ILibrary
 {
-    private readonly List<StaticSourceManager> _sources;
+    private readonly List<IStaticSource> _sources;
 
     private readonly ILibrary _cache;
     private readonly IStaticLibraryCacher _libraryCacher;
 
-    public CombinedStaticLibrary(ICache cache, IMerger merger, List<IStaticSource> staticSources)
+    public CombinedStaticLibrary(ICache cache, IMerger merger, List<IStaticSource> sources)
     {
         var itemCacher = new SimpleCacher(merger, cache);
 
         _cache = new CachedLibrary(cache);
         _libraryCacher = new StaticLibraryCacher(itemCacher);
-        _sources = staticSources.Select(s => new StaticSourceManager(s)).ToList();
+        _sources = sources;
     }
 
     public async Task<ArtistFull> GetAlbumArtist(string id)
@@ -50,8 +50,13 @@ public class CombinedStaticLibrary : ILibrary
     {
         foreach (var source in _sources)
         {
-            var library = await source.Fetch();
+            var library = await Fetch(source);
             _libraryCacher.AddStaticLibrary(library, false);
         }
+    }
+
+    private async Task<StaticLibrary> Fetch(IStaticSource source)
+    {
+        return await source.GetStaticLibrary();
     }
 }
