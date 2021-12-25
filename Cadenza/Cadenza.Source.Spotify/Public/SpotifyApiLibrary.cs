@@ -63,8 +63,7 @@ public class SpotifyApiLibrary : IStaticSource
                 var trackArtist = playlistItem.track.artists.First();
 
                 var trackArtistInfo = trackArtists
-                    .SingleOrDefault(a => 
-                        a.SourceIds.Any(s => s.Source == LibrarySource.Spotify && s.Id == trackArtist.id));
+                    .SingleOrDefault(a => a.Id == GetUniversalId(trackArtist.name));
 
                 if (trackArtistInfo == null)
                 {
@@ -85,7 +84,7 @@ public class SpotifyApiLibrary : IStaticSource
             if (trackArtists.Count > 1)
             {
                 var playlistArtistName = "Various Artists";
-                var playlistArtistId = _idGenerator.GenerateArtistId(playlistArtistName);
+                var playlistArtistId = GetUniversalId(playlistArtistName);
 
                 albumArtistInfo = new ArtistInfo
                 {
@@ -200,9 +199,13 @@ public class SpotifyApiLibrary : IStaticSource
             Grouping = Grouping.None
         };
 
-        artistInfo.Id = _idGenerator.GenerateArtistId(artistInfo.Name);
-        artistInfo.AddSourceId(LibrarySource.Spotify, artist.id);
+        artistInfo.Id = GetUniversalId(artistInfo.Name);
 
         return artistInfo;
+    }
+
+    private string GetUniversalId(string artistName)
+    {
+        return _idGenerator.GenerateArtistId(artistName);
     }
 }

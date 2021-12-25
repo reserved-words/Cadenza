@@ -18,7 +18,6 @@ public abstract class SourceLibrary : ILibrary
         if (artist == null)
             return null;
 
-        artist.Artist.AddSourceId(Source, id);
         foreach (var album in artist.Albums)
         {
             album.Album.Source = Source;
@@ -32,12 +31,7 @@ public abstract class SourceLibrary : ILibrary
 
     public async Task<ICollection<Artist>> GetAlbumArtists()
     {
-        var artists = await _baseLibrary.GetAlbumArtists();
-        foreach (var artist in artists)
-        {
-            artist.AddSourceId(Source, artist.Id);
-        }
-        return artists;
+        return await _baseLibrary.GetAlbumArtists();
     }
 
     public async Task<ICollection<Track>> GetAllTracks()

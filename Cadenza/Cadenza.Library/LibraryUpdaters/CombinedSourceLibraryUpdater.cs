@@ -26,16 +26,16 @@ public class CombinedSourceLibraryUpdater : ICombinedSourceLibraryUpdater
     {
         foreach (var source in _sourceUpdaters.Keys)
         {
-            if (artist.Item.IsInSource(source))
-            {
-                var updater = _sourceUpdaters[source];
-                var success = await updater.UpdateArtist(artist);
+            // Artist might not be in source but source responsible for checking that
+            // Try to do this asynchronously so can happen at the same time for all sources
 
-                // if successful need to update cache
+            var updater = _sourceUpdaters[source];
+            var success = await updater.UpdateArtist(artist);
 
-                if (!success)
-                    return false;
-            }
+            // if successful need to update cache
+
+            if (!success)
+                return false;
         }
 
         return true;

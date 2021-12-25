@@ -23,7 +23,6 @@ public class JsonLibrary : IStaticSource
         foreach (var jsonArtist in jsonArtists)
         {
             var artist = _converter.ConvertArtist(jsonArtist);
-            artist.AddSourceId(LibrarySource.Local, artist.Id);
             library.Artists.Add(artist);
         }
 

@@ -15,11 +15,6 @@ public class Merger : IMerger
         artist.Name = Merge(artist.Name, update.Name, forceUpdate);
         artist.Grouping = Merge(artist.Grouping, update.Grouping, forceUpdate);
         artist.Genre = Merge(artist.Genre, update.Genre, forceUpdate);
-
-        foreach (var sourceId in update.SourceIds)
-        {
-            artist.AddSourceId(sourceId);
-        }
     }
 
     public void MergeArtistInfo(ArtistInfo artist, ArtistInfo update, bool forceUpdate)
