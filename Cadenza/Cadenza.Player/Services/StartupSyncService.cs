@@ -11,99 +11,49 @@ public class StartupSyncService : IStartupSyncService
         _repository = repository;
     }
 
-    public event ProgressEventHandler ProgressChanged;
-    public event SyncProgressEventHandler SyncProgressChanged;
-
-    public async Task SyncLibrary(CancellationToken cancellationToken)
+    public TaskGroup GetLibrarySyncTasks()
     {
-        try
+        var taskGroup = new TaskGroup
         {
-            Update("Sync started", cancellationToken);
-
-            // TODO - ADD SYNC LOGIC SO DON'T HAVE TO CLEAR ALL FIRST
-
-            await _repository.Clear();
-
-            var tasks = new List<Task>();
-            
-            foreach (var source in _sources)
+            PreTask = new TaskStep
             {
-                var task = SyncSource(source, cancellationToken);
-                tasks.Add(task);
+                Task = _repository.Clear(),
+                Caption = "Clearing repository"
             }
+        };
 
-            Update("Sync in progress", cancellationToken);
-
-            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Task.WhenAll(tasks).ContinueWith(async (t) =>
-            {
-                if (t.IsFaulted)
-                {
-
-                }
-                else if (t.IsCanceled)
-                {
-                    Update("Cancelling", CancellationToken.None);
-                    await _repository.Clear();
-                    ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync cancelled", Cancelled = true });
-                }
-                else
-                {
-                    ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync complete", Completed = true });
-                }
-            });
-            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        }
-        catch (OperationCanceledException)
+        foreach (var source in _sources)
         {
-            Update("Cancelling", CancellationToken.None);
-            await _repository.Clear();
-            ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = "Sync cancelled", Cancelled = true });
+            taskGroup.Tasks.Add(GetSyncSourceSubTask(source));
         }
+
+        return taskGroup;
     }
 
-    private async Task SyncSource(KeyValuePair<LibrarySource, ISourceRepository> source, CancellationToken cancellationToken)
+    private SubTask GetSyncSourceSubTask(KeyValuePair<LibrarySource, ISourceRepository> source)
     {
-        try
+        var subTask = new SubTask
         {
-            Update(source.Key, $"Fetching artists from library", cancellationToken);
-            var artists = await source.Value.GetArtists();
-            Update(source.Key, $"Copying artists to repository", cancellationToken);
-            await _repository.AddArtists(artists);
+            Id = source.Key.ToString(),
+            Title = source.Key.ToString(),
+            Steps = new List<TaskStep>()
+        };
 
-            Update(source.Key, $"Fetching albums from library", cancellationToken);
-            var albums = await source.Value.GetAlbums();
-            Update(source.Key, $"Copying albums to repository", cancellationToken);
-            await _repository.AddAlbums(albums);
-            SyncProgressChanged?.Invoke(this, new SyncProgressEventArgs 
-            { 
-                Source = source.Key, 
-                Message = "Sync complete", 
-                Completed = true 
-            });
-        }
-        catch (OperationCanceledException)
-        {
-            SyncProgressChanged?.Invoke(this, new SyncProgressEventArgs 
-            { 
-                Source = source.Key,
-                Message = "Sync cancelled", 
-                Cancelled = true 
-            });
+        subTask.AddStep("Copying artists from source to repository", CopyArtists(source.Value));
+        subTask.AddStep("Copying albums from source to repository", CopyAlbums(source.Value));
 
-            throw;
-        }
+        return subTask;
     }
 
-    private void Update(string message, CancellationToken cancellationToken)
+    private async Task CopyArtists(ISourceRepository source)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        ProgressChanged?.Invoke(this, new ProgressEventArgs { Message = message });
+        var artists = await source.GetArtists();
+        await _repository.AddArtists(artists);
     }
 
-    private void Update(LibrarySource source, string message, CancellationToken cancellationToken)
+    private async Task CopyAlbums(ISourceRepository source)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        SyncProgressChanged?.Invoke(this, new SyncProgressEventArgs { Source = source, Message = message });
+        var albums = await source.GetAlbums();
+        await _repository.AddAlbums(albums);
     }
 }

@@ -13,6 +13,8 @@ internal static class ServiceProviderExtensions
         var spotifyCache = new Cache();
         var mainCache = new Cache();
 
+        services.AddTransient<ILongRunningTaskService, LongRunningTaskService>();
+
         services
             .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
                 sp.GetUpdaters(),

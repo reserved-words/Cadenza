@@ -1,0 +1,39 @@
+﻿@inherits ProgressDialogBase
+
+<MudDialog>
+    <DialogContent>
+        @if (Running)
+        {
+            <MudText Typo=@Typo.body1>@ProgressMessage</MudText>
+            <MudProgressLinear Indeterminate="@(State == TaskState.Running || State == TaskState.Cancelling)"
+                           Value="@(State == TaskState.Completed ? 100 : 0)"
+                           Color="@Color.Primary" />
+
+            @foreach (var task in SubTasks.Values)
+            {
+                <MudContainer Class="mx-0 my-2 pa-0">
+                    <MudText Typo=@Typo.body1>@task.Title</MudText>
+                    <MudText Typo=@Typo.body2>@task.Message</MudText>
+                    <MudProgressLinear Indeterminate="@(task.State == TaskState.Running)" Value="@(task.State == TaskState.Completed ? 100 : 0)" Color="@Color.Info" />
+                </MudContainer>
+            }
+        }
+        else
+        {
+            <MudText Typo=@Typo.body1>Do the thing? (needs to be customisable)</MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        @if (Running)
+        {
+            <MudButton Disabled="@(State != TaskState.Cancelled)" Color="@Color.Primary" OnClick="@OnStart">Start</MudButton>
+            <MudButton Disabled="@(State != TaskState.Running)" Color="@Color.Error" OnClick="@OnCancel">Cancel</MudButton>
+            <MudButton Disabled="@(State == TaskState.Running || State == TaskState.Cancelling)" Color="@Color.Success" OnClick="@OnClose">Close</MudButton>
+        }
+        else
+        {
+            <MudButton Color="@Color.Primary" OnClick="@OnStart">Yes</MudButton>
+            <MudButton Color="@Color.Success" OnClick="@OnClose">No</MudButton>
+        }
+    </DialogActions>
+</MudDialog>

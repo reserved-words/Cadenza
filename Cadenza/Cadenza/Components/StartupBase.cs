@@ -8,9 +8,17 @@ public class StartupBase : ComponentBase
     [Inject]
     public IAppController App { get; set; }
 
+    [Inject]
+    public IStartupSyncService SyncService { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        var dialogReference = DialogService.Show<StartupSyncDialog>("Syncing Library", new DialogOptions
+        var syncTasks = SyncService.GetLibrarySyncTasks();
+
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(ProgressDialog.TaskGroup), syncTasks);
+
+        var dialogReference = DialogService.Show<ProgressDialog>("Syncing Library", dialogParameters, new DialogOptions
         {
             DisableBackdropClick = true,
             MaxWidth = MaxWidth.Small,
