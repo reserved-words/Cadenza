@@ -15,11 +15,7 @@ public class StartupSyncService : IStartupSyncService
     {
         var taskGroup = new TaskGroup
         {
-            PreTask = new TaskStep
-            {
-                Task = _repository.Clear(),
-                Caption = "Clearing repository"
-            }
+            PreTask = _repository.Clear
         };
 
         foreach (var source in _sources)
@@ -39,8 +35,8 @@ public class StartupSyncService : IStartupSyncService
             Steps = new List<TaskStep>()
         };
 
-        subTask.AddStep("Copying artists from source to repository", CopyArtists(source.Value));
-        subTask.AddStep("Copying albums from source to repository", CopyAlbums(source.Value));
+        subTask.AddStep("Copying artists from source to repository", () => CopyArtists(source.Value));
+        subTask.AddStep("Copying albums from source to repository", () => CopyAlbums(source.Value));
 
         return subTask;
     }

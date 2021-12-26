@@ -1,11 +1,5 @@
 ﻿namespace Cadenza.Components.Shared.Dialogs
 {
-    public class SubTaskProgress
-    {
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public TaskState State { get; set; }
-    }
 
     public class ProgressDialogBase : DialogBase
     {
@@ -15,7 +9,13 @@
         [Parameter]
         public TaskGroup TaskGroup { get; set; }
 
-        public bool Running { get; set; }
+        [Parameter]
+        public string StartPromptText { get; set; }
+
+        public bool Started => State.Started();
+        public bool InProgress => State.InProgress();
+        public bool Ended => State.Ended();
+
         public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; }
@@ -23,7 +23,7 @@
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             Service.TaskGroupProgressChanged += OnTaskGroupProgressChanged;
             Service.SubTaskProgressChanged += OnSubTaskProgressChanged;
@@ -43,45 +43,22 @@
         private async Task OnTaskGroupProgressChanged(object sender, TaskGroupProgressEventArgs e)
         {
             ProgressMessage = e.Message;
-
-            // TODO: Errored
-
-            State = e.Completed
-                ? TaskState.Completed
-                : e.Cancelled
-                ? TaskState.Cancelled
-                : TaskState.Running;
-
+            State = e.State;
             StateHasChanged();
         }
 
         private async Task OnSubTaskProgressChanged(object sender, SubTaskProgressEventArgs e)
         {
             var task = SubTasks[e.Id];
-
             task.Message = e.Message;
-
-            // TODO: Errored
-
-            task.State = e.Completed
-                ? TaskState.Completed
-                : e.Cancelled
-                ? TaskState.Cancelled
-                : TaskState.Running;
-
+            task.State = e.State;
             StateHasChanged();
         }
 
         protected async Task OnStart()
         {
-            // also need a way to start straight away - parameter
-
-            Running = true;
-
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-
-            State = TaskState.Running;
             await Service.RunTasks(TaskGroup, _cancellationToken);
         }
 
