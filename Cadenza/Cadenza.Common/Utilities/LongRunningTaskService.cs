@@ -78,7 +78,7 @@ public class LongRunningTaskService : ILongRunningTaskService
         }
         catch (Exception ex)
         {
-            Update(task.Id, "Errored", TaskState.Errored, CancellationToken.None);
+            Update(task.Id, $"Errored: {ex.Message}", TaskState.Errored, CancellationToken.None);
             throw;
         }
     }
