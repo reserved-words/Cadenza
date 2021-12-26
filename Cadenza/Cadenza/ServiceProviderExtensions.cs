@@ -59,6 +59,7 @@ internal static class ServiceProviderExtensions
     {
         return services
             .AddTransient<IDialogService, MudDialogService>()
+            .AddTransient<IProgressDialogService, ProgressDialogService>()
             .AddTransient<IDateTime, CurrentDateTime>()
             .AddTransient<IHasher, Hasher>()
             .AddTransient<IHttpClient, HttpClient>()
