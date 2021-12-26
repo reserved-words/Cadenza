@@ -17,7 +17,7 @@ public class StartupBase : ComponentBase
 
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(ProgressDialog.TaskGroup), syncTasks);
-        //dialogParameters.Add(nameof(ProgressDialog.AutoStart), false);
+        dialogParameters.Add(nameof(ProgressDialog.AutoStart), false);
         dialogParameters.Add(nameof(ProgressDialog.StartPromptText), "Would you like to re-sync source libraries?");
 
         var dialogReference = DialogService.Show<ProgressDialog>("Syncing Library", dialogParameters, new DialogOptions

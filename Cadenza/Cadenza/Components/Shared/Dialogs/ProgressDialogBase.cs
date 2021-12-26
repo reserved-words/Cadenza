@@ -10,6 +10,9 @@
         public TaskGroup TaskGroup { get; set; }
 
         [Parameter]
+        public bool AutoStart { get; set; }
+
+        [Parameter]
         public string StartPromptText { get; set; }
 
         public bool Started => State.Started();
@@ -29,7 +32,7 @@
             Service.SubTaskProgressChanged += OnSubTaskProgressChanged;
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
             SubTasks = TaskGroup.Tasks
                 .ToDictionary(t => t.Id, t => new SubTaskProgress 
@@ -38,6 +41,11 @@
                     State = TaskState.None, 
                     Message = "" 
                 });
+
+            if (AutoStart)
+            {
+                await OnStart();
+            }
         }
 
         private async Task OnTaskGroupProgressChanged(object sender, TaskGroupProgressEventArgs e)
