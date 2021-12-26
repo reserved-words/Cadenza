@@ -3,5 +3,5 @@
 public class TaskStep
 {
     public string Caption { get; set; }
-    public Func<Task> Task { get; set; }
+    public Func<object, Task<object>> Task { get; set; }
 }

@@ -61,10 +61,12 @@ public class LongRunningTaskService : ILongRunningTaskService
     {
         try
         {
+            object result = null;
+
             foreach (var step in task.Steps)
             {
                 Update(task.Id, step.Caption, TaskState.Running, cancellationToken);
-                await step.Task();
+                result = await step.Task(result);
             }
 
             Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);

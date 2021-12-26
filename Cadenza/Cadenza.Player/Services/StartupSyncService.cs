@@ -35,21 +35,18 @@ public class StartupSyncService : IStartupSyncService
             Steps = new List<TaskStep>()
         };
 
-        subTask.AddStep("Copying artists from source to repository", () => CopyArtists(source.Value));
-        subTask.AddStep("Copying albums from source to repository", () => CopyAlbums(source.Value));
+        subTask.AddSteps(
+            "Fetching artists from source",
+            "Copying artists to repository",
+            () => source.Value.GetArtists(),
+            (r) => _repository.AddArtists(r));
+
+        subTask.AddSteps(
+            "Fetching albums from source",
+            "Copying albums to repository",
+            () => source.Value.GetAlbums(),
+            (r) => _repository.AddAlbums(r));
 
         return subTask;
-    }
-
-    private async Task CopyArtists(ISourceRepository source)
-    {
-        var artists = await source.GetArtists();
-        await _repository.AddArtists(artists);
-    }
-
-    private async Task CopyAlbums(ISourceRepository source)
-    {
-        var albums = await source.GetAlbums();
-        await _repository.AddAlbums(albums);
     }
 }
