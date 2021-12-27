@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Library;
+﻿- namespace Cadenza.Library;
 
 internal class SimpleCacher : ICacher
 {
@@ -14,7 +14,7 @@ internal class SimpleCacher : ICacher
     public void AddArtist(ArtistInfo artist, bool asAlbumArtist, bool forceUpdate)
     {
         var existingArtist = _cache.Artists.GetOrAdd(artist.Id);
-        _merger.MergeArtistInfo(existingArtist, artist, forceUpdate);
+        _merger.MergeArtist(existingArtist, artist, forceUpdate);
 
         if (asAlbumArtist)
         {

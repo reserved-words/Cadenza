@@ -9,18 +9,12 @@ public class Merger : IMerger
         _merger = merger;
     }
 
-    public void MergeArtist(Artist artist, Artist update, bool forceUpdate)
+    public void MergeArtist(ArtistInfo artist, ArtistInfo update, bool forceUpdate)
     {
         artist.Id = Merge(artist.Id, update.Id, forceUpdate);
         artist.Name = Merge(artist.Name, update.Name, forceUpdate);
         artist.Grouping = Merge(artist.Grouping, update.Grouping, forceUpdate);
         artist.Genre = Merge(artist.Genre, update.Genre, forceUpdate);
-    }
-
-    public void MergeArtistInfo(ArtistInfo artist, ArtistInfo update, bool forceUpdate)
-    {
-        MergeArtist(artist, update, forceUpdate);
-
         artist.City = Merge(artist.City, update.City, forceUpdate);
         artist.State = Merge(artist.State, update.State, forceUpdate);
         artist.Country = Merge(artist.Country, update.Country, forceUpdate);

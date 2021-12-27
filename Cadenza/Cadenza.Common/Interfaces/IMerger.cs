@@ -2,8 +2,7 @@
 
 public interface IMerger
 {
-    void MergeArtist(Artist artist, Artist update, bool forceUpdate);
-    void MergeArtistInfo(ArtistInfo artist, ArtistInfo update, bool forceUpdate);
+    void MergeArtist(ArtistInfo artist, ArtistInfo update, bool forceUpdate);
     void MergeAlbum(AlbumInfo album, AlbumInfo update, bool forceUpdate);
     void MergeTrack(TrackInfo newTrack, TrackInfo existingTrack, bool forceUpdate);
 
