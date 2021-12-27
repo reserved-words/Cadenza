@@ -1,4 +1,4 @@
-﻿- namespace Cadenza.Library;
+﻿namespace Cadenza.Library;
 
 internal class SimpleCacher : ICacher
 {
