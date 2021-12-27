@@ -19,6 +19,10 @@ variables:
   localApi.projectFilePattern: '**/*Local.API.csproj'
   localApi.projectPath: 'Cadenza.Local.API'
   
+  playerApi.projectName: 'PlayerAPI'
+  playerApi.projectFilePattern: '**/Cadenza.API.csproj'
+  playerApi.projectPath: 'Cadenza.API'
+
   syncService.serviceName: 'CadenzaSyncService'
   syncService.serviceDisplayName: 'Cadenza Sync Service'
   
@@ -31,6 +35,11 @@ variables:
   localApi.artifactFolder: '$(Pipeline.Workspace)/$(localApi.artifactName)'
   localApi.artifactLocation: '$(localApi.artifactFolder)/$(localApi.projectPath)'
   localApi.archiveFile: '$(localApi.projectPath)-$(Build.BuildId).zip'
+  
+  playerApi.artifactName: '$(artifactPrefix)-$(playerApi.projectPath)'
+  playerApi.artifactFolder: '$(Pipeline.Workspace)/$(playerApi.artifactName)'
+  playerApi.artifactLocation: '$(playerApi.artifactFolder)/$(playerApi.projectPath)'
+  playerApi.archiveFile: '$(playerApi.projectPath)-$(Build.BuildId).zip'
 
 stages:
 - stage: build
@@ -56,6 +65,15 @@ stages:
         projectFilePattern: $(localApi.projectFilePattern)
         projectPath: $(localApi.projectPath)
         artifactName: $(localApi.artifactName)
+        isWebProject: true
+  - job: builPlayerApi
+    displayName: 'Build Player API'
+    steps:
+    - template: Templates/build.yml@self
+      parameters:
+        projectFilePattern: $(playerApi.projectFilePattern)
+        projectPath: $(playerApi.projectPath)
+        artifactName: $(playerApi.artifactName)
         isWebProject: true
         
 - stage: test
@@ -98,6 +116,15 @@ stages:
         artifactName: $(localApi.artifactName) 
         artifactLocation: $(localApi.artifactLocation)
         archiveFile: $(localApi.archiveFile)
+  - job: publishPlayerApi
+    displayName: 'Publish Player API'
+    steps:
+    - template: Templates/publish.yml@self
+      parameters:
+        projectName: $(playerApi.projectName)
+        artifactName: $(playerApi.artifactName) 
+        artifactLocation: $(playerApi.artifactLocation)
+        archiveFile: $(playerApi.archiveFile)
         
 - stage: github
   displayName: 'GitHub'
