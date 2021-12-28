@@ -22,6 +22,10 @@ variables:
   playerApi.projectName: 'PlayerAPI'
   playerApi.projectFilePattern: '**/Cadenza.API.csproj'
   playerApi.projectPath: 'Cadenza.API'
+  
+  app.projectName: 'Cadenza'
+  app.projectFilePattern: '**/Cadenza.csproj'
+  app.projectPath: 'Cadenza'
 
   syncService.serviceName: 'CadenzaSyncService'
   syncService.serviceDisplayName: 'Cadenza Sync Service'
@@ -40,6 +44,11 @@ variables:
   playerApi.artifactFolder: '$(Pipeline.Workspace)/$(playerApi.artifactName)'
   playerApi.artifactLocation: '$(playerApi.artifactFolder)/$(playerApi.projectPath)'
   playerApi.archiveFile: '$(playerApi.projectPath)-$(Build.BuildId).zip'
+  
+  app.artifactName: '$(artifactPrefix)-$(app.projectPath)'
+  app.artifactFolder: '$(Pipeline.Workspace)/$(app.artifactName)'
+  app.artifactLocation: '$(app.artifactFolder)/$(app.projectPath)'
+  app.archiveFile: '$(app.projectPath)-$(Build.BuildId).zip'
 
 stages:
 - stage: build
@@ -66,7 +75,7 @@ stages:
         projectPath: $(localApi.projectPath)
         artifactName: $(localApi.artifactName)
         isWebProject: true
-  - job: builPlayerApi
+  - job: buildPlayerApi
     displayName: 'Build Player API'
     steps:
     - template: Templates/build.yml@self
@@ -74,6 +83,15 @@ stages:
         projectFilePattern: $(playerApi.projectFilePattern)
         projectPath: $(playerApi.projectPath)
         artifactName: $(playerApi.artifactName)
+        isWebProject: true
+  - job: buildWebApp
+    displayName: 'Build Web App'
+    steps:
+    - template: Templates/build.yml@self
+      parameters:
+        projectFilePattern: $(app.projectFilePattern)
+        projectPath: $(app.projectPath)
+        artifactName: $(app.artifactName)
         isWebProject: true
         
 - stage: test
@@ -125,6 +143,15 @@ stages:
         artifactName: $(playerApi.artifactName) 
         artifactLocation: $(playerApi.artifactLocation)
         archiveFile: $(playerApi.archiveFile)
+  - job: publishWebApp
+    displayName: 'Publish Web App'
+    steps:
+    - template: Templates/publish.yml@self
+      parameters:
+        projectName: $(app.projectName)
+        artifactName: $(app.artifactName) 
+        artifactLocation: $(app.artifactLocation)
+        archiveFile: $(app.archiveFile)
         
 - stage: github
   displayName: 'GitHub'
