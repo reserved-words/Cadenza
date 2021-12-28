@@ -13,9 +13,13 @@ public class LastFmAuth : ILastFmAuth
 
     public string GetAuthUrl(string redirectUri)
     {
-        return _config.AuthUrl
-            .Add("api_key", _config.ApiKey)
-            .Add("cb", redirectUri);
+        var parameters = new Dictionary<string, string>()
+        {
+            { "api_key", _config.ApiKey },
+            { "cb", redirectUri}
+        };
+
+        return _config.AuthUrl.Add(parameters);
     }
 
     public string GetSessionKeyUrl(string token)
