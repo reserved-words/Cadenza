@@ -9,7 +9,8 @@ resources:
   - repository: self
 
 variables:
-  artifactPrefix: 'drop' 
+  artifactPrefix: 'drop'
+  artifactLocation: '$(Pipeline.Workspace)'
   
   syncService.projectName: 'LocalSyncService'
   syncService.projectFilePattern: '**/*Local.SyncService.csproj'
@@ -157,10 +158,10 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive Files'
       inputs:
-        rootFolderOrFile: '${{ Pipeline.Workspace }}' 
+        rootFolderOrFile: $(artifactLocation) 
         includeRootFolder: false 
-        archiveFile: '${{ Pipeline.Workspace }}/deployment.zip'
-    - publish: '${{ Pipeline.Workspace }}/deployment.zip'
+        archiveFile: '${{ artifactLocation }}/deployment.zip'
+    - publish: '${{ artifactLocation }}/deployment.zip'
       displayName: 'Publish Archive'
       artifact: 'Deployment Files'
         
