@@ -5,15 +5,13 @@ parameters:
   type: string
 - name: artifactName
   type: string
-- name: isWebProject
-  type: boolean
   
 - name: buildConfiguration
   type: string
   default: 'Release'
 - name: buildPlatform
   type: string
-  default: 'win-x64'
+  default: 'browser-wasm'
 - name: outputPath
   type: string
   default: '$(Build.BinariesDirectory)/$(parameters.projectPath)'
@@ -39,15 +37,15 @@ steps:
   displayName: 'Publish'
   inputs:
     command: 'publish'
-    publishWebProjects: $(parameters.isWebProject)
+    publishWebProjects: true
     projects: '${{ parameters.projectFilePattern }}'
-    arguments: '--no-build -c ${{ parameters.buildConfiguration }} -r ${{ parameters.buildPlatform }} --self-contained false -o ${{ parameters.outputPath }}'
+    arguments: '--no-build -c ${{ parameters.buildConfiguration }} -r ${{ parameters.buildPlatform }} --self-contained true -o ${{ parameters.outputPath }}'
     zipAfterPublish: false
 - task: FileTransform@2
   displayName: 'Transform App Settings'
   inputs:
     xmlTransformationRules: ''
-    folderPath: '${{ parameters.outputPath }}/${{ parameters.projectPath }}'
+    folderPath: '${{ parameters.outputPath }}/${{ parameters.projectPath }}/wwwroot'
     jsonTargetFiles: 'appsettings.json'
 - publish: '${{ parameters.outputPath }}'
   displayName: 'Publish Artifact'

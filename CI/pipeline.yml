@@ -87,12 +87,11 @@ stages:
   - job: buildWebApp
     displayName: 'Build Web App'
     steps:
-    - template: Templates/build.yml@self
+    - template: Templates/blazor.yml@self
       parameters:
         projectFilePattern: $(app.projectFilePattern)
         projectPath: $(app.projectPath)
         artifactName: $(app.artifactName)
-        isWebProject: true
         
 - stage: test
   displayName: 'Test'
