@@ -118,9 +118,6 @@ stages:
     - template: Templates/publish.yml@self
       parameters:
         projectName: $(syncService.projectName)
-        projectPath: $(syncService.projectPath)
-        serviceName: $(syncService.serviceName)
-        serviceDisplayName: $(syncService.serviceDisplayName)
         artifactName: $(syncService.artifactName) 
         artifactLocation: $(syncService.artifactLocation)
         archiveFile: $(syncService.archiveFile)

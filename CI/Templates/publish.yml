@@ -7,38 +7,11 @@ parameters:
   type: string
 - name: archiveFile
   type: string
-- name: serviceName
-  type: string
-  default: ''
-- name: serviceDisplayName
-  type: string
-  default: ''
-- name: projectPath
-  type: string
-  default: ''
 
 steps:
 - download: current
   displayName: 'Download Artifacts'
   artifact: '${{ parameters.artifactName }}'
-- task: PowerShell@2
-  displayName: 'Create Install File'
-  condition: ne('{{ parameters.serviceName }}', '')
-  inputs:
-    targetType: 'inline'
-    script: |
-      Set-Content "${{ parameters.artifactLocation }}/installService.ps1" @"
-      sc.exe create `"${{ parameters.serviceName }}`" start= delayed-auto binpath= `"`$(Get-Location)\${{ parameters.projectPath }}.exe`" displayname= `"${{ parameters.serviceDisplayName }}`"
-      "@
-- task: PowerShell@2
-  displayName: 'Create Uninstall File'
-  condition: ne('{{ parameters.serviceName }}', '')
-  inputs:
-    targetType: 'inline'
-    script: |
-      Set-Content "${{ parameters.artifactLocation }}/uninstallService.ps1" @"
-      sc.exe delete `"${{ parameters.serviceName }}`"
-      "@
 - task: ArchiveFiles@2
   displayName: 'Archive Files'
   inputs:
