@@ -148,6 +148,21 @@ stages:
         artifactName: $(app.artifactName) 
         artifactLocation: $(app.artifactLocation)
         archiveFile: $(app.archiveFile)
+  - job: publishAll
+    displayName: 'Publish All Apps'
+    steps:
+    - download: current
+      displayName: 'Download Artifacts'
+      artifact: 'drop'
+    - task: ArchiveFiles@2
+      displayName: 'Archive Files'
+      inputs:
+        rootFolderOrFile: '${{ Pipeline.Workspace }}' 
+        includeRootFolder: false 
+        archiveFile: '${{ Pipeline.Workspace }}/deployment.zip'
+    - publish: '${{ Pipeline.Workspace }}/deployment.zip'
+      displayName: 'Publish Archive'
+      artifact: 'Deployment Files'
         
 - stage: github
   displayName: 'GitHub'
