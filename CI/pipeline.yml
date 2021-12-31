@@ -59,6 +59,7 @@ stages:
     - task: FileTransform@2
       displayName: 'File Transform'
       inputs:
+        xmlTransformationRules: ''
         folderPath: '$(build.artifactstagingdirectory)'
         jsonTargetFiles: '$(SettingsFiles)'
     - task: PublishBuildArtifacts@1
