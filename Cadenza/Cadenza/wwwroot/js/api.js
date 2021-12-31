@@ -1,4 +1,6 @@
 ﻿var apiSettings = null;
+var lastFmSettings = null;
+var spotifySettings = null;
 
 function getFromApi(endpoint, onSuccess) {
 
@@ -19,13 +21,13 @@ function getLastFmSessionKeyUrl(token, onSuccess) {
 }
 
 function getLastFmAuthUrl(onSuccess) {
-    var redirectUri = apiSettings.LastFm.RedirectUri;
+    var redirectUri = lastFmSettings.RedirectUri;
     var endpoint = apiSettings.Endpoints.LastFmAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }
 
 function getSpotifyAuthUrl(onSuccess) {
-    var redirectUri = apiSettings.Spotify.RedirectUri;
+    var redirectUri = spotifySettings.RedirectUri;
     var endpoint = apiSettings.Endpoints.SpotifyAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }

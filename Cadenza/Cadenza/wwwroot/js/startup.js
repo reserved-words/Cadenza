@@ -46,6 +46,8 @@ $(function () {
 
     $.getJSON("../appsettings.json", function (settings) {
         apiSettings = settings.PlayerApi;
+        lastFmSettings = settings.LastFm;
+        spotifySettings = settings.Spotify;
         connectProviders();
     });
 
