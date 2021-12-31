@@ -1,12 +1,10 @@
 ﻿
-var spt_redirect_uri = 'http://localhost:29085/spotify-callback.html';  // move to settings
-
 var isSpotifyLoggedIn = function () {
     return getStoredValue('SpotifyAccessToken');
 }
 
 var spotifyLogin = function () {
-    getSpotifyAuthUrl(spt_redirect_uri, function (url) {
+    getSpotifyAuthUrl(function (url) {
         window.location.href = url;
     });
 }

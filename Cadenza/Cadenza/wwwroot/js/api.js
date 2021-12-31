@@ -18,12 +18,14 @@ function getLastFmSessionKeyUrl(token, onSuccess) {
     getFromApi(endpoint, onSuccess);
 }
 
-function getLastFmAuthUrl(redirectUri, onSuccess) {
+function getLastFmAuthUrl(onSuccess) {
+    var redirectUri = apiSettings.LastFm.RedirectUri;
     var endpoint = apiSettings.Endpoints.LastFmAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }
 
-function getSpotifyAuthUrl(redirectUri, onSuccess) {
+function getSpotifyAuthUrl(onSuccess) {
+    var redirectUri = apiSettings.Spotify.RedirectUri;
     var endpoint = apiSettings.Endpoints.SpotifyAuthUrl + redirectUri;
     getFromApi(endpoint, onSuccess);
 }
