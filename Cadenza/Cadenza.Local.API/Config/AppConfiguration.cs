@@ -9,14 +9,28 @@ internal class AppConfiguration : ILibraryConfiguration
         _config = config;
     }
 
-    public string CurrentlyPlayingLocation => _config.GetValue<string>("CurrentlyPlayingLocation");
+    private string BaseDirectory => _config.GetValue<string>("BaseDirectory");
+
+    public string CurrentlyPlayingLocation => GetPath("CurrentlyPlayingLocation");
     public string CurrentlyPlayingPrefix => _config.GetValue<string>("CurrentlyPlayingPrefix");
     public List<string> FileExtensions => _config.GetSection("FileExtensions").Get<string[]>().ToList();
-    public string UpdateQueueFilePath => _config.GetValue<string>("UpdateQueueFilePath");
+    public string UpdateQueueFilePath => GetPath("UpdateQueueFilePath");
 
-    public string LibraryArtistsPath => _config.GetSection("LibraryPaths").GetValue<string>("Artists");
-    public string LibraryAlbumsPath => _config.GetSection("LibraryPaths").GetValue<string>("Albums");
-    public string LibraryTracksPath => _config.GetSection("LibraryPaths").GetValue<string>("Tracks");
-    public string LibraryAlbumTrackLinksPath => _config.GetSection("LibraryPaths").GetValue<string>("AlbumTrackLinks");
-    public string LibraryUpdatePath => _config.GetSection("LibraryPaths").GetValue<string>("Update");
+    public string LibraryArtistsPath => GetLibraryPath("Artists");
+    public string LibraryAlbumsPath => GetLibraryPath("Albums");
+    public string LibraryTracksPath => GetLibraryPath("Tracks");
+    public string LibraryAlbumTrackLinksPath => GetLibraryPath("AlbumTrackLinks");
+    public string LibraryUpdatePath => GetLibraryPath("Update");
+
+    private string GetPath(string key)
+    {
+        var name = _config.GetValue<string>(key);
+        return Path.Combine(BaseDirectory, name);
+    }
+
+    private string GetLibraryPath(string key)
+    {
+        var name = _config.GetSection("LibraryPaths").GetValue<string>(key);
+        return Path.Combine(BaseDirectory, name);
+    }
 }
