@@ -66,6 +66,7 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: 'Cadenza-drop' 
       condition: succeededOrFailed()
       
 - stage: github
