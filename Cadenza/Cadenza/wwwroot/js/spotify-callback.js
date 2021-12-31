@@ -5,7 +5,7 @@ var useCodeToFetchSpotifyTokens = function (code) {
 
         var tokenData = {
             code: code,
-            redirect_uri: spt_redirect_uri,
+            redirect_uri: spotifySettings.RedirectUri,
             grant_type: 'authorization_code'
         };
 
@@ -30,6 +30,7 @@ $(function () {
 
     $.getJSON("../appsettings.json", function (settings) {
         apiSettings = settings.PlayerApi;
+        spotifySettings = settings.Spotify;
         var code = getParam('code');
         useCodeToFetchSpotifyTokens(code);
     });
