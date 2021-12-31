@@ -2,41 +2,48 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  name: Azure Pipelines
   
 resources:
   repositories:
   - repository: self
 
 variables:
+  RestoreBuildProjects: '**/*.csproj'
+  TestProjects: '**/*[Tt]ests/*.csproj'
   BuildConfiguration: 'Release'
+  SettingsFiles: '**/*appsettings.json'
 
 stages:
 - stage: build
   displayName: 'Build'
   variables:
-    - group: appSettings
+  - group: appSettings
     
   jobs:
   - job: build
     displayName: 'Build'
     steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '6.0.x'
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
         command: restore
-        projects: '**/*.csproj'
+        projects: '$(RestoreBuildProjects)'
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
-        command: build
-        projects: '**/*.csproj'
-        arguments: '--configuration $(BuildConfiguration)'
+        projects: '$(RestoreBuildProjects)'
+        arguments: '--no-restore --configuration $(BuildConfiguration)'
     - task: DotNetCoreCLI@2
       displayName: Test
       inputs:
         command: test
-        projects: '**/*[Tt]ests/*.csproj'
+        projects: '$(TestProjects)'
         arguments: '--configuration $(BuildConfiguration)'
     - task: DotNetCoreCLI@2
       displayName: 'Publish Apps'
@@ -47,18 +54,18 @@ stages:
          **/*.API.csproj
          **/*Service.csproj
          **/Cadenza.csproj
-        arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        arguments: '--no-build --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
         zipAfterPublish: false
     - task: FileTransform@2
       displayName: 'File Transform'
       inputs:
         folderPath: '$(build.artifactstagingdirectory)'
-        jsonTargetFiles: '**/*appsettings.json'
+        jsonTargetFiles: '$(SettingsFiles)'
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        condition: succeededOrFailed()  
+      condition: succeededOrFailed()
       
 - stage: github
   displayName: 'GitHub'
