@@ -19,7 +19,8 @@
         {
             return state == TaskState.Cancelled
                 || state == TaskState.Errored
-                || state == TaskState.Completed;
+                || state == TaskState.Completed
+                || state == TaskState.CompletedWithErrors;
         }
     }
 }

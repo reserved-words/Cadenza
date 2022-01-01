@@ -29,7 +29,14 @@ public class LongRunningTaskService : ILongRunningTaskService
             {
                 if (t.IsFaulted)
                 {
-                    Update(TaskState.Errored, CancellationToken.None);
+                    if (tasks.All(tsk => tsk.IsFaulted))
+                    {
+                        Update(TaskState.Errored, CancellationToken.None);
+                    }
+                    else
+                    {
+                        Update(TaskState.CompletedWithErrors, CancellationToken.None);
+                    }
                 }
                 else if (t.IsCanceled)
                 {
@@ -96,7 +103,7 @@ public class LongRunningTaskService : ILongRunningTaskService
     private void Update(TaskState state, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        Update(state.ToString(), state);
+        Update(state.GetDisplayName(), state);
     }
 
     private void Update(string id, string message, TaskState state, CancellationToken cancellationToken)

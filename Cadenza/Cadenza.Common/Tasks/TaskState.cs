@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cadenza.Common;
 
 public enum TaskState
 {
@@ -11,5 +13,7 @@ public enum TaskState
 
     Cancelled,
     Completed,
-    Errored
+    Errored,
+    [Display(Name = "Completed with errors")]
+    CompletedWithErrors
 }
