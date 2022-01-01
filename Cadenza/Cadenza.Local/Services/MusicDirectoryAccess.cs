@@ -1,11 +1,13 @@
-﻿namespace Cadenza.Local;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Local;
 
 public class MusicDirectoryAccess : IMusicDirectory
 {
-    private readonly IMusicDirectoryConfiguration _config;
+    private readonly IOptions<MusicLibrary> _config;
     private readonly IFileAccess _fileAccess;
 
-    public MusicDirectoryAccess(IMusicDirectoryConfiguration config, IFileAccess fileAccess)
+    public MusicDirectoryAccess(IOptions<MusicLibrary> config, IFileAccess fileAccess)
     {
         _config = config;
         _fileAccess = fileAccess;
@@ -28,8 +30,8 @@ public class MusicDirectoryAccess : IMusicDirectory
 
     private IEnumerable<LocalFile> GetFiles()
     {
-        var directoryPath = _config.LibraryDirectoryPath;
-        var extensions = _config.FileExtensions;
+        var directoryPath = _config.Value.Directory;
+        var extensions = _config.Value.FileExtensions;
 
         return _fileAccess.GetFiles(directoryPath, extensions);
     }

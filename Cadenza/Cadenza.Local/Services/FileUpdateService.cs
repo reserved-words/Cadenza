@@ -1,12 +1,14 @@
-﻿namespace Cadenza.Local;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Local;
 
 public class FileUpdateService : IFileUpdateService
 {
     private readonly IFileAccess _fileAccess;
     private readonly IJsonConverter _jsonConverter;
-    private readonly ILibraryConfiguration _config;
+    private readonly IOptions<LibraryPaths> _config;
 
-    public FileUpdateService(IFileAccess fileAccess, IJsonConverter jsonConverter, ILibraryConfiguration config)
+    public FileUpdateService(IFileAccess fileAccess, IJsonConverter jsonConverter, IOptions<LibraryPaths> config)
     {
         _config = config;
         _fileAccess = fileAccess;
@@ -61,7 +63,7 @@ public class FileUpdateService : IFileUpdateService
 
     public FileUpdateQueue Get()
     {
-        var path = _config.UpdateQueueFilePath;
+        var path = GetUpdateQueuePath();
         var json = _fileAccess.GetText(path);
         var queue = _jsonConverter.Deserialize<FileUpdateQueue>(json);
         return queue ?? new FileUpdateQueue();
@@ -69,8 +71,14 @@ public class FileUpdateService : IFileUpdateService
 
     private void Save(FileUpdateQueue queue)
     {
-        var path = _config.UpdateQueueFilePath;
+        var path = GetUpdateQueuePath();
         var json = _jsonConverter.Serialize(queue);
         _fileAccess.SaveText(path, json);
+    }
+
+    private string GetUpdateQueuePath()
+    {
+        var directory = _config.Value.BaseDirectory;
+        return Path.Combine(directory, _config.Value.UpdateQueue);
     }
 }

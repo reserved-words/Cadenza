@@ -5,6 +5,10 @@ public static class DependencyInjection
     public static WebApplicationBuilder RegisterDependencies(this WebApplicationBuilder builder)
     {
         builder.Services.RegisterDependencies();
+
+        builder.Services.Configure<LibraryPaths>(builder.Configuration.GetSection("LibraryPaths"));
+        builder.Services.Configure<CurrentlyPlaying>(builder.Configuration.GetSection("CurrentlyPlaying"));
+
         return builder;
     }
 
@@ -24,7 +28,6 @@ public static class DependencyInjection
         .AddTransient<IId3TagsService, Id3TagsService>()
         .AddTransient<IJsonConverter, JsonConverter>()
         .AddTransient<IJsonMerger, JsonMerger>()
-        .AddTransient<ILibraryConfiguration, AppConfiguration>()
         .AddTransient<INameComparer, NameComparer>()
         .AddTransient<IFileUpdateService, FileUpdateService>()
         .AddTransient<IIdGenerator, IdGenerator>()

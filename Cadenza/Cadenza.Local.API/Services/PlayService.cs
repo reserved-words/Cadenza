@@ -1,11 +1,13 @@
-﻿namespace Cadenza.Local.API;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Local.API;
 
 public class PlayService : IPlayService
 {
     private readonly IBase64Converter _converter;
-    private readonly ILibraryConfiguration _config;
+    private readonly IOptions<CurrentlyPlaying> _config;
 
-    public PlayService(ILibraryConfiguration config, IBase64Converter converter)
+    public PlayService(IOptions<CurrentlyPlaying> config, IBase64Converter converter)
     {
         _config = config;
         _converter = converter;
@@ -24,7 +26,7 @@ public class PlayService : IPlayService
 
     private string GetCopyLocation()
     {
-        var directory = _config.CurrentlyPlayingLocation;
+        var directory = Path.Combine(_config.Value.BaseDirectory, _config.Value.DirectoryName);
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
@@ -36,7 +38,7 @@ public class PlayService : IPlayService
     {
         var extension = Path.GetExtension(filepath);
         var timestamp = DateTime.Now.ToFileTimeUtc().ToString();
-        var newFileName = $"{_config.CurrentlyPlayingPrefix}_{timestamp}{extension}";
+        var newFileName = $"{_config.Value.FilePrefix}_{timestamp}{extension}";
         return newFileName;
     }
 }

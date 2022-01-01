@@ -10,12 +10,13 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
         services.Configure<LoggerOptions>(configuration.GetSection("Logging"));
+        services.Configure<LibraryPaths>(configuration.GetSection("LibraryPaths"));
+        services.Configure<CurrentlyPlaying>(configuration.GetSection("CurrentlyPlaying"));
+        services.Configure<MusicLibrary>(configuration.GetSection("MusicLibrary"));
 
         services
             .AddHostedService<Worker>()
             .AddSingleton<IConfiguration>(configuration)
-            .AddTransient<ILibraryConfiguration, ServiceConfiguration>()
-            .AddTransient<IMusicDirectoryConfiguration, ServiceConfiguration>()
             .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
             .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
             .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()

@@ -1,22 +1,28 @@
-﻿namespace Cadenza.Local;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Local;
 
 public class PlayedFilesHandler : IPlayedFilesHandler
 {
     private readonly IFileAccess _fileAccess;
-    private readonly ILibraryConfiguration _config;
+    private readonly IOptions<CurrentlyPlaying> _currentlyPlaying;
+    private readonly IOptions<MusicLibrary> _musicLibrary;
 
-    public PlayedFilesHandler(IFileAccess fileAccess, ILibraryConfiguration config)
+    public PlayedFilesHandler(IFileAccess fileAccess, IOptions<CurrentlyPlaying> currentlyPlaying, IOptions<MusicLibrary> musicLibrary)
     {
         _fileAccess = fileAccess;
-        _config = config;
+        _currentlyPlaying = currentlyPlaying;
+        _musicLibrary = musicLibrary;
     }
 
     public void RemovePlayedFiles()
     {
-        var files = _fileAccess.GetFiles(_config.CurrentlyPlayingLocation, _config.FileExtensions);
+        var directory = Path.Combine(_currentlyPlaying.Value.BaseDirectory, _currentlyPlaying.Value.DirectoryName);
+
+        var files = _fileAccess.GetFiles(directory, _musicLibrary.Value.FileExtensions);
 
         var allButMostRecentFiles = files
-            .Where(f => Path.GetFileName(f.Path).StartsWith(_config.CurrentlyPlayingPrefix))
+            .Where(f => Path.GetFileName(f.Path).StartsWith(_currentlyPlaying.Value.FilePrefix))
             .OrderByDescending(f => f.DateCreated)
             .Skip(2);
 
