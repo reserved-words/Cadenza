@@ -2,7 +2,7 @@
 
 public interface ISpotifyLibraryApi
 {
-    Task<SpotifyApiAlbumsResponse> GetUserAlbums();
-    Task<SpotifyApiPlaylistsResponse> GetUserPlaylists();
-    Task<SpotifyApiPlaylistItemsResponse> GetPlaylistTracks(string playlistId);
+    Task<List<SpotifyApiAlbumsItem>> GetUserAlbums();
+    Task<List<SpotifyApiPlaylist>> GetUserPlaylists();
+    Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId);
 }

@@ -2,9 +2,9 @@
 
 public class SpotifyLibraryApi : ISpotifyLibraryApi
 {
-    private const string AlbumsUrl = "https://api.spotify.com/v1/me/albums?limit=50";
-    private const string PlaylistsUrl = "https://api.spotify.com/v1/me/playlists?limit=50";
-    private const string PlaylistTracksUrl = "https://api.spotify.com/v1/playlists/{0}/tracks?limit=50&fields=items(track)";
+    private const string AlbumsUrl = "https://api.spotify.com/v1/me/albums?limit=50&fields=total,next,items";
+    private const string PlaylistsUrl = "https://api.spotify.com/v1/me/playlists?limit=50&fields=total,next,items";
+    private const string PlaylistTracksUrl = "https://api.spotify.com/v1/playlists/{0}/tracks?limit=50&fields=total,next,items(track)";
 
     private readonly ISpotifyApi _api;
 
@@ -13,19 +13,33 @@ public class SpotifyLibraryApi : ISpotifyLibraryApi
         _api = api;
     }
 
-    public async Task<SpotifyApiPlaylistItemsResponse> GetPlaylistTracks(string playlistId)
+    public async Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId)
     {
-        return await _api.Get<SpotifyApiPlaylistItemsResponse>(string.Format(PlaylistTracksUrl, playlistId));
+        return await GetListResponse<SpotifyApiPlaylistItem>(string.Format(PlaylistTracksUrl, playlistId));
     }
 
-    public async Task<SpotifyApiAlbumsResponse> GetUserAlbums()
+    public async Task<List<SpotifyApiAlbumsItem>> GetUserAlbums()
     {
-        return await _api.Get<SpotifyApiAlbumsResponse>(AlbumsUrl);
+        return await GetListResponse<SpotifyApiAlbumsItem>(AlbumsUrl);
     }
 
-    public async Task<SpotifyApiPlaylistsResponse> GetUserPlaylists()
+    public async Task<List<SpotifyApiPlaylist>> GetUserPlaylists()
     {
-        return await _api.Get<SpotifyApiPlaylistsResponse>(PlaylistsUrl);
+        return await GetListResponse<SpotifyApiPlaylist>(PlaylistsUrl);
     }
 
+    private async Task<List<T>> GetListResponse<T>(string uri)
+    {
+        var response = await _api.Get<SpotifyApiListResponse<T>>(uri);
+
+        var items = new List<T>(response.items);
+
+        while (items.Count() < response.total)
+        {
+            response = await _api.Get<SpotifyApiListResponse<T>>(response.next);
+            items.AddRange(response.items);
+        }
+
+        return items;
+    }
 }

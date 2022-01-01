@@ -25,6 +25,12 @@ public class SpotifyApi : ISpotifyApi
     {
         var authHeader = await GetAuthHeader();
         var response = await _httpClient.Get(url, authHeader);
+
+        if (url.Contains("limit=50&fields=items(track)"))
+        {
+            var test = await response.Content.ReadAsStringAsync();
+        }
+
         return await response.Content.ReadFromJsonAsync<T>();
     }
 

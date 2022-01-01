@@ -17,7 +17,7 @@ public class SpotifyApiLibrary : IStaticSource
 
         var albumsResponse = await _api.GetUserAlbums();
 
-        foreach (var item in albumsResponse.items)
+        foreach (var item in albumsResponse)
         {
             var album = item.album;
             var albumArtist = album.artists.First();
@@ -49,18 +49,19 @@ public class SpotifyApiLibrary : IStaticSource
             }
         }
 
-        var playlistsResponse = await _api.GetUserPlaylists();
+        var playlists = await _api.GetUserPlaylists();
 
-        foreach (var item in playlistsResponse.items)
+        foreach (var playlist in playlists)
         {
             // This will only get first 50 tracks, will need to redo to get all
 
-            var tracks = await _api.GetPlaylistTracks(item.id);
+            var tracks = await _api.GetPlaylistTracks(playlist.id);
+
             var trackArtists = new List<ArtistInfo>();
 
-            foreach (var playlistItem in tracks.items)
+            foreach (var track in tracks)
             {
-                var trackArtist = playlistItem.track.artists.First();
+                var trackArtist = track.track.artists.First();
 
                 var trackArtistInfo = trackArtists
                     .SingleOrDefault(a => a.Id == GetUniversalId(trackArtist.name));
@@ -72,8 +73,8 @@ public class SpotifyApiLibrary : IStaticSource
                     library.Artists.Add(trackArtistInfo);
                 }
 
-                var trackInfo = GetTrackInfo(playlistItem, trackArtistInfo, item.id);
-                var albumTrack = GetPlaylistTrack(item.id, playlistItem);
+                var trackInfo = GetTrackInfo(track, trackArtistInfo, playlist.id);
+                var albumTrack = GetPlaylistTrack(playlist.id, track);
 
                 library.Tracks.Add(trackInfo);
                 library.AlbumTrackLinks.Add(albumTrack);
@@ -103,15 +104,15 @@ public class SpotifyApiLibrary : IStaticSource
             var albumInfo = new AlbumInfo
             {
                 Source = LibrarySource.Spotify,
-                Id = item.id,
+                Id = playlist.id,
                 ArtistId = albumArtistInfo.Id,
                 ArtistName = albumArtistInfo.Name,
-                Title = item.name,
+                Title = playlist.name,
                 ReleaseType = ReleaseType.Playlist,
                 Year = "",
-                ArtworkUrl = item.images.FirstOrDefault()?.url,
+                ArtworkUrl = playlist.images.FirstOrDefault()?.url,
                 DiscCount = 1,
-                TrackCounts = new List<int> { item.tracks.total }
+                TrackCounts = new List<int> { playlist.tracks.total }
             };
 
             library.Albums.Add(albumInfo);
