@@ -2,6 +2,7 @@ using Cadenza.Database;
 using IndexedDB.Blazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using ILogger = Cadenza.Common.ILogger;
 
 namespace Cadenza;
 
@@ -29,6 +30,8 @@ public class Program
             .AddSourceFactories()
             .AddSingletons();
 
+        builder.Services.AddTransient<ILogger, Logger>();
+
         builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>();
 
         builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
@@ -48,6 +51,8 @@ public class Program
         using var stream = await response.Content.ReadAsStreamAsync();
 
         builder.Configuration.AddJsonStream(stream);
+
+        builder.Services.Configure<LoggerOptions>(builder.Configuration.GetSection("Logging"));
 
         await builder.Build().RunAsync();
     }

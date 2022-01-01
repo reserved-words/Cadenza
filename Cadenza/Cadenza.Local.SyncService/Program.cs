@@ -9,12 +9,13 @@ IConfiguration configuration = new ConfigurationBuilder()
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
+        services.Configure<LoggerOptions>(configuration.GetSection("Logging"));
+
         services
             .AddHostedService<Worker>()
             .AddSingleton<IConfiguration>(configuration)
             .AddTransient<ILibraryConfiguration, ServiceConfiguration>()
             .AddTransient<IMusicDirectoryConfiguration, ServiceConfiguration>()
-            .AddTransient<ILoggerConfig, LoggerConfig>()
             .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
             .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
             .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()

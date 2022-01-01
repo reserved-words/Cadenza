@@ -8,6 +8,9 @@ public static class Configuration
             ?? "appsettings.json";
 
         builder.Configuration.AddJsonFile(settingsPath);
+
+        builder.Services.Configure<LoggerOptions>(builder.Configuration.GetSection("Logging"));
+
         return builder;
     }
 }

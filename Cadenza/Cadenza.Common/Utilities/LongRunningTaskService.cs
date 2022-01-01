@@ -2,6 +2,13 @@
 
 public class LongRunningTaskService : ILongRunningTaskService
 {
+    private readonly ILogger _logger;
+
+    public LongRunningTaskService(ILogger logger)
+    {
+        _logger = logger;
+    }
+
     public event TaskGroupProgressEventHandler TaskGroupProgressChanged;
     public event SubTaskProgressEventHandler SubTaskProgressChanged;
 
@@ -25,7 +32,7 @@ public class LongRunningTaskService : ILongRunningTaskService
             }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Task.WhenAll(tasks).ContinueWith(t =>
+            Task.WhenAll(tasks).ContinueWith(async t =>
             {
                 if (t.IsFaulted)
                 {
@@ -36,6 +43,11 @@ public class LongRunningTaskService : ILongRunningTaskService
                     else
                     {
                         Update(TaskState.CompletedWithErrors, CancellationToken.None);
+                    }
+
+                    foreach (var ex in t.Exception.InnerExceptions)
+                    {
+                        await _logger.LogError(ex);
                     }
                 }
                 else if (t.IsCanceled)

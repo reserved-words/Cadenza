@@ -1,13 +1,15 @@
-﻿namespace Cadenza.Common;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Common;
 
 public class Logger : ILogger
 {
     private readonly IHttpClient _httpClient;
-    private readonly ILoggerConfig _config;
+    private readonly IOptions<LoggerOptions> _options;
 
-    public Logger(ILoggerConfig config, IHttpClient httpClient)
+    public Logger(IOptions<LoggerOptions> options, IHttpClient httpClient)
     {
-        _config = config;
+        _options = options;
         _httpClient = httpClient;
     }
 
@@ -31,7 +33,7 @@ public class Logger : ILogger
 
     private async Task Log(object data)
     {
-        var url = _config.Url;
+        var url = _options.Value.Url;
         await _httpClient.Post(url, null, data);
     }
 
@@ -39,10 +41,19 @@ public class Logger : ILogger
     {
         return new
         {
-            app = _config.ApplicationName,
+            app = GetAppName(),
             message = message,
             level = info ? 1 : 3,
             stackTrace = stackTrace
         };
+    }
+
+    private string GetAppName()
+    {
+        var env = _options.Value.Environment == "LIVE" 
+            ? "" 
+            : $" ({_options.Value.Environment})";
+
+        return $"{_options.Value.ApplicationName}{env}";
     }
 }
