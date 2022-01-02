@@ -1,15 +1,15 @@
 using Cadenza.Local.API;
 
 var builder = WebApplication.CreateBuilder(args)
-    .BuildConfiguration()
     .RegisterDependencies()
-    .DefineCors()
-    .AddDocumentation();
+    .RegisterConfiguration()
+    .RegisterCorsPolicies()
+    .RegisterDocumentation();
 
 var app = builder.Build()
-    .ApplyCors()
-    .UseDocumentation()
-    .MapRoutes()
-    .GenerateDocumentation();
+    .AddCors()
+    .AddDocumentation()
+    .AddRoutes()
+    .AddDocumentationUI();
 
 app.Run();

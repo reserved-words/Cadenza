@@ -1,8 +1,8 @@
 ﻿namespace Cadenza.Local.API;
 
-public static class Routes
+public static class Routing
 {
-    public static WebApplication MapRoutes(this WebApplication app)
+    public static WebApplication AddRoutes(this WebApplication app)
     {
         var artworkUrlFormat = "/library/artwork?id={0}";
 

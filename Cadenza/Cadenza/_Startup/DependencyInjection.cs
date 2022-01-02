@@ -1,13 +1,54 @@
-﻿using Cadenza._Config;
+﻿using Cadenza.Database;
+using IndexedDB.Blazor;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
+using ILogger = Cadenza.Common.ILogger;
+using Cadenza._Config;
 using Cadenza.Library;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
 using HttpClient = Cadenza.Common.HttpClient;
 
+
 namespace Cadenza;
 
-internal static class ServiceProviderExtensions
+public static class DependencyInjection
 {
+    public static WebAssemblyHostBuilder RegisterDependencies(this WebAssemblyHostBuilder builder)
+    {
+        var http = new System.Net.Http.HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+
+        builder.Services
+            .AddTransient(sp => http)
+            .AddMudServices()
+            .AddAppServices()
+            .AddUtilities()
+            .AddTimers()
+            .AddLastFm()
+            .AddSpotify()
+            .AddLocalLibrary()
+            .AddLibraries()
+            .AddPlayers()
+            .AddSourceFactories()
+            .AddSingletons();
+
+        builder.Services.AddTransient<ILogger, Logger>();
+
+        builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>();
+
+        builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
+        builder.Services.AddTransient<IMainRepository, MainRepository>();
+        builder.Services.AddTransient<IArtistRepository, ArtistRepository>();
+        builder.Services.AddTransient<ITrackRepositoryUpdater, Database.TrackRepository>();
+        builder.Services.AddTransient<ITrackRepository, Player.TrackRepository>();
+        builder.Services.AddTransient<IPlayTrackRepositoryUpdater, Database.PlayTrackRepository>();
+        builder.Services.AddTransient<IPlayTrackRepository, Player.PlayTrackRepository>();
+
+        builder.Services.AddTransient<IStartupSyncService, StartupSyncService>();
+
+        return builder;
+    }
+
     public static IServiceCollection AddSingletons(this IServiceCollection services)
     {
         var spotifyCache = new Cache();
@@ -29,7 +70,7 @@ internal static class ServiceProviderExtensions
                 };
                 var combinedLibrary = new CombinedStaticLibrary(spotifyCache, merger, staticSources);
                 return new SpotifyLibrary(
-                    combinedLibrary, 
+                    combinedLibrary,
                     sp.GetService<ISpotifyLibraryApi>(),
                     sp.GetService<IIdGenerator>());
             })
@@ -48,14 +89,14 @@ internal static class ServiceProviderExtensions
         ;
     }
 
-    public static IServiceCollection AddAppServices(this IServiceCollection services)
+    private static IServiceCollection AddAppServices(this IServiceCollection services)
     {
         return services.AddSingleton<AppService>()
             .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>())
             .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>());
     }
 
-    public static IServiceCollection AddUtilities(this IServiceCollection services)
+    private static IServiceCollection AddUtilities(this IServiceCollection services)
     {
         return services
             .AddTransient<IDialogService, MudDialogService>()
@@ -75,7 +116,7 @@ internal static class ServiceProviderExtensions
             .AddTransient<IValueMerger, ValueMerger>();
     }
 
-    public static IServiceCollection AddTimers(this IServiceCollection services)
+    private static IServiceCollection AddTimers(this IServiceCollection services)
     {
         return services
             .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
@@ -83,14 +124,14 @@ internal static class ServiceProviderExtensions
             .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
     }
 
-    public static IServiceCollection AddLastFm(this IServiceCollection services)
+    private static IServiceCollection AddLastFm(this IServiceCollection services)
     {
         return services.AddTransient<IPlayTracker, LastFmService>()
             .AddTransient<IFavouritesConsumer, LastFmService>()
             .AddTransient<IFavouritesController, LastFmService>();
     }
 
-    public static IServiceCollection AddSpotify(this IServiceCollection services)
+    private static IServiceCollection AddSpotify(this IServiceCollection services)
     {
         return services.AddTransient<ISpotifyApiConfig, SpotifyConfig>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
@@ -101,7 +142,7 @@ internal static class ServiceProviderExtensions
             .AddTransient<SpotifyApiLibrary>();
     }
 
-    public static IServiceCollection AddPlayers(this IServiceCollection services)
+    private static IServiceCollection AddPlayers(this IServiceCollection services)
     {
         return services.AddTransient<CorePlayer>()
             .AddTransient<TimingPlayer>(sp => new TimingPlayer(
@@ -109,7 +150,7 @@ internal static class ServiceProviderExtensions
                 sp.GetRequiredService<ITrackTimerController>()));
     }
 
-    public static IServiceCollection AddLocalLibrary(this IServiceCollection services)
+    private static IServiceCollection AddLocalLibrary(this IServiceCollection services)
     {
         return services
             .AddTransient<LocalLibraryUpdater>()
@@ -118,7 +159,7 @@ internal static class ServiceProviderExtensions
             .AddTransient<ILocalApiConfig, LocalApiConfig>();
     }
 
-    public static IServiceCollection AddLibraries(this IServiceCollection services)
+    private static IServiceCollection AddLibraries(this IServiceCollection services)
     {
         return services
             .AddTransient<LocalLibrary>()
@@ -126,7 +167,7 @@ internal static class ServiceProviderExtensions
             .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
     }
 
-    public static IServiceCollection AddSourceFactories(this IServiceCollection services)
+    private static IServiceCollection AddSourceFactories(this IServiceCollection services)
     {
         return services
             .AddTransient(sp => GetPlayers(sp))

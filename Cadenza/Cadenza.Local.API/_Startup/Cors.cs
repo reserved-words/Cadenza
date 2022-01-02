@@ -2,15 +2,15 @@
 
 namespace Cadenza.Local.API;
 
-public static class CorsPolicies
+public static class Cors
 {
-    public static WebApplicationBuilder DefineCors(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder RegisterCorsPolicies(this WebApplicationBuilder builder)
     {
         builder.Services.AddCors(opts => SetUpCorsOptions(builder, opts));
         return builder;
     }
 
-    public static WebApplication ApplyCors(this WebApplication app)
+    public static WebApplication AddCors(this WebApplication app)
     {
         var allowedClients = GetAllowedClients(app.Configuration);
         allowedClients.ForEach(cli => app.UseCors(cli.Name));
