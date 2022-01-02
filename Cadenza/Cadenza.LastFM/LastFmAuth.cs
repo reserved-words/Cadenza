@@ -1,11 +1,13 @@
-﻿namespace Cadenza.LastFM;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.LastFM;
 
 public class LastFmAuth : ILastFmAuth
 {
-    private readonly ILastFmConfig _config;
+    private readonly IOptions<LastFmSettings> _config;
     private readonly ILastFmSigner _signer;
 
-    public LastFmAuth(ILastFmConfig config, ILastFmSigner signer)
+    public LastFmAuth(IOptions<LastFmSettings> config, ILastFmSigner signer)
     {
         _config = config;
         _signer = signer;
@@ -15,11 +17,11 @@ public class LastFmAuth : ILastFmAuth
     {
         var parameters = new Dictionary<string, string>()
         {
-            { "api_key", _config.ApiKey },
+            { "api_key", _config.Value.ApiKey },
             { "cb", redirectUri}
         };
 
-        return _config.AuthUrl.Add(parameters);
+        return _config.Value.AuthUrl.Add(parameters);
     }
 
     public string GetSessionKeyUrl(string token)
@@ -27,13 +29,13 @@ public class LastFmAuth : ILastFmAuth
         var parameters = new Dictionary<string, string>()
         {
             { "method", "auth.getSession" },
-            { "api_key", _config.ApiKey },
+            { "api_key", _config.Value.ApiKey },
             { "token", token}
         };
 
         _signer.Sign(parameters);
 
-        return _config.ApiBaseUrl
+        return _config.Value.ApiBaseUrl
             .Add(parameters);
     }
 }

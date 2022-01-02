@@ -1,22 +1,23 @@
 ﻿using Cadenza.Common;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.Azure;
 
 public class SpotifyOverridesService : IOverridesService
 {
-    private readonly IAzureConfig _config;
+    private readonly IOptions<AzureSettings> _config;
     private readonly IHttpClient _httpClient;
 
-    public SpotifyOverridesService(IHttpClient httpClient, IAzureConfig config)
+    public SpotifyOverridesService(IHttpClient httpClient, IOptions<AzureSettings> config)
     {
         _httpClient = httpClient;
         _config = config;
     }
 
-    private string AddOverrideUrl => _config.AddSpotifyOverrideUrl;
-    private string GetOverridesUrl => _config.GetSpotifyOverridesUrl;
-    private string RemoveOverrideUrl => _config.RemoveSpotifyOverrideUrl;
+    private string AddOverrideUrl => _config.Value.AddSpotifyOverrideUrl;
+    private string GetOverridesUrl => _config.Value.GetSpotifyOverridesUrl;
+    private string RemoveOverrideUrl => _config.Value.RemoveSpotifyOverrideUrl;
 
     public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
     {

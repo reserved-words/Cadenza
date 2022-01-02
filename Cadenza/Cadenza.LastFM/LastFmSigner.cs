@@ -1,13 +1,14 @@
 ﻿using Cadenza.Common;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
 public class LastFmSigner : ILastFmSigner
 {
     private readonly IHasher _hasher;
-    private readonly ILastFmConfig _config;
+    private readonly IOptions<LastFmSettings> _config;
 
-    public LastFmSigner(ILastFmConfig config, IHasher hasher)
+    public LastFmSigner(IOptions<LastFmSettings> config, IHasher hasher)
     {
         _config = config;
         _hasher = hasher;
@@ -19,7 +20,7 @@ public class LastFmSigner : ILastFmSigner
             .OrderBy(p => p)
             .Select(p => $"{p}{parameters[p]}"));
 
-        signature += _config.ApiSecret;
+        signature += _config.Value.ApiSecret;
 
         var hashedSignature = _hasher.MD5Hash(signature);
 

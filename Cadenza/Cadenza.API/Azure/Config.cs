@@ -2,7 +2,7 @@
 
 namespace Cadenza.API.Azure;
 
-public class Config : IAzureConfig
+public class Config : AzureSettings
 {
     private readonly IConfiguration _config;
 

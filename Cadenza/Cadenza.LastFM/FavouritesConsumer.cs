@@ -1,11 +1,13 @@
-﻿namespace Cadenza.LastFM;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.LastFM;
 
 public class FavouritesConsumer
 {
     private readonly ILastFmClient _client;
-    private readonly ILastFmConfig _config;
+    private readonly IOptions<LastFmSettings> _config;
 
-    public FavouritesConsumer(ILastFmClient client, ILastFmConfig config)
+    public FavouritesConsumer(ILastFmClient client, IOptions<LastFmSettings> config)
     {
         _client = client;
         _config = config;
@@ -13,7 +15,7 @@ public class FavouritesConsumer
 
     public async Task<bool> IsFavourite(string artist, string title)
     {
-        var url = _config.ApiBaseUrl
+        var url = _config.Value.ApiBaseUrl
             .SetMethod("track.getInfo")
             .Add("artist", artist)
             .Add("track", title);

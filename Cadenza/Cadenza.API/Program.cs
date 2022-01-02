@@ -1,4 +1,5 @@
 using Cadenza.API;
+using Cadenza.Azure;
 using Cadenza.Common;
 using Cadenza.LastFM;
 
@@ -7,30 +8,39 @@ var builder = WebApplication.CreateBuilder(args)
     .DefineCors()
     .AddDocumentation();
 
+builder.Services.Configure<LastFmSettings>(builder.Configuration.GetSection("LastFm"));
+builder.Services.Configure<AzureSettings>(builder.Configuration.GetSection("Azure"));
+builder.Services.Configure<Cadenza.API.Spotify.Settings>(builder.Configuration.GetSection("Spotify"));
+
+builder.Services.AddTransient<IBase64Converter, Base64Converter>();
+builder.Services.AddTransient<IHasher, Hasher>();
+builder.Services.AddTransient<IBuilder, Builder>();
+
+builder.Services.AddTransient<ILastFmSigner, LastFmSigner>();
+builder.Services.AddTransient<ILastFmAuth, LastFmAuth>();
+builder.Services.AddTransient<System.Net.Http.HttpClient>();
+builder.Services.AddTransient<IHttpClient, Cadenza.Common.HttpClient>();
+
+builder.Services.AddTransient<ILastFmClient, LastFmClient>();
+builder.Services.AddTransient<ILastFmAuthorisedClient, LastFmAuthorisedClient>();
+
+builder.Services.AddTransient<Scrobbler>();
+builder.Services.AddTransient<FavouritesController>();
+builder.Services.AddTransient<FavouritesConsumer>();
+
+builder.Services.AddTransient<Cadenza.API.Spotify.Auth>();
+builder.Services.AddTransient<SpotifyOverridesService>();
+
 var app = builder.Build()
     .ApplyCors()
     .UseDocumentation();
 
-var base64Converter = new Base64Converter();
-var hasher = new Hasher();
-var config = builder.Configuration;
-var build = new Builder(base64Converter);
-
-var lfmConfig = new Cadenza.API.LastFm.Config(config);
-var lfmSigner = new LastFmSigner(lfmConfig, hasher);
-
-var lfmAuth = new LastFmAuth(lfmConfig, lfmSigner);
-var httpClient = new Cadenza.Common.HttpClient(new System.Net.Http.HttpClient());
-var client = new LastFmClient(httpClient, lfmConfig);
-var authClient = new LastFmAuthorisedClient(httpClient, lfmConfig, lfmSigner);
-var scrobbler = new Scrobbler(authClient);
-var favouritesController = new FavouritesController(authClient);
-var favouritesConsumer = new FavouritesConsumer(client, lfmConfig);
-
-var spotify = new Cadenza.API.Spotify.Auth(config, build);
-
-var azureConfig = new Cadenza.API.Azure.Config(config);
-var azure = new Cadenza.Azure.SpotifyOverridesService(httpClient, azureConfig);
+var lfmAuth = app.Services.GetRequiredService<ILastFmAuth>();
+var scrobbler = app.Services.GetRequiredService<Scrobbler>();
+var favouritesController = app.Services.GetRequiredService<FavouritesController>();
+var favouritesConsumer = app.Services.GetRequiredService<FavouritesConsumer>();
+var spotify = app.Services.GetRequiredService<Cadenza.API.Spotify.Auth>();
+var azure = app.Services.GetRequiredService<SpotifyOverridesService>();
 
 app.MapGet("/LastFm/SessionKeyUrl", (string token) => lfmAuth.GetSessionKeyUrl(token));
 app.MapGet("/LastFm/AuthUrl", (string redirectUri) => lfmAuth.GetAuthUrl(redirectUri));
