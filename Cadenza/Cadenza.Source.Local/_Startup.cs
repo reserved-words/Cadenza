@@ -2,7 +2,7 @@
 global using Cadenza.Library;
 global using System.Net.Http.Json;
 global using System.Web;
-
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Source.Local;
@@ -32,5 +32,10 @@ public static class Startup
     public static ISourceLibraryUpdater GetLocalUpdater(this IServiceProvider services)
     {
         return services.GetRequiredService<LocalLibraryUpdater>();
+    }
+
+    public static IServiceCollection ConfigureLocalApi(this IServiceCollection services, IConfiguration config, params string[] sections)
+    {
+        return services.ConfigureOptions<LocalApiSettings>(config, sections);
     }
 }

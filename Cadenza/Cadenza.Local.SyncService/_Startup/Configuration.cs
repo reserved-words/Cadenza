@@ -19,10 +19,11 @@ namespace Cadenza.Local.SyncService
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            services.Configure<LoggerOptions>(configuration.GetSection("Logging"));
-            services.Configure<LibraryPaths>(configuration.GetSection("LibraryPaths"));
-            services.Configure<CurrentlyPlaying>(configuration.GetSection("CurrentlyPlaying"));
-            services.Configure<MusicLibrary>(configuration.GetSection("MusicLibrary"));
+            services
+                .ConfigureLogger(configuration, "Logging")
+                .ConfigureLibraryLocation(configuration, "LibraryPaths")
+                .ConfigurePlayLocation(configuration, "CurrentlyPlaying")
+                .ConfigureMusicLocation(configuration, "MusicLibrary");
 
             return services;
         }

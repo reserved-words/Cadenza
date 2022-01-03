@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Common;
 
@@ -39,6 +40,11 @@ public static class Startup
         return services.AddTransient(sp => client)
             .AddTransient<IHttpClient, HttpClient>()
             .AddTransient<ILogger, Logger>();
+    }
+
+    public static IServiceCollection ConfigureLogger(this IServiceCollection services, IConfiguration config, params string[] sections)
+    {
+        return services.ConfigureOptions<LoggerOptions>(config, sections);
     }
 }
 

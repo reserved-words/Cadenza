@@ -17,9 +17,9 @@ public static class Configuration
 
         builder.Configuration.AddJsonStream(stream);
 
-        builder.Services.ConfigureOptions<LoggerOptions>(builder.Configuration, "Logging");
-        builder.Services.ConfigureOptions<SpotifyOverridesSettings>(builder.Configuration, "SpotifyOverrides");
-        builder.Services.ConfigureOptions<LocalApiSettings>(builder.Configuration, "LocalApi");
+        builder.Services.ConfigureLogger(builder.Configuration, "Logging");
+        builder.Services.ConfigureSpotifyOverrides(builder.Configuration, "SpotifyOverrides");
+        builder.Services.ConfigureLocalApi(builder.Configuration, "LocalApi");
 
         return builder;
     }

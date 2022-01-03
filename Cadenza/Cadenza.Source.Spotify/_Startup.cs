@@ -1,6 +1,6 @@
 ﻿global using Cadenza.Common;
 global using Cadenza.Library;
-
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Source.Spotify;
@@ -57,5 +57,10 @@ public static class Startup
     public static IOverridesService GetSpotifyOverrider(this IServiceProvider services)
     {
         return services.GetService<SpotifyOverridesService>();
+    }
+
+    public static IServiceCollection ConfigureSpotifyOverrides(this IServiceCollection services, IConfiguration config, params string[] sections)
+    {
+        return services.ConfigureOptions<SpotifyOverridesSettings>(config, sections);
     }
 }
