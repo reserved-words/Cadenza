@@ -1,6 +1,6 @@
 ﻿using Cadenza.Common;
 
-namespace Cadenza.API;
+namespace Cadenza.Spotify;
 
 public class Builder : IBuilder
 {

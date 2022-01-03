@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API;
+﻿namespace Cadenza.Spotify;
 
 public interface IBuilder
 {

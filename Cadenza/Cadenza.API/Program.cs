@@ -1,8 +1,8 @@
 using Cadenza.API;
 
-var builder = (await WebApplication.CreateBuilder(args)
+var builder = WebApplication.CreateBuilder(args)
     .RegisterDependencies()
-    .RegisterConfiguration())
+    .RegisterConfiguration()
     .RegisterCorsPolicies()
     .RegisterDocumentation();
 

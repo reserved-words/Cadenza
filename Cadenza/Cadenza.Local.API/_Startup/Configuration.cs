@@ -10,6 +10,8 @@ public static class Configuration
         builder.Configuration.AddJsonFile(settingsPath);
 
         builder.Services.Configure<LoggerOptions>(builder.Configuration.GetSection("Logging"));
+        builder.Services.Configure<LibraryPaths>(builder.Configuration.GetSection("LibraryPaths"));
+        builder.Services.Configure<CurrentlyPlaying>(builder.Configuration.GetSection("CurrentlyPlaying"));
 
         return builder;
     }

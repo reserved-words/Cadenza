@@ -2,24 +2,24 @@
 using IndexedDB.Blazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using ILogger = Cadenza.Common.ILogger;
 using Cadenza._Config;
 using Cadenza.Library;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
-using HttpClient = Cadenza.Common.HttpClient;
 
 
 namespace Cadenza;
 
-public static class DependencyInjection
+public static class Services
 {
     public static WebAssemblyHostBuilder RegisterDependencies(this WebAssemblyHostBuilder builder)
     {
         var http = new System.Net.Http.HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
-            .AddTransient(sp => http)
+            .AddCommonUtilities()
+            .AddHttpClient(http)
+            .AddLogger(http)
             .AddMudServices()
             .AddAppServices()
             .AddUtilities()
@@ -31,8 +31,6 @@ public static class DependencyInjection
             .AddPlayers()
             .AddSourceFactories()
             .AddSingletons();
-
-        builder.Services.AddTransient<ILogger, Logger>();
 
         builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>();
 
@@ -53,8 +51,6 @@ public static class DependencyInjection
     {
         var spotifyCache = new Cache();
         var mainCache = new Cache();
-
-        services.AddTransient<ILongRunningTaskService, LongRunningTaskService>();
 
         services
             .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
@@ -101,19 +97,10 @@ public static class DependencyInjection
         return services
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IProgressDialogService, ProgressDialogService>()
-            .AddTransient<IDateTime, CurrentDateTime>()
-            .AddTransient<IHasher, Hasher>()
-            .AddTransient<IHttpClient, HttpClient>()
-            .AddTransient<IIdGenerator, IdGenerator>()
-            .AddTransient<IMerger, Merger>()
-            .AddTransient<INameComparer, NameComparer>()
             .AddTransient<INotificationService, MudNotificationService>()
-            .AddTransient<IRandomGenerator, RandomGenerator>()
             .AddTransient<IStoreGetter, Store>()
             .AddTransient<IStoreSetter, Store>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>()
-            .AddTransient<IShuffler, Shuffler>()
-            .AddTransient<IValueMerger, ValueMerger>();
+            .AddTransient<IPlaylistCreator, PlaylistCreator>();
     }
 
     private static IServiceCollection AddTimers(this IServiceCollection services)

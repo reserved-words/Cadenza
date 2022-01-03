@@ -4,7 +4,7 @@ public class LongRunningTaskService : ILongRunningTaskService
 {
     private readonly ILogger _logger;
 
-    public LongRunningTaskService(ILogger logger)
+    public LongRunningTaskService(ILogger logger = null)
     {
         _logger = logger;
     }
@@ -45,9 +45,16 @@ public class LongRunningTaskService : ILongRunningTaskService
                         Update(TaskState.CompletedWithErrors, CancellationToken.None);
                     }
 
-                    foreach (var ex in t.Exception.InnerExceptions)
+                    if (_logger != null)
                     {
-                        await _logger.LogError(ex);
+                        foreach (var ex in t.Exception.InnerExceptions)
+                        {
+                            await _logger.LogError(ex);
+                        }
+                    }
+                    else
+                    {
+                        throw t.Exception;
                     }
                 }
                 else if (t.IsCanceled)

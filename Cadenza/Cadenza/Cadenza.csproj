@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="_Startup\Root" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="_Startup\Root" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Components\Tabs\SystemInfo\SystemErrors.razor" />
     <None Include="Components\Tabs\SystemInfo\SystemOverrides.razor" />
     <None Include="Components\Tabs\SystemInfo\SystemUpdateQueue.razor" />

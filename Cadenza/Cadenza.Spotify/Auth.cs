@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Cadenza.API.Spotify;
+namespace Cadenza.Spotify;
 
 public class Auth
 {
-    private readonly IOptions<Settings> _config;
+    private readonly IOptions<SpotifySettings> _config;
     private readonly IBuilder _builder;
 
-    public Auth(IOptions<Settings> config, IBuilder builder)
+    public Auth(IOptions<SpotifySettings> config, IBuilder builder)
     {
         _config = config;
         _builder = builder;
