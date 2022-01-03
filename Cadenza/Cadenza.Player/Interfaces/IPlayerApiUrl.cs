@@ -7,7 +7,4 @@ public interface IPlayerApiUrl
     string IsFavourite { get; }
     string Favourite { get; }
     string Unfavourite { get; }
-    string AddSpotifyOverride { get; }
-    string GetSpotifyOverrides { get; }
-    string RemoveSpotifyOverride { get; }
 }

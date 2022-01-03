@@ -1,21 +1,24 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
 
-namespace Cadenza.Player;
+namespace Cadenza.Source.Spotify;
 
 public class SpotifyOverridesService : IOverridesService
 {
-    private readonly IPlayerApiUrl _api;
     private readonly IHttpClient _httpClient;
+    private readonly IOptions<SpotifyOverridesSettings> _settings;
 
-    public SpotifyOverridesService(IHttpClient httpClient, IPlayerApiUrl api)
+    public SpotifyOverridesService(IOptions<SpotifyOverridesSettings> settings, IHttpClient httpClient)
     {
+        _settings = settings;
         _httpClient = httpClient;
-        _api = api;
     }
 
-    private string AddOverrideUrl => _api.AddSpotifyOverride;
-    private string GetOverridesUrl => _api.GetSpotifyOverrides;
-    private string RemoveOverrideUrl => _api.RemoveSpotifyOverride;
+    private string AddOverrideUrl => GetEndpoint(s => s.AddOverride);
+
+    private string GetOverridesUrl => GetEndpoint(s => s.GetOverrides);
+
+    private string RemoveOverrideUrl => GetEndpoint(s => s.RemoveOverride);
 
     public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
     {
@@ -37,5 +40,12 @@ public class SpotifyOverridesService : IOverridesService
         var data = new { id, propertyName = property.ToString() };
         var response = await _httpClient.Delete(RemoveOverrideUrl, null, data);
         return response.IsSuccessStatusCode;
+    }
+
+    private string GetEndpoint(Func<SpotifyOverridesSettings.SpotifyOverridesEndpoints, string> getEndpoint)
+    {
+        var baseUrl = _settings.Value.BaseUrl;
+        var endpoint = getEndpoint(_settings.Value.Endpoints);
+        return $"{baseUrl}{endpoint}";
     }
 }

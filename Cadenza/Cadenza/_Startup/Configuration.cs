@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Cadenza.Source.Spotify;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Cadenza;
 
@@ -15,7 +16,9 @@ public static class Configuration
 
         builder.Configuration.AddJsonStream(stream);
 
-        builder.Services.Configure<LoggerOptions>(builder.Configuration.GetSection("Logging"));
+        builder.Services.ConfigureOptions<LoggerOptions>(builder.Configuration, "Logging");
+        builder.Services.ConfigureOptions<SpotifyOverridesSettings>(builder.Configuration, "SpotifyOverrides");
+
         return builder;
     }
 }

@@ -49,34 +49,15 @@ public static class Services
 
     public static IServiceCollection AddSingletons(this IServiceCollection services)
     {
-        var spotifyCache = new Cache();
         var mainCache = new Cache();
 
         services
             .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
                 sp.GetUpdaters(),
                 sp.GetRequiredService<IMerger>(),
-                mainCache))
-            .AddTransient<SpotifyLibrary>(sp =>
-            {
-                var merger = sp.GetRequiredService<IMerger>();
-                var staticSources = new List<IStaticSource> {
-                        sp.GetService<SpotifyOverrides>(),
-                        sp.GetService<SpotifyApiLibrary>()
-                };
-                var combinedLibrary = new CombinedStaticLibrary(spotifyCache, merger, staticSources);
-                return new SpotifyLibrary(
-                    combinedLibrary,
-                    sp.GetService<ISpotifyLibraryApi>(),
-                    sp.GetService<IIdGenerator>());
-            })
-            .AddTransient<SpotifyUpdater>(sp => new SpotifyUpdater(
-                new LibraryUpdater(sp.GetRequiredService<IMerger>(), spotifyCache),
-                sp.GetRequiredService<IOverridesService>()
-                ));
+                mainCache));
 
         return services.AddSingleton<TrackTimer>()
-            .AddSingleton<SpotifyPlayer>()
             .AddSingleton<IPlayer>(sp => new TrackingPlayer(
                 sp.GetRequiredService<TimingPlayer>(),
                 sp.GetRequiredService<IPlayTracker>()))
@@ -120,13 +101,9 @@ public static class Services
 
     private static IServiceCollection AddSpotify(this IServiceCollection services)
     {
-        return services.AddTransient<ISpotifyApiConfig, SpotifyConfig>()
-            .AddTransient<ISpotifyApi, SpotifyApi>()
-            .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
-            .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
-            .AddTransient<IOverridesService, SpotifyOverridesService>()
-            .AddTransient<SpotifyOverrides>()
-            .AddTransient<SpotifyApiLibrary>();
+        return services
+            .AddSpotifySource()
+            .AddTransient<ISpotifyApiConfig, SpotifyConfig>();
     }
 
     private static IServiceCollection AddPlayers(this IServiceCollection services)
@@ -168,7 +145,7 @@ public static class Services
         return new Dictionary<LibrarySource, ISourceRepository>
         {
             { LibrarySource.Local, sp.GetService<LocalLibrary>() },
-            { LibrarySource.Spotify, sp.GetService<SpotifyLibrary>() }
+            { LibrarySource.Spotify, sp.GetSpotifyRepository() }
         };
     }
 
@@ -177,7 +154,7 @@ public static class Services
         return new Dictionary<LibrarySource, IAudioPlayer>
         {
             { LibrarySource.Local, sp.GetService<LocalPlayer>() },
-            { LibrarySource.Spotify, sp.GetService<SpotifyPlayer>() }
+            { LibrarySource.Spotify, sp.GetSpotifyPlayer() }
         };
     }
 
@@ -186,7 +163,7 @@ public static class Services
         return new Dictionary<LibrarySource, ISourceLibraryUpdater>
         {
             { LibrarySource.Local, sp.GetService<LocalLibraryUpdater>() },
-            { LibrarySource.Spotify, sp.GetService<SpotifyUpdater>() }
+            { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
         };
     }
 
@@ -194,7 +171,7 @@ public static class Services
     {
         return new Dictionary<LibrarySource, IOverridesService>
         {
-            { LibrarySource.Spotify, sp.GetService<SpotifyOverridesService>() }
+            { LibrarySource.Spotify, sp.GetSpotifyOverrider() }
         };
     }
 }
