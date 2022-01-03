@@ -1,5 +1,4 @@
-﻿using IndexedDB.Blazor;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 
 namespace Cadenza.Database;
 

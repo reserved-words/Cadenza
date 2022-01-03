@@ -21,7 +21,7 @@ public static class Services
             .AddLogger(http)
             .AddMudServices()
             .AddAppServices()
-            .AddUtilities()
+            .AddUIHelpers()
             .AddTimers()
             .AddLastFm()
             .AddSpotify()
@@ -29,21 +29,24 @@ public static class Services
             .AddLibraries()
             .AddPlayers()
             .AddSourceFactories()
-            .AddSingletons();
+            .AddSingletons()
+            .AddCacheRepositories()
+            .AddDatabaseRepositories();
 
-        builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>();
 
-        builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
-        builder.Services.AddTransient<IMainRepository, MainRepository>();
-        builder.Services.AddTransient<IArtistRepository, ArtistRepository>();
-        builder.Services.AddTransient<ITrackRepositoryUpdater, Database.TrackRepository>();
-        builder.Services.AddTransient<ITrackRepository, Player.TrackRepository>();
-        builder.Services.AddTransient<IPlayTrackRepositoryUpdater, Database.PlayTrackRepository>();
-        builder.Services.AddTransient<IPlayTrackRepository, Player.PlayTrackRepository>();
 
-        builder.Services.AddTransient<IStartupSyncService, StartupSyncService>();
+        builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>()
+            .AddTransient<IStartupSyncService, StartupSyncService>()
+            .AddTransient<IPlaylistCreator, PlaylistCreator>();
 
         return builder;
+    }
+
+    private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<ITrackRepository, Player.TrackRepository>()
+            .AddTransient<IPlayTrackRepository, Player.PlayTrackRepository>();
     }
 
     public static IServiceCollection AddSingletons(this IServiceCollection services)
@@ -60,7 +63,6 @@ public static class Services
             .AddSingleton<IPlayer>(sp => new TrackingPlayer(
                 sp.GetRequiredService<TimingPlayer>(),
                 sp.GetRequiredService<IPlayTracker>()))
-            .AddSingleton<LocalPlayer>()
             .AddSingleton<PlayerLibrary>();
         ;
     }
@@ -72,15 +74,14 @@ public static class Services
             .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>());
     }
 
-    private static IServiceCollection AddUtilities(this IServiceCollection services)
+    private static IServiceCollection AddUIHelpers(this IServiceCollection services)
     {
         return services
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IProgressDialogService, ProgressDialogService>()
             .AddTransient<INotificationService, MudNotificationService>()
             .AddTransient<IStoreGetter, Store>()
-            .AddTransient<IStoreSetter, Store>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>();
+            .AddTransient<IStoreSetter, Store>();
     }
 
     private static IServiceCollection AddTimers(this IServiceCollection services)
@@ -122,7 +123,6 @@ public static class Services
     private static IServiceCollection AddLibraries(this IServiceCollection services)
     {
         return services
-            .AddTransient<LocalLibrary>()
             .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
             .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
     }

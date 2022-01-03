@@ -1,7 +1,4 @@
-﻿using Cadenza.Common;
-using IndexedDB.Blazor;
-
-namespace Cadenza.Database;
+﻿namespace Cadenza.Database;
 
 public class ArtistRepository : IArtistRepository
 {

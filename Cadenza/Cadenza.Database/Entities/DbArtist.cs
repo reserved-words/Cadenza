@@ -1,7 +1,4 @@
-﻿using Cadenza.Common;
-using System.ComponentModel.DataAnnotations;
-
-namespace Cadenza.Database;
+﻿namespace Cadenza.Database;
 
 public class DbArtist
 {
