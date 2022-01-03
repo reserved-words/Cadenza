@@ -14,11 +14,11 @@ public class SpotifyOverridesService : IOverridesService
         _httpClient = httpClient;
     }
 
-    private string AddOverrideUrl => GetEndpoint(s => s.AddOverride);
+    private string AddOverrideUrl => _settings.GetApiEndpoint(s => s.AddOverride);
 
-    private string GetOverridesUrl => GetEndpoint(s => s.GetOverrides);
+    private string GetOverridesUrl => _settings.GetApiEndpoint(s => s.GetOverrides);
 
-    private string RemoveOverrideUrl => GetEndpoint(s => s.RemoveOverride);
+    private string RemoveOverrideUrl => _settings.GetApiEndpoint(s => s.RemoveOverride);
 
     public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
     {
@@ -40,12 +40,5 @@ public class SpotifyOverridesService : IOverridesService
         var data = new { id, propertyName = property.ToString() };
         var response = await _httpClient.Delete(RemoveOverrideUrl, null, data);
         return response.IsSuccessStatusCode;
-    }
-
-    private string GetEndpoint(Func<SpotifyOverridesSettings.SpotifyOverridesEndpoints, string> getEndpoint)
-    {
-        var baseUrl = _settings.Value.BaseUrl;
-        var endpoint = getEndpoint(_settings.Value.Endpoints);
-        return $"{baseUrl}{endpoint}";
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿global using Cadenza.Common;
+global using Cadenza.Library;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Source.Spotify;
 

@@ -1,14 +1,16 @@
-﻿namespace Cadenza.Source.Local;
+﻿using Microsoft.Extensions.Options;
+
+namespace Cadenza.Source.Local;
 
 public class LocalPlayer : IAudioPlayer
 {
-    private readonly ILocalApiConfig _apiConfig;
+    private readonly IOptions<LocalApiSettings> _settings;
     private readonly IAudioPlayer _audioPlayer;
 
-    public LocalPlayer(IAudioPlayer audioPlayer, ILocalApiConfig apiConfig)
+    public LocalPlayer(IAudioPlayer audioPlayer, IOptions<LocalApiSettings> settings)
     {
         _audioPlayer = audioPlayer;
-        _apiConfig = apiConfig;
+        _settings = settings;
     }
 
     public async Task<int> Resume()
@@ -25,7 +27,7 @@ public class LocalPlayer : IAudioPlayer
 
     public async Task Play(string id)
     {
-        var uri = string.Format(_apiConfig.TrackUriFormat, id);
+        var uri = string.Format(_settings.GetApiEndpoint(e => e.PlayTrackUrl), id);
         await _audioPlayer.Play(uri);
     }
 

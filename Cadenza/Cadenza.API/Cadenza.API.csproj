@@ -19,9 +19,4 @@
     <ProjectReference Include="..\Cadenza.Spotify\Cadenza.Spotify.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Spotify\" />
-  </ItemGroup>
-
 </Project>

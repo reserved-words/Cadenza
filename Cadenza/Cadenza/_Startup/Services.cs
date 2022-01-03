@@ -2,7 +2,6 @@
 using IndexedDB.Blazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using Cadenza._Config;
 using Cadenza.Library;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
@@ -117,10 +116,7 @@ public static class Services
     private static IServiceCollection AddLocalLibrary(this IServiceCollection services)
     {
         return services
-            .AddTransient<LocalLibraryUpdater>()
-            .AddTransient<IAudioPlayer, HtmlPlayer>()
-            .AddTransient<IFileUpdateQueue, LocalLibraryUpdater>()
-            .AddTransient<ILocalApiConfig, LocalApiConfig>();
+            .AddLocalSource<HtmlPlayer>();
     }
 
     private static IServiceCollection AddLibraries(this IServiceCollection services)
@@ -144,7 +140,7 @@ public static class Services
     {
         return new Dictionary<LibrarySource, ISourceRepository>
         {
-            { LibrarySource.Local, sp.GetService<LocalLibrary>() },
+            { LibrarySource.Local, sp.GetLocalRepository() },
             { LibrarySource.Spotify, sp.GetSpotifyRepository() }
         };
     }
@@ -153,7 +149,7 @@ public static class Services
     {
         return new Dictionary<LibrarySource, IAudioPlayer>
         {
-            { LibrarySource.Local, sp.GetService<LocalPlayer>() },
+            { LibrarySource.Local, sp.GetLocalPlayer() },
             { LibrarySource.Spotify, sp.GetSpotifyPlayer() }
         };
     }
@@ -162,7 +158,7 @@ public static class Services
     {
         return new Dictionary<LibrarySource, ISourceLibraryUpdater>
         {
-            { LibrarySource.Local, sp.GetService<LocalLibraryUpdater>() },
+            { LibrarySource.Local, sp.GetLocalUpdater() },
             { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
         };
     }

@@ -1,4 +1,5 @@
-﻿using Cadenza.Source.Spotify;
+﻿using Cadenza.Source.Local;
+using Cadenza.Source.Spotify;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Cadenza;
@@ -18,6 +19,7 @@ public static class Configuration
 
         builder.Services.ConfigureOptions<LoggerOptions>(builder.Configuration, "Logging");
         builder.Services.ConfigureOptions<SpotifyOverridesSettings>(builder.Configuration, "SpotifyOverrides");
+        builder.Services.ConfigureOptions<LocalApiSettings>(builder.Configuration, "LocalApi");
 
         return builder;
     }
