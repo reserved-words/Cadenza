@@ -46,6 +46,18 @@ stages:
         projects: '$(TestProjects)'
         arguments: '--configuration $(BuildConfiguration)'
     - task: DotNetCoreCLI@2
+      displayName: 'Package Cadenza.Domain'
+      inputs:
+        command: pack
+        projects: '**/Cadenza.Domain.csproj'
+    - task: NuGetCommand@2
+      displayName: 'Push Cadenza.Domain'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+        publishVstsFeed: 'ReservedWordsFeed'
+        allowPackageConflicts: true
+    - task: DotNetCoreCLI@2
       displayName: 'Publish Apps'
       inputs:
         command: publish
