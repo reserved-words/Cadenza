@@ -11,6 +11,11 @@
             _sources = sources;
         }
 
+        public Task<List<AlbumTrackInfo>> GetAlbumTracks(LibrarySource source, string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<FullTrack> GetDetails(LibrarySource source, string id)
         {
             var track = await _baseRepository.GetDetails(source, id);
