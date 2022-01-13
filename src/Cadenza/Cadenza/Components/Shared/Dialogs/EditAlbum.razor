@@ -1,0 +1,40 @@
+﻿@inherits EditAlbumBase
+
+<WhipDialog Cancel="Cancel"
+            CancelCaption="Cancel"
+            Submit="Submit"
+            SubmitCaption="OK">
+
+    <ChildContent>
+        <EditForm Model="@Model">
+            <DataAnnotationsValidator />
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Artist"
+                                  ReadOnly="true"
+                                  Disabled="true"
+                                  Value="Model.Item.ArtistName" />
+                    <MudTextField Label="Title"
+                                  @bind-Value="Model.Title"
+                                  For="@(() => Model.Title)" />
+                    <MudSelect Label="Release Type"
+                               @bind-Value="Model.ReleaseType"
+                               For="@(() => Model.ReleaseType)">
+                        @foreach (var type in Enum.GetValues<ReleaseType>())
+                        {
+                            <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudTextField T="@string"
+                                  MaxLength="4"
+                                  Label="Year"
+                                  InputMode="InputMode.numeric"
+                                  @bind-Value="Model.Year"
+                                  For="@(() => Model.Year)"
+                                  InputType="InputType.Number" />
+                </MudCardContent>
+            </MudCard>
+        </EditForm>
+    </ChildContent>
+
+</WhipDialog>

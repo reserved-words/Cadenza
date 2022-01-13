@@ -1,0 +1,37 @@
+﻿
+<MudDialog>
+    <DialogContent>
+        @ChildContent
+    </DialogContent>
+    <DialogActions>
+        @if (ShowCancel)
+        {
+            <MudButton OnClick="@Cancel">@CancelCaption</MudButton>
+        }
+        @if (ShowSubmit)
+        {
+            <MudButton Color="Color.Primary" OnClick="@Submit">@SubmitCaption</MudButton>
+        }
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Cancel { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Submit { get; set; }
+
+    [Parameter]
+    public string CancelCaption { get; set; }
+
+    [Parameter]
+    public string SubmitCaption { get; set; }
+
+    public bool ShowCancel => CancelCaption != null;
+
+    public bool ShowSubmit => SubmitCaption != null;
+}
