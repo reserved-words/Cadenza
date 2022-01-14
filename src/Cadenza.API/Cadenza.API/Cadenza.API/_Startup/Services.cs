@@ -8,7 +8,7 @@ public static class Services
             .AddAzure()
             .AddLastFM()
             .AddSpotify()
-            .AddCommonUtilities()
+            .AddUtilities()
             .AddLogger();
 
         return builder;

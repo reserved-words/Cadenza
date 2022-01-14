@@ -12,10 +12,13 @@ public static class Services
 {
     public static WebAssemblyHostBuilder RegisterDependencies(this WebAssemblyHostBuilder builder)
     {
-        var http = new System.Net.Http.HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+        var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
-            .AddCommonUtilities()
+            .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddTransient<IMerger, Merger>()
+            .AddTransient<IValueMerger, ValueMerger>()
+            .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
             .AddMudServices()

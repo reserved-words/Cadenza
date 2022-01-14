@@ -14,7 +14,7 @@ public static class Services
         var cache = new Cache();
 
         services.AddSingleton<ICache>(sp => cache)
-            .AddCommonUtilities()
+            .AddUtilities()
             .AddLogger()
             .AddTransient<JsonLibrary>()
             .AddTransient<List<IStaticSource>>(sp => new List<IStaticSource> { sp.GetService<JsonLibrary>() })

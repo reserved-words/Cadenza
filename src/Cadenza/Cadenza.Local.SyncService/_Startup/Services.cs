@@ -5,9 +5,12 @@ public static class Services
     public static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
         services
-            .AddCommonUtilities()
-            .AddLogger()
-            .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
+           .AddUtilities()
+           .AddLogger()
+           .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+           .AddTransient<IMerger, Merger>()
+           .AddTransient<IValueMerger, ValueMerger>()
+           .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
            .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
            .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()
            .AddTransient<IPlayedFilesHandler, PlayedFilesHandler>()
