@@ -46,6 +46,12 @@ stages:
         command: test
         projects: '$(TestProjects)'
         arguments: '--configuration $(BuildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'Cadenza.Domain/Cadenza.Domain.csproj'
+        versioningScheme: 'off'
+        
     # - task: DotNetCoreCLI@2
     #   displayName: 'Package Cadenza.Domain'
     #   inputs:
