@@ -46,11 +46,11 @@ stages:
         command: test
         projects: '$(TestProjects)'
         arguments: '--configuration $(BuildConfiguration)'
-    - task: DotNetCoreCLI@2
-      displayName: 'Package Cadenza.Domain'
-      inputs:
-        command: pack
-        projects: 'Cadenza.Domain/Cadenza.Domain.csproj'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Package Cadenza.Domain'
+    #   inputs:
+    #     command: pack
+    #     projects: 'Cadenza.Domain/Cadenza.Domain.csproj'
     # - task: NuGetCommand@2
     #   displayName: 'Push Cadenza.Domain'
     #   inputs:
