@@ -43,8 +43,8 @@ public class AlbumConverter : IAlbumConverter
 
     public JsonAlbum ToJsonModel(Id3Data data)
     {
-        var albumId = _idGenerator.GenerateAlbumId(data.Album.ArtistName, data.Album.Title);
-        var artistId = _idGenerator.GenerateArtistId(data.Album.ArtistName);
+        var albumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title);
+        var artistId = _idGenerator.GenerateId(data.Album.ArtistName);
 
         var jsonAlbum = new JsonAlbum
         {

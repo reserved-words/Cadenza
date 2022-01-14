@@ -38,7 +38,7 @@ public class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
     {
         // need a single place to do these conversions
 
-        var albumId = _idGenerator.GenerateAlbumId(id3Data.Album.ArtistName, id3Data.Album.Title);
+        var albumId = _idGenerator.GenerateId(id3Data.Album.ArtistName, id3Data.Album.Title);
 
         return new JsonAlbumTrackLink
         {

@@ -47,7 +47,7 @@ public class ArtistConverter : IArtistConverter
         {
             return new JsonArtist
             {
-                Id = _idGenerator.GenerateArtistId(data.Album.ArtistName),
+                Id = _idGenerator.GenerateId(data.Album.ArtistName),
                 Name = data.Album.ArtistName,
                 Links = new List<JsonLink>()
             };
@@ -57,7 +57,7 @@ public class ArtistConverter : IArtistConverter
 
         return new JsonArtist
         {
-            Id = _idGenerator.GenerateArtistId(data.Artist.Name),
+            Id = _idGenerator.GenerateId(data.Artist.Name),
             Name = data.Artist.Name,
             Grouping = data.Artist.Grouping.ToString(),
             Genre = Nullify(data.Artist.Genre),
