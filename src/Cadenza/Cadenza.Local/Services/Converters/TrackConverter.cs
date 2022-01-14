@@ -27,7 +27,6 @@ public class TrackConverter : ITrackConverter
             Year = track.Year,
             Lyrics = track.Lyrics,
             Tags = track.Tags?.Split("|")
-                .Select(t => new Tag { Value = t })
                 .ToList()
         };
     }
@@ -44,7 +43,7 @@ public class TrackConverter : ITrackConverter
             Lyrics = Nullify(track.Lyrics),
             Tags = track.Tags == null
                 ? null
-                : Nullify(string.Join("|", track.Tags.Select(t => t.Value)))
+                : Nullify(string.Join("|", track.Tags))
         };
     }
 

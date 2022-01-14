@@ -18,7 +18,7 @@ public class Merger : IMerger
         artist.City = Merge(artist.City, update.City, forceUpdate);
         artist.State = Merge(artist.State, update.State, forceUpdate);
         artist.Country = Merge(artist.Country, update.Country, forceUpdate);
-        artist.Links = MergeCollection(artist.Links, update.Links, forceUpdate);
+        artist.Links = MergeLinks(artist.Links, update.Links, forceUpdate);
     }
 
     public void MergeAlbum(AlbumInfo album, AlbumInfo update, bool forceUpdate)
@@ -43,7 +43,7 @@ public class Merger : IMerger
         track.ArtistName = Merge(track.ArtistName, update.ArtistName, forceUpdate);
         track.Lyrics = Merge(track.Lyrics, update.Lyrics, forceUpdate);
         track.Year = Merge(track.Year, update.Year, forceUpdate);
-        track.Tags = MergeCollection(track.Tags, update.Tags, forceUpdate);
+        track.Tags = MergeTags(track.Tags, update.Tags, forceUpdate);
         track.DurationSeconds = Merge(track.DurationSeconds, update.DurationSeconds, forceUpdate);
         track.Source = Merge(track.Source, update.Source, forceUpdate);
     }
@@ -116,9 +116,14 @@ public class Merger : IMerger
         return _merger.Merge(original, update, forceUpdate);
     }
 
-    private ICollection<T> MergeCollection<T>(ICollection<T> original, ICollection<T> update, bool forceUpdate) where T : IMergeable
+    private ICollection<Link> MergeLinks(ICollection<Link> original, ICollection<Link> update, bool forceUpdate)
     {
-        return _merger.MergeCollection(original, update, forceUpdate);
+        return _merger.MergeLinks(original, update, forceUpdate);
+    }
+
+    private ICollection<string> MergeTags(ICollection<string> original, ICollection<string> update, bool forceUpdate)
+    {
+        return _merger.MergeTags(original, update, forceUpdate);
     }
 
     private List<int> MergeTrackCounts(List<int> original, List<int> update, bool forceUpdate)

@@ -84,19 +84,19 @@ public class ValueMerger : IValueMerger
         return list;
     }
 
-    public ICollection<T> MergeCollection<T>(ICollection<T> list, ICollection<T> update, bool forceUpdate) where T : IMergeable
+    public ICollection<Link> MergeLinks(ICollection<Link> list, ICollection<Link> update, bool forceUpdate)
     {
-        list ??= new List<T>();
-        update ??= new List<T>();
+        list ??= new List<Link>();
+        update ??= new List<Link>();
 
         foreach (var updateItem in update)
         {
-            var item = list.SingleOrDefault(i => i.Id == updateItem.Id);
+            var item = list.SingleOrDefault(i => i.Type == updateItem.Type);
             if (item == null)
             {
                 list.Add(updateItem);
             }
-            else if (!item.IsPopulated || forceUpdate)
+            else if (string.IsNullOrEmpty(item.Name) || forceUpdate)
             {
                 list.Remove(item);
                 list.Add(updateItem);
@@ -104,5 +104,12 @@ public class ValueMerger : IValueMerger
         }
 
         return list;
+    }
+
+    public ICollection<string> MergeTags(ICollection<string> list, ICollection<string> update, bool forceUpdate)
+    {
+        list ??= new List<string>();
+        update ??= new List<string>();
+        return list.Union(update).ToList();
     }
 }

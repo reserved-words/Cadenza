@@ -89,7 +89,7 @@ internal class CachedLibrary : ILibrary
             AlbumArtistId = album.ArtistId,
             AlbumId = track.AlbumId,
             Lyrics = track.Lyrics,
-            Tags = track.Tags?.Select(t => t.Value).ToList()
+            Tags = track.Tags?.ToList()
         };
     }
 }

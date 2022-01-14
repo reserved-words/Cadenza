@@ -93,7 +93,7 @@ public class SpotifyOverrides : IStaticSource
             Title = GetValue(overrides, ItemProperty.AlbumTitle),
             Lyrics = GetValue(overrides, ItemProperty.Lyrics),
             Year = GetValue(overrides, ItemProperty.ReleaseYear),
-            Tags = new List<Tag>() // overrides to do
+            Tags = new List<string>() // overrides to do
         };
     }
 
