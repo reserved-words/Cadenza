@@ -56,7 +56,7 @@ stages:
       inputs:
         command: 'push'
         packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
-        publishVstsFeed: 'ReservedWordsFeed'
+        publishVstsFeed: 'CadenzaFeed'
         allowPackageConflicts: true
     - task: DotNetCoreCLI@2
       displayName: 'Publish Apps'
