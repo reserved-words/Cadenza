@@ -54,7 +54,7 @@ public class TrackConverter : ITrackConverter
         return new JsonTrack
         {
             Path = data.Track.Filepath,
-            ArtistId = _idGenerator.GenerateArtistId(data.Artist.Name),
+            ArtistId = _idGenerator.GenerateId(data.Artist.Name),
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = Nullify(commentData.TrackYear),

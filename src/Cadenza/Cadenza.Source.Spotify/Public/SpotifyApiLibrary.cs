@@ -207,6 +207,6 @@ public class SpotifyApiLibrary : IStaticSource
 
     private string GetUniversalId(string artistName)
     {
-        return _idGenerator.GenerateArtistId(artistName);
+        return _idGenerator.GenerateId(artistName);
     }
 }
