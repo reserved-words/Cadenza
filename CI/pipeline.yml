@@ -49,7 +49,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'pack'
-        packagesToPack: 'Cadenza.Domain/Cadenza.Domain.csproj'
+        packagesToPack: '**/Cadenza.Domain.csproj'
         versioningScheme: 'off'
         
     # - task: DotNetCoreCLI@2
