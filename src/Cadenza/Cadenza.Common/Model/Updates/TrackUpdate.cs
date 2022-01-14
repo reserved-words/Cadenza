@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Cadenza.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cadenza.Common;
 

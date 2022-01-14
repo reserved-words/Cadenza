@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local.API;
 
 public static class Routing
 {
@@ -19,7 +21,7 @@ public static class Routing
         app.MapPost("/Update/Artist", (ArtistUpdate update) => updater.UpdateArtist(update));
         app.MapPost("/Update/Track", (TrackUpdate update) => updater.UpdateTrack(update));
         app.MapGet("/Update/Queue", () => updater.GetQueue());
-        app.MapDelete("/Update/Unqueue", ([FromBody] MetaDataUpdate update) => updater.Unqueue(update));
+        app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updater.Unqueue(update));
         return app;
     }
 

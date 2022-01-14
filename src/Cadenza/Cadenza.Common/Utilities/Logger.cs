@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Common;
 
 public class Logger : ILogger
 {
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
     private readonly IOptions<LoggerOptions> _options;
 
-    public Logger(IOptions<LoggerOptions> options, IHttpClient httpClient)
+    public Logger(IOptions<LoggerOptions> options, IHttpHelper httpClient)
     {
         _options = options;
         _httpClient = httpClient;

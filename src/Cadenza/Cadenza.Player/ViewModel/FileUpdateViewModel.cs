@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Player;
 
 public class FileUpdateViewModel
 {
@@ -15,7 +17,7 @@ public class FileUpdateViewModel
         NumberOfFailedAttempts = update.FailedAttempts.Count;
     }
 
-    public MetaDataUpdate Update { get; }
+    public ItemPropertyUpdate Update { get; }
     public int NumberOfFailedAttempts { get; }
     public DateTime? LastFailedAttempt { get; }
     public string LastError { get; }

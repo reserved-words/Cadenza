@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Source.Spotify;
 
 public class SpotifyLibrary : ISourceRepository
 {

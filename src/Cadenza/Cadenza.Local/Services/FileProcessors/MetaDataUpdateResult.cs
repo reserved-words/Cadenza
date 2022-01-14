@@ -1,8 +1,10 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
 
-public class MetaDataUpdateResult
+namespace Cadenza.Local;
+
+public class ItemPropertyUpdateResult
 {
-    public MetaDataUpdate Update { get; set; }
+    public ItemPropertyUpdate Update { get; set; }
     public bool Completed { get; set; }
     public Exception Error { get; set; }
 }

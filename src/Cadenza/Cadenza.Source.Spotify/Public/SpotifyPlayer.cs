@@ -4,7 +4,7 @@ public class SpotifyPlayer : IAudioPlayer
 {
     private readonly IAudioPlayer _internalPlayer;
 
-    public SpotifyPlayer(IHttpClient httpClient, ISpotifyApiConfig config)
+    public SpotifyPlayer(IHttpHelper httpClient, ISpotifyApiConfig config)
     {
         var api = new SpotifyApi(httpClient, config);
         var playerApi = new SpotifyPlayerApi(api);

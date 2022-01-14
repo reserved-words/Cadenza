@@ -1,5 +1,4 @@
-﻿using Cadenza.Common;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.LastFM;
@@ -17,8 +16,9 @@ public static class Startup
             .AddTransient<FavouritesConsumer>();
     }
 
-    public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, params string[] sectionPath)
+    public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, string sectionPath)
     {
-        return services.ConfigureOptions<LastFmSettings>(config, sectionPath);
+        var section = config.GetSection(sectionPath);
+        return services.Configure<LastFmSettings>(section);
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Cadenza.Player;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Player;
 
 public class OverrideViewModel
 {
-    public OverrideViewModel(LibrarySource source, MetaDataUpdate model)
+    public OverrideViewModel(LibrarySource source, ItemPropertyUpdate model)
     {
         Source = source;
         Id = model.Id;

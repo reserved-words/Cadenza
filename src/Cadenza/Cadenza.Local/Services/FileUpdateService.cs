@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Domain;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local;
 
@@ -15,14 +16,14 @@ public class FileUpdateService : IFileUpdateService
         _jsonConverter = jsonConverter;
     }
 
-    public void Add(MetaDataUpdate update)
+    public void Add(ItemPropertyUpdate update)
     {
         var queue = Get();
         AddOrUpdate(queue, update);
         Save(queue);
     }
 
-    private void AddOrUpdate(FileUpdateQueue queue, MetaDataUpdate update)
+    private void AddOrUpdate(FileUpdateQueue queue, ItemPropertyUpdate update)
     {
         var entry = queue.Updates.SingleOrDefault(e => e.Update.Equals(update));
         if (entry == null)
@@ -33,7 +34,7 @@ public class FileUpdateService : IFileUpdateService
         entry.FailedAttempts.Clear();
     }
 
-    public void Remove(MetaDataUpdate update)
+    public void Remove(ItemPropertyUpdate update)
     {
         var queue = Get();
 
@@ -46,7 +47,7 @@ public class FileUpdateService : IFileUpdateService
         Save(queue);
     }
 
-    public void LogError(MetaDataUpdate update, Exception ex)
+    public void LogError(ItemPropertyUpdate update, Exception ex)
     {
         var queue = Get();
 

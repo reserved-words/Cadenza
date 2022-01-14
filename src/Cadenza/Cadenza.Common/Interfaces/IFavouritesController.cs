@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Common;
 
 public interface IFavouritesController
 {

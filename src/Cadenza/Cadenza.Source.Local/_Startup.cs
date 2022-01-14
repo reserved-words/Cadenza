@@ -2,6 +2,9 @@
 global using Cadenza.Library;
 global using System.Net.Http.Json;
 global using System.Web;
+global using Cadenza.Domain;
+global using Cadenza.Utilities;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

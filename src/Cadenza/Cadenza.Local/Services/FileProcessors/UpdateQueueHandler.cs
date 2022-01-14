@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local;
 
 public class UpdateQueueHandler : IUpdateQueueHandler
 {
@@ -15,7 +17,7 @@ public class UpdateQueueHandler : IUpdateQueueHandler
     {
         var queue = _service.Get();
 
-        var updates = new Dictionary<ItemType, Dictionary<string, List<MetaDataUpdate>>>();
+        var updates = new Dictionary<ItemType, Dictionary<string, List<ItemPropertyUpdate>>>();
 
         var updatesToProcess = queue.Updates
             .Where(u => u.FailedAttempts.Count < 3)
@@ -25,12 +27,12 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         {
             if (!updates.ContainsKey(update.Update.ItemType))
             {
-                updates.Add(update.Update.ItemType, new Dictionary<string, List<MetaDataUpdate>>());
+                updates.Add(update.Update.ItemType, new Dictionary<string, List<ItemPropertyUpdate>>());
             }
 
             if (!updates[update.Update.ItemType].ContainsKey(update.Update.Id))
             {
-                updates[update.Update.ItemType].Add(update.Update.Id, new List<MetaDataUpdate>());
+                updates[update.Update.ItemType].Add(update.Update.Id, new List<ItemPropertyUpdate>());
             }
 
             updates[update.Update.ItemType][update.Update.Id].Add(update.Update);
@@ -48,9 +50,9 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         }
     }
 
-    private void ProcessUpdates(ItemType itemType, string id, List<MetaDataUpdate> updates)
+    private void ProcessUpdates(ItemType itemType, string id, List<ItemPropertyUpdate> updates)
     {
-        List<MetaDataUpdateResult> results;
+        List<ItemPropertyUpdateResult> results;
 
         switch (itemType)
         {
@@ -70,7 +72,7 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         MarkProcessed(results);
     }
 
-    private void MarkProcessed(List<MetaDataUpdateResult> results)
+    private void MarkProcessed(List<ItemPropertyUpdateResult> results)
     {
         foreach (var result in results)
         {

@@ -1,4 +1,4 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;

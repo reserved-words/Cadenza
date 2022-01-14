@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local;
 
 public interface IAlbumConverter
 {

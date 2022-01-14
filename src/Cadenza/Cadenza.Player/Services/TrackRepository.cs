@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Player
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Player
 {
     public class TrackRepository : ITrackRepository
     {

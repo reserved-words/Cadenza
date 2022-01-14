@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Utilities;
+
+namespace Cadenza.Common;
 
 public class LongRunningTaskService : ILongRunningTaskService
 {

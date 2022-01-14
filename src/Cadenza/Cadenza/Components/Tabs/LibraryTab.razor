@@ -33,9 +33,9 @@
                 else
                 {
                     <WhipTable Items="@Artists"
-                               T="@Common.LibraryArtist"
+                               T="@Domain.LibraryArtist"
                                SelectedItem="@SelectedArtist"
-                               Filter="new Func<Common.LibraryArtist, bool>(FilterFunc)"
+                               Filter="new Func<Domain.LibraryArtist, bool>(FilterFunc)"
                                OnRowClick="@((args) => SelectArtist(args.Item))"
                                OnRowDoubleClick="@((a) => OnPlayArtist(a))">
                         <RowTemplate>

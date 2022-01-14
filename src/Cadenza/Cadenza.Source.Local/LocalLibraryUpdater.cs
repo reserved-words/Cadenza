@@ -1,13 +1,15 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
 public class LocalLibraryUpdater : ISourceLibraryUpdater, IFileUpdateQueue
 {
     private readonly IOptions<LocalApiSettings> _settings;
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
 
-    public LocalLibraryUpdater(IHttpClient httpClient, IOptions<LocalApiSettings> settings)
+    public LocalLibraryUpdater(IHttpHelper httpClient, IOptions<LocalApiSettings> settings)
     {
         _httpClient = httpClient;
         _settings = settings;
@@ -19,7 +21,7 @@ public class LocalLibraryUpdater : ISourceLibraryUpdater, IFileUpdateQueue
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> RemoveQueuedUpdate(MetaDataUpdate update)
+    public async Task<bool> RemoveQueuedUpdate(ItemPropertyUpdate update)
     {
         var response = await _httpClient.Delete(_settings.GetApiEndpoint(e => e.UnqueueUpdate), null, update);
         return response.IsSuccessStatusCode;

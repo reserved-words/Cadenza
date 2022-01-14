@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local.API;
 
 public interface IUpdateService
 {
@@ -6,5 +8,5 @@ public interface IUpdateService
     Task<bool> UpdateArtist(ArtistUpdate artist);
     Task<FileUpdateQueue> GetQueue();
     Task<bool> UpdateTrack(TrackUpdate track);
-    Task Unqueue(MetaDataUpdate update);
+    Task Unqueue(ItemPropertyUpdate update);
 }

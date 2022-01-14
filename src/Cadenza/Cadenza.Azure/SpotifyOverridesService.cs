@@ -1,15 +1,16 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.Azure;
 
-public class SpotifyOverridesService : IOverridesService
+public class SpotifyOverridesService
 {
     private readonly IOptions<AzureSettings> _config;
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
 
-    public SpotifyOverridesService(IHttpClient httpClient, IOptions<AzureSettings> config)
+    public SpotifyOverridesService(IHttpHelper httpClient, IOptions<AzureSettings> config)
     {
         _httpClient = httpClient;
         _config = config;
@@ -19,11 +20,11 @@ public class SpotifyOverridesService : IOverridesService
     private string GetOverridesUrl => _config.Value.GetSpotifyOverridesUrl;
     private string RemoveOverrideUrl => _config.Value.RemoveSpotifyOverrideUrl;
 
-    public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
+    public async Task<bool> AddOverrides(List<ItemPropertyUpdate> updates)
     {
         // TODO: Change to do all in one transaction
 
-        foreach (var o in overrides)
+        foreach (var o in updates)
         {
             var overrideData = new AzureOverride
             {
@@ -43,16 +44,17 @@ public class SpotifyOverridesService : IOverridesService
         return true;
     }
 
-    public async Task<List<MetaDataUpdate>> GetOverrides()
+    public async Task<List<ItemPropertyUpdate>> GetOverrides()
     {
         var response = await _httpClient.Get(GetOverridesUrl);
         if (!response.IsSuccessStatusCode)
-            return new List<MetaDataUpdate>();
+            return new List<ItemPropertyUpdate>();
 
         var test = await response.Content.ReadAsStringAsync();
 
         var overrides = await response.Content.ReadFromJsonAsync<List<AzureOverride>>();
-        return overrides.Select(o => new MetaDataUpdate
+
+        return overrides.Select(o => new ItemPropertyUpdate
         {
             Id = o.id,
             Item = o.item,

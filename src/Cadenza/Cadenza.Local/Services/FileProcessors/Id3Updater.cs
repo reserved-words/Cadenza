@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+
+namespace Cadenza.Local;
 
 public class Id3Updater : IId3Updater
 {
@@ -15,7 +18,7 @@ public class Id3Updater : IId3Updater
         _base64Converter = base64Converter;
     }
 
-    public List<MetaDataUpdateResult> UpdateAlbum(string id, List<MetaDataUpdate> updates)
+    public List<ItemPropertyUpdateResult> UpdateAlbum(string id, List<ItemPropertyUpdate> updates)
     {
         var results = GetEmptyResults(updates);
         var tracks = GetAlbumTracks(id);
@@ -23,7 +26,7 @@ public class Id3Updater : IId3Updater
         return results;
     }
 
-    public List<MetaDataUpdateResult> UpdateArtist(string id, List<MetaDataUpdate> updates)
+    public List<ItemPropertyUpdateResult> UpdateArtist(string id, List<ItemPropertyUpdate> updates)
     {
         var tracks = GetArtistTracks(id);
         var results = GetEmptyResults(updates);
@@ -31,7 +34,7 @@ public class Id3Updater : IId3Updater
         return results;
     }
 
-    public List<MetaDataUpdateResult> UpdateTrack(string id, List<MetaDataUpdate> updates)
+    public List<ItemPropertyUpdateResult> UpdateTrack(string id, List<ItemPropertyUpdate> updates)
     {
         var path = _base64Converter.FromBase64(id);
         var results = GetEmptyResults(updates);
@@ -58,12 +61,12 @@ public class Id3Updater : IId3Updater
             .ToList();
     }
 
-    private List<MetaDataUpdateResult> GetEmptyResults(List<MetaDataUpdate> updates)
+    private List<ItemPropertyUpdateResult> GetEmptyResults(List<ItemPropertyUpdate> updates)
     {
-        return updates.Select(u => new MetaDataUpdateResult { Update = u }).ToList();
+        return updates.Select(u => new ItemPropertyUpdateResult { Update = u }).ToList();
     }
 
-    private void TryUpdate(Id3Data trackData, CommentData commentData, MetaDataUpdateResult result)
+    private void TryUpdate(Id3Data trackData, CommentData commentData, ItemPropertyUpdateResult result)
     {
         try
         {
@@ -120,12 +123,12 @@ public class Id3Updater : IId3Updater
         }
     }
 
-    private void UpdateTrack(string path, List<MetaDataUpdateResult> results)
+    private void UpdateTrack(string path, List<ItemPropertyUpdateResult> results)
     {
         UpdateAllTracks(new List<string> { path }, results);
     }
 
-    private void UpdateAllTracks(List<string> paths, List<MetaDataUpdateResult> results)
+    private void UpdateAllTracks(List<string> paths, List<ItemPropertyUpdateResult> results)
     {
         if (!paths.Any())
         {

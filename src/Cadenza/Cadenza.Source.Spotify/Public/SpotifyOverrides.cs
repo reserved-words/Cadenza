@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+
+namespace Cadenza.Source.Spotify;
 
 public class SpotifyOverrides : IStaticSource
 {
@@ -57,7 +60,7 @@ public class SpotifyOverrides : IStaticSource
 
     }
 
-    private ArtistInfo GetArtist(IGrouping<Identifier, MetaDataUpdate> overrides)
+    private ArtistInfo GetArtist(IGrouping<Identifier, ItemPropertyUpdate> overrides)
     {
         return new ArtistInfo
         {
@@ -72,7 +75,7 @@ public class SpotifyOverrides : IStaticSource
         };
     }
 
-    private AlbumInfo GetAlbum(IGrouping<Identifier, MetaDataUpdate> overrides)
+    private AlbumInfo GetAlbum(IGrouping<Identifier, ItemPropertyUpdate> overrides)
     {
         return new AlbumInfo
         {
@@ -84,7 +87,7 @@ public class SpotifyOverrides : IStaticSource
         };
     }
 
-    private TrackInfo GetTrack(IGrouping<Identifier, MetaDataUpdate> overrides)
+    private TrackInfo GetTrack(IGrouping<Identifier, ItemPropertyUpdate> overrides)
     {
         return new TrackInfo
         {
@@ -97,18 +100,18 @@ public class SpotifyOverrides : IStaticSource
         };
     }
 
-    private string GetValue(IGrouping<Identifier, MetaDataUpdate> overrides, ItemProperty ItemProperty)
+    private string GetValue(IGrouping<Identifier, ItemPropertyUpdate> overrides, ItemProperty ItemProperty)
     {
         return overrides.SingleOrDefault(a => a.Property == ItemProperty)?.UpdatedValue;
     }
 
-    private Grouping GetGroupingValue(IGrouping<Identifier, MetaDataUpdate> overrides)
+    private Grouping GetGroupingValue(IGrouping<Identifier, ItemPropertyUpdate> overrides)
     {
         return overrides.SingleOrDefault(a => a.Property == ItemProperty.Grouping)?.UpdatedValue.Parse<Grouping>()
                         ?? Grouping.None;
     }
 
-    private ReleaseType GetReleaseTypeValue(IGrouping<Identifier, MetaDataUpdate> overrides)
+    private ReleaseType GetReleaseTypeValue(IGrouping<Identifier, ItemPropertyUpdate> overrides)
     {
         return overrides.SingleOrDefault(a => a.Property == ItemProperty.ReleaseType)?.UpdatedValue.Parse<ReleaseType>()
                         ?? ReleaseType.Album;

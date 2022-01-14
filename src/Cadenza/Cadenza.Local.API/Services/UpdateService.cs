@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local.API;
 
 public class UpdateService : IUpdateService
 {
@@ -52,7 +54,7 @@ public class UpdateService : IUpdateService
         return _updateService.Get();
     }
 
-    public async Task Unqueue(MetaDataUpdate update)
+    public async Task Unqueue(ItemPropertyUpdate update)
     {
         _updateService.Remove(update);
     }

@@ -1,9 +1,11 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Local;
 
 public interface IFileUpdateService
 {
-    void Add(MetaDataUpdate update);
+    void Add(ItemPropertyUpdate update);
     FileUpdateQueue Get();
-    void LogError(MetaDataUpdate update, Exception ex);
-    void Remove(MetaDataUpdate update);
+    void LogError(ItemPropertyUpdate update, Exception ex);
+    void Remove(ItemPropertyUpdate update);
 }

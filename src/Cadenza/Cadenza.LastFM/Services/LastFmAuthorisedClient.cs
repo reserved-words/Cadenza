@@ -1,15 +1,15 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
 public class LastFmAuthorisedClient : ILastFmAuthorisedClient
 {
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
     private readonly IOptions<LastFmSettings> _config;
     private readonly ILastFmSigner _signer;
 
-    public LastFmAuthorisedClient(IHttpClient httpClient, IOptions<LastFmSettings> config, ILastFmSigner signer)
+    public LastFmAuthorisedClient(IHttpHelper httpClient, IOptions<LastFmSettings> config, ILastFmSigner signer)
     {
         _httpClient = httpClient;
         _config = config;

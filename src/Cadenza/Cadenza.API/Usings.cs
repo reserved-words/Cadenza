@@ -2,3 +2,5 @@
 global using Cadenza.Common;
 global using Cadenza.LastFM;
 global using Cadenza.Spotify;
+global using Cadenza.Domain;
+global using Cadenza.Utilities;

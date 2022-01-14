@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Common;
 
 public class ItemUpdate<TInterface> where TInterface : new()
 {
@@ -48,15 +50,15 @@ public class ItemUpdate<TInterface> where TInterface : new()
     public Dictionary<ItemProperty, string> UpdatedValues { get; set; } = new();
 
     public bool IsUpdated => Updates.Any();
-    public List<MetaDataUpdate> Updates => GetUpdates();
+    public List<ItemPropertyUpdate> Updates => GetUpdates();
 
-    private List<MetaDataUpdate> GetUpdates()
+    private List<ItemPropertyUpdate> GetUpdates()
     {
         return UpdatedValues
             .Join(OriginalValues,
                 u => u.Key,
                 o => o.Key,
-                (u, o) => new MetaDataUpdate
+                (u, o) => new ItemPropertyUpdate
                 {
                     ItemType = ItemType,
                     Id = Id,

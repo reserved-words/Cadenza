@@ -1,5 +1,4 @@
-﻿using Cadenza.Common;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Spotify;
@@ -12,8 +11,9 @@ public static class Startup
             .AddTransient<Auth>();
     }
 
-    public static IServiceCollection ConfigureSpotify(this IServiceCollection services, IConfiguration config, params string[] sectionPath)
+    public static IServiceCollection ConfigureSpotify(this IServiceCollection services, IConfiguration config, string sectionPath)
     {
-        return services.ConfigureOptions<SpotifySettings>(config, sectionPath);
+        var section = config.GetSection(sectionPath);
+        return services.Configure<SpotifySettings>(section);
     }
 }

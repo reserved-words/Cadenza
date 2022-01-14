@@ -1,14 +1,16 @@
-﻿using System.Net.Http.Json;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+using System.Net.Http.Json;
 
 namespace Cadenza.Player;
 
 public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesController
 {
     private readonly IPlayerApiUrl _api;
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
     private readonly IStoreGetter _store;
 
-    public LastFmService(IHttpClient httpClient, IStoreGetter store, IPlayerApiUrl api)
+    public LastFmService(IHttpHelper httpClient, IStoreGetter store, IPlayerApiUrl api)
     {
         _httpClient = httpClient;
         _store = store;

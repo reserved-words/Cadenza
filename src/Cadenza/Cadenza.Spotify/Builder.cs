@@ -1,4 +1,4 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Utilities;
 
 namespace Cadenza.Spotify;
 

@@ -1,14 +1,16 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.Source.Spotify;
 
 public class SpotifyOverridesService : IOverridesService
 {
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
     private readonly IOptions<SpotifyOverridesSettings> _settings;
 
-    public SpotifyOverridesService(IOptions<SpotifyOverridesSettings> settings, IHttpClient httpClient)
+    public SpotifyOverridesService(IOptions<SpotifyOverridesSettings> settings, IHttpHelper httpClient)
     {
         _settings = settings;
         _httpClient = httpClient;
@@ -20,19 +22,19 @@ public class SpotifyOverridesService : IOverridesService
 
     private string RemoveOverrideUrl => _settings.GetApiEndpoint(s => s.RemoveOverride);
 
-    public async Task<bool> AddOverrides(List<MetaDataUpdate> overrides)
+    public async Task<bool> AddOverrides(List<ItemPropertyUpdate> overrides)
     {
         var response = await _httpClient.Post(AddOverrideUrl, null, overrides);
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<List<MetaDataUpdate>> GetOverrides()
+    public async Task<List<ItemPropertyUpdate>> GetOverrides()
     {
         var response = await _httpClient.Get(GetOverridesUrl);
         if (!response.IsSuccessStatusCode)
-            return new List<MetaDataUpdate>();
+            return new List<ItemPropertyUpdate>();
 
-        return await response.Content.ReadFromJsonAsync<List<MetaDataUpdate>>();
+        return await response.Content.ReadFromJsonAsync<List<ItemPropertyUpdate>>();
     }
 
     public async Task<bool> RemoveOverride(string id, ItemProperty property)

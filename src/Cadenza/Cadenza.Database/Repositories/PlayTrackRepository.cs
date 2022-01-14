@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Database;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Database;
 
 public class PlayTrackRepository : IPlayTrackRepositoryUpdater
 {

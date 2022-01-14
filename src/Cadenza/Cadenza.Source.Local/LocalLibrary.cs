@@ -1,13 +1,15 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Domain;
+using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
 public class LocalLibrary : ISourceRepository
 {
     private readonly IOptions<LocalApiSettings> _settings;
-    private readonly IHttpClient _httpClient;
+    private readonly IHttpHelper _httpClient;
 
-    public LocalLibrary(IHttpClient httpClient, IOptions<LocalApiSettings> settings)
+    public LocalLibrary(IHttpHelper httpClient, IOptions<LocalApiSettings> settings)
     {
         _httpClient = httpClient;
         _settings = settings;
