@@ -1,4 +1,5 @@
 ﻿using Cadenza.Domain;
+using System.Reflection;
 
 namespace Cadenza.Common;
 
@@ -36,7 +37,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
             var props = typeof(TInterface).GetProperties();
             foreach (var prop in props)
             {
-                var propertyName = prop.GetPropertyName();
+                var propertyName = GetPropertyName(prop);
 
                 if (!propertyName.HasValue)
                     continue;
@@ -90,5 +91,10 @@ public class ItemUpdate<TInterface> where TInterface : new()
             return false;
 
         return originalValue == updatedValue;
+    }
+    public static ItemProperty? GetPropertyName(PropertyInfo propertyInfo)
+    {
+        var attr = propertyInfo.GetCustomAttribute<ItemPropertyAttribute>();
+        return attr?.Property;
     }
 }
