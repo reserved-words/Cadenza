@@ -1,7 +1,6 @@
-﻿using Cadenza.Domain;
-using System.Web;
+﻿using System.Web;
 
-namespace Cadenza.Common;
+namespace Cadenza.Player;
 
 public static class LinkExtensionMethods
 {

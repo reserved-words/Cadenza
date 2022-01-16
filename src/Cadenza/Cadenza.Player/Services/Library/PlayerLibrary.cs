@@ -6,9 +6,9 @@ public class PlayerLibrary : ILibraryConsumer, ILibraryController
     public event ArtistUpdatedEventHandler ArtistUpdated;
     public event TrackUpdatedEventHandler TrackUpdated;
 
-    private readonly ICombinedSourceLibraryUpdater _updater;
+    private readonly ILibraryUpdater _updater;
 
-    public PlayerLibrary(ICombinedSourceLibraryUpdater updater)
+    public PlayerLibrary(ILibraryUpdater updater)
     {
         _updater = updater;
     }
