@@ -61,6 +61,12 @@ stages:
         command: 'pack'
         packagesToPack: '**/Cadenza.Utilities.csproj'
         versioningScheme: 'off'        
+    - task: DotNetCoreCLI@2
+      displayName: 'Pack Cadenza.Library'
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/Cadenza.Library.csproj'
+        versioningScheme: 'off'        
     - task: NuGetCommand@2
       displayName: 'Push Packages'
       inputs:
