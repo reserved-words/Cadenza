@@ -17,9 +17,9 @@ public static class _Startup
             .AddTransient<IListComparer, ListComparer>()
             .AddTransient<INameComparer, NameComparer>()
             .AddTransient<IRandomGenerator, RandomGenerator>()
-            .AddTransient<IShuffler, Shuffler>();
+            .AddTransient<IShuffler, Shuffler>()
+            .AddTransient<IValueMerger, ValueMerger>();
     }
-
 
     public static IServiceCollection AddHttpClient(this IServiceCollection services, HttpClient client)
     {

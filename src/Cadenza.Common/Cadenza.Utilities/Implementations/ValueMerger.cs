@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Library;
+﻿namespace Cadenza.Utilities;
 
 public class ValueMerger : IValueMerger
 {
@@ -25,23 +23,9 @@ public class ValueMerger : IValueMerger
             : original;
     }
 
-    public Grouping Merge(Grouping original, Grouping update, bool forceUpdate)
+    public T Merge<T>(T original, T update, bool forceUpdate) where T : struct, Enum
     {
-        return forceUpdate || original == 0 || original == Grouping.None
-            ? update
-            : original;
-    }
-
-    public ReleaseType Merge(ReleaseType original, ReleaseType update, bool forceUpdate)
-    {
-        return forceUpdate || original == 0 || original == ReleaseType.Album
-            ? update
-            : original;
-    }
-
-    public LibrarySource Merge(LibrarySource original, LibrarySource update, bool forceUpdate)
-    {
-        return forceUpdate || original == 0 || original == LibrarySource.Local
+        return forceUpdate || original.Equals(default(T))
             ? update
             : original;
     }
@@ -86,19 +70,19 @@ public class ValueMerger : IValueMerger
         return list;
     }
 
-    public ICollection<Link> MergeLinks(ICollection<Link> list, ICollection<Link> update, bool forceUpdate)
+    public ICollection<T> MergeList<T>(ICollection<T> list, ICollection<T> update, bool forceUpdate) where T : class
     {
-        list ??= new List<Link>();
-        update ??= new List<Link>();
+        list ??= new List<T>();
+        update ??= new List<T>();
 
         foreach (var updateItem in update)
         {
-            var item = list.SingleOrDefault(i => i.Type == updateItem.Type);
+            var item = list.SingleOrDefault(i => i.Equals(updateItem));
             if (item == null)
             {
                 list.Add(updateItem);
             }
-            else if (string.IsNullOrEmpty(item.Name) || forceUpdate)
+            else if (forceUpdate)
             {
                 list.Remove(item);
                 list.Add(updateItem);
@@ -106,12 +90,5 @@ public class ValueMerger : IValueMerger
         }
 
         return list;
-    }
-
-    public ICollection<string> MergeTags(ICollection<string> list, ICollection<string> update, bool forceUpdate)
-    {
-        list ??= new List<string>();
-        update ??= new List<string>();
-        return list.Union(update).ToList();
     }
 }

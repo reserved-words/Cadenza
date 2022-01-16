@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Library;
+﻿namespace Cadenza.Library;
 
 public class Merger : IMerger
 {
@@ -120,12 +118,12 @@ public class Merger : IMerger
 
     private ICollection<Link> MergeLinks(ICollection<Link> original, ICollection<Link> update, bool forceUpdate)
     {
-        return _merger.MergeLinks(original, update, forceUpdate);
+        return _merger.MergeList(original, update, forceUpdate);
     }
 
     private ICollection<string> MergeTags(ICollection<string> original, ICollection<string> update, bool forceUpdate)
     {
-        return _merger.MergeTags(original, update, forceUpdate);
+        return _merger.MergeList(original, update, forceUpdate);
     }
 
     private List<int> MergeTrackCounts(List<int> original, List<int> update, bool forceUpdate)
