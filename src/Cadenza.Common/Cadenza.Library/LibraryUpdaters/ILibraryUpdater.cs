@@ -2,7 +2,7 @@
 
 public interface ILibraryUpdater
 {
-    Task<bool> UpdateAlbum(AlbumInfo album);
-    Task<bool> UpdateArtist(ArtistInfo artist);
-    Task<bool> UpdateTrack(TrackInfo track);
+    Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates);
+    Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates);
+    Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates);
 }

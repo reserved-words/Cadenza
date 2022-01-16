@@ -9,19 +9,19 @@ public class LibraryUpdater : ILibraryUpdater
         _cache = new SimpleCacher(merger, cache);
     }
 
-    public async Task<bool> UpdateAlbum(AlbumInfo album)
+    public async Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
     {
         _cache.AddAlbum(album, true);
         return true;
     }
 
-    public async Task<bool> UpdateArtist(ArtistInfo artist)
+    public async Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
     {
         _cache.AddArtist(artist, false, true);
         return true;
     }
 
-    public async Task<bool> UpdateTrack(TrackInfo track)
+    public async Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
     {
         _cache.AddTrack(track, true);
         return true;
