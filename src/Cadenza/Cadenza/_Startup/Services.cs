@@ -16,8 +16,6 @@ public static class Services
 
         builder.Services
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IMerger, Merger>()
-            .AddTransient<IValueMerger, ValueMerger>()
             .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
@@ -35,8 +33,6 @@ public static class Services
             .AddCacheRepositories()
             .AddDatabaseRepositories();
 
-
-
         builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>()
             .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>();
@@ -53,14 +49,6 @@ public static class Services
 
     public static IServiceCollection AddSingletons(this IServiceCollection services)
     {
-        var mainCache = new Cache();
-
-        services
-            .AddTransient<ILibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
-                sp.GetUpdaters(),
-                sp.GetRequiredService<IMerger>(),
-                mainCache));
-
         return services.AddSingleton<TrackTimer>()
             .AddSingleton<IPlayer>(sp => new TrackingPlayer(
                 sp.GetRequiredService<TimingPlayer>(),

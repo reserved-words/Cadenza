@@ -12,8 +12,6 @@ public static class Startup
 {
     public static IServiceCollection AddSpotifySource(this IServiceCollection services)
     {
-        var spotifyCache = new Cache();
-        
         return services
             .AddSingleton<SpotifyPlayer>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
@@ -23,23 +21,9 @@ public static class Startup
             .AddTransient<SpotifyOverridesService>()
             .AddTransient<SpotifyOverrides>()
             .AddTransient<SpotifyApiLibrary>()
-            .AddTransient<SpotifyLibrary>(sp =>
-            {
-                var merger = sp.GetRequiredService<IMerger>();
-                var staticSources = new List<IStaticSource> {
-                        sp.GetService<SpotifyOverrides>(),
-                        sp.GetService<SpotifyApiLibrary>()
-                };
-                var combinedLibrary = new CombinedStaticLibrary(spotifyCache, merger, staticSources);
-                return new SpotifyLibrary(
-                    combinedLibrary,
-                    sp.GetService<ISpotifyLibraryApi>(),
-                    sp.GetService<IIdGenerator>());
-            })
-            .AddTransient<SpotifyUpdater>(sp => new SpotifyUpdater(
-                new LibraryUpdater(sp.GetRequiredService<IMerger>(), spotifyCache),
-                sp.GetRequiredService<IOverridesService>()
-                )); ;
+            .AddCombinedLibrary<SpotifyApiLibrary, SpotifyOverrides>()
+            .AddTransient<SpotifyLibrary>()
+            .AddTransient<SpotifyUpdater>();
     }
 
     public static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)
