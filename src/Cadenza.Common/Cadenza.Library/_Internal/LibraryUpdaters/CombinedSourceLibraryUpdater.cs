@@ -1,15 +1,12 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Library;
-
+﻿namespace Cadenza.Library;
 
 // KEEP INTERNAL FOR NOW, MAY BE NEEDED PUBLIC OR CAN BE REMOVED BUT NOT SURE
-internal class CombinedSourceLibraryUpdater : ILibraryUpdater
+internal class CombinedSourceLibraryUpdater : IUpdater
 {
-    private readonly Dictionary<LibrarySource, ILibraryUpdater> _sourceUpdaters;
+    private readonly Dictionary<LibrarySource, IUpdater> _sourceUpdaters;
     private readonly ICacher _cacheUpdater;
 
-    public CombinedSourceLibraryUpdater(Dictionary<LibrarySource, ILibraryUpdater> sourceUdpaters, IMerger merger, ICache cache)
+    public CombinedSourceLibraryUpdater(Dictionary<LibrarySource, IUpdater> sourceUdpaters, IMerger merger, ICache cache)
     {
         _sourceUpdaters = sourceUdpaters;
         _cacheUpdater = new SimpleCacher(merger, cache);

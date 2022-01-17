@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public interface ICacher
+internal interface ICacher
 {
     void AddArtist(ArtistInfo artist, bool asAlbumArtist, bool forceUpdate);
     void AddAlbum(AlbumInfo album, bool forceUpdate);

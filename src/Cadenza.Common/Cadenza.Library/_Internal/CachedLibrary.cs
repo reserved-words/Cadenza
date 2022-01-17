@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Library;
+﻿namespace Cadenza.Library;
 
 internal class CachedLibrary : ILibrary
 {

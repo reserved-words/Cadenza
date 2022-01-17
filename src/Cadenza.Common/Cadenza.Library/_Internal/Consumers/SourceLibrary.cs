@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public abstract class SourceLibrary : ILibrary
+internal abstract class SourceLibrary : ILibrary
 {
     private readonly ILibrary _baseLibrary;
 

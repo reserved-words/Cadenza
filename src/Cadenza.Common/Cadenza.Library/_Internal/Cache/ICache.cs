@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public interface ICache
+internal interface ICache
 {
     List<string> AlbumArtists { get; }
     Dictionary<string, AlbumLinks> AlbumLinks { get; }

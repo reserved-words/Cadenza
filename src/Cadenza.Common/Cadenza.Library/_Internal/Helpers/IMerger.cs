@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public interface IMerger
+internal interface IMerger
 {
     void MergeArtist(ArtistInfo artist, ArtistInfo update, bool forceUpdate);
     void MergeAlbum(AlbumInfo album, AlbumInfo update, bool forceUpdate);

@@ -2,17 +2,15 @@
 
 public class CombinedLibrary : ILibrary
 {
-    private readonly List<IStaticSource> _sources;
+    private readonly IEnumerable<IStaticSource> _sources;
 
     private readonly ILibrary _cache;
     private readonly IStaticLibraryCacher _libraryCacher;
 
-    public CombinedLibrary(ICache cache, IMerger merger, List<IStaticSource> sources)
+    internal CombinedLibrary(IStaticLibraryCacher cacher, ILibrary cache, IEnumerable<IStaticSource> sources)
     {
-        var itemCacher = new SimpleCacher(merger, cache);
-
-        _cache = new CachedLibrary(cache);
-        _libraryCacher = new StaticLibraryCacher(itemCacher);
+        _cache = cache;
+        _libraryCacher = cacher;
         _sources = sources;
     }
 

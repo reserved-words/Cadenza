@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class CacheUpdater : ILibraryUpdater
+internal class CacheUpdater : IUpdater
 {
     private readonly ICacher _cache;
 

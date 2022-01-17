@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public interface ILibraryUpdater
+public interface ISourceUpdater
 {
     Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates);
     Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates);

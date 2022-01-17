@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public class Cache : ICache
+internal class Cache : ICache
 {
     public Dictionary<string, ArtistInfo> Artists { get; } = new();
     public Dictionary<string, TrackInfo> Tracks { get; } = new();
