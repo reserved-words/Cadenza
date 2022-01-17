@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.2" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.5" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

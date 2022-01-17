@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-using Cadenza.Utilities;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
@@ -15,7 +13,7 @@ public class LocalLibraryUpdater : ILibraryUpdater, IFileUpdateQueue
         _settings = settings;
     }
 
-    public async Task<bool> UpdateAlbum(AlbumInfo album, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
     {
         var response = await _httpClient.Post(_settings.GetApiEndpoint(e => e.UpdateAlbum), null, album);
         return response.IsSuccessStatusCode;
@@ -33,13 +31,13 @@ public class LocalLibraryUpdater : ILibraryUpdater, IFileUpdateQueue
         return await response.Content.ReadFromJsonAsync<FileUpdateQueue>();
     }
 
-    public async Task<bool> UpdateArtist(ArtistInfo artist, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
     {
         var response = await _httpClient.Post(_settings.GetApiEndpoint(e => e.UpdateArtist), null, artist);
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> UpdateTrack(TrackInfo track, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
     {
         var response = await _httpClient.Post(_settings.GetApiEndpoint(e => e.UpdateTrack), null, track);
         return response.IsSuccessStatusCode;

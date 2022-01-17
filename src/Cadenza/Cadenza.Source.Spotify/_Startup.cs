@@ -52,7 +52,7 @@ public static class Startup
         return services.GetRequiredService<SpotifyLibrary>();
     }
 
-    public static ISourceLibraryUpdater GetSpotifyUpdater(this IServiceProvider services)
+    public static ILibraryUpdater GetSpotifyUpdater(this IServiceProvider services)
     {
         return services.GetRequiredService<SpotifyUpdater>();
     }

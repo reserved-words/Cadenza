@@ -15,7 +15,7 @@ public class PlayerLibrary : ILibraryConsumer, ILibraryController
 
     public async Task<bool> UpdateAlbum(AlbumUpdate update)
     {
-        var success = await _updater.UpdateAlbum(update);
+        var success = await _updater.Update(update.Item, update.Updates);
         if (success)
         {
             AlbumUpdated?.Invoke(this, new AlbumUpdatedEventArgs(update.Item.Source, update));
@@ -25,7 +25,7 @@ public class PlayerLibrary : ILibraryConsumer, ILibraryController
 
     public async Task<bool> UpdateArtist(ArtistUpdate update)
     {
-        var success = await _updater.UpdateArtist(update);
+        var success = await _updater.Update(update.Item, update.Updates);
         if (success)
         {
             ArtistUpdated?.Invoke(this, new ArtistUpdatedEventArgs(update));
@@ -39,7 +39,7 @@ public class PlayerLibrary : ILibraryConsumer, ILibraryController
 
     public async Task<bool> UpdateTrack(TrackUpdate update)
     {
-        var success = await _updater.UpdateTrack(update);
+        var success = await _updater.Update(update.Item, update.Updates);
         if (success)
         {
             TrackUpdated?.Invoke(this, new TrackUpdatedEventArgs(update));

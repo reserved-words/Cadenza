@@ -11,32 +11,32 @@ public class SpotifyUpdater : ILibraryUpdater
         _overridesService = overridesService;
     }
 
-    public async Task<bool> UpdateAlbum(AlbumInfo album, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
     {
         var success = await _overridesService.AddOverrides(updates);
         if (success)
         {
-            await _cacheUpdater.UpdateAlbum(album);
+            await _cacheUpdater.Update(album, updates);
         }
         return success;
     }
 
-    public async Task<bool> UpdateArtist(ArtistInfo artist, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
     {
         var success = await _overridesService.AddOverrides(updates);
         if (success)
         {
-            await _cacheUpdater.UpdateArtist(artist);
+            await _cacheUpdater.Update(artist, updates);
         }
         return success;
     }
 
-    public async Task<bool> UpdateTrack(TrackInfo track, List<ItemPropertyUpdate> updates)
+    public async Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
     {
         var success = await _overridesService.AddOverrides(updates);
         if (success)
         {
-            await _cacheUpdater.UpdateTrack(track);
+            await _cacheUpdater.Update(track, updates);
         }
         return success;
     }

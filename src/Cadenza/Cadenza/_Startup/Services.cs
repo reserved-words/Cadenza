@@ -56,7 +56,7 @@ public static class Services
         var mainCache = new Cache();
 
         services
-            .AddTransient<ICombinedSourceLibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
+            .AddTransient<ILibraryUpdater>(sp => new CombinedSourceLibraryUpdater(
                 sp.GetUpdaters(),
                 sp.GetRequiredService<IMerger>(),
                 mainCache));
@@ -156,9 +156,9 @@ public static class Services
         };
     }
 
-    private static Dictionary<LibrarySource, ISourceLibraryUpdater> GetUpdaters(this IServiceProvider sp)
+    private static Dictionary<LibrarySource, ILibraryUpdater> GetUpdaters(this IServiceProvider sp)
     {
-        return new Dictionary<LibrarySource, ISourceLibraryUpdater>
+        return new Dictionary<LibrarySource, ILibraryUpdater>
         {
             { LibrarySource.Local, sp.GetLocalUpdater() },
             { LibrarySource.Spotify, sp.GetSpotifyUpdater() }

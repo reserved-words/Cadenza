@@ -32,7 +32,7 @@ public static class Startup
         return services.GetRequiredService<LocalLibrary>();
     }
 
-    public static ISourceLibraryUpdater GetLocalUpdater(this IServiceProvider services)
+    public static ILibraryUpdater GetLocalUpdater(this IServiceProvider services)
     {
         return services.GetRequiredService<LocalLibraryUpdater>();
     }
