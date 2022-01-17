@@ -9,18 +9,17 @@ public static class _Startup
     public static IServiceCollection AddCombinedLibrary<T>(this IServiceCollection services) 
         where T : class, IStaticSource
     {
-        return services.AddCachedLibrary(typeof(T));
+        return services.AddCombinedLibrary(typeof(T));
     }
 
     public static IServiceCollection AddCombinedLibrary<T1, T2>(this IServiceCollection services)
         where T1 : class, IStaticSource
         where T2 : class, IStaticSource
     {
-        return services
-            .AddCachedLibrary(typeof(T1), typeof(T2));
+        return services.AddCombinedLibrary(typeof(T1), typeof(T2));
     }
 
-    private static IServiceCollection AddCachedLibrary(this IServiceCollection services, params Type[] types)
+    private static IServiceCollection AddCombinedLibrary(this IServiceCollection services, params Type[] types)
     {
         services.AddSingleton<ICache, Cache>();
         services.AddTransient<IMerger, Merger>();
