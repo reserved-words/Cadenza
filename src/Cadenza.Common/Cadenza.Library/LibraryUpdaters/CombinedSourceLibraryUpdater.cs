@@ -2,7 +2,9 @@
 
 namespace Cadenza.Library;
 
-public class CombinedSourceLibraryUpdater : ILibraryUpdater
+
+// KEEP INTERNAL FOR NOW, MAY BE NEEDED PUBLIC OR CAN BE REMOVED BUT NOT SURE
+internal class CombinedSourceLibraryUpdater : ILibraryUpdater
 {
     private readonly Dictionary<LibrarySource, ILibraryUpdater> _sourceUpdaters;
     private readonly ICacher _cacheUpdater;

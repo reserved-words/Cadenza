@@ -1,10 +1,10 @@
 ﻿namespace Cadenza.Library;
 
-public class LibraryUpdater : ILibraryUpdater
+public class CacheUpdater : ILibraryUpdater
 {
     private readonly ICacher _cache;
 
-    public LibraryUpdater(IMerger merger, ICache cache)
+    public CacheUpdater(IMerger merger, ICache cache)
     {
         _cache = new SimpleCacher(merger, cache);
     }

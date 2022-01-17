@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class StaticLibraryCacher : IStaticLibraryCacher
+internal class StaticLibraryCacher : IStaticLibraryCacher
 {
     private readonly ICacher _itemCacher;
 
