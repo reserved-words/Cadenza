@@ -16,9 +16,14 @@ public class Link
         if (obj == null)
             return false;
 
-        if (!(obj is Link link))
+        if (obj is not Link link)
             return false;
 
         return link.Type == Type;
+    }
+
+    public override int GetHashCode()
+    {
+        return Type.GetHashCode();
     }
 }

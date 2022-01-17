@@ -9,13 +9,13 @@ internal class CachedLibrary : ILibrary
         _cache = new CacheReader(cache);
     }
 
-    public async Task<ArtistFull> GetAlbumArtist(string artistId)
+    public Task<ArtistFull> GetAlbumArtist(string artistId)
     {
         var artist = _cache.GetArtist(artistId);
         if (artist == null)
             return null;
 
-        return new ArtistFull
+        var result = new ArtistFull
         {
             Artist = _cache.GetArtist(artistId),
             Albums = _cache.GetArtistAlbums(artistId)
@@ -26,28 +26,34 @@ internal class CachedLibrary : ILibrary
                 })
                 .ToList()
         };
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ICollection<Artist>> GetAlbumArtists()
+    public Task<ICollection<Artist>> GetAlbumArtists()
     {
-        return _cache.GetAlbumArtists()
+        var result = _cache.GetAlbumArtists()
             .OfType<Artist>()
             .ToList();
+
+        return Task.FromResult<ICollection<Artist>>(result);
     }
 
-    public async Task<ICollection<Track>> GetAllTracks()
+    public Task<ICollection<Track>> GetAllTracks()
     {
-        return _cache.GetAllTracks()
+        var result = _cache.GetAllTracks()
             .OfType<Track>()
             .ToList();
+
+        return Task.FromResult<ICollection<Track>>(result);
     }
 
-    public async Task<PlayingTrack> GetTrack(string trackId)
+    public Task<PlayingTrack> GetTrack(string trackId)
     {
         var track = _cache.GetTrack(trackId);
         var album = _cache.GetTrackAlbum(trackId);
 
-        return new PlayingTrack
+        var result = new PlayingTrack
         {
             Id = trackId,
             Source = track.Source,
@@ -60,16 +66,18 @@ internal class CachedLibrary : ILibrary
             ReleaseType = album.ReleaseType,
             Year = track.Year
         };
+
+        return Task.FromResult(result);
     }
 
-    public async Task<FullTrack> GetFullTrack(string trackId)
+    public Task<FullTrack> GetFullTrack(string trackId)
     {
         var track = _cache.GetTrack(trackId);
         var album = _cache.GetTrackAlbum(trackId);
         var artist = _cache.GetTrackArtist(trackId);
         var position = _cache.GetAlbumPosition(trackId);
 
-        return new FullTrack
+        var result = new FullTrack
         {
             Id = trackId,
             Source = track.Source,
@@ -91,5 +99,7 @@ internal class CachedLibrary : ILibrary
             Lyrics = track.Lyrics,
             Tags = track.Tags?.ToList()
         };
+
+        return Task.FromResult(result);
     }
 }

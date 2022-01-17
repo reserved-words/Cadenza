@@ -11,11 +11,18 @@ public class ItemPropertyUpdate
 
     public override bool Equals(object obj)
     {
-        if (obj == null || !(obj is ItemPropertyUpdate update))
+        if (obj == null || obj is not ItemPropertyUpdate update)
             return false;
 
         return update.ItemType == this.ItemType
             && update.Id == this.Id
             && update.Property == this.Property;
+    }
+
+    public override int GetHashCode()
+    {
+        return ItemType.GetHashCode()
+            ^ Id.GetHashCode()
+            ^ Property.GetHashCode();
     }
 }

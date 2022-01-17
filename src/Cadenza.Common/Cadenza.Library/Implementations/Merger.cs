@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-internal class Merger : IMerger
+public class Merger : IMerger
 {
     private readonly IValueMerger _merger;
 

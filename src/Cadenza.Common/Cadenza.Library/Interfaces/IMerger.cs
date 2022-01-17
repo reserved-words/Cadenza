@@ -1,8 +1,6 @@
-﻿using Cadenza.Domain;
+﻿namespace Cadenza.Library;
 
-namespace Cadenza.Library;
-
-internal interface IMerger
+public interface IMerger
 {
     void MergeArtist(ArtistInfo artist, ArtistInfo update, bool forceUpdate);
     void MergeAlbum(AlbumInfo album, AlbumInfo update, bool forceUpdate);
