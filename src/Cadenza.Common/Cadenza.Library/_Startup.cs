@@ -17,13 +17,13 @@ public static class _Startup
         {
             var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
             var source = sp.GetRequiredService<TSource>();
-            return new CombinedLibrary(combiner, source);
+            return new Library(combiner, source);
         });
 
         return services;
     }
 
-    public static IServiceCollection AddLibrary<TSource, TOverride>(this IServiceCollection services) 
+    public static IServiceCollection AddLibrary<TSource, TOverride>(this IServiceCollection services)
         where TSource : class, IStaticSource
         where TOverride : class, IStaticSource
     {
@@ -32,14 +32,51 @@ public static class _Startup
         services.AddTransient<TSource>();
         services.AddTransient<TOverride>();
 
-        services.AddTransient<ILibrary>(sp => 
-        { 
+        services.AddTransient<ILibrary>(sp =>
+        {
             var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
             var source = sp.GetRequiredService<TSource>();
             var ovrride = sp.GetRequiredService<TOverride>();
-            return new CombinedLibrary(combiner, source, ovrride);
+            return new Library(combiner, source, ovrride);
         });
-        
+
+        return services;
+    }
+
+    public static IServiceCollection AddSourceLibrary<TSource, TOverride>(this IServiceCollection services, LibrarySource librarySource)
+        where TSource : class, IStaticSource
+        where TOverride : class, IStaticSource
+    {
+        services.AddTransient<IMerger, Merger>();
+        services.AddTransient<IStaticLibraryCacher, StaticLibraryCacher>();
+        services.AddTransient<TSource>();
+        services.AddTransient<TOverride>();
+
+        services.AddTransient<ISourceLibrary>(sp =>
+        {
+            var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
+            var source = sp.GetRequiredService<TSource>();
+            var ovrride = sp.GetRequiredService<TOverride>();
+            return new SourceLibrary(librarySource, combiner, source, ovrride);
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddSourceLibrary<TSource>(this IServiceCollection services, LibrarySource librarySource)
+        where TSource : class, IStaticSource
+    {
+        services.AddTransient<IMerger, Merger>();
+        services.AddTransient<IStaticLibraryCacher, StaticLibraryCacher>();
+        services.AddTransient<TSource>();
+
+        services.AddTransient<ISourceLibrary>(sp =>
+        {
+            var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
+            var source = sp.GetRequiredService<TSource>();
+            return new SourceLibrary(librarySource, combiner, source);
+        });
+
         return services;
     }
 
