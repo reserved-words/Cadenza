@@ -2,21 +2,69 @@
 
 internal class StaticLibraryCacher : IStaticLibraryCacher
 {
-    private readonly ICacher _itemCacher;
+    private readonly IMerger _merger;
 
-    public StaticLibraryCacher(ICacher itemCacher)
+    public StaticLibraryCacher(IMerger merger)
     {
-        _itemCacher = itemCacher;
+        _merger = merger;
     }
 
-    public void AddStaticLibrary(StaticLibrary library, bool forceUpdate)
+    public void AddStaticLibrary(StaticLibrary baseLibrary, StaticLibrary newLibrary, bool forceUpdate)
     {
-        if (library == null)
+        if (newLibrary == null)
             return;
 
-        library.Artists.ForEach(a => _itemCacher.AddArtist(a, false, false));
-        library.Albums.ForEach(a => _itemCacher.AddAlbum(a, false));
-        library.Tracks.ForEach(t => _itemCacher.AddTrack(t, false));
-        library.AlbumTrackLinks.ForEach(_itemCacher.AddAlbumTrack);
+        newLibrary.Artists.ForEach(a => AddArtist(baseLibrary, a, forceUpdate));
+        newLibrary.Albums.ForEach(a => AddAlbum(baseLibrary, a, forceUpdate));
+        newLibrary.Tracks.ForEach(t => AddTrack(baseLibrary, t, forceUpdate));
+        newLibrary.AlbumTrackLinks.ForEach(t => AddAlbumTrack(baseLibrary, t, forceUpdate));
+    }
+
+    public void AddArtist(StaticLibrary baseLibrary, ArtistInfo newItem, bool forceUpdate)
+    {
+        var existingItem = baseLibrary.Artists.SingleOrDefault(a => a.Id == newItem.Id);
+        if (existingItem == null)
+        {
+            baseLibrary.Artists.Add(newItem);
+            return;
+        }
+
+        _merger.MergeArtist(existingItem, newItem, false);
+    }
+
+    public void AddAlbum(StaticLibrary baseLibrary, AlbumInfo newItem, bool forceUpdate)
+    {
+        var existingItem = baseLibrary.Albums.SingleOrDefault(a => a.Id == newItem.Id);
+        if (existingItem == null)
+        {
+            baseLibrary.Albums.Add(newItem);
+            return;
+        }
+
+        _merger.MergeAlbum(existingItem, newItem, false);
+    }
+
+    public void AddTrack(StaticLibrary baseLibrary, TrackInfo newItem, bool forceUpdate)
+    {
+        var existingItem = baseLibrary.Tracks.SingleOrDefault(a => a.Id == newItem.Id);
+        if (existingItem == null)
+        {
+            baseLibrary.Tracks.Add(newItem);
+            return;
+        }
+
+        _merger.MergeTrack(existingItem, newItem, false);
+    }
+
+    public void AddAlbumTrack(StaticLibrary baseLibrary, AlbumTrackLink newItem, bool forceUpdate)
+    {
+        var existingItem = baseLibrary.AlbumTrackLinks.SingleOrDefault(t => t.TrackId == newItem.TrackId);
+        if (existingItem == null)
+        {
+            baseLibrary.AlbumTrackLinks.Add(newItem);
+            return;
+        }
+
+        _merger.MergeAlbumTrackLink(existingItem, newItem, false);
     }
 }

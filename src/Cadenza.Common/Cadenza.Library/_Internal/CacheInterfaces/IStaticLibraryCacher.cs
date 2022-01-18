@@ -2,5 +2,5 @@
 
 internal interface IStaticLibraryCacher
 {
-    void AddStaticLibrary(StaticLibrary library, bool forceUpdate);
+    void AddStaticLibrary(StaticLibrary baseLibrary, StaticLibrary newLibrary, bool forceUpdate);
 }

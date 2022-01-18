@@ -48,6 +48,13 @@ public class Merger : IMerger
         track.Source = Merge(track.Source, update.Source, forceUpdate);
     }
 
+    public void MergeAlbumTrackLink(AlbumTrackLink existing, AlbumTrackLink update, bool forceUpdate)
+    {
+        existing.AlbumId = Merge(existing.AlbumId, update.AlbumId, forceUpdate);
+        existing.Position.DiscNo = Merge(existing.Position.DiscNo, update.Position.DiscNo, forceUpdate);
+        existing.Position.TrackNo = Merge(existing.Position.TrackNo, update.Position.TrackNo, forceUpdate);
+    }
+
     public void MergeAlbumArtist(AlbumLinks albumLinks, string artistId)
     {
         albumLinks.ArtistId = artistId;
