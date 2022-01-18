@@ -43,7 +43,7 @@ public static class _Startup
         return services;
     }
 
-    public static IServiceCollection AddSourceLibrary<TSource, TOverride>(this IServiceCollection services, LibrarySource librarySource)
+    public static IServiceCollection AddStaticSourceLibrary<TSource, TOverride>(this IServiceCollection services, LibrarySource librarySource)
         where TSource : class, IStaticSource
         where TOverride : class, IStaticSource
     {
@@ -57,13 +57,13 @@ public static class _Startup
             var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
             var source = sp.GetRequiredService<TSource>();
             var ovrride = sp.GetRequiredService<TOverride>();
-            return new SourceLibrary(librarySource, combiner, source, ovrride);
+            return new StaticSourceLibrary(librarySource, combiner, source, ovrride);
         });
 
         return services;
     }
 
-    public static IServiceCollection AddSourceLibrary<TSource>(this IServiceCollection services, LibrarySource librarySource)
+    public static IServiceCollection AddStaticSourceLibrary<TSource>(this IServiceCollection services, LibrarySource librarySource)
         where TSource : class, IStaticSource
     {
         services.AddTransient<IMerger, Merger>();
@@ -74,7 +74,23 @@ public static class _Startup
         {
             var combiner = sp.GetRequiredService<IStaticLibraryCacher>();
             var source = sp.GetRequiredService<TSource>();
-            return new SourceLibrary(librarySource, combiner, source);
+            return new StaticSourceLibrary(librarySource, combiner, source);
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddDynamicSourceLibrary<TLibrary>(this IServiceCollection services, LibrarySource librarySource)
+        where TLibrary : class, ILibrary
+    {
+        services.AddTransient<IMerger, Merger>();
+        services.AddTransient<IStaticLibraryCacher, StaticLibraryCacher>();
+        services.AddTransient<TLibrary>();
+
+        services.AddTransient<ISourceLibrary>(sp =>
+        {
+            var baseLibrary = sp.GetRequiredService<TLibrary>();
+            return new DynamicSourceLibrary(librarySource, baseLibrary);
         });
 
         return services;

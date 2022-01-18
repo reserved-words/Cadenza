@@ -1,18 +1,5 @@
 ﻿namespace Cadenza.Library;
 
-public class SourceLibrary : Library, ISourceLibrary
-{
-    private readonly LibrarySource _librarySource;
-
-    internal SourceLibrary(LibrarySource librarySource, IStaticLibraryCacher combiner, IStaticSource source, IStaticSource overrides = null)
-        :base(combiner, source, overrides)
-    {
-        _librarySource = librarySource;
-    }
-
-    public LibrarySource Source => _librarySource;
-}
-
 public class Library : ILibrary
 {
     private readonly IStaticSource _overrides;
