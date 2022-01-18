@@ -30,7 +30,7 @@ public static class Services
             .AddTransient<ITrackConverter, TrackConverter>()
             .AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>()
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
-            .AddTransient<ILibraryService, LibraryService>()
+            .AddTransient<IArtworkService, ArtworkService>()
             .AddTransient<IPlayService, PlayService>();
 
         return services;

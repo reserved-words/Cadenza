@@ -5,8 +5,6 @@ namespace Cadenza.Local.API;
 
 public static class Routing
 {
-    private const string ArtworkUrlFormat = "/library/artwork?id={0}";
-
     public static WebApplication AddRoutes(this WebApplication app)
     {
         return app
@@ -17,14 +15,14 @@ public static class Routing
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
-        var updateQueue = app.Services.GetService<IFileUpdateService>();
-        var updaterFactory = app.Services.GetService<Func<IUpdater>>();
-        var updater = updaterFactory();
-        app.MapPost("/Update/Album", (AlbumInfo album, List<ItemPropertyUpdate> updates) => updater.Update(album, updates));
-        app.MapPost("/Update/Artist", (ArtistInfo artist, List<ItemPropertyUpdate> updates) => updater.Update(artist, updates));
-        app.MapPost("/Update/Track", (TrackInfo track, List<ItemPropertyUpdate> updates) => updater.Update(track, updates));
-        app.MapGet("/Update/Queue", () => updateQueue.Get());
-        app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updateQueue.Remove(update));
+        //var updateQueue = app.Services.GetService<IFileUpdateService>();
+        //var updaterFactory = app.Services.GetService<Func<IUpdater>>();
+        //var updater = updaterFactory();
+        //app.MapPost("/Update/Album", (AlbumInfo album, List<ItemPropertyUpdate> updates) => updater.Update(album, updates));
+        //app.MapPost("/Update/Artist", (ArtistInfo artist, List<ItemPropertyUpdate> updates) => updater.Update(artist, updates));
+        //app.MapPost("/Update/Track", (TrackInfo track, List<ItemPropertyUpdate> updates) => updater.Update(track, updates));
+        //app.MapGet("/Update/Queue", () => updateQueue.Get());
+        //app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updateQueue.Remove(update));
         return app;
     }
 
@@ -37,20 +35,21 @@ public static class Routing
 
     private static WebApplication AddLibraryRoutes(this WebApplication app)
     {
-        var library = app.Services.GetService<ILibraryService>();
+        var library = app.Services.GetRequiredService<ILibrary>();
+        var libraryService = app.Services.GetRequiredService<IArtworkService>();
 
         app.MapGet("/Library/Artists", () => library.GetArtists());
-        app.MapGet("/Library/Albums", () => library.GetAlbums(ArtworkUrlFormat));
-        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrackSummary(ArtworkUrlFormat, id));
-        app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetTrack(ArtworkUrlFormat, id));
+        app.MapGet("/Library/Albums", () => library.GetAlbums());
+        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
+        app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetFullTrack(id));
         app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
         app.MapGet("/Library/ArtistTracks/{id}", (string id) => library.GetArtistTracks(id));
-        app.MapGet("/Library/AlbumTracks/{id}", (string id) => library.GetAlbumTracks(id));
+        app.MapGet("/Library/AlbumTracks/{id}", (string id) => library.GetAlbumTracks("", id));
 
         app.MapGet("/Library/Artwork", async (HttpContext context) =>
         {
             var id = context.Request.Query["id"];
-            var artwork = await library.GetArtwork(id);
+            var artwork = await libraryService.GetArtwork(id);
 
             if (artwork.Bytes == null || artwork.Bytes.Length == 0)
             {

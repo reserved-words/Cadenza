@@ -22,14 +22,22 @@ internal class StaticLibraryCacher : IStaticLibraryCacher
 
     public void AddArtist(StaticLibrary baseLibrary, ArtistInfo newItem, bool forceUpdate)
     {
-        var existingItem = baseLibrary.Artists.SingleOrDefault(a => a.Id == newItem.Id);
-        if (existingItem == null)
+        try
         {
-            baseLibrary.Artists.Add(newItem);
-            return;
-        }
+            var existingItem = baseLibrary.Artists.SingleOrDefault(a => a.Id == newItem.Id);
+            if (existingItem == null)
+            {
+                baseLibrary.Artists.Add(newItem);
+                return;
+            }
 
-        _merger.MergeArtist(existingItem, newItem, false);
+            _merger.MergeArtist(existingItem, newItem, forceUpdate);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     public void AddAlbum(StaticLibrary baseLibrary, AlbumInfo newItem, bool forceUpdate)
@@ -41,7 +49,7 @@ internal class StaticLibraryCacher : IStaticLibraryCacher
             return;
         }
 
-        _merger.MergeAlbum(existingItem, newItem, false);
+        _merger.MergeAlbum(existingItem, newItem, forceUpdate);
     }
 
     public void AddTrack(StaticLibrary baseLibrary, TrackInfo newItem, bool forceUpdate)
@@ -53,7 +61,7 @@ internal class StaticLibraryCacher : IStaticLibraryCacher
             return;
         }
 
-        _merger.MergeTrack(existingItem, newItem, false);
+        _merger.MergeTrack(existingItem, newItem, forceUpdate);
     }
 
     public void AddAlbumTrack(StaticLibrary baseLibrary, AlbumTrackLink newItem, bool forceUpdate)
@@ -65,6 +73,6 @@ internal class StaticLibraryCacher : IStaticLibraryCacher
             return;
         }
 
-        _merger.MergeAlbumTrackLink(existingItem, newItem, false);
+        _merger.MergeAlbumTrackLink(existingItem, newItem, forceUpdate);
     }
 }

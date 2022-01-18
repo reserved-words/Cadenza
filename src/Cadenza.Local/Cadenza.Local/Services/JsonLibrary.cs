@@ -1,8 +1,11 @@
-﻿namespace Cadenza.Local;
-using Cadenza.Library;
+﻿using Cadenza.Library;
+
+namespace Cadenza.Local;
 
 public class JsonLibrary : IStaticSource
 {
+    private const string ArtworkUrlFormat = "/library/artwork?id={0}";
+
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
@@ -21,17 +24,19 @@ public class JsonLibrary : IStaticSource
 
         var library = new StaticLibrary();
 
+        var firstTracks = new Dictionary<string, string>();
+
+        foreach (var jsonAlbumTrackLink in jsonAlbumTrackLinks)
+        {
+            var albumTrack = _converter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
+            library.AlbumTrackLinks.Add(albumTrack);
+            firstTracks.TryAdd(albumTrack.AlbumId, albumTrack.TrackId);
+        }
+
         foreach (var jsonArtist in jsonArtists)
         {
             var artist = _converter.ConvertArtist(jsonArtist);
             library.Artists.Add(artist);
-        }
-
-        foreach (var jsonAlbum in jsonAlbums)
-        {
-            var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
-            album.Source = LibrarySource.Local;
-            library.Albums.Add(album);
         }
 
         foreach (var jsonTrack in jsonTracks)
@@ -41,10 +46,12 @@ public class JsonLibrary : IStaticSource
             library.Tracks.Add(track);
         }
 
-        foreach (var jsonAlbumTrackLink in jsonAlbumTrackLinks)
+        foreach (var jsonAlbum in jsonAlbums)
         {
-            var albumTrack = _converter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
-            library.AlbumTrackLinks.Add(albumTrack);
+            var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
+            album.Source = LibrarySource.Local;
+            album.ArtworkUrl = string.Format(ArtworkUrlFormat, firstTracks[album.Id]);
+            library.Albums.Add(album);
         }
 
         return Task.FromResult(library);

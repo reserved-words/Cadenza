@@ -20,30 +20,15 @@ public class SpotifyApiLibrary : IStaticSource
         foreach (var item in albumsResponse)
         {
             var album = item.album;
-            var albumArtist = album.artists.First();
-
-            var albumArtistInfo = GetArtistInfo(albumArtist);
-            var albumInfo = GetAlbumInfo(album, albumArtistInfo);
-
-            library.Artists.Add(albumArtistInfo);
+            var albumArtist = AddArtist(library, album.artists);
+            var albumInfo = GetAlbumInfo(album, albumArtist);
             library.Albums.Add(albumInfo);
 
             foreach (var track in album.tracks.items)
             {
-                var trackArtist = track.artists.First();
-
-                var trackArtistInfo = trackArtist.id == albumArtist.id
-                    ? albumArtistInfo
-                    : GetArtistInfo(trackArtist);
-
-                if (trackArtistInfo.Id != albumArtistInfo.Id)
-                {
-                    library.Artists.Add(trackArtistInfo);
-                }
-
+                var trackArtistInfo = AddArtist(library, track.artists);
                 var trackInfo = GetTrackInfo(track, trackArtistInfo, album.id);
                 var albumTrack = GetAlbumTrack(album.id, track);
-
                 library.Tracks.Add(trackInfo);
                 library.AlbumTrackLinks.Add(albumTrack);
             }
@@ -53,53 +38,28 @@ public class SpotifyApiLibrary : IStaticSource
 
         foreach (var playlist in playlists)
         {
-            // This will only get first 50 tracks, will need to redo to get all
-
             var tracks = await _api.GetPlaylistTracks(playlist.id);
 
             var trackArtists = new List<ArtistInfo>();
 
             foreach (var track in tracks)
             {
-                var trackArtist = track.track.artists.First();
-
-                var trackArtistInfo = trackArtists
-                    .SingleOrDefault(a => a.Id == GetUniversalId(trackArtist.name));
-
-                if (trackArtistInfo == null)
-                {
-                    trackArtistInfo = GetArtistInfo(trackArtist);
-                    trackArtists.Add(trackArtistInfo);
-                    library.Artists.Add(trackArtistInfo);
-                }
-
+                var trackArtistInfo = AddArtist(library, track.track.artists);
                 var trackInfo = GetTrackInfo(track, trackArtistInfo, playlist.id);
                 var albumTrack = GetPlaylistTrack(playlist.id, track);
-
                 library.Tracks.Add(trackInfo);
                 library.AlbumTrackLinks.Add(albumTrack);
+                trackArtists.Add(trackArtistInfo);
             }
 
-            ArtistInfo albumArtistInfo;
+            var distinctArtists = trackArtists
+                .Select(a => a.Id)
+                .Distinct()
+                .Count();
 
-            if (trackArtists.Count > 1)
-            {
-                var playlistArtistName = "Various Artists";
-                var playlistArtistId = GetUniversalId(playlistArtistName);
-
-                albumArtistInfo = new ArtistInfo
-                {
-                    Id = playlistArtistId,
-                    Name = playlistArtistName,
-                    Grouping = Grouping.None
-                };
-
-                library.Artists.Add(albumArtistInfo);
-            }
-            else
-            {
-                albumArtistInfo = trackArtists.Single();
-            }
+            var albumArtistInfo = distinctArtists > 1
+                ? AddArtist(library, "Various Artists")
+                : trackArtists.First();
 
             var albumInfo = new AlbumInfo
             {
@@ -119,6 +79,35 @@ public class SpotifyApiLibrary : IStaticSource
         }
 
         return library;
+    }
+
+    private ArtistInfo AddArtist(StaticLibrary library, string name)
+    {
+        var id = GetUniversalId(name);
+        var artistInfo = new ArtistInfo
+        {
+            Id = id,
+            Name = name,
+            Grouping = Grouping.None
+        };
+
+        if (!library.Artists.Any(a => a.Id == artistInfo.Id))
+        {
+            library.Artists.Add(artistInfo);
+        }
+
+        return artistInfo;
+    }
+
+    private ArtistInfo AddArtist(StaticLibrary library, List<SpotifyApiArtist> artists)
+    {
+        var artist = artists.First();
+        var artistInfo = GetArtistInfo(artist);
+        if (!library.Artists.Any(a => a.Id == artistInfo.Id))
+        {
+            library.Artists.Add(artistInfo);
+        }
+        return artistInfo;
     }
 
     private static TrackInfo GetTrackInfo(SpotifyApiAlbumTracksItem track, ArtistInfo trackArtist, string albumId)
@@ -194,15 +183,12 @@ public class SpotifyApiLibrary : IStaticSource
 
     private ArtistInfo GetArtistInfo(SpotifyApiArtist artist)
     {
-        var artistInfo = new ArtistInfo
+        return new ArtistInfo
         {
+            Id = GetUniversalId(artist.name),
             Name = artist.name,
             Grouping = Grouping.None
         };
-
-        artistInfo.Id = GetUniversalId(artistInfo.Name);
-
-        return artistInfo;
     }
 
     private string GetUniversalId(string artistName)
