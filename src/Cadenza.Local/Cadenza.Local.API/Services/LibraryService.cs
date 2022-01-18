@@ -78,9 +78,10 @@ public class LibraryService : ILibraryService
         return library.AlbumTrackLinks;
     }
 
-    public async Task<(byte[] Bytes, string Type)> GetArtwork(string id)
+    public Task<(byte[] Bytes, string Type)> GetArtwork(string id)
     {
-        return _imageSrcGenerator.GetArtwork(id);
+        var result = _imageSrcGenerator.GetArtwork(id);
+        return Task.FromResult(result);
     }
 
     public async Task<ICollection<string>> GetArtistTracks(string id)

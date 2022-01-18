@@ -13,15 +13,14 @@ public class PlayService : IPlayService
         _converter = converter;
     }
 
-    public async Task<string> GetTrackPlayPath(string id)
+    public Task<string> GetTrackPlayPath(string id)
     {
         var filepath = _converter.FromBase64(id);
         var copyFilename = CreatePlayingFilepath(filepath);
         var copyLocation = GetCopyLocation();
         var copyFilepath = Path.Combine(copyLocation, copyFilename);
         File.Copy(filepath, copyFilepath);
-        return copyFilepath;
-
+        return Task.FromResult(copyFilepath);
     }
 
     private string GetCopyLocation()

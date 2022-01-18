@@ -3,9 +3,9 @@
 public class Worker : BackgroundService
 {
     private readonly IConfiguration _config;
-    private readonly IUpdater _updater;
+    private readonly ILocalLibraryUpdater _updater;
 
-    public Worker(IUpdater updater, IConfiguration config)
+    public Worker(ILocalLibraryUpdater updater, IConfiguration config)
     {
         _config = config;
         _updater = updater;

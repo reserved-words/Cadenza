@@ -2,7 +2,7 @@
 
 namespace Cadenza.Local;
 
-public class Id3UpdateQueuer : ILibraryUpdater
+public class Id3UpdateQueuer : ISourceUpdater
 {
     private readonly IFileUpdateService _queue;
 
@@ -11,33 +11,33 @@ public class Id3UpdateQueuer : ILibraryUpdater
         _queue = queue;
     }
 
-    public async Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
     {
         foreach (var u in updates)
         {
             _queue.Add(u);
         }
 
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
     {
         foreach (var u in updates)
         {
             _queue.Add(u);
         }
 
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
     {
         foreach (var u in updates)
         {
             _queue.Add(u);
         }
 
-        return true;
+        return Task.FromResult(true);
     }
 }

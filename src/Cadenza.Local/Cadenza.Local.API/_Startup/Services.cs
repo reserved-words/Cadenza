@@ -16,9 +16,7 @@ public static class Services
         services
             .AddUtilities()
             .AddLogger()
-            .AddCombinedLibrary<JsonLibrary>()
-            .AddTransient<ILibraryUpdater, JsonUpdater>()
-            .AddTransient<ILibraryUpdater, Id3UpdateQueuer>()
+            .AddLibrary<JsonLibrary>()
             .AddTransient<ICommentProcessor, CommentProcessor>()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
@@ -32,11 +30,8 @@ public static class Services
             .AddTransient<ITrackConverter, TrackConverter>()
             .AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>()
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
-            .AddTransient<JsonUpdater>()
-            .AddTransient<Id3UpdateQueuer>()
             .AddTransient<ILibraryService, LibraryService>()
-            .AddTransient<IPlayService, PlayService>()
-            .AddTransient<IUpdateService, UpdateService>();
+            .AddTransient<IPlayService, PlayService>();
 
         return services;
     }

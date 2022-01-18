@@ -1,7 +1,6 @@
 ﻿using Cadenza.Database;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using Cadenza.Library;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
 
@@ -26,7 +25,7 @@ public static class Services
             .AddLastFm()
             .AddSpotify()
             .AddLocalLibrary()
-            .AddLibraries()
+            //.AddLibraries()
             .AddPlayers()
             .AddSourceFactories()
             .AddSingletons()
@@ -43,8 +42,8 @@ public static class Services
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<ITrackRepository, Player.TrackRepository>()
-            .AddTransient<IPlayTrackRepository, Player.PlayTrackRepository>();
+            .AddTransient<ITrackRepository, Core.TrackRepository>()
+            .AddTransient<IPlayTrackRepository, Core.PlayTrackRepository>();
     }
 
     public static IServiceCollection AddSingletons(this IServiceCollection services)
@@ -52,8 +51,8 @@ public static class Services
         return services.AddSingleton<TrackTimer>()
             .AddSingleton<IPlayer>(sp => new TrackingPlayer(
                 sp.GetRequiredService<TimingPlayer>(),
-                sp.GetRequiredService<IPlayTracker>()))
-            .AddSingleton<PlayerLibrary>();
+                sp.GetRequiredService<IPlayTracker>()));
+//            .AddSingleton<PlayerLibrary>();
         ;
     }
 
@@ -110,29 +109,19 @@ public static class Services
             .AddLocalSource<HtmlPlayer>();
     }
 
-    private static IServiceCollection AddLibraries(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
-            .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
-    }
+    //private static IServiceCollection AddLibraries(this IServiceCollection services)
+    //{
+    //    return services
+    //        .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
+    //        .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
+    //}
 
     private static IServiceCollection AddSourceFactories(this IServiceCollection services)
     {
         return services
             .AddTransient(sp => GetPlayers(sp))
-            .AddTransient(sp => sp.GetUpdaters())
-            .AddTransient(sp => GetOverriders(sp))
-            .AddTransient(sp => GetSourceRepositories(sp));
-    }
-
-    private static Dictionary<LibrarySource, ISourceRepository> GetSourceRepositories(IServiceProvider sp)
-    {
-        return new Dictionary<LibrarySource, ISourceRepository>
-        {
-            { LibrarySource.Local, sp.GetLocalRepository() },
-            { LibrarySource.Spotify, sp.GetSpotifyRepository() }
-        };
+            //.AddTransient(sp => sp.GetUpdaters())
+            .AddTransient(sp => GetOverriders(sp));
     }
 
     private static Dictionary<LibrarySource, IAudioPlayer> GetPlayers(IServiceProvider sp)
@@ -144,14 +133,14 @@ public static class Services
         };
     }
 
-    private static Dictionary<LibrarySource, ILibraryUpdater> GetUpdaters(this IServiceProvider sp)
-    {
-        return new Dictionary<LibrarySource, ILibraryUpdater>
-        {
-            { LibrarySource.Local, sp.GetLocalUpdater() },
-            { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
-        };
-    }
+    //private static Dictionary<LibrarySource, IUpdater> GetUpdaters(this IServiceProvider sp)
+    //{
+    //    return new Dictionary<LibrarySource, IUpdater>
+    //    {
+    //        { LibrarySource.Local, sp.GetLocalUpdater() },
+    //        { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
+    //    };
+    //}
 
     private static Dictionary<LibrarySource, IOverridesService> GetOverriders(IServiceProvider sp)
     {

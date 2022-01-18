@@ -2,7 +2,7 @@
 
 namespace Cadenza.Local;
 
-public class JsonUpdater : ILibraryUpdater
+public class JsonUpdater : ISourceUpdater
 {
     private readonly IBase64Converter _base64Converter;
     private readonly IDataAccess _dataAccess;
@@ -15,7 +15,7 @@ public class JsonUpdater : ILibraryUpdater
         _base64Converter = base64Converter;
     }
 
-    public async Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(AlbumInfo album, List<ItemPropertyUpdate> updates)
     {
         var albums = _dataAccess.GetAlbums();
         var existingAlbum = albums.Single(a => a.Id == album.Id);
@@ -25,10 +25,10 @@ public class JsonUpdater : ILibraryUpdater
         albums.Remove(existingAlbum);
         albums.Insert(position, updatedAlbum);
         _dataAccess.SaveAlbums(albums);
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(ArtistInfo artist, List<ItemPropertyUpdate> updates)
     {
         var artists = _dataAccess.GetArtists();
         var existingArtist = artists.Single(a => a.Id == artist.Id);
@@ -37,10 +37,10 @@ public class JsonUpdater : ILibraryUpdater
         artists.Remove(existingArtist);
         artists.Insert(position, updatedArtist);
         _dataAccess.SaveArtists(artists);
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
+    public Task<bool> Update(TrackInfo track, List<ItemPropertyUpdate> updates)
     {
         var path = _base64Converter.FromBase64(track.Id);
         var tracks = _dataAccess.GetTracks();
@@ -51,6 +51,6 @@ public class JsonUpdater : ILibraryUpdater
         tracks.Remove(existingTrack);
         tracks.Insert(position, updatedTrack);
         _dataAccess.SaveTracks(tracks);
-        return true;
+        return Task.FromResult(true);
     }
 }

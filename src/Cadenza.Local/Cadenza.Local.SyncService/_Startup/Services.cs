@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.SyncService;
+﻿using Cadenza.Library;
+
+namespace Cadenza.Local.SyncService;
 
 public static class Services
 {
@@ -24,12 +26,12 @@ public static class Services
            .AddTransient<IId3ToJsonConverter, Id3ToJsonConverter>()
            .AddTransient<IId3Updater, Id3Updater>()
            .AddTransient<IJsonConverter, JsonConverter>()
-           .AddTransient<IJsonMerger, JsonMerger>()
+           //.AddTransient<IJsonMerger, JsonMerger>()
            .AddTransient<ILibraryOrganiser, LibraryOrganiser>()
            .AddTransient<IMusicDirectory, MusicDirectoryAccess>()
            .AddTransient<IUpdatedFilesFetcher, UpdatedFilesFetcher>()
            .AddTransient<IUpdateHistory, UpdateHistory>()
-           .AddTransient<IUpdater, Updater>();
+           .AddTransient<ILocalLibraryUpdater, LocalLibraryUpdater>();
 
         return services;
     }

@@ -1,4 +1,5 @@
 ﻿using Cadenza.Domain;
+using Cadenza.Library;
 
 namespace Cadenza.Local.API;
 
@@ -16,12 +17,14 @@ public static class Routing
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
-        var updater = app.Services.GetService<IUpdateService>();
-        app.MapPost("/Update/Album", (AlbumInfo album, List<ItemPropertyUpdate> updates) => updater.UpdateAlbum(album, updates));
-        app.MapPost("/Update/Artist", (ArtistInfo artist, List<ItemPropertyUpdate> updates) => updater.UpdateArtist(artist, updates));
-        app.MapPost("/Update/Track", (TrackInfo track, List<ItemPropertyUpdate> updates) => updater.UpdateTrack(track, updates));
-        app.MapGet("/Update/Queue", () => updater.GetQueue());
-        app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updater.Unqueue(update));
+        var updateQueue = app.Services.GetService<IFileUpdateService>();
+        var updaterFactory = app.Services.GetService<Func<IUpdater>>();
+        var updater = updaterFactory();
+        app.MapPost("/Update/Album", (AlbumInfo album, List<ItemPropertyUpdate> updates) => updater.Update(album, updates));
+        app.MapPost("/Update/Artist", (ArtistInfo artist, List<ItemPropertyUpdate> updates) => updater.Update(artist, updates));
+        app.MapPost("/Update/Track", (TrackInfo track, List<ItemPropertyUpdate> updates) => updater.Update(track, updates));
+        app.MapGet("/Update/Queue", () => updateQueue.Get());
+        app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updateQueue.Remove(update));
         return app;
     }
 
@@ -51,16 +54,8 @@ public static class Routing
 
             if (artwork.Bytes == null || artwork.Bytes.Length == 0)
             {
-                try
-                {
-                    var bytes = File.ReadAllBytes("Images/default.png");
-                    artwork = new(bytes, "image/png");
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
+                var bytes = File.ReadAllBytes("Images/default.png");
+                artwork = new(bytes, "image/png");
             }
 
             context.Response.ContentType = artwork.Type;

@@ -12,33 +12,21 @@ public static class Startup
 {
     public static IServiceCollection AddSpotifySource(this IServiceCollection services)
     {
+        var sources = new Type[] { typeof(SpotifyOverridesLibrary), typeof(SpotifyApiLibrary) };
+        var updaters = new Type[] { typeof(SpotifyOverridesUpdater) };
+
         return services
             .AddSingleton<SpotifyPlayer>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
             .AddTransient<IOverridesService, SpotifyOverridesService>()
-            .AddTransient<SpotifyOverridesService>()
-            .AddTransient<SpotifyOverrides>()
-            .AddTransient<SpotifyApiLibrary>()
-            .AddCombinedLibrary<SpotifyApiLibrary, SpotifyOverrides>()
-            .AddTransient<SpotifyLibrary>()
-            .AddTransient<SpotifyUpdater>();
+            .AddStaticSourceLibrary<SpotifyApiLibrary, SpotifyOverridesLibrary>(LibrarySource.Spotify);
     }
 
     public static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)
     {
         return services.GetRequiredService<SpotifyPlayer>();
-    }
-
-    public static ISourceRepository GetSpotifyRepository(this IServiceProvider services)
-    {
-        return services.GetRequiredService<SpotifyLibrary>();
-    }
-
-    public static ILibraryUpdater GetSpotifyUpdater(this IServiceProvider services)
-    {
-        return services.GetRequiredService<SpotifyUpdater>();
     }
 
     public static IOverridesService GetSpotifyOverrider(this IServiceProvider services)

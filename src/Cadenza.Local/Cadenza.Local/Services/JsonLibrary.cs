@@ -12,7 +12,7 @@ public class JsonLibrary : IStaticSource
         _converter = converter;
     }
 
-    public async Task<StaticLibrary> GetStaticLibrary()
+    public Task<StaticLibrary> GetStaticLibrary()
     {
         var jsonArtists = _dataAccess.GetArtists();
         var jsonAlbums = _dataAccess.GetAlbums();
@@ -47,6 +47,6 @@ public class JsonLibrary : IStaticSource
             library.AlbumTrackLinks.Add(albumTrack);
         }
 
-        return library;
+        return Task.FromResult(library);
     }
 }

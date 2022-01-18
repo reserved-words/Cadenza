@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core;
+using Cadenza.Domain;
 
 namespace Cadenza.Database;
 

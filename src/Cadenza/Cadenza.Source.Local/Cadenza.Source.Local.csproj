@@ -7,13 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="Cadenza.Domain" Version="1.0.5" />
-    <PackageReference Include="Cadenza.Library" Version="1.0.6" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.12" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Library\Cadenza.Library.csproj" />
   </ItemGroup>
 
 </Project>

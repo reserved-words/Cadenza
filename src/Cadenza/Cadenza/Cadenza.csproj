@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cadenza.Library" Version="1.0.12" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
@@ -19,15 +20,16 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-    <PackageReference Include="MudBlazor" Version="6.0.4" />
+    <PackageReference Include="MudBlazor" Version="6.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.csproj" />
-    <ProjectReference Include="..\Cadenza.Player\Cadenza.Player.csproj" />
+    <ProjectReference Include="..\Cadenza.Player\Cadenza.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />
   </ItemGroup>

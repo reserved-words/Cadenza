@@ -2,7 +2,7 @@
 global using IndexedDB.Blazor;
 global using Newtonsoft.Json;
 global using System.ComponentModel.DataAnnotations;
-
+using Cadenza.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Database;

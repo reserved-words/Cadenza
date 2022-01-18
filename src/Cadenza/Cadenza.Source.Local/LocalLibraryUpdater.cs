@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Library;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
-public class LocalLibraryUpdater : ILibraryUpdater, IFileUpdateQueue
+public class LocalLibraryUpdater : IUpdater, IFileUpdateQueue
 {
     private readonly IOptions<LocalApiSettings> _settings;
     private readonly IHttpHelper _httpClient;

@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core;
+using Cadenza.Domain;
 
 namespace Cadenza.Database;
 
@@ -11,7 +12,7 @@ public class MainRepository : IMainRepository
         _dbFactory = dbFactory;
     }
 
-    public async Task AddAlbums(ICollection<AlbumInfo> albums)
+    public async Task AddAlbums(IEnumerable<AlbumInfo> albums)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
@@ -23,7 +24,7 @@ public class MainRepository : IMainRepository
         await db.SaveChanges();
     }
 
-    public async Task AddArtists(ICollection<ArtistInfo> artists)
+    public async Task AddArtists(IEnumerable<ArtistInfo> artists)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
