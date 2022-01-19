@@ -2,93 +2,103 @@
 
 public class ValueMerger : IValueMerger
 {
-    public string Merge(string original, string update, bool forceUpdate)
+    public string Merge(string original, string update, MergeMode mode)
     {
-        return forceUpdate || string.IsNullOrWhiteSpace(original)
-            ? update
-            : original;
+        return Merged(original, update, mode, v => string.IsNullOrEmpty(v));
     }
 
-    public int Merge(int original, int update, bool forceUpdate)
+    public int Merge(int original, int update, MergeMode mode)
     {
-        return forceUpdate || original == 0
-            ? update
-            : original;
+        return Merged(original, update, mode, v => v == 0);
     }
 
-    public int? Merge(int? original, int? update, bool forceUpdate)
+    public int? Merge(int? original, int? update, MergeMode mode)
     {
-        return forceUpdate || !original.HasValue
-            ? update
-            : original;
+        return Merged(original, update, mode, v => !v.HasValue);
     }
 
-    public T Merge<T>(T original, T update, bool forceUpdate) where T : struct, Enum
+    public T Merge<T>(T original, T update, MergeMode mode) where T : struct, Enum
     {
-        return forceUpdate || original.Equals(default(T))
-            ? update
-            : original;
+        return Merged(original, update, mode, v => v.Equals(default(T)));
     }
 
-    public List<int> MergeTrackCounts(List<int> list, List<int> update, bool forceUpdate)
+    public List<int> MergeTrackCounts(List<int> original, List<int> update, MergeMode mode)
     {
-        list ??= new List<int>();
+        original ??= new List<int>();
         update ??= new List<int>();
 
-        if (forceUpdate)
+        if (mode == MergeMode.ReplaceAlways)
             return update;
 
-        var listCount = list.Count;
+        var originalCount = original.Count;
         var updateCount = update.Count;
 
-        if (listCount == 0)
+        if (originalCount == 0)
             return update;
 
         if (updateCount == 0)
-            return list;
+            return original;
 
-        if (listCount == 1 && updateCount == 1)
-            return update;
-
-        var max = Math.Max(listCount, updateCount);
+        if (originalCount == 1 && updateCount == 1)
+        {
+            return mode == MergeMode.ReplaceIfUpdateIsNotEmpty
+                ? update
+                : original;
+        }
+        
+        var max = Math.Max(originalCount, updateCount);
+        var result = new List<int>();
 
         for (var i = 0; i < max; i++)
         {
-            if (listCount < i + 1)
-            {
-                list.Add(update[i]);
-                continue;
-            }
+            var originalValue = originalCount < i + 1 ? (int?)null : original[i];
+            var updateValue = updateCount < i + 1 ? (int?)null : update[i];
 
-            if (updateCount < i + 1)
-                continue;
-
-            if (list[i] == 0)
-                list[i] = update[i];
+            result.Add(Merged(originalValue, updateValue, mode, v => !v.HasValue).Value);
         }
 
-        return list;
+        return result;
     }
 
-    public ICollection<T> MergeList<T>(ICollection<T> list, ICollection<T> update, bool forceUpdate) where T : class
+    public ICollection<T> MergeList<T>(ICollection<T> original, ICollection<T> update, MergeMode mode) where T : class
     {
-        list ??= new List<T>();
+        original ??= new List<T>();
         update ??= new List<T>();
+
+        if (mode == MergeMode.ReplaceAlways)
+            return update;
+
+        var result = new List<T>();
+
+        foreach (var originalItem in original)
+        {
+            var updateItem = update.SingleOrDefault(i => i.Equals(originalItem));
+            result.Add(Merged(originalItem, updateItem, mode, v => v == null));
+        }
 
         foreach (var updateItem in update)
         {
-            var item = list.SingleOrDefault(i => i.Equals(updateItem));
-            if (item == null)
+            var resultItem = result.SingleOrDefault(i => i.Equals(updateItem));
+            if (resultItem == null)
             {
-                list.Add(updateItem);
-            }
-            else if (forceUpdate)
-            {
-                list.Remove(item);
-                list.Add(updateItem);
+                result.Add(updateItem);
             }
         }
 
-        return list;
+        return original;
+    }
+
+    private static T Merged<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
+    {
+        return Replace(original, update, mode, isEmpty)
+            ? update
+            : original;
+    }
+
+    private static bool Replace<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
+    {
+        return mode == MergeMode.ReplaceAlways
+            || (mode == MergeMode.ReplaceIfUpdateIsNotEmpty && !isEmpty(update))
+            || (mode == MergeMode.ReplaceIfOriginalIsEmpty && isEmpty(original));
     }
 }

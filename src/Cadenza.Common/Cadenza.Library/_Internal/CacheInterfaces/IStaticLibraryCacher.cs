@@ -2,5 +2,5 @@
 
 internal interface IStaticLibraryCacher
 {
-    void AddStaticLibrary(StaticLibrary baseLibrary, StaticLibrary newLibrary, bool forceUpdate);
+    void MergeStaticLibrary(StaticLibrary baseLibrary, StaticLibrary newLibrary, MergeMode mode);
 }

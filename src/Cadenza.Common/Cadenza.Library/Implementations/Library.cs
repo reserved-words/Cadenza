@@ -73,7 +73,7 @@ public class Library : ILibrary
                 var library = getSource.Result;
                 if (getOverrides.Result != null)
                 {
-                    _combiner.AddStaticLibrary(library, getOverrides.Result, true);
+                    _combiner.MergeStaticLibrary(library, getOverrides.Result, MergeMode.ReplaceIfUpdateIsNotEmpty);
                 }
                 _combinedLibrary = new Cache(library);
             });

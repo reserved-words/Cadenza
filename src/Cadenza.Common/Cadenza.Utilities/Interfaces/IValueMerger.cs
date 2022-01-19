@@ -1,11 +1,18 @@
 ﻿namespace Cadenza.Utilities;
 
+public enum MergeMode
+{
+    ReplaceIfOriginalIsEmpty,
+    ReplaceIfUpdateIsNotEmpty,
+    ReplaceAlways 
+}
+
 public interface IValueMerger
 {
-    string Merge(string original, string update, bool forceUpdate);
-    int Merge(int original, int update, bool forceUpdate);
-    int? Merge(int? original, int? update, bool forceUpdate);
-    T Merge<T>(T original, T update, bool forceUpdate) where T : struct, Enum;
-    ICollection<T> MergeList<T>(ICollection<T> list, ICollection<T> update, bool forceUpdate) where T : class;
-    List<int> MergeTrackCounts(List<int> list, List<int> update, bool forceUpdate);
+    string Merge(string original, string update, MergeMode mode);
+    int Merge(int original, int update, MergeMode mode);
+    int? Merge(int? original, int? update, MergeMode mode);
+    T Merge<T>(T original, T update, MergeMode mode) where T : struct, Enum;
+    ICollection<T> MergeList<T>(ICollection<T> list, ICollection<T> update, MergeMode mode) where T : class;
+    List<int> MergeTrackCounts(List<int> list, List<int> update, MergeMode mode);
 }
