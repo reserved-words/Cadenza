@@ -11,6 +11,6 @@ public class DbAlbum
     public string Title { get; set; }
     public string Artwork { get; set; }
     public string Year { get; set; }
-    public ReleaseType ReleaseType { get; set; }
-    public LibrarySource Source { get; set; }
+    public string ReleaseType { get; set; }
+    public string Source { get; set; }
 }

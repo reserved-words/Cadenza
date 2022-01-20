@@ -115,7 +115,7 @@ public class SpotifyApiLibrary : IStaticSource
         return new TrackInfo
         {
             Source = LibrarySource.Spotify,
-            Id = track.id,
+            Id = GetTrackId(track.id, albumId),
             Title = track.name,
             DurationSeconds = track.duration_ms / 1000,
             ArtistId = trackArtist.Id,
@@ -151,7 +151,7 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new AlbumTrackLink
         {
-            TrackId = track.id,
+            TrackId = GetTrackId(track.id, albumId),
             AlbumId = albumId,
             Position = new AlbumTrackPosition(track.disc_number, track.track_number)
         };
@@ -162,7 +162,7 @@ public class SpotifyApiLibrary : IStaticSource
         return new TrackInfo
         {
             Source = LibrarySource.Spotify,
-            Id = item.track.id,
+            Id = GetTrackId(item.track.id, albumId),
             Title = item.track.name,
             DurationSeconds = item.track.duration_ms / 1000,
             ArtistId = trackArtist.Id,
@@ -175,7 +175,7 @@ public class SpotifyApiLibrary : IStaticSource
     {
         return new AlbumTrackLink
         {
-            TrackId = item.track.id,
+            TrackId = GetTrackId(item.track.id, playlistId),
             AlbumId = playlistId,
             Position = new AlbumTrackPosition(1, item.track.track_number)
         };
@@ -189,6 +189,11 @@ public class SpotifyApiLibrary : IStaticSource
             Name = artist.name,
             Grouping = Grouping.None
         };
+    }
+
+    private static string GetTrackId(string trackId, string albumId)
+    {
+        return $"{trackId}|{albumId}";
     }
 
     private string GetUniversalId(string artistName)
