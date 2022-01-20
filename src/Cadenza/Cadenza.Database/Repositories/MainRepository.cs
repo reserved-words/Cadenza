@@ -48,7 +48,7 @@ public class MainRepository : IMainRepository
         await db.SaveChanges();
     }
 
-    private void AddAlbum(LibraryDb db, AlbumInfo album)
+    private static void AddAlbum(LibraryDb db, AlbumInfo album)
     {
         db.Albums.Add(new DbAlbum
         {
@@ -57,19 +57,19 @@ public class MainRepository : IMainRepository
             ArtistName = album.ArtistName,
             Title = album.Title,
             Year = album.Year,
-            ReleaseType = album.ReleaseType,
+            ReleaseType = album.ReleaseType.ToString(),
             Artwork = album.ArtworkUrl,
-            Source = album.Source
+            Source = album.Source.ToString()
         });
     }
 
-    private void AddArtist(LibraryDb db, ArtistInfo artist)
+    private static void AddArtist(LibraryDb db, ArtistInfo artist)
     {
         db.Artists.Add(new DbArtist
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = artist.Grouping,
+            Grouping = artist.Grouping.ToString(),
             Genre = artist.Genre,
             Country = artist.Country,
             State = artist.State,
@@ -77,7 +77,7 @@ public class MainRepository : IMainRepository
         });
     }
 
-    private void AddOrUpdateArtist(LibraryDb db, ArtistInfo artist)
+    private static void AddOrUpdateArtist(LibraryDb db, ArtistInfo artist)
     {
         var existing = db.Artists.SingleOrDefault(a => a.Id == artist.Id);
 
@@ -87,7 +87,7 @@ public class MainRepository : IMainRepository
             return;
         }
 
-        existing.Grouping = existing.Grouping == Grouping.None ? artist.Grouping : existing.Grouping;
+        existing.Grouping = existing.Grouping == Grouping.None.ToString() ? artist.Grouping.ToString() : existing.Grouping;
         existing.Genre = string.IsNullOrEmpty(existing.Genre) ? artist.Genre : existing.Genre;
         existing.Country = string.IsNullOrEmpty(existing.Country) ? artist.Country : existing.Country;
         existing.State = string.IsNullOrEmpty(existing.State) ? artist.State : existing.State;

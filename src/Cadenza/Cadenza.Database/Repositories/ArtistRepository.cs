@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core;
 using Cadenza.Domain;
+using Cadenza.Utilities;
 
 namespace Cadenza.Database;
 
@@ -23,7 +24,7 @@ public class ArtistRepository : IArtistRepository
             {
                 Id = a.Id,
                 Name = a.Name,
-                Grouping = a.Grouping
+                Grouping = a.Grouping.Parse<Grouping>()
             })
             .ToList();
     }
@@ -33,19 +34,19 @@ public class ArtistRepository : IArtistRepository
         using var db = await _dbFactory.Create<LibraryDb>();
         
         var artist = db.Artists.Single(a => a.Id == id);
-        var albums = db.Albums.Where(a => a.ArtistId == id);
+        var albums = db.Albums.Where(a => a.ArtistId == id).ToList();
 
         return new LibraryArtistDetails
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = artist.Grouping,
+            Grouping = artist.Grouping.Parse<Grouping>(),
             Genre = artist.Genre,
             Country = artist.Country,
             State = artist.State,
             City = artist.City,
             Releases = albums
-                .GroupBy(a => a.ReleaseType.GetGroup())
+                .GroupBy(a => a.ReleaseType.Parse<ReleaseType>().GetGroup())
                 .OrderBy(g => g.Key)
                 .ToDictionary(
                     grp => grp.Key,
@@ -57,9 +58,9 @@ public class ArtistRepository : IArtistRepository
                         Artist = artist.Name,
                         Artwork = a.Artwork,
                         Year = a.Year,
-                        ReleaseType = a.ReleaseType,
-                        Group = a.ReleaseType.GetGroup(),
-                        Source = a.Source
+                        ReleaseType = a.ReleaseType.Parse<ReleaseType>(),
+                        Group = a.ReleaseType.Parse<ReleaseType>().GetGroup(),
+                        Source = a.Source.Parse<LibrarySource>()
                     })
                     .ToList())
         };

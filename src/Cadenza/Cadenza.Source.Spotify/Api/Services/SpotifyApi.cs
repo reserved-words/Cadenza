@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 
 namespace Cadenza.Source.Spotify;
 
@@ -21,10 +22,16 @@ public class SpotifyApi : ISpotifyApi
         await _httpClient.Put(url, authHeader, data);
     }
 
-    public async Task<T> Get<T>(string url)
+    public async Task<T> Get<T>(string url) where T : class
     {
         var authHeader = await GetAuthHeader();
         var response = await _httpClient.Get(url, authHeader);
+
+        if (response.StatusCode == HttpStatusCode.NoContent)
+        {
+            return null;
+        }
+
         return await response.Content.ReadFromJsonAsync<T>();
     }
 

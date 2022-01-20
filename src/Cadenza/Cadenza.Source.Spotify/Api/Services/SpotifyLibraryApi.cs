@@ -31,12 +31,17 @@ public class SpotifyLibraryApi : ISpotifyLibraryApi
     private async Task<List<T>> GetListResponse<T>(string uri)
     {
         var response = await _api.Get<SpotifyApiListResponse<T>>(uri);
+        if (response == null)
+            return new List<T>();
 
         var items = new List<T>(response.items);
 
         while (items.Count() < response.total)
         {
             response = await _api.Get<SpotifyApiListResponse<T>>(response.next);
+            if (response == null)
+                return items;
+
             items.AddRange(response.items);
         }
 

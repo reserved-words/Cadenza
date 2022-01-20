@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core;
 using Cadenza.Domain;
+using Cadenza.Utilities;
 
 namespace Cadenza.Database;
 
@@ -26,8 +27,8 @@ public class AlbumRepository : IAlbumRepository
             Title = album.Title,
             ArtworkUrl = album.Artwork,
             Year = album.Year,
-            ReleaseType = album.ReleaseType,
-            Source = album.Source
+            ReleaseType = album.ReleaseType.Parse<ReleaseType>(),
+            Source = album.Source.Parse<LibrarySource>()
         };
     }
 
