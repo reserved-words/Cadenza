@@ -4,9 +4,9 @@ namespace Cadenza.Utilities;
 
 public class HttpHelper : IHttpHelper
 {
-    private readonly System.Net.Http.HttpClient _client;
+    private readonly HttpClient _client;
 
-    public HttpHelper(System.Net.Http.HttpClient client)
+    public HttpHelper(HttpClient client)
     {
         _client = client;
     }
