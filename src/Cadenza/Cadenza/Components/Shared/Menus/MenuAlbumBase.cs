@@ -5,8 +5,8 @@ public class MenuAlbumBase : ComponentBase
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    [Inject]
-    public ILibraryController LibraryController { get; set; }
+    // [Inject]
+    // public ILibraryController LibraryController { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }

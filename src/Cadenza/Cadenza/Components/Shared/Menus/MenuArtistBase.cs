@@ -7,8 +7,8 @@ public class MenuArtistBase : ComponentBase
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    [Inject]
-    public ILibraryController Library { get; set; }
+    // [Inject]
+    // public ILibraryController Library { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
