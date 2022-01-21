@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Domain;
 
-internal class PlayedTrack
+public class PlayedTrack
 {
     public string Title { get; set; }
     public string Artist { get; set; }
