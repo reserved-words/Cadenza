@@ -12,7 +12,7 @@ public class LocalApiEndpoints
     public string AlbumTracks { get; set; }
     public string ArtistTracks { get; set; }
     public string Track { get; set; }
-    public string FullTrack { get; set; }
+    public string TrackFull { get; set; }
 
     public string QueuedUpdates { get; set; }
     public string PlayTrackUrl { get; set; }

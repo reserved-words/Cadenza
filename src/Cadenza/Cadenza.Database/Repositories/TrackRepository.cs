@@ -12,7 +12,7 @@ public class TrackRepository : ITrackRepositoryUpdater
         _dbFactory = dbFactory;
     }
 
-    public async Task AddTrack(PlayingTrack track)
+    public async Task AddTrack(TrackSummary track)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
@@ -36,7 +36,7 @@ public class TrackRepository : ITrackRepositoryUpdater
         await db.SaveChanges();
     }
 
-    public async Task AddTrack(FullTrack track)
+    public async Task AddTrack(TrackFull track)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
@@ -60,14 +60,14 @@ public class TrackRepository : ITrackRepositoryUpdater
         await db.SaveChanges();
     }
 
-    public async Task<PlayingTrack> GetSummary(LibrarySource source, string id)
+    public async Task<TrackSummary> GetSummary(LibrarySource source, string id)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
         return GetById(db, id);
     }
 
-    public async Task<FullTrack> GetDetails(LibrarySource source, string id)
+    public async Task<TrackFull> GetDetails(LibrarySource source, string id)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
@@ -76,7 +76,7 @@ public class TrackRepository : ITrackRepositoryUpdater
         if (dbTrack?.Details == null)
             return null;
 
-        return JsonConvert.DeserializeObject<FullTrack>(dbTrack.Details);
+        return JsonConvert.DeserializeObject<TrackFull>(dbTrack.Details);
     }
 
     public async Task AddTrack(AlbumTrackInfo track)
@@ -109,13 +109,13 @@ public class TrackRepository : ITrackRepositoryUpdater
         return list;
     }
 
-    private PlayingTrack GetById(LibraryDb db, string id)
+    private TrackSummary GetById(LibraryDb db, string id)
     {
         var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
 
         if (dbTrack == null)
             return null;
 
-        return JsonConvert.DeserializeObject<PlayingTrack>(dbTrack.Details ?? dbTrack.Summary);
+        return JsonConvert.DeserializeObject<TrackSummary>(dbTrack.Details ?? dbTrack.Summary);
     }
 }

@@ -24,22 +24,22 @@
 //        return _library.Albums;
 //    }
 
-//    public async Task<PlayingTrack> GetTrack(string id)
+//    public async Task<TrackSummary> GetTrack(string id)
 //    {
 //        await PopulateLibrary();
 //        var track = _library.Tracks.Single(t => t.Id == id);
-//        return new PlayingTrack
+//        return new TrackSummary
 //        {
 //            Id = track.Id,
 //            // TODO
 //        };
 //    }
 
-//    public async Task<FullTrack> GetFullTrack(string id)
+//    public async Task<TrackFull> GetTrackFull(string id)
 //    {
 //        await PopulateLibrary();
 //        var track = _library.Tracks.Single(t => t.Id == id);
-//        return new FullTrack
+//        return new TrackFull
 //        {
 //            Id = track.Id,
 //            // TODO

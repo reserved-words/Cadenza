@@ -20,6 +20,7 @@ public static class Configuration
         builder.Services.ConfigureLogger(builder.Configuration, "Logging");
         builder.Services.ConfigureSpotifyOverrides(builder.Configuration, "SpotifyOverrides");
         builder.Services.ConfigureLocalApi(builder.Configuration, "LocalApi");
+        builder.Services.Configure<PlayerApiConfig>(builder.Configuration.GetSection("PlayerApi"));
 
         return builder;
     }

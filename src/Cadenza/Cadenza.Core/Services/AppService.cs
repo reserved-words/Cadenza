@@ -21,7 +21,7 @@ public class AppService : IAppConsumer, IAppController
     public event LibraryEventHandler LibraryUpdated;
 
     private IPlaylist _currentPlaylist;
-    private PlayingTrack _playingTrack;
+    private TrackSummary _TrackSummary;
 
     public void Initialise()
     {
@@ -54,8 +54,8 @@ public class AppService : IAppConsumer, IAppController
 
         if (_currentPlaylist.Current != null)
         {
-            _playingTrack = await _trackRepository.GetSummary(_currentPlaylist.Current.Source, _currentPlaylist.Current.Id);
-            await _player.Play(_playingTrack);
+            _TrackSummary = await _trackRepository.GetSummary(_currentPlaylist.Current.Source, _currentPlaylist.Current.Id);
+            await _player.Play(_TrackSummary);
             TrackStarted?.Invoke(this, GetArgs(0));
         }
     }
@@ -75,7 +75,7 @@ public class AppService : IAppConsumer, IAppController
     public async Task Stop()
     {
         await _player.Stop();
-        _playingTrack = null;
+        _TrackSummary = null;
 
     }
 
@@ -93,12 +93,12 @@ public class AppService : IAppConsumer, IAppController
 
     private TrackEventArgs GetArgs(int? secondsPlayed = null)
     {
-        var totalSeconds = _playingTrack.DurationSeconds;
+        var totalSeconds = _TrackSummary.DurationSeconds;
         var played = secondsPlayed ?? totalSeconds;
 
         return new TrackEventArgs
         {
-            CurrentTrack = _playingTrack,
+            CurrentTrack = _TrackSummary,
             IsLastTrack = _currentPlaylist.CurrentIsLast,
             PercentagePlayed = totalSeconds == 0
                 ? 0

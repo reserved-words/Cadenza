@@ -16,7 +16,7 @@ public class CurrentTrackBase : ComponentBase
 
     public double Progress { get; set; }
 
-    public PlayingTrack Model { get; set; }
+    public TrackSummary Model { get; set; }
 
     public bool IsFavourite { get; set; }
 

@@ -30,7 +30,7 @@ public static class Services
             .AddCacheRepositories()
             .AddDatabaseRepositories();
 
-        builder.Services.AddTransient<IPlayerApiUrl, PlayerApiConfig>()
+        builder.Services
             .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>();
 

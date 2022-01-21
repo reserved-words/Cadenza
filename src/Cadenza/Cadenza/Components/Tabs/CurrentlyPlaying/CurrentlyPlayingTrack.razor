@@ -13,10 +13,10 @@
 
 
     <MudDivider Class="my-3" />
-    <CurrentlyPlayingTrackTags Track="@Track" />
+    <CurrentlyTrackSummaryTags Track="@Track" />
 </WhipCard>
 
 @code {
     [Parameter]
-    public FullTrack Track { get; set; }
+    public TrackFull Track { get; set; }
 }

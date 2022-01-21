@@ -4,6 +4,6 @@ namespace Cadenza.Common;
 
 public interface IFavouritesController
 {
-    Task Favourite(PlayingTrack track);
-    Task Unfavourite(PlayingTrack track);
+    Task Favourite(TrackSummary track);
+    Task Unfavourite(TrackSummary track);
 }

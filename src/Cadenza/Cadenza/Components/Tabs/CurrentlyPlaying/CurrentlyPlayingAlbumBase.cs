@@ -3,5 +3,5 @@
 public class CurrentlyPlayingAlbumBase : ComponentBase
 {
     [Parameter]
-    public FullTrack Track { get; set; }
+    public TrackFull Track { get; set; }
 }

@@ -18,7 +18,7 @@ public class TimingPlayer : IPlayer
         return secondsPlayed;
     }
 
-    public async Task Play(PlayingTrack track)
+    public async Task Play(TrackSummary track)
     {
         await _player.Play(track);
         _timer.OnSetTrack(track?.DurationSeconds ?? 0);

@@ -40,18 +40,18 @@ public class LocalApi : ILibrary
         return albums;
     }
 
-    public async Task<PlayingTrack> GetTrack(string id)
+    public async Task<TrackSummary> GetTrack(string id)
     {
         var response = await _httpClient.Get(GetApiEndpoint(e => e.Track, id));
-        var track = await response.Content.ReadFromJsonAsync<PlayingTrack>();
+        var track = await response.Content.ReadFromJsonAsync<TrackSummary>();
         track.ArtworkUrl = GetArtworkUrl(track.ArtworkUrl);
         return track;
     }
 
-    public async Task<FullTrack> GetFullTrack(string id)
+    public async Task<TrackFull> GetFullTrack(string id)
     {
-        var response = await _httpClient.Get(GetApiEndpoint(e => e.FullTrack, id));
-        var track = await response.Content.ReadFromJsonAsync<FullTrack>();
+        var response = await _httpClient.Get(GetApiEndpoint(e => e.TrackFull, id));
+        var track = await response.Content.ReadFromJsonAsync<TrackFull>();
         track.ArtworkUrl = GetArtworkUrl(track.ArtworkUrl);
         return track;
     }

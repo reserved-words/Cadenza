@@ -13,7 +13,7 @@ public class CorePlayer : IPlayer
         _services = services.ToDictionary(s => s.Source, s => s as IAudioPlayer);
     }
 
-    public async Task Play(PlayingTrack track)
+    public async Task Play(TrackSummary track)
     {
         await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track.Source);
 

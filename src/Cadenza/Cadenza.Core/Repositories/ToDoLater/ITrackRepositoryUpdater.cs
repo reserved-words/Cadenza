@@ -4,7 +4,7 @@ namespace Cadenza.Core;
 
 public interface ITrackRepositoryUpdater : ITrackRepository
 {
-    Task AddTrack(PlayingTrack track);
-    Task AddTrack(FullTrack track);
+    Task AddTrack(TrackSummary track);
+    Task AddTrack(TrackFull track);
     Task AddTrack(AlbumTrackInfo track);
 }

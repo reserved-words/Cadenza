@@ -1,7 +1,4 @@
-﻿using Cadenza.Common;
-using Cadenza.Domain;
-
-namespace Cadenza.Core
+﻿namespace Cadenza.Core
 {
     public class TrackRepository : ITrackRepository
     {
@@ -19,7 +16,7 @@ namespace Cadenza.Core
             throw new NotImplementedException();
         }
 
-        public async Task<FullTrack> GetDetails(LibrarySource source, string id)
+        public async Task<TrackFull> GetDetails(LibrarySource source, string id)
         {
             var track = await _baseRepository.GetDetails(source, id);
 
@@ -38,7 +35,7 @@ namespace Cadenza.Core
             return track;
         }
 
-        public async Task<PlayingTrack> GetSummary(LibrarySource source, string id)
+        public async Task<TrackSummary> GetSummary(LibrarySource source, string id)
         {
             var track = await _baseRepository.GetSummary(source, id);
 

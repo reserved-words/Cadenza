@@ -5,7 +5,7 @@ public class TrackingPlayer : IPlayer
     private readonly IPlayer _player;
     private readonly IPlayTracker _tracker;
 
-    private PlayingTrack _currentTrack;
+    private TrackSummary _currentTrack;
 
     public TrackingPlayer(IPlayer player, IPlayTracker tracker)
     {
@@ -13,7 +13,7 @@ public class TrackingPlayer : IPlayer
         _tracker = tracker;
     }
 
-    public async Task Play(PlayingTrack playlistTrack)
+    public async Task Play(TrackSummary playlistTrack)
     {
         await _player.Play(playlistTrack);
         UpdateTrackDetails(playlistTrack);
@@ -41,7 +41,7 @@ public class TrackingPlayer : IPlayer
         return secondsPlayed;
     }
 
-    private void UpdateTrackDetails(PlayingTrack playlistTrack)
+    private void UpdateTrackDetails(TrackSummary playlistTrack)
     {
         _currentTrack = playlistTrack;
     }

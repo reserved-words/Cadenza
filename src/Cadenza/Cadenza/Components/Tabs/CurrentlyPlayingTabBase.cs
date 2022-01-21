@@ -8,7 +8,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     [Inject]
     public ITrackRepository TrackRepository { get; set; }
 
-    public FullTrack Track { get; set; }
+    public TrackFull Track { get; set; }
 
     public bool NotCurrentlyPlaying => Track == null;
 
