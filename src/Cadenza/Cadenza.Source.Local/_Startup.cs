@@ -1,12 +1,14 @@
 ﻿global using Cadenza.Common;
 global using System.Net.Http.Json;
-global using System.Web;
 global using Cadenza.Domain;
 global using Cadenza.Utilities;
 global using Cadenza.Library;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Cadenza.Core;
+using Microsoft.JSInterop;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
@@ -15,16 +17,18 @@ public static class Startup
     public static IServiceCollection AddLocalSource<TAudioPlayer>(this IServiceCollection services) where TAudioPlayer : class, IAudioPlayer
     {
         return services
-            .AddTransient<IAudioPlayer, TAudioPlayer>()
             .AddDynamicSourceLibrary<LocalApi>(LibrarySource.Local)
             .AddTransient<LocalLibraryUpdater>()
-            .AddTransient<LocalPlayer>()
+            .AddTransient<ISourcePlayer>(sp => sp.GetLocalPlayer())
             .AddTransient<IFileUpdateQueue, LocalLibraryUpdater>();
     }
 
-    public static IAudioPlayer GetLocalPlayer(this IServiceProvider services)
+    public static ISourcePlayer GetLocalPlayer(this IServiceProvider services)
     {
-        return services.GetRequiredService<LocalPlayer>();
+        var jsRuntime = services.GetRequiredService<IJSRuntime>();
+        var htmlPlayer = new HtmlPlayer(jsRuntime);
+        var settings = services.GetRequiredService<IOptions<LocalApiSettings>>();
+        return new LocalPlayer(htmlPlayer, settings);
     }
 
     public static IServiceCollection ConfigureLocalApi(this IServiceCollection services, IConfiguration config, params string[] sections)

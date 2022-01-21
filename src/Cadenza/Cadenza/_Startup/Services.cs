@@ -23,9 +23,7 @@ public static class Services
             .AddUIHelpers()
             .AddTimers()
             .AddLastFm()
-            .AddSpotify()
-            .AddLocalLibrary()
-            //.AddLibraries()
+            .AddSources()
             .AddPlayers()
             .AddSourceFactories()
             .AddSingletons()
@@ -88,11 +86,11 @@ public static class Services
             .AddTransient<IFavouritesController, LastFmService>();
     }
 
-    private static IServiceCollection AddSpotify(this IServiceCollection services)
+    private static IServiceCollection AddSources(this IServiceCollection services)
     {
         return services
-            .AddSpotifySource()
-            .AddTransient<ISpotifyApiConfig, SpotifyConfig>();
+            .AddSpotifySource<SpotifyConfig>()
+            .AddLocalSource<HtmlPlayer>();
     }
 
     private static IServiceCollection AddPlayers(this IServiceCollection services)

@@ -10,13 +10,11 @@ namespace Cadenza.Source.Spotify;
 
 public static class Startup
 {
-    public static IServiceCollection AddSpotifySource(this IServiceCollection services)
+    public static IServiceCollection AddSpotifySource<TConfig>(this IServiceCollection services) where TConfig : class, ISpotifyApiConfig
     {
-        var sources = new Type[] { typeof(SpotifyOverridesLibrary), typeof(SpotifyApiLibrary) };
-        var updaters = new Type[] { typeof(SpotifyOverridesUpdater) };
-
         return services
-            .AddSingleton<SpotifyPlayer>()
+            .AddTransient<ISpotifyApiConfig, TConfig>()
+            .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()

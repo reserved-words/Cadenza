@@ -6,11 +6,11 @@ public class CorePlayer : IPlayer
     private readonly IStoreSetter _storeSetter;
     private readonly Dictionary<LibrarySource, IAudioPlayer> _services;
 
-    public CorePlayer(IStoreGetter store, Dictionary<LibrarySource, IAudioPlayer> services, IStoreSetter storeSetter)
+    public CorePlayer(IStoreGetter store, IEnumerable<ISourcePlayer> services, IStoreSetter storeSetter)
     {
-        _services = services;
         _storeGetter = store;
         _storeSetter = storeSetter;
+        _services = services.ToDictionary(s => s.Source, s => s as IAudioPlayer);
     }
 
     public async Task Play(PlayingTrack track)

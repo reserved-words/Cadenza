@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Local;
 
-public class LocalPlayer : IAudioPlayer
+public class LocalPlayer : ISourcePlayer
 {
     private readonly IOptions<LocalApiSettings> _settings;
     private readonly IAudioPlayer _audioPlayer;
@@ -12,6 +12,8 @@ public class LocalPlayer : IAudioPlayer
         _audioPlayer = audioPlayer;
         _settings = settings;
     }
+
+    public LibrarySource Source => LibrarySource.Local;
 
     public async Task<int> Resume()
     {

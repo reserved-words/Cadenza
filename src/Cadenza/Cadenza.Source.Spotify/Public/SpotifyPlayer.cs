@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Source.Spotify;
 
-public class SpotifyPlayer : IAudioPlayer
+public class SpotifyPlayer : ISourcePlayer
 {
     private readonly IAudioPlayer _internalPlayer;
 
@@ -10,6 +10,7 @@ public class SpotifyPlayer : IAudioPlayer
         var playerApi = new SpotifyPlayerApi(api);
         _internalPlayer = new InternalPlayer(playerApi);
     }
+    public LibrarySource Source => LibrarySource.Spotify;
 
     public async Task<int> Pause()
     {
