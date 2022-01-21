@@ -11,9 +11,9 @@ public static class Startup
             .AddTransient<ILastFmAuth, LastFmAuth>()
             .AddTransient<ILastFmClient, LastFmClient>()
             .AddTransient<ILastFmAuthorisedClient, LastFmAuthorisedClient>()
-            .AddTransient<Scrobbler>()
-            .AddTransient<FavouritesController>()
-            .AddTransient<FavouritesConsumer>();
+            .AddTransient<Favourites>()
+            .AddTransient<History>()
+            .AddTransient<Scrobbler>();
     }
 
     public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, string sectionPath)

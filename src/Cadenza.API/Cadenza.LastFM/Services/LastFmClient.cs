@@ -17,9 +17,7 @@ public class LastFmClient : ILastFmClient
 
     public async Task<T> Get<T>(string url, Func<XElement, T> getValue)
     {
-        url = url
-            .Add("api_key", _config.Value.ApiKey)
-            .Add("username", _config.Value.Username);
+        url = url.Add("api_key", _config.Value.ApiKey);
 
         var response = await _httpClient.Get(url);
 

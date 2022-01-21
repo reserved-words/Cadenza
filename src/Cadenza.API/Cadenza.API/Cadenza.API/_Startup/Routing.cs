@@ -22,16 +22,24 @@ public static class Routing
     private static WebApplication AddLastFmRoutes(this WebApplication app)
     {
         var lfmAuth = app.Services.GetRequiredService<ILastFmAuth>();
+
+        var history = app.Services.GetRequiredService<History>();
         var scrobbler = app.Services.GetRequiredService<Scrobbler>();
-        var favouritesController = app.Services.GetRequiredService<FavouritesController>();
-        var favouritesConsumer = app.Services.GetRequiredService<FavouritesConsumer>();
+        var favourites = app.Services.GetRequiredService<Favourites>();
+
         app.MapGet("/LastFm/SessionKeyUrl", (string token) => lfmAuth.GetSessionKeyUrl(token));
         app.MapGet("/LastFm/AuthUrl", (string redirectUri) => lfmAuth.GetAuthUrl(redirectUri));
-        app.MapGet("/LastFm/IsFavourite", (string artist, string title) => favouritesConsumer.IsFavourite(artist, title));
+
         app.MapPost("/LastFm/Scrobble", (Scrobble scrobble) => scrobbler.RecordPlay(scrobble));
         app.MapPost("/LastFm/UpdateNowPlaying", (Scrobble scrobble) => scrobbler.UpdateNowPlaying(scrobble));
-        app.MapPost("/LastFm/Favourite", (LastFM.Track track) => favouritesController.Favourite(track));
-        app.MapPost("/LastFm/Unfavourite", (LastFM.Track track) => favouritesController.Unfavourite(track));
+        app.MapPost("/LastFm/Favourite", (LastFM.Track track) => favourites.Favourite(track));
+        
+        app.MapGet("/LastFm/IsFavourite", (string artist, string title) => favourites.IsFavourite(artist, title));
+        app.MapGet("/LastFm/RecentTracks", (int limit, int page) => history.GetRecentTracks(limit, page));
+        app.MapGet("/LastFm/TopTracks", (HistoryPeriod period, int limit, int page) => history.GetPlayedTracks(period, limit, page));
+        app.MapGet("/LastFm/TopAlbums", (HistoryPeriod period, int limit, int page) => history.GetPlayedAlbums(period, limit, page));
+        app.MapGet("/LastFm/TopArtists", (HistoryPeriod period, int limit, int page) => history.GetPlayedArtists(period, limit, page));
+
         return app;
     }
 

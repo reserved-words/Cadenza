@@ -17,6 +17,11 @@ internal static class ExtensionMethods
         return $"{url}&{key}={encodedValue}";
     }
 
+    public static string Add(this string url, string key, int value)
+    {
+        return $"{url}&{key}={value}";
+    }
+
     public static string Add(this string baseUrl, Dictionary<string, string> parameters)
     {
         var pairs = parameters.Select(p => $"{p.Key}={HttpUtility.UrlEncode(p.Value)}");
