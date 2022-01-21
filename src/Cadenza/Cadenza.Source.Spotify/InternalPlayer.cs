@@ -36,6 +36,6 @@ public class InternalPlayer : IAudioPlayer
     {
         var playState = await _api.GetPlayState();
         var millisecondsPlayed = playState.progress_ms;
-        return millisecondsPlayed / 1000;
+        return (millisecondsPlayed ?? 0) / 1000;
     }
 }
