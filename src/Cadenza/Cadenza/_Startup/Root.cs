@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Cadenza
 {
@@ -7,6 +8,7 @@ namespace Cadenza
         public static WebAssemblyHostBuilder RegisterComponents(this WebAssemblyHostBuilder builder)
         {
             builder.RootComponents.Add<App>("#app");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
             return builder;
         }
     }
