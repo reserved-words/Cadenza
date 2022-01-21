@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Domain;
 
-public class FullTrack : PlayingTrack
+public class TrackFull : TrackSummary
 {
     public string ArtistId { get; set; }
     public string AlbumId { get; set; }

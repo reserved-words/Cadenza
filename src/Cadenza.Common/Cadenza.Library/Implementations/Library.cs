@@ -15,13 +15,13 @@ public class Library : ILibrary
         _source = source;
     }
 
-    public async Task<PlayingTrack> GetTrack(string id)
+    public async Task<TrackSummary> GetTrack(string id)
     {
         await PopulateStaticSources();
         return await _combinedLibrary.GetTrack(id);
     }
 
-    public async Task<FullTrack> GetFullTrack(string id)
+    public async Task<TrackFull> GetFullTrack(string id)
     {
         await PopulateStaticSources();
         return await _combinedLibrary.GetFullTrack(id);

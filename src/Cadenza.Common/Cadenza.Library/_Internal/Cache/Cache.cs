@@ -51,13 +51,13 @@ internal class Cache : ILibrary
         return Task.FromResult(_artistTracks[id]);
     }
 
-    public Task<FullTrack> GetFullTrack(string id)
+    public Task<TrackFull> GetFullTrack(string id)
     {
         var track = _tracks[id];
         var album = _albums[track.AlbumId];
         var link = _links[id];
 
-        var result = new FullTrack
+        var result = new TrackFull
         {
             Id = track.Id,
             Title = track.Title,
@@ -84,12 +84,12 @@ internal class Cache : ILibrary
         return Task.FromResult(result);
     }
 
-    public Task<PlayingTrack> GetTrack(string id)
+    public Task<TrackSummary> GetTrack(string id)
     {
         var track = _tracks[id];
         var album = _albums[track.AlbumId];
 
-        var result = new PlayingTrack
+        var result = new TrackSummary
         {
             Id = track.Id,
             Title = track.Title,

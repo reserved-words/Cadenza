@@ -23,7 +23,7 @@ public class DynamicSourceLibrary : ISourceLibrary
 
     public async Task<IEnumerable<string>> GetArtistTracks(string id) => await _baseLibrary.GetArtistTracks(id);
 
-    public async Task<FullTrack> GetFullTrack(string id) => await _baseLibrary.GetFullTrack(id);
+    public async Task<TrackFull> GetFullTrack(string id) => await _baseLibrary.GetFullTrack(id);
 
-    public async Task<PlayingTrack> GetTrack(string id) => await _baseLibrary.GetTrack(id);
+    public async Task<TrackSummary> GetTrack(string id) => await _baseLibrary.GetTrack(id);
 }
