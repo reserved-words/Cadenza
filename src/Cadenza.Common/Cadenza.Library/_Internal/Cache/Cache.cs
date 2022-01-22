@@ -91,6 +91,7 @@ internal class Cache : ILibrary
 
         return new BasicTrack
         {
+            Source = track.Source,
             Id = track.Id,
             Title = track.Title,
             ArtistId = track.ArtistId,
