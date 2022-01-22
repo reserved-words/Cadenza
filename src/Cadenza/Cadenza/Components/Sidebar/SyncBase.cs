@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Components;
+﻿namespace Cadenza;
 
-public class StartupBase : ComponentBase
+public class SyncBase : ComponentBase
 {
     [Inject]
     public IProgressDialogService DialogService { get; set; }
@@ -11,7 +11,7 @@ public class StartupBase : ComponentBase
     [Inject]
     public IStartupSyncService SyncService { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected async Task OnSync()
     {
         var syncTasks = SyncService.GetLibrarySyncTasks();
 

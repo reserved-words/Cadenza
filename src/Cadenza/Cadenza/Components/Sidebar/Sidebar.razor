@@ -17,9 +17,14 @@
                                 OnSkipNext="@OnSkipNext"
                                 OnSkipPrevious="@OnSkipPrevious" />
             </WhipContainer>        </WhipRow>
-        <WhipRow RowHeight="@RowHeight.Fixed">
+        <WhipRow RowHeight="@RowHeight.Stretch">
             <WhipContainer>
                 <FavouritePlaylists OnPlay="@OnPlay" />
+            </WhipContainer>
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <Sync />
             </WhipContainer>
         </WhipRow>
     </WhipColumn>
