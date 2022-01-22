@@ -17,6 +17,9 @@
         </MudDrawer>
         <MudMainContent>
             <MudTabs Outlined="true" KeepPanelsAlive="true">
+                <MudTabPanel Text="History" Icon="@Icons.Material.Filled.History">
+                    <HistoryTab />
+                </MudTabPanel>
                 <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
                     <LibraryTab OnPlay="@OnPlay" />
                 </MudTabPanel>

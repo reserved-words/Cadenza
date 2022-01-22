@@ -101,7 +101,7 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
     {
         var url = Url(e => e.TopTracks);
         url = $"{url}?period={period}";
-        url = $"{url}?limit={limit}";
+        url = $"{url}&limit={limit}";
         url = $"{url}&page={page}";
         var response = await _httpClient.Get(url);
         return await response.Content.ReadFromJsonAsync<IEnumerable<PlayedTrack>>();
@@ -111,7 +111,7 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
     {
         var url = Url(e => e.TopAlbums);
         url = $"{url}?period={period}";
-        url = $"{url}?limit={limit}";
+        url = $"{url}&limit={limit}";
         url = $"{url}&page={page}";
         var response = await _httpClient.Get(url);
         return await response.Content.ReadFromJsonAsync<IEnumerable<PlayedAlbum>>();
@@ -121,7 +121,7 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
     {
         var url = Url(e => e.TopArtists);
         url = $"{url}?period={period}";
-        url = $"{url}?limit={limit}";
+        url = $"{url}&limit={limit}";
         url = $"{url}&page={page}";
         var response = await _httpClient.Get(url);
         return await response.Content.ReadFromJsonAsync<IEnumerable<PlayedArtist>>();

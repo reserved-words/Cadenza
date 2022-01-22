@@ -1,0 +1,38 @@
+﻿<WhipCard Title="Recent Tracks"
+          Padding=false>
+    @if (Model != null)
+    {
+        <WhipTable T="@RecentTrack"
+               Items="@Model">
+            <RowTemplate>
+                <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
+                    <img src="@context.ImageUrl" width="50" height="50"><img>
+                </MudTd>
+                <MudTd Class="pa-2">
+                    <MudText Typo="@Typo.body1">@context.Artist</MudText>
+                    <MudText Typo="@Typo.body2">@context.Title</MudText>
+                </MudTd>
+                <MudTd Style="width: 1px; text-align: right;" Class="pa-2">
+                    @if (context.NowPlaying)
+                    {
+                        <MudText Typo="@Typo.body2">Now playing</MudText>
+                    }
+                    else if (context.Played.Date == DateTime.Today)
+                    {
+                        <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
+                    }
+                    else
+                    {
+                        <MudText Typo="@Typo.body2">@context.Played.ToString("dd/MM/yyyy")</MudText>
+                        <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
+                    }
+                </MudTd>
+            </RowTemplate>
+        </WhipTable>
+    }
+</WhipCard>
+
+@code {
+    [Parameter]
+    public List<RecentTrack> Model { get; set; }
+}

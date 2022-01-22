@@ -1,0 +1,24 @@
+﻿@inherits HistoryTabBase
+
+<WhipTab>
+    <WhipColumn md="4">
+        <WhipRow RowHeight="@RowHeight.Full">
+            <HistoryRecent Model="@RecentTracks" />
+        </WhipRow>
+    </WhipColumn>
+    <WhipColumn md="8">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <MudGrid Class="pa-0 ma-0" Spacing="0">
+                <MudItem md="6" Class="pa-0 ma-0">
+                    <HistoryArtists Model="@TopArtists" />
+                </MudItem>
+                <MudItem md="6" Class="pa-0 ma-0">
+                    <HistoryAlbums Model="@TopAlbums" />
+                </MudItem>
+            </MudGrid>
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <HistoryTracks Model="@TopTracks" />
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>

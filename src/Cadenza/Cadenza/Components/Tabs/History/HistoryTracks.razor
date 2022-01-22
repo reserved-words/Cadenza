@@ -1,0 +1,27 @@
+﻿<WhipCard Title="Top Tracks"
+          Subtitle="Last week"
+          Padding=false >
+    @if (Model != null)
+    {
+        <WhipTable T="@PlayedTrack"
+                   Items="@Model">
+            <RowTemplate>
+                <MudTd Style="width: 1px;">
+                    @context.Rank
+                </MudTd>
+                <MudTd>
+                    <MudText Typo="@Typo.body1">@context.Artist</MudText>
+                    <MudText Typo="@Typo.body2">@context.Title</MudText>
+                </MudTd>
+                <MudTd Style="text-align: right;">
+                    @context.Plays
+                </MudTd Style="width: 1px;">
+            </RowTemplate>
+        </WhipTable>
+    }
+</WhipCard>
+
+@code {
+    [Parameter]
+    public List<PlayedTrack> Model { get; set; }
+}

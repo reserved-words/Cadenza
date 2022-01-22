@@ -83,7 +83,8 @@ public static class Services
     {
         return services.AddTransient<IPlayTracker, LastFmService>()
             .AddTransient<IFavouritesConsumer, LastFmService>()
-            .AddTransient<IFavouritesController, LastFmService>();
+            .AddTransient<IFavouritesController, LastFmService>()
+            .AddTransient<IHistory, LastFmService>();
     }
 
     private static IServiceCollection AddSources(this IServiceCollection services)
