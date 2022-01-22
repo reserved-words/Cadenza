@@ -28,37 +28,37 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         await _httpClient.Post(Url(e => e.UpdateNowPlaying), null, model);
     }
 
-    public async Task<bool> IsFavourite(TrackSummary track)
+    public async Task<bool> IsFavourite(string artist, string title)
     {
         var url = Url(e => e.IsFavourite);
-        url = $"{url}?artist={track.Artist}";
-        url = $"{url}&title={track.Title}";
+        url = $"{url}?artist={artist}";
+        url = $"{url}&title={title}";
         var response = await _httpClient.Get(url);
         var isFavourite = await response.Content.ReadFromJsonAsync<bool>();
         return isFavourite;
     }
 
-    public async Task Favourite(TrackSummary track)
+    public async Task Favourite(string artist, string title)
     {
-        var model = GetTrack(track);
+        var model = await GetTrack(artist, title);
         await _httpClient.Post(Url(e => e.Favourite), null, model);
     }
 
-    public async Task Unfavourite(TrackSummary track)
+    public async Task Unfavourite(string artist, string title)
     {
-        var model = GetTrack(track);
+        var model = await GetTrack(artist, title);
         await _httpClient.Post(Url(e => e.Unfavourite), null, model);
     }
 
-    public async Task<object> GetTrack(TrackSummary track)
+    public async Task<object> GetTrack(string artist, string title)
     {
         var sessionKey = await _store.GetValue(StoreKey.LastFmSessionKey);
 
         return new
         {
             SessionKey = sessionKey,
-            Artist = track.Artist,
-            Title = track.Title
+            Artist = artist,
+            Title = title
         };
     }
 

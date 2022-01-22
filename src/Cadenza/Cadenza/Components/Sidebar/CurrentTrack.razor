@@ -9,14 +9,7 @@
                 <MudText Typo="Typo.body2">@Model.Artist</MudText>
             </CardHeaderContent>
             <CardHeaderActions>
-                @if (IsFavourite)
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="Unfavourite" />
-                }
-                else
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.FavoriteBorder" Color="Color.Default" OnClick="Favourite" />
-                }
+                <FavouriteTrack Artist="@Model.Artist" Title="@Model.Title" />
             </CardHeaderActions>
         </MudCardHeader>
         <img src="@Model.ArtworkUrl" class="artwork" />

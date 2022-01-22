@@ -33,7 +33,8 @@ public static class Routing
         app.MapPost("/LastFm/Scrobble", (Scrobble scrobble) => scrobbler.RecordPlay(scrobble));
         app.MapPost("/LastFm/UpdateNowPlaying", (Scrobble scrobble) => scrobbler.UpdateNowPlaying(scrobble));
         app.MapPost("/LastFm/Favourite", (LastFM.Track track) => favourites.Favourite(track));
-        
+        app.MapPost("/LastFm/Unfavourite", (LastFM.Track track) => favourites.Unfavourite(track));
+
         app.MapGet("/LastFm/IsFavourite", (string artist, string title) => favourites.IsFavourite(artist, title));
         app.MapGet("/LastFm/RecentTracks", (int limit, int page) => history.GetRecentTracks(limit, page));
         app.MapGet("/LastFm/TopTracks", (HistoryPeriod period, int limit, int page) => history.GetPlayedTracks(period, limit, page));

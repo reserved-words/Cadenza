@@ -27,6 +27,9 @@
                         <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
                     }
                 </MudTd>
+                <MudTd Style="width: 1px; text-align: right;">
+                    <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" />
+                </MudTd>
             </RowTemplate>
         </WhipTable>
     }

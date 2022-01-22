@@ -4,5 +4,5 @@ namespace Cadenza.Common;
 
 public interface IFavouritesConsumer
 {
-    Task<bool> IsFavourite(TrackSummary track);
+    Task<bool> IsFavourite(string artist, string title);
 }
