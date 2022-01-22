@@ -4,7 +4,8 @@ public enum SearchableItemType
 {
     Artist,
     Album,
-    Track
+    Track,
+    Playlist
 }
 
 public class SearchableItem
@@ -18,12 +19,26 @@ public class SearchableItem
 
 public class SearchBase : ComponentBase
 {
-    protected bool resetValueOnEmptyText;
-    protected bool coerceText;
-    protected bool coerceValue;
-    protected string value1, value2;
+    protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
+    {
+        { SearchableItemType.Artist, MudBlazor.Icons.Material.Filled.PeopleAlt },
+        { SearchableItemType.Album, MudBlazor.Icons.Material.Filled.Album },
+        { SearchableItemType.Playlist, MudBlazor.Icons.Material.Filled.QueueMusic },
+        { SearchableItemType.Track, MudBlazor.Icons.Material.Filled.MusicNote }
+    };
 
-    protected List<SearchableItem> items = new List<SearchableItem>();
+    protected static Dictionary<SearchableItemType, Color> Colors = new Dictionary<SearchableItemType, Color>
+    {
+        { SearchableItemType.Artist, Color.Primary },
+        { SearchableItemType.Album, Color.Secondary },
+        { SearchableItemType.Playlist, Color.Info },
+        { SearchableItemType.Track, Color.Success }    
+    };
+
+    protected List<SearchableItem> items = new List<SearchableItem> 
+    { 
+        new SearchableItem { Id = "1", Name = "Arch Enemy", Type = SearchableItemType.Artist } 
+    };
 
     protected SearchableItem Result { get; set; }
 
