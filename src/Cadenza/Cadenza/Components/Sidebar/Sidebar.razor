@@ -16,11 +16,15 @@
                                 OnResume="@OnResume"
                                 OnSkipNext="@OnSkipNext"
                                 OnSkipPrevious="@OnSkipPrevious" />
-            </WhipContainer>        </WhipRow>
-        <WhipRow RowHeight="@RowHeight.Stretch">
+            </WhipContainer>
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
             <WhipContainer>
                 <Shuffle OnPlay="@OnPlay" />
             </WhipContainer>
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <Search />
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
             <WhipContainer>

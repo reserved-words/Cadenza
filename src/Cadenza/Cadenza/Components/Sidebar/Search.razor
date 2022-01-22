@@ -1,0 +1,51 @@
+﻿@inherits SearchBase
+
+<WhipContainer>
+    <MudAutocomplete T="SearchableItem"
+                     Class="mt-0 pt-0"
+                     Label="Search library"
+                     @bind-Value="Result"
+                     SearchFunc="@Search"
+                     ToStringFunc="@(e => e == null ? null : e.Name)">
+        <ItemTemplate Context="e">
+            @{
+                var icon = e.Type == SearchableItemType.Artist
+                        ? Icons.Material.Filled.PeopleAlt
+                        : e.Type == SearchableItemType.Album
+                        ? Icons.Material.Filled.QueueMusic
+                        : Icons.Material.Filled.MusicNote;
+                var color = e.Type == SearchableItemType.Artist
+                ? Color.Primary
+                : e.Type == SearchableItemType.Album
+                ? Color.Secondary
+                : Color.Info;
+            }
+            <MudContainer Class="d-flex flex-row pa-0 ma-0"
+                          title="@e.AdditionalInfo">
+                <MudIcon Icon="@icon"
+                         Class="mb-n1 mr-2"
+                         Color="@color" />
+                <MudContainer Class="pa-0 ma-0">
+                    <MudText Color=Color.Dark
+                             Typo="@Typo.body1"
+                             Class="pa-0 ma-0">
+                        @e.Name
+                    </MudText>
+                    <MudText Color=Color.Dark
+                             Typo="@Typo.body2"
+                             Class="pa-0 ma-0">
+                        @e.Artist
+                    </MudText>
+                </MudContainer>
+            </MudContainer>
+
+            @*                    <MudText Color=Color.Dark
+                title="@e.AdditionalInfo">
+
+                @e.Name
+                </MudText>
+            *@
+
+        </ItemTemplate>
+    </MudAutocomplete>
+</WhipContainer>

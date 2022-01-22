@@ -57,3 +57,13 @@ img.artist {
 table tbody tr td .show-on-hover {
     display:none;
 }
+
+.mud-list-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.mud-list-item-gutters {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
