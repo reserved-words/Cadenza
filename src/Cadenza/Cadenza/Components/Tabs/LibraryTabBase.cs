@@ -29,8 +29,6 @@ public class LibraryTabBase : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         App.LibraryUpdated += App_LibraryUpdated;
-
-        // Library.ArtistUpdated += OnArtistUpdated;
     }
 
     private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)
