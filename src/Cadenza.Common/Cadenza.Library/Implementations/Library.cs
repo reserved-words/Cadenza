@@ -39,19 +39,7 @@ public class Library : ILibrary
         return await _combinedLibrary.GetAlbums();
     }
 
-    public async Task<IEnumerable<string>> GetAlbumTracks(string artistId, string albumId)
-    {
-        await PopulateStaticSources();
-        return await _combinedLibrary.GetAlbumTracks(artistId, albumId);
-    }
-
-    public async Task<IEnumerable<string>> GetArtistTracks(string id)
-    {
-        await PopulateStaticSources();
-        return await _combinedLibrary.GetArtistTracks(id);
-    }
-
-    public async Task<IEnumerable<string>> GetAllTracks()
+    public async Task<IEnumerable<BasicTrack>> GetAllTracks()
     {
         await PopulateStaticSources();
         return await _combinedLibrary.GetAllTracks();

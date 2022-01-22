@@ -7,23 +7,12 @@ internal class Cache : ILibrary
     private Dictionary<string, AlbumInfo> _albums { get; }
     private Dictionary<string, AlbumTrackLink> _links { get; }
 
-    private Dictionary<string, IEnumerable<string>> _artistTracks { get; }
-    private Dictionary<string, IEnumerable<string>> _albumTracks { get; }
-
     public Cache(StaticLibrary source)
     {
         _artists = source.Artists.ToDictionary(a => a.Id, a => a);
         _albums = source.Albums.ToDictionary(a => a.Id, a => a);
         _tracks = source.Tracks.ToDictionary(t => t.Id, t => t);
         _links = source.AlbumTrackLinks.ToDictionary(at => at.TrackId, at => at);
-
-        _artistTracks = source.Tracks
-            .GroupBy(a => a.ArtistId)
-            .ToDictionary(grp => grp.Key, grp => grp.Select(t => t.Id));
-
-        _albumTracks = source.AlbumTrackLinks
-            .GroupBy(a => a.AlbumId)
-            .ToDictionary(grp => grp.Key, grp => grp.Select(t => t.TrackId));
     }
 
     public Task<IEnumerable<AlbumInfo>> GetAlbums()
@@ -31,24 +20,14 @@ internal class Cache : ILibrary
         return Task.FromResult(_albums.Values.OfType<AlbumInfo>());
     }
 
-    public Task<IEnumerable<string>> GetAlbumTracks(string artistId, string albumId)
+    public Task<IEnumerable<BasicTrack>> GetAllTracks()
     {
-        return Task.FromResult(_albumTracks[albumId]);
-    }
-
-    public Task<IEnumerable<string>> GetAllTracks()
-    {
-        return Task.FromResult(_tracks.Keys.OfType<string>());
+        return Task.FromResult(_tracks.Values.Select(t => GetBasicTrack(t)));
     }
 
     public Task<IEnumerable<ArtistInfo>> GetArtists()
     {
         return Task.FromResult(_artists.Values.OfType<ArtistInfo>());
-    }
-
-    public Task<IEnumerable<string>> GetArtistTracks(string id)
-    {
-        return Task.FromResult(_artistTracks[id]);
     }
 
     public Task<TrackFull> GetFullTrack(string id)
@@ -104,5 +83,21 @@ internal class Cache : ILibrary
         };
 
         return Task.FromResult(result);
+    }
+
+    private BasicTrack GetBasicTrack(TrackInfo track)
+    {
+        var album = _albums[track.AlbumId];
+
+        return new BasicTrack
+        {
+            Id = track.Id,
+            Title = track.Title,
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            AlbumId = track.AlbumId,
+            AlbumTitle = album.Title,
+            AlbumArtist = album.ArtistName
+        };
     }
 }

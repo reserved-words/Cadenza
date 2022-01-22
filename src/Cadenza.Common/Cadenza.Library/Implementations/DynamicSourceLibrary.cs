@@ -15,13 +15,9 @@ public class DynamicSourceLibrary : ISourceLibrary
 
     public async Task<IEnumerable<AlbumInfo>> GetAlbums() => await _baseLibrary.GetAlbums();
 
-    public async Task<IEnumerable<string>> GetAlbumTracks(string artistId, string albumId) => await _baseLibrary.GetAlbumTracks(artistId, albumId);
-
-    public async Task<IEnumerable<string>> GetAllTracks() => await _baseLibrary.GetAllTracks();
+    public async Task<IEnumerable<BasicTrack>> GetAllTracks() => await _baseLibrary.GetAllTracks();
 
     public async Task<IEnumerable<ArtistInfo>> GetArtists() => await _baseLibrary.GetArtists();
-
-    public async Task<IEnumerable<string>> GetArtistTracks(string id) => await _baseLibrary.GetArtistTracks(id);
 
     public async Task<TrackFull> GetFullTrack(string id) => await _baseLibrary.GetFullTrack(id);
 
