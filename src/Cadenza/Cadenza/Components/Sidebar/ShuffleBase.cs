@@ -1,6 +1,6 @@
 ﻿namespace Cadenza;
 
-public class FavouritePlaylistsBase : ComponentBase
+public class ShuffleBase : ComponentBase
 {
     [Inject]
     public IPlaylistCreator PlaylistCreator { get; set; }
