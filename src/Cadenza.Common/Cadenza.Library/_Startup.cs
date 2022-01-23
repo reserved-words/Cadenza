@@ -1,6 +1,10 @@
 ﻿global using Cadenza.Domain;
 global using Cadenza.Utilities;
+
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
+
+[assembly:InternalsVisibleTo("Cadenza.Library.Tests")]
 
 namespace Cadenza.Library;
 
