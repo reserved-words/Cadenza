@@ -87,7 +87,8 @@ internal class Cache : ILibrary
 
     private BasicTrack GetBasicTrack(TrackInfo track)
     {
-        var album = _albums[track.AlbumId];
+        var albumId = track.AlbumId ?? _links[track.Id].AlbumId;
+        var album = _albums[albumId];
 
         return new BasicTrack
         {
