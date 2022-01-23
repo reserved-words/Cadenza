@@ -44,32 +44,10 @@
                 </MudContainer>
             </ItemTemplate>
         </MudAutocomplete>
+
         @if (Result != null)
         {
-            <WhipCard Padding=true>
-                <MudContainer Class="d-flex flex-row pa-0 ma-0">
-                    <MudIcon Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
-                     Class="mb-n1 mr-2" />
-                    <MudContainer Class="pa-0 ma-0">
-                        <MudText Color=Color.Dark
-                         Typo="@Typo.body1"
-                         Class="pa-0 ma-0">
-                            @Result.Name
-                        </MudText>
-                        <MudText Color=Color.Dark
-                         Typo="@Typo.body2"
-                         Class="pa-0 ma-0">
-                            @Result.Artist
-                        </MudText>
-                        <MudText Color=Color.Dark
-                         Typo="@Typo.body2"
-                         Class="pa-0 ma-0">
-                            @Result.Album
-                        </MudText>
-                    </MudContainer>
-                </MudContainer>
-
-            </WhipCard>
+            <SearchResult Result="@Result" />
         }
     }
 </WhipContainer>

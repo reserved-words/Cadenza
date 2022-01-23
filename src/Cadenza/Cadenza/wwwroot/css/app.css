@@ -67,3 +67,8 @@ table tbody tr td .show-on-hover {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
+div.fixed-height-margin.no-side-margin {
+    margin-left: 0;
+    margin-right: 0;
+}

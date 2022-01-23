@@ -32,11 +32,11 @@
 
 @code{
     public string ContentClass => "fixed-height-scroll"
-        + (Padding ? "" : " pa-0")
+        + (Padding ? " pa-2" : " pa-0")
         + (FooterLinks == null ? "" : " pb-1")
         + (Title == null ? "" : " pt-0");
 
-    public string CardClass => "fixed-height-margin";
+    public string CardClass => "fixed-height-margin" + (SideMargin ? "" : " no-side-margin");
 
     public int Elevation => Bordered
         ? 2
@@ -56,6 +56,9 @@
 
     [Parameter]
     public bool Bordered { get; set; } = true;
+
+    [Parameter]
+    public bool SideMargin { get; set; } = true;
 
     [Parameter]
     public List<LinkViewModel> FooterLinks { get; set; }
