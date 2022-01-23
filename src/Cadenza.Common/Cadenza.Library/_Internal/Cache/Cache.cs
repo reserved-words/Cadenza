@@ -22,7 +22,7 @@ internal class Cache : ILibrary
 
     public Task<IEnumerable<BasicTrack>> GetAllTracks()
     {
-        return Task.FromResult(_tracks.Values.Select(t => GetBasicTrack(t)));
+        return Task.FromResult(_tracks.Values.OfType<TrackInfo>().Select(t => GetBasicTrack(t)));
     }
 
     public Task<IEnumerable<ArtistInfo>> GetArtists()
