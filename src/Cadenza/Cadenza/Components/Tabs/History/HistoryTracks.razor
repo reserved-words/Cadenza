@@ -1,7 +1,13 @@
 ﻿<WhipCard Title="Top Tracks"
           Subtitle="Last week"
           Padding=false >
-    @if (Model != null)
+    @if (IsLoading)
+    {
+        <WhipContainer>
+            <MudText>Loading top tracks...</MudText>
+        </WhipContainer>
+    }
+    else if (Model != null)
     {
         <WhipTable T="@PlayedTrack"
                    Items="@Model">
@@ -24,4 +30,7 @@
 @code {
     [Parameter]
     public List<PlayedTrack> Model { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
 }

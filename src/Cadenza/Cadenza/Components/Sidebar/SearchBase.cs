@@ -11,8 +11,8 @@ public class SearchBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool IsLoading { get; set; }
-    public bool IsErrored { get; set; }
+    public bool IsLoading { get; set; } = true;
+    public bool IsErrored { get; set; } = false;
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
     {

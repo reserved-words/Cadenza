@@ -3,22 +3,26 @@
 <WhipTab>
     <WhipColumn md="4">
         <WhipRow RowHeight="@RowHeight.Full">
-            <HistoryRecent Model="@RecentTracks" />
+            <HistoryRecent Model="@RecentTracks"
+                           IsLoading="@IsLoading"/>
         </WhipRow>
     </WhipColumn>
     <WhipColumn md="8">
         <WhipRow RowHeight="@RowHeight.Fixed">
             <MudGrid Class="pa-0 ma-0" Spacing="0">
                 <MudItem md="6" Class="pa-0 ma-0">
-                    <HistoryArtists Model="@TopArtists" />
+                    <HistoryArtists Model="@TopArtists"
+                                    IsLoading="@IsLoading"/>
                 </MudItem>
                 <MudItem md="6" Class="pa-0 ma-0">
-                    <HistoryTracks Model="@TopTracks" />
+                    <HistoryTracks Model="@TopTracks"
+                                   IsLoading="@IsLoading"/>
                 </MudItem>
             </MudGrid>
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
-            <HistoryAlbums Model="@TopAlbums" />
+            <HistoryAlbums Model="@TopAlbums"
+                           IsLoading="@IsLoading"/>
         </WhipRow>
     </WhipColumn>
 </WhipTab>

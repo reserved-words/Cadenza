@@ -1,6 +1,13 @@
 ﻿<WhipCard Title="Recent Tracks"
           Padding=false>
-    @if (Model != null)
+    @if (IsLoading)
+    {
+        <WhipContainer>
+            <MudText>Loading recent tracks...</MudText>
+        </WhipContainer>
+
+    }
+    else if (Model != null)
     {
         <WhipTable T="@RecentTrack"
                Items="@Model">
@@ -38,4 +45,7 @@
 @code {
     [Parameter]
     public List<RecentTrack> Model { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
 }
