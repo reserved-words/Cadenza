@@ -6,6 +6,9 @@
         <WhipTable T="@PlayedAlbum"
                    Items="@Model">
             <RowTemplate>
+                <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
+                    <img src="@context.ImageUrl" width="45" height="45"><img>
+                </MudTd>
                 <MudTd Style="width: 1px;">
                     @context.Rank
                 </MudTd>
