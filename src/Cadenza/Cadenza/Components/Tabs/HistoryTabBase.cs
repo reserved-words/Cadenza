@@ -13,7 +13,7 @@ public class HistoryTabBase : ComponentBase
 
     public List<PlayedArtist> TopArtists { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         RecentTracks = (await History.GetRecentTracks(20, 1)).ToList();
         TopTracks = (await History.GetTopTracks(HistoryPeriod.Week, 5, 1)).ToList();
