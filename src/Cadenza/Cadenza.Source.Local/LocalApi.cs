@@ -15,10 +15,10 @@ public class LocalApi : ILibrary
 
     public LibrarySource Source => LibrarySource.Local;
 
-    public async Task<IEnumerable<string>> GetAllTracks()
+    public async Task<IEnumerable<BasicTrack>> GetAllTracks()
     {
         var response = await _httpClient.Get(GetApiEndpoint(e => e.AllTracks));
-        return await response.Content.ReadFromJsonAsync<List<string>>();
+        return await response.Content.ReadFromJsonAsync<List<BasicTrack>>();
     }
 
     public async Task<IEnumerable<ArtistInfo>> GetArtists()
@@ -50,22 +50,10 @@ public class LocalApi : ILibrary
 
     public async Task<TrackFull> GetFullTrack(string id)
     {
-        var response = await _httpClient.Get(GetApiEndpoint(e => e.TrackFull, id));
+        var response = await _httpClient.Get(GetApiEndpoint(e => e.FullTrack, id));
         var track = await response.Content.ReadFromJsonAsync<TrackFull>();
         track.ArtworkUrl = GetArtworkUrl(track.ArtworkUrl);
         return track;
-    }
-
-    public async Task<IEnumerable<string>> GetArtistTracks(string id)
-    {
-        var response = await _httpClient.Get(GetApiEndpoint(e => e.ArtistTracks, id));
-        return await response.Content.ReadFromJsonAsync<List<string>>();
-    }
-
-    public async Task<IEnumerable<string>> GetAlbumTracks(string artistId, string albumId)
-    {
-        var response = await _httpClient.Get(GetApiEndpoint(e => e.AlbumTracks, albumId));
-        return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
     private string GetArtworkUrl(string artworkUrl)

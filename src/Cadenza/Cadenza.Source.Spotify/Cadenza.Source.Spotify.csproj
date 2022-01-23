@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.10" />
-    <PackageReference Include="Cadenza.Library" Version="1.0.14" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
   </ItemGroup>
 

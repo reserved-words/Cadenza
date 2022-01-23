@@ -1,4 +1,8 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Common;
+using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Core;
+
+namespace Cadenza;
 
 public class ProgressDialogService : IProgressDialogService
 {
@@ -9,14 +13,14 @@ public class ProgressDialogService : IProgressDialogService
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run(TaskGroup tasks, bool autoStart, string startPromptText = null)
+    public async Task<bool> Run(Func<TaskGroup> taskGroupFactory, bool autoStart, string startPromptText = null)
     {
         var dialogParameters = new DialogParameters();
-        dialogParameters.Add(nameof(ProgressDialog.TaskGroup), tasks);
+        dialogParameters.Add(nameof(ProgressDialog.TaskGroupFactory), taskGroupFactory);
         dialogParameters.Add(nameof(ProgressDialog.AutoStart), autoStart);
-        dialogParameters.Add(nameof(ProgressDialog.StartPromptText), "Would you like to re-sync source libraries?");
+        dialogParameters.Add(nameof(ProgressDialog.StartPromptText), startPromptText);
 
-        var dialogReference = _dialogService.Show<ProgressDialog>("Syncing Library", dialogParameters, new DialogOptions
+        var dialogReference = _dialogService.Show<ProgressDialog>("Sync Library", dialogParameters, new DialogOptions
         {
             DisableBackdropClick = true,
             MaxWidth = MaxWidth.Small,

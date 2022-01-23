@@ -1,4 +1,5 @@
-﻿using LogLevel = Cadenza.Common.LogLevel;
+﻿using Cadenza.Common;
+using LogLevel = Cadenza.Common.LogLevel;
 
 namespace Cadenza;
 

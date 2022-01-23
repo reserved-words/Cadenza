@@ -47,6 +47,12 @@ public class LongRunningTaskService : ILongRunningTaskService
                         Update(TaskState.CompletedWithErrors, CancellationToken.None);
                     }
 
+                    foreach (var ex in t.Exception.InnerExceptions)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
+                    }
+
                     if (_logger != null)
                     {
                         foreach (var ex in t.Exception.InnerExceptions)

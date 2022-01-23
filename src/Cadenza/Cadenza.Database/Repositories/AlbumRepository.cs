@@ -32,22 +32,15 @@ public class AlbumRepository : IAlbumRepository
         };
     }
 
-    private static List<PlayTrack> GetById(LibraryDb db, string id, LibrarySource source)
+    private static List<BasicTrack> GetById(LibraryDb db, string id)
     {
         var tracks = db.PlayTracks
             .SingleOrDefault(a => a.Id == id);
 
         if (tracks == null)
-            return new List<PlayTrack>();
+            return new List<BasicTrack>();
 
-        return tracks.Tracks
-            .Split(",")
-            .Select(t => new PlayTrack
-            {
-                Id = t,
-                Source = source
-            })
-            .ToList();
+        return JsonConvert.DeserializeObject<List<BasicTrack>>(tracks.Tracks);
     }
 
     private static string GetId(PlayTrackType type, string id, LibrarySource source)

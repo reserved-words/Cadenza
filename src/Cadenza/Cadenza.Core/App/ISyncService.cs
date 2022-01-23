@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Core
 {
-    public interface IStartupSyncService
+    public interface ISyncService
     {
         TaskGroup GetLibrarySyncTasks();
     }

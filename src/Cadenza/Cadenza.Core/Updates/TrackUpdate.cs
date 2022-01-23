@@ -1,7 +1,7 @@
 ﻿using Cadenza.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core;
 
 public class TrackUpdate : ItemUpdate<TrackInfo>
 {

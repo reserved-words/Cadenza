@@ -2,14 +2,14 @@
 
 public class Playlist : IPlaylist
 {
-    private Stack<PlayTrack> _played;
-    private PlayTrack _playing;
-    private Stack<PlayTrack> _toPlay;
-    private List<PlayTrack> _allTracks;
+    private Stack<BasicTrack> _played;
+    private BasicTrack _playing;
+    private Stack<BasicTrack> _toPlay;
+    private List<BasicTrack> _allTracks;
 
     private readonly PlaylistDefinition _definition;
 
-    public PlayTrack Current => _playing;
+    public BasicTrack Current => _playing;
 
     public Playlist(PlaylistDefinition def)
     {
@@ -17,9 +17,9 @@ public class Playlist : IPlaylist
 
         _allTracks = def.Tracks.ToList();
 
-        _played = new Stack<PlayTrack>(_allTracks);
+        _played = new Stack<BasicTrack>(_allTracks);
         _playing = _allTracks[0];
-        _toPlay = new Stack<PlayTrack>(_allTracks);
+        _toPlay = new Stack<BasicTrack>(_allTracks);
     }
 
     public bool CurrentIsLast => _toPlay.Count == 0;
@@ -27,7 +27,7 @@ public class Playlist : IPlaylist
     public PlaylistType Type => _definition.Type;
     public string Name => _definition.Name;
 
-    public async Task<PlayTrack> MoveNext()
+    public async Task<BasicTrack> MoveNext()
     {
         _played.Push(_playing);
 
@@ -38,7 +38,7 @@ public class Playlist : IPlaylist
         return _playing;
     }
 
-    public async Task<PlayTrack> MovePrevious()
+    public async Task<BasicTrack> MovePrevious()
     {
         if (_played.Count > 0)
         {

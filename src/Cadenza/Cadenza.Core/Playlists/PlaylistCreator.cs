@@ -29,7 +29,7 @@ public class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateAlbumPlaylist(LibraryAlbum album)
     {
-        var tracks = await _repository.GetByAlbum(album.Source, album.ArtistId, album.Id);
+        var tracks = await _repository.GetByAlbum(album.Id);
 
         if (album.ReleaseType == ReleaseType.Playlist)
         {

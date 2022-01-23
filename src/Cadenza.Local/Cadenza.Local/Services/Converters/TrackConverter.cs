@@ -22,6 +22,7 @@ public class TrackConverter : ITrackConverter
             Id = _base64Converter.ToBase64(track.Path),
             ArtistId = track.ArtistId,
             ArtistName = artist.Name,
+            AlbumId = track.AlbumId,
             Title = track.Title,
             DurationSeconds = track.DurationSeconds,
             Year = track.Year,
@@ -37,6 +38,7 @@ public class TrackConverter : ITrackConverter
         {
             Path = _base64Converter.FromBase64(track.Id),
             ArtistId = track.ArtistId,
+            AlbumId = track.AlbumId,
             Title = track.Title,
             DurationSeconds = track.DurationSeconds,
             Year = Nullify(track.Year),
@@ -55,6 +57,7 @@ public class TrackConverter : ITrackConverter
         {
             Path = data.Track.Filepath,
             ArtistId = _idGenerator.GenerateId(data.Artist.Name),
+            AlbumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title),
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = Nullify(commentData.TrackYear),

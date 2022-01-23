@@ -1,9 +1,11 @@
-﻿using Cadenza.Database;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using Cadenza.Database;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
-
+using Cadenza.Core;
+using Cadenza.Common;
+using Cadenza.Utilities;
 
 namespace Cadenza;
 
@@ -31,7 +33,7 @@ public static class Services
             .AddDatabaseRepositories();
 
         builder.Services
-            .AddTransient<IStartupSyncService, StartupSyncService>()
+            .AddTransient<ISyncService, SyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>();
 
         return builder;
@@ -40,8 +42,7 @@ public static class Services
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<ITrackRepository, Core.TrackRepository>()
-            .AddTransient<IPlayTrackRepository, Core.PlayTrackRepository>();
+            .AddTransient<ITrackRepository, Core.TrackRepository>();
     }
 
     public static IServiceCollection AddSingletons(this IServiceCollection services)

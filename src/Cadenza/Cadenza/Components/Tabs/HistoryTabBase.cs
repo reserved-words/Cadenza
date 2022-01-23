@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Common;
+
+namespace Cadenza;
 
 public class HistoryTabBase : ComponentBase
 {

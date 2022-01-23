@@ -1,10 +1,10 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Core;
+﻿namespace Cadenza.Core;
 
 public interface IMainRepository
 {
     Task Clear();
-    Task AddArtists(IEnumerable<ArtistInfo> artists);
-    Task AddAlbums(IEnumerable<AlbumInfo> albums);
+    Task AddArtists(List<ArtistInfo> artists);
+    Task AddAlbums(List<AlbumInfo> albums);
+    Task AddTracks(LibrarySource source, List<BasicTrack> tracks);
+    Task<IEnumerable<SearchableItem>> GetSearchableItems();
 }

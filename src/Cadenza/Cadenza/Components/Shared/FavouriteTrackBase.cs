@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.Shared;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Components.Shared;
 
 public class FavouriteTrackBase : ComponentBase
 {

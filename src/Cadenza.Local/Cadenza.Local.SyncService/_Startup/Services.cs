@@ -26,12 +26,13 @@ public static class Services
            .AddTransient<IId3ToJsonConverter, Id3ToJsonConverter>()
            .AddTransient<IId3Updater, Id3Updater>()
            .AddTransient<IJsonConverter, JsonConverter>()
-           //.AddTransient<IJsonMerger, JsonMerger>()
+           .AddTransient<IJsonMerger, JsonMerger>()
            .AddTransient<ILibraryOrganiser, LibraryOrganiser>()
            .AddTransient<IMusicDirectory, MusicDirectoryAccess>()
            .AddTransient<IUpdatedFilesFetcher, UpdatedFilesFetcher>()
            .AddTransient<IUpdateHistory, UpdateHistory>()
-           .AddTransient<ILocalLibraryUpdater, LocalLibraryUpdater>();
+           .AddTransient<ILocalLibraryUpdater, LocalLibraryUpdater>()
+           .AddTransient<IMerger, Merger>();
 
         return services;
     }

@@ -12,19 +12,19 @@ public class MainRepository : IMainRepository
         _dbFactory = dbFactory;
     }
 
-    public async Task AddAlbums(IEnumerable<AlbumInfo> albums)
+    public async Task AddAlbums(List<AlbumInfo> albums)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
         foreach (var album in albums)
         {
-            AddAlbum(db, album);
+            db.AddAlbum(album);
         }
 
         await db.SaveChanges();
     }
 
-    public async Task AddArtists(IEnumerable<ArtistInfo> artists)
+    public async Task AddArtists(List<ArtistInfo> artists)
     {
         using var db = await _dbFactory.Create<LibraryDb>();
 
@@ -34,64 +34,39 @@ public class MainRepository : IMainRepository
         {
             foreach (var artist in artists)
             {
-                AddOrUpdateArtist(db, artist);
+                db.AddOrUpdateArtist(artist);
             }
         }
         else
         {
             foreach (var artist in artists)
             {
-                AddArtist(db, artist);
+                db.AddArtist(artist);
             }
         }
 
         await db.SaveChanges();
     }
 
-    private static void AddAlbum(LibraryDb db, AlbumInfo album)
+    public async Task AddTracks(LibrarySource source, List<BasicTrack> tracks)
     {
-        db.Albums.Add(new DbAlbum
-        {
-            Id = album.Id,
-            ArtistId = album.ArtistId,
-            ArtistName = album.ArtistName,
-            Title = album.Title,
-            Year = album.Year,
-            ReleaseType = album.ReleaseType.ToString(),
-            Artwork = album.ArtworkUrl,
-            Source = album.Source.ToString()
-        });
-    }
+        using var db = await _dbFactory.Create<LibraryDb>();
 
-    private static void AddArtist(LibraryDb db, ArtistInfo artist)
-    {
-        db.Artists.Add(new DbArtist
+        var artists = tracks.GroupBy(a => a.ArtistId);
+        foreach (var artist in artists)
         {
-            Id = artist.Id,
-            Name = artist.Name,
-            Grouping = artist.Grouping.ToString(),
-            Genre = artist.Genre,
-            Country = artist.Country,
-            State = artist.State,
-            City = artist.City
-        });
-    }
-
-    private static void AddOrUpdateArtist(LibraryDb db, ArtistInfo artist)
-    {
-        var existing = db.Artists.SingleOrDefault(a => a.Id == artist.Id);
-
-        if (existing == null)
-        {
-            AddArtist(db, artist);
-            return;
+            db.AddTracks(PlayTrackType.Artist, artist.Key, artist.ToList());
         }
 
-        existing.Grouping = existing.Grouping == Grouping.None.ToString() ? artist.Grouping.ToString() : existing.Grouping;
-        existing.Genre = string.IsNullOrEmpty(existing.Genre) ? artist.Genre : existing.Genre;
-        existing.Country = string.IsNullOrEmpty(existing.Country) ? artist.Country : existing.Country;
-        existing.State = string.IsNullOrEmpty(existing.State) ? artist.State : existing.State;
-        existing.City = string.IsNullOrEmpty(existing.City) ? artist.City : existing.City;
+        var albums = tracks.GroupBy(a => a.AlbumId);
+        foreach (var album in albums)
+        {
+            db.AddTracks(PlayTrackType.Album, album.Key, album.ToList());
+        }
+
+        db.AddTracks(PlayTrackType.All, source.ToString(), tracks);
+
+        await db.SaveChanges();
     }
 
     public async Task Clear()
@@ -102,5 +77,53 @@ public class MainRepository : IMainRepository
         db.Tracks.ToList().ForEach(a => db.Tracks.Remove(a));
         db.PlayTracks.ToList().ForEach(a => db.PlayTracks.Remove(a));
         await db.SaveChanges();
+    }
+
+    public async Task<IEnumerable<SearchableItem>> GetSearchableItems()
+    {
+        using var db = await _dbFactory.Create<LibraryDb>();
+
+        var artists = db.Artists.Select(a => new SearchableArtist(a.Id, a.Name)).OfType<SearchableItem>().ToList();
+        
+        var albums = db.Albums.Select(a => new SearchableAlbum(a.Id, a.Title, a.ArtistName)).OfType<SearchableItem>().ToList();
+
+        if (!artists.Any() || !albums.Any())
+            return new List<SearchableItem>();
+
+        var allTracks = Enum.GetValues<LibrarySource>()
+            .SelectMany(s => db.GetPlayTracks(PlayTrackType.All, s.ToString()));
+
+        var tracks = Merge(allTracks, artists, albums);
+
+        return artists
+            .Concat(albums)
+            .Concat(tracks);
+    }
+
+    private static IEnumerable<SearchableItem> Merge(IEnumerable<BasicTrack> allTracks, List<SearchableItem> artists, List<SearchableItem> albums)
+    {
+        var artistsDict = artists.ToDictionary(a => a.Id, a => a);
+        var albumsDict = albums.ToDictionary(a => a.Id, a => a);
+
+        // TODO: For now setting album details to empty if null albumId, but there never should be any - figure out how there were
+
+        return allTracks
+            .Select(t => 
+        {
+            var artist = t.ArtistId == null
+                ? new SearchableArtist("", "No Artist Found")
+                : artistsDict[t.ArtistId];
+
+            var album = t.AlbumId == null 
+                ? new SearchableAlbum("", "No Album Found", artist.Name)
+                : albumsDict[t.AlbumId];
+
+            return new SearchableTrack(
+                t.Id,
+                t.Title,
+                artist.Name,
+                album.Name,
+                album.Artist);
+        });
     }
 }

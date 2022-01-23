@@ -11,6 +11,8 @@ public class AppService : IAppConsumer, IAppController
         _player = player;
         _trackFinishedConsumer = trackFinishedConsumer;
         _trackRepository = trackRepository;
+
+        _trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
     public event TrackEventHandler TrackStarted;
@@ -25,8 +27,6 @@ public class AppService : IAppConsumer, IAppController
 
     public void Initialise()
     {
-        _trackFinishedConsumer.TrackFinished += OnTrackFinished;
-
         LibraryUpdated?.Invoke(this, new LibraryEventArgs());
     }
 

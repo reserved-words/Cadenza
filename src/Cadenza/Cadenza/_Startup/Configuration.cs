@@ -1,5 +1,7 @@
-﻿using Cadenza.Source.Local;
+﻿using Cadenza.Core;
+using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
+using Cadenza.Utilities;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Cadenza;
@@ -10,7 +12,7 @@ public static class Configuration
     {
         var settingsPath = "appsettings.json";
 
-        var http = new System.Net.Http.HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+        var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         using var response = await http.GetAsync(settingsPath);
         using var stream = await response.Content.ReadAsStreamAsync();

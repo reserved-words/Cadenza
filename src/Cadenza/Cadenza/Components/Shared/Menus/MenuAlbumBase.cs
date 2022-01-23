@@ -1,4 +1,7 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Core;
+
+namespace Cadenza;
 
 public class MenuAlbumBase : ComponentBase
 {

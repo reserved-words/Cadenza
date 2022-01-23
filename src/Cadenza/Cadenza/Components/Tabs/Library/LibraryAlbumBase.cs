@@ -1,6 +1,4 @@
-﻿using Cadenza.Database;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public class LibraryAlbumBase : ComponentBase
 {

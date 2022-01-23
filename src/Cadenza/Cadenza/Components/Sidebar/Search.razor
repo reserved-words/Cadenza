@@ -1,7 +1,19 @@
 ﻿@inherits SearchBase
 
 <WhipContainer>
-    <MudAutocomplete T="SearchableItem"
+    @if (IsLoading)
+    {
+        <MudText>Loading items...</MudText>
+    }
+    else if (IsErrored)
+    {
+        <MudText Typo="@Typo.body1">Failed to fetch items</MudText>
+        <MudText Typo="@Typo.body2">@Exception.Message</MudText>
+        <MudText Typo="@Typo.body2">@Exception.StackTrace</MudText>
+    }
+    else
+    {
+        <MudAutocomplete T="SearchableItem"
                      Class="mt-0 pt-0"
                      Label="Search library"
                      @bind-Value="Result"
@@ -11,52 +23,53 @@
                      CoerceValue=false
                      MinCharacters=3
                      ResetValueOnEmptyText=true>
-        <ItemTemplate Context="e">
-            <MudContainer Class="d-flex flex-row pa-0 ma-0"
-                          title="@e.AdditionalInfo">
-                <MudIcon Icon="@Icons[e.Type]"
+            <ItemTemplate Context="e">
+                <MudContainer Class="d-flex flex-row pa-0 ma-0"
+                          title="@e.Album">
+                    <MudIcon Icon="@Icons[e.Type]"
                          Class="mb-n1 mr-2"
                          Color="@Colors[e.Type]" />
-                <MudContainer Class="pa-0 ma-0">
-                    <MudText Color=Color.Dark
+                    <MudContainer Class="pa-0 ma-0">
+                        <MudText Color=Color.Dark
                              Typo="@Typo.body1"
                              Class="pa-0 ma-0">
-                        @e.Name
-                    </MudText>
-                    <MudText Color=Color.Dark
+                            @e.Name
+                        </MudText>
+                        <MudText Color=Color.Dark
                              Typo="@Typo.body2"
                              Class="pa-0 ma-0">
-                        @e.Artist
-                    </MudText>
+                            @e.Artist
+                        </MudText>
+                    </MudContainer>
                 </MudContainer>
-            </MudContainer>
-        </ItemTemplate>
-    </MudAutocomplete>
-    @if (Result != null)
-    {
-        <WhipCard Padding=true>
-            <MudContainer Class="d-flex flex-row pa-0 ma-0">
-                <MudIcon Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
+            </ItemTemplate>
+        </MudAutocomplete>
+        @if (Result != null)
+        {
+            <WhipCard Padding=true>
+                <MudContainer Class="d-flex flex-row pa-0 ma-0">
+                    <MudIcon Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
                      Class="mb-n1 mr-2" />
-                <MudContainer Class="pa-0 ma-0">
-                    <MudText Color=Color.Dark
+                    <MudContainer Class="pa-0 ma-0">
+                        <MudText Color=Color.Dark
                          Typo="@Typo.body1"
                          Class="pa-0 ma-0">
-                        @Result.Name
-                    </MudText>
-                    <MudText Color=Color.Dark
+                            @Result.Name
+                        </MudText>
+                        <MudText Color=Color.Dark
                          Typo="@Typo.body2"
                          Class="pa-0 ma-0">
-                        @Result.Artist
-                    </MudText>
-                    <MudText Color=Color.Dark
+                            @Result.Artist
+                        </MudText>
+                        <MudText Color=Color.Dark
                          Typo="@Typo.body2"
                          Class="pa-0 ma-0">
-                        @Result.AdditionalInfo
-                    </MudText>
+                            @Result.Album
+                        </MudText>
+                    </MudContainer>
                 </MudContainer>
-            </MudContainer>
 
-        </WhipCard>
+            </WhipCard>
+        }
     }
 </WhipContainer>

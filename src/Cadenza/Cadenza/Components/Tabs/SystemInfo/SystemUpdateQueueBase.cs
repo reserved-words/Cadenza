@@ -1,4 +1,7 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Common;
+using Cadenza.Core;
+
+namespace Cadenza;
 
 public class SystemUpdateQueueBase : ComponentBase
 {

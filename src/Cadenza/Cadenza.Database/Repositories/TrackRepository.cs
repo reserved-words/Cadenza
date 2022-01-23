@@ -92,7 +92,7 @@ public class TrackRepository : ITrackRepositoryUpdater
 
         var list = new List<AlbumTrackInfo>();
 
-        var playTracks = db.GetPlayTracks(PlayTrackType.Album, id, source);
+        var playTracks = db.GetPlayTracks(PlayTrackType.Album, id);
 
         foreach (var track in playTracks)
         {

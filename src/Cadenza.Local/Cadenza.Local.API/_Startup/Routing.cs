@@ -43,8 +43,6 @@ public static class Routing
         app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
         app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetFullTrack(id));
         app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
-        app.MapGet("/Library/ArtistTracks/{id}", (string id) => library.GetArtistTracks(id));
-        app.MapGet("/Library/AlbumTracks/{id}", (string id) => library.GetAlbumTracks("", id));
 
         app.MapGet("/Library/Artwork", async (HttpContext context) =>
         {

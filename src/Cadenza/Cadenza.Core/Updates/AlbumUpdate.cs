@@ -2,7 +2,7 @@
 using Cadenza.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core;
 
 public class AlbumUpdate : ItemUpdate<AlbumInfo>
 {

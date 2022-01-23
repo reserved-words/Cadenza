@@ -4,8 +4,8 @@ public interface IPlaylist
 {
     PlaylistType Type { get; }
     string Name { get; }
-    Task<PlayTrack> MoveNext();
-    Task<PlayTrack> MovePrevious();
-    PlayTrack Current { get; }
+    Task<BasicTrack> MoveNext();
+    Task<BasicTrack> MovePrevious();
+    BasicTrack Current { get; }
     bool CurrentIsLast { get; }
 }

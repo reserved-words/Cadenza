@@ -93,7 +93,11 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         var url = Url(e => e.RecentTracks);
         url = $"{url}?limit={limit}";
         url = $"{url}&page={page}";
-        var response = await _httpClient.Get(url);
+
+
+        using var client = new HttpClient();
+        using var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await client.SendAsync(request);
         return await response.Content.ReadFromJsonAsync<IEnumerable<RecentTrack>>();
     }
 

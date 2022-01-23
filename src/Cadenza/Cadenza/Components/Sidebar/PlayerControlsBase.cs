@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core;
+
+namespace Cadenza;
 
 public class PlayerControlsBase : ComponentBase
 {

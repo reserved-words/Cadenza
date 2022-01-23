@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.Shared.Dialogs
+﻿using Cadenza.Common;
+
+namespace Cadenza.Components.Shared.Dialogs
 {
 
     public class ProgressDialogBase : DialogBase
@@ -7,7 +9,7 @@
         public ILongRunningTaskService Service { get; set; }
 
         [Parameter]
-        public TaskGroup TaskGroup { get; set; }
+        public Func<TaskGroup> TaskGroupFactory { get; set; }
 
         [Parameter]
         public bool AutoStart { get; set; }
@@ -21,7 +23,7 @@
 
         public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
-        public Dictionary<string, SubTaskProgress> SubTasks { get; set; }
+        public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -34,49 +36,54 @@
 
         protected override async Task OnParametersSetAsync()
         {
-            SubTasks = TaskGroup.Tasks
-                .ToDictionary(t => t.Id, t => new SubTaskProgress 
-                { 
-                    Title = t.Title, 
-                    State = TaskState.None, 
-                    Message = "" 
-                });
-
             if (AutoStart)
             {
                 await OnStart();
             }
         }
 
-        private async Task OnTaskGroupProgressChanged(object sender, TaskGroupProgressEventArgs e)
+        private Task OnTaskGroupProgressChanged(object sender, TaskGroupProgressEventArgs e)
         {
             ProgressMessage = e.Message;
             State = e.State;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
-        private async Task OnSubTaskProgressChanged(object sender, SubTaskProgressEventArgs e)
+        private Task OnSubTaskProgressChanged(object sender, SubTaskProgressEventArgs e)
         {
             var task = SubTasks[e.Id];
             task.Message = e.Message;
             task.State = e.State;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
         protected async Task OnStart()
         {
+            var taskGroup = TaskGroupFactory();
+
+            SubTasks = taskGroup.Tasks
+                .ToDictionary(t => t.Id, t => new SubTaskProgress
+                {
+                    Title = t.Title,
+                    State = TaskState.None,
+                    Message = ""
+                });
+
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-            await Service.RunTasks(TaskGroup, _cancellationToken);
+            await Service.RunTasks(taskGroup, _cancellationToken);
         }
 
-        protected async Task OnCancel()
+        protected void OnCancel()
         {
             State = TaskState.Cancelling;
+            ProgressMessage = "Cancelling";
             _cancellationTokenSource.Cancel();
         }
 
-        protected async Task OnClose()
+        protected void OnClose()
         {
             Submit();
         }

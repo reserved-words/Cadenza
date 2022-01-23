@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.Shared.Dialogs
+﻿using Cadenza.Common;
+
+namespace Cadenza.Components.Shared.Dialogs
 {
     public static class TaskStateExtensionMethods
     {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core;
+
+namespace Cadenza;
 
 public class SyncBase : ComponentBase
 {
@@ -9,13 +11,11 @@ public class SyncBase : ComponentBase
     public IAppController App { get; set; }
 
     [Inject]
-    public IStartupSyncService SyncService { get; set; }
+    public ISyncService SyncService { get; set; }
 
     protected async Task OnSync()
     {
-        var syncTasks = SyncService.GetLibrarySyncTasks();
-
-        var completed = await DialogService.Run(syncTasks, false, "Would you like to re-sync source libraries?");
+        var completed = await DialogService.Run(() => SyncService.GetLibrarySyncTasks(), false, "Would you like to re-sync source libraries?");
 
         if (completed)
         {
