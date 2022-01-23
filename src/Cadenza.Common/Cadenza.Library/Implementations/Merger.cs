@@ -41,6 +41,7 @@ public class Merger : IMerger
         track.Title = Merge(track.Title, update.Title, mode);
         track.ArtistId = Merge(track.ArtistId, update.ArtistId, mode);
         track.ArtistName = Merge(track.ArtistName, update.ArtistName, mode);
+        track.AlbumId = Merge(track.AlbumId, update.AlbumId, mode);
         track.Lyrics = Merge(track.Lyrics, update.Lyrics, mode);
         track.Year = Merge(track.Year, update.Year, mode);
         track.Tags = MergeTags(track.Tags, update.Tags, mode);
