@@ -3,19 +3,24 @@
 public class PlaylistCreator : IPlaylistCreator
 {
     private readonly IShuffler _shuffler;
+    private readonly IAlbumRepository _albumRepository;
+    private readonly IArtistRepository _artistRepository;
     private readonly IPlayTrackRepository _repository;
 
-    public PlaylistCreator(IShuffler shuffler, IPlayTrackRepository repository)
+    public PlaylistCreator(IShuffler shuffler, IPlayTrackRepository repository, IAlbumRepository albumRepository, IArtistRepository artistRepository)
     {
         _shuffler = shuffler;
         _repository = repository;
+        _albumRepository = albumRepository;
+        _artistRepository = artistRepository;
     }
 
-    public async Task<PlaylistDefinition> CreateArtistPlaylist(LibraryArtist artist)
+    public async Task<PlaylistDefinition> CreateArtistPlaylist(string id)
     {
         // this is the album tracks, probably need to change this to their actual tracks
 
-        var tracks = await _repository.GetByArtist(artist.Id);
+        var artist = await _artistRepository.GetArtist(id);
+        var tracks = await _repository.GetByArtist(id);
 
         var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
 
@@ -27,9 +32,10 @@ public class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(LibraryAlbum album)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id)
     {
-        var tracks = await _repository.GetByAlbum(album.Id);
+        var album = await _albumRepository.GetAlbum(id);
+        var tracks = await _repository.GetByAlbum(id);
 
         if (album.ReleaseType == ReleaseType.Playlist)
         {
@@ -39,7 +45,22 @@ public class PlaylistCreator : IPlaylistCreator
         return new PlaylistDefinition
         {
             Type = PlaylistType.Album,
-            Name = $"{album.Title} by {album.Artist}",
+            Name = $"{album.Title} by {album.ArtistName}",
+            Tracks = tracks
+        };
+    }
+
+    public async Task<PlaylistDefinition> CreateTrackPlaylist(string trackId, string albumId)
+    {
+        var track = (await _repository.GetByAlbum(albumId)).Single(a => a.Id == trackId);
+        var artist = await _artistRepository.GetArtist(track.ArtistId);
+
+        var tracks = new List<BasicTrack> { track };
+
+        return new PlaylistDefinition
+        {
+            Type = PlaylistType.Track,
+            Name = $"{track.Title} by {artist.Name}",
             Tracks = tracks
         };
     }

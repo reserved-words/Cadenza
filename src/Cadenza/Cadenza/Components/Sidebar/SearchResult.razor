@@ -2,9 +2,13 @@
 
 <WhipCard Padding=true
           SideMargin=false>
-    <MudContainer Class="d-flex flex-row pa-0 ma-0">
-        <MudIcon Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
-                 Class="mb-n1 mr-2" />
+    <MudContainer Class="d-flex flex-row pa-1 ma-0">
+        <div class="d-flex ma-0 pa-0">
+            <MudIconButton Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
+                           Color="@Color.Dark"
+                           Class="pa-0 ma-0 mr-2 align-self-start"
+                           OnClick="@OnPlay" />
+        </div>
         <MudContainer Class="pa-0 ma-0">
             <MudText Color=Color.Dark
                      Typo="@Typo.body1"
@@ -19,7 +23,7 @@
             <MudText Color=Color.Dark
                      Typo="@Typo.body2"
                      Class="pa-0 ma-0">
-                @Result.Album
+                @Result.AlbumDisplay
             </MudText>
         </MudContainer>
     </MudContainer>

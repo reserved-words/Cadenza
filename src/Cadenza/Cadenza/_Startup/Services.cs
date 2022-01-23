@@ -34,7 +34,8 @@ public static class Services
 
         builder.Services
             .AddTransient<ISyncService, SyncService>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>();
+            .AddTransient<IPlaylistCreator, PlaylistCreator>()
+            .AddTransient<IPlaylistPlayer, PlaylistPlayer>();
 
         return builder;
     }

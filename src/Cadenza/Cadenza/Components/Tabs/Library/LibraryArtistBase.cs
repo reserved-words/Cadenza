@@ -7,14 +7,8 @@ public class LibraryArtistBase : ComponentBase
     [Inject]
     public IArtistRepository Repository { get; set; }
 
-    [Inject]
-    public IPlaylistCreator PlaylistCreator { get; set; }
-
     [Parameter]
     public string ArtistId { get; set; }
-
-    [Parameter]
-    public Func<PlaylistDefinition, Task> OnPlay { get; set; }
 
     public LibraryArtistDetails Model { get; set; }
 
@@ -65,11 +59,5 @@ public class LibraryArtistBase : ComponentBase
     {
         Model = await Repository.GetArtist(ArtistId);
         StateHasChanged();
-    }
-
-    public async Task OnPlayAlbum(LibraryAlbum album)
-    {
-        var playlist = await PlaylistCreator.CreateAlbumPlaylist(album);
-        await OnPlay(playlist);
     }
 }

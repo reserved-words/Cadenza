@@ -11,10 +11,7 @@ public class LibraryTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IPlaylistCreator PlaylistCreator { get; set; }
-
-    [Parameter]
-    public Func<PlaylistDefinition, Task> OnPlay { get; set; }
+    public IPlaylistPlayer PlaylistPlayer { get; set; }
 
     public Grouping? SelectedGrouping { get; set; }
 
@@ -79,8 +76,7 @@ public class LibraryTabBase : ComponentBase
 
     protected async Task OnPlayArtist(LibraryArtist artist)
     {
-        var playlist = await PlaylistCreator.CreateArtistPlaylist(artist);
-        await OnPlay(playlist);
+        await PlaylistPlayer.PlayArtist(artist.Id);
     }
 
     public string SearchText { get; set; }

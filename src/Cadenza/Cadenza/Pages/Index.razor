@@ -10,8 +10,7 @@
             <Sidebar OnPause="@OnPause"
                  OnResume="@OnResume"
                  OnSkipNext="@OnSkipNext"
-                 OnSkipPrevious="@OnSkipPrevious"
-                 OnPlay="@OnPlay" />
+                 OnSkipPrevious="@OnSkipPrevious" />
         </MudDrawer>
         <MudMainContent>
             <MudTabs Outlined="true" KeepPanelsAlive="true">
@@ -19,7 +18,7 @@
                     <HistoryTab />
                 </MudTabPanel>
                 <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
-                    <LibraryTab OnPlay="@OnPlay" />
+                    <LibraryTab />
                 </MudTabPanel>
                 <MudTabPanel Text="Playlists" Icon="@Icons.Material.Filled.List">
                     @*<PlaylistsTab />*@

@@ -12,11 +12,6 @@ public class IndexBase : ComponentBase
 
     public bool ClientSideStartUpDone => NavigationManager.Uri.Contains("/player");
 
-    public async Task OnPlay(PlaylistDefinition playlistDefinition)
-    {
-        await App.Play(playlistDefinition);
-    }
-
     public async Task OnPause()
     {
         await App.Pause();

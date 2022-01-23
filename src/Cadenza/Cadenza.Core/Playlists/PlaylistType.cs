@@ -4,6 +4,7 @@ public enum PlaylistType
 {
     Album,
     Artist,
+    Track,
     Genre,
     Grouping,
     All,

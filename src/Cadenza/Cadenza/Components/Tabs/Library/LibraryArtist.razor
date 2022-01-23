@@ -31,8 +31,7 @@
                         @foreach (var album in Model.Releases.Single().Value)
                         {
                             <MudItem xs="6" sm="3">
-                                <LibraryAlbum Model="@album"
-                                              OnPlayAlbum="(a) => OnPlayAlbum(a)" />
+                                <LibraryAlbum Model="@album" />
                             </MudItem>
                         }
                     </MudGrid>
