@@ -11,31 +11,32 @@ public class TimingPlayer : IPlayer
         _timer = timer;
     }
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
-        var secondsPlayed = await _player.Pause();
-        _timer.OnPause(secondsPlayed);
-        return secondsPlayed;
+        var progress = await _player.Pause();
+        _timer.OnPause(progress.SecondsPlayed);
+        return progress;
     }
 
-    public async Task Play(TrackSummary track)
+    public async Task<TrackProgress> Play(BasicTrack track)
     {
-        await _player.Play(track);
-        _timer.OnSetTrack(track?.DurationSeconds ?? 0);
+        var progress = await _player.Play(track);
+        _timer.OnSetTrack(progress.TotalSeconds);
         _timer.OnPlay();
+        return progress;
     }
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
-        var secondsPlayed = await _player.Resume();
-        _timer.OnResume(secondsPlayed);
-        return secondsPlayed;
+        var progress = await _player.Resume();
+        _timer.OnResume(progress.SecondsPlayed);
+        return progress;
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
-        var secondsPlayed = await _player.Stop();
-        _timer.OnStop(secondsPlayed);
-        return secondsPlayed;
+        var progress = await _player.Stop();
+        _timer.OnStop(progress.SecondsPlayed);
+        return progress;
     }
 }

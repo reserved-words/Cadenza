@@ -13,31 +13,31 @@ public class CorePlayer : IPlayer
         _services = services.ToDictionary(s => s.Source, s => s as IAudioPlayer);
     }
 
-    public async Task Play(TrackSummary track)
+    public async Task<TrackProgress> Play(BasicTrack track)
     {
         await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track.Source);
 
         var service = await GetCurrentService();
-        await service.Play(track.Id);
+        return await service.Play(track.Id);
     }
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
         var service = await GetCurrentService();
         return await service.Pause();
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
         var service = await GetCurrentService();
 
         if (service == null)
-            return 0;
+            return (new TrackProgress(0, 0));
 
         return await service.Stop();
     }
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
         var service = await GetCurrentService();
         return await service.Resume();

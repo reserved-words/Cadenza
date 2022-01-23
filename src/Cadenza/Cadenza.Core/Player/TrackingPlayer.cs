@@ -5,7 +5,7 @@ public class TrackingPlayer : IPlayer
     private readonly IPlayer _player;
     private readonly IPlayTracker _tracker;
 
-    private TrackSummary _currentTrack;
+    private BasicTrack _currentTrack;
 
     public TrackingPlayer(IPlayer player, IPlayTracker tracker)
     {
@@ -13,40 +13,41 @@ public class TrackingPlayer : IPlayer
         _tracker = tracker;
     }
 
-    public async Task Play(TrackSummary playlistTrack)
+    public async Task<TrackProgress> Play(BasicTrack track)
     {
-        await _player.Play(playlistTrack);
-        UpdateTrackDetails(playlistTrack);
-        await UpdateNowPlaying(0);
+        var progress = await _player.Play(track);
+        UpdateTrackDetails(track);
+        await UpdateNowPlaying(progress);
+        return progress;
     }
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
         var secondsPlayed = await _player.Pause();
         await UpdateNowPlaying(null);
         return secondsPlayed;
     }
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
-        var secondsPlayed = await _player.Resume();
-        await UpdateNowPlaying(secondsPlayed);
-        return secondsPlayed;
+        var progress = await _player.Resume();
+        await UpdateNowPlaying(progress);
+        return progress;
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
-        var secondsPlayed = await _player.Stop();
-        await RecordPlay(secondsPlayed);
-        return secondsPlayed;
+        var progress = await _player.Stop();
+        await RecordPlay(progress);
+        return progress;
     }
 
-    private void UpdateTrackDetails(TrackSummary playlistTrack)
+    private void UpdateTrackDetails(BasicTrack playlistTrack)
     {
         _currentTrack = playlistTrack;
     }
 
-    private async Task RecordPlay(int secondsPlayed)
+    private async Task RecordPlay(TrackProgress progress)
     {
         if (_currentTrack == null)
             return;
@@ -54,15 +55,15 @@ public class TrackingPlayer : IPlayer
         if (_currentTrack.Source == LibrarySource.Spotify)
             return; // Need a better way to do this - source profile
 
-        var percentagePlayed = GetPercentagePlayed(secondsPlayed, _currentTrack.DurationSeconds);
+        var percentagePlayed = GetPercentagePlayed(progress.SecondsPlayed, progress.TotalSeconds);
 
-        if (secondsPlayed < 4 * 60 && percentagePlayed < 50)
+        if (progress.SecondsPlayed < 4 * 60 && percentagePlayed < 50)
             return;
 
-        await _tracker.RecordPlay(_currentTrack, DateTime.Now);
+      //  await _tracker.RecordPlay(_currentTrack, DateTime.Now);
     }
 
-    private async Task UpdateNowPlaying(int? secondsPlayed = null)
+    private async Task UpdateNowPlaying(TrackProgress progress)
     {
         if (_currentTrack == null)
             return;
@@ -70,18 +71,13 @@ public class TrackingPlayer : IPlayer
         if (_currentTrack.Source == LibrarySource.Spotify)
             return; // Need a better way to do this - source profile
 
-        var secondsRemaining = GetSecondsRemaining(secondsPlayed);
-        await _tracker.UpdateNowPlaying(_currentTrack, secondsRemaining);
+        var secondsRemaining = GetSecondsRemaining(progress);
+     //   await _tracker.UpdateNowPlaying(_currentTrack, secondsRemaining);
     }
 
-    private int GetSecondsRemaining(int? secondsPlayed = null)
+    private int GetSecondsRemaining(TrackProgress progress)
     {
-        if (!secondsPlayed.HasValue)
-            return 1;
-
-        var totalSeconds = _currentTrack.DurationSeconds;
-
-        return totalSeconds - secondsPlayed.Value;
+        return progress.TotalSeconds - progress.SecondsPlayed;
     }
 
     private double GetPercentagePlayed(int secondsPlayed, int duration)

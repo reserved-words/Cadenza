@@ -2,8 +2,8 @@
 
 public interface IAudioPlayer
 {
-    Task Play(string id);
-    Task<int> Pause();
-    Task<int> Resume();
-    Task<int> Stop();
+    Task<TrackProgress> Play(string id);
+    Task<TrackProgress> Pause();
+    Task<TrackProgress> Resume();
+    Task<TrackProgress> Stop();
 }

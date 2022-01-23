@@ -15,27 +15,24 @@ public class LocalPlayer : ISourcePlayer
 
     public LibrarySource Source => LibrarySource.Local;
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
-        var millisecondsPlayed = await _audioPlayer.Resume();
-        return millisecondsPlayed / 1000;
+        return await _audioPlayer.Resume();
     }
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
-        var millisecondsPlayed = await _audioPlayer.Pause();
-        return millisecondsPlayed / 1000;
+        return await _audioPlayer.Pause();
     }
 
-    public async Task Play(string id)
+    public async Task<TrackProgress> Play(string id)
     {
         var uri = string.Format(_settings.GetApiEndpoint(e => e.PlayTrackUrl), id);
-        await _audioPlayer.Play(uri);
+        return await _audioPlayer.Play(uri);
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
-        var millisecondsPlayed = await _audioPlayer.Stop();
-        return millisecondsPlayed / 1000;
+        return await _audioPlayer.Stop();
     }
 }

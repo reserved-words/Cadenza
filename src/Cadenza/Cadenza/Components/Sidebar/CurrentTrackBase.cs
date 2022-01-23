@@ -10,6 +10,9 @@ public class CurrentTrackBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
+    [Inject]
+    public ITrackRepository Repository { get; set; }
+
     public double Progress { get; set; }
 
     public TrackSummary Model { get; set; }
@@ -23,7 +26,7 @@ public class CurrentTrackBase : ComponentBase
     private async Task OnTrackStarted(object sender, TrackEventArgs e)
     {
         StateHasChanged();
-        Model = e.CurrentTrack;
+        Model = await Repository.GetSummary(e.CurrentTrack.Source, e.CurrentTrack.Id);
         StateHasChanged();
     }
 

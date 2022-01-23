@@ -12,22 +12,22 @@ public class SpotifyPlayer : ISourcePlayer
     }
     public LibrarySource Source => LibrarySource.Spotify;
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
         return await _internalPlayer.Pause();
     }
 
-    public async Task Play(string id)
+    public async Task<TrackProgress> Play(string id)
     {
-        await _internalPlayer.Play(id);
+        return await _internalPlayer.Play(id);
     }
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
         return await _internalPlayer.Resume();
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
         return await _internalPlayer.Stop();
     }

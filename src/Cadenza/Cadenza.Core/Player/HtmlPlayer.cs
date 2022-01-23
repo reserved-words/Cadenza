@@ -11,23 +11,23 @@ public class HtmlPlayer : IAudioPlayer
         _js = js;
     }
 
-    public async Task<int> Pause()
+    public async Task<TrackProgress> Pause()
     {
-        return await _js.InvokeAsync<int>("pause");
+        return await _js.InvokeAsync<TrackProgress>("pause");
     }
 
-    public async Task Play(string uri)
+    public async Task<TrackProgress> Play(string uri)
     {
-        await _js.InvokeVoidAsync("play", uri);
+        return await _js.InvokeAsync<TrackProgress>("play", uri);
     }
 
-    public async Task<int> Resume()
+    public async Task<TrackProgress> Resume()
     {
-        return await _js.InvokeAsync<int>("play");
+        return await _js.InvokeAsync<TrackProgress>("play");
     }
 
-    public async Task<int> Stop()
+    public async Task<TrackProgress> Stop()
     {
-        return await _js.InvokeAsync<int>("stop");
+        return await _js.InvokeAsync<TrackProgress>("stop");
     }
 }

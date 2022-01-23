@@ -23,7 +23,6 @@ public class AppService : IAppConsumer, IAppController
     public event LibraryEventHandler LibraryUpdated;
 
     private IPlaylist _currentPlaylist;
-    private TrackSummary _TrackSummary;
 
     public void Initialise()
     {
@@ -32,7 +31,7 @@ public class AppService : IAppConsumer, IAppController
 
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
     {
-        TrackFinished?.Invoke(this, GetArgs());
+        TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MoveNext();
         await PlayTrack();
     }
@@ -54,28 +53,26 @@ public class AppService : IAppConsumer, IAppController
 
         if (_currentPlaylist.Current != null)
         {
-            _TrackSummary = await _trackRepository.GetSummary(_currentPlaylist.Current.Source, _currentPlaylist.Current.Id);
-            await _player.Play(_TrackSummary);
-            TrackStarted?.Invoke(this, GetArgs(0));
+            var progress = await _player.Play(_currentPlaylist.Current);
+            TrackStarted?.Invoke(this, GetProgressArgs(progress));
         }
     }
 
     public async Task Pause()
     {
-        var secondsPlayed = await _player.Pause();
-        TrackPaused?.Invoke(this, GetArgs(secondsPlayed));
+        var progress = await _player.Pause();
+        TrackPaused?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task Resume()
     {
-        var secondsPlayed = await _player.Resume();
-        TrackResumed?.Invoke(this, GetArgs(secondsPlayed));
+        var progress = await _player.Resume();
+        TrackResumed?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task Stop()
     {
         await _player.Stop();
-        _TrackSummary = null;
 
     }
 
@@ -91,18 +88,25 @@ public class AppService : IAppConsumer, IAppController
         await PlayTrack();
     }
 
-    private TrackEventArgs GetArgs(int? secondsPlayed = null)
+    private TrackEventArgs GetFinishedArgs()
     {
-        var totalSeconds = _TrackSummary.DurationSeconds;
-        var played = secondsPlayed ?? totalSeconds;
-
         return new TrackEventArgs
         {
-            CurrentTrack = _TrackSummary,
+            CurrentTrack = _currentPlaylist.Current,
             IsLastTrack = _currentPlaylist.CurrentIsLast,
-            PercentagePlayed = totalSeconds == 0
+            PercentagePlayed = 100
+        };
+    }
+
+    private TrackEventArgs GetProgressArgs(TrackProgress progress)
+    {
+        return new TrackEventArgs
+        {
+            CurrentTrack = _currentPlaylist.Current,
+            IsLastTrack = _currentPlaylist.CurrentIsLast,
+            PercentagePlayed = progress.TotalSeconds == 0
                 ? 0
-                : played / totalSeconds
+                : progress.SecondsPlayed / progress.TotalSeconds
         };
     }
 }
