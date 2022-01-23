@@ -45,10 +45,7 @@ namespace Cadenza.Library.Tests
             track.Id.Should().Be("Track4");
             track.Title.Should().Be("Track 4");
             track.ArtistId.Should().Be("TrackArtist1");
-            track.ArtistName.Should().Be("Track Artist 1");
             track.AlbumId.Should().Be("Album3");
-            track.AlbumTitle.Should().Be("Album 3");
-            track.AlbumArtist.Should().Be("Album Artist 2");
         }
 
         [Test]
@@ -71,10 +68,7 @@ namespace Cadenza.Library.Tests
                 track.Id.Should().Be($"Track{i}");
                 track.Title.Should().Be($"Track {i}");
                 track.ArtistId.Should().Be($"Artist{i}");
-                track.ArtistName.Should().Be($"Artist {i}");
                 track.AlbumId.Should().Be($"Album{i}");
-                track.AlbumTitle.Should().Be($"Album {i}");
-                track.AlbumArtist.Should().Be($"Artist {i}");
             }
         }
 

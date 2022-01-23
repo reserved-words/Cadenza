@@ -96,10 +96,7 @@ internal class Cache : ILibrary
             Id = track.Id,
             Title = track.Title,
             ArtistId = track.ArtistId,
-            ArtistName = track.ArtistName,
-            AlbumId = track.AlbumId,
-            AlbumTitle = album.Title,
-            AlbumArtist = album.ArtistName
+            AlbumId = track.AlbumId
         };
     }
 }
