@@ -41,17 +41,7 @@ public static class Routing
         app.MapGet("/Library/Artists", () => library.GetArtists());
         app.MapGet("/Library/Albums", () => library.GetAlbums());
         app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
-        app.MapGet("/Library/FullTrack/{id}", async (string id) =>
-        {
-            try
-            {
-                return await library.GetFullTrack(id);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        });
+        app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetFullTrack(id));
         app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
 
         app.MapGet("/Library/Artwork", async (HttpContext context) =>
