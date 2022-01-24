@@ -22,7 +22,7 @@ public class PlaylistCreator : IPlaylistCreator
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.GetByArtist(id);
 
-        var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
+        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
         return new PlaylistDefinition
         {
@@ -34,19 +34,15 @@ public class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id)
     {
+        // may or may not need shuffling
+
         var album = await _albumRepository.GetAlbum(id);
         var tracks = await _repository.GetByAlbum(id);
-
-        if (album.ReleaseType == ReleaseType.Playlist)
-        {
-            tracks = _shuffler.Shuffle(tracks).ToList();
-        }
-
         return new PlaylistDefinition
         {
             Type = PlaylistType.Album,
             Name = $"{album.Title} by {album.ArtistName}",
-            Tracks = tracks
+            Tracks = tracks.ToList()
         };
     }
 
@@ -69,7 +65,7 @@ public class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.GetAll();
 
-        var shuffledTracks = _shuffler.Shuffle(tracks).ToList();
+        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
         return new PlaylistDefinition
         {
