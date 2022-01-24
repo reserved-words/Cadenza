@@ -2,5 +2,5 @@
 
 public interface IShuffler
 {
-    IEnumerable<T> Shuffle<T>(IEnumerable<T> items, T first = null) where T : class;
+    List<T> Shuffle<T>(List<T> items, T first = null) where T : class;
 }
