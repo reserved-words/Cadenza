@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace Cadenza.Core;
 
@@ -31,8 +32,8 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
     public async Task<bool> IsFavourite(string artist, string title)
     {
         var url = Url(e => e.IsFavourite);
-        url = $"{url}?artist={artist}";
-        url = $"{url}&title={title}";
+        url = $"{url}?artist={HttpUtility.UrlEncode(artist)}";
+        url = $"{url}&title={HttpUtility.UrlEncode(title)}";
         var response = await _httpClient.Get(url);
         var isFavourite = await response.Content.ReadFromJsonAsync<bool>();
         return isFavourite;
