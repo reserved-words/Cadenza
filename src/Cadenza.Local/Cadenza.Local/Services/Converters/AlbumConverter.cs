@@ -17,7 +17,7 @@ public class AlbumConverter : IAlbumConverter
             ArtistId = album.ArtistId,
             ArtistName = artists.Single(a => a.Id == album.ArtistId).Name,
             Title = album.Title,
-            ReleaseType = album.ReleaseType.Parse<ReleaseType>(),
+            ReleaseType = album.ReleaseType.Parse<ReleaseType>(ReleaseType.Album),
             Year = album.Year,
             DiscCount = album.TrackCounts.Count,
             TrackCounts = album.TrackCounts
@@ -31,9 +31,7 @@ public class AlbumConverter : IAlbumConverter
             Id = album.Id,
             ArtistId = album.ArtistId,
             Title = album.Title,
-            ReleaseType = album.ReleaseType == ReleaseType.Album
-                    ? null
-                    : album.ReleaseType.ToString(),
+            ReleaseType = album.ReleaseType.ToString(),
             TrackCounts = album.TrackCounts,
             Year = Nullify(album.Year)
         };
@@ -51,7 +49,7 @@ public class AlbumConverter : IAlbumConverter
             Id = albumId,
             ArtistId = artistId,
             Title = data.Album.Title,
-            ReleaseType = data.Album.ReleaseType,
+            ReleaseType = data.Album.ReleaseType ?? ReleaseType.Album.ToString(),
             TrackCounts = new List<int>(),
             Year = Nullify(data.Album.Year)
         };
