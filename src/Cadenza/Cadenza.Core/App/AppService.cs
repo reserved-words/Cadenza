@@ -4,13 +4,11 @@ public class AppService : IAppConsumer, IAppController
 {
     private readonly IPlayer _player;
     private readonly ITrackFinishedConsumer _trackFinishedConsumer;
-    private readonly ITrackRepository _trackRepository;
 
-    public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer, ITrackRepository trackRepository)
+    public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer)
     {
         _player = player;
         _trackFinishedConsumer = trackFinishedConsumer;
-        _trackRepository = trackRepository;
 
         _trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }

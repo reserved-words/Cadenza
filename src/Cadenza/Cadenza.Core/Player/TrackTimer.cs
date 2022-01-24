@@ -82,6 +82,5 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     {
         _trackProgressTimer.Stop();
         _trackProgressSeconds = secondsPlayed;
-
     }
 }

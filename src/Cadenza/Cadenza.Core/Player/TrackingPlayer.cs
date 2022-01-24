@@ -1,89 +1,73 @@
 ﻿namespace Cadenza.Core;
 
-public class TrackingPlayer : IPlayer
+public class TrackingPlayer : IUtilityPlayer
 {
-    private readonly IPlayer _player;
     private readonly IPlayTracker _tracker;
+    private readonly IStoreGetter _store;
 
-    private BasicTrack _currentTrack;
-
-    public TrackingPlayer(IPlayer player, IPlayTracker tracker)
+    public TrackingPlayer(IPlayTracker tracker, IStoreGetter store)
     {
-        _player = player;
         _tracker = tracker;
+        _store = store;
     }
 
-    public async Task<TrackProgress> Play(BasicTrack track)
+    public async Task OnPlay(TrackProgress progress)
     {
-        var progress = await _player.Play(track);
-        UpdateTrackDetails(track);
         await UpdateNowPlaying(progress);
-        return progress;
     }
 
-    public async Task<TrackProgress> Pause()
+    public async Task OnPause(TrackProgress progress)
     {
-        var secondsPlayed = await _player.Pause();
         await UpdateNowPlaying(null);
-        return secondsPlayed;
     }
 
-    public async Task<TrackProgress> Resume()
+    public async Task OnResume(TrackProgress progress)
     {
-        var progress = await _player.Resume();
         await UpdateNowPlaying(progress);
-        return progress;
     }
 
-    public async Task<TrackProgress> Stop()
+    public async Task OnStop(TrackProgress progress)
     {
-        var progress = await _player.Stop();
         await RecordPlay(progress);
-        return progress;
-    }
-
-    private void UpdateTrackDetails(BasicTrack playlistTrack)
-    {
-        _currentTrack = playlistTrack;
     }
 
     private async Task RecordPlay(TrackProgress progress)
     {
-        if (_currentTrack == null)
+        var currentTrack = await CurrentTrack();
+
+        if (currentTrack == null || !Tracking(currentTrack))
             return;
 
-        if (_currentTrack.Source == LibrarySource.Spotify)
-            return; // Need a better way to do this - source profile
-
-        var percentagePlayed = GetPercentagePlayed(progress.SecondsPlayed, progress.TotalSeconds);
-
-        if (progress.SecondsPlayed < 4 * 60 && percentagePlayed < 50)
+        if (!PlayedEnough(progress))
             return;
 
-      //  await _tracker.RecordPlay(_currentTrack, DateTime.Now);
+        await _tracker.RecordPlay(currentTrack, DateTime.Now);
     }
 
     private async Task UpdateNowPlaying(TrackProgress progress)
     {
-        if (_currentTrack == null)
+        var currentTrack = await CurrentTrack();
+
+        if (currentTrack == null || !Tracking(currentTrack))
             return;
 
-        if (_currentTrack.Source == LibrarySource.Spotify)
-            return; // Need a better way to do this - source profile
-
-        var secondsRemaining = GetSecondsRemaining(progress);
-     //   await _tracker.UpdateNowPlaying(_currentTrack, secondsRemaining);
+        await _tracker.UpdateNowPlaying(currentTrack, progress?.SecondsRemaining ?? 1);
     }
 
-    private int GetSecondsRemaining(TrackProgress progress)
+    private static bool PlayedEnough(TrackProgress progress)
     {
-        return progress.TotalSeconds - progress.SecondsPlayed;
+        return progress.SecondsPlayed >= 4 * 60 
+            || progress.PercentagePlayed >= 50;
     }
 
-    private double GetPercentagePlayed(int secondsPlayed, int duration)
+    private static bool Tracking(TrackSummary track)
     {
-        return duration == 0
-            ? 0
-            : 100 * secondsPlayed / duration;
+        // Need a better way to do this - source profile
+        return track.Source != LibrarySource.Spotify;
+    }
+
+    private async Task<TrackSummary> CurrentTrack()
+    {
+        return await _store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
     }
 }

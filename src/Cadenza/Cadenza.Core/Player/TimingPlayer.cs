@@ -1,42 +1,36 @@
 ﻿namespace Cadenza.Core;
 
-public class TimingPlayer : IPlayer
+public class TimingPlayer : IUtilityPlayer
 {
-    private readonly IPlayer _player;
     private readonly ITrackTimerController _timer;
 
-    public TimingPlayer(IPlayer player, ITrackTimerController timer)
+    public TimingPlayer(ITrackTimerController timer)
     {
-        _player = player;
         _timer = timer;
     }
 
-    public async Task<TrackProgress> Pause()
+    public Task OnPause(TrackProgress progress)
     {
-        var progress = await _player.Pause();
         _timer.OnPause(progress.SecondsPlayed);
-        return progress;
+        return Task.CompletedTask;
     }
 
-    public async Task<TrackProgress> Play(BasicTrack track)
+    public Task OnPlay(TrackProgress progress)
     {
-        var progress = await _player.Play(track);
         _timer.OnSetTrack(progress.TotalSeconds);
         _timer.OnPlay();
-        return progress;
+        return Task.CompletedTask;
     }
 
-    public async Task<TrackProgress> Resume()
+    public Task OnResume(TrackProgress progress)
     {
-        var progress = await _player.Resume();
         _timer.OnResume(progress.SecondsPlayed);
-        return progress;
+        return Task.CompletedTask;
     }
 
-    public async Task<TrackProgress> Stop()
+    public Task OnStop(TrackProgress progress)
     {
-        var progress = await _player.Stop();
         _timer.OnStop(progress.SecondsPlayed);
-        return progress;
+        return Task.CompletedTask;
     }
 }

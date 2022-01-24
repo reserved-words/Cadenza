@@ -15,4 +15,7 @@ public class TrackProgress
 
     public int SecondsPlayed { get; set; }
     public int TotalSeconds { get; set; }
+
+    public int SecondsRemaining => TotalSeconds - SecondsPlayed;
+    public int PercentagePlayed => TotalSeconds == 0 ? 0 : ((SecondsPlayed / TotalSeconds) * 100);
 }

@@ -25,10 +25,10 @@ public class LocalPlayer : ISourcePlayer
         return await _audioPlayer.Pause();
     }
 
-    public async Task<TrackProgress> Play(string id)
+    public async Task Play(string id)
     {
         var uri = string.Format(_settings.GetApiEndpoint(e => e.PlayTrackUrl), id);
-        return await _audioPlayer.Play(uri);
+        await _audioPlayer.Play(uri);
     }
 
     public async Task<TrackProgress> Stop()

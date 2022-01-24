@@ -3,8 +3,9 @@
 public enum StoreKey
 {
     SpotifyAccessToken,
-    CurrentTrackSource,
     SpotifyDeviceId,
     SpotifyRefreshToken,
-    LastFmSessionKey
+    LastFmSessionKey,
+    CurrentTrack,
+    CurrentTrackSource
 }

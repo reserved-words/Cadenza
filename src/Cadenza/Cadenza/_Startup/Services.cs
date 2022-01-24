@@ -26,9 +26,7 @@ public static class Services
             .AddTimers()
             .AddLastFm()
             .AddSources()
-            .AddPlayers()
             .AddSourceFactories()
-            .AddSingletons()
             .AddCacheRepositories()
             .AddDatabaseRepositories();
 
@@ -37,6 +35,11 @@ public static class Services
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IPlaylistPlayer, PlaylistPlayer>();
 
+        builder.Services
+            .AddTransient<IPlayer, CorePlayer>()
+            .AddTransient<IUtilityPlayer, TimingPlayer>()
+            .AddTransient<IUtilityPlayer, TrackingPlayer>();
+
         return builder;
     }
 
@@ -44,16 +47,6 @@ public static class Services
     {
         return services
             .AddTransient<ITrackRepository, Core.TrackRepository>();
-    }
-
-    public static IServiceCollection AddSingletons(this IServiceCollection services)
-    {
-        return services.AddSingleton<TrackTimer>()
-            .AddSingleton<IPlayer>(sp => new TrackingPlayer(
-                sp.GetRequiredService<TimingPlayer>(),
-                sp.GetRequiredService<IPlayTracker>()));
-//            .AddSingleton<PlayerLibrary>();
-        ;
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
@@ -76,6 +69,7 @@ public static class Services
     private static IServiceCollection AddTimers(this IServiceCollection services)
     {
         return services
+            .AddSingleton<TrackTimer>()
             .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
             .AddTransient<ITrackProgressedConsumer>(sp => sp.GetRequiredService<TrackTimer>())
             .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
@@ -96,18 +90,9 @@ public static class Services
             .AddLocalSource<HtmlPlayer>();
     }
 
-    private static IServiceCollection AddPlayers(this IServiceCollection services)
-    {
-        return services.AddTransient<CorePlayer>()
-            .AddTransient<TimingPlayer>(sp => new TimingPlayer(
-                sp.GetRequiredService<CorePlayer>(),
-                sp.GetRequiredService<ITrackTimerController>()));
-    }
-
     private static IServiceCollection AddLocalLibrary(this IServiceCollection services)
     {
-        return services
-            .AddLocalSource<HtmlPlayer>();
+        return services.AddLocalSource<HtmlPlayer>();
     }
 
     //private static IServiceCollection AddLibraries(this IServiceCollection services)
@@ -120,18 +105,8 @@ public static class Services
     private static IServiceCollection AddSourceFactories(this IServiceCollection services)
     {
         return services
-            .AddTransient(sp => GetPlayers(sp))
             //.AddTransient(sp => sp.GetUpdaters())
             .AddTransient(sp => GetOverriders(sp));
-    }
-
-    private static Dictionary<LibrarySource, IAudioPlayer> GetPlayers(IServiceProvider sp)
-    {
-        return new Dictionary<LibrarySource, IAudioPlayer>
-        {
-            { LibrarySource.Local, sp.GetLocalPlayer() },
-            { LibrarySource.Spotify, sp.GetSpotifyPlayer() }
-        };
     }
 
     //private static Dictionary<LibrarySource, IUpdater> GetUpdaters(this IServiceProvider sp)

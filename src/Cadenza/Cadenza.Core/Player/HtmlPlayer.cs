@@ -16,9 +16,9 @@ public class HtmlPlayer : IAudioPlayer
         return await _js.InvokeAsync<TrackProgress>("pause");
     }
 
-    public async Task<TrackProgress> Play(string uri)
+    public async Task Play(string uri)
     {
-        return await _js.InvokeAsync<TrackProgress>("play", uri);
+        await _js.InvokeAsync<TrackProgress>("play", uri);
     }
 
     public async Task<TrackProgress> Resume()

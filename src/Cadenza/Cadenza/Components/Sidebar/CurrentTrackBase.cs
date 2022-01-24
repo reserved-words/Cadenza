@@ -11,7 +11,7 @@ public class CurrentTrackBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public ITrackRepository Repository { get; set; }
+    public IStoreGetter Store { get; set; }
 
     public double Progress { get; set; }
 
@@ -25,8 +25,7 @@ public class CurrentTrackBase : ComponentBase
 
     private async Task OnTrackStarted(object sender, TrackEventArgs e)
     {
-        StateHasChanged();
-        Model = await Repository.GetSummary(e.CurrentTrack.Source, e.CurrentTrack.Id);
+        Model = await Store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
         StateHasChanged();
     }
 

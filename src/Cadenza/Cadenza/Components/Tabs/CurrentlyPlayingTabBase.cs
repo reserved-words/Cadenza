@@ -60,10 +60,10 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     private async Task SetTrack(LibrarySource? source, string trackId)
     {
-        Track = source.HasValue
-            ? await TrackRepository.GetDetails(source.Value, trackId)
-            : null;
+        //Track = source.HasValue
+        //    ? await TrackRepository.GetDetails(source.Value, trackId)
+        //    : null;
 
-        StateHasChanged();
+        //StateHasChanged();
     }
 }

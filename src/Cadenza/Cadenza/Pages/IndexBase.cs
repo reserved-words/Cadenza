@@ -10,7 +10,16 @@ public class IndexBase : ComponentBase
     [Inject]
     public IAppController App { get; set; }
 
+    [Inject]
+    public IStoreSetter Store { get; set; }
+
     public bool ClientSideStartUpDone => NavigationManager.Uri.Contains("/player");
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Store.SetValue(StoreKey.CurrentTrackSource, null);
+        await Store.SetValue(StoreKey.CurrentTrack, null);
+    }
 
     public async Task OnPause()
     {

@@ -21,10 +21,9 @@ public class InternalPlayer : IAudioPlayer
         return await GetProgress();
     }
 
-    public async Task<TrackProgress> Play(string trackId)
+    public async Task Play(string trackId)
     {
         await _api.Play(trackId);
-        return await GetProgress();
     }
 
     public async Task<TrackProgress> Stop()
@@ -36,6 +35,9 @@ public class InternalPlayer : IAudioPlayer
     private async Task<TrackProgress> GetProgress()
     {
         var playState = await _api.GetPlayState();
+        if (playState == null)
+            return new TrackProgress(0, 0);
+
         return new TrackProgress(
             MillisecondsToSeconds(playState.progress_ms), 
             MillisecondsToSeconds(playState.item.duration_ms));

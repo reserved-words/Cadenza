@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using Newtonsoft.Json;
 
 namespace Cadenza.Core;
 
@@ -11,14 +12,30 @@ public class Store : IStoreGetter, IStoreSetter
         _js = js;
     }
 
-    public async Task<string> GetValue(StoreKey key)
+    public async Task<string> GetString(StoreKey key)
     {
         return await _js.InvokeAsync<string>("getStoredValue", key.ToString());
     }
 
-    public async Task<List<string>> GetValues(StoreKey key)
+    public async Task<T> GetValue<T>(StoreKey key) where T : class
     {
-        var value = await GetValue(key);
+        var json = await GetString(key);
+        return json == null
+            ? null
+            : JsonConvert.DeserializeObject<T>(json);
+    }
+
+    public async Task<int?> GetInt(StoreKey key)
+    {
+        var value = await GetString(key);
+        return int.TryParse(value, out int result)
+            ? result
+            : null;
+    }
+
+    public async Task<List<string>> GetList(StoreKey key)
+    {
+        var value = await GetString(key);
         return value.Split("|").Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
     }
 
@@ -30,6 +47,16 @@ public class Store : IStoreGetter, IStoreSetter
             return false;
 
         await SetValue(key, value?.ToString());
+        return true;
+    }
+
+    public async Task<bool> SetValue<T>(StoreKey key, T value) where T : class
+    {
+        var json = value == null
+            ? null
+            : JsonConvert.SerializeObject(value);
+
+        await SetValue(key, json);
         return true;
     }
 
@@ -50,7 +77,7 @@ public class Store : IStoreGetter, IStoreSetter
 
     private async Task<bool> IsValueChanged(StoreKey key, object newValue)
     {
-        var currentValue = await GetValue(key);
+        var currentValue = await GetString(key);
 
         if (currentValue == null)
         {
@@ -62,7 +89,7 @@ public class Store : IStoreGetter, IStoreSetter
 
     private async Task<bool> IsValueChanged<T>(StoreKey key, List<T> newValue)
     {
-        var currentValue = await GetValues(key);
+        var currentValue = await GetList(key);
 
         if (currentValue == null)
         {

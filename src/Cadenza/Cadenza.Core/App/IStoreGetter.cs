@@ -2,6 +2,8 @@
 
 public interface IStoreGetter
 {
-    Task<string> GetValue(StoreKey key);
-    Task<List<string>> GetValues(StoreKey key);
+    Task<string> GetString(StoreKey key);
+    Task<int?> GetInt(StoreKey key);
+    Task<T> GetValue<T>(StoreKey key) where T : class;
+    Task<List<string>> GetList(StoreKey key);
 }
