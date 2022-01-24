@@ -43,7 +43,9 @@ public class CorePlayer : IPlayer
         if (service == null)
             return null;
 
-        var progress = await service.Stop();
+        await service.Stop();
+        var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        var progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
         await RunUtilities(p => p.OnStop(progress));
         return progress;
     }

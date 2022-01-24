@@ -26,15 +26,22 @@ namespace Cadenza.LastFM
             return await _client.Get(url, xml => xml
                     .Element("recenttracks")
                     .Elements("track")
-                    .Select(t => new RecentTrack
+                    .Select(t =>
                     {
-                        Title = t.Get("name"),
-                        Artist = t.Get("artist", "name"),
-                        Album = t.Get("album"),
-                        IsLoved = t.GetBool("loved"),
-                        ImageUrl = t.GetImage(),
-                        Played = t.GetDateTime("date", true),
-                        NowPlaying = t.GetBool("nowplaying", true)
+                        var nowPlaying = t.GetBool("nowplaying", true);
+
+                        return new RecentTrack
+                        {
+                            Title = t.Get("name"),
+                            Artist = t.Get("artist", "name"),
+                            Album = t.Get("album"),
+                            IsLoved = t.GetBool("loved"),
+                            ImageUrl = t.GetImage(),
+                            Played = (nowPlaying 
+                                ? DateTime.Now
+                                : t.GetDateTime("date", true)),
+                            NowPlaying = nowPlaying
+                        };
                     })
                     .ToList());
         }

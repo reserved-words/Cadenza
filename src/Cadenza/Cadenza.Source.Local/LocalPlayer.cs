@@ -31,8 +31,8 @@ public class LocalPlayer : ISourcePlayer
         await _audioPlayer.Play(uri);
     }
 
-    public async Task<TrackProgress> Stop()
+    public async Task Stop()
     {
-        return await _audioPlayer.Stop();
+        await _audioPlayer.Stop();
     }
 }

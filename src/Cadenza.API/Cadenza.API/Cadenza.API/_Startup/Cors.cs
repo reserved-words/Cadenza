@@ -25,8 +25,9 @@ public static class Cors
             name: cli.Name,
             builder =>
             {
-                builder.WithOrigins(cli.Origin)
-                    .WithMethods("GET", "POST")
+                builder
+                    .WithOrigins(cli.Origin)
+                    .WithMethods("GET", "POST", "OPTIONS")
                     .WithHeaders("content-type");
             }));
     }

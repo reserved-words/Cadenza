@@ -1,4 +1,6 @@
-﻿<WhipCard Title="Recent Tracks"
+﻿@inherits HistoryRecentBase
+
+<WhipCard Title="Recent Tracks"
           Padding=false>
     @if (IsLoading)
     {
@@ -15,14 +17,15 @@
                 <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
                     <img src="@context.ImageUrl" width="50" height="50"><img>
                 </MudTd>
-                <MudTd Class="pa-2">
+                <MudTd Class="pa-1">
                     <MudText Typo="@Typo.body1">@context.Artist</MudText>
                     <MudText Typo="@Typo.body2">@context.Title</MudText>
                 </MudTd>
-                <MudTd Style="width: 1px; text-align: right;" Class="pa-2">
+                <MudTd Style="width: 1px; text-align: right;" Class="pa-1">
                     @if (context.NowPlaying)
                     {
-                        <MudText Typo="@Typo.body2">Now playing</MudText>
+                        <img src="images/playing.gif" class="ma-1" />
+@*                        <MudText Typo="@Typo.body2">Now playing</MudText>*@
                     }
                     else if (context.Played.Date == DateTime.Today)
                     {
@@ -41,11 +44,3 @@
         </WhipTable>
     }
 </WhipCard>
-
-@code {
-    [Parameter]
-    public List<RecentTrack> Model { get; set; }
-
-    [Parameter]
-    public bool IsLoading { get; set; }
-}

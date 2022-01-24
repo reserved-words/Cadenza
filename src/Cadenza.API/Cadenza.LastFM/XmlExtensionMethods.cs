@@ -36,7 +36,9 @@ public static class XmlExtensionMethods
     public static DateTime GetDateTime(this XElement xml, string name, bool isAttribute = false)
     {
         var value = xml.Get(name);
-        return DateTime.ParseExact(value, "dd MMM yyyy, HH:mm", Format);
+        return DateTime.TryParseExact(value, "dd MMM yyyy, HH:mm", Format, DateTimeStyles.None, out DateTime result)
+            ? result
+            : DateTime.MinValue;
     }
 
     public static string GetImage(this XElement xml)

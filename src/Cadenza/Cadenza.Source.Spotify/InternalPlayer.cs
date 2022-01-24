@@ -26,24 +26,20 @@ public class InternalPlayer : IAudioPlayer
         await _api.Play(trackId);
     }
 
-    public async Task<TrackProgress> Stop()
+    public async Task Stop()
     {
         await _api.Pause();
-        return await GetProgress();
     }
 
     private async Task<TrackProgress> GetProgress()
     {
         var playState = await _api.GetPlayState();
-        if (playState == null)
-            return new TrackProgress(0, 0);
-
         return new TrackProgress(
-            MillisecondsToSeconds(playState.progress_ms), 
-            MillisecondsToSeconds(playState.item.duration_ms));
+            MillisecondsToSeconds(playState?.progress_ms ?? 0), 
+            MillisecondsToSeconds(playState?.item?.duration_ms ?? 0));
     }
 
-    private int MillisecondsToSeconds(int? milliseconds)
+    private static int MillisecondsToSeconds(int? milliseconds)
     {
         return (milliseconds ?? 0) / 1000;
     }

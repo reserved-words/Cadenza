@@ -27,8 +27,8 @@ public class SpotifyPlayer : ISourcePlayer
         return await _internalPlayer.Resume();
     }
 
-    public async Task<TrackProgress> Stop()
+    public async Task Stop()
     {
-        return await _internalPlayer.Stop();
+        await _internalPlayer.Stop();
     }
 }

@@ -26,7 +26,7 @@ public static class Cors
             builder =>
             {
                 builder.WithOrigins(cli.Origin)
-                    .WithMethods("GET", "POST")
+                    .WithMethods("GET", "POST", "OPTIONS")
                     .WithHeaders("content-type");
             }));
     }
