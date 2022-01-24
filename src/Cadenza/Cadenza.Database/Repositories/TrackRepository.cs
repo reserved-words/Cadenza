@@ -1,121 +1,121 @@
-﻿using Cadenza.Core;
-using Cadenza.Domain;
+﻿//using Cadenza.Core;
+//using Cadenza.Domain;
 
-namespace Cadenza.Database;
+//namespace Cadenza.Database;
 
-public class TrackRepository : ITrackRepositoryUpdater
-{
-    private readonly IIndexedDbFactory _dbFactory;
+//public class TrackRepository : ITrackRepositoryUpdater
+//{
+//    private readonly IIndexedDbFactory _dbFactory;
 
-    public TrackRepository(IIndexedDbFactory dbFactory)
-    {
-        _dbFactory = dbFactory;
-    }
+//    public TrackRepository(IIndexedDbFactory dbFactory)
+//    {
+//        _dbFactory = dbFactory;
+//    }
 
-    public async Task AddTrack(TrackSummary track)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
+//    public async Task AddTrack(TrackSummary track)
+//    {
+//        using var db = await _dbFactory.Create<LibraryDb>();
 
-        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
+//        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
 
-        var summary = JsonConvert.SerializeObject(track);
+//        var summary = JsonConvert.SerializeObject(track);
 
-        if (dbTrack == null)
-        {
-            db.Tracks.Add(new DbTrack
-            {
-                Id = track.Id,
-                Summary = summary
-            });
-        }
-        else
-        {
-            dbTrack.Summary = summary;
-        }
+//        if (dbTrack == null)
+//        {
+//            db.Tracks.Add(new DbTrack
+//            {
+//                Id = track.Id,
+//                Summary = summary
+//            });
+//        }
+//        else
+//        {
+//            dbTrack.Summary = summary;
+//        }
 
-        await db.SaveChanges();
-    }
+//        await db.SaveChanges();
+//    }
 
-    public async Task AddTrack(TrackFull track)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
+//    public async Task AddTrack(TrackFull track)
+//    {
+//        using var db = await _dbFactory.Create<LibraryDb>();
 
-        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
+//        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == track.Id);
 
-        var details = JsonConvert.SerializeObject(track);
+//        var details = JsonConvert.SerializeObject(track);
 
-        if (dbTrack == null)
-        {
-            db.Tracks.Add(new DbTrack
-            {
-                Id = track.Id,
-                Details = details
-            });
-        }
-        else
-        {
-            dbTrack.Details = details;
-        }
+//        if (dbTrack == null)
+//        {
+//            db.Tracks.Add(new DbTrack
+//            {
+//                Id = track.Id,
+//                Details = details
+//            });
+//        }
+//        else
+//        {
+//            dbTrack.Details = details;
+//        }
 
-        await db.SaveChanges();
-    }
+//        await db.SaveChanges();
+//    }
 
-    public async Task<TrackSummary> GetSummary(LibrarySource source, string id)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
+//    public async Task<TrackSummary> GetSummary(LibrarySource source, string id)
+//    {
+//        using var db = await _dbFactory.Create<LibraryDb>();
 
-        return GetById(db, id);
-    }
+//        return GetById(db, id);
+//    }
 
-    public async Task<TrackFull> GetDetails(LibrarySource source, string id)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
+//    public async Task<TrackFull> GetDetails(LibrarySource source, string id)
+//    {
+//        using var db = await _dbFactory.Create<LibraryDb>();
 
-        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
+//        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
 
-        if (dbTrack?.Details == null)
-            return null;
+//        if (dbTrack?.Details == null)
+//            return null;
 
-        return JsonConvert.DeserializeObject<TrackFull>(dbTrack.Details);
-    }
+//        return JsonConvert.DeserializeObject<TrackFull>(dbTrack.Details);
+//    }
 
-    public async Task AddTrack(AlbumTrackInfo track)
-    {
-        // Add to track summaries
-        // And add to album playtracks
-        // And add positions?
-    }
+//    public async Task AddTrack(AlbumTrackInfo track)
+//    {
+//        // Add to track summaries
+//        // And add to album playtracks
+//        // And add positions?
+//    }
 
-    public async Task<List<AlbumTrackInfo>> GetAlbumTracks(LibrarySource source, string id)
-    {
-        using var db = await _dbFactory.Create<LibraryDb>();
+//    public async Task<List<AlbumTrackInfo>> GetAlbumTracks(LibrarySource source, string id)
+//    {
+//        using var db = await _dbFactory.Create<LibraryDb>();
 
-        var list = new List<AlbumTrackInfo>();
+//        var list = new List<AlbumTrackInfo>();
 
-        var playTracks = db.GetPlayTracks(PlayTrackType.Album, id);
+//        var playTracks = db.GetPlayTracks(PlayTrackType.Album, id);
 
-        foreach (var track in playTracks)
-        {
-            var dbTrack = db.Tracks.Single(t => t.Id == track.Id);
+//        foreach (var track in playTracks)
+//        {
+//            var dbTrack = db.Tracks.Single(t => t.Id == track.Id);
 
-            list.Add(new AlbumTrackInfo
-            {
-                Track = GetById(db, id),
-                DiscNo = 0,
-                TrackNo = 0
-            });
-        }
+//            list.Add(new AlbumTrackInfo
+//            {
+//                Track = GetById(db, id),
+//                DiscNo = 0,
+//                TrackNo = 0
+//            });
+//        }
 
-        return list;
-    }
+//        return list;
+//    }
 
-    private TrackSummary GetById(LibraryDb db, string id)
-    {
-        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
+//    private TrackSummary GetById(LibraryDb db, string id)
+//    {
+//        var dbTrack = db.Tracks.SingleOrDefault(t => t.Id == id);
 
-        if (dbTrack == null)
-            return null;
+//        if (dbTrack == null)
+//            return null;
 
-        return JsonConvert.DeserializeObject<TrackSummary>(dbTrack.Details ?? dbTrack.Summary);
-    }
-}
+//        return JsonConvert.DeserializeObject<TrackSummary>(dbTrack.Details ?? dbTrack.Summary);
+//    }
+//}

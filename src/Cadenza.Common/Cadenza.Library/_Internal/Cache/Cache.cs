@@ -57,7 +57,7 @@ internal class Cache : ILibrary
             DiscCount = album.DiscCount,
             DiscNo = link.Position.DiscNo,
             Lyrics = track.Lyrics,
-            Tags = track.Tags.ToList()
+            Tags = track.Tags?.ToList() ?? new List<string>()
         };
 
         return Task.FromResult(result);

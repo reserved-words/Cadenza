@@ -1,10 +1,10 @@
-﻿using Cadenza.Domain;
+﻿//using Cadenza.Domain;
 
-namespace Cadenza.Core;
+//namespace Cadenza.Core;
 
-public interface ITrackRepositoryUpdater : ITrackRepository
-{
-    Task AddTrack(TrackSummary track);
-    Task AddTrack(TrackFull track);
-    Task AddTrack(AlbumTrackInfo track);
-}
+//public interface ITrackRepositoryUpdater : ITrackRepository
+//{
+//    Task AddTrack(TrackSummary track);
+//    Task AddTrack(TrackFull track);
+//    Task AddTrack(AlbumTrackInfo track);
+//}

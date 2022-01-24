@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Core;
+﻿namespace Cadenza.Core;
 
 public interface ITrackRepository
 {

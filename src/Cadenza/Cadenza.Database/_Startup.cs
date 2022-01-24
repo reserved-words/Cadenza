@@ -16,7 +16,6 @@ public static class Startup
             .AddTransient<IMainRepository, MainRepository>()
             .AddTransient<IArtistRepository, ArtistRepository>()
             .AddTransient<IAlbumRepository, AlbumRepository>()
-            .AddTransient<ITrackRepositoryUpdater, TrackRepository>()
             .AddTransient<IPlayTrackRepository, PlayTrackRepository>();
     }
 }
