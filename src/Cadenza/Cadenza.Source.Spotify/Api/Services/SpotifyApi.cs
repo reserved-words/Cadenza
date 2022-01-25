@@ -32,8 +32,6 @@ public class SpotifyApi : ISpotifyApi
             return null;
         }
 
-
-
         return await response.Content.ReadFromJsonAsync<T>();
     }
 

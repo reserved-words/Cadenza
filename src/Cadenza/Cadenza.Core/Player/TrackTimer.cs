@@ -17,14 +17,13 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     {
         _trackProgressTimer.Interval = 1000;
         _trackProgressTimer.AutoReset = true;
-        _trackProgressTimer.Elapsed += OnTrackProgressed;
     }
 
     public void OnPlay()
     {
         StopTimer(0);
         RaiseTrackProgressed();
-        _trackProgressTimer.Start();
+        StartTimer();
     }
 
     public void OnPause(int secondsPlayed)
@@ -37,12 +36,12 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     {
         StopTimer(secondsPlayed);
         RaiseTrackProgressed();
-        _trackProgressTimer.Start();
+        StartTimer();
     }
 
     public void OnStop(int secondsPlayed)
     {
-        StopTimer(0);
+        StopTimer(-1);
         RaiseTrackProgressed();
     }
 
@@ -78,8 +77,15 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
         TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_trackTotalSeconds, _trackProgressSeconds));
     }
 
+    private void StartTimer()
+    {
+        _trackProgressTimer.Elapsed += OnTrackProgressed;
+        _trackProgressTimer.Start();
+    }
+
     private void StopTimer(int secondsPlayed)
     {
+        _trackProgressTimer.Elapsed -= OnTrackProgressed;
         _trackProgressTimer.Stop();
         _trackProgressSeconds = secondsPlayed;
     }

@@ -37,17 +37,24 @@ public class CorePlayer : IPlayer
         return progress;
     }
 
-    public async Task<TrackProgress> Stop()
+    public async Task Stop()
     {
         var service = await GetCurrentService();
         if (service == null)
-            return null;
+            return;
 
-        await service.Stop();
-        var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
-        var progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
+        var progress = await service.Stop();
+
+        //if (progress.SecondsPlayed == -1 && progress.TotalSeconds == -1)
+        //{
+        //    // track finished playing but duration data wasn't available
+        //    var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        //    progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
+        //}
+
         await RunUtilities(p => p.OnStop(progress));
-        return progress;
+        await _storeSetter.SetValue(StoreKey.CurrentTrack, null);
+        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, null);
     }
 
     public async Task<TrackProgress> Resume()
