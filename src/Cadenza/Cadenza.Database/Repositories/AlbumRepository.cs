@@ -31,20 +31,4 @@ public class AlbumRepository : IAlbumRepository
             Source = album.Source.Parse<LibrarySource>()
         };
     }
-
-    private static List<BasicTrack> GetById(LibraryDb db, string id)
-    {
-        var tracks = db.PlayTracks
-            .SingleOrDefault(a => a.Id == id);
-
-        if (tracks == null)
-            return new List<BasicTrack>();
-
-        return JsonConvert.DeserializeObject<List<BasicTrack>>(tracks.Tracks);
-    }
-
-    private static string GetId(PlayTrackType type, string id, LibrarySource source)
-    {
-        return $"{type}|{id}|{source}";
-    }
 }

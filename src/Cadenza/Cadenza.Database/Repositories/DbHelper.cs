@@ -11,7 +11,7 @@ namespace Cadenza.Database
             if (entry == null)
                 return new List<BasicTrack>();
 
-            return JsonConvert.DeserializeObject<List<BasicTrack>>(entry.Tracks);
+            return Json.Deserialize<List<BasicTrack>>(entry.Tracks); ;
         }
 
         internal static DbPlayTracks GetPlayTracksEntry(this LibraryDb db, PlayTrackType type, string id)
@@ -40,9 +40,9 @@ namespace Cadenza.Database
                 entry = db.GetPlayTracksEntry(type, id);
                 if (entry != null)
                 {
-                    var existingTracks = JsonConvert.DeserializeObject<List<BasicTrack>>(entry.Tracks);
+                    var existingTracks = Json.Deserialize<List<BasicTrack>>(entry.Tracks);
                     var allTracks = existingTracks.Concat(tracks).ToList();
-                    entry.Tracks = JsonConvert.SerializeObject(allTracks);
+                    entry.Tracks = Json.Serialize(allTracks);
                 }
             }
 
@@ -51,7 +51,7 @@ namespace Cadenza.Database
                 entry = new DbPlayTracks
                 {
                     Id = playTrackId,
-                    Tracks = JsonConvert.SerializeObject(tracks)
+                    Tracks = Json.Serialize(tracks)
                 };
                 db.PlayTracks.Add(entry);
             }
