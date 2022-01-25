@@ -19,67 +19,71 @@ public class CorePlayer : IPlayer
 
     public async Task<TrackProgress> Play(BasicTrack track)
     {
-        var service = await GetCurrentService(track.Source);
+        var service = await GetCurrentSourcePlayer(track.Source);
         await service.Play(track.Id);
+
         var summary = await _trackRepository.GetSummary(track.Source, track.Id);
         var progress = new TrackProgress(0, summary.DurationSeconds);
-        await _storeSetter.SetValue(StoreKey.CurrentTrack, summary);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track.Source);
+
+        await StoreCurrentTrack(summary);
         await RunUtilities(p => p.OnPlay(progress));
+
         return progress;
     }
 
     public async Task<TrackProgress> Pause()
     {
-        var service = await GetCurrentService();
+        var service = await GetCurrentSourcePlayer();
         var progress = await service.Pause();
         await RunUtilities(p => p.OnPause(progress));
         return progress;
     }
 
-    public async Task Stop()
-    {
-        var service = await GetCurrentService();
-        if (service == null)
-            return;
-
-        var progress = await service.Stop();
-
-        //if (progress.SecondsPlayed == -1 && progress.TotalSeconds == -1)
-        //{
-        //    // track finished playing but duration data wasn't available
-        //    var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
-        //    progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
-        //}
-
-        await RunUtilities(p => p.OnStop(progress));
-        await _storeSetter.SetValue(StoreKey.CurrentTrack, null);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, null);
-    }
-
     public async Task<TrackProgress> Resume()
     {
-        var service = await GetCurrentService();
+        var service = await GetCurrentSourcePlayer();
         var progress = await service.Resume();
         await RunUtilities(p => p.OnResume(progress));
         return progress;
     }
 
-    private async Task<IAudioPlayer> GetCurrentService(LibrarySource? source = null)
+    public async Task Stop()
     {
-        if (!source.HasValue)
+        var service = await GetCurrentSourcePlayer();
+        
+        if (service == null)
+            return;
+
+        var progress = await service.Stop();
+        if (progress.TotalSeconds == -1)
         {
-            var storedSource = await _storeGetter.GetString(StoreKey.CurrentTrackSource);
-            if (storedSource == null)
-                return null;
-
-            if (!Enum.TryParse<LibrarySource>(storedSource, out LibrarySource result))
-                return null;
-
-            source = result;
+            var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+            progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
         }
 
-        return _sourcePlayers.Single(p => p.Source == source.Value);
+        await RunUtilities(p => p.OnStop(progress));
+        await StoreCurrentTrack(null);
+    }
+
+    private async Task<ISourcePlayer> GetCurrentSourcePlayer(LibrarySource? source = null)
+    {
+        var currentSource = source.HasValue
+            ? source.Value
+            : await GetCurrentSource();
+
+        if (!currentSource.HasValue)
+            return null;
+
+        return _sourcePlayers.Single(p => p.Source == currentSource.Value);
+    }
+
+    private async Task<LibrarySource?> GetCurrentSource()
+    {
+        var storedSource = await _storeGetter.GetString(StoreKey.CurrentTrackSource);
+        if (storedSource == null)
+            return null;
+
+        return Enum.Parse<LibrarySource>(storedSource);
     }
 
     private async Task RunUtilities(Func<IUtilityPlayer, Task> action)
@@ -88,5 +92,11 @@ public class CorePlayer : IPlayer
         {
             await action(player);
         }
+    }
+
+    private async Task StoreCurrentTrack(TrackSummary summary)
+    {
+        await _storeSetter.SetValue(StoreKey.CurrentTrack, summary);
+        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, summary?.Source);
     }
 }

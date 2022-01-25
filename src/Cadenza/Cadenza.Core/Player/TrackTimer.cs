@@ -8,7 +8,7 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     public event TrackFinishedEventHandler TrackFinished;
     public event TrackProgressedEventHandler TrackProgressed;
 
-    private readonly Timer _trackProgressTimer = new Timer();
+    private readonly Timer _trackProgressTimer = new();
 
     private int _trackProgressSeconds;
     private int _trackTotalSeconds;
@@ -19,30 +19,32 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
         _trackProgressTimer.AutoReset = true;
     }
 
-    public void OnPlay()
+    public void OnPlay(int totalSeconds)
     {
-        StopTimer(0);
+        _trackProgressSeconds = 0;
+        _trackTotalSeconds = totalSeconds;
+
         RaiseTrackProgressed();
-        StartTimer();
+
+        _trackProgressTimer.Elapsed += OnTrackProgressed;
+        _trackProgressTimer.Start();
     }
 
     public void OnPause(int secondsPlayed)
     {
-        StopTimer(secondsPlayed);
-        RaiseTrackProgressed();
+        _trackProgressTimer.Stop();
+        _trackProgressSeconds = secondsPlayed;
     }
 
     public void OnResume(int secondsPlayed)
     {
-        StopTimer(secondsPlayed);
-        RaiseTrackProgressed();
-        StartTimer();
+        _trackProgressSeconds = secondsPlayed; 
+        _trackProgressTimer.Start();
     }
 
     public void OnStop(int secondsPlayed)
     {
-        StopTimer(-1);
-        RaiseTrackProgressed();
+        _trackProgressTimer.Stop();
     }
 
     public void OnSetTrack(int totalSeconds)
@@ -55,14 +57,14 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
         if (_trackTotalSeconds == 0)
             return;
 
-        _trackProgressSeconds++;
-
         if (_trackProgressSeconds >= _trackTotalSeconds)
         {
+            _trackProgressTimer.Elapsed -= OnTrackProgressed;
             RaiseTrackFinished();
         }
         else
         {
+            _trackProgressSeconds++;
             RaiseTrackProgressed();
         }
     }
@@ -75,18 +77,5 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     private void RaiseTrackProgressed()
     {
         TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_trackTotalSeconds, _trackProgressSeconds));
-    }
-
-    private void StartTimer()
-    {
-        _trackProgressTimer.Elapsed += OnTrackProgressed;
-        _trackProgressTimer.Start();
-    }
-
-    private void StopTimer(int secondsPlayed)
-    {
-        _trackProgressTimer.Elapsed -= OnTrackProgressed;
-        _trackProgressTimer.Stop();
-        _trackProgressSeconds = secondsPlayed;
     }
 }

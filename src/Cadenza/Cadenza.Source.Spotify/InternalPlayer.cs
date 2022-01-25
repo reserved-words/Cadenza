@@ -28,30 +28,27 @@ public class InternalPlayer : IAudioPlayer
 
     public async Task<TrackProgress> Stop()
     {
-        // This sometimes errors, need to investigate and fix
+        var playState = await _api.GetPlayState();
+
+        if (playState == null
+            || playState.item == null)
+            return new TrackProgress(-1, -1);
+
         await _api.Pause();
-        return await GetProgress();
+        return GetProgress(playState);
     }
 
     private async Task<TrackProgress> GetProgress()
     {
         var playState = await _api.GetPlayState();
+        return GetProgress(playState);
+    }
 
-        // potential fix for Stop error
-
-        //if (playState == null) // has not been playing at all
-        //    return new TrackProgress(0, 0);
-
-        //if (!playState.is_playing || playState.item == null) // track has finished
-        //    return new TrackProgress(-1, -1);
-
-        //return new TrackProgress(
-        //    MillisecondsToSeconds(playState.progress_ms), 
-        //    MillisecondsToSeconds(playState.item.duration_ms));
-
+    private static TrackProgress GetProgress(SpotifyApiPlayState playState)
+    {
         return new TrackProgress(
-            MillisecondsToSeconds(playState?.progress_ms ?? 0),
-            MillisecondsToSeconds(playState?.item?.duration_ms ?? 0));
+            MillisecondsToSeconds(playState.progress_ms),
+            MillisecondsToSeconds(playState.item.duration_ms));
     }
 
     private static int MillisecondsToSeconds(int? milliseconds)

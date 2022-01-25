@@ -14,7 +14,11 @@ public class Store : IStoreGetter, IStoreSetter
 
     public async Task<string> GetString(StoreKey key)
     {
-        return await _js.InvokeAsync<string>("getStoredValue", key.ToString());
+        var value = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
+        return value == "null"
+            || value == "'null'"
+            ? null
+            : value;
     }
 
     public async Task<T> GetValue<T>(StoreKey key) where T : class

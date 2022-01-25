@@ -71,7 +71,6 @@ public class AppService : IAppConsumer, IAppController
     public async Task Stop()
     {
         await _player.Stop();
-
     }
 
     public async Task SkipNext()

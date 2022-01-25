@@ -17,8 +17,7 @@ public class TimingPlayer : IUtilityPlayer
 
     public Task OnPlay(TrackProgress progress)
     {
-        _timer.OnSetTrack(progress.TotalSeconds);
-        _timer.OnPlay();
+        _timer.OnPlay(progress.TotalSeconds);
         return Task.CompletedTask;
     }
 
