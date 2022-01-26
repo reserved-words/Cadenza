@@ -28,19 +28,18 @@ public class InternalPlayer : IAudioPlayer
 
     public async Task<TrackProgress> Stop()
     {
-        var playState = await _api.GetPlayState();
-
-        if (playState == null
-            || playState.item == null)
-            return new TrackProgress(-1, -1);
-
+        var progress = await GetProgress();
         await _api.Pause();
-        return GetProgress(playState);
+        return progress;
     }
 
     private async Task<TrackProgress> GetProgress()
     {
         var playState = await _api.GetPlayState();
+
+        if (playState == null || playState.item == null)
+            return new TrackProgress(-1, -1);
+
         return GetProgress(playState);
     }
 

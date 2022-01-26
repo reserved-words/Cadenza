@@ -15,12 +15,7 @@ public class SpotifyPlayerApi : ISpotifyPlayerApi
 
     public async Task<SpotifyApiPlayState> GetPlayState()
     {
-        var playState = await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
-        return playState ?? new SpotifyApiPlayState
-        {
-            progress_ms = 0,
-            timestamp = 0
-        };
+        return await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
     }
 
     public async Task Play(string trackId = null)
