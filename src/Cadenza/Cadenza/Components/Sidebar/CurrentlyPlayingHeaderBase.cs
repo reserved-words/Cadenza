@@ -14,9 +14,10 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
         App.PlaylistUpdated += OnPlaylistUpdated;
     }
 
-    private async Task OnPlaylistUpdated(object sender, PlaylistEventArgs e)
+    private Task OnPlaylistUpdated(object sender, PlaylistEventArgs e)
     {
         PlaylistName = e.PlaylistName;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 }
