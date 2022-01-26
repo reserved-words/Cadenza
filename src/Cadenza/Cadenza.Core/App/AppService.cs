@@ -3,14 +3,12 @@
 public class AppService : IAppConsumer, IAppController
 {
     private readonly IPlayer _player;
-    private readonly ITrackFinishedConsumer _trackFinishedConsumer;
 
     public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer)
     {
         _player = player;
-        _trackFinishedConsumer = trackFinishedConsumer;
 
-        _trackFinishedConsumer.TrackFinished += OnTrackFinished;
+        trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
     public event TrackEventHandler TrackStarted;
@@ -29,9 +27,7 @@ public class AppService : IAppConsumer, IAppController
 
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
     {
-        TrackFinished?.Invoke(this, GetFinishedArgs());
-        await _currentPlaylist.MoveNext();
-        await PlayTrack();
+        await SkipNext();
     }
 
     public async Task Play(PlaylistDefinition playlistDefinition)
@@ -47,13 +43,13 @@ public class AppService : IAppConsumer, IAppController
 
     private async Task PlayTrack()
     {
-        await Stop();
+        await _player.Stop();
 
-        if (_currentPlaylist.Current != null)
-        {
-            var progress = await _player.Play(_currentPlaylist.Current);
-            TrackStarted?.Invoke(this, GetProgressArgs(progress));
-        }
+        if (_currentPlaylist.Current == null)
+            return;
+
+        var progress = await _player.Play(_currentPlaylist.Current);
+        TrackStarted?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task Pause()
@@ -68,19 +64,16 @@ public class AppService : IAppConsumer, IAppController
         TrackResumed?.Invoke(this, GetProgressArgs(progress));
     }
 
-    public async Task Stop()
-    {
-        await _player.Stop();
-    }
-
     public async Task SkipNext()
     {
+        TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MoveNext();
         await PlayTrack();
     }
 
     public async Task SkipPrevious()
     {
+        TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
     }

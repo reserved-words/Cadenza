@@ -33,7 +33,6 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     public void OnPause(int secondsPlayed)
     {
         _trackProgressTimer.Stop();
-        _trackProgressSeconds = secondsPlayed;
     }
 
     public void OnResume(int secondsPlayed)
@@ -45,11 +44,6 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     public void OnStop(int secondsPlayed)
     {
         _trackProgressTimer.Stop();
-    }
-
-    public void OnSetTrack(int totalSeconds)
-    {
-        _trackTotalSeconds = totalSeconds;
     }
 
     private void OnTrackProgressed(object sender, ElapsedEventArgs e)
