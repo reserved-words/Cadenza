@@ -1,5 +1,4 @@
-﻿@inherits SidebarBase
-
+﻿
 <WhipTab>
     <WhipColumn md="12">
         <WhipRow RowHeight="@RowHeight.Fixed">
@@ -12,15 +11,12 @@
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
             <WhipContainer>
-                <PlayerControls OnPause="@OnPause"
-                                OnResume="@OnResume"
-                                OnSkipNext="@OnSkipNext"
-                                OnSkipPrevious="@OnSkipPrevious" />
+                <PlayerControls />
             </WhipContainer>
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
             <WhipContainer>
-                <Shuffle OnPlay="@OnPlay" />
+                <Shuffle />
             </WhipContainer>
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Stretch">

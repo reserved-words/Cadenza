@@ -57,7 +57,7 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
         if (_trackTotalSeconds == 0)
             return;
 
-        if (_trackProgressSeconds >= _trackTotalSeconds)
+        if (_trackProgressSeconds > _trackTotalSeconds)
         {
             _trackProgressTimer.Elapsed -= OnTrackProgressed;
             RaiseTrackFinished();
