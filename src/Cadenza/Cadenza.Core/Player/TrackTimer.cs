@@ -8,68 +8,79 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     public event TrackFinishedEventHandler TrackFinished;
     public event TrackProgressedEventHandler TrackProgressed;
 
-    private readonly Timer _trackProgressTimer = new();
-
-    private int _trackProgressSeconds;
-    private int _trackTotalSeconds;
-
-    public TrackTimer()
-    {
-        _trackProgressTimer.Interval = 1000;
-        _trackProgressTimer.AutoReset = true;
-    }
+    private CurrentTrackTimer _current;
 
     public void OnPlay(int totalSeconds)
     {
-        _trackProgressSeconds = 0;
-        _trackTotalSeconds = totalSeconds;
-
-        RaiseTrackProgressed();
-
-        _trackProgressTimer.Elapsed += OnTrackProgressed;
-        _trackProgressTimer.Start();
+        _current = new CurrentTrackTimer(totalSeconds, OnTrackProgressed);
+        _current.Start(0);
     }
 
     public void OnPause(int secondsPlayed)
     {
-        _trackProgressTimer.Stop();
+        _current.Stop();
     }
 
     public void OnResume(int secondsPlayed)
     {
-        _trackProgressSeconds = secondsPlayed; 
-        _trackProgressTimer.Start();
+        _current.Start(secondsPlayed);
     }
 
     public void OnStop(int secondsPlayed)
     {
-        _trackProgressTimer.Stop();
+        _current.Stop();
     }
 
     private void OnTrackProgressed(object sender, ElapsedEventArgs e)
     {
-        if (_trackTotalSeconds == 0)
-            return;
-
-        if (_trackProgressSeconds > _trackTotalSeconds)
+        if (_current.IsTrackFinished)
         {
-            _trackProgressTimer.Elapsed -= OnTrackProgressed;
-            RaiseTrackFinished();
+            //_current.Dispose();
+            //_current = null;
+            TrackFinished?.Invoke(this, new TrackFinishedEventArgs());
         }
         else
         {
-            _trackProgressSeconds++;
-            RaiseTrackProgressed();
+            TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_current.TotalSeconds, _current.ProgressSeconds));
         }
     }
 
-    private void RaiseTrackFinished()
+    internal class CurrentTrackTimer : IDisposable
     {
-        TrackFinished?.Invoke(this, new TrackFinishedEventArgs());
-    }
+        private readonly Timer _timer;
+        private readonly ElapsedEventHandler _handler;
 
-    private void RaiseTrackProgressed()
-    {
-        TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_trackTotalSeconds, _trackProgressSeconds));
+        public int TotalSeconds { get; }
+        public int ProgressSeconds { get; private set; }
+
+        public bool IsTrackFinished => ProgressSeconds > TotalSeconds;
+
+        public CurrentTrackTimer(int totalSeconds, ElapsedEventHandler handler)
+        {
+            _handler = handler;
+            _timer = new Timer(2000);
+            TotalSeconds = totalSeconds;
+        }
+
+        public void Start(int progressSeconds)
+        {
+            ProgressSeconds = progressSeconds;
+            _timer.Elapsed += OnElapsed;
+            _timer.Start();
+        }
+
+        public void Stop()
+        {
+            _timer.Stop();
+            _timer.Elapsed -= OnElapsed;
+        }
+
+        private void OnElapsed(object sender, ElapsedEventArgs e)
+        {
+            ProgressSeconds += 2;
+            _handler(sender, e);
+        }
+
+        public void Dispose() => _timer.Dispose();
     }
 }
