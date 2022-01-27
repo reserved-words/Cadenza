@@ -30,7 +30,10 @@ public class SpotifyLibraryApi : ISpotifyLibraryApi
 
     private async Task<List<T>> GetListResponse<T>(string uri)
     {
-        var response = await _api.Get<SpotifyApiListResponse<T>>(uri);
+        var apiResponse = await _api.Get<SpotifyApiListResponse<T>>(uri);
+
+        var response = apiResponse.Data;
+
         if (response == null)
             return new List<T>();
 
@@ -38,7 +41,9 @@ public class SpotifyLibraryApi : ISpotifyLibraryApi
 
         while (items.Count() < response.total)
         {
-            response = await _api.Get<SpotifyApiListResponse<T>>(response.next);
+            apiResponse = await _api.Get<SpotifyApiListResponse<T>>(response.next);
+            response = apiResponse.Data;
+
             if (response == null)
                 return items;
 

@@ -6,22 +6,42 @@ public class SpotifyPlayerApi : ISpotifyPlayerApi
     private const string PlayUrlFormat = "https://api.spotify.com/v1/me/player/play?device_id={0}";
     private const string PlayStateUrl = "https://api.spotify.com/v1/me/player";
 
+    private readonly IErrorHandler _errorHandler;
     private readonly ISpotifyApi _api;
 
-    public SpotifyPlayerApi(ISpotifyApi api)
+    public SpotifyPlayerApi(ISpotifyApi api, IErrorHandler errorHandler)
     {
         _api = api;
+        _errorHandler = errorHandler;
     }
 
     public async Task<SpotifyApiPlayState> GetPlayState()
     {
-        return await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
+        var response = await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
+        return response.Data;
     }
 
     public async Task Play(string trackId = null)
     {
         var data = GetPlayData(trackId);
-        await _api.Put(PlayUrlFormat, data);
+        var response = await _api.Put(PlayUrlFormat, data);
+
+        if (response.Success)
+            return;
+
+        if (response.Error.Status == 404 && response.Error.Message == "Device not found")
+        {
+            var resolved = await _errorHandler.DeviceNotFound();
+
+            if (!resolved)
+            {
+                throw new SourceException(SourceError.PlayFailure, "Device not found");
+            }
+            else
+            {
+                // Try again to play
+            }
+        }
     }
 
     public async Task Pause()

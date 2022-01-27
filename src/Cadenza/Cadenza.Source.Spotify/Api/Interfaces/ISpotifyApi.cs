@@ -2,6 +2,6 @@
 
 public interface ISpotifyApi
 {
-    Task Put(string urlFormat, object data = null);
-    Task<T> Get<T>(string url) where T : class;
+    Task<ApiResponse> Put(string urlFormat, object data = null);
+    Task<ApiResponse<T>> Get<T>(string url) where T : class;
 }

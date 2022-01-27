@@ -20,7 +20,6 @@ public static class Services
             .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
-            .AddMudServices()
             .AddAppServices()
             .AddUIHelpers()
             .AddTimers()
@@ -59,6 +58,17 @@ public static class Services
     private static IServiceCollection AddUIHelpers(this IServiceCollection services)
     {
         return services
+            .AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            })
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IProgressDialogService, ProgressDialogService>()
             .AddTransient<INotificationService, MudNotificationService>()
@@ -88,11 +98,6 @@ public static class Services
         return services
             .AddSpotifySource<SpotifyConfig>()
             .AddLocalSource<HtmlPlayer>();
-    }
-
-    private static IServiceCollection AddLocalLibrary(this IServiceCollection services)
-    {
-        return services.AddLocalSource<HtmlPlayer>();
     }
 
     //private static IServiceCollection AddLibraries(this IServiceCollection services)

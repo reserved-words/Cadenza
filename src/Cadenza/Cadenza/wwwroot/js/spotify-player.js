@@ -4,7 +4,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     var accessToken = getStoredValue('SpotifyAccessToken');
 
     var player = new Spotify.Player({
-        name: 'Whip',
+        name: 'Cadenza',
         getOAuthToken: cb => { cb(accessToken); }
     });
 

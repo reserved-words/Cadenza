@@ -1,11 +1,13 @@
 ﻿using Cadenza.Common;
-using Cadenza.Core;
 using Cadenza.Utilities;
 
 namespace Cadenza.Components.Sidebar;
 
 public class SearchResultBase : ComponentBase
 {
+    [Inject]
+    public INotificationService Notifications { get; set; }
+
     [Inject]
     public IPlaylistCreator PlaylistCreator { get; set; }
 
@@ -19,6 +21,24 @@ public class SearchResultBase : ComponentBase
     public SearchableItem Result { get; set; }
 
     protected async Task OnPlay()
+    {
+        try
+        {
+            await Play();
+        }
+        catch (SourceException ex)
+        {
+            Notifications.Error(ex.Message);
+            // TODO:
+            // Set the source to disabled
+            // If the current album / playlist is purely for this source, stop playing
+            // If try to play albums / playlists / artists from this source, display error again
+            // In the UI disable all albums / playlists / artists that are only for a disabled source
+            // Add a check when skip to a new track - if in a disabled source, skip again
+        }
+    }
+
+    private async Task Play()
     {
         if (Result.Type == SearchableItemType.Artist)
         {
