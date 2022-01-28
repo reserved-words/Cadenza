@@ -13,12 +13,14 @@ public class PlaylistPlayer : IPlaylistPlayer
 
     public async Task PlayAlbum(string id)
     {
+        await _app.LoadingPlaylist();
         var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
         await _app.Play(playlist);
     }
 
     public async Task PlayArtist(string id)
     {
+        _app.LoadingPlaylist();
         var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
         await _app.Play(playlist);
     }
@@ -30,12 +32,14 @@ public class PlaylistPlayer : IPlaylistPlayer
 
     public async Task PlayTrack(string trackId, string albumId)
     {
+        await _app.LoadingPlaylist();
         var playlist = await _playlistCreator.CreateTrackPlaylist(trackId, albumId);
         await _app.Play(playlist);
     }
 
     public async Task PlayAll()
     {
+        await _app.LoadingPlaylist();
         var playlist = await _playlistCreator.CreateLibraryPlaylist();
         await _app.Play(playlist);
     }

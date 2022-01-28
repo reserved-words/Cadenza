@@ -7,7 +7,9 @@ public interface IAppConsumer
     event TrackEventHandler TrackResumed;
     event TrackEventHandler TrackFinished;
 
-    event PlaylistEventHandler PlaylistUpdated;
+    event PlaylistEventHandler PlaylistLoading;
+    event PlaylistEventHandler PlaylistStarted;
+    event PlaylistEventHandler PlaylistFinished;
 
     event LibraryEventHandler LibraryUpdated;
 }

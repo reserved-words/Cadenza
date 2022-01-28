@@ -17,6 +17,9 @@ public class SearchResultBase : ComponentBase
     [Inject]
     public IIdGenerator IdGenerator { get; set; }
 
+    [Inject]
+    public IAppController App { get; set; }
+
     [Parameter]
     public SearchableItem Result { get; set; }
 
@@ -29,6 +32,7 @@ public class SearchResultBase : ComponentBase
         catch (SourceException ex)
         {
             Notifications.Error(ex.Message);
+            await App.StopPlaylist();
             // TODO:
             // Set the source to disabled
             // If the current album / playlist is purely for this source, stop playing

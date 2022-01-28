@@ -15,7 +15,9 @@ public class AppService : IAppConsumer, IAppController
     public event TrackEventHandler TrackPaused;
     public event TrackEventHandler TrackResumed;
     public event TrackEventHandler TrackFinished;
-    public event PlaylistEventHandler PlaylistUpdated;
+    public event PlaylistEventHandler PlaylistLoading;
+    public event PlaylistEventHandler PlaylistStarted;
+    public event PlaylistEventHandler PlaylistFinished;
     public event LibraryEventHandler LibraryUpdated;
 
     private IPlaylist _currentPlaylist;
@@ -34,11 +36,7 @@ public class AppService : IAppConsumer, IAppController
     {
         _currentPlaylist = new Playlist(playlistDefinition);
         await PlayTrack();
-        PlaylistUpdated?.Invoke(this, new PlaylistEventArgs
-        {
-            PlaylistName = _currentPlaylist.Name,
-            PlaylistType = _currentPlaylist.Type
-        });
+        PlaylistStarted?.Invoke(this, GetPlaylistArgs());
     }
 
     private async Task PlayTrack()
@@ -67,6 +65,12 @@ public class AppService : IAppConsumer, IAppController
     public async Task SkipNext()
     {
         TrackFinished?.Invoke(this, GetFinishedArgs());
+        if (_currentPlaylist.CurrentIsLast)
+        {
+            await StopPlaylist();
+            return;
+        }
+
         await _currentPlaylist.MoveNext();
         await PlayTrack();
     }
@@ -88,6 +92,18 @@ public class AppService : IAppConsumer, IAppController
         };
     }
 
+    private PlaylistEventArgs GetPlaylistArgs()
+    {
+        if (_currentPlaylist == null)
+            return new PlaylistEventArgs();
+
+        return new PlaylistEventArgs
+        {
+            PlaylistName = _currentPlaylist.Name,
+            PlaylistType = _currentPlaylist.Type
+        };
+    }
+
     private TrackEventArgs GetProgressArgs(TrackProgress progress)
     {
         return new TrackEventArgs
@@ -98,5 +114,18 @@ public class AppService : IAppConsumer, IAppController
                 ? 0
                 : progress.SecondsPlayed / progress.TotalSeconds
         };
+    }
+
+    public async Task LoadingPlaylist()
+    {
+        await StopPlaylist();
+        PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
+    }
+
+    public async Task StopPlaylist()
+    {
+        await _player.Stop();
+        PlaylistFinished?.Invoke(this, GetPlaylistArgs());
+        _currentPlaylist = null;
     }
 }

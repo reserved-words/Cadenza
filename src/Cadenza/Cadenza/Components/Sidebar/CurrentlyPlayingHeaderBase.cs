@@ -11,7 +11,7 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        App.PlaylistUpdated += OnPlaylistUpdated;
+        App.PlaylistStarted += OnPlaylistUpdated;
     }
 
     private Task OnPlaylistUpdated(object sender, PlaylistEventArgs e)
