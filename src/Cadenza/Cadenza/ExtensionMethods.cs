@@ -10,8 +10,7 @@ public static class ExtensionMethods
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
             LibrarySource.Spotify => Icons.Material.Filled.Wifi,
-            LibrarySource.Cloud => Icons.Material.Filled.Cloud,
-            _ => throw new NotImplementedException()
+            LibrarySource.Cloud => Icons.Material.Filled.Cloud
         };
     }
 

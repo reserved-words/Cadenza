@@ -7,7 +7,7 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public string PlaylistName { get; set; }
+    public string PlaylistName { get; set; } = "Nothing";
 
     protected override void OnInitialized()
     {
