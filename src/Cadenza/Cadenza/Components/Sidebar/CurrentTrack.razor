@@ -1,14 +1,15 @@
 ﻿@inherits CurrentTrackBase
 
-@if (Errored)
+@foreach (var error in ErrorMessages)
 {
     <MudAlert Class="mb-2"
-          Severity="Severity.Error" 
-          ShowCloseIcon="true" 
-          Dense="true"
-          Variant="Variant.Outlined"
-          ContentAlignment="@HorizontalAlignment.Center"
-          CloseIconClicked="(() => CloseError())">@ErrorMessage</MudAlert>
+              Severity="Severity.Error" 
+              Dense="true"
+              Variant="Variant.Outlined"
+              ContentAlignment="@HorizontalAlignment.Left">
+        <MudText Typo=Typo.body1>@error.Title</MudText>
+        <MudText Typo=Typo.body2>@error.Message</MudText>
+    </MudAlert>
 }
 
 @*Position relative needed to keep overlay inside card*@

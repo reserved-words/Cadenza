@@ -11,18 +11,17 @@ public class AppService : IAppConsumer, IAppController
         trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
-    public event TrackEventHandler TrackErrored;
     public event TrackEventHandler TrackFinished;
     public event TrackEventHandler TrackPaused;
     public event TrackEventHandler TrackResumed;
     public event TrackEventHandler TrackStarted;
 
-    public event PlaylistEventHandler PlaylistErrored;
     public event PlaylistEventHandler PlaylistFinished;
     public event PlaylistEventHandler PlaylistLoading;
     public event PlaylistEventHandler PlaylistStarted;
     
     public event LibraryEventHandler LibraryUpdated;
+    public event SourceEventHandler SourceErrored;
 
     private IPlaylist _currentPlaylist;
 
@@ -133,21 +132,15 @@ public class AppService : IAppConsumer, IAppController
 
     public async Task ProcessSourceError(SourceException ex)
     {
+        SourceErrored?.Invoke(this, new SourceEventArgs(ex.Source, ex.Message));
+
         if (_currentPlaylist.MixedSource)
         {
-            TrackErrored?.Invoke(this, new TrackEventArgs
-            {
-                CurrentTrack = _currentPlaylist.Current,
-                IsLastTrack = _currentPlaylist.CurrentIsLast,
-                PercentagePlayed = -1,
-                Error = ex.Message
-            });
             await SkipNext();
         }
         else
         {
             await StopPlaylist();
-            PlaylistErrored?.Invoke(this, GetPlaylistArgs(ex.Message));
         }
 
         // TODO:

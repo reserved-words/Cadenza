@@ -7,6 +7,7 @@ public class SourceException : Exception
     public SourceException(LibrarySource source, SourceError error, string message)
         : base(message)
     {
+        Source = source;
         Error = error;
     }
 
