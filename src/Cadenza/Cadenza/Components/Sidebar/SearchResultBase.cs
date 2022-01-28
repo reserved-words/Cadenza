@@ -31,14 +31,7 @@ public class SearchResultBase : ComponentBase
         }
         catch (SourceException ex)
         {
-            Notifications.Error(ex.Message);
-            await App.StopPlaylist();
-            // TODO:
-            // Set the source to disabled
-            // If the current album / playlist is purely for this source, stop playing
-            // If try to play albums / playlists / artists from this source, display error again
-            // In the UI disable all albums / playlists / artists that are only for a disabled source
-            // Add a check when skip to a new track - if in a disabled source, skip again
+            await App.ProcessSourceError(ex);
         }
     }
 

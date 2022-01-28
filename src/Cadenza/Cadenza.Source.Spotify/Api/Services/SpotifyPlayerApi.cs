@@ -35,7 +35,7 @@ public class SpotifyPlayerApi : ISpotifyPlayerApi
 
             if (!resolved)
             {
-                throw new SourceException(SourceError.PlayFailure, "Device not found");
+                throw new SourceException(LibrarySource.Spotify, SourceError.PlayFailure, "Device not found");
             }
             else
             {

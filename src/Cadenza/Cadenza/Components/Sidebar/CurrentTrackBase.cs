@@ -15,6 +15,10 @@ public class CurrentTrackBase : ComponentBase
     [Inject]
     public IStoreGetter Store { get; set; }
 
+    public bool Errored => ErrorMessage != null;
+
+    public string ErrorMessage { get; private set; }
+
     public bool Loading { get; set; } = false;
 
     public bool Empty => _model == null && !Loading;
@@ -43,11 +47,27 @@ public class CurrentTrackBase : ComponentBase
     {
         App.PlaylistLoading += OnPlaylistLoading;
         App.PlaylistFinished += OnPlaylistFinished;
+        App.PlaylistErrored += OnPlaylistErrored;
 
         App.TrackStarted += OnTrackStarted;
         App.TrackFinished += OnTrackFinished;
+        App.TrackErrored += OnTrackErrored;
 
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
+    }
+
+    private Task OnPlaylistErrored(object sender, PlaylistEventArgs e)
+    {
+        ErrorMessage = e.Error;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnTrackErrored(object sender, TrackEventArgs e)
+    {
+        ErrorMessage = e.Error;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
     private Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
@@ -91,5 +111,10 @@ public class CurrentTrackBase : ComponentBase
     {
         Progress = e.ProgressPercentage;
         StateHasChanged();
+    }
+
+    protected void CloseError()
+    {
+        ErrorMessage = null;
     }
 }

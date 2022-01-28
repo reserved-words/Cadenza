@@ -22,13 +22,17 @@ public class PlaylistCreator : IPlaylistCreator
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.GetByArtist(id);
 
+        var firstSource = tracks.First().Source;
+        var mixedSource = tracks.Any(t => t.Source != firstSource);
+
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
         return new PlaylistDefinition
         {
             Type = PlaylistType.Artist,
             Name = artist.Name,
-            Tracks = shuffledTracks
+            Tracks = shuffledTracks,
+            MixedSource = mixedSource
         };
     }
 
@@ -42,7 +46,8 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.Album,
             Name = $"{album.Title} by {album.ArtistName}",
-            Tracks = tracks.ToList()
+            Tracks = tracks.ToList(),
+            MixedSource = false
         };
     }
 
@@ -57,7 +62,8 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.Track,
             Name = $"{track.Title} by {artist.Name}",
-            Tracks = tracks
+            Tracks = tracks,
+            MixedSource = false
         };
     }
 
@@ -71,7 +77,8 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.All,
             Name = $"All Library",
-            Tracks = shuffledTracks
+            Tracks = shuffledTracks,
+            MixedSource = true
         };
     }
 }

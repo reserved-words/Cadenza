@@ -1,13 +1,16 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Common;
 
 public class SourceException : Exception
 {
-    public SourceException(SourceError error, string message)
+    public SourceException(LibrarySource source, SourceError error, string message)
         : base(message)
     {
         Error = error;
     }
 
+    public LibrarySource Source { get; set; }
     public SourceError Error { get; }
 }
 

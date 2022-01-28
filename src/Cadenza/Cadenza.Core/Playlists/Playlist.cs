@@ -7,13 +7,13 @@ public class Playlist : IPlaylist
     private Stack<BasicTrack> _toPlay;
     private List<BasicTrack> _allTracks;
 
-    private readonly PlaylistDefinition _definition;
-
     public BasicTrack Current => _playing;
 
     public Playlist(PlaylistDefinition def)
     {
-        _definition = def;
+        Type = def.Type;
+        Name = def.Name;
+        MixedSource = def.MixedSource;
 
         _allTracks = def.Tracks.ToList();
 
@@ -24,8 +24,9 @@ public class Playlist : IPlaylist
 
     public bool CurrentIsLast => _toPlay.Count == 0;
 
-    public PlaylistType Type => _definition.Type;
-    public string Name => _definition.Name;
+    public PlaylistType Type { get; }
+    public string Name { get; }
+    public bool MixedSource { get; }
 
     public async Task<BasicTrack> MoveNext()
     {

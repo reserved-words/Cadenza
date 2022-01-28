@@ -1,5 +1,16 @@
 ﻿@inherits CurrentTrackBase
 
+@if (Errored)
+{
+    <MudAlert Class="mb-2"
+          Severity="Severity.Error" 
+          ShowCloseIcon="true" 
+          Dense="true"
+          Variant="Variant.Outlined"
+          ContentAlignment="@HorizontalAlignment.Center"
+          CloseIconClicked="(() => CloseError())">@ErrorMessage</MudAlert>
+}
+
 @*Position relative needed to keep overlay inside card*@
 
 <MudCard Elevation="3" Class="pa-0 ma-0" Style="position: relative;">

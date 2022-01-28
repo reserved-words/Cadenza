@@ -11,13 +11,17 @@ public class AppService : IAppConsumer, IAppController
         trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
-    public event TrackEventHandler TrackStarted;
+    public event TrackEventHandler TrackErrored;
+    public event TrackEventHandler TrackFinished;
     public event TrackEventHandler TrackPaused;
     public event TrackEventHandler TrackResumed;
-    public event TrackEventHandler TrackFinished;
+    public event TrackEventHandler TrackStarted;
+
+    public event PlaylistEventHandler PlaylistErrored;
+    public event PlaylistEventHandler PlaylistFinished;
     public event PlaylistEventHandler PlaylistLoading;
     public event PlaylistEventHandler PlaylistStarted;
-    public event PlaylistEventHandler PlaylistFinished;
+    
     public event LibraryEventHandler LibraryUpdated;
 
     private IPlaylist _currentPlaylist;
@@ -92,15 +96,13 @@ public class AppService : IAppConsumer, IAppController
         };
     }
 
-    private PlaylistEventArgs GetPlaylistArgs()
+    private PlaylistEventArgs GetPlaylistArgs(string error = null)
     {
-        if (_currentPlaylist == null)
-            return new PlaylistEventArgs();
-
         return new PlaylistEventArgs
         {
-            PlaylistName = _currentPlaylist.Name,
-            PlaylistType = _currentPlaylist.Type
+            PlaylistName = _currentPlaylist?.Name,
+            PlaylistType = _currentPlaylist?.Type ?? default(PlaylistType),
+            Error = error
         };
     }
 
@@ -122,10 +124,36 @@ public class AppService : IAppConsumer, IAppController
         PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
     }
 
-    public async Task StopPlaylist()
+    private async Task StopPlaylist()
     {
         await _player.Stop();
         PlaylistFinished?.Invoke(this, GetPlaylistArgs());
         _currentPlaylist = null;
+    }
+
+    public async Task ProcessSourceError(SourceException ex)
+    {
+        if (_currentPlaylist.MixedSource)
+        {
+            TrackErrored?.Invoke(this, new TrackEventArgs
+            {
+                CurrentTrack = _currentPlaylist.Current,
+                IsLastTrack = _currentPlaylist.CurrentIsLast,
+                PercentagePlayed = -1,
+                Error = ex.Message
+            });
+            await SkipNext();
+        }
+        else
+        {
+            await StopPlaylist();
+            PlaylistErrored?.Invoke(this, GetPlaylistArgs(ex.Message));
+        }
+
+        // TODO:
+        // Set the source to disabled
+        // If try to play albums / playlists / artists from this source, display error again
+        // In the UI disable all albums / playlists / artists that are only for a disabled source
+        // Add a check when skip to a new track - if in a disabled source, skip again
     }
 }
