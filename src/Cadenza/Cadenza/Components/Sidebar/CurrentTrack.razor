@@ -1,17 +1,5 @@
 ﻿@inherits CurrentTrackBase
 
-@foreach (var error in ErrorMessages)
-{
-    <MudAlert Class="mb-2"
-              Severity="Severity.Error" 
-              Dense="true"
-              Variant="Variant.Outlined"
-              ContentAlignment="@HorizontalAlignment.Left">
-        <MudText Typo=Typo.body1>@error.Title</MudText>
-        <MudText Typo=Typo.body2>@error.Message</MudText>
-    </MudAlert>
-}
-
 @*Position relative needed to keep overlay inside card*@
 
 <MudCard Elevation="3" Class="pa-0 ma-0" Style="position: relative;">

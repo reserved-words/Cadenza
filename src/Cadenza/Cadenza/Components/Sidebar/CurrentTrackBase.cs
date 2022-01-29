@@ -15,8 +15,6 @@ public class CurrentTrackBase : ComponentBase
     [Inject]
     public IStoreGetter Store { get; set; }
 
-    public readonly List<(string Title, string Message)> ErrorMessages = new ();
-
     public bool Loading { get; set; } = false;
 
     public bool Empty => _model == null && !Loading;
@@ -49,16 +47,7 @@ public class CurrentTrackBase : ComponentBase
         App.TrackStarted += OnTrackStarted;
         App.TrackFinished += OnTrackFinished;
 
-        App.SourceErrored += OnSourceErrored;
-
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
-    }
-
-    private Task OnSourceErrored(object sender, SourceEventArgs e)
-    {
-        ErrorMessages.Add(($"{e.Source} disabled", e.Error));
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
     private Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
