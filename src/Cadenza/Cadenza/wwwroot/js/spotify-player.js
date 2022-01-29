@@ -1,33 +1,52 @@
 ﻿
-window.onSpotifyWebPlaybackSDKReady = () => {
-
-    var accessToken = getStoredValue('SpotifyAccessToken');
-
-    var player = new Spotify.Player({
-        name: 'Cadenza',
-        getOAuthToken: cb => { cb(accessToken); }
+async function waitForSpotifyWebPlaybackSDKToLoad() {
+    return new Promise(resolve => {
+        if (window.Spotify) {
+            resolve(window.Spotify);
+        } else {
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                resolve(window.Spotify);
+            };
+        }
     });
-
-    // Error handling
-    player.addListener('initialization_error', ({ message }) => { console.log('initialization error: ' + message); });
-    player.addListener('authentication_error', ({ message }) => { console.log('authentication error: ' + message); });
-    player.addListener('account_error', ({ message }) => { console.log('account error: ' + message); });
-    player.addListener('playback_error', ({ message }) => { console.log('playback error: ' + message); });
-
-    // Playback status updates
-    player.addListener('player_state_changed', state => { console.log(state); });
-
-    // Ready
-    player.addListener('ready', ({ device_id }) => {
-        console.log('Device ID = ' + device_id);
-        setStoredValue('SpotifyDeviceId', device_id);
-    });
-
-    // Not Ready
-    player.addListener('not_ready', ({ device_id }) => {
-        console.log('Device ID has gone offline', device_id);
-    });
-
-    player.connect();
 };
 
+async function startSpotifyPlayer() {
+
+    const { Player } = await waitForSpotifyWebPlaybackSDKToLoad();
+
+    console.log("The Web Playback SDK has loaded.");
+
+    if (window.location.href.indexOf("player") < 0) {
+        return;
+    }
+
+    var accessToken = window.localStorage.getItem('SpotifyAccessToken');
+
+    const sdk = new Player({
+        name: "Cadenza",
+        volume: 1.0,
+        getOAuthToken: callback => { callback(accessToken); }
+    });
+
+    sdk.on("authentication_error", ({ message }) => {
+        // This happens if the access token is invalid or null
+        console.log('authentication error: ' + message);
+    });
+
+    sdk.on("ready", ({ device_id }) => {
+        console.log("Device ID = " + device_id);
+        window.localStorage.setItem('SpotifyDeviceId', device_id);
+    });
+
+    let connected = await sdk.connect();
+    return connected;
+}
+
+(async () => {
+
+    var result = await startSpotifyPlayer();
+    console.log("RESULT: " + result);
+    return result;
+    
+})();

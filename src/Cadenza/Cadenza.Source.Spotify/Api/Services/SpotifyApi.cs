@@ -25,7 +25,7 @@ public class SpotifyApi : ISpotifyApi
             ? await response.Content.ReadFromJsonAsync<ApiError>()
             : null;
 
-        return new ApiResponse(error.Error);
+        return new ApiResponse(error?.Error);
     }
 
     public async Task<ApiResponse<T>> Get<T>(string url) where T : class
