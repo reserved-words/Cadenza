@@ -1,4 +1,6 @@
 ﻿
+window.onSpotifyWebPlaybackSDKReady = () => {};
+
 async function waitForSpotifyWebPlaybackSDKToLoad() {
     return new Promise(resolve => {
         if (window.Spotify) {
@@ -9,7 +11,7 @@ async function waitForSpotifyWebPlaybackSDKToLoad() {
             };
         }
     });
-};
+}
 
 async function startSpotifyPlayer() {
 
@@ -43,10 +45,10 @@ async function startSpotifyPlayer() {
     return connected;
 }
 
-(async () => {
+//(async () => {
 
-    var result = await startSpotifyPlayer();
-    console.log("RESULT: " + result);
-    return result;
+//    var result = await startSpotifyPlayer();
+//    console.log("RESULT: " + result);
+//    return result;
     
-})();
+//})();

@@ -17,5 +17,8 @@
         public string TopTracks { get; set; }
         public string UpdateNowPlaying { get; set; }
         public string Unfavourite { get; set; }
+        public string SpotifyAuthHeader { get; set; }
+        public string SpotifyAuthUrl { get; set; }
+        public string SpotifyTokenUrl { get; set; }
     }
 }

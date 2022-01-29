@@ -1,5 +1,4 @@
-﻿using Cadenza.Core;
-
+﻿
 namespace Cadenza;
 
 public class ToolbarBase : ComponentBase
@@ -27,6 +26,18 @@ public class ToolbarBase : ComponentBase
         SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Spotify, Enabled = true });
 
         AppConsumer.SourceErrored += OnSourceErrored;
+        AppConsumer.SourceEnabled += OnSourceEnabled;
+    }
+
+    private Task OnSourceEnabled(object sender, SourceEventArgs e)
+    {
+        var status = SourceStatuses.Single(s => s.Source == e.Source);
+        status.Loading = false;
+        status.Enabled = true;
+        status.ErrorTitle = null;
+        status.ErrorMessage = null;
+        status.ShowError = false;
+        return Task.CompletedTask;
     }
 
     protected async Task OnSync()
@@ -48,6 +59,7 @@ public class ToolbarBase : ComponentBase
             Notification.Error($"{e.Source} error: {e.Error}");
         }
 
+        status.Loading = false;
         status.Enabled = false;
         status.ErrorTitle = $"{e.Source} disabled";
         status.ErrorMessage = e.Error;
@@ -72,6 +84,7 @@ public class ToolbarBase : ComponentBase
 public class SourceStatus
 {
     public LibrarySource Source { get; set; }
+    public bool Loading { get; set; } = true;
     public bool Enabled { get; set; }
     public string ErrorTitle { get; set; }
     public string ErrorMessage { get; set; }

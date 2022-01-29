@@ -1,6 +1,4 @@
-﻿using Cadenza.Core;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public class IndexBase : ComponentBase
 {
@@ -10,11 +8,39 @@ public class IndexBase : ComponentBase
     [Inject]
     public IStoreSetter Store { get; set; }
 
-    public bool ClientSideStartUpDone => NavigationManager.Uri.Contains("/player");
+    [Inject]
+    public IAppConsumer App { get; set; }
+
+    public bool IsSpotifyLoaded { get; private set; }
+    public bool IsLastFmLoaded { get; private set; } = true; // todo
+    public bool IsLocalLoaded { get; private set; } = true; // todo
 
     protected override async Task OnInitializedAsync()
     {
+        App.SourceEnabled += OnSourceEnabled;
+        App.SourceErrored += OnSourceErrored;
+
         await Store.SetValue(StoreKey.CurrentTrackSource, null);
         await Store.SetValue(StoreKey.CurrentTrack, null);
+    }
+
+    private Task OnSourceErrored(object sender, SourceEventArgs e)
+    {
+        if (e.Source == LibrarySource.Spotify)
+        {
+            IsSpotifyLoaded = true;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnSourceEnabled(object sender, SourceEventArgs e)
+    {
+        if (e.Source == LibrarySource.Spotify)
+        {
+            IsSpotifyLoaded = true;
+        }
+
+        return Task.CompletedTask;
     }
 }

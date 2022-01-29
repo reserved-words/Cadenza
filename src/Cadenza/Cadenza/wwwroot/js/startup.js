@@ -9,27 +9,27 @@ var showOnHover = function (row, show) {
 
 var connectProviders = function(){
 
-    if (!doesUrlContain("player")) {
+    //if (!doesUrlContain("player")) {
 
-        var spl = getParam("spl");
-        var spr = getParam("spr");
-        var lfm = getParam("lfm");
+    //    var spl = getParam("spl");
+    //    var spr = getParam("spr");
+    //    var lfm = getParam("lfm");
 
-        if (!spl && !isSpotifyLoggedIn()) {
-            spotifyLogin();
-            return;
-        }
-        else if (!lfm && !isLastFmLoggedIn()) {
-            lastFmLogin();
-            return;
-        }
-        else if (!spr) {
-            spotifyRefresh();
-            return;
-        }
+    //    if (!spl && !isSpotifyLoggedIn()) {
+    //        spotifyLogin();
+    //        return;
+    //    }
+    //    else if (!lfm && !isLastFmLoggedIn()) {
+    //        lastFmLogin();
+    //        return;
+    //    }
+    //    else if (!spr) {
+    //        spotifyRefresh();
+    //        return;
+    //    }
 
-        window.location.href = "/player";
-    }
+      //  window.location.href = "/player";
+    //}
 
     //// Need to make sure app can handle if permissions revoked for either account while in use
 }
@@ -44,11 +44,11 @@ $(function () {
         showOnHover($(this), false);
     });
 
-    $.getJSON("../appsettings.json", function (settings) {
-        apiSettings = settings.PlayerApi;
-        lastFmSettings = settings.LastFm;
-        spotifySettings = settings.Spotify;
-        connectProviders();
-    });
+    //$.getJSON("../appsettings.json", function (settings) {
+    //    apiSettings = settings.PlayerApi;
+    //    lastFmSettings = settings.LastFm;
+    //    spotifySettings = settings.Spotify;
+    //    connectProviders();
+    //});
 
 });

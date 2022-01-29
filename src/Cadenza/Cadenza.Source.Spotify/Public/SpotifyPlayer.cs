@@ -8,7 +8,7 @@ public class SpotifyPlayer : ISourcePlayer
 
     public SpotifyPlayer(IHttpHelper httpClient, ISpotifyApiConfig config, IJSRuntime js)
     {
-        var errorHandler = new ErrorHandler(js);
+        var errorHandler = new SpotifyInterop(js);
         var api = new SpotifyApi(httpClient, config);
         var playerApi = new SpotifyPlayerApi(api, errorHandler);
         _internalPlayer = new InternalPlayer(playerApi);

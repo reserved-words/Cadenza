@@ -10,6 +10,8 @@ public interface IAppController
     Task SkipPrevious();
 
     Task LoadingPlaylist();
+
+    Task EnableSource(LibrarySource source);
     Task ProcessSourceError(SourceException ex);
 
     Task Play(PlaylistDefinition playlistDefinition);

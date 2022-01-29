@@ -14,4 +14,5 @@ public interface IAppConsumer
     event LibraryEventHandler LibraryUpdated;
 
     event SourceEventHandler SourceErrored;
+    event SourceEventHandler SourceEnabled;
 }

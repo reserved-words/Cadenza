@@ -21,6 +21,8 @@ public class AppService : IAppConsumer, IAppController
     public event PlaylistEventHandler PlaylistStarted;
     
     public event LibraryEventHandler LibraryUpdated;
+
+    public event SourceEventHandler SourceEnabled;
     public event SourceEventHandler SourceErrored;
 
     private IPlaylist _currentPlaylist;
@@ -148,5 +150,11 @@ public class AppService : IAppConsumer, IAppController
         // If try to play albums / playlists / artists from this source, display error again
         // In the UI disable all albums / playlists / artists that are only for a disabled source
         // Add a check when skip to a new track - if in a disabled source, skip again
+    }
+
+    public Task EnableSource(LibrarySource source)
+    {
+        SourceEnabled?.Invoke(this, new SourceEventArgs(source, null));
+        return Task.CompletedTask;
     }
 }
