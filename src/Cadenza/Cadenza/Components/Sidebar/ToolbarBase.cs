@@ -41,11 +41,17 @@ public class ToolbarBase : ComponentBase
 
     private Task OnSourceErrored(object sender, SourceEventArgs e)
     {
-        Notification.Error($"{e.Source} error: {e.Error}");
         var status = SourceStatuses.Single(s => s.Source == e.Source);
+        
+        if (status.ErrorMessage != e.Error)
+        {
+            Notification.Error($"{e.Source} error: {e.Error}");
+        }
+
         status.Enabled = false;
         status.ErrorTitle = $"{e.Source} disabled";
         status.ErrorMessage = e.Error;
+
         StateHasChanged();
         return Task.CompletedTask;
     }
