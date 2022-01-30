@@ -1,9 +1,10 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
-public class LastFmAuth : ILastFmAuth
+public class LastFmAuth : IAuthoriser
 {
     private readonly IHttpHelper _http;
     private readonly IOptions<LastFmSettings> _config;
@@ -16,7 +17,7 @@ public class LastFmAuth : ILastFmAuth
         _http = http;
     }
 
-    public string GetAuthUrl(string redirectUri)
+    public Task<string> GetAuthUrl(string redirectUri)
     {
         var parameters = new Dictionary<string, string>()
         {
@@ -24,7 +25,8 @@ public class LastFmAuth : ILastFmAuth
             { "cb", redirectUri}
         };
 
-        return _config.Value.AuthUrl.Add(parameters);
+        var result = _config.Value.AuthUrl.Add(parameters);
+        return Task.FromResult(result);
     }
 
     public async Task<string> CreateSession(string token)

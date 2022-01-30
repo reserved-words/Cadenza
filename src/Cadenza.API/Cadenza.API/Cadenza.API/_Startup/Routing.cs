@@ -24,7 +24,7 @@ public static class Routing
 
     private static WebApplication AddLastFmRoutes(this WebApplication app)
     {
-        var lfmAuth = app.Services.GetRequiredService<ILastFmAuth>();
+        var lfmAuth = app.Services.GetRequiredService<IAuthoriser>();
 
         var history = app.Services.GetRequiredService<History>();
         var scrobbler = app.Services.GetRequiredService<Scrobbler>();
@@ -49,7 +49,7 @@ public static class Routing
 
     private static WebApplication AddSpotifyRoutes(this WebApplication app)
     {
-        var spotify = app.Services.GetRequiredService<Authoriser>();
+        var spotify = app.Services.GetRequiredService<Core.Spotify.IAuthoriser>();
         app.MapGet(ApiEndpoints.SpotifyAuthHeader, () => spotify.GetAuthHeader());
         app.MapGet(ApiEndpoints.SpotifyTokenUrl, () => spotify.GetTokenUrl());
         app.MapGet(ApiEndpoints.SpotifyAuthUrl, (string redirectUri) => spotify.GetAuthUrl(redirectUri));
