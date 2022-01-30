@@ -13,17 +13,11 @@ async function waitForSpotifyWebPlaybackSDKToLoad() {
     });
 }
 
-async function startSpotifyPlayer() {
+async function startSpotifyPlayer(accessToken) {
 
     const { Player } = await waitForSpotifyWebPlaybackSDKToLoad();
 
     console.log("The Web Playback SDK has loaded.");
-
-    if (window.location.href.indexOf("player") < 0) {
-        return;
-    }
-
-    var accessToken = window.localStorage.getItem('SpotifyAccessToken');
 
     const sdk = new Player({
         name: "Cadenza",
@@ -36,19 +30,22 @@ async function startSpotifyPlayer() {
         console.log('authentication error: ' + message);
     });
 
+    sdk.on('initialization_error', ({ message }) => {
+        console.error('Failed to initialize', message);
+    });
+
+    sdk.on('account_error', ({ message }) => {
+        console.error('Failed to validate Spotify account', message);
+    });
+
+    sdk.on('playback_error', ({ message }) => {
+        console.error('Failed to perform playback', message);
+    });
+
     sdk.on("ready", ({ device_id }) => {
         console.log("Device ID = " + device_id);
         window.localStorage.setItem('SpotifyDeviceId', device_id);
     });
 
-    let connected = await sdk.connect();
-    return connected;
+    return await sdk.connect();
 }
-
-//(async () => {
-
-//    var result = await startSpotifyPlayer();
-//    console.log("RESULT: " + result);
-//    return result;
-    
-//})();

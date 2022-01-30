@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Spotify;
 
-public class SpotifyInterop : IErrorHandler
+public class SpotifyInterop : IErrorHandler, ISpotifyStartup
 {
     private readonly IJSRuntime _js;
 
@@ -16,9 +16,9 @@ public class SpotifyInterop : IErrorHandler
         return await _js.InvokeAsync<bool>("spotifyDeviceNotFound");
     }
 
-    public async Task<bool> SpotifyConnect()
+    public async Task<bool> ConnectPlayer(string accessToken)
     {
-        return await _js.InvokeAsync<bool>("spotifyConnect");
+        return await _js.InvokeAsync<bool>("connectSpotifyPlayer", accessToken);
     }
 
     public async Task UnexpectedError()

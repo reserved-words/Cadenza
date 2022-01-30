@@ -1,4 +1,6 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.Common;
+using Cadenza.Source.Spotify;
+using Cadenza.Utilities;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
@@ -25,6 +27,9 @@ public class SpotifyConnectBase : ComponentBase
     [Inject]
     public IAppController App { get; set; }
 
+    [Inject]
+    public ISpotifyStartup StartupService { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         if (QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query).TryGetValue("code", out var code))
@@ -32,16 +37,24 @@ public class SpotifyConnectBase : ComponentBase
             var tokens = await GetSpotifyTokens(code);
             await SaveSpotifyTokens(tokens);
             await RefreshSpotify(tokens.refresh_token);
-
-            // Enable player as well
-
             NavigationManager.NavigateTo("/");
             return;
         }
 
-        if (await IsSpotifyLoggedIn())
+        var accessToken = await StoreGetter.GetString(StoreKey.SpotifyAccessToken);
+        if (accessToken != null)
         {
-            await App.EnableSource(LibrarySource.Spotify);
+            var connected = await StartupService.ConnectPlayer(accessToken);
+            // Change to get Device ID here
+
+            if (connected)
+            {
+                await App.EnableSource(LibrarySource.Spotify);
+            }
+            else
+            {
+                await App.DisableSource(new SourceException(LibrarySource.Spotify, SourceError.ConnectFailure, "Failed to connect"));
+            }
             return;
         }
 
@@ -107,11 +120,6 @@ public class SpotifyConnectBase : ComponentBase
         var apiUrl = $"{apiBaseUrl}{apiEndpoint}";
         var response = await Http.Get(apiUrl);
         return await response.Content.ReadAsStringAsync();
-    }
-
-    private async Task<bool> IsSpotifyLoggedIn()
-    {
-        return await StoreGetter.GetString(StoreKey.SpotifyAccessToken) != null;
     }
 
     private async Task RefreshSpotify(string refreshToken)

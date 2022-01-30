@@ -132,9 +132,12 @@ public class AppService : IAppConsumer, IAppController
         _currentPlaylist = null;
     }
 
-    public async Task ProcessSourceError(SourceException ex)
+    public async Task DisableSource(SourceException ex)
     {
         SourceErrored?.Invoke(this, new SourceEventArgs(ex.Source, ex.Message));
+
+        if (_currentPlaylist == null)
+            return;
 
         if (_currentPlaylist.MixedSource)
         {

@@ -2,39 +2,10 @@
 
 <MudPaper Elevation="3" Outlined="true" Class="d-flex flex-row">
     <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnSync" Style="flex: unset;" Class="mr-auto" />
+
     @foreach (var sourceStatus in SourceStatuses)
     {
-        var color = sourceStatus.Enabled ? Color.Dark : Color.Error;
-        var disabled = sourceStatus.Enabled;
-
-        if (sourceStatus.Loading)
-        {
-            <MudProgressCircular Color="Color.Default" 
-                                 Indeterminate="true"
-                                 Size="@Size.Small" />
-        }
-        else if (sourceStatus.Enabled)
-        {
-            <MudIconButton Icon="@sourceStatus.Source.GetIcon()"
-                   Style="flex: unset;"
-                   Color="@color"
-                   Disabled="@disabled"
-                   OnClick="@(() => ShowSourceError(sourceStatus))" />
-        }
-        else
-        {
-            <MudPopover Open="@sourceStatus.ShowError"
-                Fixed="true">
-                <MudAlert Severity="Severity.Error"
-                  ContentAlignment="HorizontalAlignment.Center"
-                  Dense="true"
-                  Variant="@Variant.Filled"
-                  ShowCloseIcon="true"
-                  CloseIconClicked="(() => HideSourceError(sourceStatus))">
-                    <MudText Typo="@Typo.body1">@sourceStatus.ErrorTitle</MudText>
-                    <MudText Typo="@Typo.body2">@sourceStatus.ErrorMessage</MudText>
-                </MudAlert>
-            </MudPopover>
-        }
+        <ToolbarSource Model="@sourceStatus" />
     }
+
 </MudPaper>

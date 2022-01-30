@@ -15,6 +15,8 @@ public class IndexBase : ComponentBase
     public bool IsLastFmLoaded { get; private set; } = true; // todo
     public bool IsLocalLoaded { get; private set; } = true; // todo
 
+    public bool IsAllLoaded => IsSpotifyLoaded && IsLastFmLoaded && IsLocalLoaded;
+
     protected override async Task OnInitializedAsync()
     {
         App.SourceEnabled += OnSourceEnabled;
@@ -31,6 +33,7 @@ public class IndexBase : ComponentBase
             IsSpotifyLoaded = true;
         }
 
+        StateHasChanged();
         return Task.CompletedTask;
     }
 
@@ -41,6 +44,7 @@ public class IndexBase : ComponentBase
             IsSpotifyLoaded = true;
         }
 
+        StateHasChanged();
         return Task.CompletedTask;
     }
 }

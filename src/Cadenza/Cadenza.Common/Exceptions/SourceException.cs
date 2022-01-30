@@ -17,5 +17,6 @@ public class SourceException : Exception
 
 public enum SourceError
 {
+    ConnectFailure,
     PlayFailure
 }

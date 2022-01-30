@@ -1,0 +1,50 @@
+﻿@if (Model.Loading)
+{
+
+}
+else
+{
+    <MudIconButton Icon="@Model.Source.GetIcon()"
+               Style="flex: unset;"
+               Color="@Color"
+               Disabled="@Disabled"
+               OnClick="@(() => ShowError())" />
+
+    if (!Model.Enabled)
+    {
+        <MudPopover Open="@Model.ShowError"
+            Fixed="true">
+            <MudAlert Severity="Severity.Error"
+              ContentAlignment="HorizontalAlignment.Center"
+              Dense="true"
+              Variant="@Variant.Filled"
+              ShowCloseIcon="true"
+              CloseIconClicked="(() => HideError())">
+                <MudText Typo="@Typo.body1">@Model.ErrorTitle</MudText>
+                <MudText Typo="@Typo.body2">@Model.ErrorMessage</MudText>
+            </MudAlert>
+        </MudPopover>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public SourceStatus Model { get; set; }
+
+    private Color Color => Model.Enabled ? Color.Dark : Color.Error;
+
+    private bool Disabled => Model.Enabled;
+
+    private void HideError()
+    {
+        Model.ShowError = false;
+        StateHasChanged();
+    }
+
+    private void ShowError()
+    {
+        Model.ShowError = true;
+        StateHasChanged();
+    }
+}

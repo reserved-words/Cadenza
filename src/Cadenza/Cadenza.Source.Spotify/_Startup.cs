@@ -19,6 +19,7 @@ public static class Startup
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
             .AddTransient<IOverridesService, SpotifyOverridesService>()
+            .AddTransient<ISpotifyStartup, SpotifyInterop>()
             .AddStaticSourceLibrary<SpotifyApiLibrary, SpotifyOverridesLibrary>(LibrarySource.Spotify);
     }
 

@@ -22,8 +22,8 @@ public class ToolbarBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Local, Enabled = true });
-        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Spotify, Enabled = true });
+        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Local, Enabled = true, Loading = false });
+        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Spotify, Enabled = true, Loading = true });
 
         AppConsumer.SourceErrored += OnSourceErrored;
         AppConsumer.SourceEnabled += OnSourceEnabled;
@@ -32,11 +32,8 @@ public class ToolbarBase : ComponentBase
     private Task OnSourceEnabled(object sender, SourceEventArgs e)
     {
         var status = SourceStatuses.Single(s => s.Source == e.Source);
-        status.Loading = false;
-        status.Enabled = true;
-        status.ErrorTitle = null;
-        status.ErrorMessage = null;
-        status.ShowError = false;
+        status.MarkAsEnabled();
+        StateHasChanged();
         return Task.CompletedTask;
     }
 
@@ -53,40 +50,41 @@ public class ToolbarBase : ComponentBase
     private Task OnSourceErrored(object sender, SourceEventArgs e)
     {
         var status = SourceStatuses.Single(s => s.Source == e.Source);
-        
+
         if (status.ErrorMessage != e.Error)
         {
             Notification.Error($"{e.Source} error: {e.Error}");
         }
 
-        status.Loading = false;
-        status.Enabled = false;
-        status.ErrorTitle = $"{e.Source} disabled";
-        status.ErrorMessage = e.Error;
-
+        status.MarkAsErrored(e.Error);
         StateHasChanged();
         return Task.CompletedTask;
-    }
-
-    protected void HideSourceError(SourceStatus sourceStatus)
-    {
-        sourceStatus.ShowError = false;
-        StateHasChanged();
-    }
-
-    protected void ShowSourceError(SourceStatus sourceStatus)
-    {
-        sourceStatus.ShowError = true;
-        StateHasChanged();
     }
 }
 
 public class SourceStatus
 {
     public LibrarySource Source { get; set; }
-    public bool Loading { get; set; } = true;
+    public bool Loading { get; set; }
     public bool Enabled { get; set; }
     public string ErrorTitle { get; set; }
     public string ErrorMessage { get; set; }
     public bool ShowError { get; set; }
+
+    public void MarkAsEnabled()
+    {
+        Loading = false;
+        Enabled = true;
+        ErrorTitle = null;
+        ErrorMessage = null;
+        ShowError = false;
+    }
+
+    public void MarkAsErrored(string error)
+    {
+        Loading = false;
+        Enabled = false;
+        ErrorTitle = $"{Source} disabled";
+        ErrorMessage = error;
+    }
 }

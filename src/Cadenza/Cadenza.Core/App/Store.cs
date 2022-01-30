@@ -109,7 +109,7 @@ public class Store : IStoreGetter, IStoreSetter
             || !newValue.All(s => currentValue.Contains(s.ToString()));
     }
 
-    private async Task SetValue(StoreKey key, string value)
+    public async Task SetValue(StoreKey key, string value)
     {
         await _js.InvokeVoidAsync("setStoredValue", key.ToString(), value);
     }

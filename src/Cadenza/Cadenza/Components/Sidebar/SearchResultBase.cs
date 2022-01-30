@@ -31,7 +31,7 @@ public class SearchResultBase : ComponentBase
         }
         catch (SourceException ex)
         {
-            await App.ProcessSourceError(ex);
+            await App.DisableSource(ex);
         }
     }
 

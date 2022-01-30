@@ -1,7 +1,7 @@
 ﻿
-async function spotifyConnect() {
+async function connectSpotifyPlayer(accessToken) {
     // for now just return true or false but change to return the device ID
-    return await startSpotifyPlayer();
+    return await startSpotifyPlayer(accessToken);
 }
 
 var spotifyDeviceNotFound = function(){

@@ -12,7 +12,7 @@ public interface IAppController
     Task LoadingPlaylist();
 
     Task EnableSource(LibrarySource source);
-    Task ProcessSourceError(SourceException ex);
+    Task DisableSource(SourceException ex);
 
     Task Play(PlaylistDefinition playlistDefinition);
 }
