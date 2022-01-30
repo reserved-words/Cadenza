@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <PackageReference Include="Cadenza.Domain" Version="1.0.12" />
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.5" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
   </ItemGroup>
 
 </Project>

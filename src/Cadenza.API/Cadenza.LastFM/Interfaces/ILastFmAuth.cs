@@ -3,5 +3,5 @@
 public interface ILastFmAuth
 {
     string GetAuthUrl(string redirectUri);
-    string GetSessionKeyUrl(string token);
+    Task<string> CreateSession(string token);
 }

@@ -67,6 +67,12 @@ stages:
         command: 'pack'
         packagesToPack: '**/Cadenza.Library.csproj'
         versioningScheme: 'off'        
+    - task: DotNetCoreCLI@2
+      displayName: 'Pack Cadenza.API.Wrapper'
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/Cadenza.API.Wrapper.csproj'
+        versioningScheme: 'off'        
     - task: NuGetCommand@2
       displayName: 'Push Packages'
       inputs:

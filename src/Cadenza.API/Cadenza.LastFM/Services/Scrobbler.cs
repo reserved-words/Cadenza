@@ -1,4 +1,6 @@
-﻿namespace Cadenza.LastFM;
+﻿using Cadenza.API.Core.LastFM;
+
+namespace Cadenza.LastFM;
 
 public class Scrobbler
 {
