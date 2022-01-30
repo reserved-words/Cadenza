@@ -7,8 +7,12 @@
 {
     <SpotifyConnect />
 }
-
-<MudLayout>
+else if (!IsLastFmLoaded)
+{
+    <LastFmConnect />
+}
+else {
+    <MudLayout>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
         <Sidebar />
     </MudDrawer>
@@ -32,3 +36,4 @@
         }
     </MudMainContent>
 </MudLayout>
+}

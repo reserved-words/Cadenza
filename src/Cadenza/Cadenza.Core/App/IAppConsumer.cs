@@ -13,6 +13,9 @@ public interface IAppConsumer
 
     event LibraryEventHandler LibraryUpdated;
 
-    event SourceEventHandler SourceErrored;
-    event SourceEventHandler SourceEnabled;
+    event ConnectorEventHandler ConnectorDisabled;
+    event ConnectorEventHandler ConnectorEnabled;
+
+    bool IsInitialised(Connector connector);
+    bool IsEnabled(Connector connector);
 }

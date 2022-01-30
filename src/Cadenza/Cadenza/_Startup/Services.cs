@@ -6,6 +6,8 @@ using Cadenza.Source.Spotify;
 using Cadenza.Core;
 using Cadenza.Common;
 using Cadenza.Utilities;
+using Cadenza.LastFM;
+using Cadenza.API.Wrapper;
 
 namespace Cadenza;
 
@@ -90,13 +92,15 @@ public static class Services
         return services.AddTransient<IPlayTracker, LastFmService>()
             .AddTransient<IFavouritesConsumer, LastFmService>()
             .AddTransient<IFavouritesController, LastFmService>()
-            .AddTransient<IHistory, LastFmService>();
+            .AddTransient<ILastFmStartup, LastFmStartup>()
+            .AddLastFMCore();
     }
 
     private static IServiceCollection AddSources(this IServiceCollection services)
     {
         return services
             .AddSpotifySource<SpotifyConfig>()
+            .AddSpotifyCore()
             .AddLocalSource<HtmlPlayer>();
     }
 

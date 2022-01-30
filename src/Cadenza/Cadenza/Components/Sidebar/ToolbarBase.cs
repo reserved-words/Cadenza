@@ -18,20 +18,21 @@ public class ToolbarBase : ComponentBase
     [Inject]
     public ISyncService SyncService { get; set; }
 
-    public List<SourceStatus> SourceStatuses { get; set; } = new List<SourceStatus>();
+    public List<ConnectorStatus> ConnectorStatuses { get; set; } = new List<ConnectorStatus>();
 
     protected override void OnInitialized()
     {
-        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Local, Enabled = true, Loading = false });
-        SourceStatuses.Add(new SourceStatus { Source = LibrarySource.Spotify, Enabled = true, Loading = true });
+        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.LastFm, Enabled = true, Loading = true });
+        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.Local, Enabled = true, Loading = false });
+        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.Spotify, Enabled = true, Loading = true });
 
-        AppConsumer.SourceErrored += OnSourceErrored;
-        AppConsumer.SourceEnabled += OnSourceEnabled;
+        AppConsumer.ConnectorDisabled += OnConnectorDisabled;
+        AppConsumer.ConnectorEnabled += OnConnectorEnabled;
     }
 
-    private Task OnSourceEnabled(object sender, SourceEventArgs e)
+    private Task OnConnectorEnabled(object sender, ConnectorEventArgs e)
     {
-        var status = SourceStatuses.Single(s => s.Source == e.Source);
+        var status = ConnectorStatuses.Single(s => s.Connector == e.Connector);
         status.MarkAsEnabled();
         StateHasChanged();
         return Task.CompletedTask;
@@ -47,13 +48,13 @@ public class ToolbarBase : ComponentBase
         }
     }
 
-    private Task OnSourceErrored(object sender, SourceEventArgs e)
+    private Task OnConnectorDisabled(object sender, ConnectorEventArgs e)
     {
-        var status = SourceStatuses.Single(s => s.Source == e.Source);
+        var status = ConnectorStatuses.Single(s => s.Connector == e.Connector);
 
         if (status.ErrorMessage != e.Error)
         {
-            Notification.Error($"{e.Source} error: {e.Error}");
+            Notification.Error($"{e.Connector} error: {e.Error}");
         }
 
         status.MarkAsErrored(e.Error);
@@ -62,9 +63,9 @@ public class ToolbarBase : ComponentBase
     }
 }
 
-public class SourceStatus
+public class ConnectorStatus
 {
-    public LibrarySource Source { get; set; }
+    public Connector Connector { get; set; }
     public bool Loading { get; set; }
     public bool Enabled { get; set; }
     public string ErrorTitle { get; set; }
@@ -84,7 +85,7 @@ public class SourceStatus
     {
         Loading = false;
         Enabled = false;
-        ErrorTitle = $"{Source} disabled";
+        ErrorTitle = $"{Connector} disabled";
         ErrorMessage = error;
     }
 }

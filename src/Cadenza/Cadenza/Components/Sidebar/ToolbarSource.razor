@@ -4,7 +4,7 @@
 }
 else
 {
-    <MudIconButton Icon="@Model.Source.GetIcon()"
+    <MudIconButton Icon="@Model.Connector.GetIcon()"
                Style="flex: unset;"
                Color="@Color"
                Disabled="@Disabled"
@@ -30,7 +30,7 @@ else
 @code {
 
     [Parameter]
-    public SourceStatus Model { get; set; }
+    public ConnectorStatus Model { get; set; }
 
     private Color Color => Model.Enabled ? Color.Dark : Color.Error;
 

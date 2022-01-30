@@ -1,28 +1,27 @@
-﻿using Cadenza.Core;
-using Microsoft.Extensions.Options;
+﻿using Cadenza.API.Core.Spotify;
+using Cadenza.Core;
 using System.Net.Http.Json;
-using System.Web;
 
 namespace Cadenza.Source.Spotify;
 
 public class SpotifyStartup : ISpotifyStartup
 {
+    private readonly IAuthoriser _authoriser;
     private readonly IStoreGetter _storeGetter;
     private readonly IStoreSetter _storeSetter;
     private readonly IHttpHelper _http;
-    private readonly IOptions<PlayerApiConfig> _playerApi;
     private readonly ISpotifyInterop _interop;
 
-    public SpotifyStartup(IStoreGetter storeGetter, IStoreSetter storeSetter, IHttpHelper http, IOptions<PlayerApiConfig> playerApi, ISpotifyInterop interop)
+    public SpotifyStartup(IStoreGetter storeGetter, IStoreSetter storeSetter, IHttpHelper http, ISpotifyInterop interop, IAuthoriser authoriser)
     {
         _storeGetter = storeGetter;
         _storeSetter = storeSetter;
         _http = http;
-        _playerApi = playerApi;
         _interop = interop;
+        _authoriser = authoriser;
     }
 
-    public async Task ConnectToApi(string code, string redirectUri)
+    public async Task StartSession(string code, string redirectUri)
     {
         var tokens = await GetSpotifyTokens(code, redirectUri);
         await SaveSpotifyTokens(tokens);
@@ -36,9 +35,7 @@ public class SpotifyStartup : ISpotifyStartup
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
-        var apiUrl = GetApiUrl(e => e.SpotifyAuthUrl) + HttpUtility.UrlEncode(redirectUri);
-        var response = await _http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
+        return await _authoriser.GetAuthUrl(redirectUri);
     }
 
     public async Task<bool> InitialisePlayer(string accessToken)
@@ -46,16 +43,9 @@ public class SpotifyStartup : ISpotifyStartup
         return await _interop.ConnectPlayer(accessToken);
     }
 
-    private async Task<string> GetSpotifyAuthHeader()
-    {
-        var apiUrl = GetApiUrl(e => e.SpotifyAuthHeader);
-        var response = await _http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
-    }
-
     private async Task<SpotifyTokens> GetSpotifyTokens(string code, string redirectUri)
     {
-        var authHeader = await GetSpotifyAuthHeader();
+        var authHeader = await _authoriser.GetAuthHeader();
 
         var requestData = new Dictionary<string, string>
         {
@@ -64,25 +54,11 @@ public class SpotifyStartup : ISpotifyStartup
             { "grant_type", "authorization_code" }
         };
 
-        var tokenUrl = await GetSpotifyTokenUrl();
+        var tokenUrl = await _authoriser.GetTokenUrl();
 
         var response = await _http.Post(tokenUrl, requestData, authHeader);
 
         return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
-    }
-
-    private async Task<string> GetSpotifyTokenUrl()
-    {
-        var apiUrl = GetApiUrl(e => e.SpotifyTokenUrl);
-        var response = await _http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
-    }
-
-    private string GetApiUrl(Func<PlayerApiEndpoints, string> getEndpoint)
-    {
-        var apiBaseUrl = _playerApi.Value.BaseUrl;
-        var apiEndpoint = getEndpoint(_playerApi.Value.Endpoints);
-        return $"{apiBaseUrl}{apiEndpoint}";
     }
 
     private async Task RefreshSpotify(string refreshToken)
@@ -93,8 +69,8 @@ public class SpotifyStartup : ISpotifyStartup
             { "refresh_token", refreshToken }
         };
 
-        var tokenUrl = await GetSpotifyTokenUrl();
-        var authHeader = await GetSpotifyAuthHeader();
+        var tokenUrl = await _authoriser.GetTokenUrl();
+        var authHeader = await _authoriser.GetAuthHeader();
 
         var response = await _http.Post(tokenUrl, requestData, authHeader);
 

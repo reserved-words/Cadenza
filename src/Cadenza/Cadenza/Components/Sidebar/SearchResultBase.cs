@@ -29,9 +29,9 @@ public class SearchResultBase : ComponentBase
         {
             await Play();
         }
-        catch (SourceException ex)
+        catch (ConnectorException ex)
         {
-            await App.DisableSource(ex);
+            await App.DisableConnector(ex.Connector, ex.Error, ex.Message);
         }
     }
 

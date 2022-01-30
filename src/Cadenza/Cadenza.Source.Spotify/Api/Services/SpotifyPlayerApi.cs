@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿using Cadenza.Core;
+
+namespace Cadenza.Source.Spotify;
 
 public class SpotifyPlayerApi : ISpotifyPlayerApi
 {
@@ -35,7 +37,7 @@ public class SpotifyPlayerApi : ISpotifyPlayerApi
 
             if (!resolved)
             {
-                throw new SourceException(LibrarySource.Spotify, SourceError.PlayFailure, "Device not found");
+                throw new ConnectorException(Connector.Spotify, ConnectorError.PlaybackFailure, "Device not found");
             }
             else
             {

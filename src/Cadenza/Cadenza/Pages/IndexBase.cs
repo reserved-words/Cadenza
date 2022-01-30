@@ -11,39 +11,23 @@ public class IndexBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool IsSpotifyLoaded { get; private set; }
-    public bool IsLastFmLoaded { get; private set; } = true; // todo
-    public bool IsLocalLoaded { get; private set; } = true; // todo
+    public bool IsSpotifyLoaded => App.IsInitialised(Connector.Spotify);
+    public bool IsLastFmLoaded => App.IsInitialised(Connector.LastFm);
+    public bool IsLocalLoaded => App.IsInitialised(Connector.Local);
 
     public bool IsAllLoaded => IsSpotifyLoaded && IsLastFmLoaded && IsLocalLoaded;
 
     protected override async Task OnInitializedAsync()
     {
-        App.SourceEnabled += OnSourceEnabled;
-        App.SourceErrored += OnSourceErrored;
+        App.ConnectorEnabled += OnConnectorInitialised;
+        App.ConnectorDisabled += OnConnectorInitialised;
 
         await Store.SetValue(StoreKey.CurrentTrackSource, null);
         await Store.SetValue(StoreKey.CurrentTrack, null);
     }
 
-    private Task OnSourceErrored(object sender, SourceEventArgs e)
+    private Task OnConnectorInitialised(object sender, ConnectorEventArgs e)
     {
-        if (e.Source == LibrarySource.Spotify)
-        {
-            IsSpotifyLoaded = true;
-        }
-
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnSourceEnabled(object sender, SourceEventArgs e)
-    {
-        if (e.Source == LibrarySource.Spotify)
-        {
-            IsSpotifyLoaded = true;
-        }
-
         StateHasChanged();
         return Task.CompletedTask;
     }

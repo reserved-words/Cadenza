@@ -1,4 +1,4 @@
-﻿using Cadenza.Core;
+﻿using Cadenza.API.Wrapper;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
 using Cadenza.Utilities;
@@ -22,7 +22,7 @@ public static class Configuration
         builder.Services.ConfigureLogger(builder.Configuration, "Logging");
         builder.Services.ConfigureSpotifyOverrides(builder.Configuration, "SpotifyOverrides");
         builder.Services.ConfigureLocalApi(builder.Configuration, "LocalApi");
-        builder.Services.Configure<PlayerApiConfig>(builder.Configuration.GetSection("PlayerApi"));
+        builder.Services.ConfigureCoreAPI(builder.Configuration, "PlayerApi");
 
         return builder;
     }

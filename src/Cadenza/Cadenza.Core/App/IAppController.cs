@@ -11,8 +11,8 @@ public interface IAppController
 
     Task LoadingPlaylist();
 
-    Task EnableSource(LibrarySource source);
-    Task DisableSource(SourceException ex);
+    Task EnableConnector(Connector connector);
+    Task DisableConnector(Connector connector, ConnectorError error, string message);
 
     Task Play(PlaylistDefinition playlistDefinition);
 }

@@ -3,7 +3,7 @@
 <MudPaper Elevation="3" Outlined="true" Class="d-flex flex-row">
     <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnSync" Style="flex: unset;" Class="mr-auto" />
 
-    @foreach (var sourceStatus in SourceStatuses)
+    @foreach (var sourceStatus in ConnectorStatuses)
     {
         <ToolbarSource Model="@sourceStatus" />
     }

@@ -22,11 +22,12 @@ public class SpotifyConnectBase : ComponentBase
 
     private string RedirectUri => Config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("code", out var code))
         {
-            await Connect(code);
+            await StartupService.StartSession(code, RedirectUri);
+            NavigationManager.NavigateTo("/");
             return;
         }
 
@@ -34,23 +35,12 @@ public class SpotifyConnectBase : ComponentBase
 
         if (accessToken == null)
         {
-            await Authorise();
+            var authUrl = await StartupService.GetAuthUrl(RedirectUri);
+            NavigationManager.NavigateTo(authUrl);
             return;
         }
 
         await InitialisePlayer(accessToken);
-    }
-
-    private async Task Authorise()
-    {
-        var authUrl = await StartupService.GetAuthUrl(RedirectUri);
-        NavigationManager.NavigateTo(authUrl);
-    }
-
-    private async Task Connect(string code)
-    {
-        await StartupService.ConnectToApi(code, RedirectUri);
-        NavigationManager.NavigateTo("/");
     }
 
     private async Task InitialisePlayer(string accessToken)
@@ -59,11 +49,11 @@ public class SpotifyConnectBase : ComponentBase
 
         if (connected)
         {
-            await App.EnableSource(LibrarySource.Spotify);
+            await App.EnableConnector(Connector.Spotify);
         }
         else
         {
-            await App.DisableSource(new SourceException(LibrarySource.Spotify, SourceError.ConnectFailure, "Failed to connect"));
+            await App.DisableConnector(Connector.Spotify, ConnectorError.ConnectFailure, "Failed to connect");
         }
     }
 }
