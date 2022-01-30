@@ -8,10 +8,10 @@ namespace Cadenza.API.Wrapper.Spotify;
 
 public class Authoriser : IAuthoriser
 {
-    private readonly Api _api;
+    private readonly ApiSettings _api;
     private readonly IHttpHelper _http;
 
-    public Authoriser(IOptions<Api> api, IHttpHelper http)
+    public Authoriser(IOptions<ApiSettings> api, IHttpHelper http)
     {
         _api = api.Value;
         _http = http;
@@ -19,22 +19,27 @@ public class Authoriser : IAuthoriser
 
     public async Task<string> GetAuthHeader()
     {
-        var url = _api.Endpoints.SpotifyAuthHeader;
+        var url = GetApiUrl(ApiEndpoints.SpotifyAuthHeader);
         var response = await _http.Get(url);
         return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
-        var url = _api.Endpoints.SpotifyAuthUrl + HttpUtility.UrlEncode(redirectUri);
+        var url = $"{GetApiUrl(ApiEndpoints.SpotifyAuthUrl)}?redirectUri={HttpUtility.UrlEncode(redirectUri)}";
         var response = await _http.Get(url);
         return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<string> GetTokenUrl()
     {
-        var url = _api.Endpoints.SpotifyTokenUrl;
+        var url = GetApiUrl(ApiEndpoints.SpotifyTokenUrl);
         var response = await _http.Get(url);
         return await response.Content.ReadAsStringAsync();
+    }
+
+    private string GetApiUrl(string endpoint)
+    {
+        return $"{_api.BaseUrl}{endpoint}";
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cadenza.API.Core.LastFM;
+﻿using Cadenza.API.Core;
+using Cadenza.API.Core.LastFM;
 
 namespace Cadenza.API;
 
@@ -29,19 +30,19 @@ public static class Routing
         var scrobbler = app.Services.GetRequiredService<Scrobbler>();
         var favourites = app.Services.GetRequiredService<Favourites>();
 
-        app.MapGet("/LastFm/AuthUrl", (string redirectUri) => lfmAuth.GetAuthUrl(redirectUri));
-        app.MapGet("/LastFm/CreateSession", (string token) => lfmAuth.CreateSession(token));
+        app.MapGet(ApiEndpoints.LastFmAuthUrl, (string redirectUri) => lfmAuth.GetAuthUrl(redirectUri));
+        app.MapGet(ApiEndpoints.LastFmCreateSession, (string token) => lfmAuth.CreateSession(token));
 
-        app.MapPost("/LastFm/Scrobble", (Scrobble scrobble) => scrobbler.RecordPlay(scrobble));
-        app.MapPost("/LastFm/UpdateNowPlaying", (Scrobble scrobble) => scrobbler.UpdateNowPlaying(scrobble));
-        app.MapPost("/LastFm/Favourite", (Core.LastFM.Track track) => favourites.Favourite(track));
-        app.MapPost("/LastFm/Unfavourite", (Core.LastFM.Track track) => favourites.Unfavourite(track));
+        app.MapPost(ApiEndpoints.Scrobble, (Scrobble scrobble) => scrobbler.RecordPlay(scrobble));
+        app.MapPost(ApiEndpoints.UpdateNowPlaying, (Scrobble scrobble) => scrobbler.UpdateNowPlaying(scrobble));
+        app.MapPost(ApiEndpoints.Favourite, (Core.LastFM.Track track) => favourites.Favourite(track));
+        app.MapPost(ApiEndpoints.Unfavourite, (Core.LastFM.Track track) => favourites.Unfavourite(track));
 
-        app.MapGet("/LastFm/IsFavourite", (string artist, string title) => favourites.IsFavourite(artist, title));
-        app.MapGet("/LastFm/RecentTracks", (int limit, int page) => history.GetRecentTracks(limit, page));
-        app.MapGet("/LastFm/TopTracks", (HistoryPeriod period, int limit, int page) => history.GetPlayedTracks(period, limit, page));
-        app.MapGet("/LastFm/TopAlbums", (HistoryPeriod period, int limit, int page) => history.GetPlayedAlbums(period, limit, page));
-        app.MapGet("/LastFm/TopArtists", (HistoryPeriod period, int limit, int page) => history.GetPlayedArtists(period, limit, page));
+        app.MapGet(ApiEndpoints.IsFavourite, (string artist, string title) => favourites.IsFavourite(artist, title));
+        app.MapGet(ApiEndpoints.RecentTracks, (int limit, int page) => history.GetRecentTracks(limit, page));
+        app.MapGet(ApiEndpoints.TopTracks, (HistoryPeriod period, int limit, int page) => history.GetPlayedTracks(period, limit, page));
+        app.MapGet(ApiEndpoints.TopAlbums, (HistoryPeriod period, int limit, int page) => history.GetPlayedAlbums(period, limit, page));
+        app.MapGet(ApiEndpoints.TopArtists, (HistoryPeriod period, int limit, int page) => history.GetPlayedArtists(period, limit, page));
 
         return app;
     }
@@ -49,9 +50,9 @@ public static class Routing
     private static WebApplication AddSpotifyRoutes(this WebApplication app)
     {
         var spotify = app.Services.GetRequiredService<Authoriser>();
-        app.MapGet("/Spotify/AuthHeader", () => spotify.GetAuthHeader());
-        app.MapGet("/Spotify/TokenUrl", () => spotify.GetTokenUrl());
-        app.MapGet("/Spotify/AuthUrl", (string redirectUri) => spotify.GetAuthUrl(redirectUri));
+        app.MapGet(ApiEndpoints.SpotifyAuthHeader, () => spotify.GetAuthHeader());
+        app.MapGet(ApiEndpoints.SpotifyTokenUrl, () => spotify.GetTokenUrl());
+        app.MapGet(ApiEndpoints.SpotifyAuthUrl, (string redirectUri) => spotify.GetAuthUrl(redirectUri));
         return app;
     }
 }

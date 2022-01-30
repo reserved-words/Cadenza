@@ -1,25 +1,19 @@
 ﻿namespace Cadenza.API.Core;
 
-public class Api
+public static class ApiEndpoints
 {
-    public string BaseUrl { get; set; }
-    public ApiEndpoints Endpoints { get; set; }
-}
-
-public class ApiEndpoints
-{
-    public string Favourite { get; set; }
-    public string IsFavourite { get; set; }
-    public string RecentTracks { get; set; }
-    public string Scrobble { get; set; }
-    public string TopAlbums { get; set; }
-    public string TopArtists { get; set; }
-    public string TopTracks { get; set; }
-    public string UpdateNowPlaying { get; set; }
-    public string Unfavourite { get; set; }
-    public string SpotifyAuthHeader { get; set; }
-    public string SpotifyAuthUrl { get; set; }
-    public string SpotifyTokenUrl { get; set; }
-    public string LastFmAuthUrl { get; set; }
-    public string LastFmCreateSession { get; set; }
+    public static string Favourite => "/LastFm/Favourite";
+    public static string IsFavourite => "/LastFm/IsFavourite";
+    public static string RecentTracks => "/LastFm/RecentTracks";
+    public static string Scrobble => "/LastFm/Scrobble";
+    public static string TopAlbums => "/LastFm/TopAlbums";
+    public static string TopArtists => "/LastFm/TopArtists";
+    public static string TopTracks => "/LastFm/TopTracks";
+    public static string UpdateNowPlaying => "/LastFm/UpdateNowPlaying";
+    public static string Unfavourite => "/LastFm/Unfavourite";
+    public static string SpotifyAuthHeader => "/Spotify/AuthHeader";
+    public static string SpotifyAuthUrl => "/Spotify/AuthUrl";
+    public static string SpotifyTokenUrl => "/Spotify/TokenUrl";
+    public static string LastFmAuthUrl => "/LastFm/AuthUrl";
+    public static string LastFmCreateSession => "/LastFm/CreateSession";
 }
