@@ -31,7 +31,7 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.Artist,
             Name = artist.Name,
-            Tracks = shuffledTracks,
+            Tracks = shuffledTracks.ToList(),
             MixedSource = mixedSource
         };
     }
@@ -77,7 +77,7 @@ public class PlaylistCreator : IPlaylistCreator
         {
             Type = PlaylistType.All,
             Name = $"All Library",
-            Tracks = shuffledTracks,
+            Tracks = shuffledTracks.ToList(),
             MixedSource = true
         };
     }

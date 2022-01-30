@@ -17,14 +17,14 @@ internal class Authoriser : IAuthoriser
 
     public async Task<string> CreateSession(string token)
     {
-        var url = _url.Build(ApiEndpoints.SpotifyTokenUrl, ("token", token));
+        var url = _url.Build(ApiEndpoints.LastFmCreateSession, ("token", token));
         var response = await _http.Get(url);
         return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
-        var url = _url.Build(ApiEndpoints.SpotifyAuthUrl, ("redirectUri", redirectUri)); 
+        var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("redirectUri", redirectUri)); 
         var response = await _http.Get(url);
         return await response.Content.ReadAsStringAsync();
     }

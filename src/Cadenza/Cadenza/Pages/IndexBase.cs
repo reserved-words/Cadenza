@@ -11,9 +11,9 @@ public class IndexBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool IsSpotifyLoaded => App.IsInitialised(Connector.Spotify);
+    public bool IsSpotifyLoaded => true; // App.IsInitialised(Connector.Spotify);
     public bool IsLastFmLoaded => App.IsInitialised(Connector.LastFm);
-    public bool IsLocalLoaded => App.IsInitialised(Connector.Local);
+    public bool IsLocalLoaded => true; //App.IsInitialised(Connector.Local);
 
     public bool IsAllLoaded => IsSpotifyLoaded && IsLastFmLoaded && IsLocalLoaded;
 
