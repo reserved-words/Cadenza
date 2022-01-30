@@ -1,9 +1,10 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.Domain;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM
 {
-    public class History
+    public class History : IHistory
     {
         private readonly ILastFmClient _client;
         private readonly IOptions<LastFmSettings> _config;
@@ -37,7 +38,7 @@ namespace Cadenza.LastFM
                             Album = t.Get("album"),
                             IsLoved = t.GetBool("loved"),
                             ImageUrl = t.GetImage(),
-                            Played = (nowPlaying 
+                            Played = (nowPlaying
                                 ? DateTime.Now
                                 : t.GetDateTime("date", true)),
                             NowPlaying = nowPlaying

@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.Core;
+using Cadenza.API.Wrapper.LastFM;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,12 +9,19 @@ public static class _Startup
 {
     public static IServiceCollection AddLastFMCore(this IServiceCollection services)
     {
-        return services.AddTransient<Core.LastFM.IAuthoriser, LastFM.Authoriser>();
+        return services
+            .AddCoreServices()
+            .AddTransient<Core.LastFM.IAuthoriser, Authoriser>()
+            .AddTransient<Core.LastFM.IFavourites, Favourites>()
+            .AddTransient<Core.LastFM.IHistory, History>()
+            .AddTransient<Core.LastFM.IScrobbler, Scrobbler>();
     }
 
     public static IServiceCollection AddSpotifyCore(this IServiceCollection services)
     {
-        return services.AddTransient<Core.Spotify.IAuthoriser, Spotify.Authoriser>();
+        return services
+            .AddCoreServices()
+            .AddTransient<Core.Spotify.IAuthoriser, Spotify.Authoriser>();
     }
 
     public static IServiceCollection ConfigureCoreAPI(this IServiceCollection services, IConfiguration config, string sectionPath)
@@ -22,4 +30,8 @@ public static class _Startup
         return services.Configure<ApiSettings>(section);
     }
 
+    private static IServiceCollection AddCoreServices(this IServiceCollection services)
+    {
+        return services.AddTransient<IUrl, Url>();
+    }
 }

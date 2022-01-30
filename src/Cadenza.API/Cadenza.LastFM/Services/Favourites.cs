@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
-public class Favourites
+public class Favourites : IFavourites
 {
     private readonly ILastFmAuthorisedClient _authorisedClient;
     private readonly ILastFmClient _client;
@@ -42,7 +42,7 @@ public class Favourites
 
     public async Task Unfavourite(Track track)
     {
-        await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string> 
+        await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {
             { "method", "track.unlove" },
             { "track", track.Title },

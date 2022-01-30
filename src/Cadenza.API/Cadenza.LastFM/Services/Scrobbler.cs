@@ -2,7 +2,7 @@
 
 namespace Cadenza.LastFM;
 
-public class Scrobbler
+public class Scrobbler : IScrobbler
 {
     private readonly ILastFmAuthorisedClient _client;
 
