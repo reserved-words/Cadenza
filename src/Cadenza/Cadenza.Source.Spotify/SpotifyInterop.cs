@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Spotify;
 
-public class SpotifyInterop : IErrorHandler, ISpotifyStartup
+public class SpotifyInterop : ISpotifyInterop
 {
     private readonly IJSRuntime _js;
 

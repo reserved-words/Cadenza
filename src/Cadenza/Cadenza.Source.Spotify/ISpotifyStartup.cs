@@ -2,5 +2,8 @@
 
 public interface ISpotifyStartup
 {
-    Task<bool> ConnectPlayer(string accessToken);
+    Task ConnectToApi(string code, string redirectUri);
+    Task<bool> InitialisePlayer(string accessToken);
+    Task<string> GetAuthUrl(string redirectUri);
+    Task<string> GetAccessToken();
 }

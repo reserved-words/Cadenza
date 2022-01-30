@@ -1,26 +1,11 @@
 ﻿using Cadenza.Common;
 using Cadenza.Source.Spotify;
-using Cadenza.Utilities;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
 
 namespace Cadenza;
 
 public class SpotifyConnectBase : ComponentBase
 {
-    [Inject]
-    public IStoreGetter StoreGetter { get; set; }
-
-    [Inject]
-    public IStoreSetter StoreSetter { get; set; }
-
-    [Inject]
-    public IHttpHelper Http { get; set; }
-
-    [Inject]
-    public IOptions<PlayerApiConfig> PlayerApi { get; set; }
-
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
@@ -30,126 +15,55 @@ public class SpotifyConnectBase : ComponentBase
     [Inject]
     public ISpotifyStartup StartupService { get; set; }
 
+    [Inject]
+    public IConfiguration Config { get; set; }
+
+    private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+    private string RedirectUri => Config.GetSection("Spotify").GetValue<string>("RedirectUri");
+
     protected override async Task OnInitializedAsync()
     {
-        if (QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query).TryGetValue("code", out var code))
+        if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("code", out var code))
         {
-            var tokens = await GetSpotifyTokens(code);
-            await SaveSpotifyTokens(tokens);
-            await RefreshSpotify(tokens.refresh_token);
-            NavigationManager.NavigateTo("/");
+            await Connect(code);
             return;
         }
 
-        var accessToken = await StoreGetter.GetString(StoreKey.SpotifyAccessToken);
-        if (accessToken != null)
-        {
-            var connected = await StartupService.ConnectPlayer(accessToken);
-            // Change to get Device ID here
+        var accessToken = await StartupService.GetAccessToken();
 
-            if (connected)
-            {
-                await App.EnableSource(LibrarySource.Spotify);
-            }
-            else
-            {
-                await App.DisableSource(new SourceException(LibrarySource.Spotify, SourceError.ConnectFailure, "Failed to connect"));
-            }
+        if (accessToken == null)
+        {
+            await Authorise();
             return;
         }
 
-        var authUrl = await GetSpotifyAuthUrl();
+        await InitialisePlayer(accessToken);
+    }
 
+    private async Task Authorise()
+    {
+        var authUrl = await StartupService.GetAuthUrl(RedirectUri);
         NavigationManager.NavigateTo(authUrl);
     }
 
-    private async Task SaveSpotifyTokens(SpotifyTokens tokens)
+    private async Task Connect(string code)
     {
-        await StoreSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
-        await StoreSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
+        await StartupService.ConnectToApi(code, RedirectUri);
+        NavigationManager.NavigateTo("/");
     }
 
-    private async Task<string> GetSpotifyAuthHeader()
+    private async Task InitialisePlayer(string accessToken)
     {
-        var apiBaseUrl = PlayerApi.Value.BaseUrl;
-        var apiEndpoint = PlayerApi.Value.Endpoints.SpotifyAuthHeader;
-        var apiUrl = $"{apiBaseUrl}{apiEndpoint}";
-        var response = await Http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
-    }
+        var connected = await StartupService.InitialisePlayer(accessToken);
 
-    private async Task<string> GetSpotifyAuthUrl()
-    {
-        var apiBaseUrl = PlayerApi.Value.BaseUrl;
-        var apiEndpoint = PlayerApi.Value.Endpoints.SpotifyAuthUrl;
-        var redirectUri = "http://localhost:29085/SpotifyConnect";  //todo
-        var apiUrl = $"{apiBaseUrl}{apiEndpoint}{HttpUtility.UrlEncode(redirectUri)}";
-        var response = await Http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
-    }
-
-    private async Task<SpotifyTokens> GetSpotifyTokens(string code)
-    {
-        var authHeader = await GetSpotifyAuthHeader();
-
-        var requestData = new Dictionary<string, string>
+        if (connected)
         {
-            { "code", code },
-            { "redirect_uri", "http://localhost:29085/SpotifyConnect" }, //todo
-            { "grant_type", "authorization_code" }
-        };
-
-        var tokenUrl = await GetSpotifyTokenUrl();
-
-        var response = await Http.Post(tokenUrl, requestData, authHeader);
-
-        return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
-    }
-
-    public class TokenRequestData
-    {
-        public string code { get; set; }
-        public string redirect_uri { get; set; }
-        public string grant_type { get; set; }
-    }
-
-    private async Task<string> GetSpotifyTokenUrl()
-    {
-        var apiBaseUrl = PlayerApi.Value.BaseUrl;
-        var apiEndpoint = PlayerApi.Value.Endpoints.SpotifyTokenUrl;
-        var apiUrl = $"{apiBaseUrl}{apiEndpoint}";
-        var response = await Http.Get(apiUrl);
-        return await response.Content.ReadAsStringAsync();
-    }
-
-    private async Task RefreshSpotify(string refreshToken)
-    {
-        var requestData = new Dictionary<string, string>
-        {
-            { "grant_type", "refresh_token" },
-            { "refresh_token", refreshToken }
-        };
-
-        var tokenUrl = await GetSpotifyTokenUrl();
-        var authHeader = await GetSpotifyAuthHeader();
-
-        var response = await Http.Post(tokenUrl, requestData, authHeader);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var tokens = await response.Content.ReadFromJsonAsync<SpotifyTokens>();
-            await SaveSpotifyTokens(tokens);
+            await App.EnableSource(LibrarySource.Spotify);
         }
         else
         {
-            var test = await response.Content.ReadAsStringAsync();
-            throw new Exception();
+            await App.DisableSource(new SourceException(LibrarySource.Spotify, SourceError.ConnectFailure, "Failed to connect"));
         }
-    }
-
-    private class SpotifyTokens
-    {
-        public string access_token { get; set; }
-        public string refresh_token { get; set; }
     }
 }
