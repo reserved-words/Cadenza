@@ -1,16 +1,11 @@
-﻿@if (Model.Loading)
-{
+﻿
+<MudIconButton Icon="@Model.Connector.GetIcon()"
+                   Style="flex: unset;"
+                   Color="@Color"
+                   Disabled="true"
+                   OnClick="@(() => ShowError())" />
 
-}
-else
-{
-    <MudIconButton Icon="@Model.Connector.GetIcon()"
-               Style="flex: unset;"
-               Color="@Color"
-               Disabled="@Disabled"
-               OnClick="@(() => ShowError())" />
-
-    if (!Model.Enabled)
+    @if (Model.Status == ConnectorStatus.Errored)
     {
         <MudPopover Open="@Model.ShowError"
             Fixed="true">
@@ -25,16 +20,20 @@ else
             </MudAlert>
         </MudPopover>
     }
-}
 
 @code {
 
     [Parameter]
-    public ConnectorStatus Model { get; set; }
+    public ConnectorStatusViewModel Model { get; set; }
 
-    private Color Color => Model.Enabled ? Color.Dark : Color.Error;
+    private Color Color => Model.Status == ConnectorStatus.Errored 
+        ? Color.Error
+        : Model.Status == ConnectorStatus.Disabled
+        ? Color.Default
+        : Model.Status == ConnectorStatus.Connected
+        ? Color.Success
+        : Color.Warning;
 
-    private bool Disabled => Model.Enabled;
 
     private void HideError()
     {

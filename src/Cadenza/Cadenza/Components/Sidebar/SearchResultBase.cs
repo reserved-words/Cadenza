@@ -31,7 +31,7 @@ public class SearchResultBase : ComponentBase
         }
         catch (ConnectorException ex)
         {
-            await App.DisableConnector(ex.Connector, ex.Error, ex.Message);
+            // await App.DisableConnector(ex.Connector, ex.Error, ex.Message);
         }
     }
 

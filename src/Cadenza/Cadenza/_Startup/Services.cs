@@ -18,6 +18,9 @@ public static class Services
         var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
+            .AddSingleton<ConnectorService>()
+            .AddTransient<IConnectorConsumer, ConnectorService>()
+            .AddTransient<IConnectorController, ConnectorService>()
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddUtilities()
             .AddHttpClient(http)

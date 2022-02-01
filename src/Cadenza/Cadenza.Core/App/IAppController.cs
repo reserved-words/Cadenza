@@ -11,8 +11,5 @@ public interface IAppController
 
     Task LoadingPlaylist();
 
-    Task EnableConnector(Connector connector);
-    Task DisableConnector(Connector connector, ConnectorError error, string message);
-
     Task Play(PlaylistDefinition playlistDefinition);
 }

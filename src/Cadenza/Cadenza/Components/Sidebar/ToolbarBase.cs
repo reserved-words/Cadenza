@@ -10,7 +10,7 @@ public class ToolbarBase : ComponentBase
     public INotificationService Notification { get; set; }
 
     [Inject]
-    public IAppConsumer AppConsumer { get; set; }
+    public IConnectorConsumer ConnectorService { get; set; }
 
     [Inject]
     public IAppController AppController { get; set; }
@@ -18,24 +18,19 @@ public class ToolbarBase : ComponentBase
     [Inject]
     public ISyncService SyncService { get; set; }
 
-    public List<ConnectorStatus> ConnectorStatuses { get; set; } = new List<ConnectorStatus>();
+    public List<ConnectorStatusViewModel> ConnectorStatuses { get; set; }
 
     protected override void OnInitialized()
     {
-        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.LastFm, Enabled = true, Loading = true });
-        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.Local, Enabled = true, Loading = false });
-        ConnectorStatuses.Add(new ConnectorStatus { Connector = Connector.Spotify, Enabled = true, Loading = true });
+        ConnectorStatuses = Enum.GetValues<Connector>()
+            .Select(c => new ConnectorStatusViewModel
+            {
+                Connector = c,
+                Status = ConnectorStatus.Loading
+            })
+            .ToList();
 
-        AppConsumer.ConnectorDisabled += OnConnectorDisabled;
-        AppConsumer.ConnectorEnabled += OnConnectorEnabled;
-    }
-
-    private Task OnConnectorEnabled(object sender, ConnectorEventArgs e)
-    {
-        var status = ConnectorStatuses.Single(s => s.Connector == e.Connector);
-        status.MarkAsEnabled();
-        StateHasChanged();
-        return Task.CompletedTask;
+        ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
     }
 
     protected async Task OnSync()
@@ -48,44 +43,38 @@ public class ToolbarBase : ComponentBase
         }
     }
 
-    private Task OnConnectorDisabled(object sender, ConnectorEventArgs e)
+    private Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
     {
-        var status = ConnectorStatuses.Single(s => s.Connector == e.Connector);
+        var model = ConnectorStatuses.Single(s => s.Connector == e.Connector);
+        model.UpdateStatus(e.Status, e.Error);
 
-        if (status.ErrorMessage != e.Error)
+        if (e.Status == ConnectorStatus.Errored)
         {
             Notification.Error($"{e.Connector} error: {e.Error}");
         }
 
-        status.MarkAsErrored(e.Error);
         StateHasChanged();
         return Task.CompletedTask;
     }
 }
 
-public class ConnectorStatus
+public class ConnectorStatusViewModel
 {
     public Connector Connector { get; set; }
-    public bool Loading { get; set; }
-    public bool Enabled { get; set; }
+    public ConnectorStatus Status { get; set; }
     public string ErrorTitle { get; set; }
     public string ErrorMessage { get; set; }
     public bool ShowError { get; set; }
 
-    public void MarkAsEnabled()
+    public void UpdateStatus(ConnectorStatus status, string error)
     {
-        Loading = false;
-        Enabled = true;
-        ErrorTitle = null;
-        ErrorMessage = null;
+        Status = status;
+        ErrorTitle = status == ConnectorStatus.Errored 
+            ? $"{Connector} errored" 
+            : null;
+        ErrorMessage = status == ConnectorStatus.Errored
+            ? error
+            : null;
         ShowError = false;
-    }
-
-    public void MarkAsErrored(string error)
-    {
-        Loading = false;
-        Enabled = false;
-        ErrorTitle = $"{Connector} disabled";
-        ErrorMessage = error;
     }
 }

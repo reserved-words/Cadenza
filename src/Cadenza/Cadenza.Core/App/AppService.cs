@@ -4,13 +4,6 @@ public class AppService : IAppConsumer, IAppController
 {
     private readonly IPlayer _player;
 
-    private readonly Dictionary<Connector, (bool, bool)> _connectors = new Dictionary<Connector, (bool, bool)>
-    {
-        { Connector.Local, (true, true) },
-        { Connector.Spotify, (false, false) },
-        { Connector.LastFm, (false, false) }
-    };
-
     public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer)
     {
         _player = player;
@@ -28,9 +21,6 @@ public class AppService : IAppConsumer, IAppController
     public event PlaylistEventHandler PlaylistStarted;
 
     public event LibraryEventHandler LibraryUpdated;
-
-    public event ConnectorEventHandler ConnectorEnabled;
-    public event ConnectorEventHandler ConnectorDisabled;
 
     private IPlaylist _currentPlaylist;
 
@@ -137,47 +127,5 @@ public class AppService : IAppConsumer, IAppController
         await _player.Stop();
         PlaylistFinished?.Invoke(this, GetPlaylistArgs());
         _currentPlaylist = null;
-    }
-
-    public async Task DisableConnector(Connector connector, ConnectorError error, string message)
-    {
-        _connectors[connector] = (true, false); // initialised but disabled
-
-        ConnectorDisabled?.Invoke(this, new ConnectorEventArgs(connector, message));
-
-        if (_currentPlaylist == null)
-            return;
-
-        if (_currentPlaylist.MixedSource)
-        {
-            await SkipNext();
-        }
-        else
-        {
-            await StopPlaylist();
-        }
-
-        // TODO:
-        // Set the source to disabled
-        // If try to play albums / playlists / artists from this source, display error again
-        // In the UI disable all albums / playlists / artists that are only for a disabled source
-        // Add a check when skip to a new track - if in a disabled source, skip again
-    }
-
-    public Task EnableConnector(Connector connector)
-    {
-        _connectors[connector] = (true, true); // initialised and enabled
-        ConnectorEnabled?.Invoke(this, new ConnectorEventArgs(connector, null));
-        return Task.CompletedTask;
-    }
-
-    public bool IsInitialised(Connector connector)
-    {
-        return _connectors[connector].Item1;
-    }
-
-    public bool IsEnabled(Connector connector)
-    {
-        return _connectors[connector].Item2;
     }
 }

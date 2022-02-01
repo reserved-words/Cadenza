@@ -6,4 +6,12 @@
         Local,
         Spotify
     }
+
+    public enum ConnectorStatus
+    {
+        Loading,
+        Connected, 
+        Disabled,
+        Errored
+    }
 }

@@ -10,7 +10,7 @@ public static class ExtensionMethods
         {
             Connector.Local => LibrarySource.Local.GetIcon(),
             Connector.Spotify => LibrarySource.Spotify.GetIcon(),
-            Connector.LastFm => "fa-brands fa-lastfm-square"
+            Connector.LastFm => "fab fa-lastfm-square"
         };
     }
     
@@ -19,7 +19,7 @@ public static class ExtensionMethods
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            LibrarySource.Spotify => "fa-brands fa-spotify",
+            LibrarySource.Spotify => "fab fa-spotify",
             LibrarySource.Cloud => Icons.Material.Filled.Cloud
         };
     }

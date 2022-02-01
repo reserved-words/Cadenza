@@ -12,10 +12,4 @@ public interface IAppConsumer
     event PlaylistEventHandler PlaylistStarted;
 
     event LibraryEventHandler LibraryUpdated;
-
-    event ConnectorEventHandler ConnectorDisabled;
-    event ConnectorEventHandler ConnectorEnabled;
-
-    bool IsInitialised(Connector connector);
-    bool IsEnabled(Connector connector);
 }

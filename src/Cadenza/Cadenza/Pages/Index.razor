@@ -3,23 +3,14 @@
 @inherits IndexBase
 
 
-@if (!IsSpotifyLoaded)
-{
-    <SpotifyConnect />
-}
-else if (!IsLastFmLoaded)
-{
-    <LastFmConnect />
-}
-else {
-    <MudLayout>
+<MudLayout>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
         <Sidebar />
     </MudDrawer>
     <MudMainContent>
         @if (IsAllLoaded)
         {
-            <MudTabs Outlined="true" KeepPanelsAlive="true">
+            <MudTabs Outlined="true" KeepPanelsAlive="false">
                 <MudTabPanel Text="History" Icon="@Icons.Material.Filled.History">
                     <HistoryTab />
                 </MudTabPanel>
@@ -36,4 +27,3 @@ else {
         }
     </MudMainContent>
 </MudLayout>
-}

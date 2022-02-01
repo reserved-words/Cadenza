@@ -38,7 +38,7 @@ public class LastFmConnectBase : ComponentBase
             return;
         }
 
-        await App.EnableConnector(Connector.LastFm);
+        // await App.EnableConnector(Connector.LastFm);
     }
 
     private async Task CreateSession(string token)
@@ -47,11 +47,11 @@ public class LastFmConnectBase : ComponentBase
 
         if (connected)
         {
-            await App.EnableConnector(Connector.LastFm);
+            // await App.EnableConnector(Connector.LastFm);
         }
         else
         {
-            await App.DisableConnector(Connector.LastFm, ConnectorError.ConnectFailure, "Failed to create session");
+            // await App.DisableConnector(Connector.LastFm, ConnectorError.ConnectFailure, "Failed to create session");
         }
     }
 }

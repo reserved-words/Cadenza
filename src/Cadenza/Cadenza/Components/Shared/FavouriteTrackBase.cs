@@ -10,6 +10,9 @@ public class FavouriteTrackBase : ComponentBase
     [Inject]
     public IFavouritesController FavouritesController { get; set; }
 
+    [Inject]
+    public IConnectorConsumer ConnectorService { get; set; }
+
     [Parameter]
     public string Artist { get; set; }
 
@@ -19,13 +22,15 @@ public class FavouriteTrackBase : ComponentBase
     [Parameter]
     public bool? IsFavourite { get; set; }
 
+    public bool IsEnabled { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
-        if (!IsFavourite.HasValue)
-        {
-            IsFavourite = false;
-            IsFavourite = await Favourites.IsFavourite(Artist, Title);
-        }
+        IsEnabled = false;
+        
+        var status = ConnectorService.GetStatus(Connector.LastFm);
+
+        await LoadData(status);
     }
 
     public async Task Favourite()
@@ -38,5 +43,19 @@ public class FavouriteTrackBase : ComponentBase
     {
         await FavouritesController.Unfavourite(Artist, Title);
         IsFavourite = false;
+    }
+
+    private async Task LoadData(ConnectorStatus status)
+    {
+        if (status != ConnectorStatus.Connected)
+            return;
+
+        if (!IsFavourite.HasValue)
+        {
+            IsFavourite = false;
+            IsFavourite = await Favourites.IsFavourite(Artist, Title);
+        }
+
+        StateHasChanged();
     }
 }

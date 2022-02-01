@@ -49,11 +49,11 @@ public class SpotifyConnectBase : ComponentBase
 
         if (connected)
         {
-            await App.EnableConnector(Connector.Spotify);
+            // await App.EnableConnector(Connector.Spotify);
         }
         else
         {
-            await App.DisableConnector(Connector.Spotify, ConnectorError.ConnectFailure, "Failed to connect");
+            // await App.DisableConnector(Connector.Spotify, ConnectorError.ConnectFailure, "Failed to connect");
         }
     }
 }
