@@ -10,7 +10,7 @@ public class SearchBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool IsLoading { get; set; } = true;
+    public bool IsLoading { get; set; } = false;
     public bool IsErrored { get; set; } = false;
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
@@ -38,12 +38,12 @@ public class SearchBase : ComponentBase
 
     private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)
     {
-        await Update();
+      //  await Update();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        await Update();
+       //  await Update();
     }
 
     protected SearchableItem Result { get; set; }

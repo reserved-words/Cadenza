@@ -14,11 +14,13 @@
                 <MudContainer Class="mx-0 my-2 pa-0">
                     <MudText Typo=@Typo.body1>@task.Title</MudText>
                     <MudText Typo=@Typo.body2>@task.Message</MudText>
-                    <MudProgressLinear Indeterminate="@(task.InProgress)" Value="@(task.Ended ? 100 : 0)" Color="@Color.Info" />
+                    <MudProgressLinear Indeterminate="@(task.InProgress)" 
+                                       Value="@(task.Ended ? 100 : 0)" 
+                                       Color="@(task.Errored ? Color.Error : task.Ended ? Color.Success : Color.Info)" />
                 </MudContainer>
             }
         }
-        else
+        else if (!AutoStart)
         {
             <MudText Typo=@Typo.body1>@StartPromptText</MudText>
         }
@@ -26,11 +28,10 @@
     <DialogActions>
         @if (Started)
         {
-            <MudButton Disabled="@(!Ended)" Color="@Color.Primary" OnClick="@OnStart">Start</MudButton>
             <MudButton Disabled="@(!InProgress)" Color="@Color.Error" OnClick="@OnCancel">Cancel</MudButton>
             <MudButton Disabled="@(InProgress)" Color="@Color.Success" OnClick="@OnClose">Close</MudButton>
         }
-        else
+        else if (!AutoStart)
         {
             <MudButton Color="@Color.Primary" OnClick="@OnStart">Yes</MudButton>
             <MudButton Color="@Color.Success" OnClick="@OnClose">No</MudButton>

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Wrapper" Version="1.0.4" />
+    <PackageReference Include="Cadenza.API.Wrapper" Version="1.0.5" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
   </ItemGroup>
 

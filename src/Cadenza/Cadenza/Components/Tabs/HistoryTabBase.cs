@@ -21,7 +21,7 @@ public class HistoryTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
+        //ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
     }
 
     private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)

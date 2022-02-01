@@ -19,8 +19,8 @@ public static class Services
 
         builder.Services
             .AddSingleton<ConnectorService>()
-            .AddTransient<IConnectorConsumer, ConnectorService>()
-            .AddTransient<IConnectorController, ConnectorService>()
+            .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
+            .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddUtilities()
             .AddHttpClient(http)

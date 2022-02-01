@@ -36,6 +36,9 @@ namespace Cadenza.Components.Shared.Dialogs
 
         protected override async Task OnParametersSetAsync()
         {
+            if (Started)
+                return;
+
             if (AutoStart)
             {
                 await OnStart();

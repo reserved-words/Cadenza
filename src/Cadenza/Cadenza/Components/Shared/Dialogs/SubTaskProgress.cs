@@ -11,5 +11,6 @@ namespace Cadenza.Components.Shared.Dialogs
         public bool Started => State.Started();
         public bool InProgress => State.InProgress();
         public bool Ended => State.Ended();
+        public bool Errored => State == TaskState.Errored;
     }
 }

@@ -19,7 +19,7 @@ public class HistoryRecentBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
+        //ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
         App.TrackPaused += App_TrackProgressed;
         App.TrackResumed += App_TrackProgressed;
         App.TrackStarted += App_TrackProgressed;

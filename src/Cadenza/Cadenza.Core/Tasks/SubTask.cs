@@ -5,6 +5,7 @@ public class SubTask
     public string Id { get; set; }
     public string Title { get; set; }
     public List<TaskStep> Steps { get; set; } = new List<TaskStep>();
+    public Func<Exception, Task> OnError { get; set; }
 
     public void AddStep(string caption, Func<object, Task<object>> task)
     {

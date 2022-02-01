@@ -18,6 +18,20 @@ public static class HttpHelperExtensions
             throw new HttpException();
         }
     }
+    public static async Task<string> GetString(this IHttpHelper http, string url)
+    {
+        try
+        {
+            var response = await http.Get(url);
+            return await response.GetString();
+        }
+        catch (Exception)
+        {
+            throw new HttpException();
+        }
+    }
+
+
     public static async Task Post(this IHttpHelper http, string url)
     {
         try
@@ -31,14 +45,21 @@ public static class HttpHelperExtensions
         }
     }
 
+    private static async Task<string> GetString(this HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new HttpException();
+        }
+
+        return await response.Content.ReadAsStringAsync();
+    }
+
     private static async Task<T> Get<T>(this HttpResponseMessage response)
     {
         if (!response.IsSuccessStatusCode)
         {
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new HttpException();
-            }
+            throw new HttpException();
         }
 
         return await response.Content.ReadFromJsonAsync<T>();
@@ -48,10 +69,7 @@ public static class HttpHelperExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new HttpException();
-            }
+            throw new HttpException();
         }
     }
 }

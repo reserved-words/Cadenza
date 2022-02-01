@@ -24,11 +24,6 @@ public class AppService : IAppConsumer, IAppController
 
     private IPlaylist _currentPlaylist;
 
-    public void Initialise()
-    {
-        LibraryUpdated?.Invoke(this, new LibraryEventArgs());
-    }
-
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
     {
         await SkipNext();
