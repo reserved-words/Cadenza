@@ -66,11 +66,6 @@ public class IndexBase : ComponentBase
 
     private async Task ClearSessionData()
     {
-        // Temporary while testing startup
-        //await StoreSetter.Clear(StoreKey.LastFmToken);
-        //await StoreSetter.Clear(StoreKey.LastFmSessionKey);
-
-
         await StoreSetter.Clear(StoreKey.CurrentTrackSource);
         await StoreSetter.Clear(StoreKey.CurrentTrack);
         await StoreSetter.Clear(StoreKey.SpotifyAccessToken);
@@ -80,6 +75,11 @@ public class IndexBase : ComponentBase
 
     private SubTask GetLastFmConnectTask()
     {
+        // TODO: Move all this into a service - a service to run the startup stuff (that can be called from toolbar)
+        // and a separate one to create the Last.FM subtask
+        // TODO: Handle if session key has been revoked - if so need to start Last.FM connection process again
+        // (or for now as long as relevant error message displayed could just clear the session key and user can retry)
+
         var subTask = new SubTask
         {
             Id = "LastFM",

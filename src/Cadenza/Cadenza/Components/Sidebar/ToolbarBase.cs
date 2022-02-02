@@ -42,8 +42,7 @@ public class ToolbarBase : ComponentBase
 
     protected async Task OnClearSession()
     {
-        var keys = Enum.GetValues<StoreKey>()
-            .ToList();
+        var keys = Enum.GetValues<StoreKey>().ToList();
 
         foreach (var key in keys)
         {
