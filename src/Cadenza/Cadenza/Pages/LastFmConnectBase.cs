@@ -1,5 +1,5 @@
-﻿using Cadenza.LastFM;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.JSInterop;
 
 namespace Cadenza;
 
@@ -9,50 +9,28 @@ public class LastFmConnectBase : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public IAppController App { get; set; }
+    public IStoreSetter Store { get; set; }
 
     [Inject]
-    public IConfiguration Config { get; set; }
-
-    [Inject]
-    public ILastFmStartup StartupService { get; set; }
+    public IJSRuntime JSRuntime { get; set; }
 
     private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-
-    private string RedirectUri => Config.GetSection("LastFm").GetValue<string>("RedirectUri");
 
     protected override async Task OnParametersSetAsync()
     {
         if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("token", out var token))
         {
-            await CreateSession(token);
-            return;
+            await Store.SetValue(StoreKey.LastFmToken, token);
         }
 
-        var sessionKey = await StartupService.GetSessionKey();
-
-        if (sessionKey == null)
-        {
-            var authUrl = await StartupService.GetAuthUrl(RedirectUri);
-            NavigationManager.NavigateTo(authUrl);
-            return;
-        }
-
-        // await App.EnableConnector(Connector.LastFm);
+        // Maybe display a message instead saying to go back to main window
+        await CloseTab();
     }
 
-    private async Task CreateSession(string token)
+    public async Task CloseTab()
     {
-        var connected = await StartupService.CreateSession(token);
-
-        if (connected)
-        {
-            // await App.EnableConnector(Connector.LastFm);
-        }
-        else
-        {
-            // await App.DisableConnector(Connector.LastFm, ConnectorError.ConnectFailure, "Failed to create session");
-        }
+        // Doesn't work in Chrome but not a huge problem for now
+        await JSRuntime.InvokeAsync<object>("close");
     }
 }
 

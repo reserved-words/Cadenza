@@ -12,7 +12,10 @@ public class IndexBase : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public IStoreSetter Store { get; set; }
+    public IStoreGetter StoreGetter { get; set; }
+
+    [Inject]
+    public IStoreSetter StoreSetter { get; set; }
 
     [Inject]
     public IAppConsumer App { get; set; }
@@ -48,7 +51,25 @@ public class IndexBase : ComponentBase
 
     protected async Task OnStartup()
     {
-        var completed = await DialogService.Run(() => GetStartupTasks(), "Connecting Services", true);
+        // First step is clearing session data, but maybe instead should check the updated date and
+        // only clear if older than a certain amount of time
+        // Then check for existing values before doing any of the startup stuff
+
+        await DialogService.Run(() => GetStartupTasks(), "Connecting Services", true);
+
+        // Do this as one of the final steps instead of waiting, could also add a loop to wait a fixed amount of time
+
+        var lastFmToken = await StoreGetter.GetValue<string>(StoreKey.LastFmToken);
+
+        if (lastFmToken == null)
+        {
+            // Display something asking user to confirm when they've granted access
+        }
+        else
+        {
+            var sessionKey = await LastFmAuthoriser.CreateSession(lastFmToken.Value);
+            await StoreSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
+        }
     }
 
     private TaskGroup GetStartupTasks()
@@ -65,12 +86,13 @@ public class IndexBase : ComponentBase
 
     private async Task ClearSessionData()
     {
-        await Store.SetValue(StoreKey.CurrentTrackSource, null);
-        await Store.SetValue(StoreKey.CurrentTrack, null);
-        await Store.SetValue(StoreKey.LastFmSessionKey, null);
-        await Store.SetValue(StoreKey.SpotifyAccessToken, null);
-        await Store.SetValue(StoreKey.SpotifyRefreshToken, null);
-        await Store.SetValue(StoreKey.SpotifyDeviceId, null);
+        await StoreSetter.Clear(StoreKey.CurrentTrackSource);
+        await StoreSetter.Clear(StoreKey.CurrentTrack);
+        await StoreSetter.Clear(StoreKey.LastFmSessionKey);
+        await StoreSetter.Clear(StoreKey.LastFmToken);
+        await StoreSetter.Clear(StoreKey.SpotifyAccessToken);
+        await StoreSetter.Clear(StoreKey.SpotifyRefreshToken);
+        await StoreSetter.Clear(StoreKey.SpotifyDeviceId);
     }
 
     private SubTask GetLastFmConnectTask()
@@ -94,6 +116,6 @@ public class IndexBase : ComponentBase
 
     public async Task NavigateToNewTab(string url)
     {
-        await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 }

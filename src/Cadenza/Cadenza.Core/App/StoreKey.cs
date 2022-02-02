@@ -6,6 +6,7 @@ public enum StoreKey
     SpotifyDeviceId,
     SpotifyRefreshToken,
     LastFmSessionKey,
+    LastFmToken,
     CurrentTrack,
     CurrentTrackSource
 }

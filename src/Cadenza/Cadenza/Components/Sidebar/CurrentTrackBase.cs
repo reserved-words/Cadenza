@@ -83,7 +83,7 @@ public class CurrentTrackBase : ComponentBase
     {
         Loading = false;
         Progress = 0;
-        _model = await Store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        _model = (await Store.GetValue<TrackSummary>(StoreKey.CurrentTrack)).Value;
         StateHasChanged();
     }
 

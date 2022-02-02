@@ -36,7 +36,7 @@ public class LastFmStartup : ILastFmStartup
 
     public async Task<string> GetSessionKey()
     {
-        return await _storeGetter.GetString(StoreKey.LastFmSessionKey);
+        return (await _storeGetter.GetValue<string>(StoreKey.LastFmSessionKey)).Value;
     }
 
     private async Task SaveSessionKey(string sessionKey)

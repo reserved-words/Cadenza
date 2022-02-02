@@ -30,7 +30,7 @@ public class SpotifyStartup : ISpotifyStartup
 
     public async Task<string> GetAccessToken()
     {
-        return await _storeGetter.GetString(StoreKey.SpotifyAccessToken);
+        return (await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken)).Value;
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)

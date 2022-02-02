@@ -50,11 +50,11 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
 
     public async Task<Track> GetTrack(string artist, string title)
     {
-        var sessionKey = await _store.GetString(StoreKey.LastFmSessionKey);
+        var storedSessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
         return new Track
         {
-            SessionKey = sessionKey,
+            SessionKey = storedSessionKey.Value,
             Artist = artist,
             Title = title
         };
@@ -62,13 +62,13 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
 
     public async Task<Scrobble> GetScrobble(TrackSummary track, int? duration, DateTime? timestamp)
     {
-        var sessionKey = await _store.GetString(StoreKey.LastFmSessionKey);
+        var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
         // Might be a better way to do this in future but for now omit album details for Spotify playlists
         return track.ReleaseType == ReleaseType.Playlist
             ? new Scrobble
             {
-                SessionKey = sessionKey,
+                SessionKey = sessionKey.Value,
                 Timestamp = timestamp ?? DateTime.Now,
                 Artist = track.Artist,
                 Title = track.Title,
@@ -76,7 +76,7 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
             }
             : new Scrobble
             {
-                SessionKey = sessionKey,
+                SessionKey = sessionKey.Value,
                 Timestamp = timestamp ?? DateTime.Now,
                 Artist = track.Artist,
                 Title = track.Title,

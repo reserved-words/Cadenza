@@ -57,7 +57,8 @@ public class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var summary = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+            var summaryStoredValue = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+            var summary = summaryStoredValue.Value;
             progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
         }
 
@@ -79,11 +80,11 @@ public class CorePlayer : IPlayer
 
     private async Task<LibrarySource?> GetCurrentSource()
     {
-        var storedSource = await _storeGetter.GetString(StoreKey.CurrentTrackSource);
+        var storedSource = await _storeGetter.GetValue<LibrarySource>(StoreKey.CurrentTrackSource);
         if (storedSource == null)
             return null;
 
-        return Enum.Parse<LibrarySource>(storedSource);
+        return storedSource.Value;
     }
 
     private async Task RunUtilities(Func<IUtilityPlayer, Task> action)

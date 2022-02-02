@@ -12,105 +12,40 @@ public class Store : IStoreGetter, IStoreSetter
         _js = js;
     }
 
-    public async Task<string> GetString(StoreKey key)
+    public async Task Clear(StoreKey key)
     {
-        var value = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
-        return value == "null"
-            || value == "'null'"
+        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), "");
+    }
+
+    public async Task<StoredValue<T>> GetValue<T>(StoreKey key)
+    {
+        var json = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
+        return string.IsNullOrWhiteSpace(json)
             ? null
-            : value;
+            : JsonConvert.DeserializeObject<StoredValue<T>>(json);
     }
 
-    public async Task<T> GetValue<T>(StoreKey key) where T : class
+    public async Task SetValue<T>(StoreKey key, T value)
     {
-        var json = await GetString(key);
-        return json == null
-            ? null
-            : JsonConvert.DeserializeObject<T>(json);
+        var storedValue = new StoredValue<T>(value);
+        var json = JsonConvert.SerializeObject(storedValue);
+        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), json);
     }
+}
 
-    public async Task<int?> GetInt(StoreKey key)
+public class StoredValue<T>
+{
+    public StoredValue()
     {
-        var value = await GetString(key);
-        return int.TryParse(value, out int result)
-            ? result
-            : null;
+
     }
 
-    public async Task<List<string>> GetList(StoreKey key)
+    public StoredValue(T value)
     {
-        var value = await GetString(key);
-        return value.Split("|").Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+        Value = value;
+        Updated = DateTime.Now;
     }
 
-    public async Task<bool> SetValue(StoreKey key, object value)
-    {
-        var isValueChanged = await IsValueChanged(key, value);
-
-        if (!isValueChanged)
-            return false;
-
-        await SetValue(key, value?.ToString());
-        return true;
-    }
-
-    public async Task<bool> SetValue<T>(StoreKey key, T value) where T : class
-    {
-        var json = value == null
-            ? null
-            : JsonConvert.SerializeObject(value);
-
-        await SetValue(key, json);
-        return true;
-    }
-
-    public async Task<bool> SetValues<T>(StoreKey key, List<T> values)
-    {
-        var isValueChanged = await IsValueChanged(key, values);
-
-        if (!isValueChanged)
-            return false;
-
-        var value = values == null
-            ? null
-            : string.Join("|", values);
-
-        await SetValue(key, value);
-        return true;
-    }
-
-    private async Task<bool> IsValueChanged(StoreKey key, object newValue)
-    {
-        var currentValue = await GetString(key);
-
-        if (currentValue == null)
-        {
-            return newValue != null;
-        }
-
-        return !currentValue.Equals(newValue);
-    }
-
-    private async Task<bool> IsValueChanged<T>(StoreKey key, List<T> newValue)
-    {
-        var currentValue = await GetList(key);
-
-        if (currentValue == null)
-        {
-            return newValue != null;
-        }
-
-        if (newValue == null)
-        {
-            return currentValue != null;
-        }
-
-        return currentValue.Count != newValue.Count
-            || !newValue.All(s => currentValue.Contains(s.ToString()));
-    }
-
-    public async Task SetValue(StoreKey key, string value)
-    {
-        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), value);
-    }
+    public T Value { get; set; }
+    public DateTime Updated { get; set; }
 }

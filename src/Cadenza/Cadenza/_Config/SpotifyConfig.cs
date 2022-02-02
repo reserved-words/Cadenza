@@ -14,11 +14,11 @@ public class SpotifyConfig : ISpotifyApiConfig
 
     public async Task<string> AccessToken()
     {
-        return await _store.GetString(StoreKey.SpotifyAccessToken);
+        return (await _store.GetValue<string>(StoreKey.SpotifyAccessToken)).Value;
     }
 
     public async Task<string> DeviceId()
     {
-        return await _store.GetString(StoreKey.SpotifyDeviceId);
+        return (await _store.GetValue<string>(StoreKey.SpotifyDeviceId)).Value;
     }
 }
