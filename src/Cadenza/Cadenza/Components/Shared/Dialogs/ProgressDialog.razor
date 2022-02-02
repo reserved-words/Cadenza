@@ -28,6 +28,11 @@
     <DialogActions>
         @if (Started)
         {
+            @if (Ended && AtLeastOneTaskErrored)
+            {
+                <MudButton Color="@Color.Primary" OnClick="@OnStart">Try again</MudButton>
+            }
+
             <MudButton Disabled="@(!InProgress)" Color="@Color.Error" OnClick="@OnCancel">Cancel</MudButton>
             <MudButton Disabled="@(InProgress)" Color="@Color.Success" OnClick="@OnClose">Close</MudButton>
         }

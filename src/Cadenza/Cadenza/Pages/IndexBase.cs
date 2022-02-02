@@ -105,11 +105,14 @@ public class IndexBase : ComponentBase
             OnError = (ex) => ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Errored, ex.Message)
         };
 
+        // Add step to check is SK is present and not timed out
         subTask.AddSteps(
-            "Get auth URL",
-            "Navigating to auth URL",
-            () => LastFmAuthoriser.GetAuthUrl(RedirectUri),
-            (url) => NavigateToNewTab(url));
+            "Getting auth URL",
+            "Saving session key",
+            () => GetAuthUrl(),
+            (sk) => SaveSessionKey(sk),
+            ("Authenticating", (url) => Authorise(url)),
+            ("Creating session", (token) => CreateSession(token)));
 
         return subTask;
     }
@@ -117,5 +120,44 @@ public class IndexBase : ComponentBase
     public async Task NavigateToNewTab(string url)
     {
         await JSRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+    private async Task<string> GetAuthUrl()
+    {
+        return await LastFmAuthoriser.GetAuthUrl(RedirectUri);
+    }
+
+    private async Task<string> Authorise(string authUrl)
+    {
+        await NavigateToNewTab(authUrl);
+
+        var startTime = DateTime.Now;
+        var endTime = startTime.AddSeconds(60);
+
+        var token = await StoreGetter.GetValue<string>(StoreKey.LastFmToken);
+
+        while (token == null && DateTime.Now < endTime)
+        {
+            await Task.Delay(500);
+            token = await StoreGetter.GetValue<string>(StoreKey.LastFmToken);
+        }
+
+        if (token == null)
+            throw new Exception("No token received - need to authenticate on Last.FM website");
+
+        // TODO: If token is still null here, haven't authorised via Last.FM - prompt for user interaction
+        return token.Value;
+    }
+
+    private async Task<string> CreateSession(string token)
+    {
+        return await LastFmAuthoriser.CreateSession(token);
+    }
+
+    private async Task SaveSessionKey(string sessionKey)
+    {
+        await StoreSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
+        await StoreSetter.Clear(StoreKey.LastFmToken);
+        await ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Connected);
     }
 }

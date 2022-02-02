@@ -25,4 +25,31 @@ public class SubTask
             return true;
         });
     }
+
+    public void AddSteps(
+        string firstStep, 
+        string lastStep,
+        Func<Task<string>> firstTask, 
+        Func<string, Task> lastTask,
+        params (string Caption, Func<string, Task<string>> Task)[] intermediateSteps) 
+    {
+        AddStep(firstStep, async (o1) =>
+        {
+            return await firstTask();
+        });
+        
+        foreach (var step in intermediateSteps)
+        {
+            AddStep(step.Caption, async (o) =>
+            {
+                return await step.Task((string)o);
+            });
+        }
+
+        AddStep(lastStep, async (o3) =>
+        {
+            await lastTask((string)o3);
+            return null;
+        });
+    }
 }

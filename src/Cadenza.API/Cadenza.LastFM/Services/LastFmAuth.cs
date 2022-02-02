@@ -38,7 +38,7 @@ public class LastFmAuth : IAuthoriser
             return "";
 
         var xml = await response.ToXml();
-        return xml.Get("key");
+        return xml.Get("session", "key");
     }
 
     private string GetSessionKeyUrl(string token)

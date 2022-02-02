@@ -20,9 +20,11 @@ public class Store : IStoreGetter, IStoreSetter
     public async Task<StoredValue<T>> GetValue<T>(StoreKey key)
     {
         var json = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
-        return string.IsNullOrWhiteSpace(json)
-            ? null
-            : JsonConvert.DeserializeObject<StoredValue<T>>(json);
+
+        if (string.IsNullOrWhiteSpace(json))
+            return null;
+
+        return JsonConvert.DeserializeObject<StoredValue<T>>(json);
     }
 
     public async Task SetValue<T>(StoreKey key, T value)

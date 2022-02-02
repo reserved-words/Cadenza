@@ -20,7 +20,7 @@ public class LastFmConnectBase : ComponentBase
     {
         if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("token", out var token))
         {
-            await Store.SetValue(StoreKey.LastFmToken, token);
+            await Store.SetValue<string>(StoreKey.LastFmToken, token);
         }
 
         // Maybe display a message instead saying to go back to main window

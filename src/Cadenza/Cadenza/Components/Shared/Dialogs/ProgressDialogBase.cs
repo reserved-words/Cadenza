@@ -21,6 +21,8 @@ namespace Cadenza.Components.Shared.Dialogs
         public bool InProgress => State.InProgress();
         public bool Ended => State.Ended();
 
+        public bool AtLeastOneTaskErrored => SubTasks.Any(t => t.Value.State == TaskState.Errored);
+
         public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
