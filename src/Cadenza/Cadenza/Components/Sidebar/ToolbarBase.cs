@@ -12,6 +12,12 @@ public class ToolbarBase : ComponentBase
     [Inject]
     public ISyncService SyncService { get; set; }
 
+    [Inject]
+    public IStoreSetter StoreSetter { get; set; }
+
+    [Inject]
+    public IConnectorController ConnectorService { get; set; }
+
     public List<ConnectorStatusViewModel> ConnectorStatuses { get; set; }
 
     protected override void OnInitialized()
@@ -32,6 +38,22 @@ public class ToolbarBase : ComponentBase
         if (completed)
         {
         }
+    }
+
+    protected async Task OnClearSession()
+    {
+        var keys = Enum.GetValues<StoreKey>()
+            .ToList();
+
+        foreach (var key in keys)
+        {
+            await StoreSetter.Clear(key);
+        }
+
+        await ConnectorService.SetStatus(Connector.LastFm, ConnectorStatus.Disabled);
+        await ConnectorService.SetStatus(Connector.Spotify, ConnectorStatus.Disabled);
+
+        // and then start the connection process again? or can just refresh
     }
 }
 

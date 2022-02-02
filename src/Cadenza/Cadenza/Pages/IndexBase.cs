@@ -34,8 +34,6 @@ public class IndexBase : ComponentBase
 
     public bool IsInitalised { get; private set; }
 
-    private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-
     private string RedirectUri => Config.GetSection("LastFm").GetValue<string>("RedirectUri");
 
     protected override async Task OnInitializedAsync()
@@ -51,25 +49,7 @@ public class IndexBase : ComponentBase
 
     protected async Task OnStartup()
     {
-        // First step is clearing session data, but maybe instead should check the updated date and
-        // only clear if older than a certain amount of time
-        // Then check for existing values before doing any of the startup stuff
-
         await DialogService.Run(() => GetStartupTasks(), "Connecting Services", true);
-
-        // Do this as one of the final steps instead of waiting, could also add a loop to wait a fixed amount of time
-
-        var lastFmToken = await StoreGetter.GetValue<string>(StoreKey.LastFmToken);
-
-        if (lastFmToken == null)
-        {
-            // Display something asking user to confirm when they've granted access
-        }
-        else
-        {
-            var sessionKey = await LastFmAuthoriser.CreateSession(lastFmToken.Value);
-            await StoreSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
-        }
     }
 
     private TaskGroup GetStartupTasks()
@@ -86,10 +66,13 @@ public class IndexBase : ComponentBase
 
     private async Task ClearSessionData()
     {
+        // Temporary while testing startup
+        //await StoreSetter.Clear(StoreKey.LastFmToken);
+        //await StoreSetter.Clear(StoreKey.LastFmSessionKey);
+
+
         await StoreSetter.Clear(StoreKey.CurrentTrackSource);
         await StoreSetter.Clear(StoreKey.CurrentTrack);
-        await StoreSetter.Clear(StoreKey.LastFmSessionKey);
-        await StoreSetter.Clear(StoreKey.LastFmToken);
         await StoreSetter.Clear(StoreKey.SpotifyAccessToken);
         await StoreSetter.Clear(StoreKey.SpotifyRefreshToken);
         await StoreSetter.Clear(StoreKey.SpotifyDeviceId);
@@ -101,8 +84,10 @@ public class IndexBase : ComponentBase
         {
             Id = "LastFM",
             Title = "Connect to Last.FM",
+            CheckStep = new TaskCheckStep { Caption = "Checking if Last.FM already connected", Task = IsLastFmTaskNeeded },
             Steps = new List<TaskStep>(),
-            OnError = (ex) => ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Errored, ex.Message)
+            OnError = (ex) => ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Errored, ex.Message),
+            OnCompleted = () => ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Connected)
         };
 
         // Add step to check is SK is present and not timed out
@@ -120,6 +105,12 @@ public class IndexBase : ComponentBase
     public async Task NavigateToNewTab(string url)
     {
         await JSRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+    private async Task<bool> IsLastFmTaskNeeded()
+    {
+        var sessionKey = await StoreGetter.GetValue<string>(StoreKey.LastFmSessionKey);
+        return sessionKey == null;
     }
 
     private async Task<string> GetAuthUrl()
@@ -145,12 +136,12 @@ public class IndexBase : ComponentBase
         if (token == null)
             throw new Exception("No token received - need to authenticate on Last.FM website");
 
-        // TODO: If token is still null here, haven't authorised via Last.FM - prompt for user interaction
         return token.Value;
     }
 
     private async Task<string> CreateSession(string token)
     {
+        // Need to handle specific error e.g. if session key has been revoked
         return await LastFmAuthoriser.CreateSession(token);
     }
 
@@ -158,6 +149,5 @@ public class IndexBase : ComponentBase
     {
         await StoreSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
         await StoreSetter.Clear(StoreKey.LastFmToken);
-        await ConnectorController.SetStatus(Connector.LastFm, ConnectorStatus.Connected);
     }
 }

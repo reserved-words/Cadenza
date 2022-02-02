@@ -95,6 +95,17 @@ public class LongRunningTaskService : ILongRunningTaskService
     {
         try
         {
+            if (task.CheckStep != null)
+            {
+                var isTaskNeeded = await task.CheckStep.Task();
+                if (!isTaskNeeded)
+                {
+                    Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
+                    await task.OnCompleted();
+                    return;
+                }
+            }
+
             object result = null;
             
             foreach (var step in task.Steps)
@@ -104,6 +115,10 @@ public class LongRunningTaskService : ILongRunningTaskService
             }
 
             Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
+            if (task.OnCompleted != null)
+            {
+                await task.OnCompleted();
+            }
         }
         catch (OperationCanceledException)
         {
@@ -117,7 +132,6 @@ public class LongRunningTaskService : ILongRunningTaskService
             {
                 await task.OnError(ex);
             }
-            //throw;
         }
     }
 
