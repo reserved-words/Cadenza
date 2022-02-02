@@ -18,12 +18,12 @@ internal class Authoriser : IAuthoriser
     public async Task<string> CreateSession(string token)
     {
         var url = _url.Build(ApiEndpoints.LastFmCreateSession, ("token", token));
-        return await _http.Get<string>(url);
+        return await _http.GetString(url);
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
         var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("redirectUri", redirectUri)); 
-        return await _http.Get<string>(url);
+        return await _http.GetString(url);
     }
 }
