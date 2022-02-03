@@ -41,10 +41,11 @@ namespace Cadenza
 
             subTask.AddSteps(
                 "Getting auth URL",
-                "Creating session",
+                "Refreshing session",
                 () => GetAuthUrl(),
-                (code) => CreateSession(code),
-                ("Authenticating", (url) => Authorise(url)));
+                (at) => RefreshSession(at),
+                ("Authenticating", (url) => Authorise(url)),
+                ("Creating session", (code) => CreateSession(code)));
 
             return subTask;
         }
@@ -75,10 +76,18 @@ namespace Cadenza
             return code.Value;
         }
 
-        private async Task CreateSession(string code)
+        private async Task<string> CreateSession(string code)
         {
             var tokens = await _authoriser.CreateSession(code, RedirectUri);
             await _storeSetter.Clear(StoreKey.SpotifyCode);
+            await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
+            await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
+            return tokens.refresh_token;
+        }
+
+        private async Task RefreshSession(string refreshToken)
+        {
+            var tokens = await _authoriser.RefreshSession(refreshToken);
             await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
             await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
         }
