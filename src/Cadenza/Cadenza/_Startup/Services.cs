@@ -3,7 +3,6 @@ using MudBlazor.Services;
 using Cadenza.Database;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
-using Cadenza.Core;
 using Cadenza.Common;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
@@ -53,7 +52,8 @@ public static class Services
         return services
             .AddTransient<IStartupConnectService, StartupConnectService>()
             .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)

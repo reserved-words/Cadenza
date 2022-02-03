@@ -7,6 +7,8 @@ public static class Routing
 {
     public static WebApplication AddRoutes(this WebApplication app)
     {
+        app.MapGet("/Connect", () => "Connected");
+
         return app
             .AddAzureRoutes()
             .AddLastFmRoutes()

@@ -32,6 +32,8 @@ public static class _Startup
 
     private static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
-        return services.AddTransient<IUrl, Url>();
+        return services
+            .AddTransient<IUrl, Url>()
+            .AddTransient<IConnectionChecker, ConnectionChecker>();
     }
 }

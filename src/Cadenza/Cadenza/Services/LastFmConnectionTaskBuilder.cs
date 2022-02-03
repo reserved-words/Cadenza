@@ -35,13 +35,12 @@ namespace Cadenza
             {
                 Id = "LastFM",
                 Title = "Connect to Last.FM",
-                CheckStep = new TaskCheckStep { Caption = "Checking if Last.FM already connected", Task = IsLastFmTaskNeeded },
+                CheckStep = new TaskCheckStep { Caption = "Checking if Last.FM already connected", Task = IsTaskNeeded },
                 Steps = new List<TaskStep>(),
                 OnError = (ex) => _connectorController.SetStatus(Connector.LastFm, ConnectorStatus.Errored, ex.Message),
                 OnCompleted = () => _connectorController.SetStatus(Connector.LastFm, ConnectorStatus.Connected)
             };
 
-            // Add step to check is SK is present and not timed out
             subTask.AddSteps(
                 "Getting auth URL",
                 "Saving session key",
@@ -58,7 +57,7 @@ namespace Cadenza
             await _jsRuntime.InvokeVoidAsync("open", url, "_blank");
         }
 
-        private async Task<bool> IsLastFmTaskNeeded()
+        private async Task<bool> IsTaskNeeded()
         {
             var sessionKey = await _storeGetter.GetValue<string>(StoreKey.LastFmSessionKey);
             return sessionKey == null;

@@ -2,18 +2,19 @@
 
 public static class ApiEndpoints
 {
-    public static string Favourite => "/LastFm/Favourite";
-    public static string IsFavourite => "/LastFm/IsFavourite";
-    public static string RecentTracks => "/LastFm/RecentTracks";
-    public static string Scrobble => "/LastFm/Scrobble";
-    public static string TopAlbums => "/LastFm/TopAlbums";
-    public static string TopArtists => "/LastFm/TopArtists";
-    public static string TopTracks => "/LastFm/TopTracks";
-    public static string UpdateNowPlaying => "/LastFm/UpdateNowPlaying";
-    public static string Unfavourite => "/LastFm/Unfavourite";
-    public static string SpotifyAuthHeader => "/Spotify/AuthHeader";
-    public static string SpotifyAuthUrl => "/Spotify/AuthUrl";
-    public static string SpotifyTokenUrl => "/Spotify/TokenUrl";
-    public static string LastFmAuthUrl => "/LastFm/AuthUrl";
-    public static string LastFmCreateSession => "/LastFm/CreateSession";
+    public const string Connect = "/Connect";
+    public const string Favourite = "/LastFm/Favourite";
+    public const string IsFavourite = "/LastFm/IsFavourite";
+    public const string RecentTracks = "/LastFm/RecentTracks";
+    public const string Scrobble = "/LastFm/Scrobble";
+    public const string TopAlbums = "/LastFm/TopAlbums";
+    public const string TopArtists = "/LastFm/TopArtists";
+    public const string TopTracks = "/LastFm/TopTracks";
+    public const string UpdateNowPlaying = "/LastFm/UpdateNowPlaying";
+    public const string Unfavourite = "/LastFm/Unfavourite";
+    public const string SpotifyAuthHeader = "/Spotify/AuthHeader";
+    public const string SpotifyAuthUrl = "/Spotify/AuthUrl";
+    public const string SpotifyTokenUrl = "/Spotify/TokenUrl";
+    public const string LastFmAuthUrl = "/LastFm/AuthUrl";
+    public const string LastFmCreateSession = "/LastFm/CreateSession";
 }

@@ -1,6 +1,5 @@
-﻿using Cadenza.Common;
-using Cadenza.Source.Spotify;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.JSInterop;
 
 namespace Cadenza;
 
@@ -10,50 +9,25 @@ public class SpotifyConnectBase : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public IAppController App { get; set; }
+    public IStoreSetter Store { get; set; }
 
     [Inject]
-    public ISpotifyStartup StartupService { get; set; }
-
-    [Inject]
-    public IConfiguration Config { get; set; }
+    public IJSRuntime JSRuntime { get; set; }
 
     private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
 
-    private string RedirectUri => Config.GetSection("Spotify").GetValue<string>("RedirectUri");
-
     protected override async Task OnParametersSetAsync()
     {
-        if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("code", out var code))
+        if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("code", out var token))
         {
-            await StartupService.StartSession(code, RedirectUri);
-            NavigationManager.NavigateTo("/");
-            return;
+            await Store.SetValue(StoreKey.SpotifyCode, token.SingleOrDefault());
         }
 
-        var accessToken = await StartupService.GetAccessToken();
-
-        if (accessToken == null)
-        {
-            var authUrl = await StartupService.GetAuthUrl(RedirectUri);
-            NavigationManager.NavigateTo(authUrl);
-            return;
-        }
-
-        await InitialisePlayer(accessToken);
+        await CloseTab();
     }
 
-    private async Task InitialisePlayer(string accessToken)
+    public async Task CloseTab()
     {
-        var connected = await StartupService.InitialisePlayer(accessToken);
-
-        if (connected)
-        {
-            // await App.EnableConnector(Connector.Spotify);
-        }
-        else
-        {
-            // await App.DisableConnector(Connector.Spotify, ConnectorError.ConnectFailure, "Failed to connect");
-        }
+        await JSRuntime.InvokeAsync<object>("close");
     }
 }

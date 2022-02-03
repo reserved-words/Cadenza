@@ -80,6 +80,7 @@ public class SpotifyStartup : ISpotifyStartup
 
     private async Task SaveSpotifyTokens(SpotifyTokens tokens)
     {
+        await _storeSetter.Clear(StoreKey.SpotifyCode);
         await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
         await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
     }
