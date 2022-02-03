@@ -23,13 +23,11 @@ public class LastFmConnectBase : ComponentBase
             await Store.SetValue(StoreKey.LastFmToken, token.SingleOrDefault());
         }
 
-        // Maybe display a message instead saying to go back to main window
         await CloseTab();
     }
 
     public async Task CloseTab()
     {
-        // Doesn't work in Chrome but not a huge problem for now
         await JSRuntime.InvokeAsync<object>("close");
     }
 }

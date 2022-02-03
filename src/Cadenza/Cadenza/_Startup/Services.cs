@@ -22,6 +22,7 @@ public static class Services
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddStartupServices()
             .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
@@ -35,7 +36,7 @@ public static class Services
             .AddDatabaseRepositories();
 
         builder.Services
-            .AddTransient<ISyncService, SyncService>()
+            .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IPlaylistPlayer, PlaylistPlayer>();
 
@@ -45,6 +46,13 @@ public static class Services
             .AddTransient<IUtilityPlayer, TrackingPlayer>();
 
         return builder;
+    }
+
+    private static IServiceCollection AddStartupServices(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IStartupConnectService, StartupConnectService>()
+            .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)

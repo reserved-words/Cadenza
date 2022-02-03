@@ -1,11 +1,14 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Common;
+using Cadenza.Library;
 
-public class SyncService : ISyncService
+namespace Cadenza;
+
+public class StartupSyncService : IStartupSyncService
 {
     private readonly IEnumerable<ISourceLibrary> _sources;
     private readonly IMainRepository _repository;
 
-    public SyncService(IEnumerable<ISourceLibrary> sources, IMainRepository repository)
+    public StartupSyncService(IEnumerable<ISourceLibrary> sources, IMainRepository repository)
     {
         _sources = sources;
         _repository = repository;

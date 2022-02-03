@@ -10,7 +10,7 @@ public class ToolbarBase : ComponentBase
     public IAppController AppController { get; set; }
 
     [Inject]
-    public ISyncService SyncService { get; set; }
+    public IStartupSyncService SyncService { get; set; }
 
     [Inject]
     public IStoreSetter StoreSetter { get; set; }
