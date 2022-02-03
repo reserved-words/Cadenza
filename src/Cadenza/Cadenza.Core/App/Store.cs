@@ -12,6 +12,22 @@ public class Store : IStoreGetter, IStoreSetter
         _js = js;
     }
 
+    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds)
+    {
+        var startTime = DateTime.Now;
+        var endTime = startTime.AddSeconds(timeoutSeconds);
+
+        var token = await GetValue<T>(storeKey);
+
+        while (token == null && DateTime.Now < endTime)
+        {
+            await Task.Delay(500);
+            token = await GetValue<T>(storeKey);
+        }
+
+        return token;
+    }
+
     public async Task Clear(StoreKey key)
     {
         await _js.InvokeVoidAsync("setStoredValue", key.ToString(), "");

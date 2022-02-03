@@ -53,8 +53,8 @@ public static class Services
             .AddTransient<IStartupConnectService, StartupConnectService>()
             .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>()
             .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>();
-            //.AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
@@ -105,7 +105,6 @@ public static class Services
         return services.AddTransient<IPlayTracker, LastFmService>()
             .AddTransient<IFavouritesConsumer, LastFmService>()
             .AddTransient<IFavouritesController, LastFmService>()
-            .AddTransient<ILastFmStartup, LastFmStartup>()
             .AddLastFMCore();
     }
 

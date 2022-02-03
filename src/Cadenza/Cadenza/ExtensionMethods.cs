@@ -8,6 +8,7 @@ public static class ExtensionMethods
     {
         return connector switch
         {
+            Connector.API => Icons.Material.Filled.Api,
             Connector.Local => LibrarySource.Local.GetIcon(),
             Connector.Spotify => LibrarySource.Spotify.GetIcon(),
             Connector.LastFm => "fab fa-lastfm-square"

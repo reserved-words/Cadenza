@@ -1,4 +1,5 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.Common;
 using Microsoft.JSInterop;
 
 namespace Cadenza
@@ -11,12 +12,12 @@ namespace Cadenza
         private readonly IConfiguration _config;
         private readonly IJSRuntime _jsRuntime;
         private readonly IConnectorController _connectorController;
-        private readonly API.Core.LastFM.IAuthoriser _authoriser;
+        private readonly IAuthoriser _authoriser;
 
         private string RedirectUri => _config.GetSection("LastFm").GetValue<string>("RedirectUri");
 
         public LastFmConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
-            IJSRuntime jsRuntime, IConnectorController connectorController, API.Core.LastFM.IAuthoriser lastFmAuthoriser)
+            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser)
         {
             _storeGetter = storeGetter;
             _storeSetter = storeSetter;
@@ -45,9 +46,8 @@ namespace Cadenza
                 "Getting auth URL",
                 "Saving session key",
                 () => GetAuthUrl(),
-                (sk) => SaveSessionKey(sk),
-                ("Authenticating", (url) => Authorise(url)),
-                ("Creating session", (token) => CreateSession(token)));
+                (sk) => CreateSession(sk),
+                ("Authenticating", (url) => Authorise(url)));
 
             return subTask;
         }
@@ -72,16 +72,7 @@ namespace Cadenza
         {
             await NavigateToNewTab(authUrl);
 
-            var startTime = DateTime.Now;
-            var endTime = startTime.AddSeconds(60);
-
-            var token = await _storeGetter.GetValue<string>(StoreKey.LastFmToken);
-
-            while (token == null && DateTime.Now < endTime)
-            {
-                await Task.Delay(500);
-                token = await _storeGetter.GetValue<string>(StoreKey.LastFmToken);
-            }
+            var token = await _storeGetter.AwaitValue<string>(StoreKey.LastFmToken, 60);
 
             if (token == null)
                 throw new Exception("No token received - need to authenticate on Last.FM website");
@@ -89,14 +80,9 @@ namespace Cadenza
             return token.Value;
         }
 
-        private async Task<string> CreateSession(string token)
+        public async Task CreateSession(string token)
         {
-            // Need to handle specific error e.g. if session key has been revoked
-            return await _authoriser.CreateSession(token);
-        }
-
-        private async Task SaveSessionKey(string sessionKey)
-        {
+            var sessionKey = await _authoriser.CreateSession(token);
             await _storeSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
             await _storeSetter.Clear(StoreKey.LastFmToken);
         }
