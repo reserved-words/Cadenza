@@ -11,7 +11,7 @@ public static class _Startup
     {
         return services
             .AddCoreServices()
-            .AddTransient<Core.LastFM.IAuthoriser, Authoriser>()
+            .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<Core.LastFM.IFavourites, Favourites>()
             .AddTransient<Core.LastFM.IHistory, History>()
             .AddTransient<Core.LastFM.IScrobbler, Scrobbler>();
@@ -21,7 +21,7 @@ public static class _Startup
     {
         return services
             .AddCoreServices()
-            .AddTransient<Core.Spotify.IAuthoriser, Spotify.Authoriser>();
+            .AddTransient<Spotify.IAuthoriser, Spotify.Authoriser>();
     }
 
     public static IServiceCollection ConfigureCoreAPI(this IServiceCollection services, IConfiguration config, string sectionPath)

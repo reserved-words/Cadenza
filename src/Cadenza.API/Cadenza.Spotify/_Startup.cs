@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Core.Spotify;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Spotify;

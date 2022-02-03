@@ -21,9 +21,9 @@ internal class Authoriser : IAuthoriser
         return await _http.GetString(url);
     }
 
-    public async Task<string> GetAuthUrl(string redirectUri)
+    public async Task<string> GetAuthUrl(string state, string redirectUri)
     {
-        var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("redirectUri", redirectUri)); 
+        var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("state", state), ("redirectUri", redirectUri)); 
         return await _http.GetString(url);
     }
 }

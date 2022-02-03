@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Core.Spotify;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.Spotify;
 
@@ -14,16 +13,14 @@ public class Authoriser : IAuthoriser
         _builder = builder;
     }
 
-    private string State => "a1s2d3f4TY63"; // TODO
-
-    public Task<string> GetAuthUrl(string redirectUri)
+    public Task<string> GetAuthUrl(string state, string redirectUri)
     {
         var result = _builder.BuildUrl(_config.Value.AuthUri,
             ("response_type", "code"),
             ("client_id", _config.Value.ClientId),
             ("scope", _config.Value.Scopes),
             ("redirect_uri", redirectUri),
-            ("state", State));
+            ("state", state));
 
         return Task.FromResult(result);
     }
