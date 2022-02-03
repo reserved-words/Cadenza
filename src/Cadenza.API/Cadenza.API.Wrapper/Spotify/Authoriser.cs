@@ -38,9 +38,9 @@ internal class Authoriser : IAuthoriser
         return await _http.GetString(url);
     }
 
-    public async Task<string> GetAuthUrl(string redirectUri)
+    public async Task<string> GetAuthUrl(string state, string redirectUri)
     {
-        var url = _url.Build(ApiEndpoints.SpotifyAuthUrl, ("redirectUri", redirectUri));
+        var url = _url.Build(ApiEndpoints.SpotifyAuthUrl, ("state", state), ("redirectUri", redirectUri));
         return await _http.GetString(url);
     }
 
