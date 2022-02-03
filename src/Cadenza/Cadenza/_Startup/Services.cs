@@ -51,15 +51,16 @@ public static class Services
     {
         return services
             .AddTransient<IStartupConnectService, StartupConnectService>()
+            .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>()
             .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>();
+            //.AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<ITrackRepository, Core.TrackRepository>();
+            .AddTransient<ITrackRepository, TrackRepository>();
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)

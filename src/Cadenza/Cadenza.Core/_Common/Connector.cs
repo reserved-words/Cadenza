@@ -2,6 +2,7 @@
 {
     public enum Connector
     {
+        API,
         LastFm,
         Local,
         Spotify
