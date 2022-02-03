@@ -1,8 +1,7 @@
 ﻿using Cadenza.Utilities;
-using System.Net;
 using System.Net.Http.Json;
 
-namespace Cadenza.API.Wrapper.LastFM;
+namespace Cadenza.API.Wrapper;
 
 public static class HttpHelperExtensions
 {
@@ -13,7 +12,7 @@ public static class HttpHelperExtensions
             var response = await http.Get(url);
             return await response.Get<T>();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw new HttpException();
         }
@@ -25,12 +24,11 @@ public static class HttpHelperExtensions
             var response = await http.Get(url);
             return await response.GetString();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw new HttpException();
         }
     }
-
 
     public static async Task Post(this IHttpHelper http, string url)
     {
@@ -39,7 +37,7 @@ public static class HttpHelperExtensions
             var response = await http.Post(url);
             response.Validate();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw new HttpException();
         }

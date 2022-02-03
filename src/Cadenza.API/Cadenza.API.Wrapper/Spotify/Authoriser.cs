@@ -18,21 +18,18 @@ internal class Authoriser : IAuthoriser
     public async Task<string> GetAuthHeader()
     {
         var url = _url.Build(ApiEndpoints.SpotifyAuthHeader);
-        var response = await _http.Get(url);
-        return await response.Content.ReadAsStringAsync();
+        return await _http.GetString(url);
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
         var url = _url.Build(ApiEndpoints.SpotifyAuthUrl, ("redirectUri", redirectUri));
-        var response = await _http.Get(url);
-        return await response.Content.ReadAsStringAsync();
+        return await _http.GetString(url);
     }
 
     public async Task<string> GetTokenUrl()
     {
         var url = _url.Build(ApiEndpoints.SpotifyTokenUrl);
-        var response = await _http.Get(url);
-        return await response.Content.ReadAsStringAsync();
+        return await _http.GetString(url);
     }
 }

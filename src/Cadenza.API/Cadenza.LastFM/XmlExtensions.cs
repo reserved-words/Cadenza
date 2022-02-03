@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace Cadenza.LastFM;
 
-public static class XmlExtensionMethods
+public static class XmlExtensions
 {
     private static readonly string[] ImageSizes = new string[] { "extralarge", "large", "medium", "small" };
     private static readonly IFormatProvider Format = CultureInfo.CurrentCulture.DateTimeFormat;

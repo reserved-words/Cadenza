@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace Cadenza.LastFM;
 
-internal static class ExtensionMethods
+internal static class Extensions
 {
     public static string SetMethod(this string url, string name)
     {
