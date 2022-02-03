@@ -3,6 +3,7 @@ using Microsoft.JSInterop;
 
 namespace Cadenza
 {
+
     public class LastFmConnectionTaskBuilder : IConnectionTaskBuilder
     {
         private readonly IStoreGetter _storeGetter;
@@ -24,7 +25,6 @@ namespace Cadenza
             _connectorController = connectorController;
             _authoriser = lastFmAuthoriser;
         }
-
 
         public SubTask GetConnectionTask()
         {

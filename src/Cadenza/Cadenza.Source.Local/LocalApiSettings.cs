@@ -6,6 +6,7 @@ public class LocalApiSettings : ApiOptions<LocalApiEndpoints>
 
 public class LocalApiEndpoints
 {
+    public string Connect { get; set; }
     public string Albums { get; set; }
     public string Artists { get; set; }
     public string AllTracks { get; set; }

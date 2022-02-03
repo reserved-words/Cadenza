@@ -52,7 +52,8 @@ public static class Services
     {
         return services
             .AddTransient<IStartupConnectService, StartupConnectService>()
-            .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddCacheRepositories(this IServiceCollection services)

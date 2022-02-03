@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain;
-using Cadenza.Library;
+﻿using Cadenza.Library;
 
 namespace Cadenza.Local.API;
 
@@ -7,6 +6,8 @@ public static class Routing
 {
     public static WebApplication AddRoutes(this WebApplication app)
     {
+        app.MapGet("/Connect", () => "Connected");
+
         return app
             .AddLibraryRoutes()
             .AddPlayerRoutes()

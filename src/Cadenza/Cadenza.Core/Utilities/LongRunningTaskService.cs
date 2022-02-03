@@ -127,7 +127,7 @@ public class LongRunningTaskService : ILongRunningTaskService
         }
         catch (Exception ex)
         {
-            Update(task.Id, $"Errored: {ex.Message}", TaskState.Errored, CancellationToken.None);
+            Update(task.Id, ex.Message, TaskState.Errored, CancellationToken.None);
             if (task.OnError != null)
             {
                 await task.OnError(ex);

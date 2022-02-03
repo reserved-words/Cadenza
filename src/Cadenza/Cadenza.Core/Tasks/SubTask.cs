@@ -14,6 +14,19 @@ public class SubTask
         Steps.Add(new TaskStep { Caption = caption, Task = task });
     }
 
+    public void AddStep(string caption, Func<Task> task)
+    {
+        Steps.Add(new TaskStep
+        {
+            Caption = caption,
+            Task = new Func<object, Task<object>>(async (o) =>
+            {
+                await task();
+                return true;
+            })
+        });
+    }
+
     public void AddSteps<T>(string fetchCaption, string processCaption, Func<Task<T>> fetchTask, Func<T, Task> processTask) where T : class
     {
         AddStep(fetchCaption, async (r) =>
@@ -29,17 +42,17 @@ public class SubTask
     }
 
     public void AddSteps(
-        string firstStep, 
+        string firstStep,
         string lastStep,
-        Func<Task<string>> firstTask, 
+        Func<Task<string>> firstTask,
         Func<string, Task> lastTask,
-        params (string Caption, Func<string, Task<string>> Task)[] intermediateSteps) 
+        params (string Caption, Func<string, Task<string>> Task)[] intermediateSteps)
     {
         AddStep(firstStep, async (o1) =>
         {
             return await firstTask();
         });
-        
+
         foreach (var step in intermediateSteps)
         {
             AddStep(step.Caption, async (o) =>
