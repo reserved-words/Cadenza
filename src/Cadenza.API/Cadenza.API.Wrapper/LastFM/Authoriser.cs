@@ -1,5 +1,4 @@
 ﻿using Cadenza.API.Core;
-using Cadenza.API.Core.LastFM;
 using Cadenza.Utilities;
 
 namespace Cadenza.API.Wrapper.LastFM;
@@ -21,9 +20,9 @@ internal class Authoriser : IAuthoriser
         return await _http.GetString(url);
     }
 
-    public async Task<string> GetAuthUrl(string state, string redirectUri)
+    public async Task<string> GetAuthUrl(string redirectUri)
     {
-        var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("state", state), ("redirectUri", redirectUri)); 
+        var url = _url.Build(ApiEndpoints.LastFmAuthUrl, ("redirectUri", redirectUri)); 
         return await _http.GetString(url);
     }
 }
