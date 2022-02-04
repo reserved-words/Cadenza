@@ -1,17 +1,19 @@
-﻿using Cadenza.Common;
-
-namespace Cadenza.Components.Sidebar;
+﻿namespace Cadenza.Components.Sidebar;
 
 public class SearchBase : ComponentBase
 {
+    private const int ItemFetchLimit = 500;
+
     [Inject]
-    protected IMainRepository Repository { get; set; }
+    protected IEnumerable<ISearchRepository> Repositories { get; set; }
 
     [Inject]
     public IAppConsumer App { get; set; }
 
     public bool IsLoading { get; set; } = false;
     public bool IsErrored { get; set; } = false;
+
+    private Dictionary<LibrarySource, List<string>> _sourceArtists = new Dictionary<LibrarySource, List<string>>();
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
     {
@@ -31,29 +33,15 @@ public class SearchBase : ComponentBase
 
     protected List<SearchableItem> Items = new List<SearchableItem>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        App.LibraryUpdated += App_LibraryUpdated;
-    }
-
-    private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)
-    {
-      //  await Update();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-       //  await Update();
-    }
-
     protected SearchableItem Result { get; set; }
 
-    protected async Task<IEnumerable<SearchableItem>> Search(string value)
+    protected Task<IEnumerable<SearchableItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;
 
-        return Items.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        var results = Items.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return Task.FromResult(results);
     }
 
     private static bool IsCommon(string value)
@@ -71,8 +59,13 @@ public class SearchBase : ComponentBase
 
         try
         {
-            var items = await Repository.GetSearchableItems();
-            Items = items.ToList();
+            foreach (var repository in Repositories)
+            {
+                await FetchArtists(repository);
+                await FetchAlbums(repository);
+                await FetchTracks(repository);
+            }
+
             IsLoading = false;
         }
         catch (Exception ex)
@@ -80,6 +73,56 @@ public class SearchBase : ComponentBase
             IsLoading = false;
             IsErrored = true;
             Exception = ex;
+        }
+    }
+
+    private async Task FetchTracks(ISearchRepository repository)
+    {
+        var response = await repository.GetSearchTracks(1, ItemFetchLimit);
+        Items.AddRange(response.Items);
+
+        while (response.Page < response.TotalPages)
+        {
+            response = await repository.GetSearchTracks(1, ItemFetchLimit);
+            Items.AddRange(response.Items);
+        }
+    }
+
+    private async Task FetchAlbums(ISearchRepository repository)
+    {
+        var response = await repository.GetSearchAlbums(1, ItemFetchLimit);
+        Items.AddRange(response.Items);
+
+        while (response.Page < response.TotalPages)
+        {
+            response = await repository.GetSearchAlbums(1, ItemFetchLimit);
+            Items.AddRange(response.Items);
+        }
+    }
+
+    private async Task FetchArtists(ISearchRepository repository)
+    {
+        _sourceArtists.Add(repository.Source, new List<string>());
+
+        var response = await repository.GetSearchArtists(1, ItemFetchLimit);
+        AddItems(repository, response);
+
+        while (response.Page < response.TotalPages)
+        {
+            response = await repository.GetSearchArtists(1, ItemFetchLimit);
+            AddItems(repository, response);
+        }
+    }
+
+    private void AddItems(ISearchRepository repository, ListResponse<SearchableArtist> response)
+    {
+        foreach (var item in response.Items)
+        {
+            if (!Items.Any(i => i.Id == item.Id))
+            {
+                Items.Add(item);
+            }
+            _sourceArtists[repository.Source].Add(item.Id);
         }
     }
 

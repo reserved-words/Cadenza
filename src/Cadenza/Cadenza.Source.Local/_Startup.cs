@@ -20,7 +20,8 @@ public static class Startup
             .AddDynamicSourceLibrary<LocalApi>(LibrarySource.Local)
             .AddTransient<LocalLibraryUpdater>()
             .AddTransient<ISourcePlayer>(sp => sp.GetLocalPlayer())
-            .AddTransient<IFileUpdateQueue, LocalLibraryUpdater>();
+            .AddTransient<IFileUpdateQueue, LocalLibraryUpdater>()
+            .AddTransient<ISearchRepository, LocalSearchRepository>();
     }
 
     public static ISourcePlayer GetLocalPlayer(this IServiceProvider services)

@@ -30,13 +30,9 @@ namespace Cadenza
             };
 
             subTask.AddStep("Checking connection", Connect);
+            subTask.AddStep("Populating library", Populate);
 
             return subTask;
-        }
-
-        private string GetConnectUrl()
-        {
-            return $"{_apiSettings.Value.BaseUrl}{_apiSettings.Value.Endpoints.Connect}";
         }
 
         private async Task Connect()
@@ -54,6 +50,33 @@ namespace Cadenza
             {
                 throw new Exception("Failed to connect to Local API");
             }
+        }
+
+        private async Task Populate()
+        {
+            try
+            {
+                var response = await _http.Post(GetPopulateUrl());
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to populate local library");
+            }
+        }
+
+        private string GetConnectUrl()
+        {
+            return $"{_apiSettings.Value.BaseUrl}{_apiSettings.Value.Endpoints.Connect}";
+        }
+
+        private string GetPopulateUrl()
+        {
+            return $"{_apiSettings.Value.BaseUrl}{_apiSettings.Value.Endpoints.Populate}";
         }
     }
 }
