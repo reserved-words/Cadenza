@@ -1,7 +1,12 @@
 ﻿namespace Cadenza.Domain;
 
-public abstract class SearchableItem
+public class SearchableItem
 {
+    public SearchableItem()
+    {
+
+    }
+
     public SearchableItem(SearchableItemType type, string id, string name, string artist, string album, string albumDisplay)
     {
         Type = type;
@@ -12,12 +17,12 @@ public abstract class SearchableItem
         AlbumDisplay = albumDisplay;
     }
 
-    public SearchableItemType Type { get; }
-    public string Id { get; }
-    public string Name { get; }
-    public string Artist { get; }
-    public string Album { get; }
-    public string AlbumDisplay { get; }
+    public SearchableItemType Type { get; set; }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Artist { get; set; }
+    public string Album { get; set; }
+    public string AlbumDisplay { get; set; }
 }
 
 public class SearchableAlbum : SearchableItem
