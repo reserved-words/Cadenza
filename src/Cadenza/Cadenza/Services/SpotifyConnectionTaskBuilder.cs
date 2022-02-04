@@ -108,7 +108,7 @@ namespace Cadenza
 
         public async Task InitialisePlayer(string accessToken)
         {
-            //await _interop.ConnectPlayer(accessToken);
+            await _interop.ConnectPlayer(accessToken);
             var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60);
 
             if (deviceId == null)
