@@ -1,6 +1,6 @@
 ﻿using Cadenza.API.Wrapper.Spotify;
 using Cadenza.Common;
-using Cadenza.Utilities;
+using Cadenza.Source.Spotify;
 using Microsoft.JSInterop;
 
 namespace Cadenza
@@ -13,11 +13,12 @@ namespace Cadenza
         private readonly IJSRuntime _jsRuntime;
         private readonly IConnectorController _connectorController;
         private readonly IAuthoriser _authoriser;
+        private readonly ISpotifyInterop _interop;
 
         private string RedirectUri => _config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
         public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
-            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, IHttpHelper http)
+            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop)
         {
             _storeGetter = storeGetter;
             _storeSetter = storeSetter;
@@ -25,6 +26,7 @@ namespace Cadenza
             _jsRuntime = jsRuntime;
             _connectorController = connectorController;
             _authoriser = lastFmAuthoriser;
+            _interop = interop;
         }
 
         public SubTask GetConnectionTask()
@@ -40,20 +42,26 @@ namespace Cadenza
             };
 
             subTask.AddSteps(
-                "Getting auth URL",
-                "Refreshing session",
-                () => GetAuthUrl(),
-                (at) => RefreshSession(at),
-                ("Authenticating", (url) => Authorise(url)),
-                ("Creating session", (code) => CreateSession(code)));
+                 "Getting auth URL",
+                 "Initialising player",
+                 () => GetAuthUrl(),
+                 (at) => InitialisePlayer(at),
+                 ("Authenticating", (url) => Authorise(url)),
+                 ("Creating session", (code) => CreateSession(code)),
+                 ("Refreshing session", (at) => RefreshSession(at)));
 
-            return subTask;
+            return subTask; 
+
         }
 
         private async Task<bool> IsTaskNeeded()
         {
-            var sessionKey = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-            return sessionKey == null;
+            await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
+            await _storeSetter.Clear(StoreKey.SpotifyCode);
+            await _storeSetter.Clear(StoreKey.SpotifyDeviceId);
+            await _storeSetter.Clear(StoreKey.SpotifyState);
+            await _storeSetter.Clear(StoreKey.SpotifyRefreshToken);
+            return true;
         }
 
         private async Task<string> GetAuthUrl()
@@ -85,11 +93,12 @@ namespace Cadenza
             return tokens.refresh_token;
         }
 
-        private async Task RefreshSession(string refreshToken)
+        private async Task<string> RefreshSession(string refreshToken)
         {
             var tokens = await _authoriser.RefreshSession(refreshToken);
             await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
             await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
+            return tokens.refresh_token;
         }
 
         private async Task NavigateToNewTab(string url)
@@ -97,42 +106,15 @@ namespace Cadenza
             await _jsRuntime.InvokeVoidAsync("open", url, "_blank");
         }
 
-        //private async Task InitialisePlayer(string accessToken)
-        //{
-        //    await _startup.InitialisePlayer(accessToken);
-        //}
+        public async Task InitialisePlayer(string accessToken)
+        {
+            //await _interop.ConnectPlayer(accessToken);
+            var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60);
 
-        //public async Task StartSession(string code, string redirectUri)
-        //{
-        //    await RefreshSpotify(tokens.refresh_token);
-        //}
+            if (deviceId == null)
+                throw new Exception("No Device ID received - Spotify player not ready");
 
-        //public async Task<string> GetAccessToken()
-        //{
-        //    return (await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken)).Value;
-        //}
 
-        //public async Task<bool> InitialisePlayer(string accessToken)
-        //{
-        //    return await _interop.ConnectPlayer(accessToken);
-        //}
-
-        //private async Task RefreshSpotify(string refreshToken)
-        //{
-        //    var requestData = new Dictionary<string, string>
-        //{
-        //    { "grant_type", "refresh_token" },
-        //    { "refresh_token", refreshToken }
-        //};
-
-        //    var tokenUrl = await _authoriser.GetTokenUrl();
-        //    var authHeader = await _authoriser.GetAuthHeader();
-
-        //    var response = await _http.Post(tokenUrl, requestData, authHeader);
-
-        //    var tokens = await response.Content.ReadFromJsonAsync<SpotifyTokens>();
-        //    await SaveSpotifyTokens(tokens);
-        //}
-
+        }
     }
 }
