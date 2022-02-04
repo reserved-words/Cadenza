@@ -98,7 +98,7 @@ namespace Cadenza
             var tokens = await _authoriser.RefreshSession(refreshToken);
             await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token);
             await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
-            return tokens.refresh_token;
+            return tokens.access_token;
         }
 
         private async Task NavigateToNewTab(string url)
@@ -108,13 +108,14 @@ namespace Cadenza
 
         public async Task InitialisePlayer(string accessToken)
         {
-            await _interop.ConnectPlayer(accessToken);
+            var connected = await _interop.ConnectPlayer(accessToken);
+            if (!connected)
+                throw new Exception("Failed to connect to Spotify player");
+
             var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60);
 
             if (deviceId == null)
                 throw new Exception("No Device ID received - Spotify player not ready");
-
-
         }
     }
 }
