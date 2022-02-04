@@ -31,11 +31,6 @@ namespace Cadenza
         {
             await _storeSetter.Clear(StoreKey.CurrentTrackSource);
             await _storeSetter.Clear(StoreKey.CurrentTrack);
-
-            await _storeSetter.Clear(StoreKey.SpotifyCode);
-            await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
-            await _storeSetter.Clear(StoreKey.SpotifyRefreshToken);
-            await _storeSetter.Clear(StoreKey.SpotifyDeviceId);
         }
     }
 }
