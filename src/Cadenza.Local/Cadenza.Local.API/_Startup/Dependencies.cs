@@ -2,7 +2,7 @@
 
 namespace Cadenza.Local.API;
 
-public static class Services
+public static class Dependencies
 {
     public static WebApplicationBuilder RegisterDependencies(this WebApplicationBuilder builder)
     {
@@ -17,6 +17,8 @@ public static class Services
             .AddUtilities()
             .AddLogger()
             .AddLibrary<JsonLibrary>()
+            .AddSingleton<SearchRepository>()
+            .AddTransient<ILocalSearchRepository, SearchRepository>()
             .AddTransient<ICommentProcessor, CommentProcessor>()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
