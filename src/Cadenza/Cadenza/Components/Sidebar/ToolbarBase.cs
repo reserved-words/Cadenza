@@ -36,7 +36,7 @@ public class ToolbarBase : ComponentBase
 
     protected async Task OnSync()
     {
-        var success = await DialogService.Run(() => SyncService.GetLibrarySyncTasks(), "Sync Library", false, "Would you like to re-sync source libraries?");
+        var success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", false, "Would you like to re-sync source libraries?");
     }
 
     protected async Task OnClearSession()

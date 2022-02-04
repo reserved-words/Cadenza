@@ -5,12 +5,6 @@
     {
         <MudText>Loading items...</MudText>
     }
-    else if (IsErrored)
-    {
-        <MudText Typo="@Typo.body1">Failed to fetch items</MudText>
-        <MudText Typo="@Typo.body2">@Exception.Message</MudText>
-        <MudText Typo="@Typo.body2">@Exception.StackTrace</MudText>
-    }
     else
     {
         <MudAutocomplete T="SearchableItem"

@@ -56,6 +56,11 @@ namespace Cadenza
 
         private async Task<bool> IsTaskNeeded()
         {
+            var deviceId = await _storeGetter.GetValue<string>(StoreKey.SpotifyDeviceId);
+            if (deviceId != null && deviceId.Updated > DateTime.Now.AddMinutes(-30))
+                return false;
+
+
             await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
             await _storeSetter.Clear(StoreKey.SpotifyCode);
             await _storeSetter.Clear(StoreKey.SpotifyDeviceId);

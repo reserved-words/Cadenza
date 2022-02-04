@@ -17,6 +17,10 @@ public static class Services
         var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
+            .AddSingleton<SearchRepositoryCache>()
+            .AddTransient<ISearchSyncService, SearchSyncService>();
+
+        builder.Services
             .AddSingleton<ConnectorService>()
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())

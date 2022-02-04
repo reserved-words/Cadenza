@@ -6,6 +6,9 @@ public class IndexBase : ComponentBase
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
+    public IStartupSyncService SyncService { get; set; }
+
+    [Inject]
     public IProgressDialogService DialogService { get; set; }
 
     public bool IsInitalised { get; private set; }
@@ -18,6 +21,12 @@ public class IndexBase : ComponentBase
     protected async Task OnStartup()
     {
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
+
+        if (success)
+        {
+            success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", true);
+        }
+
         IsInitalised = success;
     }
 }

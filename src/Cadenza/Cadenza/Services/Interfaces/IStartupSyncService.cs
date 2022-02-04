@@ -4,6 +4,6 @@ namespace Cadenza
 {
     public interface IStartupSyncService
     {
-        TaskGroup GetLibrarySyncTasks();
+        TaskGroup GetStartupTasks();
     }
 }

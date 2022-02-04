@@ -1,60 +1,43 @@
 ﻿using Cadenza.Common;
-using Cadenza.Library;
 
 namespace Cadenza;
 
 public class StartupSyncService : IStartupSyncService
 {
-    private readonly IEnumerable<ISourceLibrary> _sources;
-    private readonly IMainRepository _repository;
+    private readonly ISearchSyncService _searchSyncService;
 
-    public StartupSyncService(IEnumerable<ISourceLibrary> sources, IMainRepository repository)
+    public StartupSyncService(ISearchSyncService searchSyncService)
     {
-        _sources = sources;
-        _repository = repository;
+        _searchSyncService = searchSyncService;
     }
 
-    public TaskGroup GetLibrarySyncTasks()
+    public TaskGroup GetStartupTasks()
     {
-        var taskGroup = new TaskGroup
-        {
-            PreTask = _repository.Clear
-        };
+        var taskGroup = new TaskGroup();
 
-        foreach (var source in _sources)
-        {
-            taskGroup.Tasks.Add(GetSyncSourceSubTask(source));
-        }
+        taskGroup.Tasks.Add(GetSearchSyncSubTask());
 
         return taskGroup;
     }
 
-    private SubTask GetSyncSourceSubTask(ISourceLibrary source)
+    private SubTask GetSearchSyncSubTask()
     {
         var subTask = new SubTask
         {
-            Id = source.Source.ToString(),
-            Title = source.Source.ToString(),
+            Id = "SearchSync",
+            Title = "Sync Search Items",
             Steps = new List<TaskStep>()
         };
 
-        subTask.AddSteps(
-            "Fetching artists from source",
-            "Copying artists to repository",
-            () => source.GetArtists(),
-            (r) => _repository.AddArtists(r.ToList()));
-
-        subTask.AddSteps(
-            "Fetching albums from source",
-            "Copying albums to repository",
-            () => source.GetAlbums(),
-            (r) => _repository.AddAlbums(r.ToList()));
-
-        subTask.AddSteps(
-            "Fetching tracks from source",
-            "Copying tracks to repository",
-            () => source.GetAllTracks(),
-            (r) => _repository.AddTracks(source.Source, r.ToList()));
+        subTask.Steps.Add(new TaskStep
+        {
+            Caption = "Syncing search items",
+            Task = async (o) =>
+            {
+                await _searchSyncService.PopulateSearchItems();
+                return true;
+            }
+        });
 
         return subTask;
     }

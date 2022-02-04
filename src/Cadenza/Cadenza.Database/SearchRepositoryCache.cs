@@ -20,17 +20,17 @@ public class SearchRepositoryCache
         UpdateCompleted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddTracks(List<SearchableTrack> items)
+    public void AddTracks(List<SearchableItem> items)
     {
         Items.AddRange(items);
     }
 
-    public void AddAlbums(List<SearchableAlbum> items)
+    public void AddAlbums(List<SearchableItem> items)
     {
         Items.AddRange(items);
     }
 
-    public void AddArtists(LibrarySource source, List<SearchableArtist> items)
+    public void AddArtists(LibrarySource source, List<SearchableItem> items)
     {
         if (!SourceArtists.ContainsKey(source))
         {
