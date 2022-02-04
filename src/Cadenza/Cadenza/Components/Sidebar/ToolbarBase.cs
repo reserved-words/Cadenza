@@ -10,6 +10,9 @@ public class ToolbarBase : ComponentBase
     public IAppController AppController { get; set; }
 
     [Inject]
+    public IStartupConnectService ConnectService { get; set; }
+
+    [Inject]
     public IStartupSyncService SyncService { get; set; }
 
     [Inject]
@@ -33,11 +36,7 @@ public class ToolbarBase : ComponentBase
 
     protected async Task OnSync()
     {
-        var completed = await DialogService.Run(() => SyncService.GetLibrarySyncTasks(), "Sync Library", false, "Would you like to re-sync source libraries?");
-
-        if (completed)
-        {
-        }
+        var success = await DialogService.Run(() => SyncService.GetLibrarySyncTasks(), "Sync Library", false, "Would you like to re-sync source libraries?");
     }
 
     protected async Task OnClearSession()
@@ -52,7 +51,7 @@ public class ToolbarBase : ComponentBase
         await ConnectorService.SetStatus(Connector.LastFm, ConnectorStatus.Disabled);
         await ConnectorService.SetStatus(Connector.Spotify, ConnectorStatus.Disabled);
 
-        // and then start the connection process again? or can just refresh
+        var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connect Services", false, "Reconnect services?");
     }
 }
 
