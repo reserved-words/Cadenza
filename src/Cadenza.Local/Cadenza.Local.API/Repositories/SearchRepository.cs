@@ -21,6 +21,8 @@ public class SearchRepository : ILocalSearchRepository
         _library = library;
     }
 
+    public LibrarySource Source => LibrarySource.Local;
+
     public async Task Populate()
     {
         _albums = (await _library.GetAlbums())
@@ -36,27 +38,27 @@ public class SearchRepository : ILocalSearchRepository
         _tracks = await PopulateSearchableTracks();
     }
 
-    public async Task<ListReponse<SearchableAlbum>> GetSearchAlbums(int page, int limit)
+    public async Task<ListResponse<SearchableAlbum>> GetSearchAlbums(int page, int limit)
     {
         return await GetListResponse(_albums, page, limit);
     }
 
-    public async Task<ListReponse<SearchableArtist>> GetSearchArtists(int page, int limit)
+    public async Task<ListResponse<SearchableArtist>> GetSearchArtists(int page, int limit)
     {
         return await GetListResponse(_artists, page, limit);
     }
 
-    public async Task<ListReponse<SearchablePlaylist>> GetSearchPlaylists(int page, int limit)
+    public async Task<ListResponse<SearchablePlaylist>> GetSearchPlaylists(int page, int limit)
     {
         return await GetListResponse(_playlists, page, limit);
     }
 
-    public async Task<ListReponse<SearchableTrack>> GetSearchTracks(int page, int limit)
+    public async Task<ListResponse<SearchableTrack>> GetSearchTracks(int page, int limit)
     {
         return await GetListResponse(_tracks, page, limit);
     }
 
-    private async Task<ListReponse<T>> GetListResponse<T>(List<T> allItems, int page, int limit) where T : SearchableItem
+    private async Task<ListResponse<T>> GetListResponse<T>(List<T> allItems, int page, int limit) where T : SearchableItem
     {
         if (allItems == null)
         {
@@ -73,7 +75,7 @@ public class SearchRepository : ILocalSearchRepository
 
         var total = allItems.Count;
 
-        return new ListReponse<T>
+        return new ListResponse<T>
         {
             Items = items,
             Limit = limit,
