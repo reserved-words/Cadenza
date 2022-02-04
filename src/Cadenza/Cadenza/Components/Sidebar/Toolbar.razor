@@ -1,8 +1,8 @@
 ﻿@inherits ToolbarBase
 
 <MudPaper Elevation="3" Outlined="true" Class="d-flex flex-row">
-    <MudIconButton Icon="@Icons.Material.Filled.Sync" OnClick="@OnSync" Style="flex: unset;" Class="mr-auto" Title="Resync libraries" />
-    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnClearSession" Style="flex: unset;" Class="mr-auto" Title="Refresh connections" />
+    <MudIconButton Icon="@Icons.Material.Filled.Sync" OnClick="@OnSync" Style="flex: unset;" Class="mr-auto" />
+    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnClearSession" Style="flex: unset;" Class="mr-auto" />
 
     @foreach (var sourceStatus in ConnectorStatuses)
     {
