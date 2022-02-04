@@ -2,8 +2,9 @@
 
 public interface ISearchRepository
 {
-    Task<ListReponse<SearchableAlbum>> GetSearchAlbums(int page, int limit);
-    Task<ListReponse<SearchableArtist>> GetSearchArtists(int page, int limit);
-    Task<ListReponse<SearchablePlaylist>> GetSearchPlaylists(int page, int limit);
-    Task<ListReponse<SearchableTrack>> GetSearchTracks(int page, int limit);
+    public LibrarySource Source { get; }
+    Task<ListResponse<SearchableAlbum>> GetSearchAlbums(int page, int limit);
+    Task<ListResponse<SearchableArtist>> GetSearchArtists(int page, int limit);
+    Task<ListResponse<SearchablePlaylist>> GetSearchPlaylists(int page, int limit);
+    Task<ListResponse<SearchableTrack>> GetSearchTracks(int page, int limit);
 }

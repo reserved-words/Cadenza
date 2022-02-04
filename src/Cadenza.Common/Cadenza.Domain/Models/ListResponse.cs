@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Domain;
 
-public class ListReponse<T>
+public class ListResponse<T>
 {
     public List<T> Items { get; set; }
     public int Page { get; set; }
