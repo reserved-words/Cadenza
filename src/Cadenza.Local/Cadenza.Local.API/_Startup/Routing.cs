@@ -37,7 +37,7 @@ public static class Routing
     private static WebApplication AddLibraryRoutes(this WebApplication app)
     {
         var library = app.Services.GetRequiredService<ILibrary>();
-        var searchRepository = app.Services.GetRequiredService<ILocalSearchRepository>();
+        var searchRepository = app.Services.GetRequiredService<ISearchRepository>();
         var libraryService = app.Services.GetRequiredService<IArtworkService>();
 
         app.MapPost("/Startup", async () =>

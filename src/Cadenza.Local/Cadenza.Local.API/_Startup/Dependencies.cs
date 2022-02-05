@@ -18,7 +18,7 @@ public static class Dependencies
             .AddLogger()
             .AddLibrary<JsonLibrary>()
             .AddSingleton<SearchRepository>()
-            .AddTransient<ILocalSearchRepository, SearchRepository>()
+            .AddTransient<ISearchRepository, LocalSearchRepository>()
             .AddTransient<ICommentProcessor, CommentProcessor>()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
