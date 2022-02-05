@@ -5,6 +5,7 @@ global using Cadenza.Utilities;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Cadenza.Source.Spotify.Repositories;
 
 namespace Cadenza.Source.Spotify;
 
@@ -15,12 +16,13 @@ public static class Startup
         return services
             .AddTransient<ISpotifyApiConfig, TConfig>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
+            .AddTransient<ISearchRepository, SpotifySearchRepository>()
             .AddTransient<ISpotifyApi, SpotifyApi>()
             .AddTransient<ISpotifyLibraryApi, SpotifyLibraryApi>()
             .AddTransient<ISpotifyPlayerApi, SpotifyPlayerApi>()
             .AddTransient<IOverridesService, SpotifyOverridesService>()
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
-            .AddStaticSourceLibrary<SpotifyApiLibrary, SpotifyOverridesLibrary>(LibrarySource.Spotify);
+            .AddLibrary<SpotifyApiLibrary, SpotifyOverridesLibrary>();
     }
 
     public static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)

@@ -50,6 +50,9 @@ namespace Cadenza
                  ("Creating session", (code) => CreateSession(code)),
                  ("Refreshing session", (at) => RefreshSession(at)));
 
+
+            subTask.AddStep("Populating library", Populate);
+
             return subTask; 
 
         }
@@ -121,6 +124,23 @@ namespace Cadenza
 
             if (deviceId == null)
                 throw new Exception("No Device ID received - Spotify player not ready");
+        }
+
+        private async Task Populate()
+        {
+            //try
+            //{
+            //    var response = await _http.Post(GetPopulateUrl());
+
+            //    if (!response.IsSuccessStatusCode)
+            //    {
+            //        throw new Exception();
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    throw new Exception("Failed to populate local library");
+            //}
         }
     }
 }

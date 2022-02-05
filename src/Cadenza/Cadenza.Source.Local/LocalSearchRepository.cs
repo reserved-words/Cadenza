@@ -39,6 +39,11 @@ namespace Cadenza.Source.Local
             return await response.Content.ReadFromJsonAsync<ListResponse<SearchableItem>>();
         }
 
+        public Task Populate()
+        {
+            return Task.CompletedTask;
+        }
+
         private string GetApiEndpoint(Func<LocalApiEndpoints, string> getEndpoint, int page, int limit)
         {
             return string.Format(_settings.GetApiEndpoint(getEndpoint), page, limit);
