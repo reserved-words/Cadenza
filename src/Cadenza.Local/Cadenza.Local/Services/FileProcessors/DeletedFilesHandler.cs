@@ -13,17 +13,17 @@ public class DeletedFilesHandler : IDeletedFilesHandler
         _dataAccess = dataAccess;
     }
 
-    public void Sync()
+    public async Task Sync()
     {
-        var filepaths = _fileFetcher.GetRemovedFiles();
+        var filepaths = await _fileFetcher.GetRemovedFiles();
 
         if (!filepaths.Any())
             return;
 
-        var jsonData = _dataAccess.GetAll();
+        var jsonData = await _dataAccess.GetAll();
 
         _organiser.RemoveTracks(jsonData, filepaths);
 
-        _dataAccess.SaveAll(jsonData);
+        await _dataAccess.SaveAll(jsonData);
     }
 }

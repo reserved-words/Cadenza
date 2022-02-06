@@ -2,5 +2,5 @@
 
 public interface IPlayedFilesHandler
 {
-    void RemovePlayedFiles();
+    Task RemovePlayedFiles();
 }

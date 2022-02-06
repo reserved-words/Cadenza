@@ -42,6 +42,7 @@ public static class Routing
 
         app.MapPost("/Startup", async () =>
         {
+            await library.Populate();
             await searchRepository.Populate();
         });
 
@@ -50,11 +51,11 @@ public static class Routing
         app.MapGet("/Search/Playlists", (int page, int limit) => searchRepository.GetSearchPlaylists(page, limit));
         app.MapGet("/Search/Tracks", (int page, int limit) => searchRepository.GetSearchTracks(page, limit));
 
-        app.MapGet("/Library/Artists", () => library.GetArtists());
-        app.MapGet("/Library/Albums", () => library.GetAlbums());
-        app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
-        app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetFullTrack(id));
-        app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
+        //app.MapGet("/Library/Artists", () => (await library.Get();
+        //app.MapGet("/Library/Albums", () => library.GetAlbums());
+        //app.MapGet("/Library/Track/{id}", (string id) => library.GetTrack(id));
+        //app.MapGet("/Library/FullTrack/{id}", (string id) => library.GetFullTrack(id));
+        //app.MapGet("/Library/AllTracks", () => library.GetAllTracks());
 
         app.MapGet("/Library/Artwork", async (HttpContext context) =>
         {

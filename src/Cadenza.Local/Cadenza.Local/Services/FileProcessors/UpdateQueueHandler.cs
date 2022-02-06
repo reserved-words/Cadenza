@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Local;
+﻿namespace Cadenza.Local;
 
 public class UpdateQueueHandler : IUpdateQueueHandler
 {
@@ -13,9 +11,9 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         _updater = udpater;
     }
 
-    public void Process()
+    public async Task Process()
     {
-        var queue = _service.Get();
+        var queue = await _service.Get();
 
         var updates = new Dictionary<ItemType, Dictionary<string, List<ItemPropertyUpdate>>>();
 
@@ -50,20 +48,20 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         }
     }
 
-    private void ProcessUpdates(ItemType itemType, string id, List<ItemPropertyUpdate> updates)
+    private async Task ProcessUpdates(ItemType itemType, string id, List<ItemPropertyUpdate> updates)
     {
         List<ItemPropertyUpdateResult> results;
 
         switch (itemType)
         {
             case ItemType.Artist:
-                results = _updater.UpdateArtist(id, updates);
+                results = await _updater.UpdateArtist(id, updates);
                 break;
             case ItemType.Album:
-                results = _updater.UpdateAlbum(id, updates);
+                results = await _updater.UpdateAlbum(id, updates);
                 break;
             case ItemType.Track:
-                results = _updater.UpdateTrack(id, updates);
+                results = await _updater.UpdateTrack(id, updates);
                 break;
             default:
                 throw new NotImplementedException();

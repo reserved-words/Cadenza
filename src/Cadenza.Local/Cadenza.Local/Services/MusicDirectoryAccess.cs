@@ -13,26 +13,28 @@ public class MusicDirectoryAccess : IMusicDirectory
         _fileAccess = fileAccess;
     }
 
-    public List<string> GetAllFiles()
+    public async Task<List<string>> GetAllFiles()
     {
-        return GetFiles()
+        var files = await GetFiles();
+        return files
             .Select(f => f.Path)
             .ToList();
     }
 
-    public List<string> GetModifiedFiles(DateTime sinceDate)
+    public async Task<List<string>> GetModifiedFiles(DateTime sinceDate)
     {
-        return GetFiles()
+        var files = await GetFiles();
+        return files
             .Where(f => f.DateModified > sinceDate)
             .Select(f => f.Path)
             .ToList();
     }
 
-    private IEnumerable<LocalFile> GetFiles()
+    private async Task<IEnumerable<LocalFile>> GetFiles()
     {
         var directoryPath = _config.Value.Directory;
         var extensions = _config.Value.FileExtensions;
 
-        return _fileAccess.GetFiles(directoryPath, extensions);
+        return await _fileAccess.GetFiles(directoryPath, extensions);
     }
 }

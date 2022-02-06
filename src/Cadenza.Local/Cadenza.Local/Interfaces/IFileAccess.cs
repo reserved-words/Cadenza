@@ -2,8 +2,8 @@
 
 public interface IFileAccess
 {
-    List<LocalFile> GetFiles(string directoryPath, List<string> extensions);
-    string GetText(string path);
-    void SaveText(string path, string text);
-    void DeleteFile(string path);
+    Task<List<LocalFile>> GetFiles(string directoryPath, List<string> extensions);
+    Task<string> GetText(string path);
+    Task SaveText(string path, string text);
+    Task DeleteFile(string path);
 }

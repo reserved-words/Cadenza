@@ -2,17 +2,17 @@
 
 public interface IDataAccess
 {
-    List<JsonArtist> GetArtists();
-    List<JsonAlbum> GetAlbums();
-    List<JsonTrack> GetTracks();
-    List<JsonAlbumTrackLink> GetAlbumTrackLinks();
-    JsonItems GetAll();
-    JsonUpdateHistory GetUpdateHistory();
+    Task<List<JsonArtist>> GetArtists();
+    Task<List<JsonAlbum>> GetAlbums();
+    Task<List<JsonTrack>> GetTracks();
+    Task<List<JsonAlbumTrackLink>> GetAlbumTrackLinks();
+    Task<JsonItems> GetAll();
+    Task<JsonUpdateHistory> GetUpdateHistory();
 
-    void SaveArtists(List<JsonArtist> artists);
-    void SaveAlbums(List<JsonAlbum> albums);
-    void SaveTracks(List<JsonTrack> tracks);
-    void SaveAlbumTrackLinks(List<JsonAlbumTrackLink> albumTrackLinks);
-    void SaveAll(JsonItems items);
-    void SaveUpdateHistory(JsonUpdateHistory history);
+    Task SaveArtists(List<JsonArtist> artists);
+    Task SaveAlbums(List<JsonAlbum> albums);
+    Task SaveTracks(List<JsonTrack> tracks);
+    Task SaveAlbumTrackLinks(List<JsonAlbumTrackLink> albumTrackLinks);
+    Task SaveAll(JsonItems items);
+    Task SaveUpdateHistory(JsonUpdateHistory history);
 }

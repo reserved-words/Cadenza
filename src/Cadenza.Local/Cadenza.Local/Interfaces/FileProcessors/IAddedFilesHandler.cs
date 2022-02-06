@@ -2,5 +2,5 @@
 
 public interface IAddedFilesHandler
 {
-    void Sync();
+    Task Sync();
 }

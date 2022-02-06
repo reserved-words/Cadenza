@@ -8,6 +8,4 @@ public class LocalSearchRepository : SearchRepository
         :base(library)
     {
     }
-
-    public override LibrarySource Source => LibrarySource.Local;
 }

@@ -21,27 +21,27 @@ public class Worker : BackgroundService
         {
             try
             {
-                _updater.UpdateDeletedFiles();
+                await _updater.UpdateDeletedFiles();
 
                 if (stoppingToken.IsCancellationRequested)
                     return;
 
-                _updater.UpdateAddedFiles();
+                await _updater.UpdateAddedFiles();
 
                 if (stoppingToken.IsCancellationRequested)
                     return;
 
-                _updater.UpdateModifiedFiles();
+                await _updater.UpdateModifiedFiles();
 
                 if (stoppingToken.IsCancellationRequested)
                     return;
 
-                _updater.RemovePlayedFiles();
+                await _updater.RemovePlayedFiles();
 
                 if (stoppingToken.IsCancellationRequested)
                     return;
 
-                _updater.ProcessUpdateQueue();
+                await _updater.ProcessUpdateQueue();
 
             }
             catch (Exception ex)

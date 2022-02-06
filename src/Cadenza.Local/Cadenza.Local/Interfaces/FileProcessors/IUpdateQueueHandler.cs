@@ -2,5 +2,5 @@
 
 public interface IUpdateQueueHandler
 {
-    void Process();
+    Task Process();
 }

@@ -19,13 +19,13 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
         _fileFetcher = fileFetcher;
     }
 
-    public void Sync()
+    public async Task Sync()
     {
-        var jsonItems = _dataAccess.GetAll();
+        var jsonItems = await _dataAccess.GetAll();
 
         var updatesFetched = DateTime.Now;
 
-        var filepaths = _fileFetcher.GetFilesModifiedSinceLastUpdate();
+        var filepaths = await _fileFetcher.GetFilesModifiedSinceLastUpdate();
 
         foreach (var filePath in filepaths)
         {
@@ -54,7 +54,7 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
 
         _organiser.RemoveOrphanedItems(jsonItems);
 
-        _dataAccess.SaveAll(jsonItems);
+        await _dataAccess.SaveAll(jsonItems);
 
         _fileFetcher.UpdateTimeModifiedFilesUpdated(updatesFetched);
     }

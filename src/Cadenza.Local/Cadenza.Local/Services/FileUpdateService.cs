@@ -16,9 +16,9 @@ public class FileUpdateService : IFileUpdateService
         _jsonConverter = jsonConverter;
     }
 
-    public void Add(ItemPropertyUpdate update)
+    public async Task Add(ItemPropertyUpdate update)
     {
-        var queue = Get();
+        var queue = await Get();
         AddOrUpdate(queue, update);
         Save(queue);
     }
@@ -34,9 +34,9 @@ public class FileUpdateService : IFileUpdateService
         entry.FailedAttempts.Clear();
     }
 
-    public void Remove(ItemPropertyUpdate update)
+    public async Task Remove(ItemPropertyUpdate update)
     {
-        var queue = Get();
+        var queue = await Get();
 
         var existing = queue.Updates.SingleOrDefault(e => e.Update.Equals(update));
 
@@ -47,9 +47,9 @@ public class FileUpdateService : IFileUpdateService
         Save(queue);
     }
 
-    public void LogError(ItemPropertyUpdate update, Exception ex)
+    public async Task LogError(ItemPropertyUpdate update, Exception ex)
     {
-        var queue = Get();
+        var queue = await Get();
 
         var savedUpdate = queue.Updates.SingleOrDefault(e => e.Update.Equals(update));
 
@@ -62,10 +62,10 @@ public class FileUpdateService : IFileUpdateService
         Save(queue);
     }
 
-    public FileUpdateQueue Get()
+    public async Task<FileUpdateQueue> Get()
     {
         var path = GetUpdateQueuePath();
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         var queue = _jsonConverter.Deserialize<FileUpdateQueue>(json);
         return queue ?? new FileUpdateQueue();
     }

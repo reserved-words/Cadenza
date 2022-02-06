@@ -2,7 +2,7 @@
 
 public interface IUpdateHistory
 {
-    DateTime GetDateProcessedModifiedFiles();
+    Task<DateTime> GetDateProcessedModifiedFiles();
 
-    void SetDateProcessedModifiedFiles(DateTime date);
+    Task SetDateProcessedModifiedFiles(DateTime date);
 }

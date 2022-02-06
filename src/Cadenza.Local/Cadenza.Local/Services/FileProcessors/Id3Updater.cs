@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-using Cadenza.Utilities;
-
+﻿
 namespace Cadenza.Local;
 
 public class Id3Updater : IId3Updater
@@ -18,33 +16,33 @@ public class Id3Updater : IId3Updater
         _base64Converter = base64Converter;
     }
 
-    public List<ItemPropertyUpdateResult> UpdateAlbum(string id, List<ItemPropertyUpdate> updates)
+    public async Task<List<ItemPropertyUpdateResult>> UpdateAlbum(string id, List<ItemPropertyUpdate> updates)
     {
         var results = GetEmptyResults(updates);
-        var tracks = GetAlbumTracks(id);
+        var tracks = await GetAlbumTracks(id);
         UpdateAllTracks(tracks, results);
         return results;
     }
 
-    public List<ItemPropertyUpdateResult> UpdateArtist(string id, List<ItemPropertyUpdate> updates)
+    public async Task<List<ItemPropertyUpdateResult>> UpdateArtist(string id, List<ItemPropertyUpdate> updates)
     {
-        var tracks = GetArtistTracks(id);
+        var tracks = await GetArtistTracks(id);
         var results = GetEmptyResults(updates);
         UpdateAllTracks(tracks, results);
         return results;
     }
 
-    public List<ItemPropertyUpdateResult> UpdateTrack(string id, List<ItemPropertyUpdate> updates)
+    public Task<List<ItemPropertyUpdateResult>> UpdateTrack(string id, List<ItemPropertyUpdate> updates)
     {
         var path = _base64Converter.FromBase64(id);
         var results = GetEmptyResults(updates);
         UpdateTrack(path, results);
-        return results;
+        return Task.FromResult(results);
     }
 
-    private List<string> GetAlbumTracks(string id)
+    private async Task<List<string>> GetAlbumTracks(string id)
     {
-        var albumTrackLinks = _dataAccess.GetAlbumTrackLinks();
+        var albumTrackLinks = await _dataAccess.GetAlbumTrackLinks();
 
         return albumTrackLinks
             .Where(t => t.AlbumId == id)
@@ -52,9 +50,9 @@ public class Id3Updater : IId3Updater
             .ToList();
     }
 
-    private List<string> GetArtistTracks(string id)
+    private async Task<List<string>> GetArtistTracks(string id)
     {
-        var tracks = _dataAccess.GetTracks();
+        var tracks = await _dataAccess.GetTracks();
         return tracks
             .Where(t => t.ArtistId == id)
             .Select(t => t.Path)

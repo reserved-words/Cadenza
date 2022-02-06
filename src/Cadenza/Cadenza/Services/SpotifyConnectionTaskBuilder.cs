@@ -15,6 +15,8 @@ namespace Cadenza
         private readonly IAuthoriser _authoriser;
         private readonly ISpotifyInterop _interop;
 
+
+
         private string RedirectUri => _config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
         public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
