@@ -7,28 +7,35 @@ public abstract class SearchRepository : ISearchRepository
     private List<SearchablePlaylist> _playlists;
     private List<SearchableTrack> _tracks;
 
-    private readonly ILibrary _library;
+    private readonly ILibrary _source;
 
     public SearchRepository(ILibrary library)
     {
-        _library = library;
+        _source = library;
     }
 
-    public abstract LibrarySource Source { get; }
+    public LibrarySource Source => _source.Source;
 
     public async Task Populate()
     {
-        _albums = (await _library.GetAlbums())
+        if (!_source.IsPopulated)
+        {
+            await _source.Populate();
+        }
+
+        var library = await _source.Get();
+
+        _albums = library.Albums
             .Select(a => new SearchableAlbum(a.Id, a.Title, a.ArtistName))
             .ToList();
 
-        _artists = (await _library.GetArtists())
+        _artists = library.Artists
             .Select(a => new SearchableArtist(a.Id, a.Name))
             .ToList();
 
         _playlists = new List<SearchablePlaylist>();
 
-        _tracks = await PopulateSearchableTracks();
+        _tracks = PopulateSearchableTracks(library);
     }
 
     public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
@@ -79,9 +86,9 @@ public abstract class SearchRepository : ISearchRepository
         };
     }
 
-    private async Task<List<SearchableTrack>> PopulateSearchableTracks()
+    private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)
     {
-        var tracks = await _library.GetAllTracks();
+        var tracks = library.Tracks;
 
         var artistsDict = _artists.ToDictionary(a => a.Id, a => a);
         var albumsDict = _albums.ToDictionary(a => a.Id, a => a);

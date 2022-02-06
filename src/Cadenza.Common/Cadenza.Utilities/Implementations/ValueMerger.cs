@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Utilities;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Utilities;
 
 public class ValueMerger : IValueMerger
 {

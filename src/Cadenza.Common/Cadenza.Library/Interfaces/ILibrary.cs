@@ -2,9 +2,8 @@
 
 public interface ILibrary
 {
-    Task<IEnumerable<ArtistInfo>> GetArtists();
-    Task<IEnumerable<AlbumInfo>> GetAlbums();
-    Task<TrackSummary> GetTrack(string id);
-    Task<IEnumerable<BasicTrack>> GetAllTracks();
-    Task<TrackFull> GetFullTrack(string id);
+    LibrarySource Source { get; }
+    bool IsPopulated { get; }
+    Task Populate();
+    Task<FullLibrary> Get();
 }

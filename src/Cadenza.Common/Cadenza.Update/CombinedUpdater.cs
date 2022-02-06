@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Domain;
+
+namespace Cadenza.Library;
 
 public class CombinedUpdater : IUpdater
 {
