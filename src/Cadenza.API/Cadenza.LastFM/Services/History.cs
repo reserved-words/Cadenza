@@ -1,8 +1,10 @@
 ﻿using Cadenza.API.Core.LastFM;
 using Cadenza.Domain;
+using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.LastFM
+namespace Cadenza.LastFM.Services
 {
     public class History : IHistory
     {
@@ -38,9 +40,9 @@ namespace Cadenza.LastFM
                             Album = t.Get("album"),
                             IsLoved = t.GetBool("loved"),
                             ImageUrl = t.GetImage(),
-                            Played = (nowPlaying
+                            Played = nowPlaying
                                 ? DateTime.Now
-                                : t.GetDateTime("date", true)),
+                                : t.GetDateTime("date", true),
                             NowPlaying = nowPlaying
                         };
                     })

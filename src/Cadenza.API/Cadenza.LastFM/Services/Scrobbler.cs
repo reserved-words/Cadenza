@@ -1,6 +1,7 @@
 ﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Services;
 
 public class Scrobbler : IScrobbler
 {

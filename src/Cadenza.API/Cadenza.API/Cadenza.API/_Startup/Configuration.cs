@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API;
+﻿namespace Cadenza.API._Startup;
 
 public static class Configuration
 {

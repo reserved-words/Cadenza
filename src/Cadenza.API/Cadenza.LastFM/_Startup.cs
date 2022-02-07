@@ -1,4 +1,7 @@
 ﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
+using Cadenza.LastFM.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -8,12 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Spotify\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.12" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.18" />
   </ItemGroup>
 
 </Project>

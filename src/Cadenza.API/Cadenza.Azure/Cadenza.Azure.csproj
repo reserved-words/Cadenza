@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.12" />
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.7" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.18" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
   </ItemGroup>
 
 </Project>

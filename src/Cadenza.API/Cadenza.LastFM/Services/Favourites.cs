@@ -1,7 +1,9 @@
 ﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Services;
 
 public class Favourites : IFavourites
 {

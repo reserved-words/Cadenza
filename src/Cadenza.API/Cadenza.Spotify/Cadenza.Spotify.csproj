@@ -3,17 +3,20 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.7" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.18" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.28" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.8" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
+    <ProjectReference Include="..\Cadenza.API.Wrapper.Core\Cadenza.API.Wrapper.Core.csproj" />
   </ItemGroup>
 
 </Project>
