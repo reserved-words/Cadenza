@@ -1,11 +1,8 @@
-﻿using Cadenza.API.Core.LastFM;
-using Cadenza.API.Wrapper.LastFM;
-using Cadenza.Common;
+﻿using Cadenza.Common;
 using Microsoft.JSInterop;
 
 namespace Cadenza
 {
-
     public class LastFmConnectionTaskBuilder : IConnectionTaskBuilder
     {
         private readonly IStoreGetter _storeGetter;
