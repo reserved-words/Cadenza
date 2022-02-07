@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Cadenza.Source.Spotify;
+namespace Cadenza.Source.Spotify.Player;
 
 public class SpotifyPlayer : ISourcePlayer
 {
@@ -9,8 +9,8 @@ public class SpotifyPlayer : ISourcePlayer
     public SpotifyPlayer(IHttpHelper httpClient, ISpotifyApiConfig config, IJSRuntime js)
     {
         var errorHandler = new SpotifyInterop(js);
-        var api = new SpotifyApi(httpClient, config);
-        var playerApi = new SpotifyPlayerApi(api, errorHandler);
+        var api = new ApiHelper(httpClient, config);
+        var playerApi = new PlayerApi(api, errorHandler);
         _internalPlayer = new InternalPlayer(playerApi);
     }
     public LibrarySource Source => LibrarySource.Spotify;

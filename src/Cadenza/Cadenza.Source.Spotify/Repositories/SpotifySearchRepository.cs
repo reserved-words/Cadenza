@@ -7,6 +7,4 @@ internal class SpotifySearchRepository : SearchRepository
         :base(library)
     {
     }
-
-    public override LibrarySource Source => LibrarySource.Spotify;
 }

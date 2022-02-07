@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿namespace Cadenza.Source.Spotify.Player;
 
 public interface ISpotifyApiConfig
 {

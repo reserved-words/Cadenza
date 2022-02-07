@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Cadenza.Source.Spotify;
+namespace Cadenza.Source.Spotify.Player;
 
 public class SpotifyInterop : ISpotifyInterop
 {

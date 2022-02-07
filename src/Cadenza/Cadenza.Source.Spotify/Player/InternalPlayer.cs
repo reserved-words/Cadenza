@@ -1,10 +1,10 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿namespace Cadenza.Source.Spotify.Player;
 
 public class InternalPlayer : IAudioPlayer
 {
-    private readonly ISpotifyPlayerApi _api;
+    private readonly IPlayerApi _api;
 
-    internal InternalPlayer(ISpotifyPlayerApi api)
+    internal InternalPlayer(IPlayerApi api)
     {
         _api = api;
     }

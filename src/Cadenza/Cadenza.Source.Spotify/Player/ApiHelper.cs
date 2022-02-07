@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 
-namespace Cadenza.Source.Spotify;
+namespace Cadenza.Source.Spotify.Player;
 
-public class SpotifyApi : ISpotifyApi
+public class ApiHelper : IApiHelper
 {
     private readonly ISpotifyApiConfig _config;
     private readonly IHttpHelper _httpClient;
 
-    public SpotifyApi(IHttpHelper httpClient, ISpotifyApiConfig config)
+    public ApiHelper(IHttpHelper httpClient, ISpotifyApiConfig config)
     {
         _config = config;
         _httpClient = httpClient;
@@ -82,7 +82,7 @@ public class ApiResponse
 
 public class ApiResponse<T>
 {
-    public ApiResponse(T data = default(T))
+    public ApiResponse(T data = default)
     {
         Data = data;
     }

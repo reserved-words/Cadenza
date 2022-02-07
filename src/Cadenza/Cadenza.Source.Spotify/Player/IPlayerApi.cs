@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Source.Spotify;
+﻿namespace Cadenza.Source.Spotify.Player;
 
-public interface ISpotifyPlayerApi
+public interface IPlayerApi
 {
     Task<SpotifyApiPlayState> GetPlayState();
     Task Play(string trackId = null);

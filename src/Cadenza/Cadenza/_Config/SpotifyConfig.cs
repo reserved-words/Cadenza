@@ -1,5 +1,5 @@
 ﻿using Cadenza.Core;
-using Cadenza.Source.Spotify;
+using Cadenza.Source.Spotify.Player;
 
 namespace Cadenza;
 

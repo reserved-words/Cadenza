@@ -1,4 +1,5 @@
 ﻿using Cadenza.Database;
+using Cadenza.Library;
 
 namespace Cadenza;
 
@@ -6,11 +7,11 @@ public class SearchSyncService : ISearchSyncService
 {
     private const int ItemFetchLimit = 500;
 
-    private readonly IEnumerable<ISearchRepository> _repositories;
+    private readonly IEnumerable<ISourceSearchRepository> _repositories;
 
     private readonly SearchRepositoryCache _cache;
 
-    public SearchSyncService(IEnumerable<ISearchRepository> repositories, SearchRepositoryCache cache)
+    public SearchSyncService(IEnumerable<ISourceSearchRepository> repositories, SearchRepositoryCache cache)
     {
         _repositories = repositories;
         _cache = cache;
@@ -64,7 +65,7 @@ public class SearchSyncService : ISearchSyncService
         }
     }
 
-    private async Task FetchArtists(ISearchRepository repository)
+    private async Task FetchArtists(ISourceSearchRepository repository)
     {
         var response = await repository.GetSearchArtists(1, ItemFetchLimit);
         _cache.AddArtists(repository.Source, response.Items);

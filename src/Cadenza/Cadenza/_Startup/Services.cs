@@ -34,8 +34,6 @@ public static class Services
             .AddTimers()
             .AddLastFm()
             .AddSources()
-            .AddSourceFactories()
-            .AddCacheRepositories()
             .AddDatabaseRepositories();
 
         builder.Services
@@ -59,12 +57,6 @@ public static class Services
             .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
             .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
-    }
-
-    private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<ITrackRepository, TrackRepository>();
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
@@ -118,36 +110,5 @@ public static class Services
             .AddSpotifySource<SpotifyConfig>()
             .AddSpotifyCore()
             .AddLocalSource<HtmlPlayer>();
-    }
-
-    //private static IServiceCollection AddLibraries(this IServiceCollection services)
-    //{
-    //    return services
-    //        .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
-    //        .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
-    //}
-
-    private static IServiceCollection AddSourceFactories(this IServiceCollection services)
-    {
-        return services
-            //.AddTransient(sp => sp.GetUpdaters())
-            .AddTransient(sp => GetOverriders(sp));
-    }
-
-    //private static Dictionary<LibrarySource, IUpdater> GetUpdaters(this IServiceProvider sp)
-    //{
-    //    return new Dictionary<LibrarySource, IUpdater>
-    //    {
-    //        { LibrarySource.Local, sp.GetLocalUpdater() },
-    //        { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
-    //    };
-    //}
-
-    private static Dictionary<LibrarySource, IOverridesService> GetOverriders(IServiceProvider sp)
-    {
-        return new Dictionary<LibrarySource, IOverridesService>
-        {
-            { LibrarySource.Spotify, sp.GetSpotifyOverrider() }
-        };
     }
 }
