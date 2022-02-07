@@ -18,7 +18,7 @@ public static class Routing
 
     private static WebApplication AddLastFmRoutes(this WebApplication app)
     {
-        var lfmAuth = app.Services.GetRequiredService<Core.LastFM.IAuthoriser>();
+        var lfmAuth = app.Services.GetRequiredService<LastFM.IAuthoriser>();
 
         var history = app.Services.GetRequiredService<IHistory>();
         var scrobbler = app.Services.GetRequiredService<IScrobbler>();

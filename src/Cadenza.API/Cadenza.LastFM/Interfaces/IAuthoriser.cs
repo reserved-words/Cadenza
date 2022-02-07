@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Core.LastFM;
+﻿namespace Cadenza.LastFM;
 
 public interface IAuthoriser
 {
