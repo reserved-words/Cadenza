@@ -68,10 +68,10 @@ stages:
         packagesToPack: '**/Cadenza.Library.csproj'
         versioningScheme: 'off'        
     - task: DotNetCoreCLI@2
-      displayName: 'Pack Cadenza.API.Core'
+      displayName: 'Pack Cadenza.API.Wrapper.Core'
       inputs:
         command: 'pack'
-        packagesToPack: '**/Cadenza.API.Core.csproj'
+        packagesToPack: '**/Cadenza.API.Wrapper.Core.csproj'
         versioningScheme: 'off'        
     - task: DotNetCoreCLI@2
       displayName: 'Pack Cadenza.API.Wrapper.LastFM'
