@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public abstract class Library : ILibrary
+public class Library : ILibrary
 {
     private readonly ISourceFactory _sourceFactory;
     private readonly IMerger _merger;
@@ -12,8 +12,6 @@ public abstract class Library : ILibrary
         _sourceFactory = sourceFactory;
         _merger = merger;
     }
-
-    public abstract LibrarySource Source { get; }
 
     public bool IsPopulated => _library != null;
 

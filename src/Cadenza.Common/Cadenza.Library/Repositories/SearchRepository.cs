@@ -1,19 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public abstract class SourceSearchRepository : SearchRepository, ISourceSearchRepository
-{
-
-    private ISourceLibrary _library;
-
-    protected SourceSearchRepository(ISourceLibrary library) 
-        : base(library)
-    {
-        _library = library;
-    }
-    public LibrarySource Source => _library.Source;
-}
-
-public abstract class SearchRepository : ISearchRepository
+public class SearchRepository : ISearchRepository
 {
     private List<SearchableAlbum> _albums;
     private List<SearchableArtist> _artists;
