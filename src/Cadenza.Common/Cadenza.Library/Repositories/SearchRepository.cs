@@ -1,5 +1,18 @@
 ﻿namespace Cadenza.Library;
 
+public abstract class SourceSearchRepository : SearchRepository, ISourceSearchRepository
+{
+
+    private ISourceLibrary _library;
+
+    protected SourceSearchRepository(ISourceLibrary library) 
+        : base(library)
+    {
+        _library = library;
+    }
+    public LibrarySource Source => _library.Source;
+}
+
 public abstract class SearchRepository : ISearchRepository
 {
     private List<SearchableAlbum> _albums;
@@ -7,23 +20,21 @@ public abstract class SearchRepository : ISearchRepository
     private List<SearchablePlaylist> _playlists;
     private List<SearchableTrack> _tracks;
 
-    private readonly ILibrary _source;
+    private readonly ILibrary _library;
 
     public SearchRepository(ILibrary library)
     {
-        _source = library;
+        _library = library;
     }
-
-    public LibrarySource Source => _source.Source;
 
     public async Task Populate()
     {
-        if (!_source.IsPopulated)
+        if (!_library.IsPopulated)
         {
-            await _source.Populate();
+            await _library.Populate();
         }
 
-        var library = await _source.Get();
+        var library = await _library.Get();
 
         _albums = library.Albums
             .Select(a => new SearchableAlbum(a.Id, a.Title, a.ArtistName))
