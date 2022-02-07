@@ -7,6 +7,8 @@ using Cadenza.Common;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
 using Cadenza.API.Wrapper;
+using Cadenza.API.Wrapper.Spotify;
+using Cadenza.API.Wrapper.LastFM;
 
 namespace Cadenza;
 

@@ -1,4 +1,5 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.API.Wrapper.LastFM;
+using Cadenza.Common;
 using Microsoft.JSInterop;
 
 namespace Cadenza

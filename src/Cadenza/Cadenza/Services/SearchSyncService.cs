@@ -41,7 +41,7 @@ public class SearchSyncService : ISearchSyncService
         }
     }
 
-    private async Task FetchTracks(ISearchRepository repository)
+    private async Task FetchTracks(ISourceSearchRepository repository)
     {
         var response = await repository.GetSearchTracks(1, ItemFetchLimit);
         _cache.AddTracks(response.Items);
@@ -53,7 +53,7 @@ public class SearchSyncService : ISearchSyncService
         }
     }
 
-    private async Task FetchAlbums(ISearchRepository repository)
+    private async Task FetchAlbums(ISourceSearchRepository repository)
     {
         var response = await repository.GetSearchAlbums(1, ItemFetchLimit);
         _cache.AddAlbums(response.Items);
