@@ -13,6 +13,7 @@ public static class _Startup
     public static IServiceCollection AddLibrary<TSource>(this IServiceCollection services)
         where TSource : class, IStaticLibrary
     {
+        services.AddTransient<ValueMerger>();
         services.AddTransient<IMerger, Merger>();
         services.AddTransient<IStaticLibrary, TSource>();
         services.AddTransient<ISourceFactory, SourceFactory>();
@@ -24,6 +25,7 @@ public static class _Startup
         where TSource : class, IStaticLibrary
         where TOverride : class, IStaticLibrary
     {
+        services.AddTransient<ValueMerger>();
         services.AddTransient<IMerger, Merger>();
         services.AddTransient<IStaticLibrary, TSource>();
         services.AddTransient<IStaticLibrary, TOverride>();
