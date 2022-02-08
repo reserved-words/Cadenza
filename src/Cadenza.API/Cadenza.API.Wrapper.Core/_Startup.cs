@@ -11,7 +11,7 @@ public static class _Startup
         return services.Configure<ApiSettings>(section);
     }
 
-    public static IServiceCollection AddCoreServices(this IServiceCollection services)
+    public static IServiceCollection AddAPIWrapper(this IServiceCollection services)
     {
         return services
             .AddTransient<IUrl, Url>()

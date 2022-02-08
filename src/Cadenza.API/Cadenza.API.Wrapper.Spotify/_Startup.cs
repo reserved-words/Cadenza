@@ -9,7 +9,6 @@ public static class _Startup
     public static IServiceCollection AddSpotifyCore(this IServiceCollection services)
     {
         return services
-            .AddCoreServices()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IInitialiser, Initialiser>()
             .AddTransient<ISourceSearchRepository, SpotifySearchRepository>();

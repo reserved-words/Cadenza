@@ -14,13 +14,12 @@ namespace Cadenza
         private readonly IConnectorController _connectorController;
         private readonly IAuthoriser _authoriser;
         private readonly ISpotifyInterop _interop;
-
-
+        private readonly IInitialiser _initialiser;
 
         private string RedirectUri => _config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
         public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
-            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop)
+            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop, IInitialiser initialiser)
         {
             _storeGetter = storeGetter;
             _storeSetter = storeSetter;
@@ -29,6 +28,7 @@ namespace Cadenza
             _connectorController = connectorController;
             _authoriser = lastFmAuthoriser;
             _interop = interop;
+            _initialiser = initialiser;
         }
 
         public SubTask GetConnectionTask()
@@ -51,7 +51,6 @@ namespace Cadenza
                  ("Authenticating", (url) => Authorise(url)),
                  ("Creating session", (code) => CreateSession(code)),
                  ("Refreshing session", (at) => RefreshSession(at)));
-
 
             subTask.AddStep("Populating library", Populate);
 
@@ -130,19 +129,15 @@ namespace Cadenza
 
         private async Task Populate()
         {
-            //try
-            //{
-            //    var response = await _http.Post(GetPopulateUrl());
-
-            //    if (!response.IsSuccessStatusCode)
-            //    {
-            //        throw new Exception();
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    throw new Exception("Failed to populate local library");
-            //}
+            try
+            {
+                var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
+                await _initialiser.Populate(accessToken.Value);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to populate local library");
+            }
         }
     }
 }
