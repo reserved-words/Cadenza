@@ -1,5 +1,4 @@
 ﻿using Cadenza.API.Core;
-using Cadenza.API.Core.Spotify;
 using Cadenza.API.Wrapper.Core;
 using Cadenza.Utilities;
 using System.Net.Http.Json;

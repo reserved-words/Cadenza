@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Core.Spotify;
-
-namespace Cadenza.API.Wrapper.Spotify
+﻿namespace Cadenza.API.Wrapper.Spotify
 {
     public interface IAuthoriser
     {

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Core.Spotify;
+﻿namespace Cadenza.API.Wrapper.Spotify;
 
 internal class TokenRequestData
 {

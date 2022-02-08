@@ -6,7 +6,7 @@ using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
-namespace Cadenza.Spotify.Repositories;
+namespace Cadenza.API.Wrapper.Spotify;
 
 internal class SpotifySearchRepository : ISourceSearchRepository
 {

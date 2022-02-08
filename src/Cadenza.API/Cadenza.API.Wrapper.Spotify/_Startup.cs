@@ -1,6 +1,5 @@
-﻿using Cadenza.API.Core.Spotify;
-using Cadenza.API.Wrapper.Core;
-using Microsoft.Extensions.Configuration;
+﻿using Cadenza.API.Wrapper.Core;
+using Cadenza.Library;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.Wrapper.Spotify;
@@ -11,6 +10,8 @@ public static class _Startup
     {
         return services
             .AddCoreServices()
-            .AddTransient<IAuthoriser, Authoriser>();
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<IInitialiser, Initialiser>()
+            .AddTransient<ISourceSearchRepository, SpotifySearchRepository>();
     }
 }
