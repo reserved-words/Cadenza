@@ -9,6 +9,7 @@ using Cadenza.LastFM;
 using Cadenza.API.Wrapper;
 using Cadenza.API.Wrapper.Spotify;
 using Cadenza.API.Wrapper.LastFM;
+using Cadenza.API.Wrapper.Core;
 
 namespace Cadenza;
 
@@ -34,9 +35,10 @@ public static class Services
             .AddAppServices()
             .AddUIHelpers()
             .AddTimers()
+            .AddAPIWrapper()
             .AddLastFm()
-            .AddSources()
-            .AddDatabaseRepositories();
+            .AddSources();
+//            .AddDatabaseRepositories();
 
         builder.Services
             .AddTransient<IStartupSyncService, StartupSyncService>()

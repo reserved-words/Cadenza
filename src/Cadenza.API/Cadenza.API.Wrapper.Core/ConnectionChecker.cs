@@ -3,7 +3,7 @@ using Cadenza.Utilities;
 
 namespace Cadenza.API.Wrapper.Core;
 
-internal class ConnectionChecker : IConnectionChecker
+public class ConnectionChecker : IConnectionChecker
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;

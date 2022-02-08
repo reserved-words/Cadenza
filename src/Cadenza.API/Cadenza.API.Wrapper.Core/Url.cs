@@ -3,7 +3,7 @@ using System.Web;
 
 namespace Cadenza.API.Wrapper.Core;
 
-internal class Url : IUrl
+public class Url : IUrl
 {
     private readonly ApiSettings _api;
 
