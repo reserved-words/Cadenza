@@ -34,4 +34,13 @@ public static class _Startup
 
         return services;
     }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddTransient<IArtistRepository, ArtistRepository>();
+        services.AddTransient<IPlayTrackRepository, PlayTrackRepository>();
+        services.AddTransient<ISearchRepository, SearchRepository>();
+        services.AddTransient<ITrackRepository, TrackRepository>();
+        return services;
+    }
 }

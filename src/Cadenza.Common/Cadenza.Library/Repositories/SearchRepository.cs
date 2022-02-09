@@ -38,50 +38,42 @@ public class SearchRepository : ISearchRepository
 
     public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
     {
-        return await GetListResponse(_albums, page, limit);
-    }
-
-    public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
-    {
-        return await GetListResponse(_artists, page, limit);
-    }
-
-    public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
-    {
-        return await GetListResponse(_playlists, page, limit);
-    }
-
-    public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
-    {
-        return await GetListResponse(_tracks, page, limit);
-    }
-
-    private async Task<ListResponse<SearchableItem>> GetListResponse<T>(List<T> allItems, int page, int limit) where T : SearchableItem
-    {
-        if (allItems == null)
+        if (_albums == null)
         {
             await Populate();
         }
 
-        var skip = (page - 1) * limit;
+        return _albums.ToListResponse<SearchableAlbum, SearchableItem>(t => t.Id, page, limit);
+    }
 
-        var items = allItems
-            .OrderBy(i => i.Id)
-            .Skip(skip)
-            .Take(limit)
-            .OfType<SearchableItem>()
-            .ToList();
-
-        var total = allItems.Count;
-
-        return new ListResponse<SearchableItem>
+    public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
+    {
+        if (_artists == null)
         {
-            Items = items,
-            Limit = limit,
-            Page = page,
-            TotalItems = total,
-            TotalPages = (int)Math.Ceiling((double)total / limit)
-        };
+            await Populate();
+        }
+
+        return _artists.ToListResponse<SearchableArtist, SearchableItem>(t => t.Id, page, limit);
+    }
+
+    public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
+    {
+        if (_playlists == null)
+        {
+            await Populate();
+        }
+
+        return _playlists.ToListResponse<SearchablePlaylist, SearchableItem>(t => t.Id, page, limit);
+    }
+
+    public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
+    {
+        if (_tracks == null)
+        {
+            await Populate();
+        }
+
+        return _tracks.ToListResponse<SearchableTrack, SearchableItem>(t => t.Id, page, limit);
     }
 
     private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)

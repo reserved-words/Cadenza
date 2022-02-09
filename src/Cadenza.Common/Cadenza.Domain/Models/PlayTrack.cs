@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Domain;
 
-public class BasicTrack
+public class PlayTrack
 {
     public LibrarySource Source { get; set; }
     public string Id { get; set; }
