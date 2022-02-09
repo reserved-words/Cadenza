@@ -13,15 +13,8 @@ public class Library : ILibrary
         _merger = merger;
     }
 
-    public bool IsPopulated => _library != null;
-
     public async Task<FullLibrary> Get()
     {
-        if (!IsPopulated)
-        {
-            await Populate();
-        }
-
         return _library;
     }
 
@@ -31,20 +24,29 @@ public class Library : ILibrary
 
         var sources = _sourceFactory.GetSources();
 
-        var tasks = sources.Select(s => s.Get());
+        // var tasks = sources.Select(s => s.Get());
 
-        _library = await Task
-            .WhenAll(tasks)
-            .ContinueWith(t =>
-            {
-                var cancelled = tasks.Where(t => t.IsCanceled).ToList();
-                var completed = tasks.Where(t => t.IsCompleted).ToList();
-                var faulted = tasks.Where(t => t.IsFaulted).ToList();
+        var libraries = new List<FullLibrary>();
 
-                var results = completed.Select(task => task.Result);
+        foreach (var source in sources)
+        {
+            libraries.Add(await source.Get());
+        }
 
-                return Combine(results);
-            });
+        Combine(libraries);
+
+        //_library = await Task
+        //    .WhenAll(tasks)
+        //    .ContinueWith(t =>
+        //    {
+        //        var cancelled = tasks.Where(t => t.IsCanceled).ToList();
+        //        var completed = tasks.Where(t => t.IsCompleted).ToList();
+        //        var faulted = tasks.Where(t => t.IsFaulted).ToList();
+
+        //        var results = completed.Select(task => task.Result);
+
+        //        return Combine(results);
+        //    });
     }
 
     private FullLibrary Combine(IEnumerable<FullLibrary> sources)
@@ -69,22 +71,20 @@ public class Library : ILibrary
         {
             return update;
         }
-        else
-        {
-            foreach (var updateItem in update)
-            {
-                var existingItem = existing.SingleOrDefault(i => id(i) == id(updateItem));
-                if (existingItem != null)
-                {
-                    merge(existingItem, updateItem);
-                }
-                else
-                {
-                    existing.Add(updateItem);
-                }
-            }
 
-            return existing;
+        foreach (var updateItem in update)
+        {
+            var existingItem = existing.SingleOrDefault(i => id(i) == id(updateItem));
+            if (existingItem != null)
+            {
+                merge(existingItem, updateItem);
+            }
+            else
+            {
+                existing.Add(updateItem);
+            }
         }
+
+        return existing;
     }
 }

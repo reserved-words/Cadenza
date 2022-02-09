@@ -4,23 +4,18 @@ public class TrackRepository : ITrackRepository
 {
     private readonly ILibrary _library;
 
-    public TrackRepository(ILibrary library)
-    {
-        _library = library;
-    }
-
     private Dictionary<string, TrackInfo> _tracks;
     private Dictionary<string, AlbumInfo> _albums;
     private Dictionary<string, ArtistInfo> _artists;
     private Dictionary<string, AlbumTrackLink> _albumTracks;
 
+    public TrackRepository(ILibrary library)
+    {
+        _library = library;
+    }
+
     public async Task<TrackFull> GetTrack(string id)
     {
-        if (_tracks == null)
-        {
-            await Populate();
-        }
-
         var track = _tracks[id];
         var album = _albums[track.AlbumId];
         var artist = _artists[track.ArtistId];
@@ -52,12 +47,7 @@ public class TrackRepository : ITrackRepository
 
     public async Task Populate()
     {
-        if (!_library.IsPopulated)
-        {
-            await _library.Populate();
-        }
         var library = await _library.Get();
-
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);

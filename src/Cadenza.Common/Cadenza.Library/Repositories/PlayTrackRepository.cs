@@ -15,41 +15,21 @@ public class PlayTrackRepository : IPlayTrackRepository
 
     public async Task<ListResponse<PlayTrack>> GetAll(int page, int limit)
     {
-        if (_tracks == null)
-        {
-            await Populate();
-        }
-
         return _tracks.ToListResponse(t => t.Id, page, limit);
     }
 
     public async Task<ListResponse<PlayTrack>> GetByAlbum(string id, int page, int limit)
     {
-        if (_tracks == null)
-        {
-            await Populate();
-        }
-
         return _albumTracks[id].ToListResponse(t => t.Id, page, limit);
     }
 
     public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)
     {
-        if (_tracks == null)
-        {
-            await Populate();
-        }
-
         return _artistTracks[id].ToListResponse(t => t.Id, page, limit);
     }
 
     public async Task Populate()
     {
-        if (!_library.IsPopulated)
-        {
-            await _library.Populate();
-        }
-
         var library = await _library.Get();
 
         _tracks = library.Tracks

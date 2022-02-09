@@ -16,11 +16,6 @@ public class ArtistRepository : IArtistRepository
 
     public async Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
     {
-        if (_artists == null)
-        {
-            await Populate();
-        }
-
         return _albumArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
@@ -28,22 +23,12 @@ public class ArtistRepository : IArtistRepository
 
     public async Task<ListResponse<AlbumInfo>> GetAlbums(string artistId, int page, int limit)
     {
-        if (_albums == null)
-        {
-            await Populate();
-        }
-
         return _albums[artistId]
             .ToListResponse<AlbumInfo>(a => a.Id, page, limit);
     }
 
     public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
     {
-        if (_artists == null)
-        {
-            await Populate();
-        }
-
         return _artists
             .Values
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
@@ -51,21 +36,11 @@ public class ArtistRepository : IArtistRepository
 
     public async Task<ArtistInfo> GetArtist(string id)
     {
-        if (_artists == null)
-        {
-            await Populate();
-        }
-
         return _artists[id];
     }
 
     public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
     {
-        if (_artists == null)
-        {
-            await Populate();
-        }
-
         return _trackArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
@@ -73,11 +48,6 @@ public class ArtistRepository : IArtistRepository
 
     public async Task Populate()
     {
-        if (!_library.IsPopulated)
-        {
-            await _library.Populate();
-        }
-
         var library = await _library.Get();
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);

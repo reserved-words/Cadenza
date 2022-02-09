@@ -16,11 +16,6 @@ public class SearchRepository : ISearchRepository
 
     public async Task Populate()
     {
-        if (!_library.IsPopulated)
-        {
-            await _library.Populate();
-        }
-
         var library = await _library.Get();
 
         _albums = library.Albums
@@ -38,41 +33,21 @@ public class SearchRepository : ISearchRepository
 
     public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
     {
-        if (_albums == null)
-        {
-            await Populate();
-        }
-
         return _albums.ToListResponse<SearchableAlbum, SearchableItem>(t => t.Id, page, limit);
     }
 
     public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
     {
-        if (_artists == null)
-        {
-            await Populate();
-        }
-
         return _artists.ToListResponse<SearchableArtist, SearchableItem>(t => t.Id, page, limit);
     }
 
     public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
     {
-        if (_playlists == null)
-        {
-            await Populate();
-        }
-
         return _playlists.ToListResponse<SearchablePlaylist, SearchableItem>(t => t.Id, page, limit);
     }
 
     public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
     {
-        if (_tracks == null)
-        {
-            await Populate();
-        }
-
         return _tracks.ToListResponse<SearchableTrack, SearchableItem>(t => t.Id, page, limit);
     }
 
