@@ -20,11 +20,7 @@ public class Library : ILibrary
 
     public async Task Populate()
     {
-        // todo - add error handling
-
         var sources = _sourceFactory.GetSources();
-
-        // var tasks = sources.Select(s => s.Get());
 
         var libraries = new List<FullLibrary>();
 
@@ -34,19 +30,6 @@ public class Library : ILibrary
         }
 
         _library = Combine(libraries);
-
-        //_library = await Task
-        //    .WhenAll(tasks)
-        //    .ContinueWith(t =>
-        //    {
-        //        var cancelled = tasks.Where(t => t.IsCanceled).ToList();
-        //        var completed = tasks.Where(t => t.IsCompleted).ToList();
-        //        var faulted = tasks.Where(t => t.IsFaulted).ToList();
-
-        //        var results = completed.Select(task => task.Result);
-
-        //        return Combine(results);
-        //    });
     }
 
     private FullLibrary Combine(IEnumerable<FullLibrary> sources)

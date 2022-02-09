@@ -14,7 +14,7 @@ namespace Cadenza.Library.Repositories
 
         public async Task<TrackFull> GetTrack(string id)
         {
-            return await Get<TrackFull>(_settings.Track);
+            return await Get<TrackFull>(_settings.Track, id);
         }
 
         public async Task<ListResponse<PlayTrack>> GetAll(int page, int limit)
@@ -49,7 +49,7 @@ namespace Cadenza.Library.Repositories
 
         public async Task<ArtistInfo> GetArtist(string id)
         {
-            return await Get<ArtistInfo>(_settings.Artist);
+            return await Get<ArtistInfo>(_settings.Artist, id);
         }
 
         public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
@@ -100,7 +100,7 @@ namespace Cadenza.Library.Repositories
             return await response.Content.ReadFromJsonAsync<T>();
         }
 
-        public async Task<T> Get<T>(string endpoint)
+        public async Task<T> Get<T>(string endpoint, string id)
         {
             var url = GetApiEndpoint(endpoint);
             var response = await _http.Get(url);
@@ -110,6 +110,11 @@ namespace Cadenza.Library.Repositories
         private string GetApiEndpoint(string endpoint)
         {
             return $"{_settings.BaseUrl}{endpoint}";
+        }
+
+        private string GetApiEndpoint(string endpoint, string id)
+        {
+            return $"{GetApiEndpoint(endpoint)}?id={id}";
         }
 
         private string GetApiEndpoint(string endpoint, int page, int limit)

@@ -46,7 +46,10 @@ public static class Routing
         app.MapPost("/Startup", async () =>
         {
             await library.Populate();
+            await artistRepository.Populate();
+            await playTrackRepository.Populate();
             await searchRepository.Populate();
+            await trackRepository.Populate();
         });
 
         app.MapGet("/Artists", (int page, int limit) => artistRepository.GetAllArtists(page, limit));
