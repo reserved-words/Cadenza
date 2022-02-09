@@ -33,7 +33,7 @@ public class Library : ILibrary
             libraries.Add(await source.Get());
         }
 
-        Combine(libraries);
+        _library = Combine(libraries);
 
         //_library = await Task
         //    .WhenAll(tasks)
