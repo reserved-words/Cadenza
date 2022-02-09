@@ -2,6 +2,9 @@
 global using Cadenza.Utilities;
 
 using System.Runtime.CompilerServices;
+using Cadenza.Library.Libraries;
+using Cadenza.Library.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly:InternalsVisibleTo("Cadenza.Library.Tests")]
@@ -41,6 +44,20 @@ public static class _Startup
         services.AddTransient<IPlayTrackRepository, PlayTrackRepository>();
         services.AddTransient<ISearchRepository, SearchRepository>();
         services.AddTransient<ITrackRepository, TrackRepository>();
+        return services;
+    }
+
+    public static IServiceCollection AddApiRepository(this IServiceCollection services, LibrarySource source, IConfiguration config, string sectionPath)
+    {
+        services
+            .AddTransient<ISource>(sp => new SourceProvider(source))
+            .AddTransient<ISourceArtistRepository, ApiRepository>()
+            .AddTransient<ISourcePlayTrackRepository, ApiRepository>()
+            .AddTransient<ISourceSearchRepository, ApiRepository>()
+            .AddTransient<ISourceTrackRepository, ApiRepository>();
+
+        var section = config.GetSection(sectionPath);
+        services.Configure<ApiRepositorySettings>(section);
         return services;
     }
 }
