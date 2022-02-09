@@ -18,7 +18,7 @@ public static class Startup
             .AddSingleton<IApiHelper, ApiHelper>()
             .AddSingleton<IApiToken, ApiToken>()
             .AddLibrary<ApiLibrary, OverridesLibrary>()
-            .AddTransient<ISearchRepository, SearchRepository>();
+            .AddRepositories();
     }
 
     public static IServiceCollection ConfigureSpotify(this IServiceCollection services, IConfiguration config, string sectionPath)

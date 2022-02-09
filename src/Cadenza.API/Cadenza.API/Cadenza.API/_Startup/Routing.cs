@@ -49,21 +49,39 @@ public static class Routing
         app.MapGet(ApiEndpoints.Spotify.TokenUrl, () => authoriser.GetTokenUrl());
         app.MapGet(ApiEndpoints.Spotify.AuthUrl, (string state, string redirectUri) => authoriser.GetAuthUrl(state, redirectUri));
 
-        var library = app.Services.GetRequiredService<ILibrary>();
-        var searchRepository = app.Services.GetRequiredService<ISearchRepository>();
         var apiToken = app.Services.GetRequiredService<IApiToken>();
+        var library = app.Services.GetRequiredService<ILibrary>();
+        var artistRepository = app.Services.GetRequiredService<IArtistRepository>();
+        var playTrackRepository = app.Services.GetRequiredService<IPlayTrackRepository>();
+        var searchRepository = app.Services.GetRequiredService<ISearchRepository>();
+        var trackRepository = app.Services.GetRequiredService<ITrackRepository>();
 
         app.MapPost(ApiEndpoints.Spotify.Populate, async (string accessToken) =>
         {
             apiToken.SetAccessToken(accessToken);
             await library.Populate();
+            await artistRepository.Populate();
+            await playTrackRepository.Populate();
             await searchRepository.Populate();
+            await trackRepository.Populate();
         });
+
+        app.MapGet(ApiEndpoints.Spotify.AllArtists, (int page, int limit) => artistRepository.GetAllArtists(page, limit));
+        app.MapGet(ApiEndpoints.Spotify.AlbumArtists, (int page, int limit) => artistRepository.GetAlbumArtists(page, limit));
+        app.MapGet(ApiEndpoints.Spotify.TrackArtists, (int page, int limit) => artistRepository.GetTrackArtists(page, limit));
+        app.MapGet(ApiEndpoints.Spotify.Artist, (string id) => artistRepository.GetArtist(id));
+        app.MapGet(ApiEndpoints.Spotify.ArtistAlbums, (string id, int page, int limit) => artistRepository.GetAlbums(id, page, limit));
+
+        app.MapGet(ApiEndpoints.Spotify.PlayTracks, (int page, int limit) => playTrackRepository.GetAll(page, limit));
+        app.MapGet(ApiEndpoints.Spotify.PlayArtist, (string id, int page, int limit) => playTrackRepository.GetByArtist(id, page, limit));
+        app.MapGet(ApiEndpoints.Spotify.PlayAlbum, (string id, int page, int limit) => playTrackRepository.GetByAlbum(id, page, limit));
 
         app.MapGet(ApiEndpoints.Spotify.SearchArtists, (int page, int limit) => searchRepository.GetSearchArtists(page, limit));
         app.MapGet(ApiEndpoints.Spotify.SearchAlbums, (int page, int limit) => searchRepository.GetSearchAlbums(page, limit));
         app.MapGet(ApiEndpoints.Spotify.SearchPlaylists, (int page, int limit) => searchRepository.GetSearchPlaylists(page, limit));
         app.MapGet(ApiEndpoints.Spotify.SearchTracks, (int page, int limit) => searchRepository.GetSearchTracks(page, limit));
+
+        app.MapGet(ApiEndpoints.Spotify.Track, (string id) => trackRepository.GetTrack(id));
 
         var azure = app.Services.GetRequiredService<SpotifyOverridesService>();
         app.MapGet(ApiEndpoints.Spotify.GetOverrides, () => azure.GetOverrides());
