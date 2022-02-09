@@ -40,10 +40,10 @@ public static class _Startup
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<IArtistRepository, ArtistRepository>();
-        services.AddTransient<IPlayTrackRepository, PlayTrackRepository>();
-        services.AddTransient<ISearchRepository, SearchRepository>();
-        services.AddTransient<ITrackRepository, TrackRepository>();
+        services.AddSingleton<IArtistRepository, ArtistRepository>();
+        services.AddSingleton<IPlayTrackRepository, PlayTrackRepository>();
+        services.AddSingleton<ISearchRepository, SearchRepository>();
+        services.AddSingleton<ITrackRepository, TrackRepository>();
         return services;
     }
 
