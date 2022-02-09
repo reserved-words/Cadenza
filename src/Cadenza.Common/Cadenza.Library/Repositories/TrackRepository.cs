@@ -32,6 +32,7 @@ public class TrackRepository : ITrackRepository
             AlbumId = track.AlbumId,
             AlbumTitle = album.Title,
             AlbumArtistId = album.ArtistId,
+            AlbumArtist = album.ArtistName,
             ArtworkUrl = album.ArtworkUrl,
             ReleaseType = album.ReleaseType,
             Year = track.Year,
