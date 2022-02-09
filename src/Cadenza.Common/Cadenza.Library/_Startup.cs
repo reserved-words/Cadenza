@@ -47,17 +47,14 @@ public static class _Startup
         return services;
     }
 
-    public static IServiceCollection AddApiRepository(this IServiceCollection services, LibrarySource source, IConfiguration config, string sectionPath)
+    public static IServiceCollection AddApiRepository(this IServiceCollection services, LibrarySource source, ApiRepositorySettings settings)
     {
-        services
+        return services
             .AddTransient<ISource>(sp => new SourceProvider(source))
+            .AddTransient<ApiRepositorySettings>(sp => settings)
             .AddTransient<ISourceArtistRepository, ApiRepository>()
             .AddTransient<ISourcePlayTrackRepository, ApiRepository>()
             .AddTransient<ISourceSearchRepository, ApiRepository>()
             .AddTransient<ISourceTrackRepository, ApiRepository>();
-
-        var section = config.GetSection(sectionPath);
-        services.Configure<ApiRepositorySettings>(section);
-        return services;
     }
 }
