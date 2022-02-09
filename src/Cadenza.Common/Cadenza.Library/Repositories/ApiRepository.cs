@@ -4,9 +4,9 @@ namespace Cadenza.Library.Repositories
 {
     internal class ApiRepository : ApiRepositoryBase, ISourceTrackRepository, ISourcePlayTrackRepository, ISourceArtistRepository, ISourceSearchRepository
     {
-        private readonly ApiRepositorySettings _settings;
+        private readonly IApiRepositorySettings _settings;
 
-        public ApiRepository(IHttpHelper http, ISource source, ApiRepositorySettings settings)
+        public ApiRepository(IHttpHelper http, ISource source, IApiRepositorySettings settings)
             : base(http, settings, source)
         {
             _settings = settings;
@@ -80,11 +80,11 @@ namespace Cadenza.Library.Repositories
 
     internal abstract class ApiRepositoryBase
     {
-        private readonly ApiRepositorySettings _settings;
+        private readonly IApiRepositorySettings _settings;
         private readonly IHttpHelper _http;
         private readonly ISource _source;
 
-        public ApiRepositoryBase(IHttpHelper http, ApiRepositorySettings settings, ISource source)
+        public ApiRepositoryBase(IHttpHelper http, IApiRepositorySettings settings, ISource source)
         {
             _http = http;
             _settings = settings;
@@ -118,25 +118,25 @@ namespace Cadenza.Library.Repositories
         }
     }
 
-    public class ApiRepositorySettings
+    public interface IApiRepositorySettings
     {
-        public string BaseUrl { get; set; }
+        string BaseUrl { get; }
 
-        public string Artist { get; set; }
-        public string ArtistAlbums { get; set; }
-        public string AllArtists { get; set; }
-        public string AlbumArtists { get; set; }
-        public string TrackArtists { get; set; }
+        string Artist { get; }
+        string ArtistAlbums { get; }
+        string AllArtists { get; }
+        string AlbumArtists { get; }
+        string TrackArtists { get; }
 
-        public string PlayTracks { get; set; }
-        public string PlayArtist { get; set; }
-        public string PlayAlbum { get; set; }
+        string PlayTracks { get; }
+        string PlayArtist { get; }
+        string PlayAlbum { get; }
 
-        public string SearchArtists { get; set; }
-        public string SearchAlbums { get; set; }
-        public string SearchTracks { get; set; }
-        public string SearchPlaylists { get; set; }
+        string SearchArtists { get; }
+        string SearchAlbums { get; }
+        string SearchTracks { get; }
+        string SearchPlaylists { get; }
 
-        public string Track { get; set; }
+        string Track { get; }
     }
 }

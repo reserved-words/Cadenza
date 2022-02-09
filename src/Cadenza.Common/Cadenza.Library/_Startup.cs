@@ -47,11 +47,11 @@ public static class _Startup
         return services;
     }
 
-    public static IServiceCollection AddApiRepository(this IServiceCollection services, LibrarySource source, ApiRepositorySettings settings)
+    public static IServiceCollection AddApiRepository<T>(this IServiceCollection services, LibrarySource source) where T : class, IApiRepositorySettings
     {
         return services
             .AddTransient<ISource>(sp => new SourceProvider(source))
-            .AddTransient<ApiRepositorySettings>(sp => settings)
+            .AddTransient<IApiRepositorySettings, T>()
             .AddTransient<ISourceArtistRepository, ApiRepository>()
             .AddTransient<ISourcePlayTrackRepository, ApiRepository>()
             .AddTransient<ISourceSearchRepository, ApiRepository>()
