@@ -1,4 +1,4 @@
-﻿using Cadenza.API.Core;
+﻿using Cadenza.API.Wrapper.Core;
 using Cadenza.Common;
 
 namespace Cadenza

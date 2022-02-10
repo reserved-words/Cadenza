@@ -15,11 +15,12 @@ namespace Cadenza
         private readonly IAuthoriser _authoriser;
         private readonly ISpotifyInterop _interop;
         private readonly IInitialiser _initialiser;
+        private readonly IPlayerApi _player;
 
         private string RedirectUri => _config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
         public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
-            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop, IInitialiser initialiser)
+            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop, IInitialiser initialiser, IPlayerApi player)
         {
             _storeGetter = storeGetter;
             _storeSetter = storeSetter;
@@ -29,6 +30,7 @@ namespace Cadenza
             _authoriser = lastFmAuthoriser;
             _interop = interop;
             _initialiser = initialiser;
+            _player = player;
         }
 
         public SubTask GetConnectionTask()
@@ -60,10 +62,23 @@ namespace Cadenza
 
         private async Task<bool> IsTaskNeeded()
         {
-            var deviceId = await _storeGetter.GetValue<string>(StoreKey.SpotifyDeviceId);
-            if (deviceId != null && deviceId.Updated > DateTime.Now.AddMinutes(-30))
-                return false;
+            var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
+            if (accessToken != null && accessToken.Updated > DateTime.Now.AddHours(-2))
+            {
+                var devices = await _player.GetDevices();
+                var device = devices?.Devices.SingleOrDefault(d => d.name == "Cadenza");
+                if (device != null)
+                {
+                    await _storeSetter.SetValue(StoreKey.SpotifyDeviceId, device.id);
+                }
+            }
 
+            var deviceId = await _storeGetter.GetValue<string>(StoreKey.SpotifyDeviceId);
+            if (deviceId != null)
+            {
+                await Populate();
+                return false;
+            }
 
             await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
             await _storeSetter.Clear(StoreKey.SpotifyCode);
@@ -134,9 +149,9 @@ namespace Cadenza
                 var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
                 await _initialiser.Populate(accessToken.Value);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Failed to populate local library");
+                throw new Exception("Failed to populate Spotify library");
             }
         }
     }

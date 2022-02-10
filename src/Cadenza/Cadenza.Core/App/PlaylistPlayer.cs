@@ -20,8 +20,8 @@ public class PlaylistPlayer : IPlaylistPlayer
 
     public async Task PlayArtist(string id)
     {
-        _app.LoadingPlaylist();
-        var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
+        await _app.LoadingPlaylist();
+        var playlist = await _playlistCreator.CreateArtistPlaylist(id);
         await _app.Play(playlist);
     }
 

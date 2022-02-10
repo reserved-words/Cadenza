@@ -6,17 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Core" Version="1.0.5" />
-    <PackageReference Include="Cadenza.API.Wrapper.Spotify" Version="1.0.4" />
+    <PackageReference Include="Cadenza.API.Wrapper.Spotify" Version="1.0.10" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Library\" />
   </ItemGroup>
 
 </Project>

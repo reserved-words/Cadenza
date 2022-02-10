@@ -14,8 +14,8 @@ public class MenuAlbumBase : ComponentBase
     [Inject]
     public INotificationService Alert { get; set; }
 
-    [Inject]
-    public IAlbumRepository Repository { get; set; }
+    //[Inject]
+    //public IAlbumRepository Repository { get; set; }
 
     [Parameter]
     public string Class { get; set; }
@@ -52,8 +52,7 @@ public class MenuAlbumBase : ComponentBase
 
     public async Task OnViewTracklist()
     {
-        var album = await Repository.GetAlbum(AlbumId);
-        // var tracks = new List<Track>();
-        await DialogService.Display<AlbumTracklist, AlbumInfo>(album, "Tracklist");
+        //var album = await Repository.GetAlbum(AlbumId);
+        //await DialogService.Display<AlbumTracklist, AlbumInfo>(album, "Tracklist");
     }
 }

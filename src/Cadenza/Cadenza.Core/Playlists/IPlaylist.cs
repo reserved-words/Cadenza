@@ -5,8 +5,8 @@ public interface IPlaylist
     PlaylistType Type { get; }
     string Name { get; }
     bool MixedSource { get; }
-    Task<BasicTrack> MoveNext();
-    Task<BasicTrack> MovePrevious();
-    BasicTrack Current { get; }
+    Task<PlayTrack> MoveNext();
+    Task<PlayTrack> MovePrevious();
+    PlayTrack Current { get; }
     bool CurrentIsLast { get; }
 }

@@ -13,10 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Core" Version="1.0.5" />
-    <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.3" />
-    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.3" />
-    <PackageReference Include="Cadenza.Domain" Version="1.0.18" />
+    <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.8" />
+    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.7" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.20" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />

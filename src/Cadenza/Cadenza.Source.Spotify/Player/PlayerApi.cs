@@ -7,6 +7,7 @@ public class PlayerApi : IPlayerApi
     private const string PauseUrlFormat = "https://api.spotify.com/v1/me/player/pause?device_id={0}";
     private const string PlayUrlFormat = "https://api.spotify.com/v1/me/player/play?device_id={0}";
     private const string PlayStateUrl = "https://api.spotify.com/v1/me/player";
+    private const string AvailableDevicesUrl = "https://api.spotify.com/v1/me/player/devices";
 
     private readonly ISpotifyInterop _interop;
     private readonly IApiHelper _api;
@@ -20,6 +21,12 @@ public class PlayerApi : IPlayerApi
     public async Task<SpotifyApiPlayState> GetPlayState()
     {
         var response = await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
+        return response.Data;
+    }
+
+    public async Task<SpotifyApiDevicesResponse> GetDevices()
+    {
+        var response = await _api.Get<SpotifyApiDevicesResponse>(AvailableDevicesUrl);
         return response.Data;
     }
 

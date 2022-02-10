@@ -1,16 +1,16 @@
-﻿using Cadenza.Core;
+﻿using Cadenza.Library;
 
 namespace Cadenza;
 
 public class LibraryArtistBase : ComponentBase
 {
     [Inject]
-    public IArtistRepository Repository { get; set; }
+    public IMergedArtistRepository Repository { get; set; }
 
     [Parameter]
     public string ArtistId { get; set; }
 
-    public LibraryArtistDetails Model { get; set; }
+    //public LibraryArtistDetails Model { get; set; }
 
     public string PlaceholderText { get; set; }
 
@@ -24,40 +24,40 @@ public class LibraryArtistBase : ComponentBase
 
     private async Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs e)
     {
-        if (Model == null || Model.Id != e.Update.Id)
-            return;
+        //if (Model == null || Model.Id != e.Update.Id)
+        //    return;
 
         await UpdateArtist();
     }
 
     private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
     {
-        if (Model == null || Model.Id != e.Update.Id)
-            return;
+        //if (Model == null || Model.Id != e.Update.Id)
+        //    return;
 
         await UpdateArtist();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (ArtistId == Model?.Id)
-            return;
+        //if (ArtistId == Model?.Id)
+        //    return;
 
-        PlaceholderText = "Loading artist...";
+        //PlaceholderText = "Loading artist...";
 
-        Model = null;
+        //Model = null;
 
-        if (ArtistId != null)
-        {
-            await UpdateArtist();
-        }
+        //if (ArtistId != null)
+        //{
+        //    await UpdateArtist();
+        //}
 
-        PlaceholderText = "No artist selected";
+        //PlaceholderText = "No artist selected";
     }
 
     private async Task UpdateArtist()
     {
-        Model = await Repository.GetArtist(ArtistId);
+//        Model = await Repository.GetArtist(ArtistId);
         StateHasChanged();
     }
 }

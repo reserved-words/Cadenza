@@ -1,11 +1,12 @@
 ﻿using Cadenza.Core;
+using Cadenza.Library;
 
 namespace Cadenza;
 
 public class LibraryTabBase : ComponentBase
 {
     [Inject]
-    public IArtistRepository Repository { get; set; }
+    public IMergedArtistRepository Repository { get; set; }
 
     [Inject]
     public IAppConsumer App { get; set; }
@@ -19,9 +20,9 @@ public class LibraryTabBase : ComponentBase
 
     public bool Loading => Artists == null || !Artists.Any();
 
-    public List<LibraryArtist> Artists { get; set; }
+    public List<Artist> Artists { get; set; }
 
-    public LibraryArtist SelectedArtist { get; set; }
+    public Artist SelectedArtist { get; set; }
 
     public string SelectedArtistId { get; set; }
 
@@ -68,20 +69,20 @@ public class LibraryTabBase : ComponentBase
         }
     }
 
-    protected void SelectArtist(LibraryArtist artist)
+    protected void SelectArtist(Artist artist)
     {
         SelectedArtist = artist;
         SelectedArtistId = artist?.Id;
     }
 
-    protected async Task OnPlayArtist(LibraryArtist artist)
+    protected async Task OnPlayArtist(Artist artist)
     {
         await PlaylistPlayer.PlayArtist(artist.Id);
     }
 
     public string SearchText { get; set; }
 
-    public bool FilterFunc(LibraryArtist element)
+    public bool FilterFunc(Artist element)
     {
         return (SelectedGrouping == null || element.Grouping == SelectedGrouping)
             && (string.IsNullOrEmpty(SearchText) || element.Name.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase));
