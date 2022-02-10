@@ -1,7 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public interface ISourceTrackRepository
+public interface ISourceTrackRepository : ITrackRepository
 {
     LibrarySource Source { get; }
-    Task<TrackFull> GetTrack(string id);
 }

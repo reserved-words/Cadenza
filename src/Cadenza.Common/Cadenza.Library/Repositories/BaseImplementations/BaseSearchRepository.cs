@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class SearchRepository : ISearchRepository
+public class BaseSearchRepository : IBaseSearchRepository
 {
     private List<SearchableAlbum> _albums;
     private List<SearchableArtist> _artists;
@@ -9,7 +9,7 @@ public class SearchRepository : ISearchRepository
 
     private readonly ILibrary _library;
 
-    public SearchRepository(ILibrary library)
+    public BaseSearchRepository(ILibrary library)
     {
         _library = library;
     }

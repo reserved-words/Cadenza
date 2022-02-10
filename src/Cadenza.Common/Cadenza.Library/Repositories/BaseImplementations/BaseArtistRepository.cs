@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class ArtistRepository : IArtistRepository
+public class BaseArtistRepository : IBaseArtistRepository
 {
     private readonly ILibrary _library;
 
@@ -9,7 +9,7 @@ public class ArtistRepository : IArtistRepository
     private List<string> _albumArtists;
     private List<string> _trackArtists;
 
-    public ArtistRepository(ILibrary library)
+    public BaseArtistRepository(ILibrary library)
     {
         _library = library;
     }
