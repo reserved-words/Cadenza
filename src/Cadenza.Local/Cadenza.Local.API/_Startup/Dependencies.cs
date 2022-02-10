@@ -17,7 +17,7 @@ public static class Dependencies
             .AddUtilities()
             .AddLogger()
             .AddLibrary<JsonLibrary>()
-            .AddRepositories()
+            .AddBaseRepositories()
             .AddTransient<ICommentProcessor, CommentProcessor>()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()

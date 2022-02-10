@@ -11,6 +11,6 @@ public static class _Startup
         return services
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IInitialiser, Initialiser>()
-            .AddApiRepository<SpotifyApiSettings>(LibrarySource.Spotify);
+            .AddApiRepositories<SpotifyApiSettings>(LibrarySource.Spotify);
     }
 }

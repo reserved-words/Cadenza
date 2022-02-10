@@ -38,10 +38,10 @@ public static class Routing
     {
         var library = app.Services.GetRequiredService<ILibrary>();
 
-        var artistRepository = app.Services.GetRequiredService<IArtistRepository>();
-        var playTrackRepository = app.Services.GetRequiredService<IPlayTrackRepository>();
-        var searchRepository = app.Services.GetRequiredService<ISearchRepository>();
-        var trackRepository = app.Services.GetRequiredService<ITrackRepository>();
+        var artistRepository = app.Services.GetRequiredService<IBaseArtistRepository>();
+        var playTrackRepository = app.Services.GetRequiredService<IBasePlayTrackRepository>();
+        var searchRepository = app.Services.GetRequiredService<IBaseSearchRepository>();
+        var trackRepository = app.Services.GetRequiredService<IBaseTrackRepository>();
 
         app.MapPost("/Startup", async () =>
         {
