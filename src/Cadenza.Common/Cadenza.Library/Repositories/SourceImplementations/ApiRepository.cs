@@ -24,12 +24,12 @@ namespace Cadenza.Library.Repositories
 
         public async Task<ListResponse<PlayTrack>> GetByAlbum(string id, int page, int limit)
         {
-            return await Get<ListResponse<PlayTrack>>(_settings.PlayAlbum, page, limit);
+            return await Get<ListResponse<PlayTrack>>(_settings.PlayAlbum, id, page, limit);
         }
 
         public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)
         {
-            return await Get<ListResponse<PlayTrack>>(_settings.PlayArtist, page, limit);
+            return await Get<ListResponse<PlayTrack>>(_settings.PlayArtist, id, page, limit);
         }
 
         public async Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
@@ -100,9 +100,16 @@ namespace Cadenza.Library.Repositories
             return await response.Content.ReadFromJsonAsync<T>();
         }
 
+        public async Task<T> Get<T>(string endpoint, string id, int page, int limit)
+        {
+            var url = GetApiEndpoint(endpoint, id, page, limit);
+            var response = await _http.Get(url);
+            return await response.Content.ReadFromJsonAsync<T>();
+        }
+
         public async Task<T> Get<T>(string endpoint, string id)
         {
-            var url = GetApiEndpoint(endpoint);
+            var url = GetApiEndpoint(endpoint, id);
             var response = await _http.Get(url);
             return await response.Content.ReadFromJsonAsync<T>();
         }
@@ -120,6 +127,11 @@ namespace Cadenza.Library.Repositories
         private string GetApiEndpoint(string endpoint, int page, int limit)
         {
             return $"{GetApiEndpoint(endpoint)}?page={page}&limit={limit}";
+        }
+
+        private string GetApiEndpoint(string endpoint, string id, int page, int limit)
+        {
+            return $"{GetApiEndpoint(endpoint)}?id={id}&page={page}&limit={limit}";
         }
     }
 
