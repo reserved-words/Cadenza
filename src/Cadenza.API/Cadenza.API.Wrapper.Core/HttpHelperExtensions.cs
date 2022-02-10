@@ -34,7 +34,7 @@ public static class HttpHelperExtensions
     {
         try
         {
-            var response = await http.Post(url);
+            var response = await http.Post(url, null, null);
             response.Validate();
         }
         catch (Exception ex)

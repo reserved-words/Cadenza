@@ -25,6 +25,6 @@ public class LastFmAuthorisedClient : ILastFmAuthorisedClient
 
         _signer.Sign(parameters);
 
-        await _httpClient.Post(_config.Value.ApiBaseUrl, parameters);
+        await _httpClient.Post(_config.Value.ApiBaseUrl, null, parameters);
     }
 }

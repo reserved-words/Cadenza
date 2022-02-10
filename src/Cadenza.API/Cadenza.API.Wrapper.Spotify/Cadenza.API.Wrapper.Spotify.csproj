@@ -4,11 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>1.0.9</Version>
+    <Version>1.0.10</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Library" Version="1.0.40" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.41" />
   </ItemGroup>
 
   <ItemGroup>

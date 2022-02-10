@@ -28,7 +28,7 @@ internal class Authoriser : IAuthoriser
             { "grant_type", "authorization_code" }
         };
 
-        var response = await _http.Post(tokenUrl, requestData, authHeader);
+        var response = await _http.Post(tokenUrl, authHeader, requestData);
 
         return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
     }
@@ -56,7 +56,7 @@ internal class Authoriser : IAuthoriser
         var authHeader = await GetAuthHeader();
         var tokenUrl = await GetTokenUrl();
 
-        var response = await _http.Post(tokenUrl, requestData, authHeader);
+        var response = await _http.Post(tokenUrl, authHeader, requestData);
 
         return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
     }
