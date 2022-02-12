@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public interface ISourceTrackRepository : ITrackRepository
+public interface ISourceAlbumRepository : IAlbumRepository
 {
     LibrarySource Source { get; }
 }

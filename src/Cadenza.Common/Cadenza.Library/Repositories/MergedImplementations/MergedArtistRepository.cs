@@ -17,7 +17,7 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
         return await Fetch((repository, page, limit) => repository.GetAlbumArtists(page, limit));
     }
 
-    public async Task<List<AlbumInfo>> GetAlbums(string artistId)
+    public async Task<List<AlbumInfo>> GetArtistAlbums(string artistId)
     {
         return await Fetch((repository, page, limit) => repository.GetAlbums(artistId, page, limit));
     }

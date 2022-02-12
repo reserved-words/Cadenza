@@ -40,6 +40,7 @@ public static class _Startup
     public static IServiceCollection AddBaseRepositories(this IServiceCollection services)
     {
         services.AddSingleton<IBaseArtistRepository, BaseArtistRepository>();
+        services.AddSingleton<IBaseAlbumRepository, BaseAlbumRepository>();
         services.AddSingleton<IBasePlayTrackRepository, BasePlayTrackRepository>();
         services.AddSingleton<IBaseSearchRepository, BaseSearchRepository>();
         services.AddSingleton<IBaseTrackRepository, BaseTrackRepository>();
@@ -52,10 +53,12 @@ public static class _Startup
             .AddTransient<ISource>(sp => new SourceProvider(source))
             .AddTransient<IApiRepositorySettings, T>()
             .AddTransient<ISourceArtistRepository, ApiRepository>()
+            .AddTransient<ISourceAlbumRepository, ApiRepository>()
             .AddTransient<ISourcePlayTrackRepository, ApiRepository>()
             .AddTransient<ISourceSearchRepository, ApiRepository>()
             .AddTransient<ISourceTrackRepository, ApiRepository>()
             .AddTransient<IMergedArtistRepository, MergedArtistRepository>()
+            .AddTransient<IMergedAlbumRepository, MergedAlbumRepository>()
             .AddTransient<IMergedPlayTrackRepository, MergedPlayTrackRepository>()
             .AddTransient<IMergedTrackRepository, MergedTrackRepository>();
     }
