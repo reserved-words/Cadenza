@@ -14,8 +14,8 @@ public static class Startup
         return services
             .AddTransient<IBuilder, Builder>()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddSingleton<IApiCaller, ApiCaller>()
-            .AddSingleton<IApiHelper, ApiHelper>()
+            .AddTransient<IApiCaller, ApiCaller>()
+            .AddTransient<IApiHelper, ApiHelper>()
             .AddSingleton<IApiToken, ApiToken>()
             .AddLibrary<ApiLibrary, OverridesLibrary>()
             .AddBaseRepositories();

@@ -38,6 +38,7 @@ public static class Routing
     {
         var library = app.Services.GetRequiredService<ILibrary>();
 
+        var albumRepository = app.Services.GetRequiredService<IBaseAlbumRepository>();
         var artistRepository = app.Services.GetRequiredService<IBaseArtistRepository>();
         var playTrackRepository = app.Services.GetRequiredService<IBasePlayTrackRepository>();
         var searchRepository = app.Services.GetRequiredService<IBaseSearchRepository>();
@@ -46,6 +47,7 @@ public static class Routing
         app.MapPost("/Startup", async () =>
         {
             await library.Populate();
+            await albumRepository.Populate();
             await artistRepository.Populate();
             await playTrackRepository.Populate();
             await searchRepository.Populate();
@@ -68,6 +70,7 @@ public static class Routing
         app.MapGet("/Search/Tracks", (int page, int limit) => searchRepository.GetSearchTracks(page, limit));
 
         app.MapGet("/Track", (string id) => trackRepository.GetTrack(id));
+        app.MapGet("/Album", (string id) => albumRepository.GetAlbum(id));
 
         var libraryService = app.Services.GetRequiredService<IArtworkService>();
 

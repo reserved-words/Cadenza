@@ -32,4 +32,5 @@ public class SpotifyApiSettings : IApiRepositorySettings
     public string SearchPlaylists => ApiEndpoints.Spotify.SearchPlaylists;
 
     public string Track => ApiEndpoints.Spotify.Track;
+    public string Album => ApiEndpoints.Spotify.Album;
 }
