@@ -40,7 +40,7 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
             else
             {
                 var update = await source.GetArtist(id);
-                _merger.MergeArtist(artist, update, MergeMode.ReplaceIfOriginalIsEmpty);
+                _merger.MergeArtist(artist, update, MergeMode.Merge);
             }
         }
 

@@ -35,7 +35,7 @@ public class Library : ILibrary
     private FullLibrary Combine(IEnumerable<FullLibrary> sources)
     {
         var result = new FullLibrary();
-        var mergeMode = MergeMode.ReplaceIfUpdateIsNotEmpty;
+        var mergeMode = MergeMode.Override;
 
         foreach (var source in sources)
         {

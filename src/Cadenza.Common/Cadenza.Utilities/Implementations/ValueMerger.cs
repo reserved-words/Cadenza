@@ -29,7 +29,7 @@ public class ValueMerger : IValueMerger
         original ??= new List<int>();
         update ??= new List<int>();
 
-        if (mode == MergeMode.ReplaceAlways)
+        if (mode == MergeMode.Update)
             return update;
 
         var originalCount = original.Count;
@@ -43,7 +43,7 @@ public class ValueMerger : IValueMerger
 
         if (originalCount == 1 && updateCount == 1)
         {
-            return mode == MergeMode.ReplaceIfUpdateIsNotEmpty
+            return mode == MergeMode.Override
                 ? update
                 : original;
         }
@@ -67,7 +67,7 @@ public class ValueMerger : IValueMerger
         original ??= new List<T>();
         update ??= new List<T>();
 
-        if (mode == MergeMode.ReplaceAlways)
+        if (mode == MergeMode.Update)
             return update;
 
         var result = new List<T>();
@@ -99,8 +99,8 @@ public class ValueMerger : IValueMerger
 
     private static bool Replace<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
     {
-        return mode == MergeMode.ReplaceAlways
-            || (mode == MergeMode.ReplaceIfUpdateIsNotEmpty && !isEmpty(update))
-            || (mode == MergeMode.ReplaceIfOriginalIsEmpty && isEmpty(original));
+        return mode == MergeMode.Update
+            || (mode == MergeMode.Override && !isEmpty(update))
+            || (mode == MergeMode.Merge && isEmpty(original));
     }
 }
