@@ -63,7 +63,9 @@ public class BaseArtistRepository : IBaseArtistRepository
             if (album.ArtistId == null)
             {
                 var json = JsonConvert.SerializeObject(album);
-                throw new Exception($"Artist ID is null for {album.Id} ({album.Title})");
+                var ex = new Exception($"Artist ID is null for {album.Id} ({album.Title})");
+                ex.Data.Add("Album", json);
+                throw ex;
             }
 
             if (!_albums.ContainsKey(album.ArtistId))
