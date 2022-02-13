@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Library;
+﻿using Newtonsoft.Json;
+
+namespace Cadenza.Library;
 
 public class BaseArtistRepository : IBaseArtistRepository
 {
@@ -59,7 +61,10 @@ public class BaseArtistRepository : IBaseArtistRepository
         foreach (var album in library.Albums)
         {
             if (album.ArtistId == null)
+            {
+                var json = JsonConvert.SerializeObject(album);
                 throw new Exception($"Artist ID is null for {album.Id} ({album.Title})");
+            }
 
             if (!_albums.ContainsKey(album.ArtistId))
             {
