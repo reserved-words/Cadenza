@@ -52,11 +52,24 @@ public class BaseArtistRepository : IBaseArtistRepository
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
+
         _albumArtists = library.Albums.Select(a => a.ArtistId).Distinct().ToList();
         _trackArtists = library.Tracks.Select(a => a.ArtistId).Distinct().ToList();
 
         foreach (var album in library.Albums)
         {
+            if (!_albums.ContainsKey(album.ArtistId))
+            {
+                var exception = new Exception($"Artist {album.ArtistId} was not found in the albums dictionary");
+                exception.Data.Add("AlbumsKeys", string.Join(",", _albums.Keys));
+                throw exception;
+            }
+
+            if (_albums[album.ArtistId] == null)
+            {
+                throw new Exception($"Album list is null for {album.ArtistId}");
+            }
+
             _albums[album.ArtistId].Add(album);
         }
     }
