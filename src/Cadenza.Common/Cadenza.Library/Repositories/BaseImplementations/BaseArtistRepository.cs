@@ -58,6 +58,9 @@ public class BaseArtistRepository : IBaseArtistRepository
 
         foreach (var album in library.Albums)
         {
+            if (album.ArtistId == null)
+                throw new Exception($"Artist ID is null for {album.Id} ({album.Title})");
+
             if (!_albums.ContainsKey(album.ArtistId))
             {
                 var exception = new Exception($"Artist {album.ArtistId} was not found in the albums dictionary");
