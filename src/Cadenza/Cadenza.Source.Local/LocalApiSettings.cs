@@ -32,6 +32,7 @@ public class LocalApiEndpoints
     public string SearchPlaylists { get; set; }
 
     public string Track { get; set; }
+    public string Album { get; set; }
 }
 
 

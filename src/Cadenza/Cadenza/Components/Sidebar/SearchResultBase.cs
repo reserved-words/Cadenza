@@ -1,5 +1,6 @@
 ﻿using Cadenza.Common;
 using Cadenza.Utilities;
+using Cadenza.Database;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -24,7 +25,10 @@ public class SearchResultBase : ComponentBase
     public NavigationManager NavigationManager { get; set; }
 
     [Parameter]
-    public SearchableItem Result { get; set; }
+    public SourceSearchableItem Result { get; set; }
+
+    [Parameter]
+    public LibrarySource? ResultSource { get; set; }
 
     protected async Task OnPlay()
     {
@@ -46,7 +50,7 @@ public class SearchResultBase : ComponentBase
         }
         else if (Result.Type == SearchableItemType.Album)
         {
-            await Player.PlayAlbum(Result.Id);
+            await Player.PlayAlbum(ResultSource.Value, Result.Id);
         }
         else if (Result.Type == SearchableItemType.Playlist)
         {
@@ -54,8 +58,7 @@ public class SearchResultBase : ComponentBase
         }
         else if (Result.Type == SearchableItemType.Track)
         {
-            var albumId = IdGenerator.GenerateId(Result.Artist, Result.Album);
-            await Player.PlayTrack(Result.Id, albumId);
+            await Player.PlayTrack(ResultSource.Value, Result.Id);
         }
     }
 

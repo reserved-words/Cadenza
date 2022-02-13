@@ -2,13 +2,27 @@
 
 namespace Cadenza.Database;
 
+public class SourceSearchableItem : SearchableItem
+{
+    public SourceSearchableItem(LibrarySource? source, SearchableItem item)
+    {
+        Source = source;
+        Id = item.Id;
+        Name = item.Name;
+        Artist = item.Artist;
+        Album = item.Album;
+    }
+
+    public LibrarySource? Source { get; }
+}
+
 public class SearchRepositoryCache
 {
     public event EventHandler UpdateStarted;
     public event EventHandler UpdateCompleted;
 
     public Dictionary<LibrarySource, List<string>> SourceArtists = new ();
-    public List<SearchableItem> Items { get; set; } = new List<SearchableItem>();
+    public List<SourceSearchableItem> Items { get; set; } = new List<SourceSearchableItem>();
 
     public void StartUpdate()
     {
@@ -20,14 +34,14 @@ public class SearchRepositoryCache
         UpdateCompleted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddTracks(List<SearchableItem> items)
+    public void AddTracks(LibrarySource source, List<SearchableItem> items)
     {
-        Items.AddRange(items);
+        Items.AddRange(items.Select(i => new SourceSearchableItem(source, i)));
     }
 
-    public void AddAlbums(List<SearchableItem> items)
+    public void AddAlbums(LibrarySource source, List<SearchableItem> items)
     {
-        Items.AddRange(items);
+        Items.AddRange(items.Select(i => new SourceSearchableItem(source, i)));
     }
 
     public void AddArtists(LibrarySource source, List<SearchableItem> items)
@@ -41,7 +55,7 @@ public class SearchRepositoryCache
         {
             if (!Items.Any(i => i.Id == item.Id))
             {
-                Items.Add(item);
+                Items.Add(new SourceSearchableItem(null, item));
             }
             SourceArtists[source].Add(item.Id);
         }
@@ -49,7 +63,7 @@ public class SearchRepositoryCache
 
     public void AddPlaylists(List<SearchablePlaylist> items)
     {
-        Items.AddRange(items);
+        Items.AddRange(items.Select(i => new SourceSearchableItem(null, i)));
     }
 
     public void Clear()

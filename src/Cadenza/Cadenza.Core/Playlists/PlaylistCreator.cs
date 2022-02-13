@@ -3,13 +3,19 @@
 public class PlaylistCreator : IPlaylistCreator
 {
     private readonly IShuffler _shuffler;
-    private readonly IArtistRepository _artistRepository;
+    private readonly IMergedAlbumRepository _albumRepository;
+    private readonly IMergedArtistRepository _artistRepository;
     private readonly IMergedPlayTrackRepository _repository;
+    private readonly IMergedTrackRepository _trackRepository;
 
-    public PlaylistCreator(IShuffler shuffler, IMergedPlayTrackRepository repository)
+    public PlaylistCreator(IShuffler shuffler, IMergedPlayTrackRepository repository, IMergedArtistRepository artistRepository,
+        IMergedAlbumRepository albumRepository, IMergedTrackRepository trackRepository)
     {
         _shuffler = shuffler;
         _repository = repository;
+        _artistRepository = artistRepository;
+        _albumRepository = albumRepository;
+        _trackRepository = trackRepository;
     }
 
     public async Task<PlaylistDefinition> CreateArtistPlaylist(string id)
@@ -33,32 +39,39 @@ public class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(LibrarySource source, string id)
     {
-        // may or may not need shuffling
-
-       // var album = await _repository.GetAlbum(id);
         var tracks = await _repository.GetByAlbum(id);
+        var album = await _albumRepository.GetAlbum(source, id);
+
         return new PlaylistDefinition
         {
             Type = PlaylistType.Album,
-            Name = "", // $"{album.Title} by {album.ArtistName}",
+            Name = $"{album.Title} by {album.ArtistName}",
             Tracks = tracks.ToList(),
             MixedSource = false
         };
     }
 
-    public async Task<PlaylistDefinition> CreateTrackPlaylist(string trackId, string albumId)
+    public async Task<PlaylistDefinition> CreateTrackPlaylist(LibrarySource source, string id)
     {
-        var track = (await _repository.GetByAlbum(albumId)).Single(a => a.Id == trackId);
-        var artist = await _artistRepository.GetArtist(track.ArtistId);
+        var track = await _trackRepository.GetTrack(source, id);
 
-        var tracks = new List<PlayTrack> { track };
+        var playTrack = new PlayTrack
+        {
+             Id = id, 
+             Source = source,
+             ArtistId = track.ArtistId,
+             AlbumId = track.AlbumId,
+             Title = track.Title
+        };
+
+        var tracks = new List<PlayTrack> { playTrack };
 
         return new PlaylistDefinition
         {
             Type = PlaylistType.Track,
-            Name = $"{track.Title} by {artist.Name}",
+            Name = $"{track.Title} by {track.Artist}",
             Tracks = tracks,
             MixedSource = false
         };

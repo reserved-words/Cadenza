@@ -30,6 +30,7 @@ public class LocalApiRepositorySettings : IApiRepositorySettings
     public string SearchPlaylists => _settings.Endpoints.SearchPlaylists;
 
     public string Track => _settings.Endpoints.Track;
+    public string Album => _settings.Endpoints.Album;
 }
 
 

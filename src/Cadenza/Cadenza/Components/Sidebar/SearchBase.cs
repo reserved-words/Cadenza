@@ -25,7 +25,7 @@ public class SearchBase : ComponentBase
         { SearchableItemType.Track, Color.Success }
     };
 
-    protected SearchableItem Result { get; set; }
+    protected SourceSearchableItem Result { get; set; }
 
     protected override void OnInitialized()
     {
@@ -45,7 +45,7 @@ public class SearchBase : ComponentBase
         StateHasChanged();
     }
 
-    protected Task<IEnumerable<SearchableItem>> Search(string value)
+    protected Task<IEnumerable<SourceSearchableItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;

@@ -59,21 +59,13 @@ public static class Routing
 
         app.MapPost(ApiEndpoints.Spotify.Populate, async (string accessToken) =>
         {
-            try
-            {
-                apiToken.SetAccessToken(accessToken);
-                await library.Populate();
-                await albumRepository.Populate();
-                await artistRepository.Populate();
-                await playTrackRepository.Populate();
-                await searchRepository.Populate();
-                await trackRepository.Populate();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            apiToken.SetAccessToken(accessToken);
+            await library.Populate();
+            await albumRepository.Populate();
+            await artistRepository.Populate();
+            await playTrackRepository.Populate();
+            await searchRepository.Populate();
+            await trackRepository.Populate();
         });
 
         app.MapGet(ApiEndpoints.Spotify.AllArtists, async (int page, int limit) =>

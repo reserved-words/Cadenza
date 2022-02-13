@@ -1,6 +1,7 @@
 ﻿using Cadenza.API.Wrapper.Spotify;
 using Cadenza.Common;
 using Cadenza.Source.Spotify.Player;
+using Cadenza.Utilities;
 using Microsoft.JSInterop;
 
 namespace Cadenza
@@ -63,21 +64,17 @@ namespace Cadenza
         private async Task<bool> IsTaskNeeded()
         {
             var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-            if (accessToken != null && accessToken.Updated > DateTime.Now.AddHours(-2))
+
+            if (accessToken != null && accessToken.Updated > DateTime.Now.AddHours(-1))
             {
                 var devices = await _player.GetDevices();
                 var device = devices?.Devices.SingleOrDefault(d => d.name == "Cadenza");
                 if (device != null)
                 {
                     await _storeSetter.SetValue(StoreKey.SpotifyDeviceId, device.id);
+                    await Populate();
+                    return false;
                 }
-            }
-
-            var deviceId = await _storeGetter.GetValue<string>(StoreKey.SpotifyDeviceId);
-            if (deviceId != null)
-            {
-                await Populate();
-                return false;
             }
 
             await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
@@ -147,7 +144,13 @@ namespace Cadenza
             try
             {
                 var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-                await _initialiser.Populate(accessToken.Value);
+
+                var httpClient = new HttpClient();
+                var http = new HttpHelper(httpClient);
+                var url = $"http://localhost:5141/Spotify/Library/Populate?accessToken={accessToken.Value}";
+                var response = await http.Post(url, null, null);
+
+                //await _initialiser.Populate(accessToken.Value);
             }
             catch (Exception ex)
             {

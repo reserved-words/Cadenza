@@ -3,8 +3,8 @@
 public interface IPlaylistPlayer
 {
     Task PlayArtist(string id);
-    Task PlayAlbum(string id);
-    Task PlayTrack(string trackId, string albumId);
+    Task PlayAlbum(LibrarySource source, string id);
+    Task PlayTrack(LibrarySource source, string id);
     Task PlayPlaylist(string id);
     Task PlayAll();
 }

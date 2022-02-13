@@ -44,24 +44,24 @@ public class SearchSyncService : ISearchSyncService
     private async Task FetchTracks(ISourceSearchRepository repository)
     {
         var response = await repository.GetSearchTracks(1, ItemFetchLimit);
-        _cache.AddTracks(response.Items);
+        _cache.AddTracks(repository.Source, response.Items);
 
         while (response.Page < response.TotalPages)
         {
             response = await repository.GetSearchTracks(response.Page + 1, ItemFetchLimit);
-            _cache.AddTracks(response.Items);
+            _cache.AddTracks(repository.Source, response.Items);
         }
     }
 
     private async Task FetchAlbums(ISourceSearchRepository repository)
     {
         var response = await repository.GetSearchAlbums(1, ItemFetchLimit);
-        _cache.AddAlbums(response.Items);
+        _cache.AddAlbums(repository.Source, response.Items);
 
         while (response.Page < response.TotalPages)
         {
             response = await repository.GetSearchAlbums(response.Page + 1, ItemFetchLimit);
-            _cache.AddAlbums(response.Items);
+            _cache.AddAlbums(repository.Source, response.Items);
         }
     }
 

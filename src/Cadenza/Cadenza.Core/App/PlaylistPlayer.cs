@@ -11,10 +11,10 @@ public class PlaylistPlayer : IPlaylistPlayer
         _playlistCreator = playlistCreator;
     }
 
-    public async Task PlayAlbum(string id)
+    public async Task PlayAlbum(LibrarySource source, string id)
     {
         await _app.LoadingPlaylist();
-        var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
+        var playlist = await _playlistCreator.CreateAlbumPlaylist(source, id);
         await _app.Play(playlist);
     }
 
@@ -30,10 +30,10 @@ public class PlaylistPlayer : IPlaylistPlayer
         throw new NotImplementedException();
     }
 
-    public async Task PlayTrack(string trackId, string albumId)
+    public async Task PlayTrack(LibrarySource source, string id)
     {
         await _app.LoadingPlaylist();
-        var playlist = await _playlistCreator.CreateTrackPlaylist(trackId, albumId);
+        var playlist = await _playlistCreator.CreateTrackPlaylist(source, id);
         await _app.Play(playlist);
     }
 

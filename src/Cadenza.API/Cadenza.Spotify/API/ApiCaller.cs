@@ -37,6 +37,14 @@ internal class ApiCaller : IApiCaller
     {
         var apiResponse = await _api.Get<SpotifyApiListResponse<T>>(uri);
 
+        if (apiResponse.Error != null)
+        {
+            var ex = new Exception("API error");
+            ex.Data.Add("Message", apiResponse.Error.Error.Message);
+            ex.Data.Add("Status", apiResponse.Error.Error.Status);
+            throw ex;
+        }
+
         var response = apiResponse.Data;
 
         if (response == null)
