@@ -39,6 +39,8 @@ public static class _Startup
 
     public static IServiceCollection AddBaseRepositories(this IServiceCollection services)
     {
+        services.AddTransient<IValueMerger, ValueMerger>();
+        services.AddTransient<IMerger, Merger>();
         services.AddSingleton<IBaseArtistRepository, BaseArtistRepository>();
         services.AddSingleton<IBaseAlbumRepository, BaseAlbumRepository>();
         services.AddSingleton<IBasePlayTrackRepository, BasePlayTrackRepository>();
@@ -50,6 +52,8 @@ public static class _Startup
     public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services, LibrarySource source) where T : class, IApiRepositorySettings
     {
         return services
+            .AddTransient<IValueMerger, ValueMerger>()
+            .AddTransient<IMerger, Merger>()
             .AddTransient<ISource>(sp => new SourceProvider(source))
             .AddTransient<IApiRepositorySettings, T>()
             .AddTransient<ISourceArtistRepository, ApiRepository>()
