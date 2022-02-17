@@ -15,7 +15,7 @@ public class LocalApiRepositorySettings : IApiRepositorySettings
     public string BaseUrl => _settings.BaseUrl;
 
     public string Artist => _settings.Endpoints.Artist;
-    public string ArtistAlbums => _settings.Endpoints.Artist;
+    public string ArtistAlbums => _settings.Endpoints.ArtistAlbums;
     public string AllArtists => _settings.Endpoints.AllArtists;
     public string AlbumArtists => _settings.Endpoints.AlbumArtists;
     public string TrackArtists => _settings.Endpoints.TrackArtists;

@@ -30,19 +30,19 @@
                        Disabled="@(Result == null)"
                        OnClick="@OnPlay" />
 
-        <MudIconButton Icon="@Icons[SearchableItemType.Artist]"
+        <MudIconButton Icon="@SearchableItemType.Artist.GetIcon()"
                        Color="@Color.Dark"
                        Class="pa-0 ma-0 mr-2 align-self-start"
                        Disabled="@(!DisplayArtistLink)"
-                       OnClick="@OnViewArtist" />
+                       OnClick="@(() => OnViewArtist())" />
 
-        <MudIconButton Icon="@Icons[SearchableItemType.Album]"
+        <MudIconButton Icon="@SearchableItemType.Album.GetIcon()"
                        Color="@Color.Dark"
                        Class="pa-0 ma-0 mr-2 align-self-start"
                        Disabled="@(!DisplayAlbumLink)"
                        OnClick="@OnViewAlbum" />
 
-        <MudIconButton Icon="@Icons[SearchableItemType.Track]"
+        <MudIconButton Icon="@SearchableItemType.Track.GetIcon()"
                        Color="@Color.Dark"
                        Class="pa-0 ma-0 mr-2 align-self-start"
                        Disabled="@(!DisplayTrackLink)"

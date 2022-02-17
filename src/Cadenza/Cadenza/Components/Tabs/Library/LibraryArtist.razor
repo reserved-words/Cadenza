@@ -1,6 +1,6 @@
 ﻿@inherits LibraryArtistBase
 
-@*<MudCard Elevation="2"
+<MudCard Elevation="2"
          Class="fixed-height-margin"
          Style="display: flex; flex-direction: column;">
 
@@ -23,12 +23,12 @@
                     Class="fixed-height-scroll">
         @if (Model != null)
         {
-            if (Model.Releases.Count == 1)
+            if (Releases.Count == 1)
             {
                 <WhipCard Padding="false"
                           Bordered="false">
                     <MudGrid Spacing="2">
-                        @foreach (var album in Model.Releases.Single().Value)
+                        @foreach (var album in Releases.Single().Albums)
                         {
                             <MudItem xs="6" sm="3">
                                 <LibraryAlbum Model="@album" />
@@ -40,17 +40,16 @@
             else
             {
                 <MudTabs>
-                    @foreach (var group in Model.Releases)
+                    @foreach (var release in Releases)
                     {
-                        <MudTabPanel Text="@group.Key.GetDisplayName()">
+                        <MudTabPanel Text="@release.Group.GetDisplayName()">
                             <WhipCard Padding="false"
                                       Bordered="false">
                                 <MudGrid Spacing="2">
-                                    @foreach (var album in group.Value)
+                                    @foreach (var album in release.Albums)
                                     {
                                         <MudItem xs="6" sm="3">
-                                            <LibraryAlbum Model="@album"
-                                                          OnPlayAlbum="(a) => OnPlayAlbum(a)" />
+                                            <LibraryAlbum Model="@album" />
                                         </MudItem>
                                     }
                                 </MudGrid>
@@ -61,4 +60,4 @@
             }
         }
     </MudCardContent>
-</MudCard>*@
+</MudCard>

@@ -129,14 +129,16 @@ namespace Cadenza
 
         public async Task InitialisePlayer(string accessToken, CancellationToken cancellationToken)
         {
-            var connected = await _interop.ConnectPlayer(accessToken);
-            if (!connected)
-                throw new Exception("Failed to connect to Spotify player");
+            return;
 
-            var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60, cancellationToken);
+            //var connected = await _interop.ConnectPlayer(accessToken);
+            //if (!connected)
+            //    throw new Exception("Failed to connect to Spotify player");
 
-            if (deviceId == null)
-                throw new Exception("No Device ID received - Spotify player not ready");
+            //var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60, cancellationToken);
+
+            //if (deviceId == null)
+            //    throw new Exception("No Device ID received - Spotify player not ready");
         }
 
         private async Task Populate()

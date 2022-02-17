@@ -7,6 +7,9 @@ public class SearchBase : ComponentBase
     [Inject]
     public SearchRepositoryCache Cache { get; set; }
 
+    [Parameter]
+    public Func<SearchableItemType, string, string, Task> OnViewItem { get; set; }
+
     public bool IsLoading { get; set; }
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>

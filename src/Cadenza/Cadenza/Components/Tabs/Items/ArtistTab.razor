@@ -1,9 +1,8 @@
-﻿@page "/Album/{Id}"
+﻿@using Cadenza.Library
 
-<h3>Album</h3>
+<LibraryArtist ArtistId="@Id" />
 
 @code {
     [Parameter]
     public string Id { get; set; }
-
 }

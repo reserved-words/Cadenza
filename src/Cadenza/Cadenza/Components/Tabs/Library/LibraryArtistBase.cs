@@ -1,4 +1,5 @@
 ﻿using Cadenza.Library;
+using Cadenza.Utilities;
 
 namespace Cadenza;
 
@@ -10,54 +11,59 @@ public class LibraryArtistBase : ComponentBase
     [Parameter]
     public string ArtistId { get; set; }
 
-    //public LibraryArtistDetails Model { get; set; }
+    public ArtistInfo Model { get; set; }
+
+    public List<LibraryReleaseTypeGroup> Releases { get; set; } = new();
 
     public string PlaceholderText { get; set; }
 
     protected override void OnInitialized()
     {
         PlaceholderText = "No artist selected";
-
-        //Repository.AlbumUpdated += OnAlbumUpdated;
-        //Repository.ArtistUpdated += OnArtistUpdated;
-    }
-
-    private async Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs e)
-    {
-        //if (Model == null || Model.Id != e.Update.Id)
-        //    return;
-
-        await UpdateArtist();
-    }
-
-    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
-    {
-        //if (Model == null || Model.Id != e.Update.Id)
-        //    return;
-
-        await UpdateArtist();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        //if (ArtistId == Model?.Id)
-        //    return;
+		if (ArtistId == Model?.Id)
+			return;
 
-        //PlaceholderText = "Loading artist...";
+		PlaceholderText = "Loading artist...";
 
-        //Model = null;
+		Model = null;
 
-        //if (ArtistId != null)
-        //{
-        //    await UpdateArtist();
-        //}
+		if (ArtistId != null)
+		{
+			await UpdateArtist();
+		}
 
-        //PlaceholderText = "No artist selected";
-    }
+		PlaceholderText = "No artist selected";
+	}
 
     private async Task UpdateArtist()
     {
-//        Model = await Repository.GetArtist(ArtistId);
+        Model = await Repository.GetArtist(ArtistId);
+
+        //var albums = await Repository.GetArtistAlbums(ArtistId);
+
+        //     Releases = albums
+        //         .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
+        //         .Select(r => new LibraryReleaseTypeGroup
+        //{
+        //             Group = r.Key,
+        //             Albums = r.OrderBy(a => a.ReleaseType)
+        //                 .ThenBy(a => a.Year)
+        //                 .ToList()
+        //})
+        //         .ToList();
+
+        Releases = new List<LibraryReleaseTypeGroup>();
+
         StateHasChanged();
     }
+}
+
+public class LibraryReleaseTypeGroup
+{
+	public ReleaseTypeGroup Group { get; set; }
+	public List<AlbumInfo> Albums { get; set; }
 }

@@ -2,7 +2,7 @@
 
 namespace Cadenza;
 
-public static class ExtensionMethods
+public static class Extensions
 {
     public static string GetIcon(this Connector connector)
     {
@@ -38,6 +38,17 @@ public static class ExtensionMethods
             LinkType.Wikipedia => "fab fa-wikipedia-w",
             LinkType.Search => Icons.Custom.Brands.Google
         };
+    }
+
+    public static string GetIcon(this SearchableItemType type)
+	{
+        return type switch
+		{
+			SearchableItemType.Artist => Icons.Material.Filled.PeopleAlt,
+			SearchableItemType.Album => Icons.Material.Filled.Album,
+			SearchableItemType.Track => Icons.Material.Filled.MusicNote,
+			SearchableItemType.Playlist => Icons.Material.Filled.QueueMusic,
+		};
     }
 
     public static string WithLineBreaks(this string text)

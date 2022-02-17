@@ -1,29 +1,43 @@
 ﻿@page "/"
 @page "/player"
+@using Cadenza.Components.Tabs.Items
 @inherits IndexBase
-
 
 <MudLayout>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <Sidebar />
+        <Sidebar OnViewItem="@OnViewItem" />
     </MudDrawer>
     <MudMainContent>
         @if (IsInitalised)
         {
-            <MudTabs Outlined="true" KeepPanelsAlive="false">
-                <MudTabPanel Text="History" Icon="@Icons.Material.Filled.History">
+			<MudDynamicTabs Outlined="true"
+							AddTab="AddTabCallback" 
+							CloseTab="@((panel) => CloseTabCallback(panel))" 
+							@bind-ActivePanelIndex="SelectedTabIndex" 
+                            AddIconToolTip="Click here to add a new tab"
+							CloseIconToolTip="Close this tab. All data will be lost"
+                            KeepPanelsAlive="true">
+
+				<MudTabPanel Text="History" Icon="@Icons.Material.Filled.History" Class="mud-tab-fixed">
                     <HistoryTab />
                 </MudTabPanel>
-                <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote">
+                <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote" Class="mud-tab-fixed">
                     <CurrentlyPlayingTab />
                 </MudTabPanel>
-                <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
+                <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks" Class="mud-tab-fixed">
                     <LibraryTab />
                 </MudTabPanel>
-                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info">
+                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info" Class="mud-tab-fixed">
                     <SystemInfoTab />
                 </MudTabPanel>
-            </MudTabs>
+
+				@foreach (var item in ItemTabs)
+				{
+					<MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
+						<ItemTab Type="@item.Type" Id="@item.Id" />
+					</MudTabPanel>
+				}
+			</MudDynamicTabs>
         }
     </MudMainContent>
 </MudLayout>
