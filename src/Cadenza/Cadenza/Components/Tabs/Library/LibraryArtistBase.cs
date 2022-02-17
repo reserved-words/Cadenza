@@ -1,5 +1,4 @@
 ﻿using Cadenza.Library;
-using Cadenza.Utilities;
 
 namespace Cadenza;
 
@@ -43,18 +42,18 @@ public class LibraryArtistBase : ComponentBase
     {
         Model = await Repository.GetArtist(ArtistId);
 
-        //var albums = await Repository.GetArtistAlbums(ArtistId);
+        var albums = await Repository.GetArtistAlbums(ArtistId);
 
-        //     Releases = albums
-        //         .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
-        //         .Select(r => new LibraryReleaseTypeGroup
-        //{
-        //             Group = r.Key,
-        //             Albums = r.OrderBy(a => a.ReleaseType)
-        //                 .ThenBy(a => a.Year)
-        //                 .ToList()
-        //})
-        //         .ToList();
+        Releases = albums
+            .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
+            .Select(r => new LibraryReleaseTypeGroup
+            {
+                Group = r.Key,
+                Albums = r.OrderBy(a => a.ReleaseType)
+                    .ThenBy(a => a.Year)
+                    .ToList()
+            })
+            .ToList();
 
         Releases = new List<LibraryReleaseTypeGroup>();
 
