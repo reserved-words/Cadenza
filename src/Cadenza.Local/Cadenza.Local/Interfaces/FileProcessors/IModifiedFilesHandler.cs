@@ -2,5 +2,5 @@
 
 public interface IModifiedFilesHandler
 {
-    void Sync();
+    Task Sync();
 }

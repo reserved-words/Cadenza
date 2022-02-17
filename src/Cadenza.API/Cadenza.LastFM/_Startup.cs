@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
+using Cadenza.LastFM.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.LastFM;
@@ -8,12 +12,12 @@ public static class Startup
     public static IServiceCollection AddLastFM(this IServiceCollection services)
     {
         return services.AddTransient<ILastFmSigner, LastFmSigner>()
-            .AddTransient<ILastFmAuth, LastFmAuth>()
             .AddTransient<ILastFmClient, LastFmClient>()
             .AddTransient<ILastFmAuthorisedClient, LastFmAuthorisedClient>()
-            .AddTransient<Favourites>()
-            .AddTransient<History>()
-            .AddTransient<Scrobbler>();
+            .AddTransient<IAuthoriser, LastFmAuth>()
+            .AddTransient<IFavourites, Favourites>()
+            .AddTransient<IHistory, History>()
+            .AddTransient<IScrobbler, Scrobbler>();
     }
 
     public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, string sectionPath)

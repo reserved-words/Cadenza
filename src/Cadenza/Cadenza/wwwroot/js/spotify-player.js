@@ -1,33 +1,62 @@
 ﻿
-window.onSpotifyWebPlaybackSDKReady = () => {
+window.onSpotifyWebPlaybackSDKReady = () => {};
 
-    var accessToken = getStoredValue('SpotifyAccessToken');
+async function waitForSpotifyWebPlaybackSDKToLoad() {
+    return new Promise(resolve => {
+        if (window.Spotify) {
+            resolve(window.Spotify);
+        } else {
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                resolve(window.Spotify);
+            };
+        }
+    });
+}
 
-    var player = new Spotify.Player({
-        name: 'Whip',
-        getOAuthToken: cb => { cb(accessToken); }
+async function startSpotifyPlayer(accessToken) {
+
+
+    const { Player } = await waitForSpotifyWebPlaybackSDKToLoad();
+
+    const sdk = new Player({
+        name: "Cadenza",
+        volume: 1.0,
+        getOAuthToken: callback => { callback(accessToken); }
     });
 
-    // Error handling
-    player.addListener('initialization_error', ({ message }) => { console.log('initialization error: ' + message); });
-    player.addListener('authentication_error', ({ message }) => { console.log('authentication error: ' + message); });
-    player.addListener('account_error', ({ message }) => { console.log('account error: ' + message); });
-    player.addListener('playback_error', ({ message }) => { console.log('playback error: ' + message); });
-
-    // Playback status updates
-    player.addListener('player_state_changed', state => { console.log(state); });
-
-    // Ready
-    player.addListener('ready', ({ device_id }) => {
-        console.log('Device ID = ' + device_id);
-        setStoredValue('SpotifyDeviceId', device_id);
+    sdk.on("authentication_error", ({ message }) => {
+        // This happens if the access token is invalid or null
+        console.log('Authentication error: ' + message);
     });
 
-    // Not Ready
-    player.addListener('not_ready', ({ device_id }) => {
-        console.log('Device ID has gone offline', device_id);
+    sdk.on('initialization_error', ({ message }) => {
+        console.error('Failed to initialize', message);
     });
 
-    player.connect();
-};
+    sdk.on('account_error', ({ message }) => {
+        console.error('Failed to validate Spotify account', message);
+    });
 
+    sdk.on('playback_error', ({ message }) => {
+        console.error('Failed to perform playback', message);
+    });
+
+    sdk.on("ready", ({ device_id }) => {
+        var storeDeviceId = {
+            "Value": device_id,
+            "Updated": new Date()
+        };
+
+        window.localStorage.setItem("SpotifyDeviceId", JSON.stringify(storeDeviceId));
+    });
+
+    try {
+        let connected = await sdk.connect();
+
+        return connected;
+    }
+    catch (err) {
+        console.log(err);
+        return false;
+    }
+}

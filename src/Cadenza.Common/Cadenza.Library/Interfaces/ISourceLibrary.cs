@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Library;
+﻿//namespace Cadenza.Library;
 
-public interface ISourceLibrary : ILibrary
-{
-    public LibrarySource Source { get; }
-}
+//public interface ISourceLibrary : ILibrary
+//{
+//    LibrarySource Source { get; }
+//}

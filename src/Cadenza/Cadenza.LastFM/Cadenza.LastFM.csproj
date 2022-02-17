@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.7" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.21" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
+  </ItemGroup>
+
+</Project>

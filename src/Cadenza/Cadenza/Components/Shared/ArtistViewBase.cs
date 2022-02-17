@@ -4,8 +4,8 @@ namespace Cadenza;
 
 public class ArtistViewBase : ComponentBase
 {
-    [Parameter]
-    public LibraryArtistDetails Model { get; set; }
+    //[Parameter]
+    //public LibraryArtistDetails Model { get; set; }
 
     [Parameter]
     public List<LibrarySource> Sources { get; set; }
@@ -25,19 +25,20 @@ public class ArtistViewBase : ComponentBase
 
     private LinkViewModel GetLinkViewModel(LinkType linkType)
     {
-        var link = Model.Links?.FirstOrDefault(l => l.Type == linkType);
-        var name = link?.Name ?? linkType.GetDefault(Model.Name);
-        var url = linkType.GetUrl(name);
+        throw new Exception();
+        //var link = Model.Links?.FirstOrDefault(l => l.Type == linkType);
+        //var name = link?.Name ?? linkType.GetDefault(Model.Name);
+        //var url = linkType.GetUrl(name);
 
-        return new LinkViewModel
-        {
-            Type = linkType,
-            Url = url,
-            Disabled = link != null && link.Name == null
-        };
+        //return new LinkViewModel
+        //{
+        //    Type = linkType,
+        //    Url = url,
+        //    Disabled = link != null && link.Name == null
+        //};
     }
 
-    protected string Location => AsList(Model.City, Model.State, Model.Country);
+    //protected string Location => AsList(Model.City, Model.State, Model.Country);
 
     private string AsList(params string[] city)
     {

@@ -28,12 +28,19 @@ public class HttpHelper : IHttpHelper
         return await _client.SendAsync(httpRequest);
     }
 
-    public async Task<HttpResponseMessage> Post(string url, Dictionary<string, string> parameters)
+    public async Task<HttpResponseMessage> Post(string url, string authHeader = null, Dictionary<string, string> parameters = null)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
+        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+
+        if (parameters != null)
         {
-            Content = new FormUrlEncodedContent(parameters)
-        };
+            httpRequest.Content = new FormUrlEncodedContent(parameters);
+        }
+
+        if (authHeader != null)
+        {
+            httpRequest.Headers.Add("Authorization", authHeader);
+        }
 
         return await _client.SendAsync(httpRequest);
     }

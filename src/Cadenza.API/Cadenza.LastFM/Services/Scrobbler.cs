@@ -1,6 +1,9 @@
-﻿namespace Cadenza.LastFM;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
 
-public class Scrobbler
+namespace Cadenza.LastFM.Services;
+
+public class Scrobbler : IScrobbler
 {
     private readonly ILastFmAuthorisedClient _client;
 

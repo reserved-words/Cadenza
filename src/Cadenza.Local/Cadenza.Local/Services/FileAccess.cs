@@ -2,26 +2,26 @@
 
 public class FileAccess : IFileAccess
 {
-    public string GetText(string path)
+    public async Task<string> GetText(string path)
     {
         return File.Exists(path)
-            ? File.ReadAllText(path)
+            ? await File.ReadAllTextAsync(path)
             : null;
     }
 
-    public void SaveText(string path, string text)
+    public async Task SaveText(string path, string text)
     {
         var directory = Path.GetDirectoryName(path);
         Directory.CreateDirectory(directory);
-        File.WriteAllText(path, text);
+        await File.WriteAllTextAsync(path, text);
     }
 
-    public List<LocalFile> GetFiles(string directoryPath, List<string> extensions)
+    public Task<List<LocalFile>> GetFiles(string directoryPath, List<string> extensions)
     {
-        if (!Directory.Exists(directoryPath))
-            return new List<LocalFile>();
-
         var files = new List<LocalFile>();
+
+        if (!Directory.Exists(directoryPath))
+            return Task.FromResult(files);
 
         foreach (var filepath in Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories))
         {
@@ -37,14 +37,16 @@ public class FileAccess : IFileAccess
             }
         }
 
-        return files;
+        return Task.FromResult(files);
     }
 
-    public void DeleteFile(string path)
+    public Task DeleteFile(string path)
     {
-        if (!File.Exists(path))
-            return;
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
 
-        File.Delete(path);
+        return Task.CompletedTask;
     }
 }

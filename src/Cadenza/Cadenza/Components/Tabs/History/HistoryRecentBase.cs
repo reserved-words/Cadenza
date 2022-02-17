@@ -1,10 +1,12 @@
-﻿using Cadenza.Common;
-using Cadenza.Core;
+﻿using Cadenza.API.Core.LastFM;
 
 namespace Cadenza;
 
 public class HistoryRecentBase : ComponentBase
 {
+    [Inject]
+    public IConnectorConsumer ConnectorService { get; set; }
+
     [Inject]
     public IAppConsumer App { get; set; }
 
@@ -17,7 +19,7 @@ public class HistoryRecentBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        // App.TrackFinished += App_TrackProgressed;
+        //ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
         App.TrackPaused += App_TrackProgressed;
         App.TrackResumed += App_TrackProgressed;
         App.TrackStarted += App_TrackProgressed;
@@ -27,20 +29,40 @@ public class HistoryRecentBase : ComponentBase
     {
         await Task.Delay(1000).ContinueWith(async t =>
         {
-            await Update();
+            var status = ConnectorService.GetStatus(Connector.LastFm);
+            await LoadData(status);
             StateHasChanged();
         });
     }
 
-    protected override async Task OnParametersSetAsync()
+    private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
     {
-        IsLoading = true;
-        await Update();
-        IsLoading = false;
+        if (e.Connector != Connector.LastFm)
+            return;
+
+        await LoadData(e.Status);
     }
 
-    private async Task Update()
+    protected override async Task OnParametersSetAsync()
     {
+        var status = ConnectorService.GetStatus(Connector.LastFm);
+        await LoadData(status);
+    }
+
+    private async Task LoadData(ConnectorStatus status)
+    {
+        if (status == ConnectorStatus.Errored || status == ConnectorStatus.Disabled)
+        {
+            IsLoading = false;
+            return;
+        }
+
+        IsLoading = true;
+
+        if (status == ConnectorStatus.Loading)
+            return;
+
         Model = (await History.GetRecentTracks(20, 1)).ToList();
+        IsLoading = false;
     }
 }

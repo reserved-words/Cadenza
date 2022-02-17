@@ -1,4 +1,4 @@
-﻿namespace Cadenza.LastFM;
+﻿namespace Cadenza.LastFM.Interfaces;
 
 public interface ILastFmSigner
 {

@@ -1,32 +1,35 @@
 ﻿@inherits CurrentTrackBase
 
-@if (Model != null)
-{
-    <MudCard Elevation="3" Class="pa-0 ma-0">
-        <MudCardHeader Class="pa-2">
-            <CardHeaderContent>
-                <MudText Typo="Typo.body1">@Model.Title</MudText>
-                <MudText Typo="Typo.body2">@Model.Artist</MudText>
-            </CardHeaderContent>
-            <CardHeaderActions>
-                <FavouriteTrack Artist="@Model.Artist" Title="@Model.Title" />
-            </CardHeaderActions>
-        </MudCardHeader>
-        <img src="@Model.ArtworkUrl" class="artwork" />
-        <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
-        <MudCardContent Class="pa-2">
-            <MudText Typo="Typo.body1">@Model.AlbumTitle</MudText>
-            <MudText Typo="Typo.body2">@Model.AlbumArtist</MudText>
-            <MudContainer Class="d-flex pa-0 ma-0">
-                <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
-                    <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
-                    <MudText Typo="Typo.body2">@Model.Year</MudText>
-                </MudPaper>
-                <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-end;">
-                    <MudIcon Icon="@Model.Source.GetIcon()" Style="text-align: right; vertical-align: bottom;" />
-                </MudPaper>
-            </MudContainer>
+@*Position relative needed to keep overlay inside card*@
 
-        </MudCardContent>
-    </MudCard>
-} 
+<MudCard Elevation="3" Class="pa-0 ma-0" Style="position: relative;">
+    <MudOverlay Visible="@Loading" LightBackground="true" Absolute="true">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </MudOverlay>
+    <MudOverlay Visible="@Empty" LightBackground="true" Absolute="true">
+    </MudOverlay>
+    <MudCardHeader Class="pa-2">
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">@Title</MudText>
+            <MudText Typo="Typo.body2">@Artist</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <FavouriteTrack Artist="@Artist" Title="@Title" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <img src="@ArtworkUrl" class="artwork" />
+    <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
+    <MudCardContent Class="pa-2">
+        <MudText Typo="Typo.body1">@AlbumTitle</MudText>
+        <MudText Typo="Typo.body2">@AlbumArtist</MudText>
+        <MudContainer Class="d-flex pa-0 ma-0">
+            <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
+                <MudText Typo="Typo.body2">@ReleaseType</MudText>
+                <MudText Typo="Typo.body2">@Year</MudText>
+            </MudPaper>
+            <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-end;">
+                <MudIcon Icon="@SourceIcon" Style="text-align: right; vertical-align: bottom;" />
+            </MudPaper>
+        </MudContainer>
+    </MudCardContent>
+</MudCard>

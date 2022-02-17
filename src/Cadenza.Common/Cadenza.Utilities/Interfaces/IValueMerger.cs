@@ -1,11 +1,6 @@
-﻿namespace Cadenza.Utilities;
+﻿using Cadenza.Domain;
 
-public enum MergeMode
-{
-    ReplaceIfOriginalIsEmpty,
-    ReplaceIfUpdateIsNotEmpty,
-    ReplaceAlways 
-}
+namespace Cadenza.Utilities;
 
 public interface IValueMerger
 {

@@ -21,11 +21,11 @@ public class AddedFilesHandler : IAddedFilesHandler
         _fileFetcher = fileFetcher;
     }
 
-    public void Sync()
+    public async Task Sync()
     {
-        var jsonItems = _dataAccess.GetAll();
+        var jsonItems = await _dataAccess.GetAll();
 
-        var filepaths = _fileFetcher.GetAddedFiles();
+        var filepaths = await _fileFetcher.GetAddedFiles();
 
         foreach (var filePath in filepaths.Take(MaxToProcess))
         {
@@ -54,6 +54,6 @@ public class AddedFilesHandler : IAddedFilesHandler
 
         _organiser.RemoveOrphanedItems(jsonItems);
 
-        _dataAccess.SaveAll(jsonItems);
+        await _dataAccess.SaveAll(jsonItems);
     }
 }

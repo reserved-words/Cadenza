@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common", "Cadenza.Common\Cadenza.Common.csproj", "{5F1FDA78-87BB-4F8B-8C38-03108D586776}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Source.Local", "Cadenza.Source.Local\Cadenza.Source.Local.csproj", "{CA7E6D95-8A17-4E07-8473-B7E630E1B352}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Source.Spotify", "Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj", "{A2F6276C-352D-42B1-86A5-59C6F300BA30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza", "Cadenza\Cadenza.csproj", "{2B3621BC-990F-4912-B9F1-BA741E75779A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{48E201A1-2F02-4424-A3B7-0E92564A19E2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connections", "Connections", "{48E201A1-2F02-4424-A3B7-0E92564A19E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Database", "Cadenza.Database\Cadenza.Database.csproj", "{864422F5-B367-446C-8D74-AF9B5D5983FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Core", "Cadenza.Core\Cadenza.Core.csproj", "{1DAA360C-2949-489B-A465-C205FE9EFA2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.LastFM", "Cadenza.LastFM\Cadenza.LastFM.csproj", "{6993D179-D28A-40F4-A490-33036232E1B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F1FDA78-87BB-4F8B-8C38-03108D586776}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA7E6D95-8A17-4E07-8473-B7E630E1B352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA7E6D95-8A17-4E07-8473-B7E630E1B352}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7E6D95-8A17-4E07-8473-B7E630E1B352}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +43,10 @@ Global
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6993D179-D28A-40F4-A490-33036232E1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6993D179-D28A-40F4-A490-33036232E1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6993D179-D28A-40F4-A490-33036232E1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6993D179-D28A-40F4-A490-33036232E1B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CA7E6D95-8A17-4E07-8473-B7E630E1B352} = {48E201A1-2F02-4424-A3B7-0E92564A19E2}
 		{A2F6276C-352D-42B1-86A5-59C6F300BA30} = {48E201A1-2F02-4424-A3B7-0E92564A19E2}
+		{6993D179-D28A-40F4-A490-33036232E1B9} = {48E201A1-2F02-4424-A3B7-0E92564A19E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC17F3E1-56B9-47E8-83C4-C7358F820CD1}

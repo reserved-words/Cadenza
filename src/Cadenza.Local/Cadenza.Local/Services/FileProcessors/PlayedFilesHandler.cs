@@ -15,11 +15,11 @@ public class PlayedFilesHandler : IPlayedFilesHandler
         _musicLibrary = musicLibrary;
     }
 
-    public void RemovePlayedFiles()
+    public async Task RemovePlayedFiles()
     {
         var directory = Path.Combine(_currentlyPlaying.Value.BaseDirectory, _currentlyPlaying.Value.DirectoryName);
 
-        var files = _fileAccess.GetFiles(directory, _musicLibrary.Value.FileExtensions);
+        var files = await _fileAccess.GetFiles(directory, _musicLibrary.Value.FileExtensions);
 
         var allButMostRecentFiles = files
             .Where(f => Path.GetFileName(f.Path).StartsWith(_currentlyPlaying.Value.FilePrefix))

@@ -1,14 +1,8 @@
 ﻿@inherits SearchResultBase
 
-<WhipCard Padding=true
-          SideMargin=false>
-    <MudContainer Class="d-flex flex-row pa-1 ma-0">
-        <div class="d-flex ma-0 pa-0">
-            <MudIconButton Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
-                           Color="@Color.Dark"
-                           Class="pa-0 ma-0 mr-2 align-self-start"
-                           OnClick="@OnPlay" />
-        </div>
+<MudCard>
+
+    <MudCardContent>
         <MudContainer Class="pa-0 ma-0">
             <MudText Color=Color.Dark
                      Typo="@Typo.body1"
@@ -26,6 +20,34 @@
                 @Result.AlbumDisplay
             </MudText>
         </MudContainer>
-    </MudContainer>
+    </MudCardContent>
 
-</WhipCard>
+    <MudCardActions Class="pt-0">
+
+        <MudIconButton Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
+                       Color="@Color.Dark"
+                       Class="pa-0 ma-0 mr-2 align-self-start"
+                       Disabled="@(Result == null)"
+                       OnClick="@OnPlay" />
+
+        <MudIconButton Icon="@Icons[SearchableItemType.Artist]"
+                       Color="@Color.Dark"
+                       Class="pa-0 ma-0 mr-2 align-self-start"
+                       Disabled="@(!DisplayArtistLink)"
+                       OnClick="@OnViewArtist" />
+
+        <MudIconButton Icon="@Icons[SearchableItemType.Album]"
+                       Color="@Color.Dark"
+                       Class="pa-0 ma-0 mr-2 align-self-start"
+                       Disabled="@(!DisplayAlbumLink)"
+                       OnClick="@OnViewAlbum" />
+
+        <MudIconButton Icon="@Icons[SearchableItemType.Track]"
+                       Color="@Color.Dark"
+                       Class="pa-0 ma-0 mr-2 align-self-start"
+                       Disabled="@(!DisplayTrackLink)"
+                       OnClick="@OnViewTrack" />
+
+    </MudCardActions>
+
+</MudCard>

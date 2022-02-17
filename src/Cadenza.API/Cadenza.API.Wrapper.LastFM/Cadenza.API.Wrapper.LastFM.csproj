@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>1.0.7</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
+    <ProjectReference Include="..\Cadenza.API.Wrapper.Core\Cadenza.API.Wrapper.Core.csproj" />
+  </ItemGroup>
+
+</Project>

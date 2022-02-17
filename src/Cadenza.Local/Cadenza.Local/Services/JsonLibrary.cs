@@ -2,7 +2,7 @@
 
 namespace Cadenza.Local;
 
-public class JsonLibrary : IStaticSource
+public class JsonLibrary : IStaticLibrary
 {
     private const string ArtworkUrlFormat = "/library/artwork?id={0}";
 
@@ -15,14 +15,14 @@ public class JsonLibrary : IStaticSource
         _converter = converter;
     }
 
-    public Task<StaticLibrary> GetStaticLibrary()
+    public async Task<FullLibrary> Get()
     {
-        var jsonArtists = _dataAccess.GetArtists();
-        var jsonAlbums = _dataAccess.GetAlbums();
-        var jsonTracks = _dataAccess.GetTracks();
-        var jsonAlbumTrackLinks = _dataAccess.GetAlbumTrackLinks();
+        var jsonArtists = await _dataAccess.GetArtists();
+        var jsonAlbums = await _dataAccess.GetAlbums();
+        var jsonTracks = await _dataAccess.GetTracks();
+        var jsonAlbumTrackLinks = await _dataAccess.GetAlbumTrackLinks();
 
-        var library = new StaticLibrary();
+        var library = new FullLibrary();
 
         var firstTracks = new Dictionary<string, string>();
 
@@ -54,6 +54,6 @@ public class JsonLibrary : IStaticSource
             library.Albums.Add(album);
         }
 
-        return Task.FromResult(library);
+        return library;
     }
 }

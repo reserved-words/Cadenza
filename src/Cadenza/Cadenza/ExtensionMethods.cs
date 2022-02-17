@@ -4,14 +4,24 @@ namespace Cadenza;
 
 public static class ExtensionMethods
 {
+    public static string GetIcon(this Connector connector)
+    {
+        return connector switch
+        {
+            Connector.API => Icons.Material.Filled.Api,
+            Connector.Local => LibrarySource.Local.GetIcon(),
+            Connector.Spotify => LibrarySource.Spotify.GetIcon(),
+            Connector.LastFm => "fab fa-lastfm-square"
+        };
+    }
+    
     public static string GetIcon(this LibrarySource source)
     {
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            LibrarySource.Spotify => Icons.Material.Filled.Wifi,
-            LibrarySource.Cloud => Icons.Material.Filled.Cloud,
-            _ => throw new NotImplementedException()
+            LibrarySource.Spotify => "fab fa-spotify",
+            LibrarySource.Cloud => Icons.Material.Filled.Cloud
         };
     }
 

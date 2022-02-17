@@ -1,4 +1,4 @@
-﻿namespace Cadenza.LastFM;
+﻿namespace Cadenza.LastFM.Model;
 
 public class LastFmSettings
 {

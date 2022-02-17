@@ -9,15 +9,15 @@ public class UpdateHistory : IUpdateHistory
         _dataAccess = dataAccess;
     }
 
-    public DateTime GetDateProcessedModifiedFiles()
+    public async Task<DateTime> GetDateProcessedModifiedFiles()
     {
-        var history = _dataAccess.GetUpdateHistory();
+        var history = await _dataAccess.GetUpdateHistory();
         return history.ModifiedFilesLastUpdated;
     }
 
-    public void SetDateProcessedModifiedFiles(DateTime date)
+    public async Task SetDateProcessedModifiedFiles(DateTime date)
     {
         var history = new JsonUpdateHistory { ModifiedFilesLastUpdated = date };
-        _dataAccess.SaveUpdateHistory(history);
+        await _dataAccess.SaveUpdateHistory(history);
     }
 }

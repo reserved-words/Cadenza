@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Cadenza.API._Startup;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Cadenza.API;
+namespace Cadenza.API._Startup;
 
 public static class Cors
 {
     public static WebApplicationBuilder RegisterCorsPolicies(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(opts => SetUpCorsOptions(builder, opts));
+        builder.Services.AddCors(opts => builder.SetUpCorsOptions(opts));
         return builder;
     }
 

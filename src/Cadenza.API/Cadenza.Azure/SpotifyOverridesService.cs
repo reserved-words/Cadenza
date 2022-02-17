@@ -1,11 +1,12 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.API.Core.Common;
+using Cadenza.Domain;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.Azure;
 
-public class SpotifyOverridesService
+public class SpotifyOverridesService : IOverridesService
 {
     private readonly IOptions<AzureSettings> _config;
     private readonly IHttpHelper _httpClient;

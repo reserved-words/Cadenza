@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Cadenza.API.Core.Common;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Azure;
@@ -7,7 +8,9 @@ public static class Startup
 {
     public static IServiceCollection AddAzure(this IServiceCollection services)
     {
-        return services.AddTransient<SpotifyOverridesService>();
+        return services
+            .AddTransient<SpotifyOverridesService>()
+            .AddTransient<IOverridesService, SpotifyOverridesService>();
     }
 
     public static IServiceCollection ConfigureAzure(this IServiceCollection services, IConfiguration config, string sectionPath)

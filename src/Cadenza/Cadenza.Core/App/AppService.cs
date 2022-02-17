@@ -11,19 +11,18 @@ public class AppService : IAppConsumer, IAppController
         trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
-    public event TrackEventHandler TrackStarted;
+    public event TrackEventHandler TrackFinished;
     public event TrackEventHandler TrackPaused;
     public event TrackEventHandler TrackResumed;
-    public event TrackEventHandler TrackFinished;
-    public event PlaylistEventHandler PlaylistUpdated;
+    public event TrackEventHandler TrackStarted;
+
+    public event PlaylistEventHandler PlaylistFinished;
+    public event PlaylistEventHandler PlaylistLoading;
+    public event PlaylistEventHandler PlaylistStarted;
+
     public event LibraryEventHandler LibraryUpdated;
 
     private IPlaylist _currentPlaylist;
-
-    public void Initialise()
-    {
-        LibraryUpdated?.Invoke(this, new LibraryEventArgs());
-    }
 
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
     {
@@ -34,11 +33,7 @@ public class AppService : IAppConsumer, IAppController
     {
         _currentPlaylist = new Playlist(playlistDefinition);
         await PlayTrack();
-        PlaylistUpdated?.Invoke(this, new PlaylistEventArgs
-        {
-            PlaylistName = _currentPlaylist.Name,
-            PlaylistType = _currentPlaylist.Type
-        });
+        PlaylistStarted?.Invoke(this, GetPlaylistArgs());
     }
 
     private async Task PlayTrack()
@@ -67,6 +62,12 @@ public class AppService : IAppConsumer, IAppController
     public async Task SkipNext()
     {
         TrackFinished?.Invoke(this, GetFinishedArgs());
+        if (_currentPlaylist.CurrentIsLast)
+        {
+            await StopPlaylist();
+            return;
+        }
+
         await _currentPlaylist.MoveNext();
         await PlayTrack();
     }
@@ -88,6 +89,16 @@ public class AppService : IAppConsumer, IAppController
         };
     }
 
+    private PlaylistEventArgs GetPlaylistArgs(string error = null)
+    {
+        return new PlaylistEventArgs
+        {
+            PlaylistName = _currentPlaylist?.Name,
+            PlaylistType = _currentPlaylist?.Type ?? default(PlaylistType),
+            Error = error
+        };
+    }
+
     private TrackEventArgs GetProgressArgs(TrackProgress progress)
     {
         return new TrackEventArgs
@@ -98,5 +109,18 @@ public class AppService : IAppConsumer, IAppController
                 ? 0
                 : progress.SecondsPlayed / progress.TotalSeconds
         };
+    }
+
+    public async Task LoadingPlaylist()
+    {
+        await StopPlaylist();
+        PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
+    }
+
+    private async Task StopPlaylist()
+    {
+        await _player.Stop();
+        PlaylistFinished?.Invoke(this, GetPlaylistArgs());
+        _currentPlaylist = null;
     }
 }

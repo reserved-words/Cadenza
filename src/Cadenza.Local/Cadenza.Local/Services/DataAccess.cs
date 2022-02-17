@@ -15,94 +15,94 @@ public class DataAccess : IDataAccess
         _jsonConverter = jsonConverter;
     }
 
-    public List<JsonArtist> GetArtists()
+    public async Task<List<JsonArtist>> GetArtists()
     {
         var path = GetPath(opt => opt.Artists);
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         return _jsonConverter.Deserialize<List<JsonArtist>>(json);
     }
 
-    public List<JsonAlbum> GetAlbums()
+    public async Task<List<JsonAlbum>> GetAlbums()
     {
         var path = GetPath(opt => opt.Albums);
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         return _jsonConverter.Deserialize<List<JsonAlbum>>(json);
     }
 
-    public List<JsonTrack> GetTracks()
+    public async Task<List<JsonTrack>> GetTracks()
     {
         var path = GetPath(opt => opt.Tracks);
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         return _jsonConverter.Deserialize<List<JsonTrack>>(json);
     }
 
-    public List<JsonAlbumTrackLink> GetAlbumTrackLinks()
+    public async Task<List<JsonAlbumTrackLink>> GetAlbumTrackLinks()
     {
         var path = GetPath(opt => opt.AlbumTrackLinks);
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         return _jsonConverter.Deserialize<List<JsonAlbumTrackLink>>(json);
     }
 
-    public void SaveArtists(List<JsonArtist> artists)
+    public async Task SaveArtists(List<JsonArtist> artists)
     {
         var path = GetPath(opt => opt.Artists);
         var json = _jsonConverter.Serialize(artists);
-        _fileAccess.SaveText(path, json);
+        await _fileAccess.SaveText(path, json);
     }
 
-    public void SaveAlbums(List<JsonAlbum> albums)
+    public async Task SaveAlbums(List<JsonAlbum> albums)
     {
         var path = GetPath(opt => opt.Albums);
         var json = _jsonConverter.Serialize(albums);
-        _fileAccess.SaveText(path, json);
+        await _fileAccess.SaveText(path, json);
     }
 
-    public void SaveTracks(List<JsonTrack> tracks)
+    public async Task SaveTracks(List<JsonTrack> tracks)
     {
         var path = GetPath(opt => opt.Tracks);
         var json = _jsonConverter.Serialize(tracks);
-        _fileAccess.SaveText(path, json);
+        await _fileAccess.SaveText(path, json);
     }
 
-    public void SaveAlbumTrackLinks(List<JsonAlbumTrackLink> albumTrackLinks)
+    public async Task SaveAlbumTrackLinks(List<JsonAlbumTrackLink> albumTrackLinks)
     {
         var path = GetPath(opt => opt.AlbumTrackLinks);
         var json = _jsonConverter.Serialize(albumTrackLinks);
-        _fileAccess.SaveText(path, json);
+        await _fileAccess.SaveText(path, json);
     }
 
-    public JsonItems GetAll()
+    public async Task<JsonItems> GetAll()
     {
         return new JsonItems
         {
-            Tracks = GetTracks(),
-            Artists = GetArtists(),
-            Albums = GetAlbums(),
-            AlbumTrackLinks = GetAlbumTrackLinks()
+            Tracks = await GetTracks(),
+            Artists = await GetArtists(),
+            Albums = await GetAlbums(),
+            AlbumTrackLinks = await GetAlbumTrackLinks()
         };
     }
 
-    public void SaveAll(JsonItems items)
+    public async Task SaveAll(JsonItems items)
     {
         // should be transaction
-        SaveTracks(items.Tracks);
-        SaveArtists(items.Artists);
-        SaveAlbums(items.Albums);
-        SaveAlbumTrackLinks(items.AlbumTrackLinks);
+        await SaveTracks(items.Tracks);
+        await SaveArtists(items.Artists);
+        await SaveAlbums(items.Albums);
+        await SaveAlbumTrackLinks(items.AlbumTrackLinks);
     }
 
-    public JsonUpdateHistory GetUpdateHistory()
+    public async Task<JsonUpdateHistory> GetUpdateHistory()
     {
         var path = GetPath(opt => opt.UpdateHistory);
-        var json = _fileAccess.GetText(path);
+        var json = await _fileAccess.GetText(path);
         return _jsonConverter.Deserialize<JsonUpdateHistory>(json);
     }
 
-    public void SaveUpdateHistory(JsonUpdateHistory history)
+    public async Task SaveUpdateHistory(JsonUpdateHistory history)
     {
         var path = GetPath(opt => opt.UpdateHistory);
         var json = _jsonConverter.Serialize(history);
-        _fileAccess.SaveText(path, json);
+        await _fileAccess.SaveText(path, json);
     }
 
     private string GetPath(Func<LibraryPaths, string> getFileName)

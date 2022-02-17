@@ -2,8 +2,8 @@
 
 public interface IUpdatedFilesFetcher
 {
-    List<string> GetAddedFiles();
-    List<string> GetFilesModifiedSinceLastUpdate();
-    void UpdateTimeModifiedFilesUpdated(DateTime updateTime);
-    List<string> GetRemovedFiles();
+    Task<List<string>> GetAddedFiles();
+    Task<List<string>> GetFilesModifiedSinceLastUpdate();
+    Task UpdateTimeModifiedFilesUpdated(DateTime updateTime);
+    Task<List<string>> GetRemovedFiles();
 }

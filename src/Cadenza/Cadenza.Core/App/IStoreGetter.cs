@@ -2,8 +2,7 @@
 
 public interface IStoreGetter
 {
-    Task<string> GetString(StoreKey key);
-    Task<int?> GetInt(StoreKey key);
-    Task<T> GetValue<T>(StoreKey key) where T : class;
-    Task<List<string>> GetList(StoreKey key);
+    Task<StoredValue<T>> GetValue<T>(StoreKey key);
+
+    Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken);
 }

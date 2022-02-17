@@ -9,13 +9,16 @@
     <link href="images/favicon.ico" rel="icon" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <link href="lib/fontawesome/css/svg-with-js.min.css" rel="stylesheet">
+    <link href="lib/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="css/layout.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <p>Loading...</p>
+    </div>
 
     <audio id="audioPlayer" />
 
@@ -30,17 +33,16 @@
     <script src="_content/TG.Blazor.IndexedDB/indexedDb.Blazor.js"></script>
 
     <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/fontawesome/js/all.min.js"></script>
 
-    <script src="js/api.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/lastfm-common.js"></script>
-    <script src="js/spotify-common.js"></script>
     <script src="js/startup.js"></script>
 
     <script src="js/audio-player.js"></script>
 
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="js/spotify-player.js"></script>
+    <script src="js/spotify-interop.js"></script>
 
 </body>
 

@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.API.Core.LastFM;
+using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
+using Microsoft.Extensions.Options;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Services;
 
-public class Favourites
+public class Favourites : IFavourites
 {
     private readonly ILastFmAuthorisedClient _authorisedClient;
     private readonly ILastFmClient _client;
@@ -41,7 +44,7 @@ public class Favourites
 
     public async Task Unfavourite(Track track)
     {
-        await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string> 
+        await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {
             { "method", "track.unlove" },
             { "track", track.Title },

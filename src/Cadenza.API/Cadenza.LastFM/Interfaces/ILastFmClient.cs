@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Interfaces;
 
 public interface ILastFmClient
 {

@@ -15,28 +15,30 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         _updateHistory = updateHistory;
     }
 
-    public List<string> GetAddedFiles()
+    public async Task<List<string>> GetAddedFiles()
     {
-        var filesInDirectory = _musicDirectory.GetAllFiles();
-        var pathsInJson = _jsonData.GetTracks().Select(t => t.Path).ToList();
+        var filesInDirectory = await _musicDirectory.GetAllFiles();
+        var tracks = await _jsonData.GetTracks();
+        var pathsInJson = tracks.Select(t => t.Path).ToList();
         return _listComparer.GetMissingItems(filesInDirectory, pathsInJson);
     }
 
-    public List<string> GetFilesModifiedSinceLastUpdate()
+    public async Task<List<string>> GetFilesModifiedSinceLastUpdate()
     {
-        var lastUpdate = _updateHistory.GetDateProcessedModifiedFiles();
-        return _musicDirectory.GetModifiedFiles(lastUpdate);
+        var lastUpdate = await _updateHistory.GetDateProcessedModifiedFiles();
+        return await _musicDirectory.GetModifiedFiles(lastUpdate);
     }
 
-    public List<string> GetRemovedFiles()
+    public async Task<List<string>> GetRemovedFiles()
     {
-        var filesInDirectory = _musicDirectory.GetAllFiles();
-        var pathsInJson = _jsonData.GetTracks().Select(t => t.Path).ToList();
+        var filesInDirectory = await _musicDirectory.GetAllFiles();
+        var tracks = await _jsonData.GetTracks();
+        var pathsInJson = tracks.Select(t => t.Path).ToList();
         return _listComparer.GetMissingItems(pathsInJson, filesInDirectory);
     }
 
-    public void UpdateTimeModifiedFilesUpdated(DateTime updateTime)
+    public async Task UpdateTimeModifiedFilesUpdated(DateTime updateTime)
     {
-        _updateHistory.SetDateProcessedModifiedFiles(updateTime);
+        await _updateHistory.SetDateProcessedModifiedFiles(updateTime);
     }
 }

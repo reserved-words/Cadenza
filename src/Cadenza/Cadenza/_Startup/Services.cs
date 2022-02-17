@@ -3,9 +3,13 @@ using MudBlazor.Services;
 using Cadenza.Database;
 using Cadenza.Source.Local;
 using Cadenza.Source.Spotify;
-using Cadenza.Core;
 using Cadenza.Common;
 using Cadenza.Utilities;
+using Cadenza.LastFM;
+using Cadenza.API.Wrapper;
+using Cadenza.API.Wrapper.Spotify;
+using Cadenza.API.Wrapper.LastFM;
+using Cadenza.API.Wrapper.Core;
 
 namespace Cadenza;
 
@@ -16,22 +20,27 @@ public static class Services
         var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
+            .AddSingleton<SearchRepositoryCache>()
+            .AddTransient<ISearchSyncService, SearchSyncService>();
+
+        builder.Services
+            .AddSingleton<ConnectorService>()
+            .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
+            .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddStartupServices()
             .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
-            .AddMudServices()
             .AddAppServices()
             .AddUIHelpers()
             .AddTimers()
+            .AddAPIWrapper()
             .AddLastFm()
-            .AddSources()
-            .AddSourceFactories()
-            .AddCacheRepositories()
-            .AddDatabaseRepositories();
+            .AddSources();
 
         builder.Services
-            .AddTransient<ISyncService, SyncService>()
+            .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IPlaylistPlayer, PlaylistPlayer>();
 
@@ -43,10 +52,14 @@ public static class Services
         return builder;
     }
 
-    private static IServiceCollection AddCacheRepositories(this IServiceCollection services)
+    private static IServiceCollection AddStartupServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<ITrackRepository, Core.TrackRepository>();
+            .AddTransient<IStartupConnectService, StartupConnectService>()
+            .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
+            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
@@ -59,6 +72,17 @@ public static class Services
     private static IServiceCollection AddUIHelpers(this IServiceCollection services)
     {
         return services
+            .AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            })
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IProgressDialogService, ProgressDialogService>()
             .AddTransient<INotificationService, MudNotificationService>()
@@ -80,49 +104,14 @@ public static class Services
         return services.AddTransient<IPlayTracker, LastFmService>()
             .AddTransient<IFavouritesConsumer, LastFmService>()
             .AddTransient<IFavouritesController, LastFmService>()
-            .AddTransient<IHistory, LastFmService>();
+            .AddLastFMCore();
     }
 
     private static IServiceCollection AddSources(this IServiceCollection services)
     {
         return services
             .AddSpotifySource<SpotifyConfig>()
+            .AddSpotifyCore()
             .AddLocalSource<HtmlPlayer>();
-    }
-
-    private static IServiceCollection AddLocalLibrary(this IServiceCollection services)
-    {
-        return services.AddLocalSource<HtmlPlayer>();
-    }
-
-    //private static IServiceCollection AddLibraries(this IServiceCollection services)
-    //{
-    //    return services
-    //        .AddTransient<ILibraryConsumer>(sp => sp.GetRequiredService<PlayerLibrary>())
-    //        .AddTransient<ILibraryController>(sp => sp.GetRequiredService<PlayerLibrary>());
-    //}
-
-    private static IServiceCollection AddSourceFactories(this IServiceCollection services)
-    {
-        return services
-            //.AddTransient(sp => sp.GetUpdaters())
-            .AddTransient(sp => GetOverriders(sp));
-    }
-
-    //private static Dictionary<LibrarySource, IUpdater> GetUpdaters(this IServiceProvider sp)
-    //{
-    //    return new Dictionary<LibrarySource, IUpdater>
-    //    {
-    //        { LibrarySource.Local, sp.GetLocalUpdater() },
-    //        { LibrarySource.Spotify, sp.GetSpotifyUpdater() }
-    //    };
-    //}
-
-    private static Dictionary<LibrarySource, IOverridesService> GetOverriders(IServiceProvider sp)
-    {
-        return new Dictionary<LibrarySource, IOverridesService>
-        {
-            { LibrarySource.Spotify, sp.GetSpotifyOverrider() }
-        };
     }
 }

@@ -3,14 +3,14 @@
 @inherits IndexBase
 
 
-@if (ClientSideStartUpDone)
-{
-    <MudLayout>
-        <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
-            <Sidebar />
-        </MudDrawer>
-        <MudMainContent>
-            <MudTabs Outlined="true" KeepPanelsAlive="true">
+<MudLayout>
+    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <Sidebar />
+    </MudDrawer>
+    <MudMainContent>
+        @if (IsInitalised)
+        {
+            <MudTabs Outlined="true" KeepPanelsAlive="false">
                 <MudTabPanel Text="History" Icon="@Icons.Material.Filled.History">
                     <HistoryTab />
                 </MudTabPanel>
@@ -20,17 +20,10 @@
                 <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
                     <LibraryTab />
                 </MudTabPanel>
-@*                <MudTabPanel Text="Playlists" Icon="@Icons.Material.Filled.List">
-                    <PlaylistsTab />
-                </MudTabPanel>
-                <MudTabPanel Text="Search" Icon="@Icons.Material.Filled.Search">
-                    <SearchTab />
-                </MudTabPanel>
-*@                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info">
+                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info">
                     <SystemInfoTab />
                 </MudTabPanel>
             </MudTabs>
-        </MudMainContent>
-    </MudLayout>
-}
-
+        }
+    </MudMainContent>
+</MudLayout>

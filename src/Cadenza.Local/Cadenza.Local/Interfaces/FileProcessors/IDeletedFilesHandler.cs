@@ -2,5 +2,5 @@
 
 public interface IDeletedFilesHandler
 {
-    void Sync();
+    Task Sync();
 }

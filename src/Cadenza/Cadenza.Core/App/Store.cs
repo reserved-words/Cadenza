@@ -12,105 +12,58 @@ public class Store : IStoreGetter, IStoreSetter
         _js = js;
     }
 
-    public async Task<string> GetString(StoreKey key)
+    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken)
     {
-        var value = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
-        return value == "null"
-            || value == "'null'"
-            ? null
-            : value;
-    }
+        var startTime = DateTime.Now;
+        var endTime = startTime.AddSeconds(timeoutSeconds);
 
-    public async Task<T> GetValue<T>(StoreKey key) where T : class
-    {
-        var json = await GetString(key);
-        return json == null
-            ? null
-            : JsonConvert.DeserializeObject<T>(json);
-    }
+        var token = await GetValue<T>(storeKey);
 
-    public async Task<int?> GetInt(StoreKey key)
-    {
-        var value = await GetString(key);
-        return int.TryParse(value, out int result)
-            ? result
-            : null;
-    }
-
-    public async Task<List<string>> GetList(StoreKey key)
-    {
-        var value = await GetString(key);
-        return value.Split("|").Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
-    }
-
-    public async Task<bool> SetValue(StoreKey key, object value)
-    {
-        var isValueChanged = await IsValueChanged(key, value);
-
-        if (!isValueChanged)
-            return false;
-
-        await SetValue(key, value?.ToString());
-        return true;
-    }
-
-    public async Task<bool> SetValue<T>(StoreKey key, T value) where T : class
-    {
-        var json = value == null
-            ? null
-            : JsonConvert.SerializeObject(value);
-
-        await SetValue(key, json);
-        return true;
-    }
-
-    public async Task<bool> SetValues<T>(StoreKey key, List<T> values)
-    {
-        var isValueChanged = await IsValueChanged(key, values);
-
-        if (!isValueChanged)
-            return false;
-
-        var value = values == null
-            ? null
-            : string.Join("|", values);
-
-        await SetValue(key, value);
-        return true;
-    }
-
-    private async Task<bool> IsValueChanged(StoreKey key, object newValue)
-    {
-        var currentValue = await GetString(key);
-
-        if (currentValue == null)
+        while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
         {
-            return newValue != null;
+            await Task.Delay(500);
+            token = await GetValue<T>(storeKey);
         }
 
-        return !currentValue.Equals(newValue);
+        return token;
     }
 
-    private async Task<bool> IsValueChanged<T>(StoreKey key, List<T> newValue)
+    public async Task Clear(StoreKey key)
     {
-        var currentValue = await GetList(key);
-
-        if (currentValue == null)
-        {
-            return newValue != null;
-        }
-
-        if (newValue == null)
-        {
-            return currentValue != null;
-        }
-
-        return currentValue.Count != newValue.Count
-            || !newValue.All(s => currentValue.Contains(s.ToString()));
+        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), "");
     }
 
-    private async Task SetValue(StoreKey key, string value)
+    public async Task<StoredValue<T>> GetValue<T>(StoreKey key)
     {
-        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), value);
+        var json = await _js.InvokeAsync<string>("getStoredValue", key.ToString());
+
+        if (string.IsNullOrWhiteSpace(json))
+            return null;
+
+        return JsonConvert.DeserializeObject<StoredValue<T>>(json);
     }
+
+    public async Task SetValue<T>(StoreKey key, T value)
+    {
+        var storedValue = new StoredValue<T>(value);
+        var json = JsonConvert.SerializeObject(storedValue);
+        await _js.InvokeVoidAsync("setStoredValue", key.ToString(), json);
+    }
+}
+
+public class StoredValue<T>
+{
+    public StoredValue()
+    {
+
+    }
+
+    public StoredValue(T value)
+    {
+        Value = value;
+        Updated = DateTime.Now;
+    }
+
+    public T Value { get; set; }
+    public DateTime Updated { get; set; }
 }

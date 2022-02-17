@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Cadenza.Library;
+using Cadenza.Spotify.API;
+using Cadenza.Spotify.API.Interfaces;
+using Cadenza.Spotify.Libraries;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Spotify;
@@ -7,8 +11,14 @@ public static class Startup
 {
     public static IServiceCollection AddSpotify(this IServiceCollection services)
     {
-        return services.AddTransient<IBuilder, Builder>()
-            .AddTransient<Auth>();
+        return services
+            .AddTransient<IBuilder, Builder>()
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<IApiCaller, ApiCaller>()
+            .AddTransient<IApiHelper, ApiHelper>()
+            .AddSingleton<IApiToken, ApiToken>()
+            .AddLibrary<ApiLibrary, OverridesLibrary>()
+            .AddBaseRepositories();
     }
 
     public static IServiceCollection ConfigureSpotify(this IServiceCollection services, IConfiguration config, string sectionPath)

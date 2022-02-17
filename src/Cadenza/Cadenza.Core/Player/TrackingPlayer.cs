@@ -68,6 +68,7 @@ public class TrackingPlayer : IUtilityPlayer
 
     private async Task<TrackSummary> CurrentTrack()
     {
-        return await _store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        var storedValue = await _store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        return storedValue?.Value;
     }
 }

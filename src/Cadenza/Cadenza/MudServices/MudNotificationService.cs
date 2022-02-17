@@ -11,7 +11,7 @@ public class MudNotificationService : INotificationService
 
     public void Error(string message)
     {
-        _snackbar.Add(message, Severity.Error);
+        _snackbar.Add(message, Severity.Error, options => options.RequireInteraction = true);
     }
 
     public void Success(string message)

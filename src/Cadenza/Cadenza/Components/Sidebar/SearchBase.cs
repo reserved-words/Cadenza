@@ -1,18 +1,13 @@
-﻿using Cadenza.Common;
-using Cadenza.Core;
+﻿using Cadenza.Database;
 
 namespace Cadenza.Components.Sidebar;
 
 public class SearchBase : ComponentBase
 {
     [Inject]
-    protected IMainRepository Repository { get; set; }
+    public SearchRepositoryCache Cache { get; set; }
 
-    [Inject]
-    public IAppConsumer App { get; set; }
-
-    public bool IsLoading { get; set; } = true;
-    public bool IsErrored { get; set; } = false;
+    public bool IsLoading { get; set; }
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
     {
@@ -30,31 +25,33 @@ public class SearchBase : ComponentBase
         { SearchableItemType.Track, Color.Success }
     };
 
-    protected List<SearchableItem> Items = new List<SearchableItem>();
+    protected SourceSearchableItem Result { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        App.LibraryUpdated += App_LibraryUpdated;
+        Cache.UpdateStarted += Cache_UpdateStarted;
+        Cache.UpdateCompleted += Cache_UpdateCompleted;
     }
 
-    private async Task App_LibraryUpdated(object sender, LibraryEventArgs e)
+    private void Cache_UpdateCompleted(object sender, EventArgs e)
     {
-        await Update();
+        IsLoading = false;
+        StateHasChanged();
     }
 
-    protected override async Task OnParametersSetAsync()
+    private void Cache_UpdateStarted(object sender, EventArgs e)
     {
-        await Update();
+        IsLoading = true;
+        StateHasChanged();
     }
 
-    protected SearchableItem Result { get; set; }
-
-    protected async Task<IEnumerable<SearchableItem>> Search(string value)
+    protected Task<IEnumerable<SourceSearchableItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;
 
-        return Items.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        var results = Cache.Items.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return Task.FromResult(results);
     }
 
     private static bool IsCommon(string value)
@@ -62,28 +59,5 @@ public class SearchBase : ComponentBase
         return value.Equals("the", StringComparison.InvariantCultureIgnoreCase)
             || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
     }
-
-    private async Task Update()
-    {
-        IsErrored = false;
-        IsLoading = true;
-        Items.Clear();
-        Exception = null;
-
-        try
-        {
-            var items = await Repository.GetSearchableItems();
-            Items = items.ToList();
-            IsLoading = false;
-        }
-        catch (Exception ex)
-        {
-            IsLoading = false;
-            IsErrored = true;
-            Exception = ex;
-        }
-    }
-
-    public Exception Exception = null;
 }
 

@@ -21,28 +21,28 @@ public class LocalLibraryUpdater : ILocalLibraryUpdater
         _updateQueueHandler = updateQueueHandler;
     }
 
-    public void UpdateAddedFiles()
+    public async Task UpdateAddedFiles()
     {
-        _addedFilesHandler.Sync();
+        await _addedFilesHandler.Sync();
     }
 
-    public void UpdateDeletedFiles()
+    public async Task UpdateDeletedFiles()
     {
-        _deletedFilesHandler.Sync();
+        await _deletedFilesHandler.Sync();
     }
 
-    public void UpdateModifiedFiles()
+    public async Task UpdateModifiedFiles()
     {
-        _modifiedFilesHandler.Sync();
+        await _modifiedFilesHandler.Sync();
     }
 
-    public void RemovePlayedFiles()
+    public async Task RemovePlayedFiles()
     {
-        _playedFilesHandler.RemovePlayedFiles();
+        await _playedFilesHandler.RemovePlayedFiles();
     }
 
-    public void ProcessUpdateQueue()
+    public async Task ProcessUpdateQueue()
     {
-        _updateQueueHandler.Process();
+        await _updateQueueHandler.Process();
     }
 }

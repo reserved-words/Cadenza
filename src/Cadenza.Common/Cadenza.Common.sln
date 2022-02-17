@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Utilities", "Cadenz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Library", "Cadenza.Library\Cadenza.Library.csproj", "{E60EA7DB-0673-4979-AE0B-EC7D028D7D6B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BC92E6CC-FBA6-4C74-8556-A13F03D3A618}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Update", "Cadenza.Update\Cadenza.Update.csproj", "{7E92D60A-D32A-438F-8CAA-67E72AC10EFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Utilities.Tests", "Cadenza.Utilities.Tests\Cadenza.Utilities.Tests.csproj", "{96BFA400-635C-40DC-8434-5F07DF997578}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Library.Tests", "Cadenza.Library.Tests\Cadenza.Library.Tests.csproj", "{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Library.Tests", "Cadenza.Library.Tests\Cadenza.Library.Tests.csproj", "{D58CF992-B012-410F-B772-D1D4C6D6B98C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Utilities.Tests", "Cadenza.Utilities.Tests\Cadenza.Utilities.Tests.csproj", "{B047A9C3-588F-4B11-8F81-34465197BDA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D76321D6-AD3F-4218-B8C7-DA4516C1F9F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,21 +35,25 @@ Global
 		{E60EA7DB-0673-4979-AE0B-EC7D028D7D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E60EA7DB-0673-4979-AE0B-EC7D028D7D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E60EA7DB-0673-4979-AE0B-EC7D028D7D6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{96BFA400-635C-40DC-8434-5F07DF997578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96BFA400-635C-40DC-8434-5F07DF997578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96BFA400-635C-40DC-8434-5F07DF997578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96BFA400-635C-40DC-8434-5F07DF997578}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D58CF992-B012-410F-B772-D1D4C6D6B98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D58CF992-B012-410F-B772-D1D4C6D6B98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D58CF992-B012-410F-B772-D1D4C6D6B98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D58CF992-B012-410F-B772-D1D4C6D6B98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E92D60A-D32A-438F-8CAA-67E72AC10EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E92D60A-D32A-438F-8CAA-67E72AC10EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E92D60A-D32A-438F-8CAA-67E72AC10EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E92D60A-D32A-438F-8CAA-67E72AC10EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B047A9C3-588F-4B11-8F81-34465197BDA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B047A9C3-588F-4B11-8F81-34465197BDA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B047A9C3-588F-4B11-8F81-34465197BDA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B047A9C3-588F-4B11-8F81-34465197BDA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{96BFA400-635C-40DC-8434-5F07DF997578} = {BC92E6CC-FBA6-4C74-8556-A13F03D3A618}
-		{D58CF992-B012-410F-B772-D1D4C6D6B98C} = {BC92E6CC-FBA6-4C74-8556-A13F03D3A618}
+		{E3BE1F7A-36E2-42A9-95B5-FF6F410B9D46} = {D76321D6-AD3F-4218-B8C7-DA4516C1F9F6}
+		{B047A9C3-588F-4B11-8F81-34465197BDA9} = {D76321D6-AD3F-4218-B8C7-DA4516C1F9F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DB12A33-7D2A-4B5E-ABC3-9CB37FC8C580}

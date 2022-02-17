@@ -1,8 +1,10 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
+using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Xml.Linq;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Services;
 
 public class LastFmClient : ILastFmClient
 {

@@ -1,20 +1,32 @@
-﻿using Cadenza.Core;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public class IndexBase : ComponentBase
 {
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
-    public IStoreSetter Store { get; set; }
+    public IStartupSyncService SyncService { get; set; }
 
-    public bool ClientSideStartUpDone => NavigationManager.Uri.Contains("/player");
+    [Inject]
+    public IProgressDialogService DialogService { get; set; }
+
+    public bool IsInitalised { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await Store.SetValue(StoreKey.CurrentTrackSource, null);
-        await Store.SetValue(StoreKey.CurrentTrack, null);
+        await OnStartup();
+    }
+
+    protected async Task OnStartup()
+    {
+        var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
+
+        if (success)
+        {
+            success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", true);
+        }
+
+        IsInitalised = success;
     }
 }

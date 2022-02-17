@@ -1,7 +1,9 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.LastFM.Interfaces;
+using Cadenza.LastFM.Model;
+using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.LastFM;
+namespace Cadenza.LastFM.Services;
 
 public class LastFmAuthorisedClient : ILastFmAuthorisedClient
 {
@@ -23,6 +25,6 @@ public class LastFmAuthorisedClient : ILastFmAuthorisedClient
 
         _signer.Sign(parameters);
 
-        await _httpClient.Post(_config.Value.ApiBaseUrl, parameters);
+        await _httpClient.Post(_config.Value.ApiBaseUrl, null, parameters);
     }
 }
