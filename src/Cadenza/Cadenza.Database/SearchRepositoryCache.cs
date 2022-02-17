@@ -21,8 +21,9 @@ public class SearchRepositoryCache
     public event EventHandler UpdateStarted;
     public event EventHandler UpdateCompleted;
 
-    public Dictionary<LibrarySource, List<string>> SourceArtists = new ();
-    public List<SourceSearchableItem> Items { get; set; } = new List<SourceSearchableItem>();
+    private Dictionary<LibrarySource, List<string>> _sourceArtists = new ();
+
+    public List<SourceSearchableItem> Items { get; set; } = new ();
 
     public void StartUpdate()
     {
@@ -46,9 +47,9 @@ public class SearchRepositoryCache
 
     public void AddArtists(LibrarySource source, List<SearchableItem> items)
     {
-        if (!SourceArtists.ContainsKey(source))
+        if (!_sourceArtists.ContainsKey(source))
         {
-            SourceArtists.Add(source, new List<string>());
+            _sourceArtists.Add(source, new List<string>());
         }
 
         foreach (var item in items)
@@ -57,7 +58,7 @@ public class SearchRepositoryCache
             {
                 Items.Add(new SourceSearchableItem(null, item));
             }
-            SourceArtists[source].Add(item.Id);
+            _sourceArtists[source].Add(item.Id);
         }
     }
 
@@ -69,7 +70,7 @@ public class SearchRepositoryCache
     public void Clear()
     {
         Items.Clear();
-        SourceArtists.Clear();
+        _sourceArtists.Clear();
     }
 }
 

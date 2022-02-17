@@ -38,7 +38,6 @@ public static class Services
             .AddAPIWrapper()
             .AddLastFm()
             .AddSources();
-//            .AddDatabaseRepositories();
 
         builder.Services
             .AddTransient<IStartupSyncService, StartupSyncService>()

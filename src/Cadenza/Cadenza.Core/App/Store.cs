@@ -12,14 +12,14 @@ public class Store : IStoreGetter, IStoreSetter
         _js = js;
     }
 
-    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds)
+    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken)
     {
         var startTime = DateTime.Now;
         var endTime = startTime.AddSeconds(timeoutSeconds);
 
         var token = await GetValue<T>(storeKey);
 
-        while (token == null && DateTime.Now < endTime)
+        while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
         {
             await Task.Delay(500);
             token = await GetValue<T>(storeKey);

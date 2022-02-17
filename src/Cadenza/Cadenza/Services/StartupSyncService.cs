@@ -32,7 +32,7 @@ public class StartupSyncService : IStartupSyncService
         subTask.Steps.Add(new TaskStep
         {
             Caption = "Syncing search items",
-            Task = async (o) =>
+            Task = async (o, ct) =>
             {
                 await _searchSyncService.PopulateSearchItems();
                 return true;

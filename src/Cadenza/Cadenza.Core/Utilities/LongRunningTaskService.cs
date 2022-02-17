@@ -1,6 +1,4 @@
-﻿using Cadenza.Utilities;
-
-namespace Cadenza.Common;
+﻿namespace Cadenza.Common;
 
 public class LongRunningTaskService : ILongRunningTaskService
 {
@@ -111,7 +109,7 @@ public class LongRunningTaskService : ILongRunningTaskService
             foreach (var step in task.Steps)
             {
                 Update(task.Id, step.Caption, TaskState.Running, cancellationToken);
-                result = await step.Task(result);
+                result = await step.Task(result, cancellationToken);
             }
 
             Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);

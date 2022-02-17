@@ -44,9 +44,9 @@ namespace Cadenza
             subTask.AddSteps(
                 "Getting auth URL",
                 "Saving session key",
-                () => GetAuthUrl(),
-                (sk) => CreateSession(sk),
-                ("Authenticating", (url) => Authorise(url)));
+                (ct) => GetAuthUrl(),
+                (sk, ct) => CreateSession(sk),
+                ("Authenticating", (url, ct) => Authorise(url, ct)));
 
             return subTask;
         }
@@ -67,11 +67,11 @@ namespace Cadenza
             return await _authoriser.GetAuthUrl(RedirectUri);
         }
 
-        private async Task<string> Authorise(string authUrl)
+        private async Task<string> Authorise(string authUrl, CancellationToken cancellationToken)
         {
             await NavigateToNewTab(authUrl);
 
-            var token = await _storeGetter.AwaitValue<string>(StoreKey.LastFmToken, 60);
+            var token = await _storeGetter.AwaitValue<string>(StoreKey.LastFmToken, 60, cancellationToken);
 
             if (token == null)
                 throw new Exception("No token received - need to authenticate on Last.FM website");

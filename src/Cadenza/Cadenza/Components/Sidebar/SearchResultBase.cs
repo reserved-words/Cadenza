@@ -30,6 +30,10 @@ public class SearchResultBase : ComponentBase
     [Parameter]
     public LibrarySource? ResultSource { get; set; }
 
+    public bool DisplayArtistLink => Result != null && Result.Type != SearchableItemType.Playlist;
+    public bool DisplayAlbumLink => Result != null && Result.Type != SearchableItemType.Artist;
+    public bool DisplayTrackLink => Result != null && Result.Type == SearchableItemType.Track;
+
     protected async Task OnPlay()
     {
         try

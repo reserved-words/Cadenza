@@ -19,26 +19,18 @@ public class SearchSyncService : ISearchSyncService
 
     public async Task PopulateSearchItems()
     {
-        try
+        _cache.StartUpdate();
+
+        _cache.Clear();
+
+        foreach (var repository in _repositories)
         {
-            _cache.StartUpdate();
-
-            _cache.Clear();
-
-            foreach (var repository in _repositories)
-            {
-                await FetchArtists(repository);
-                await FetchAlbums(repository);
-                await FetchTracks(repository);
-            }
-
-            _cache.FinishUpdate();
+            await FetchArtists(repository);
+            await FetchAlbums(repository);
+            await FetchTracks(repository);
         }
-        catch (Exception ex)
-        {
 
-            throw;
-        }
+        _cache.FinishUpdate();
     }
 
     private async Task FetchTracks(ISourceSearchRepository repository)

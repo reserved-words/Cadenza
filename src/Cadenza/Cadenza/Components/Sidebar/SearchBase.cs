@@ -7,7 +7,7 @@ public class SearchBase : ComponentBase
     [Inject]
     public SearchRepositoryCache Cache { get; set; }
 
-    public bool IsLoading { get; set; } = true;
+    public bool IsLoading { get; set; }
 
     protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
     {

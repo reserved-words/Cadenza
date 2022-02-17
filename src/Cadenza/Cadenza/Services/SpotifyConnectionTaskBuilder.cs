@@ -49,11 +49,11 @@ namespace Cadenza
             subTask.AddSteps(
                  "Getting auth URL",
                  "Initialising player",
-                 () => GetAuthUrl(),
-                 (at) => InitialisePlayer(at),
-                 ("Authenticating", (url) => Authorise(url)),
-                 ("Creating session", (code) => CreateSession(code)),
-                 ("Refreshing session", (at) => RefreshSession(at)));
+                 (ct) => GetAuthUrl(),
+                 (at, ct) => InitialisePlayer(at, ct),
+                 ("Authenticating", (url, ct) => Authorise(url, ct)),
+                 ("Creating session", (code, ct) => CreateSession(code)),
+                 ("Refreshing session", (at, ct) => RefreshSession(at)));
 
             subTask.AddStep("Populating library", Populate);
 
@@ -93,11 +93,11 @@ namespace Cadenza
             return await _authoriser.GetAuthUrl(state, RedirectUri);
         }
 
-        private async Task<string> Authorise(string authUrl)
+        private async Task<string> Authorise(string authUrl, CancellationToken cancellationToken)
         {
             await NavigateToNewTab(authUrl);
 
-            var code = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyCode, 60);
+            var code = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyCode, 60, cancellationToken);
 
             if (code == null)
                 throw new Exception("No code received - need to authenticate on Spotify website");
@@ -127,13 +127,13 @@ namespace Cadenza
             await _jsRuntime.InvokeVoidAsync("open", url, "_blank");
         }
 
-        public async Task InitialisePlayer(string accessToken)
+        public async Task InitialisePlayer(string accessToken, CancellationToken cancellationToken)
         {
             var connected = await _interop.ConnectPlayer(accessToken);
             if (!connected)
                 throw new Exception("Failed to connect to Spotify player");
 
-            var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60);
+            var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60, cancellationToken);
 
             if (deviceId == null)
                 throw new Exception("No Device ID received - Spotify player not ready");

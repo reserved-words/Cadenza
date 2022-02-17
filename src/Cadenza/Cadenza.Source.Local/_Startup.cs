@@ -17,11 +17,8 @@ public static class Startup
     public static IServiceCollection AddLocalSource<TAudioPlayer>(this IServiceCollection services) where TAudioPlayer : class, IAudioPlayer
     {
         return services
-            //.AddDynamicSourceLibrary<LocalApi>(LibrarySource.Local)
-            //.AddTransient<LocalLibraryUpdater>()
             .AddTransient<ISourcePlayer>(sp => sp.GetLocalPlayer())
-            //.AddTransient<IFileUpdateQueue, LocalLibraryUpdater>()
-            .AddTransient<ISearchRepository, LocalSearchRepository>();
+            .AddApiRepositories<LocalApiRepositorySettings>(LibrarySource.Local);
     }
 
     public static ISourcePlayer GetLocalPlayer(this IServiceProvider services)
