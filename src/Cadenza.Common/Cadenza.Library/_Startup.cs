@@ -58,6 +58,7 @@ public static class _Startup
         // need to register multiple instances of each source repository interface
 
         return services
+            .AddTransient<T>()
             .AddTransient<ISourceArtistRepository>(sp => GetApiRepository<T>(source, sp))
             .AddTransient<ISourceAlbumRepository>(sp => GetApiRepository<T>(source, sp))
             .AddTransient<ISourcePlayTrackRepository>(sp => GetApiRepository<T>(source, sp))
