@@ -17,9 +17,9 @@ public class BaseAlbumRepository : IBaseAlbumRepository
         return _albums[id];
     }
 
-    public async Task<List<Track>> GetTracks(string albumId)
+    public async Task<List<Track>> GetTracks(string id)
     {
-        return _albumTracks[albumId];
+        return _albumTracks[id];
     }
 
     public async Task Populate()
@@ -28,10 +28,10 @@ public class BaseAlbumRepository : IBaseAlbumRepository
 
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
 
-        _albumTracks = library.Albums.ToDictionary(a => a.Id, a => new List<Track>());
-
         var albums = library.AlbumTrackLinks
             .GroupBy(a => a.AlbumId);
+
+        _albumTracks = albums.ToDictionary(a => a.Key, a => new List<Track>());
 
         var tracks = library.Tracks.ToDictionary(t => t.Id, t => t as Track);
 

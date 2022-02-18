@@ -35,9 +35,9 @@
             return await Get<ListResponse<Artist>>(_settings.AlbumArtists, page, limit);
         }
 
-        public async Task<ListResponse<AlbumInfo>> GetAlbums(string artistId, int page, int limit)
+        public async Task<ListResponse<Album>> GetAlbums(string id, int page, int limit)
         {
-            return await Get<ListResponse<AlbumInfo>>(_settings.ArtistAlbums, artistId, page, limit);
+            return await Get<ListResponse<Album>>(_settings.ArtistAlbums, id, page, limit);
         }
 
         public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)

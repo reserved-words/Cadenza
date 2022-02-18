@@ -23,10 +23,10 @@ public class BaseArtistRepository : IBaseArtistRepository
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
     }
 
-    public async Task<ListResponse<AlbumInfo>> GetAlbums(string artistId, int page, int limit)
+    public async Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
     {
         return _albums[artistId]
-            .ToListResponse<AlbumInfo>(a => a.Id, page, limit);
+            .ToListResponse<Album>(a => a.Id, page, limit);
     }
 
     public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
