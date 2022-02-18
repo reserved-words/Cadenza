@@ -74,9 +74,10 @@ public static class Routing
 
         var libraryService = app.Services.GetRequiredService<IArtworkService>();
 
-        app.MapGet("/Library/Artwork", async (HttpContext context) =>
+        app.MapGet("/Library/Artwork", async (HttpContext context) => 
         {
-            var id = context.Request.Query["id"];
+            var id = context.Request.Query["id"].Single();
+
             var artwork = await libraryService.GetArtwork(id);
 
             if (artwork.Bytes == null || artwork.Bytes.Length == 0)
