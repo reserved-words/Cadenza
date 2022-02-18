@@ -4,8 +4,8 @@
     {
         private readonly IApiRepositorySettings _settings;
 
-        public ApiRepository(IHttpHelper http, ISource source, IApiRepositorySettings settings)
-            : base(http, settings, source)
+        public ApiRepository(LibrarySource source, IHttpHelper http, IApiRepositorySettings settings)
+            : base(source, http, settings)
         {
             _settings = settings;
         }
