@@ -1,14 +1,13 @@
 ﻿namespace Cadenza.Domain;
 
-public class Track
+public class AlbumTrack
 {
-    public LibrarySource Source { get; set; }
-    public string Id { get; set; }
-    public string ArtistId { get; set; }
+    public string TrackId { get; set; }
 
     [ItemProperty(ItemProperty.TrackTitle)]
     public string Title { get; set; }
+    public string ArtistId { get; set; }
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }
-    public string AlbumId { get; set; }
+    public AlbumTrackPosition Position { get; set; }
 }

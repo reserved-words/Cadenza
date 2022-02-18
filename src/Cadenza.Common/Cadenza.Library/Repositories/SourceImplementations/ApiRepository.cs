@@ -80,9 +80,9 @@
             return await Get<AlbumInfo>(_settings.Album, id);
         }
 
-        public async Task<List<Track>> GetTracks(string id)
+        public async Task<List<AlbumTrack>> GetTracks(string id)
         {
-            return await Get<List<Track>>(_settings.AlbumTracks, id);
+            return await Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
         }
     }
 }

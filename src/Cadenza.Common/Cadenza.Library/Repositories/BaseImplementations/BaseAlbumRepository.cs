@@ -5,7 +5,7 @@ public class BaseAlbumRepository : IBaseAlbumRepository
     private readonly ILibrary _library;
 
     private Dictionary<string, AlbumInfo> _albums;
-    private Dictionary<string, List<Track>> _albumTracks;
+    private Dictionary<string, List<AlbumTrack>> _albumTracks;
 
     public BaseAlbumRepository(ILibrary library)
     {
@@ -17,7 +17,7 @@ public class BaseAlbumRepository : IBaseAlbumRepository
         return _albums[id];
     }
 
-    public async Task<List<Track>> GetTracks(string id)
+    public async Task<List<AlbumTrack>> GetTracks(string id)
     {
         return _albumTracks[id];
     }
@@ -31,7 +31,7 @@ public class BaseAlbumRepository : IBaseAlbumRepository
         var albums = library.AlbumTrackLinks
             .GroupBy(a => a.AlbumId);
 
-        _albumTracks = albums.ToDictionary(a => a.Key, a => new List<Track>());
+        _albumTracks = albums.ToDictionary(a => a.Key, a => new List<AlbumTrack>());
 
         var tracks = library.Tracks.ToDictionary(t => t.Id, t => t as Track);
 
@@ -40,8 +40,21 @@ public class BaseAlbumRepository : IBaseAlbumRepository
             _albumTracks[album.Key] = album
                 .OrderBy(t => t.Position.DiscNo)
                 .ThenBy(t => t.Position.TrackNo)
-                .Select(t => tracks[t.TrackId])
+                .Select(t => GetAlbumTrack(t.Position, tracks[t.TrackId]))
                 .ToList();
         }
+    }
+
+    private static AlbumTrack GetAlbumTrack(AlbumTrackPosition position, Track track)
+    {
+        return new AlbumTrack
+        {
+            TrackId = track.Id,
+            Title = track.Title,
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            DurationSeconds = track.DurationSeconds,
+            Position = position
+        };
     }
 }

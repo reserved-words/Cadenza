@@ -3,5 +3,5 @@
 public interface IMergedAlbumRepository
 {
     Task<AlbumInfo> GetAlbum(LibrarySource source, string id);
-    Task<List<Track>> GetTracks(LibrarySource source, string albumId);
+    Task<List<AlbumTrack>> GetTracks(LibrarySource source, string albumId);
 }
