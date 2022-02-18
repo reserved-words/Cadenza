@@ -1,8 +1,21 @@
-﻿@using Cadenza.Library
+﻿@inherits ArtistTabBase
 
-<LibraryArtist ArtistId="@Id" />
+@using Cadenza.Library
 
-@code {
-    [Parameter]
-    public string Id { get; set; }
-}
+<MudCard Elevation="2"
+         Class="fixed-height-margin"
+         Style="display: flex; flex-direction: column;">
+
+    <MudCardHeader Style="flex-grow: 0;" Class="pb-0 pt-3">
+        <CardHeaderContent>
+            <ArtistView Model="@Artist"
+                        HeaderOnly="true" />
+            <MudDivider Class="mt-3" />
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent Style="flex-grow: 1;"
+                    Class="fixed-height-scroll">
+        <ArtistReleasesView Model="@Releases" />
+    </MudCardContent>
+</MudCard>

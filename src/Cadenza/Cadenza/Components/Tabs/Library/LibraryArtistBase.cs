@@ -1,4 +1,6 @@
-﻿using Cadenza.Library;
+﻿using Cadenza.Common;
+using Cadenza.Core.Model;
+using Cadenza.Library;
 
 namespace Cadenza;
 
@@ -10,9 +12,9 @@ public class LibraryArtistBase : ComponentBase
     [Parameter]
     public string ArtistId { get; set; }
 
-    public ArtistInfo Model { get; set; }
+    public ArtistInfo Artist { get; set; }
 
-    public List<LibraryReleaseTypeGroup> Releases { get; set; } = new();
+    public List<ArtistReleaseGroup> Releases { get; set; } = new();
 
     public string PlaceholderText { get; set; }
 
@@ -23,12 +25,12 @@ public class LibraryArtistBase : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
-		if (ArtistId == Model?.Id)
+		if (ArtistId == Artist?.Id)
 			return;
 
 		PlaceholderText = "Loading artist...";
 
-		Model = null;
+		Artist = null;
 
 		if (ArtistId != null)
 		{
@@ -40,29 +42,12 @@ public class LibraryArtistBase : ComponentBase
 
     private async Task UpdateArtist()
     {
-        Model = await Repository.GetArtist(ArtistId);
+        Artist = await Repository.GetArtist(ArtistId);
 
         var albums = await Repository.GetArtistAlbums(ArtistId);
 
-        Releases = albums
-            .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
-            .Select(r => new LibraryReleaseTypeGroup
-            {
-                Group = r.Key,
-                Albums = r.OrderBy(a => a.ReleaseType)
-                    .ThenBy(a => a.Year)
-                    .ToList()
-            })
-            .ToList();
-
-        Releases = new List<LibraryReleaseTypeGroup>();
+        Releases = albums.GroupByReleaseType();
 
         StateHasChanged();
     }
-}
-
-public class LibraryReleaseTypeGroup
-{
-	public ReleaseTypeGroup Group { get; set; }
-	public List<AlbumInfo> Albums { get; set; }
 }

@@ -6,13 +6,13 @@
 
     <MudCardHeader Style="flex-grow: 0;" Class="pb-0 pt-3">
         <CardHeaderContent>
-            @if (Model == null)
+            @if (Artist == null)
             {
                 <MudText Typo="Typo.h6">@PlaceholderText</MudText>
             }
             else
             {
-                <ArtistView Model="@Model"
+                <ArtistView Model="@Artist"
                             HeaderOnly="true" />
             }
             <MudDivider Class="mt-3" />
@@ -21,43 +21,9 @@
 
     <MudCardContent Style="flex-grow: 1;" 
                     Class="fixed-height-scroll">
-        @if (Model != null)
+        @if (Artist != null)
         {
-            if (Releases.Count == 1)
-            {
-                <WhipCard Padding="false"
-                          Bordered="false">
-                    <MudGrid Spacing="2">
-                        @foreach (var album in Releases.Single().Albums)
-                        {
-                            <MudItem xs="6" sm="3">
-                                <LibraryAlbum Model="@album" />
-                            </MudItem>
-                        }
-                    </MudGrid>
-                </WhipCard>
-            }
-            else
-            {
-                <MudTabs>
-                    @foreach (var release in Releases)
-                    {
-                        <MudTabPanel Text="@release.Group.GetDisplayName()">
-                            <WhipCard Padding="false"
-                                      Bordered="false">
-                                <MudGrid Spacing="2">
-                                    @foreach (var album in release.Albums)
-                                    {
-                                        <MudItem xs="6" sm="3">
-                                            <LibraryAlbum Model="@album" />
-                                        </MudItem>
-                                    }
-                                </MudGrid>
-                            </WhipCard>
-                        </MudTabPanel>
-                    }
-                </MudTabs>
-            }
+            <ArtistReleasesView Model="@Releases" />
         }
     </MudCardContent>
 </MudCard>

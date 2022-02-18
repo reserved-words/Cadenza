@@ -15,10 +15,11 @@
     {
         <WhipColumn md="4">
             <WhipRow RowHeight="@RowHeight.Fixed">
-                <CurrentlyTrackSummary Track="@Track" />
+@*                <CurrentlyTrackSummary Track="@Track" />*@
             </WhipRow>
             <WhipRow RowHeight="@RowHeight.Fixed">
-              @*  <ArtistView Model="@Track.Artist" />*@
+@*              <ArtistView Model="@Track.Artist"
+                          HeaderOnly="false" />*@
             </WhipRow>
             <WhipRow RowHeight="@RowHeight.Fixed">
                 <CurrentlyPlayingAlbum Track="@Track" />

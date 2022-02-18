@@ -1,6 +1,6 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Components.Shared;
 
-public class LibraryAlbumBase : ComponentBase
+public class AlbumViewBase : ComponentBase
 {
     [Inject]
     public IPlaylistPlayer PlaylistPlayer { get; set; }

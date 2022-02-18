@@ -1,7 +1,8 @@
-﻿@inherits LibraryAlbumBase
+﻿@inherits AlbumViewBase
 
 <MudCard Elevation="1" Class="pa-0 ma-0">
     <img class="artwork" src="@Model.ArtworkUrl" @ondblclick="@(() => OnPlayAlbum())" />
+
     <MudCardContent Class="pa-2">
         <MudContainer Class="d-flex pa-0 ma-0">
             <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
