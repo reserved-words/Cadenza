@@ -6,7 +6,7 @@ public class AlbumViewBase : ComponentBase
     public IPlaylistPlayer PlaylistPlayer { get; set; }
 
     [Parameter]
-    public AlbumInfo Model { get; set; }
+    public Album Model { get; set; }
 
 	protected async Task OnPlayAlbum()
 	{

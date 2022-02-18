@@ -5,7 +5,7 @@ namespace Cadenza.Common;
 
 public static class ItemExtensions
 {
-    public static List<ArtistReleaseGroup> GroupByReleaseType(this List<AlbumInfo> albums)
+    public static List<ArtistReleaseGroup> GroupByReleaseType(this List<Album> albums)
     {
         return albums
             .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)

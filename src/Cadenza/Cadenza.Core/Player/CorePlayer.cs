@@ -19,13 +19,13 @@ public class CorePlayer : IPlayer
 
     public async Task<TrackProgress> Play(PlayTrack track)
     {
-        var service = await GetCurrentSourcePlayer(track.Source);
-        await service.Play(track.Id);
+        var service = await this.GetCurrentSourcePlayer(track.Source);
+        await service.Play((string)track.Id);
 
-        var summary = await _trackRepository.GetTrack(track.Source, track.Id);
-        var progress = new TrackProgress(0, summary.DurationSeconds);
+        var fullTrack = await _trackRepository.GetTrack((LibrarySource)track.Source, (string)track.Id);
+        var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
-        await StoreCurrentTrack(summary);
+        await StoreCurrentTrack(fullTrack.Track);
         await RunUtilities(p => p.OnPlay(progress));
 
         return progress;
@@ -95,9 +95,9 @@ public class CorePlayer : IPlayer
         }
     }
 
-    private async Task StoreCurrentTrack(TrackSummary summary)
+    private async Task StoreCurrentTrack(TrackInfo track)
     {
-        await _storeSetter.SetValue(StoreKey.CurrentTrack, summary);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, summary?.Source);
+        await _storeSetter.SetValue(StoreKey.CurrentTrack, track);
+        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track?.Source);
     }
 }

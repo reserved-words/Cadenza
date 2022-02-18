@@ -33,6 +33,7 @@ public class LocalApiEndpoints
 
     public string Track { get; set; }
     public string Album { get; set; }
+    public string AlbumTracks { get; set; }
 }
 
 

@@ -61,9 +61,9 @@ public class PlaylistCreator : IPlaylistCreator
         {
              Id = id, 
              Source = source,
-             ArtistId = track.ArtistId,
-             AlbumId = track.AlbumId,
-             Title = track.Title
+             ArtistId = track.Artist.Id,
+             AlbumId = track.Album.Id,
+             Title = track.Track.Title
         };
 
         var tracks = new List<PlayTrack> { playTrack };
@@ -71,7 +71,7 @@ public class PlaylistCreator : IPlaylistCreator
         return new PlaylistDefinition
         {
             Type = PlaylistType.Track,
-            Name = $"{track.Title} by {track.Artist}",
+            Name = $"{track.Track.Title} by {track.Artist.Name}",
             Tracks = tracks,
             MixedSource = false
         };
