@@ -21,5 +21,6 @@
 
         string Track { get; }
         string Album { get; }
+        string AlbumTracks { get; }
     }
 }

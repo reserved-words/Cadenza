@@ -79,5 +79,10 @@
         {
             return await Get<AlbumInfo>(_settings.Album, id);
         }
+
+        public async Task<List<Track>> GetTracks(string albumId)
+        {
+            return await Get<List<Track>>(_settings.AlbumTracks, albumId);
+        }
     }
 }

@@ -20,29 +20,15 @@ public class BaseTrackRepository : IBaseTrackRepository
         var album = _albums[track.AlbumId];
         var artist = _artists[track.ArtistId];
         var albumTrack = _albumTracks[track.Id];
+        var albumArtist = _artists[album.ArtistId];
 
         return new TrackFull
         {
-            Id = track.Id,
-            Source = track.Source,
-            DurationSeconds = track.DurationSeconds,
-            Title = track.Title,
-            ArtistId = track.ArtistId,
-            Artist = track.ArtistName,
-            AlbumId = track.AlbumId,
-            AlbumTitle = album.Title,
-            AlbumArtistId = album.ArtistId,
-            AlbumArtist = album.ArtistName,
-            ArtworkUrl = album.ArtworkUrl,
-            ReleaseType = album.ReleaseType,
-            Year = track.Year,
-            Lyrics = track.Lyrics,
-            Tags = track.Tags?.ToList() ?? new List<string>(),
-            DiscNo = albumTrack.Position.DiscNo,
-            DiscCount = album.DiscCount,
-            TrackNo = albumTrack.Position.TrackNo,
-            TrackCount = album.TrackCounts.Count,
-            AlbumYear = album.Year
+            Track = track,
+            Artist = artist,
+            Album = album,
+            AlbumTrack = albumTrack,
+            AlbumArtist = albumArtist
         };
     }
 
