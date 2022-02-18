@@ -44,6 +44,7 @@ public static class ApiEndpoints
 
         public const string Track = "/Spotify/Track";
         public const string Album = "/Spotify/Album";
+        public const string AlbumTracks = "/Spotify/Album/Tracks";
 
         public const string AddOverrides = "/Spotify/AddOverrides";
         public const string GetOverrides = "/Spotify/GetOverrides";

@@ -71,6 +71,7 @@ public static class Routing
 
         app.MapGet("/Track", (string id) => trackRepository.GetTrack(id));
         app.MapGet("/Album", (string id) => albumRepository.GetAlbum(id));
+        app.MapGet("/Album/Tracks", (string albumId) => albumRepository.GetTracks(albumId));
 
         var libraryService = app.Services.GetRequiredService<IArtworkService>();
 
