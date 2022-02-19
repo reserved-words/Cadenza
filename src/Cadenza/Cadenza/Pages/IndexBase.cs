@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Components.Sidebar;
+
+namespace Cadenza;
 
 public class IndexBase : ComponentBase
 {
@@ -17,7 +19,7 @@ public class IndexBase : ComponentBase
     
     //protected bool UpdateIndex = false;
 
-    protected List<ItemTab> ItemTabs = new();
+    protected List<SearchResultItem> ItemTabs = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,16 +40,9 @@ public class IndexBase : ComponentBase
         IsInitalised = success;
     }
 
-    protected async Task OnViewItem(SearchableItemType type, string id, string name)
+    protected async Task OnViewItem(SearchResultItem item)
     {
-        var tab = new ItemTab
-        {
-            Name = name,
-            Id = id,
-            Type = type
-        };
-
-        ItemTabs.Add(tab);
+        ItemTabs.Add(item);
 
         StateHasChanged();
     }
@@ -61,10 +56,11 @@ public class IndexBase : ComponentBase
 
     protected void CloseTabCallback(MudTabPanel panel)
     {
-        var tabView = ItemTabs.FirstOrDefault(x => x.Id == panel.Tag.ToString());
-        if (tabView != null)
+        var itemId = panel.Tag.ToString();
+        if (ItemTabs.Any(i => i.Id == itemId))
         {
-            ItemTabs.Remove(tabView);
+            var tab = ItemTabs.Single(i => i.Id == itemId);
+            ItemTabs.Remove(tab);
         }
     }
 
@@ -76,12 +72,5 @@ public class IndexBase : ComponentBase
         //    StateHasChanged();
         //    UpdateIndex = false;
         //}
-    }
-
-    protected class ItemTab
-    {
-        public SearchableItemType Type { get; set; }
-        public string Id { get; set; }
-        public String Name { get; set; }
     }
 }

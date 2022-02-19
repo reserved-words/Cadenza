@@ -30,7 +30,7 @@ public class SearchResultBase : ComponentBase
     public LibrarySource? ResultSource { get; set; }
 
     [Parameter]
-    public Func<SearchableItemType, string, string, Task> OnViewItem { get; set; }
+    public Func<SearchResultItem, Task> OnViewItem { get; set; }
 
     public bool DisplayArtistLink => Result != null && Result.Type != SearchableItemType.Playlist;
     public bool DisplayAlbumLink => Result != null && Result.Type != SearchableItemType.Artist;
@@ -70,7 +70,7 @@ public class SearchResultBase : ComponentBase
 
     protected async Task OnViewTrack()
     {
-        await OnViewItem(SearchableItemType.Track, Result.Id, Result.Name);
+        await OnViewItem(new SearchResultItem(SearchableItemType.Track, Result.Id, Result.Name, ResultSource));
     }
 
     protected async Task OnViewAlbum()
@@ -84,7 +84,7 @@ public class SearchResultBase : ComponentBase
             ? Result.Name
             : Result.Album;
 
-        await OnViewItem(SearchableItemType.Album, albumId, albumTitle);
+        await OnViewItem(new SearchResultItem(SearchableItemType.Album, albumId, albumTitle, ResultSource));
     }
 
     protected async Task OnViewArtist()
@@ -97,7 +97,23 @@ public class SearchResultBase : ComponentBase
             ? Result.Name
             : Result.Artist;
 
-        await OnViewItem(SearchableItemType.Artist, artistId, artistName);
+        await OnViewItem(new SearchResultItem(SearchableItemType.Artist, artistId, artistName, ResultSource));
     }
 }
 
+
+public struct SearchResultItem 
+{
+    public SearchResultItem(SearchableItemType type, string id, string name, LibrarySource? source)
+    {
+        Type = type;
+        Id = id;
+        Name = name;
+        Source = source;
+    }
+
+    public SearchableItemType Type { get; }
+    public string Id { get; }
+    public string Name { get; }
+    public LibrarySource? Source { get;}
+}

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Wrapper.Spotify" Version="1.0.15" />
+    <PackageReference Include="Cadenza.API.Wrapper.Spotify" Version="1.0.17" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.1" />
   </ItemGroup>
 

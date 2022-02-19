@@ -1,10 +1,31 @@
-﻿
-<h3>Track</h3>
+﻿@inherits TrackTabBase
 
-<p>@Id</p>
+@if (Model != null)
+{
+    <WhipColumn md="4">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <TrackSummaryView Model="@Model.Track" />
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <ArtistView Model="@Model.Artist"
+                    HeaderOnly="false" />
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <TrackAlbumView Album="@Model.Album"
+                        Position="@Model.AlbumTrack.Position" />
+        </WhipRow>
+    </WhipColumn>
 
-@code {
-    [Parameter]
-    public string Id { get; set; }
+    <WhipColumn md="4">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <AlbumArtworkView Model="@Model.Album" />
+        </WhipRow>
+    </WhipColumn>
+
+    <WhipColumn md="4">
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <TrackLyricsView Model="@Model.Track" />
+        </WhipRow>
+    </WhipColumn>
 
 }

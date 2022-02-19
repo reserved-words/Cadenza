@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.9" />
-    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.7" />
+    <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.10" />
+    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.8" />
     <PackageReference Include="Cadenza.Domain" Version="1.0.24" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
@@ -34,6 +34,10 @@
     <ProjectReference Include="..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Tabs\CurrentlyPlaying\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/license-report-config.json" /></VisualStudio></ProjectExtensions>

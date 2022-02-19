@@ -1,0 +1,11 @@
+﻿
+<WhipCard Title="Lyrics">
+    <MudText Typo="@Typo.body1">
+        @((MarkupString)Model.Lyrics.WithLineBreaks())
+    </MudText>
+</WhipCard>
+
+@code {
+    [Parameter]
+    public TrackInfo Model { get; set; }
+}

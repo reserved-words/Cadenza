@@ -1,8 +1,20 @@
-﻿
-<h3>Album</h3>
+﻿@inherits AlbumTabBase
 
-@code {
-    [Parameter]
-    public string Id { get; set; }
+@if (Album != null)
+{
+    <MudGrid Spacing="0" Class="fixed-height">
 
+        <MudItem xs="12" md="4" Class="fixed-height" Style="display: flex; flex-direction: column;">
+
+            <AlbumView Model="@Album" />
+
+        </MudItem>
+
+        <MudItem xs="12" md="8" Class="fixed-height" Style="display: flex; flex-direction: column;">
+
+
+
+        </MudItem>
+
+    </MudGrid>
 }

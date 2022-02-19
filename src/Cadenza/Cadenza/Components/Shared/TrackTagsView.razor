@@ -1,6 +1,7 @@
-﻿@if (Track.Track.Tags != null && Track.Track.Tags.Any())
+﻿
+@if (Model.Tags != null && Model.Tags.Any())
 {
-    foreach (var tag in Track.Track.Tags)
+    foreach (var tag in Model.Tags)
     {
         <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag</MudChip>
     }
@@ -13,5 +14,5 @@ else
 
 @code {
     [Parameter]
-    public TrackFull Track { get; set; }
+    public TrackInfo Model { get; set; }
 }

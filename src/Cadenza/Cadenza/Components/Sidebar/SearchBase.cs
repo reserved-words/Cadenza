@@ -8,7 +8,7 @@ public class SearchBase : ComponentBase
     public SearchRepositoryCache Cache { get; set; }
 
     [Parameter]
-    public Func<SearchableItemType, string, string, Task> OnViewItem { get; set; }
+    public Func<SearchResultItem, Task> OnViewItem { get; set; }
 
     public bool IsLoading { get; set; }
 

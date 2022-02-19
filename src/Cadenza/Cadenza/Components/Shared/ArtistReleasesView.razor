@@ -1,4 +1,4 @@
-﻿@inherits ArtistReleasesViewBase
+﻿@using Cadenza.Core.Model
 
 @if (Model != null)
 {
@@ -37,4 +37,10 @@
             }
         </MudTabs>
     }
+}
+
+@code 
+{
+    [Parameter]
+    public List<ArtistReleaseGroup> Model { get; set; } = new();
 }

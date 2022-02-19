@@ -15,26 +15,27 @@
     {
         <WhipColumn md="4">
             <WhipRow RowHeight="@RowHeight.Fixed">
-@*                <CurrentlyTrackSummary Track="@Track" />*@
+                <TrackSummaryView Model="@Model.Track" />
             </WhipRow>
             <WhipRow RowHeight="@RowHeight.Fixed">
-@*              <ArtistView Model="@Track.Artist"
-                          HeaderOnly="false" />*@
+              <ArtistView Model="@Model.Artist"
+                          HeaderOnly="false" />
             </WhipRow>
             <WhipRow RowHeight="@RowHeight.Fixed">
-                <CurrentlyPlayingAlbum Track="@Track" />
+                <TrackAlbumView Album="@Model.Album"
+                                Position="@Model.AlbumTrack.Position" />
             </WhipRow>
         </WhipColumn>
 
         <WhipColumn md="4">
             <WhipRow RowHeight="@RowHeight.Fixed">
-                <CurrentlyPlayingArtwork Track="@Track" />
+                <AlbumArtworkView Model="@Model.Album" />
             </WhipRow>
         </WhipColumn>
 
         <WhipColumn md="4">
             <WhipRow RowHeight="@RowHeight.Stretch">
-                <CurrentlyPlayingLyrics Track="@Track" />
+                <TrackLyricsView Model="@Model.Track" />
             </WhipRow>
         </WhipColumn>
     }

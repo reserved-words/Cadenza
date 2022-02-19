@@ -23,6 +23,8 @@ public class SearchSyncService : ISearchSyncService
 
         _cache.Clear();
 
+        var reps = string.Join(", ", _repositories.Select(r => r.Source));
+
         foreach (var repository in _repositories)
         {
             await FetchArtists(repository);

@@ -34,7 +34,7 @@
 				@foreach (var item in ItemTabs)
 				{
 					<MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
-						<ItemTab Type="@item.Type" Id="@item.Id" />
+						<ItemTab Item="@item" />
 					</MudTabPanel>
 				}
 			</MudDynamicTabs>

@@ -1,5 +1,4 @@
-﻿using Cadenza.Core;
-using Cadenza.Library;
+﻿using Cadenza.Library;
 
 namespace Cadenza;
 
@@ -11,9 +10,9 @@ public class CurrentlyPlayingTabBase : ComponentBase
     [Inject]
     public IMergedTrackRepository TrackRepository { get; set; }
 
-    public TrackFull Track { get; set; }
+    public TrackFull Model { get; set; }
 
-    public bool NotCurrentlyPlaying => Track == null;
+    public bool NotCurrentlyPlaying => Model == null;
 
     protected override void OnInitialized()
     {
@@ -33,7 +32,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     private async Task SetTrack(LibrarySource? source, string trackId)
     {
-        Track = source.HasValue
+        Model = source.HasValue
             ? await TrackRepository.GetTrack(source.Value, trackId)
             : null;
 

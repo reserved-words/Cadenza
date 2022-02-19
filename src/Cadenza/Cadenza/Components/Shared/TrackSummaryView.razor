@@ -2,21 +2,21 @@
 <WhipCard>
     <MudContainer Class="d-flex pa-0 ma-0">
         <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">
-            <MudText Typo="Typo.h6">@Track.Track.Title</MudText>
-            <MudText Typo="Typo.body1">@Track.Track.ArtistName</MudText>
+            <MudText Typo="Typo.h6">@Model.Title</MudText>
+            <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
         </MudPaper>
         <MudPaper Elevation="0" Class="flex-grow-0 flex-shrink-1 pa-0 ma-0" Style="align-self: flex-start;">
             <MenuTrack Style="text-align: right; vertical-align: top;"
-                       TrackId="@Track.Track.Id" />
+                       TrackId="@Model.Id" />
         </MudPaper>
     </MudContainer>
 
-
     <MudDivider Class="my-3" />
-    <CurrentlyPlayingTrackTags Track="@Track" />
+
+    <TrackTagsView Model="@Model" />
 </WhipCard>
 
 @code {
     [Parameter]
-    public TrackFull Track { get; set; }
+    public TrackInfo Model { get; set; }
 }

@@ -1,25 +1,22 @@
 ﻿
 <WhipTab>
 
-    @if (Type == SearchableItemType.Artist)
+    @if (Item.Type == SearchableItemType.Artist)
     {
-        <ArtistTab Id="@Id" />
+        <ArtistTab Id="@Item.Id" />
     }
-    else if (Type == SearchableItemType.Album)
+    else if (Item.Type == SearchableItemType.Album)
     {
-        <AlbumTab Id="@Id" />
+        <AlbumTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
-    else if (Type== SearchableItemType.Track)
+    else if (Item.Type== SearchableItemType.Track)
     {
-        <TrackTab Id="@Id" />
+        <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
 
 </WhipTab>
 
 @code {
     [Parameter]
-    public SearchableItemType Type { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
+    public SearchResultItem Item { get; set; }
 }

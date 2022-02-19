@@ -5,10 +5,25 @@ namespace Cadenza.Common;
 
 public static class ItemExtensions
 {
+    public static List<Disc> GroupByDisc(this List<AlbumTrack> tracks)
+    {
+        return tracks
+            .GroupBy(t => t.Position.DiscNo)
+            .OrderBy(g => g.Key)
+            .Select(r => new Disc
+            {
+                DiscNo = r.Key,
+                Tracks = r.OrderBy(a => a.Position.TrackNo)
+                    .ToList()
+            })
+            .ToList();
+    }
+
     public static List<ArtistReleaseGroup> GroupByReleaseType(this List<Album> albums)
     {
         return albums
             .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
+            .OrderBy(g => g.Key)
             .Select(r => new ArtistReleaseGroup
             {
                 Group = r.Key,
@@ -49,6 +64,17 @@ public static class ItemExtensions
             return "";
 
         return AsList(artist.City, artist.State, artist.Country);
+    }
+
+    public static string DiscPosition(this AlbumInfo album, AlbumTrackPosition position)
+    {
+        return $"Disc {position.DiscNo} of {album.DiscCount}";
+    }
+
+    public static string TrackPosition(this AlbumInfo album, AlbumTrackPosition position)
+    {
+        var trackCountIndex = position.DiscNo - 1;
+        return $"Track {position.TrackNo} of {album.TrackCounts[trackCountIndex]}";
     }
 
     private static string AsList(params string[] elements)

@@ -1,7 +1,5 @@
 ﻿global using Cadenza.Common;
-global using System.Net.Http.Json;
 global using Cadenza.Domain;
-global using Cadenza.Utilities;
 global using Cadenza.Library;
 
 using Microsoft.Extensions.Configuration;

@@ -6,14 +6,14 @@ using Cadenza.Source.Spotify;
 using Cadenza.Common;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
-using Cadenza.API.Wrapper;
 using Cadenza.API.Wrapper.Spotify;
 using Cadenza.API.Wrapper.LastFM;
 using Cadenza.API.Wrapper.Core;
+using Cadenza.Library;
 
 namespace Cadenza;
 
-public static class Services
+public static class Dependencies
 {
     public static WebAssemblyHostBuilder RegisterDependencies(this WebAssemblyHostBuilder builder)
     {
@@ -112,6 +112,7 @@ public static class Services
         return services
             .AddSpotifySource<SpotifyConfig>()
             .AddSpotifyCore()
-            .AddLocalSource<HtmlPlayer>();
+            .AddLocalSource<HtmlPlayer>()
+            .AddMergedRepositories();
     }
 }

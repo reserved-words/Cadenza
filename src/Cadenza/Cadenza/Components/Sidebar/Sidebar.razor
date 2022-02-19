@@ -30,5 +30,5 @@
 
 @code{
     [Parameter]
-    public Func<SearchableItemType, string, string, Task> OnViewItem { get; set; }
+    public Func<SearchResultItem, Task> OnViewItem { get; set; }
 }
