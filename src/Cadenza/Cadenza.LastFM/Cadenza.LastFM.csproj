@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.8" />
-    <PackageReference Include="Cadenza.Domain" Version="1.0.24" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.25" />
     <PackageReference Include="Cadenza.Utilities" Version="1.0.11" />
   </ItemGroup>
 

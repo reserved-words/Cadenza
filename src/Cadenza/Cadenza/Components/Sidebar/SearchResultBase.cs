@@ -27,9 +27,6 @@ public class SearchResultBase : ComponentBase
     public SourceSearchableItem Result { get; set; }
 
     [Parameter]
-    public LibrarySource? ResultSource { get; set; }
-
-    [Parameter]
     public Func<SearchResultItem, Task> OnViewItem { get; set; }
 
     public bool DisplayArtistLink => Result != null && Result.Type != SearchableItemType.Playlist;
@@ -56,7 +53,7 @@ public class SearchResultBase : ComponentBase
         }
         else if (Result.Type == SearchableItemType.Album)
         {
-            await Player.PlayAlbum(ResultSource.Value, Result.Id);
+            await Player.PlayAlbum(Result.Source.Value, Result.Id);
         }
         else if (Result.Type == SearchableItemType.Playlist)
         {
@@ -64,13 +61,13 @@ public class SearchResultBase : ComponentBase
         }
         else if (Result.Type == SearchableItemType.Track)
         {
-            await Player.PlayTrack(ResultSource.Value, Result.Id);
+            await Player.PlayTrack(Result.Source.Value, Result.Id);
         }
     }
 
     protected async Task OnViewTrack()
     {
-        await OnViewItem(new SearchResultItem(SearchableItemType.Track, Result.Id, Result.Name, ResultSource));
+        await OnViewItem(new SearchResultItem(SearchableItemType.Track, Result.Id, Result.Name, Result.Source));
     }
 
     protected async Task OnViewAlbum()
@@ -84,7 +81,7 @@ public class SearchResultBase : ComponentBase
             ? Result.Name
             : Result.Album;
 
-        await OnViewItem(new SearchResultItem(SearchableItemType.Album, albumId, albumTitle, ResultSource));
+        await OnViewItem(new SearchResultItem(SearchableItemType.Album, albumId, albumTitle, Result.Source));
     }
 
     protected async Task OnViewArtist()
@@ -97,7 +94,7 @@ public class SearchResultBase : ComponentBase
             ? Result.Name
             : Result.Artist;
 
-        await OnViewItem(new SearchResultItem(SearchableItemType.Artist, artistId, artistName, ResultSource));
+        await OnViewItem(new SearchResultItem(SearchableItemType.Artist, artistId, artistName, Result.Source));
     }
 }
 
