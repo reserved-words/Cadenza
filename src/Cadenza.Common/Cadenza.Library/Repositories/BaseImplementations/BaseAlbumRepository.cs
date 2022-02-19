@@ -14,12 +14,16 @@ public class BaseAlbumRepository : IBaseAlbumRepository
 
     public async Task<AlbumInfo> GetAlbum(string id)
     {
-        return _albums[id];
+        return _albums.TryGetValue(id, out AlbumInfo album)
+            ? album
+            : null;
     }
 
     public async Task<List<AlbumTrack>> GetTracks(string id)
     {
-        return _albumTracks[id];
+        return _albumTracks.TryGetValue(id, out List<AlbumTrack> tracks)
+            ? tracks
+            : null;
     }
 
     public async Task Populate()

@@ -16,6 +16,9 @@ public class BaseTrackRepository : IBaseTrackRepository
 
     public async Task<TrackFull> GetTrack(string id)
     {
+        if (!_tracks.ContainsKey(id))
+            return null;
+
         var track = _tracks[id];
         var album = _albums[track.AlbumId];
         var artist = _artists[track.ArtistId];

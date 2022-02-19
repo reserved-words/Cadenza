@@ -20,12 +20,16 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
 
     public async Task<ListResponse<PlayTrack>> GetByAlbum(string id, int page, int limit)
     {
-        return _albumTracks[id].ToListResponse(t => t.Id, page, limit);
+        return _albumTracks.TryGetValue(id, out List<PlayTrack> tracks)
+            ? tracks.ToListResponse(t => t.Id, page, limit)
+            : ListResponse<PlayTrack>.Empty;
     }
 
     public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)
     {
-        return _artistTracks[id].ToListResponse(t => t.Id, page, limit);
+        return _artistTracks.TryGetValue(id, out List<PlayTrack> tracks)
+            ? tracks.ToListResponse(t => t.Id, page, limit)
+            : ListResponse<PlayTrack>.Empty;
     }
 
     public async Task Populate()
