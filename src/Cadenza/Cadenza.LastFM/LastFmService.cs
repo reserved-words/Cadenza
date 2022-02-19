@@ -19,13 +19,13 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         _scrobbler = scrobbler;
     }
 
-    public async Task RecordPlay(TrackSummary track, DateTime timestamp)
+    public async Task RecordPlay(TrackFull track, DateTime timestamp)
     {
         var model = await GetScrobble(track, null, timestamp);
         await _scrobbler.RecordPlay(model);
     }
 
-    public async Task UpdateNowPlaying(TrackSummary track, int duration)
+    public async Task UpdateNowPlaying(TrackFull track, int duration)
     {
         var model = await GetScrobble(track, duration, null);
         await _scrobbler.UpdateNowPlaying(model);
@@ -60,29 +60,29 @@ public class LastFmService : IPlayTracker, IFavouritesConsumer, IFavouritesContr
         };
     }
 
-    public async Task<Scrobble> GetScrobble(TrackSummary track, int? duration, DateTime? timestamp)
+    public async Task<Scrobble> GetScrobble(TrackFull track, int? duration, DateTime? timestamp)
     {
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
         // Might be a better way to do this in future but for now omit album details for Spotify playlists
-        return track.ReleaseType == ReleaseType.Playlist
+        return track.Album.ReleaseType == ReleaseType.Playlist
             ? new Scrobble
             {
                 SessionKey = sessionKey.Value,
                 Timestamp = timestamp ?? DateTime.Now,
-                Artist = track.Artist,
-                Title = track.Title,
-                Duration = duration ?? track.DurationSeconds
+                Artist = track.Artist.Name,
+                Title = track.Track.Title,
+                Duration = duration ?? track.Track.DurationSeconds
             }
             : new Scrobble
             {
                 SessionKey = sessionKey.Value,
                 Timestamp = timestamp ?? DateTime.Now,
-                Artist = track.Artist,
-                Title = track.Title,
-                AlbumTitle = track.AlbumTitle,
-                AlbumArtist = track.AlbumArtist,
-                Duration = duration ?? track.DurationSeconds
+                Artist = track.Artist.Name,
+                Title = track.Track.Title,
+                AlbumTitle = track.Album.Title,
+                AlbumArtist = track.Album.ArtistName,
+                Duration = duration ?? track.Track.DurationSeconds
             };
     }
 }

@@ -76,3 +76,7 @@ div.fixed-height-margin.no-side-margin {
 .mud-dynamic-tabs .mud-tabs-toolbar .mud-tab.mud-tab-fixed .mud-icon-button {
     display: none;
 }
+
+.mud-tab {
+    min-width: 40px;
+}

@@ -10,31 +10,34 @@
     <MudMainContent>
         @if (IsInitalised)
         {
-			<MudDynamicTabs Outlined="true"
-							AddTab="AddTabCallback" 
-							CloseTab="@((panel) => CloseTabCallback(panel))" 
-							@bind-ActivePanelIndex="SelectedTabIndex" 
-                            AddIconToolTip="Click here to add a new tab"
-							CloseIconToolTip="Close this tab. All data will be lost"
-                            KeepPanelsAlive="true">
+            <MudDynamicTabs Outlined="true"
+                        AddTab="AddTabCallback"
+                        CloseTab="@((panel) => CloseTabCallback(panel))"
+                        @bind-ActivePanelIndex="SelectedTabIndex"
+                        KeepPanelsAlive="true">
 
-				<MudTabPanel Text="History" Icon="@Icons.Material.Filled.History" Class="mud-tab-fixed">
+                <MudTabPanel Icon="fas fa-history" Class="mud-tab-fixed">
                     <HistoryTab />
                 </MudTabPanel>
-                <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote" Class="mud-tab-fixed">
-                    <CurrentlyPlayingTab />
-                </MudTabPanel>
-                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info" Class="mud-tab-fixed">
+
+                @if (Playing)
+                {
+                    <MudTabPanel Icon="fas fa-volume-up" Class="mud-tab-fixed">
+                        <CurrentlyPlayingTab />
+                    </MudTabPanel>
+                }
+
+                <MudTabPanel Icon="fas fa-cog" Class="mud-tab-fixed">
                     <SystemInfoTab />
                 </MudTabPanel>
 
-				@foreach (var item in ItemTabs)
-				{
-					<MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
-						<ItemTab Item="@item" />
-					</MudTabPanel>
-				}
-			</MudDynamicTabs>
+                @foreach (var item in ItemTabs)
+                {
+                    <MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
+                        <ItemTab Item="@item" />
+                    </MudTabPanel>
+                }
+            </MudDynamicTabs>
         }
     </MudMainContent>
 </MudLayout>

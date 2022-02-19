@@ -25,7 +25,7 @@ public class CorePlayer : IPlayer
         var fullTrack = await _trackRepository.GetTrack((LibrarySource)track.Source, (string)track.Id);
         var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
-        await StoreCurrentTrack(fullTrack.Track);
+        await StoreCurrentTrack(fullTrack);
         await RunUtilities(p => p.OnPlay(progress));
 
         return progress;
@@ -57,9 +57,9 @@ public class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var summaryStoredValue = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
-            var summary = summaryStoredValue.Value;
-            progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
+            var storedTrack = await _storeGetter.GetValue<TrackFull>(StoreKey.CurrentTrack);
+            var track = storedTrack.Value;
+            progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
         }
 
         await RunUtilities(p => p.OnStop(progress));
@@ -95,9 +95,9 @@ public class CorePlayer : IPlayer
         }
     }
 
-    private async Task StoreCurrentTrack(TrackInfo track)
+    private async Task StoreCurrentTrack(TrackFull track)
     {
         await _storeSetter.SetValue(StoreKey.CurrentTrack, track);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track?.Source);
+        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
     }
 }

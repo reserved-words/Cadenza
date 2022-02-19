@@ -13,6 +13,11 @@ public class IndexBase : ComponentBase
     [Inject]
     public IProgressDialogService DialogService { get; set; }
 
+    [Inject]
+    public IAppConsumer App { get; set; }
+
+    public bool Playing { get; set; }
+
     protected bool IsInitalised { get; private set; }
 
     protected int SelectedTabIndex = 0;
@@ -23,7 +28,23 @@ public class IndexBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
+        App.TrackStarted += App_TrackStarted;
+        App.TrackFinished += App_TrackFinished;
+
         await OnStartup();
+    }
+
+    private Task App_TrackFinished(object sender, TrackEventArgs e)
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task App_TrackStarted(object sender, TrackEventArgs e)
+    {
+        Playing = true;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
     protected async Task OnStartup()

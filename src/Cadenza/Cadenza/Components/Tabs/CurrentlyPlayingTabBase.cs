@@ -1,6 +1,4 @@
-﻿using Cadenza.Library;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {
@@ -8,7 +6,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IMergedTrackRepository Repository { get; set; }
+    public IStoreGetter Store { get; set; }
 
     [Inject]
     public IPlaylistPlayer Player { get; set; }
@@ -25,20 +23,13 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     private async Task OnTrackStarted(object sender, TrackEventArgs e)
     {
-        await SetTrack(e.CurrentTrack.Source, e.CurrentTrack.Id);
+        Model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
+        StateHasChanged();
     }
 
     private async Task OnTrackFinished(object sender, TrackEventArgs e)
     {
-        await SetTrack(null, null);
-    }
-
-    private async Task SetTrack(LibrarySource? source, string trackId)
-    {
-        Model = source.HasValue
-            ? await Repository.GetTrack(source.Value, trackId)
-            : null;
-
+        Model = null;
         StateHasChanged();
     }
 

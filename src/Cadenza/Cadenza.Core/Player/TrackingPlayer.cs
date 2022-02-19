@@ -60,15 +60,15 @@ public class TrackingPlayer : IUtilityPlayer
             || progress.PercentagePlayed >= 50;
     }
 
-    private static bool Tracking(TrackSummary track)
+    private static bool Tracking(TrackFull track)
     {
         // Need a better way to do this - source profile
-        return track.Source != LibrarySource.Spotify;
+        return track.Track.Source != LibrarySource.Spotify;
     }
 
-    private async Task<TrackSummary> CurrentTrack()
+    private async Task<TrackFull> CurrentTrack()
     {
-        var storedValue = await _store.GetValue<TrackSummary>(StoreKey.CurrentTrack);
+        var storedValue = await _store.GetValue<TrackFull>(StoreKey.CurrentTrack);
         return storedValue?.Value;
     }
 }
