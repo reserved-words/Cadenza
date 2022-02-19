@@ -2,7 +2,5 @@
 {
     public class AlbumTracklistBase : ViewBase<AlbumInfo>
     {
-        [Parameter]
-        public AlbumInfo Model { get; set; }
     }
 }

@@ -2,25 +2,28 @@
 
 @if (Model != null)
 {
-    <MudGrid Spacing="2">
-        @foreach (var album in Model.Albums)
-        {
-            <MudItem xs="6" sm="3">
+    <MudContainer Style="flex-grow: 1;"
+              Class="fixed-height-scroll">
+        <MudGrid Spacing="2">
+            @foreach (var album in Model.Albums)
+            {
+                <MudItem xs="6" sm="3">
+                    <MudCard Elevation="1"
+                             Class="pa-0 ma-0">
+                        <AlbumArtworkView Model="@album"
+                                  OnPlay="@OnPlay" />
 
-                <MudCard Elevation="1"
-                         Class="pa-0 ma-0">
-                    <AlbumArtworkView Model="@album"
-                                      OnPlay="@OnPlay" />
+                        <MudCardContent Class="pa-2">
+                            <AlbumSummaryView Model="@album"
+                                              OnPlay="@OnPlay" />
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
 
-                    <MudCardContent Class="pa-2">
-                        <AlbumSummaryView Model="@album"
-                                          OnPlay="@OnPlay" />
-                    </MudCardContent>
-                </MudCard>
+    </MudContainer>
 
-            </MudItem>
-        }
-    </MudGrid>
 }
 
 @code {

@@ -7,16 +7,10 @@
         @foreach (var releaseGroup in Model)
         {
             <MudTabPanel Text="@releaseGroup.Group.GetDisplayName()">
-                <MudCard Elevation="2"
-                         Class="fixed-height-margin"
-                         Style="display: flex; flex-direction: column;">
-
-                    <MudCardContent Style="flex-grow: 1;"
-                                    Class="fixed-height-scroll">
+                <MudContainer Class="fixed-height-margin">
                         <ArtistReleaseGroupView Model="@releaseGroup"
                                                 OnPlay="@OnPlay" />
-                    </MudCardContent>
-                </MudCard>
+                </MudContainer>
             </MudTabPanel>
         }
     </MudTabs>
