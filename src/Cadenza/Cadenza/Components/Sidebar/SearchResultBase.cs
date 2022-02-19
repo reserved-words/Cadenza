@@ -30,8 +30,9 @@ public class SearchResultBase : ComponentBase
     public Func<SearchResultItem, Task> OnViewItem { get; set; }
 
     public bool DisplayArtistLink => Result != null && Result.Type != SearchableItemType.Playlist;
-    public bool DisplayAlbumLink => Result != null && Result.Type != SearchableItemType.Artist;
+    public bool DisplayAlbumLink => Result != null && Result.Type != SearchableItemType.Artist && Result.Type != SearchableItemType.Playlist;
     public bool DisplayTrackLink => Result != null && Result.Type == SearchableItemType.Track;
+    public bool DisplayPlaylistLink => Result != null && Result.Type == SearchableItemType.Playlist;
 
     protected async Task OnPlay()
     {
@@ -65,6 +66,11 @@ public class SearchResultBase : ComponentBase
         }
     }
 
+    protected async Task OnView()
+    {
+        await OnViewItem(new SearchResultItem(Result.Type, Result.Id, Result.Name, Result.Source));
+    }
+
     protected async Task OnViewTrack()
     {
         await OnViewItem(new SearchResultItem(SearchableItemType.Track, Result.Id, Result.Name, Result.Source));
@@ -95,6 +101,11 @@ public class SearchResultBase : ComponentBase
             : Result.Artist;
 
         await OnViewItem(new SearchResultItem(SearchableItemType.Artist, artistId, artistName, Result.Source));
+    }
+
+    protected async Task OnViewPlaylist()
+    {
+
     }
 }
 

@@ -1,21 +1,36 @@
 ﻿@inherits ArtistTabBase
 
-@using Cadenza.Library
+<MudGrid Class="ma-1">
 
-<MudCard Elevation="2"
-         Class="fixed-height-margin"
-         Style="display: flex; flex-direction: column;">
+    <MudItem xs="12" md="3" Class="pa-2">
 
-    <MudCardHeader Style="flex-grow: 0;" Class="pb-0 pt-3">
-        <CardHeaderContent>
-            <ArtistView Model="@Artist"
-                        HeaderOnly="true" />
-            <MudDivider Class="mt-3" />
-        </CardHeaderContent>
-    </MudCardHeader>
+        @if (Artist != null)
+        {
+            <MudCard Class="pa-0">
+                <MudCardHeader Class="px-3 pt-3 pb-1">
+                    <ArtistCardHeader Model="@Artist"
+                                  OnPlay="OnPlayArtist"
+                                  TitleOnly="false" />
+                </MudCardHeader>
+                <MudCardContent Class="px-2 pt-0 pb-2">
+                    <MudDivider Class="pa-0 ma-0 mb-2" />
+                    <ArtistLinksView Model="@Artist" />
+                </MudCardContent>
+            </MudCard>
+        }
 
-    <MudCardContent Style="flex-grow: 1;"
-                    Class="fixed-height-scroll">
-        <ArtistReleasesView Model="@Releases" />
-    </MudCardContent>
-</MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="9" Class="pa-2">
+
+        @if (Releases != null)
+        {
+            <MudCard Class="pa-0">
+                <ArtistReleaseGroupsView Model="@Releases"
+                                     OnPlay="@OnPlayAlbum" />
+            </MudCard>
+        }
+
+    </MudItem>
+
+</MudGrid>

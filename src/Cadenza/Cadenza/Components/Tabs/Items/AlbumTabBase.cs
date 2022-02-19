@@ -9,6 +9,9 @@ namespace Cadenza.Components.Tabs.Items
         [Inject]
         public IMergedAlbumRepository Repository { get; set; }
 
+        [Inject]
+        public IPlaylistPlayer Player { get; set; }
+
         [Parameter]
         public LibrarySource Source { get; set; }
 
@@ -22,6 +25,11 @@ namespace Cadenza.Components.Tabs.Items
         protected override async Task OnParametersSetAsync()
         {
             await UpdateAlbum();
+        }
+
+        protected async Task OnPlay(Album album)
+        {
+            await Player.PlayAlbum(album.Source, album.Id);
         }
 
         private async Task UpdateAlbum()

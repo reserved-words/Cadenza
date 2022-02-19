@@ -1,0 +1,14 @@
+﻿
+
+@foreach (var link in Model.Links())
+{
+    <MudPaper Class="pa-0 mb-2"
+          Elevation="0">
+        <MudButton StartIcon="@link.GetIcon()">@link.Type</MudButton>
+    </MudPaper>
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+}

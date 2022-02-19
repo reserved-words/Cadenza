@@ -1,52 +1,32 @@
 ﻿@inherits SearchResultBase
 
-<MudCard>
+<MudCard Elevation="3">
 
-    <MudCardContent>
-        <MudContainer Class="pa-0 ma-0">
-            <MudText Color=Color.Dark
-                     Typo="@Typo.body1"
-                     Class="pa-0 ma-0">
-                @Result.Name
-            </MudText>
-            <MudText Color=Color.Dark
-                     Typo="@Typo.body2"
-                     Class="pa-0 ma-0">
-                @Result.Artist
-            </MudText>
-            <MudText Color=Color.Dark
-                     Typo="@Typo.body2"
-                     Class="pa-0 ma-0">
-                @Result.AlbumDisplay
-            </MudText>
+    <MudCardHeader Class="pa-3 pb-1">
+        <MudContainer Class="d-flex pa-0 ma-0">
+
+            <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 mr-2">
+                <MudIcon Icon="@Result.Type.GetIcon()"
+                         Size="@Size.Medium"
+                         Class="ma-1" />
+            </MudPaper>
+
+            <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+                <MudText Typo="@Typo.body1">@Result.Name</MudText>
+                <MudText Typo="@Typo.body2">@Result.Artist</MudText>
+                <MudText Typo="@Typo.body2">@Result.AlbumDisplay</MudText>
+            </MudPaper>
+
         </MudContainer>
-    </MudCardContent>
+    </MudCardHeader>
 
-    <MudCardActions Class="pt-0">
+    <MudCardActions Class="pa-0 ma-0">
 
-        <MudIconButton Icon="@MudBlazor.Icons.Material.Filled.PlayCircleOutline"
-                       Color="@Color.Dark"
-                       Class="pa-0 ma-0 mr-2 align-self-start"
-                       Disabled="@(Result == null)"
-                       OnClick="@OnPlay" />
+        <MudButton Color="@Color.Dark"
+                   OnClick="@OnPlay">Play</MudButton>
 
-        <MudIconButton Icon="@SearchableItemType.Artist.GetIcon()"
-                       Color="@Color.Dark"
-                       Class="pa-0 ma-0 mr-2 align-self-start"
-                       Disabled="@(!DisplayArtistLink)"
-                       OnClick="@(() => OnViewArtist())" />
-
-        <MudIconButton Icon="@SearchableItemType.Album.GetIcon()"
-                       Color="@Color.Dark"
-                       Class="pa-0 ma-0 mr-2 align-self-start"
-                       Disabled="@(!DisplayAlbumLink)"
-                       OnClick="@OnViewAlbum" />
-
-        <MudIconButton Icon="@SearchableItemType.Track.GetIcon()"
-                       Color="@Color.Dark"
-                       Class="pa-0 ma-0 mr-2 align-self-start"
-                       Disabled="@(!DisplayTrackLink)"
-                       OnClick="@OnViewTrack" />
+        <MudButton Color="@Color.Dark"
+                   OnClick="@OnView">View</MudButton>
 
     </MudCardActions>
 

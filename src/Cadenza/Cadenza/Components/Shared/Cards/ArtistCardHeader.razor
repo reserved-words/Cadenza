@@ -1,0 +1,27 @@
+﻿@if (Model != null)
+{
+    <ItemCardHeader Type="@SearchableItemType.Artist"
+                Id="@Model.Id">
+        <ChildContent>
+            <MudText Typo="Typo.h6">@Model.Name</MudText>
+
+            @if (!TitleOnly)
+            {
+                <MudText Typo="Typo.body1">@Model.Location()</MudText>
+                <MudText Typo="Typo.body1">@Model.Grouping | @Model.Genre</MudText>
+            }
+
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+
+    [Parameter]
+    public Func<Artist, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+}

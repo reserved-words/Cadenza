@@ -1,0 +1,32 @@
+﻿@using Cadenza.Core.Model
+
+@if (Model != null)
+{
+    <MudTabs Class="ma-0 pa-0"
+             Color="@Color.Dark">
+        @foreach (var releaseGroup in Model)
+        {
+            <MudTabPanel Text="@releaseGroup.Group.GetDisplayName()">
+                <MudCard Elevation="2"
+                         Class="fixed-height-margin"
+                         Style="display: flex; flex-direction: column;">
+
+                    <MudCardContent Style="flex-grow: 1;"
+                                    Class="fixed-height-scroll">
+                        <ArtistReleaseGroupView Model="@releaseGroup"
+                                                OnPlay="@OnPlay" />
+                    </MudCardContent>
+                </MudCard>
+            </MudTabPanel>
+        }
+    </MudTabs>
+}
+
+@code
+{
+    [Parameter]
+    public List<ArtistReleaseGroup> Model { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlay { get; set; }
+}

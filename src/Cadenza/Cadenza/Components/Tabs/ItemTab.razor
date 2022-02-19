@@ -1,6 +1,6 @@
 ﻿@using Cadenza.Components.Tabs.Items
 
-<WhipTab>
+<MudContainer Spacing="0" Class="fixed-height pa-1">
 
     @if (Item.Type == SearchableItemType.Artist)
     {
@@ -15,7 +15,7 @@
         <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
 
-</WhipTab>
+</MudContainer>
 
 @code {
     [Parameter]

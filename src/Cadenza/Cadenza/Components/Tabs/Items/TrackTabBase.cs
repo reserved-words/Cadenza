@@ -7,6 +7,9 @@ namespace Cadenza.Components.Tabs.Items
         [Inject]
         public IMergedTrackRepository Repository { get; set; }
 
+        [Inject]
+        public IPlaylistPlayer Player { get; set; }
+
         [Parameter]
         public string Id { get; set; }
 
@@ -18,6 +21,21 @@ namespace Cadenza.Components.Tabs.Items
         protected override async Task OnParametersSetAsync()
         {
             await UpdateTrack();
+        }
+
+        protected async Task OnPlayTrack(Track track)
+        {
+            await Player.PlayTrack(track.Source, track.Id);
+        }
+
+        protected async Task OnPlayAlbum(Album album)
+        {
+            await Player.PlayAlbum(album.Source, album.Id);
+        }
+
+        protected async Task OnPlayArtist(Artist artist)
+        {
+            await Player.PlayArtist(artist.Id);
         }
 
         private async Task UpdateTrack()

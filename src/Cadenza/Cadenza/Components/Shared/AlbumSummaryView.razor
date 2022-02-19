@@ -1,0 +1,24 @@
+﻿@if (Model != null)
+{
+    <MudContainer Class="d-flex pa-0 ma-0">
+        <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+            <MudText Typo="Typo.body1">@Model.Title</MudText>
+            <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="Typo.body2">@Model.Year</MudText>
+        </MudPaper>
+        <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 d-flex flex-column align-self-stretch align-content-space-between">
+            <MudIcon Icon="@Model.Source.GetIcon()" />
+            <MenuAlbum Class="mt-auto"
+                   AlbumId="@Model.Id"
+                   Size="@Size.Medium" />
+        </MudPaper>
+    </MudContainer>
+}
+
+@code {
+    [Parameter]
+    public Album Model { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlay { get; set; }
+}

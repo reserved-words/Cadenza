@@ -8,7 +8,7 @@
     else
     {
         <MudAutocomplete T="SourceSearchableItem"
-                     Class="mt-0 pt-0"
+                     Class="mt-0 pt-0 pb-2"
                      Label="Search library"
                      @bind-Value="Result"
                      SearchFunc="@Search"
@@ -18,11 +18,10 @@
                      MinCharacters=3
                      ResetValueOnEmptyText=true>
             <ItemTemplate Context="e">
-                <MudContainer Class="d-flex flex-row pa-0 ma-0"
-                              title="@e.AlbumDisplay">
-                    <MudIcon Icon="@Icons[e.Type]"
-                         Class="mb-n1 mr-2"
-                         Color="@Colors[e.Type]" />
+                <MudContainer Class="d-flex flex-row pa-0 ma-0">
+                    <MudIcon Icon="@e.Type.GetIcon()"
+                             Class="mb-n1 mr-2"
+                             Color="@Color.Dark" />
                     <MudContainer Class="pa-0 ma-0">
                         <MudText Color=Color.Dark
                              Typo="@Typo.body1"
@@ -33,6 +32,11 @@
                              Typo="@Typo.body2"
                              Class="pa-0 ma-0">
                             @e.Artist
+                        </MudText>
+                        <MudText Color=Color.Dark
+                             Typo="@Typo.body2"
+                             Class="pa-0 ma-0">
+                            @e.AlbumDisplay
                         </MudText>
                     </MudContainer>
                 </MudContainer>

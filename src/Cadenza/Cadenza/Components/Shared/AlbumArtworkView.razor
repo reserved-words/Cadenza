@@ -1,9 +1,12 @@
-﻿
-<WhipCard>
-    <img class="artwork" src="@Model.ArtworkUrl" />
-</WhipCard>
+﻿@if (Model != null)
+{
+    <img class="artwork" src="@Model.ArtworkUrl" @ondblclick="@(() => OnPlay(Model))" />
+}
 
 @code {
     [Parameter]
     public Album Model { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlay { get; set; }
 }

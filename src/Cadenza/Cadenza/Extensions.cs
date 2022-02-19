@@ -1,6 +1,4 @@
-﻿using Cadenza.Core;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public static class Extensions
 {
@@ -44,15 +42,24 @@ public static class Extensions
 	{
         return type switch
 		{
-			SearchableItemType.Artist => Icons.Material.Filled.PeopleAlt,
-			SearchableItemType.Album => Icons.Material.Filled.Album,
-			SearchableItemType.Track => Icons.Material.Filled.MusicNote,
-			SearchableItemType.Playlist => Icons.Material.Filled.QueueMusic,
-		};
+			SearchableItemType.Artist => "fas fa-users", // Icons.Material.Filled.PeopleAlt,
+			SearchableItemType.Album => "fas fa-compact-disc", // Icons.Material.Filled.Album,
+            SearchableItemType.Track => "fas fa-music", // Icons.Material.Filled.MusicNote,
+            SearchableItemType.Playlist => "fas fa-list-ol",
+        };
     }
 
     public static string WithLineBreaks(this string text)
     {
         return text?.Replace("\n", "<br />", StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    public static string Duration(this AlbumTrack track)
+    {
+        var duration = TimeSpan.FromSeconds(track.DurationSeconds);
+
+        return duration.TotalHours > 1
+            ? duration.ToString(@"hh\:mm\:ss")
+            : duration.ToString(@"mm\:ss");
     }
 }

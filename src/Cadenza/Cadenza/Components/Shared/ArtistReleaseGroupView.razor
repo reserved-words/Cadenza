@@ -1,0 +1,32 @@
+﻿@using Cadenza.Core.Model
+
+@if (Model != null)
+{
+    <MudGrid Spacing="2">
+        @foreach (var album in Model.Albums)
+        {
+            <MudItem xs="6" sm="3">
+
+                <MudCard Elevation="1"
+                         Class="pa-0 ma-0">
+                    <AlbumArtworkView Model="@album"
+                                      OnPlay="@OnPlay" />
+
+                    <MudCardContent Class="pa-2">
+                        <AlbumSummaryView Model="@album"
+                                          OnPlay="@OnPlay" />
+                    </MudCardContent>
+                </MudCard>
+
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+@code {
+    [Parameter]
+    public ArtistReleaseGroup Model { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlay { get; set; }
+}

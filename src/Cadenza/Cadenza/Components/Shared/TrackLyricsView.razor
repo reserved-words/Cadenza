@@ -1,9 +1,7 @@
 ﻿
-<WhipCard Title="Lyrics">
-    <MudText Typo="@Typo.body1">
-        @((MarkupString)Model.Lyrics.WithLineBreaks())
-    </MudText>
-</WhipCard>
+<MudText Typo="@Typo.body1">
+    @((MarkupString)Model.Lyrics.WithLineBreaks())
+</MudText>
 
 @code {
     [Parameter]

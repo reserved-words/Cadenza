@@ -6,14 +6,7 @@
     {
         <WhipCard Padding="false"
           Bordered="false">
-            <WhipTable T="@AlbumTrack"
-               Items="@Model.Single().Tracks">
-                <RowTemplate>
-                    <MudTd>@context.Position.TrackNo</MudTd>
-                    <MudTd>@context.Title</MudTd>
-                    <MudTd>@context.DurationSeconds</MudTd>
-                </RowTemplate>
-            </WhipTable>
+            <AlbumDiscView Model="@Model.Single()" />
         </WhipCard>
     }
     else
@@ -22,18 +15,7 @@
             @foreach (var disc in Model)
             {
                 <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-                    <WhipCard Padding="false"
-                              Bordered="false">
-                        <WhipTable T="@AlbumTrack"
-                       Items="@Model.Single().Tracks">
-                            <RowTemplate>
-                                <MudTd>@context.Position.TrackNo</MudTd>
-                                <MudTd>@context.Title</MudTd>
-                                <MudTd>@context.DurationSeconds</MudTd>
-                            </RowTemplate>
-                        </WhipTable>
-
-                    </WhipCard>
+                    <AlbumDiscView Model="@disc" />
                 </MudTabPanel>
             }
         </MudTabs>
