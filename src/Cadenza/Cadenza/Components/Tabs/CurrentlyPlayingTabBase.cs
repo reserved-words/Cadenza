@@ -8,7 +8,10 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IMergedTrackRepository TrackRepository { get; set; }
+    public IMergedTrackRepository Repository { get; set; }
+
+    [Inject]
+    public IPlaylistPlayer Player { get; set; }
 
     public TrackFull Model { get; set; }
 
@@ -33,9 +36,24 @@ public class CurrentlyPlayingTabBase : ComponentBase
     private async Task SetTrack(LibrarySource? source, string trackId)
     {
         Model = source.HasValue
-            ? await TrackRepository.GetTrack(source.Value, trackId)
+            ? await Repository.GetTrack(source.Value, trackId)
             : null;
 
         StateHasChanged();
+    }
+
+    protected async Task OnPlayTrack(Track track)
+    {
+        await Player.PlayTrack(track.Source, track.Id);
+    }
+
+    protected async Task OnPlayAlbum(Album album)
+    {
+        await Player.PlayAlbum(album.Source, album.Id);
+    }
+
+    protected async Task OnPlayArtist(Artist artist)
+    {
+        await Player.PlayArtist(artist.Id);
     }
 }

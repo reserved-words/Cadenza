@@ -3,7 +3,7 @@
 @if (Model != null)
 {
     <MudTabs Class="ma-0 pa-0"
-             Color="@Color.Dark">
+             Elevation="0">
         @foreach (var releaseGroup in Model)
         {
             <MudTabPanel Text="@releaseGroup.Group.GetDisplayName()">

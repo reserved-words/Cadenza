@@ -4,14 +4,17 @@
 {
     if (Model.Count == 1)
     {
-        <WhipCard Padding="false"
-          Bordered="false">
-            <AlbumDiscView Model="@Model.Single()" />
-        </WhipCard>
+        <MudTabs Class="ma-0 pa-0">
+            <MudTabPanel Text="Tracks">
+                <AlbumDiscView Model="@Model.Single()" />
+            </MudTabPanel>
+        </MudTabs>
     }
     else
     {
-        <MudTabs>
+        <MudTabs Class="ma-0 pa-0"
+         Color="@Color.Dark"
+         Rounded="true">
             @foreach (var disc in Model)
             {
                 <MudTabPanel Text="@("Disc " + disc.DiscNo)">

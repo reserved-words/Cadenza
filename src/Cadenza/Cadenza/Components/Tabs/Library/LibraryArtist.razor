@@ -6,24 +6,18 @@
 
     <MudCardHeader Style="flex-grow: 0;" Class="pb-0 pt-3">
         <CardHeaderContent>
-            @if (Artist == null)
-            {
-                <MudText Typo="Typo.h6">@PlaceholderText</MudText>
-            }
-            else
-            {
-                <ArtistView Model="@Artist"
-                            HeaderOnly="true" />
-            }
-            <MudDivider Class="mt-3" />
+            <ArtistCardHeader Model="@Artist" />
         </CardHeaderContent>
     </MudCardHeader>
 
     <MudCardContent Style="flex-grow: 1;" 
                     Class="fixed-height-scroll">
-        @if (Artist != null)
+        @if (Releases != null)
         {
-            <ArtistReleasesView Model="@Releases" />
+            <MudCard Class="pa-0">
+                <ArtistReleaseGroupsView Model="@Releases"
+                                         OnPlay="@OnPlayAlbum" />
+            </MudCard>
         }
     </MudCardContent>
 </MudCard>

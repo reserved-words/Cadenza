@@ -1,43 +1,80 @@
 ﻿@inherits CurrentlyPlayingTabBase
 
-<WhipTab>
-    @if (NotCurrentlyPlaying)
-    {
-        <WhipColumn md="12">
-            <WhipRow RowHeight="@RowHeight.Full">
-                <WhipCard>
-                    <MudText Typo="@Typo.body1">Not currently playing</MudText>
-                </WhipCard>
-            </WhipRow>
-        </WhipColumn>
-    }
-    else
-    {
-        <WhipColumn md="4">
-            <WhipRow RowHeight="@RowHeight.Fixed">
-                <TrackSummaryView Model="@Model.Track" />
-            </WhipRow>
-            <WhipRow RowHeight="@RowHeight.Fixed">
-              <ArtistView Model="@Model.Artist"
-                          HeaderOnly="false" />
-            </WhipRow>
-            <WhipRow RowHeight="@RowHeight.Fixed">
-                <TrackAlbumView Album="@Model.Album"
-                                Position="@Model.AlbumTrack.Position" />
-            </WhipRow>
-        </WhipColumn>
+<MudGrid Class="ma-1">
 
-        <WhipColumn md="4">
-            <WhipRow RowHeight="@RowHeight.Fixed">
-                <AlbumArtworkView Model="@Model.Album" />
-            </WhipRow>
-        </WhipColumn>
+    <MudItem xs="12" md="4" Class="pa-2">
 
-        <WhipColumn md="4">
-            <WhipRow RowHeight="@RowHeight.Stretch">
-                <TrackLyricsView Model="@Model.Track" />
-            </WhipRow>
-        </WhipColumn>
-    }
+        @if (Model != null)
+        {
+            <MudCard Class="mb-3" Elevation="2">
+                <MudCardHeader Class="px-3 pt-3 pb-2">
+                    <TrackCardHeader Model="@Model.Track"
+                                 OnPlay="OnPlayTrack"
+                                 TitleOnly="false" />
+                </MudCardHeader>
+                <MudCardContent Class="px-2 pt-0 pb-2">
+                    <MudDivider Class="pa-0 ma-0 mb-2" />
+                    <TrackTagsView Model="@Model.Track" />
+                </MudCardContent>
+            </MudCard>
 
-</WhipTab>
+            <MudCard Class="mb-3" Elevation="2">
+                <MudCardHeader Class="px-3 pt-3 pb-2">
+                    <ArtistCardHeader Model="@Model.Artist"
+                                  OnPlay="OnPlayArtist"
+                                  TitleOnly="false" />
+                </MudCardHeader>
+                <MudCardContent Class="px-2 pt-0 pb-2">
+                    <MudDivider Class="pa-0 ma-0 mb-2" />
+                    <ArtistLinksView Model="@Model.Artist" />
+                </MudCardContent>
+            </MudCard>
+        }
+
+    </MudItem>
+
+    <MudItem xs="12" md="4" Class="pa-2">
+
+        @if (Model != null)
+        {
+            <MudCard Elevation="2">
+                <MudCardHeader Class="px-3 pt-3 pb-2">
+                    <AlbumCardHeader Model="@Model.Album"
+                                 OnPlay="OnPlayAlbum"
+                                 TitleOnly="true" />
+                </MudCardHeader>
+                <MudCardContent Class="pa-2">
+                    <AlbumArtworkView Model="@Model.Album"
+                                  OnPlay="OnPlayAlbum" />
+                    <MudPaper Elevation="0"
+                              Class="pa-0 mt-3 mb-1">
+                        <MudText Typo="@Typo.body2">@Model.Album.ReleaseType.GetDisplayName()</MudText>
+                        <MudText Typo="@Typo.body2">@Model.Album.Year</MudText>
+                        <MudText Typo="@Typo.body2">@Model.Album.DiscPosition(Model.AlbumTrack.Position)</MudText>
+                        <MudText Typo="@Typo.body2">@Model.Album.TrackPosition(Model.AlbumTrack.Position)</MudText>
+                    </MudPaper>
+                </MudCardContent>
+            </MudCard>
+        }
+
+    </MudItem>
+
+    <MudItem xs="12" md="4" Class="pa-2">
+
+        @if (Model != null)
+        {
+            <MudCard Elevation="2">
+                <MudCardHeader Class="px-3 pt-3 pb-2">
+                    <LyricsCardHeader Id="@Model.Track.Id"
+                                  Source="@Model.Track.Source" />
+                </MudCardHeader>
+                <MudCardContent Class="px-3 pt-0 pb-3">
+                    <MudDivider Class="pa-0 ma-0 mb-3" />
+                    <TrackLyricsView Model="@Model.Track" />
+                </MudCardContent>
+            </MudCard>
+        }
+
+    </MudItem>
+
+</MudGrid>

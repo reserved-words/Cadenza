@@ -1,11 +1,12 @@
 ﻿@inherits SearchResultBase
 
-<MudCard Elevation="3">
+<MudCard Elevation="2">
 
-    <MudCardHeader Class="pa-3 pb-1">
+    <MudCardHeader Class="pa-3 pb-0">
         <MudContainer Class="d-flex pa-0 ma-0">
 
-            <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 mr-2">
+            <MudPaper Elevation="0" 
+                      Class="flex-grow-0 pa-0 ma-0 mr-2">
                 <MudIcon Icon="@Result.Type.GetIcon()"
                          Size="@Size.Medium"
                          Class="ma-1" />
@@ -19,7 +20,9 @@
 
         </MudContainer>
     </MudCardHeader>
-
+    <MudCardContent Class="pa-0">
+        <MudDivider Class="pa-0 ma-0" />
+    </MudCardContent>
     <MudCardActions Class="pa-0 ma-0">
 
         <MudButton Color="@Color.Dark"

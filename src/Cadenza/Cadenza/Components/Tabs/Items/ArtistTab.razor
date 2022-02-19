@@ -6,8 +6,9 @@
 
         @if (Artist != null)
         {
-            <MudCard Class="pa-0">
-                <MudCardHeader Class="px-3 pt-3 pb-1">
+            <MudCard Class="pa-0 ma-0">
+                <MudCardHeader Class="pa-3"
+                               Style="flex-grow: 0;">
                     <ArtistCardHeader Model="@Artist"
                                   OnPlay="OnPlayArtist"
                                   TitleOnly="false" />
@@ -25,9 +26,13 @@
 
         @if (Releases != null)
         {
-            <MudCard Class="pa-0">
-                <ArtistReleaseGroupsView Model="@Releases"
-                                     OnPlay="@OnPlayAlbum" />
+            <MudCard Class="pa-0 ma-0 fixed-height-margin"
+                     Style="display: flex; flex-direction: column;">
+                <MudCardContent Style="flex-grow: 1;"
+                                Class="px-0 pt-1 pb-2 fixed-height-scroll">
+                    <ArtistReleaseGroupsView Model="@Releases"
+                                             OnPlay="@OnPlayAlbum" />
+                </MudCardContent>
             </MudCard>
         }
 

@@ -9,6 +9,9 @@ public class LibraryArtistBase : ComponentBase
     [Inject]
     public IMergedArtistRepository Repository { get; set; }
 
+    [Inject]
+    public IPlaylistPlayer Player { get; set; }
+
     [Parameter]
     public string ArtistId { get; set; }
 
@@ -49,5 +52,10 @@ public class LibraryArtistBase : ComponentBase
         Releases = albums.GroupByReleaseType();
 
         StateHasChanged();
+    }
+
+    protected async Task OnPlayAlbum(Album album)
+    {
+        await Player.PlayAlbum(album.Source, album.Id);
     }
 }
