@@ -11,9 +11,7 @@ public class Playlist : IPlaylist
 
     public Playlist(PlaylistDefinition def)
     {
-        Type = def.Type;
-        Name = def.Name;
-        MixedSource = def.MixedSource;
+        Id = def.Id;
 
         _allTracks = def.Tracks.ToList();
 
@@ -24,9 +22,7 @@ public class Playlist : IPlaylist
 
     public bool CurrentIsLast => _toPlay.Count == 0;
 
-    public PlaylistType Type { get; }
-    public string Name { get; }
-    public bool MixedSource { get; }
+    public PlaylistId Id { get; }
 
     public async Task<PlayTrack> MoveNext()
     {

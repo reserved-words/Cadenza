@@ -26,16 +26,19 @@ public class PlaylistCreator : IPlaylistCreator
         var tracks = await _repository.GetByArtist(id);
 
         var firstSource = tracks.First().Source;
-        var mixedSource = tracks.Any(t => t.Source != firstSource);
+
+        LibrarySource? source = tracks.All(t => t.Source == firstSource)
+            ? firstSource
+            : null;
+
+        var playlistId = new PlaylistId(id, source, PlaylistType.Artist, artist.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Artist,
-            Name = artist.Name,
-            Tracks = shuffledTracks.ToList(),
-            MixedSource = mixedSource
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
         };
     }
 
@@ -44,12 +47,12 @@ public class PlaylistCreator : IPlaylistCreator
         var tracks = await _repository.GetByAlbum(id);
         var album = await _albumRepository.GetAlbum(source, id);
 
+        var playlistId = new PlaylistId(id, source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Album,
-            Name = $"{album.Title} by {album.ArtistName}",
-            Tracks = tracks.ToList(),
-            MixedSource = false
+            Id = playlistId,
+            Tracks = tracks.ToList()
         };
     }
 
@@ -68,12 +71,12 @@ public class PlaylistCreator : IPlaylistCreator
 
         var tracks = new List<PlayTrack> { playTrack };
 
+        var playlistId = new PlaylistId(id, source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Track,
-            Name = $"{track.Track.Title} by {track.Artist.Name}",
-            Tracks = tracks,
-            MixedSource = false
+            Id = playlistId,
+            Tracks = tracks
         };
     }
 
@@ -83,12 +86,12 @@ public class PlaylistCreator : IPlaylistCreator
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
+        var playlistId = new PlaylistId("", null, PlaylistType.All, "All Library");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.All,
-            Name = $"All Library",
-            Tracks = shuffledTracks.ToList(),
-            MixedSource = true
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
         };
     }
 }

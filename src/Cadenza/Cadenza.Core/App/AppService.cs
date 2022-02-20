@@ -96,8 +96,7 @@ public class AppService : IAppConsumer, IAppController
     {
         return new PlaylistEventArgs
         {
-            PlaylistName = _currentPlaylist?.Name,
-            PlaylistType = _currentPlaylist?.Type ?? default(PlaylistType),
+            Playlist = _currentPlaylist.Id,
             Error = error
         };
     }
@@ -123,8 +122,12 @@ public class AppService : IAppConsumer, IAppController
     private async Task StopPlaylist()
     {
         await _player.Stop();
-        await PlaylistFinished?.Invoke(this, GetPlaylistArgs());
-        _currentPlaylist = null;
+        
+        if (_currentPlaylist != null)
+        {
+            await PlaylistFinished?.Invoke(this, GetPlaylistArgs());
+            _currentPlaylist = null;
+        }
     }
 
     public async Task View(ViewItem item)

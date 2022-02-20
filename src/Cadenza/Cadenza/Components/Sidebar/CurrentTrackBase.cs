@@ -100,4 +100,19 @@ public class CurrentTrackBase : ComponentBase
     {
         await Viewer.ViewAlbum(_model.Album);
     }
+
+    protected async Task OnViewArtist()
+    {
+        await Viewer.ViewArtist(_model.Artist);
+    }
+
+    protected async Task OnViewTrack()
+    {
+        await Viewer.ViewTrack(_model.Track);
+    }
+
+    protected async Task OnViewAlbumArtist()
+    {
+        await Viewer.ViewArtist(_model.Album.ArtistId, _model.Album.ArtistName);
+    }
 }
