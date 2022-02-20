@@ -18,6 +18,8 @@ public class IndexBase : ComponentBase
 
     public bool Playing { get; set; }
 
+    public int FixedTabCount => Playing ? 3 : 2;
+
     protected bool IsInitalised { get; private set; }
 
     protected int SelectedTabIndex = 0;
@@ -36,7 +38,17 @@ public class IndexBase : ComponentBase
 
     private Task App_ItemRequested(object sender, ItemEventArgs e)
     {
-        ItemTabs.Add(e.Item);
+        if (ItemTabs.Any(t => t.Id == e.Item.Id))
+        {
+            var tab = ItemTabs.Single(t => t.Id == e.Item.Id);
+            var index = ItemTabs.IndexOf(tab);
+            SelectedTabIndex = FixedTabCount + index;
+        }
+        else
+        {
+            ItemTabs.Add(e.Item);
+        }
+
         StateHasChanged();
         return Task.CompletedTask;
     }
