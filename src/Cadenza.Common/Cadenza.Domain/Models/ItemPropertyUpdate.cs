@@ -2,7 +2,7 @@
 
 public class ItemPropertyUpdate
 {
-    public ItemType ItemType { get; set; }
+    public LibraryItemType ItemType { get; set; }
     public string Id { get; set; }
     public string Item { get; set; }
     public ItemProperty Property { get; set; }
@@ -14,9 +14,9 @@ public class ItemPropertyUpdate
         if (obj == null || obj is not ItemPropertyUpdate update)
             return false;
 
-        return update.ItemType == this.ItemType
-            && update.Id == this.Id
-            && update.Property == this.Property;
+        return update.ItemType == ItemType
+            && update.Id == Id
+            && update.Property == Property;
     }
 
     public override int GetHashCode()

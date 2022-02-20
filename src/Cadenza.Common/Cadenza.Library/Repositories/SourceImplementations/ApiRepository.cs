@@ -55,24 +55,24 @@
             return await Get<ListResponse<Artist>>(_settings.TrackArtists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchAlbums(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchAlbums, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchAlbums, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchArtists(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchArtists, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchArtists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchPlaylists(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchPlaylists, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchPlaylists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchTracks, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchTracks, page, limit);
         }
 
         public async Task<AlbumInfo> GetAlbum(string id)

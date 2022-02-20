@@ -1,5 +1,4 @@
-﻿
-namespace Cadenza.Library;
+﻿namespace Cadenza.Library;
 
 public interface ISourceArtistRepository : IArtistRepository
 {

@@ -1,5 +1,4 @@
-﻿using Cadenza.Library;
-using Cadenza.Utilities;
+﻿using Cadenza.Utilities;
 
 namespace Cadenza;
 
@@ -15,6 +14,9 @@ public class CurrentTrackBase : ComponentBase
 
     [Inject]
     public IStoreGetter Store { get; set; }
+
+    [Inject]
+    public IItemViewer Viewer { get; set; }
 
     public bool Loading { get; set; } = false;
 
@@ -92,5 +94,10 @@ public class CurrentTrackBase : ComponentBase
     {
         Progress = e.ProgressPercentage;
         StateHasChanged();
+    }
+
+    protected async Task OnViewAlbum()
+    {
+        await Viewer.ViewAlbum(_model.Album);
     }
 }

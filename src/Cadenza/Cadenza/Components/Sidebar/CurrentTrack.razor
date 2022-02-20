@@ -20,7 +20,7 @@
     <img src="@ArtworkUrl" class="artwork" />
     <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
     <MudCardContent Class="pa-2">
-        <MudText Typo="Typo.body1">@AlbumTitle</MudText>
+        <MudLink Style="cursor: pointer;" onclick="@(() => OnViewAlbum())">@AlbumTitle</MudLink>
         <MudText Typo="Typo.body2">@AlbumArtist</MudText>
         <MudContainer Class="d-flex pa-0 ma-0">
             <MudPaper Elevation="0" Class="flex-grow-1 flex-shrink-0 pa-0 ma-0">

@@ -37,6 +37,9 @@ public class BaseTrackRepository : IBaseTrackRepository
 
     public async Task Populate()
     {
+        if (_tracks != null)
+            return;
+
         var library = await _library.Get();
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);

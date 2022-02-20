@@ -1,9 +1,10 @@
 ﻿namespace Cadenza.Domain;
 
-public enum ItemType
+public enum PlayerItemType
 {
     Artist,
     Album,
     Track,
-    AlbumTrackLink
+    Playlist
 }
+

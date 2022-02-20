@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿global using Cadenza.Domain;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Utilities;

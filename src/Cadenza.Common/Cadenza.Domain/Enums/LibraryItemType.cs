@@ -1,10 +1,9 @@
 ﻿namespace Cadenza.Domain;
 
-public enum SearchableItemType
+public enum LibraryItemType
 {
     Artist,
     Album,
     Track,
-    Playlist
+    AlbumTrackLink
 }
-

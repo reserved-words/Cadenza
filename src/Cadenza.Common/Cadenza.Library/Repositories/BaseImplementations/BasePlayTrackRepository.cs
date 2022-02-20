@@ -34,6 +34,9 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
 
     public async Task Populate()
     {
+        if (_tracks != null)
+            return;
+
         var library = await _library.Get();
 
         _tracks = library.Tracks

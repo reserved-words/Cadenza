@@ -1,5 +1,4 @@
 ﻿namespace Cadenza.Domain;
-
 public class AlbumTrackLink
 {
     public string AlbumId { get; set; }

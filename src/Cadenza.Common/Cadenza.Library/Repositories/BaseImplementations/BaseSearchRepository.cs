@@ -16,6 +16,9 @@ public class BaseSearchRepository : IBaseSearchRepository
 
     public async Task Populate()
     {
+        if (_albums != null)
+            return;
+
         var library = await _library.Get();
 
         _albums = library.Albums
@@ -31,24 +34,24 @@ public class BaseSearchRepository : IBaseSearchRepository
         _tracks = PopulateSearchableTracks(library);
     }
 
-    public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
+    public async Task<ListResponse<PlayerItem>> GetSearchAlbums(int page, int limit)
     {
-        return _albums.ToListResponse<SearchableAlbum, SearchableItem>(t => t.Id, page, limit);
+        return _albums.ToListResponse<SearchableAlbum, PlayerItem>(t => t.Id, page, limit);
     }
 
-    public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
+    public async Task<ListResponse<PlayerItem>> GetSearchArtists(int page, int limit)
     {
-        return _artists.ToListResponse<SearchableArtist, SearchableItem>(t => t.Id, page, limit);
+        return _artists.ToListResponse<SearchableArtist, PlayerItem>(t => t.Id, page, limit);
     }
 
-    public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
+    public async Task<ListResponse<PlayerItem>> GetSearchPlaylists(int page, int limit)
     {
-        return _playlists.ToListResponse<SearchablePlaylist, SearchableItem>(t => t.Id, page, limit);
+        return _playlists.ToListResponse<SearchablePlaylist, PlayerItem>(t => t.Id, page, limit);
     }
 
-    public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
+    public async Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit)
     {
-        return _tracks.ToListResponse<SearchableTrack, SearchableItem>(t => t.Id, page, limit);
+        return _tracks.ToListResponse<SearchableTrack, PlayerItem>(t => t.Id, page, limit);
     }
 
     private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)

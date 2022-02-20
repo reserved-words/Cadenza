@@ -8,7 +8,7 @@ public class ListResponse<T>
     public int TotalItems { get; set; }
     public int TotalPages { get; set; }
 
-    public static ListResponse<T> Empty => new ()
+    public static ListResponse<T> Empty => new()
     {
         Items = new List<T>()
     };

@@ -53,6 +53,9 @@ public class BaseArtistRepository : IBaseArtistRepository
 
     public async Task Populate()
     {
+        if (_artists != null)
+            return;
+
         var library = await _library.Get();
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);

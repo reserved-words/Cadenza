@@ -28,6 +28,9 @@ public class BaseAlbumRepository : IBaseAlbumRepository
 
     public async Task Populate()
     {
+        if (_albums != null)
+            return;
+
         var library = await _library.Get();
 
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
