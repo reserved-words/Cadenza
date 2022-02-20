@@ -1,4 +1,5 @@
-﻿using Cadenza.Database;
+﻿using Cadenza.Core.Model;
+using Cadenza.Database;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -6,9 +7,6 @@ public class SearchBase : ComponentBase
 {
     [Inject]
     public SearchRepositoryCache Cache { get; set; }
-
-    [Parameter]
-    public Func<SearchResultItem, Task> OnViewItem { get; set; }
 
     public bool IsLoading { get; set; }
 

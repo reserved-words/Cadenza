@@ -8,7 +8,7 @@ namespace Cadenza.Components.Tabs.Items
         public IMergedTrackRepository Repository { get; set; }
 
         [Inject]
-        public IPlaylistPlayer Player { get; set; }
+        public IItemPlayer Player { get; set; }
 
         [Parameter]
         public string Id { get; set; }

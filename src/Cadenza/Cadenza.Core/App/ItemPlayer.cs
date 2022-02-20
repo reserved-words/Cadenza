@@ -1,11 +1,11 @@
 ﻿namespace Cadenza.Core;
 
-public class PlaylistPlayer : IPlaylistPlayer
+public class ItemPlayer : IItemPlayer
 {
     private readonly IPlaylistCreator _playlistCreator;
     private readonly IAppController _app;
 
-    public PlaylistPlayer(IAppController app, IPlaylistCreator playlistCreator)
+    public ItemPlayer(IAppController app, IPlaylistCreator playlistCreator)
     {
         _app = app;
         _playlistCreator = playlistCreator;

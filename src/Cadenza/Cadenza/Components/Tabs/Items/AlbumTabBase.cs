@@ -10,7 +10,7 @@ namespace Cadenza.Components.Tabs.Items
         public IMergedAlbumRepository Repository { get; set; }
 
         [Inject]
-        public IPlaylistPlayer Player { get; set; }
+        public IItemPlayer Player { get; set; }
 
         [Parameter]
         public LibrarySource Source { get; set; }

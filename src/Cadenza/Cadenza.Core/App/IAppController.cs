@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Model;
+
+namespace Cadenza.Core;
 
 public interface IAppController
 {
@@ -10,4 +12,5 @@ public interface IAppController
     Task LoadingPlaylist();
 
     Task Play(PlaylistDefinition playlistDefinition);
+    Task View(PlayerItem item);
 }

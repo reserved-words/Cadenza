@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Model;
+
+namespace Cadenza.Core;
 
 public class AppService : IAppConsumer, IAppController
 {
@@ -21,6 +23,7 @@ public class AppService : IAppConsumer, IAppController
     public event PlaylistEventHandler PlaylistStarted;
 
     public event LibraryEventHandler LibraryUpdated;
+    public event ItemEventHandler ItemRequested;
 
     private IPlaylist _currentPlaylist;
 
@@ -33,7 +36,7 @@ public class AppService : IAppConsumer, IAppController
     {
         _currentPlaylist = new Playlist(playlistDefinition);
         await PlayTrack();
-        PlaylistStarted?.Invoke(this, GetPlaylistArgs());
+        await PlaylistStarted?.Invoke(this, GetPlaylistArgs());
     }
 
     private async Task PlayTrack()
@@ -44,24 +47,24 @@ public class AppService : IAppConsumer, IAppController
             return;
 
         var progress = await _player.Play(_currentPlaylist.Current);
-        TrackStarted?.Invoke(this, GetProgressArgs(progress));
+        await TrackStarted?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task Pause()
     {
         var progress = await _player.Pause();
-        TrackPaused?.Invoke(this, GetProgressArgs(progress));
+        await TrackPaused?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task Resume()
     {
         var progress = await _player.Resume();
-        TrackResumed?.Invoke(this, GetProgressArgs(progress));
+        await TrackResumed?.Invoke(this, GetProgressArgs(progress));
     }
 
     public async Task SkipNext()
     {
-        TrackFinished?.Invoke(this, GetFinishedArgs());
+        await TrackFinished?.Invoke(this, GetFinishedArgs());
         if (_currentPlaylist.CurrentIsLast)
         {
             await StopPlaylist();
@@ -74,7 +77,7 @@ public class AppService : IAppConsumer, IAppController
 
     public async Task SkipPrevious()
     {
-        TrackFinished?.Invoke(this, GetFinishedArgs());
+        await TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
     }
@@ -114,13 +117,18 @@ public class AppService : IAppConsumer, IAppController
     public async Task LoadingPlaylist()
     {
         await StopPlaylist();
-        PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
+        await PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
     }
 
     private async Task StopPlaylist()
     {
         await _player.Stop();
-        PlaylistFinished?.Invoke(this, GetPlaylistArgs());
+        await PlaylistFinished?.Invoke(this, GetPlaylistArgs());
         _currentPlaylist = null;
+    }
+
+    public async Task View(PlayerItem item)
+    {
+        await ItemRequested?.Invoke(this, new ItemEventArgs { Item = item });
     }
 }

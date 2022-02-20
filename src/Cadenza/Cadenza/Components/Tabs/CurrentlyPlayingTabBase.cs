@@ -9,7 +9,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IStoreGetter Store { get; set; }
 
     [Inject]
-    public IPlaylistPlayer Player { get; set; }
+    public IItemPlayer Player { get; set; }
 
     public TrackFull Model { get; set; }
 

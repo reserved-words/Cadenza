@@ -1,10 +1,9 @@
 ﻿namespace Cadenza.Core;
 
-public interface IPlaylistPlayer
+public interface IItemPlayer
 {
     Task PlayArtist(string id);
     Task PlayAlbum(LibrarySource source, string id);
     Task PlayTrack(LibrarySource source, string id);
-    Task PlayPlaylist(string id);
     Task PlayAll();
 }

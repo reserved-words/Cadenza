@@ -20,15 +20,10 @@
             </WhipContainer>
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Stretch">
-            <Search OnViewItem="@OnViewItem" />
+            <Search />
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
             <Toolbar />
         </WhipRow>
     </WhipColumn>
 </WhipTab>
-
-@code{
-    [Parameter]
-    public Func<SearchResultItem, Task> OnViewItem { get; set; }
-}

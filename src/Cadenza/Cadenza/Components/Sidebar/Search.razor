@@ -1,4 +1,5 @@
-﻿@inherits SearchBase
+﻿@using Cadenza.Core.Model
+@inherits SearchBase
 
 <WhipContainer>
     @if (IsLoading)
@@ -45,8 +46,7 @@
 
         @if (Result != null)
         {
-            <SearchResult Result="@Result" 
-                          OnViewItem="@OnViewItem" />
+            <SearchResult Result="@Result"  />
         }
     }
 </WhipContainer>

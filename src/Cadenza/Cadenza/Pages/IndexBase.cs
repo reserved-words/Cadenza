@@ -1,4 +1,4 @@
-﻿using Cadenza.Components.Sidebar;
+﻿using Cadenza.Core.Model;
 
 namespace Cadenza;
 
@@ -24,18 +24,19 @@ public class IndexBase : ComponentBase
     
     //protected bool UpdateIndex = false;
 
-    protected List<SearchResultItem> ItemTabs = new();
+    protected List<PlayerItem> ItemTabs = new();
 
     protected override async Task OnInitializedAsync()
     {
         App.TrackStarted += App_TrackStarted;
-        App.TrackFinished += App_TrackFinished;
+        App.ItemRequested += App_ItemRequested;
 
         await OnStartup();
     }
 
-    private Task App_TrackFinished(object sender, TrackEventArgs e)
+    private Task App_ItemRequested(object sender, ItemEventArgs e)
     {
+        ItemTabs.Add(e.Item);
         StateHasChanged();
         return Task.CompletedTask;
     }
@@ -59,13 +60,6 @@ public class IndexBase : ComponentBase
         }
 
         IsInitalised = success;
-    }
-
-    protected async Task OnViewItem(SearchResultItem item)
-    {
-        ItemTabs.Add(item);
-
-        StateHasChanged();
     }
 
     protected void AddTabCallback()

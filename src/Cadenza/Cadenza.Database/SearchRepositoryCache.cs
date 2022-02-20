@@ -1,21 +1,8 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core.Model;
+using Cadenza.Domain;
 
 namespace Cadenza.Database;
 
-public class SourceSearchableItem : SearchableItem
-{
-    public SourceSearchableItem(LibrarySource? source, SearchableItem item)
-    {
-        Type = item.Type;
-        Id = item.Id;
-        Name = item.Name;
-        Artist = item.Artist;
-        Album = item.Album;
-        Source = source;
-    }
-
-    public LibrarySource? Source { get; }
-}
 
 public class SearchRepositoryCache
 {
