@@ -9,5 +9,6 @@ public interface IItemViewer
     Task ViewAlbum(Album album);
     Task ViewArtist(Artist artist);
     Task ViewArtist(string id, string name);
+    Task ViewArtist(string name);
     Task ViewTrack(Track track);
 }

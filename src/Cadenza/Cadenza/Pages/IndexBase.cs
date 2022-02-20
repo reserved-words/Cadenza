@@ -42,7 +42,16 @@ public class IndexBase : ComponentBase
         {
             var tab = ItemTabs.Single(t => t.Id == e.Item.Id);
             var index = ItemTabs.IndexOf(tab);
-            SelectedTabIndex = FixedTabCount + index;
+            var newIndex = FixedTabCount + index;
+
+            if (SelectedTabIndex == newIndex)
+            {
+                // Display message
+            }
+            else
+            {
+                SelectedTabIndex = FixedTabCount + index;
+            }
         }
         else
         {

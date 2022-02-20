@@ -1,6 +1,4 @@
-﻿using Cadenza.Utilities;
-using Cadenza.Database;
-using Cadenza.Core.Model;
+﻿using Cadenza.Core.Model;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -15,6 +13,9 @@ public class SearchResultBase : ComponentBase
 
     [Parameter]
     public SourcePlayerItem Result { get; set; }
+
+    [Parameter]
+    public Func<Task> OnClear { get; set; }
 
     protected async Task OnPlay()
     {
@@ -32,8 +33,13 @@ public class SearchResultBase : ComponentBase
         }
     }
 
-    protected async Task OnView()
+    protected async Task OnViewItem()
     {
         await Viewer.ViewSearchResult(Result);
+    }
+
+    protected async Task Clear()
+    {
+        await OnClear();
     }
 }

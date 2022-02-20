@@ -5,10 +5,12 @@ namespace Cadenza.Core;
 public class ItemViewer : IItemViewer
 {
     private readonly IAppController _app;
-    
-    public ItemViewer(IAppController app)
+    private readonly IIdGenerator _idGenerator;
+
+    public ItemViewer(IAppController app, IIdGenerator idGenerator)
     {
         _app = app;
+        _idGenerator = idGenerator;
     }
 
     public async Task ViewAlbum(Album album)
@@ -27,6 +29,12 @@ public class ItemViewer : IItemViewer
     {
         var playerItem = new ViewItem(PlayerItemType.Artist, id, name, null);
         await _app.View(playerItem);
+    }
+
+    public async Task ViewArtist(string name)
+    {
+        var id = _idGenerator.GenerateId(name);
+        await ViewArtist(id, name);
     }
 
     public async Task ViewPlaying(PlaylistId playlist)

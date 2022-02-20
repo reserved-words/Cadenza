@@ -13,7 +13,11 @@
             </MudPaper>
 
             <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-                <MudText Typo="@Typo.body1">@Result.Name</MudText>
+                <MudText Typo="@Typo.body1">
+                    <MudLink Style="cursor: pointer;" onclick="@(() => OnViewItem())">
+                        @Result.Name
+                    </MudLink>
+                </MudText>
                 <MudText Typo="@Typo.body2">@Result.Artist</MudText>
                 <MudText Typo="@Typo.body2">@Result.AlbumDisplay</MudText>
             </MudPaper>
@@ -23,13 +27,16 @@
     <MudCardContent Class="pa-0">
         <MudDivider Class="pa-0 ma-0" />
     </MudCardContent>
-    <MudCardActions Class="pa-0 ma-0">
+    <MudCardActions Class="pa-0 ma-0 d-flex justify-space-between">
 
         <MudButton Color="@Color.Dark"
                    OnClick="@OnPlay">Play</MudButton>
 
-        <MudButton Color="@Color.Dark"
-                   OnClick="@OnView">View</MudButton>
+        <MudIconButton Color="@Color.Dark"
+                       Class="mr-2"
+                       Style="flex: unset;"
+                       Icon="@Icons.Material.Filled.Clear"
+                       OnClick="@OnClear" />
 
     </MudCardActions>
 
