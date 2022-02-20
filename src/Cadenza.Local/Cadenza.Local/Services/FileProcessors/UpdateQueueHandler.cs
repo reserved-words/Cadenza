@@ -15,7 +15,7 @@ public class UpdateQueueHandler : IUpdateQueueHandler
     {
         var queue = await _service.Get();
 
-        var updates = new Dictionary<ItemType, Dictionary<string, List<ItemPropertyUpdate>>>();
+        var updates = new Dictionary<LibraryItemType, Dictionary<string, List<ItemPropertyUpdate>>>();
 
         var updatesToProcess = queue.Updates
             .Where(u => u.FailedAttempts.Count < 3)
@@ -48,19 +48,19 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         }
     }
 
-    private async Task ProcessUpdates(ItemType itemType, string id, List<ItemPropertyUpdate> updates)
+    private async Task ProcessUpdates(LibraryItemType itemType, string id, List<ItemPropertyUpdate> updates)
     {
         List<ItemPropertyUpdateResult> results;
 
         switch (itemType)
         {
-            case ItemType.Artist:
+            case LibraryItemType.Artist:
                 results = await _updater.UpdateArtist(id, updates);
                 break;
-            case ItemType.Album:
+            case LibraryItemType.Album:
                 results = await _updater.UpdateAlbum(id, updates);
                 break;
-            case ItemType.Track:
+            case LibraryItemType.Track:
                 results = await _updater.UpdateTrack(id, updates);
                 break;
             default:
