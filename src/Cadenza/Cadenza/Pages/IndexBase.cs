@@ -24,7 +24,7 @@ public class IndexBase : ComponentBase
     
     //protected bool UpdateIndex = false;
 
-    protected List<PlayerItem> ItemTabs = new();
+    protected List<ViewItem> ItemTabs = new();
 
     protected override async Task OnInitializedAsync()
     {

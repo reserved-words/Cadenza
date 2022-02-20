@@ -14,19 +14,19 @@ public class SearchResultBase : ComponentBase
     public IItemViewer Viewer { get; set; }
 
     [Parameter]
-    public SourceSearchableItem Result { get; set; }
+    public SourcePlayerItem Result { get; set; }
 
     protected async Task OnPlay()
     {
-        if (Result.Type == SearchableItemType.Artist)
+        if (Result.Type == PlayerItemType.Artist)
         {
             await Player.PlayArtist(Result.Id);
         }
-        else if (Result.Type == SearchableItemType.Album)
+        else if (Result.Type == PlayerItemType.Album)
         {
             await Player.PlayAlbum(Result.Source.Value, Result.Id);
         }
-        else if (Result.Type == SearchableItemType.Track)
+        else if (Result.Type == PlayerItemType.Track)
         {
             await Player.PlayTrack(Result.Source.Value, Result.Id);
         }

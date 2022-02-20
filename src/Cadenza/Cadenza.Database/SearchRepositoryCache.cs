@@ -11,7 +11,7 @@ public class SearchRepositoryCache
 
     private Dictionary<LibrarySource, List<string>> _sourceArtists = new ();
 
-    public List<SourceSearchableItem> Items { get; set; } = new ();
+    public List<SourcePlayerItem> Items { get; set; } = new ();
 
     public void StartUpdate()
     {
@@ -23,17 +23,17 @@ public class SearchRepositoryCache
         UpdateCompleted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddTracks(LibrarySource source, List<SearchableItem> items)
+    public void AddTracks(LibrarySource source, List<PlayerItem> items)
     {
-        Items.AddRange(items.Select(i => new SourceSearchableItem(source, i)));
+        Items.AddRange(items.Select(i => new SourcePlayerItem(source, i)));
     }
 
-    public void AddAlbums(LibrarySource source, List<SearchableItem> items)
+    public void AddAlbums(LibrarySource source, List<PlayerItem> items)
     {
-        Items.AddRange(items.Select(i => new SourceSearchableItem(source, i)));
+        Items.AddRange(items.Select(i => new SourcePlayerItem(source, i)));
     }
 
-    public void AddArtists(LibrarySource source, List<SearchableItem> items)
+    public void AddArtists(LibrarySource source, List<PlayerItem> items)
     {
         if (!_sourceArtists.ContainsKey(source))
         {
@@ -44,7 +44,7 @@ public class SearchRepositoryCache
         {
             if (!Items.Any(i => i.Id == item.Id))
             {
-                Items.Add(new SourceSearchableItem(null, item));
+                Items.Add(new SourcePlayerItem(null, item));
             }
             _sourceArtists[source].Add(item.Id);
         }
@@ -52,7 +52,7 @@ public class SearchRepositoryCache
 
     public void AddPlaylists(List<SearchablePlaylist> items)
     {
-        Items.AddRange(items.Select(i => new SourceSearchableItem(null, i)));
+        Items.AddRange(items.Select(i => new SourcePlayerItem(null, i)));
     }
 
     public void Clear()

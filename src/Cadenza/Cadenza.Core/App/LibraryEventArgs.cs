@@ -12,5 +12,5 @@ public delegate Task ItemEventHandler(object sender, ItemEventArgs e);
 
 public class ItemEventArgs : EventArgs
 {
-    public PlayerItem Item { get; set; }
+    public ViewItem Item { get; set; }
 }

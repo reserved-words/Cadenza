@@ -10,7 +10,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         Item = new();
     }
 
-    public ItemUpdate(ItemType itemType, string id, TInterface model)
+    public ItemUpdate(LibraryItemType itemType, string id, TInterface model)
     {
         ItemType = itemType;
         Id = id;
@@ -23,7 +23,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    public ItemType ItemType { get; set; }
+    public LibraryItemType ItemType { get; set; }
     public string Id { get; set; }
     public string Description { get; set; }
 

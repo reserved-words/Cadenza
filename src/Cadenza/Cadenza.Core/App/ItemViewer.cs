@@ -13,13 +13,13 @@ public class ItemViewer : IItemViewer
 
     public async Task ViewAlbum(Album album)
     {
-        var playerItem = new PlayerItem(SearchableItemType.Album, album.Id, album.Title, album.Source);
+        var playerItem = new ViewItem(PlayerItemType.Album, album.Id, album.Title, album.Source);
         await _app.View(playerItem);
     }
 
-    public async Task ViewSearchResult(SourceSearchableItem item)
+    public async Task ViewSearchResult(SourcePlayerItem item)
     {
-        var playerItem = new PlayerItem(item.Type, item.Id, item.Name, item.Source);
+        var playerItem = new ViewItem(item.Type, item.Id, item.Name, item.Source);
         await _app.View(playerItem);
     }
 }

@@ -38,14 +38,14 @@ public static class Extensions
         };
     }
 
-    public static string GetIcon(this SearchableItemType type)
+    public static string GetIcon(this PlayerItemType type)
 	{
         return type switch
 		{
-			SearchableItemType.Artist => "fas fa-users", // Icons.Material.Filled.PeopleAlt,
-			SearchableItemType.Album => "fas fa-compact-disc", // Icons.Material.Filled.Album,
-            SearchableItemType.Track => "fas fa-music", // Icons.Material.Filled.MusicNote,
-            SearchableItemType.Playlist => "fas fa-list-ol",
+			PlayerItemType.Artist => "fas fa-users", // Icons.Material.Filled.PeopleAlt,
+			PlayerItemType.Album => "fas fa-compact-disc", // Icons.Material.Filled.Album,
+            PlayerItemType.Track => "fas fa-music", // Icons.Material.Filled.MusicNote,
+            PlayerItemType.Playlist => "fas fa-list-ol",
         };
     }
 

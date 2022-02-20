@@ -3,15 +3,15 @@
 
 <MudContainer Spacing="0" Class="fixed-height pa-1">
 
-    @if (Item.Type == SearchableItemType.Artist)
+    @if (Item.Type == PlayerItemType.Artist)
     {
         <ArtistTab Id="@Item.Id" />
     }
-    else if (Item.Type == SearchableItemType.Album)
+    else if (Item.Type == PlayerItemType.Album)
     {
         <AlbumTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
-    else if (Item.Type== SearchableItemType.Track)
+    else if (Item.Type== PlayerItemType.Track)
     {
         <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
@@ -20,5 +20,5 @@
 
 @code {
     [Parameter]
-    public PlayerItem Item { get; set; }
+    public ViewItem Item { get; set; }
 }

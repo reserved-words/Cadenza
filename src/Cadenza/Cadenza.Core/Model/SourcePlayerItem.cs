@@ -1,9 +1,9 @@
 ﻿
 namespace Cadenza.Core.Model;
 
-public class SourceSearchableItem : SearchableItem
+public class SourcePlayerItem : PlayerItem
 {
-    public SourceSearchableItem(LibrarySource? source, SearchableItem item)
+    public SourcePlayerItem(LibrarySource? source, PlayerItem item)
     {
         Type = item.Type;
         Id = item.Id;

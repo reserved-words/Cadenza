@@ -127,7 +127,7 @@ public class AppService : IAppConsumer, IAppController
         _currentPlaylist = null;
     }
 
-    public async Task View(PlayerItem item)
+    public async Task View(ViewItem item)
     {
         await ItemRequested?.Invoke(this, new ItemEventArgs { Item = item });
     }

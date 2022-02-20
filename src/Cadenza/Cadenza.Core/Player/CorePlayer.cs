@@ -80,7 +80,7 @@ public class CorePlayer : IPlayer
 
     private async Task<LibrarySource?> GetCurrentSource()
     {
-        var storedSource = await _storeGetter.GetValue<LibrarySource>(StoreKey.CurrentTrackSource);
+        var storedSource = await _storeGetter.GetValue<LibrarySource?>(StoreKey.CurrentTrackSource);
         if (storedSource == null)
             return null;
 

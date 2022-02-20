@@ -14,19 +14,19 @@
     
     <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
         
-        @if (Type == SearchableItemType.Artist)
+        @if (Type == PlayerItemType.Artist)
         {
             <MenuArtist Class="mt-auto"
                         ArtistId="@Id"
                         Size="@Size.Medium" />        
         }
-        else if (Type == SearchableItemType.Album)
+        else if (Type == PlayerItemType.Album)
         {
             <MenuAlbum Class="mt-auto"
                        AlbumId="@Id"
                        Size="@Size.Medium" />
         }
-        else if (Type == SearchableItemType.Track)
+        else if (Type == PlayerItemType.Track)
         {
             <MenuTrack Class="mt-auto"
                        TrackId="@Id"
@@ -38,7 +38,7 @@
 
 @code {
     [Parameter]
-    public SearchableItemType Type { get; set; }
+    public PlayerItemType Type { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }

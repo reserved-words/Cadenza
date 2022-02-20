@@ -10,7 +10,7 @@ public class SearchBase : ComponentBase
 
     public bool IsLoading { get; set; }
 
-    protected SourceSearchableItem Result { get; set; }
+    protected SourcePlayerItem Result { get; set; }
 
     protected override void OnInitialized()
     {
@@ -30,7 +30,7 @@ public class SearchBase : ComponentBase
         StateHasChanged();
     }
 
-    protected Task<IEnumerable<SourceSearchableItem>> Search(string value)
+    protected Task<IEnumerable<SourcePlayerItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;

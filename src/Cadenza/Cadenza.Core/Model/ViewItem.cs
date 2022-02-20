@@ -1,9 +1,9 @@
 ﻿
 namespace Cadenza.Core.Model;
 
-public struct PlayerItem
+public struct ViewItem
 {
-    public PlayerItem(SearchableItemType type, string id, string name, LibrarySource? source)
+    public ViewItem(PlayerItemType type, string id, string name, LibrarySource? source)
     {
         Type = type;
         Id = id;
@@ -11,7 +11,7 @@ public struct PlayerItem
         Source = source;
     }
 
-    public SearchableItemType Type { get; }
+    public PlayerItemType Type { get; }
     public string Id { get; }
     public string Name { get; }
     public LibrarySource? Source { get; }

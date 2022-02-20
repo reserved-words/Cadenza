@@ -4,6 +4,6 @@ namespace Cadenza.Core;
 
 public interface IItemViewer
 {
-    Task ViewSearchResult(SourceSearchableItem item);
+    Task ViewSearchResult(SourcePlayerItem item);
     Task ViewAlbum(Album album);
 }
