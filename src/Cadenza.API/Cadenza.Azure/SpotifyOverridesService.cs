@@ -59,7 +59,7 @@ public class SpotifyOverridesService : IOverridesService
         {
             Id = o.id,
             Item = o.item,
-            ItemType = o.itemType.Parse<ItemType>(),
+            ItemType = o.itemType.Parse<LibraryItemType>(),
             Property = o.propertyName.Parse<ItemProperty>(),
             OriginalValue = o.originalValue,
             UpdatedValue = o.overrideValue

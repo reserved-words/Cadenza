@@ -16,7 +16,7 @@ internal class OverridesLibrary : IStaticLibrary
 
     private class Identifier
     {
-        public ItemType Type { get; set; }
+        public LibraryItemType Type { get; set; }
         public string Id { get; set; }
 
         public override bool Equals(object obj)
@@ -44,15 +44,15 @@ internal class OverridesLibrary : IStaticLibrary
 
         foreach (var grp in itemOverrides)
         {
-            if (grp.Key.Type == ItemType.Artist)
+            if (grp.Key.Type == LibraryItemType.Artist)
             {
                 library.Artists.Add(GetArtist(grp));
             }
-            else if (grp.Key.Type == ItemType.Album)
+            else if (grp.Key.Type == LibraryItemType.Album)
             {
                 library.Albums.Add(GetAlbum(grp));
             }
-            else if (grp.Key.Type == ItemType.Track)
+            else if (grp.Key.Type == LibraryItemType.Track)
             {
                 library.Tracks.Add(GetTrack(grp));
             }
