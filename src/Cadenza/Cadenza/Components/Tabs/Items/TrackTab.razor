@@ -1,93 +1,68 @@
 ﻿@inherits TrackTabBase
 
 <WhipColumn md="4">
-    <WhipRow RowHeight="@RowHeight.Full">
-    </WhipRow>
-</WhipColumn>
-<WhipColumn md="8">
     <WhipRow RowHeight="@RowHeight.Fixed">
-    </WhipRow>
-    <WhipRow RowHeight="@RowHeight.Fixed">
-    </WhipRow>
-</WhipColumn>
-
-
-@*<MudGrid Class="ma-1">
-
-    <MudItem xs="12" md="4" Class="pa-2">
-
-        @if (Model != null)
-        {
-            <MudCard Class="mb-3" Elevation="2">
-                <MudCardHeader Class="px-3 pt-3 pb-2">
-                    <TrackCardHeader Model="@Model.Track"
+        <MudCard Class="ma-3">
+            <MudCardHeader Class="pa-3">
+                <TrackCardHeader Model="@Model.Track"
                                  OnPlay="OnPlayTrack"
                                  TitleOnly="false" />
-                </MudCardHeader>
-                <MudCardContent Class="px-2 pt-0 pb-2">
-                    <MudDivider Class="pa-0 ma-0 mb-2" />
-                    <TrackTagsView Model="@Model.Track" />
-                </MudCardContent>
-            </MudCard>
-
-            <MudCard Class="mb-3" Elevation="2">
-                <MudCardHeader Class="px-3 pt-3 pb-2">
-                    <ArtistCardHeader Model="@Model.Artist"
+            </MudCardHeader>
+            <MudCardContent Class="px-2 pt-0 pb-2">
+                <MudDivider Class="pa-0 ma-0 mb-2" />
+                <TrackTagsView Model="@Model.Track" />
+            </MudCardContent>
+        </MudCard>
+    </WhipRow>
+    <WhipRow RowHeight="@RowHeight.Fixed">
+        <MudCard Class="ma-3">
+            <MudCardHeader Class="pa-3">
+                <ArtistCardHeader Model="@Model.Artist"
                                   OnPlay="OnPlayArtist"
                                   TitleOnly="false" />
-                </MudCardHeader>
-                <MudCardContent Class="px-2 pt-0 pb-2">
-                    <MudDivider Class="pa-0 ma-0 mb-2" />
-                    <ArtistLinksView Model="@Model.Artist" />
-                </MudCardContent>
-            </MudCard>
-        }
-
-    </MudItem>
-
-    <MudItem xs="12" md="4" Class="pa-2">
-
-        @if (Model != null)
-        {
-            <MudCard Elevation="2">
-                <MudCardHeader Class="px-3 pt-3 pb-2">
-                    <AlbumCardHeader Model="@Model.Album"
+            </MudCardHeader>
+            <MudCardContent Class="px-2 pt-0 pb-2">
+                <MudDivider Class="pa-0 ma-0 mb-2" />
+                <ArtistLinksView Model="@Model.Artist" />
+            </MudCardContent>
+        </MudCard>
+    </WhipRow>
+</WhipColumn>
+<WhipColumn md="4">
+    <WhipRow RowHeight="@RowHeight.Fixed">
+        <MudCard Class="ma-3">
+            <MudCardHeader Class="pa-3">
+                <AlbumCardHeader Model="@Model.Album"
                                  OnPlay="OnPlayAlbum"
                                  TitleOnly="true" />
-                </MudCardHeader>
-                <MudCardContent Class="pa-2">
-                    <AlbumArtworkView Model="@Model.Album"
+            </MudCardHeader>
+            <MudCardContent Class="pa-2">
+                <AlbumArtworkView Model="@Model.Album"
                                   OnPlay="OnPlayAlbum" />
-                    <MudPaper Elevation="0"
-                              Class="pa-0 mt-3 mb-1">
-                        <MudText Typo="@Typo.body2">@Model.Album.ReleaseType.GetDisplayName()</MudText>
-                        <MudText Typo="@Typo.body2">@Model.Album.Year</MudText>
-                        <MudText Typo="@Typo.body2">@Model.Album.DiscPosition(Model.AlbumTrack.Position)</MudText>
-                        <MudText Typo="@Typo.body2">@Model.Album.TrackPosition(Model.AlbumTrack.Position)</MudText>
-                    </MudPaper>
-                </MudCardContent>
-            </MudCard>
-        }
+                <MudPaper Elevation="0"
+                          Class="pa-0 mt-3 mb-1">
+                    <MudText Typo="@Typo.body2">@Model.Album.ReleaseType.GetDisplayName()</MudText>
+                    <MudText Typo="@Typo.body2">@Model.Album.Year</MudText>
+                    <MudText Typo="@Typo.body2">@Model.Album.DiscPosition(Model.AlbumTrack.Position)</MudText>
+                    <MudText Typo="@Typo.body2">@Model.Album.TrackPosition(Model.AlbumTrack.Position)</MudText>
+                </MudPaper>
+            </MudCardContent>
+        </MudCard>
 
-    </MudItem>
-
-    <MudItem xs="12" md="4" Class="pa-2">
-
-        @if (Model != null)
-        {
-            <MudCard Elevation="2">
-                <MudCardHeader Class="px-3 pt-3 pb-2">
-                    <LyricsCardHeader Id="@Model.Track.Id"
+    </WhipRow>
+</WhipColumn>
+<WhipColumn md="4">
+    <WhipRow RowHeight="@RowHeight.Full">
+        <MudCard Class="ma-3">
+            <MudCardHeader Class="pa-3">
+                <LyricsCardHeader Id="@Model.Track.Id"
                                   Source="@Model.Track.Source" />
-                </MudCardHeader>
-                <MudCardContent Class="px-3 pt-0 pb-3">
-                    <MudDivider Class="pa-0 ma-0 mb-3" />
-                    <TrackLyricsView Model="@Model.Track" />
-                </MudCardContent>
-            </MudCard>
-        }
+            </MudCardHeader>
+            <MudCardContent Class="px-3 pt-0 pb-3">
+                <MudDivider Class="pa-0 ma-0 mb-3" />
+                <TrackLyricsView Model="@Model.Track" />
+            </MudCardContent>
+        </MudCard>
 
-    </MudItem>
-
-</MudGrid>
-*@
+    </WhipRow>
+</WhipColumn>
