@@ -5,7 +5,7 @@
     <MudText Typo="Typo.h6">Currently Playing</MudText>
     @if (ShowViewLink)
     {
-        <MudLink Typo="Typo.body1" Style="cursor: pointer;" onclick="@(() => OnView())">@PlaylistName</MudLink>
+        <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
     }
     else
     {

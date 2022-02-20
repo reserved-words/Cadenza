@@ -10,16 +10,8 @@
     </MudOverlay>
     <MudCardHeader Class="pa-2">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">
-                <MudLink Style="cursor: pointer;" onclick="@(() => OnViewTrack())">
-                    @Title
-                </MudLink>
-            </MudText>
-            <MudText Typo="Typo.body1">
-                <MudLink Style="cursor: pointer;" onclick="@(() => OnViewArtist())">
-                    @Artist
-                </MudLink>
-            </MudText>
+            <ActionLink Typo="Typo.h6" OnClick="@OnViewTrack" Text="@Title" />
+            <ActionLink Typo="Typo.body1" OnClick="@OnViewArtist" Text="@Artist" />
         </CardHeaderContent>
         <CardHeaderActions>
             <FavouriteTrack Artist="@Artist" Title="@Title" />
@@ -28,16 +20,8 @@
     <img src="@ArtworkUrl" class="artwork" />
     <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
     <MudCardContent Class="pa-2">
-        <MudText Typo="Typo.body1">
-            <MudLink Style="cursor: pointer;" onclick="@(() => OnViewAlbum())">
-                @AlbumTitle
-            </MudLink>
-        </MudText>
-        <MudText Typo="Typo.body2">
-            <MudLink Style="cursor: pointer;" onclick="@(() => OnViewAlbumArtist())">
-                @AlbumArtist
-            </MudLink>
-        </MudText>
+        <ActionLink Typo="Typo.body1" OnClick="@OnViewAlbum" Text="@AlbumTitle" />
+        <ActionLink Typo="Typo.body2" OnClick="@OnViewAlbumArtist" Text="@AlbumArtist" />
         <MudText Typo="Typo.body2">@ReleaseType</MudText>
         <MudText Typo="Typo.body2">@Year</MudText>
     </MudCardContent>

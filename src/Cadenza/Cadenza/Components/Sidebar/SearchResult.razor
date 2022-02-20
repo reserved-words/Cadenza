@@ -5,7 +5,7 @@
     <MudCardHeader Class="pa-3 pb-0">
         <MudContainer Class="d-flex pa-0 ma-0">
 
-            <MudPaper Elevation="0" 
+            <MudPaper Elevation="0"
                       Class="flex-grow-0 pa-0 ma-0 mr-2">
                 <MudIcon Icon="@Result.Type.GetIcon()"
                          Size="@Size.Medium"
@@ -13,11 +13,7 @@
             </MudPaper>
 
             <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-                <MudText Typo="@Typo.body1">
-                    <MudLink Style="cursor: pointer;" onclick="@(() => OnViewItem())">
-                        @Result.Name
-                    </MudLink>
-                </MudText>
+                <ActionLink Typo="Typo.body1" OnClick="@OnViewItem" Text="@Result.Name" />
                 <MudText Typo="@Typo.body2">@Result.Artist</MudText>
                 <MudText Typo="@Typo.body2">@Result.AlbumDisplay</MudText>
             </MudPaper>
