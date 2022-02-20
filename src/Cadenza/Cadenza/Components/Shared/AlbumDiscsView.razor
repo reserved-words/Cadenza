@@ -2,28 +2,35 @@
 
 @if (Model != null)
 {
-    if (Model.Count == 1)
-    {
-        <MudTabs Class="ma-0 pa-0">
-            <MudTabPanel Text="Tracks">
-                <AlbumDiscView Model="@Model.Single()" />
-            </MudTabPanel>
-        </MudTabs>
-    }
-    else
-    {
-        <MudTabs Class="ma-0 pa-0"
-         Color="@Color.Dark"
-         Rounded="true">
-            @foreach (var disc in Model)
-            {
-                <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-                    <AlbumDiscView Model="@disc" />
-                </MudTabPanel>
-            }
-        </MudTabs>
-    }
+    <MudCard Elevation="2"
+             Class="fixed-height-margin"
+             Style="display: flex; flex-direction: column;">
+
+        <MudCardContent Style="flex-grow: 1;"
+                    Class="fixed-height-scroll pa-1">
+            <MudTabs>
+                @if (Model.Count == 1)
+                {
+                    <MudTabPanel Text="Tracks">
+                        <AlbumDiscView Model="@Model.Single()" />
+                    </MudTabPanel>
+                }
+                else
+                {
+                    @foreach (var disc in Model)
+                    {
+                        <MudTabPanel Text="@("Disc " + disc.DiscNo)">
+                            <AlbumDiscView Model="@disc" />
+                        </MudTabPanel>
+                    }
+                }
+
+            </MudTabs>
+
+        </MudCardContent>
+    </MudCard>
 }
+
 
 @code
 {

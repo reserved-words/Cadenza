@@ -2,16 +2,16 @@
 
 @if (Model != null)
 {
-    <MudCard Class="ma-0 pa-0">
+    <WhipCard Padding="false">
         <WhipTable T="@AlbumTrack"
                    Items="@Model.Tracks">
-        <RowTemplate>
-            <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
-            <MudTd>@context.Title</MudTd>
-            <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
-        </RowTemplate>
-    </WhipTable>
-    </MudCard>
+            <RowTemplate>
+                <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
+                <MudTd>@context.Title</MudTd>
+                <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
+            </RowTemplate>
+        </WhipTable>
+    </WhipCard>
 }
 
 @code {

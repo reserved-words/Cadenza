@@ -1,35 +1,34 @@
 ﻿@inherits AlbumTabBase
 
-<MudGrid Class="ma-1">
+<WhipColumn md="3">
+    @if (Album != null)
+    {
+        <WhipRow RowHeight="@RowHeight.Fixed">
 
-    <MudItem xs="12" md="3" Class="pa-2">
-
-        @if (Album != null)
-        {
-            <MudCard Elevation="2">
-                <MudCardHeader Class="px-3 pt-3 pb-1">
+            <MudCard Class="ma-3">
+                <MudCardHeader Class="pa-3">
                     <AlbumCardHeader Model="@Album"
                                      OnPlay="@OnPlay"
                                      TitleOnly="false" />
                 </MudCardHeader>
-                <MudCardContent Class="pa-2">
+                <MudCardContent Class="px-2 py-0">
                     <AlbumArtworkView Model="@Album"
                                       OnPlay="@OnPlay" />
                 </MudCardContent>
             </MudCard>
-        }
 
-    </MudItem>
-
-    <MudItem xs="12" md="9" Class="pa-2">
-
-        @if (Discs != null)
-        {
+        </WhipRow>
+    }
+</WhipColumn>
+<WhipColumn md="9">
+    @if (Discs != null)
+    {
+        <WhipRow RowHeight="@RowHeight.Stretch">
             <MudCard Class="pa-0" Elevation="2">
                 <AlbumDiscsView Model="@Discs" />
             </MudCard>
-        }
+        </WhipRow>
+    }
+</WhipColumn>
 
-    </MudItem>
 
-</MudGrid>

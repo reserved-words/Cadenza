@@ -1,6 +1,18 @@
 ﻿@inherits TrackTabBase
 
-<MudGrid Class="ma-1">
+<WhipColumn md="4">
+    <WhipRow RowHeight="@RowHeight.Full">
+    </WhipRow>
+</WhipColumn>
+<WhipColumn md="8">
+    <WhipRow RowHeight="@RowHeight.Fixed">
+    </WhipRow>
+    <WhipRow RowHeight="@RowHeight.Fixed">
+    </WhipRow>
+</WhipColumn>
+
+
+@*<MudGrid Class="ma-1">
 
     <MudItem xs="12" md="4" Class="pa-2">
 
@@ -78,3 +90,4 @@
     </MudItem>
 
 </MudGrid>
+*@
