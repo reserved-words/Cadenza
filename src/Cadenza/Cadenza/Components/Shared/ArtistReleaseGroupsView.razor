@@ -2,21 +2,21 @@
 
 @if (Model != null)
 {
+    <MudCard Elevation="2"
+             Class="fixed-height-margin"
+             Style="display: flex; flex-direction: column;">
 
-    <div class="" style="flex-grow: 0;">
-        <MudTabs Class="ma-0 pa-0"
-                 Elevation="0">
-            @foreach (var releaseGroup in Model)
-            {
-                <MudTabPanel Text="@releaseGroup.Group.GetDisplayName()">
-                    <MudContainer Class="fixed-height-margin">
-                        <ArtistReleaseGroupView Model="@releaseGroup"
-                                        OnPlay="@OnPlay" />
-                    </MudContainer>
-                </MudTabPanel>
-            }
-        </MudTabs>
-    </div>
+        <MudCardContent Style="flex-grow: 1;"
+                        Class="fixed-height-scroll pa-1">
+            <MudTabs>
+                @foreach (var group in Model)
+                {
+                    <ArtistReleaseGroupView Model="@group"
+                                            OnPlay="@OnPlay" />
+                }
+            </MudTabs>
+        </MudCardContent>
+    </MudCard>
 }
 
 @code

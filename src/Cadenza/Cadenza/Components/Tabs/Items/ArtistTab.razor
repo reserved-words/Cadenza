@@ -1,35 +1,32 @@
 ﻿@inherits ArtistTabBase
 
-<MudGrid Class="ma-1 fixed-height">
-
-    <MudItem xs="12" md="3" Class="pa-2">
-
+@if (Artist != null)
+{
+    <WhipColumn md="3">
         @if (Artist != null)
         {
-            <MudCard Class="pa-0 ma-0">
-                <MudCardHeader Class="pa-3"
-                           Style="flex-grow: 0;">
-                    <ArtistCardHeader Model="@Artist"
+            <WhipRow RowHeight="@RowHeight.Fixed">
+                <MudCard Class="ma-3" >
+                    <MudCardHeader Class="pa-3">
+                        <ArtistCardHeader Model="@Artist"
                                   OnPlay="OnPlayArtist"
                                   TitleOnly="false" />
-                </MudCardHeader>
-                <MudCardContent Class="px-2 pt-0 pb-2">
-                    <MudDivider Class="pa-0 ma-0 mb-2" />
-                    <ArtistLinksView Model="@Artist" />
-                </MudCardContent>
-            </MudCard>
+                    </MudCardHeader>
+                    <MudCardContent Class="px-2 py-0">
+                        <MudDivider Class="mb-3" />
+                        <ArtistLinksView Model="@Artist" />
+                    </MudCardContent>
+                </MudCard>
+            </WhipRow>
         }
-
-    </MudItem>
-
-    <MudItem xs="12" md="9" Class="fixed-height pa-2" Style="display: flex; flex-direction: column;">
-
+    </WhipColumn>
+    <WhipColumn md="9">
         @if (Releases != null)
         {
+            <WhipRow RowHeight="@RowHeight.Stretch">
                 <ArtistReleaseGroupsView Model="@Releases"
-                                         OnPlay="@OnPlayAlbum" />         
+                                         OnPlay="@OnPlayAlbum" /> 
+            </WhipRow>
         }
-
-    </MudItem>
-
-</MudGrid>
+    </WhipColumn>
+}
