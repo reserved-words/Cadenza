@@ -12,7 +12,7 @@
                 @if (Model.Count == 1)
                 {
                     <MudTabPanel Text="Tracks">
-                        <AlbumDiscView Model="@Model.Single()" />
+                        <AlbumDiscView Model="@Model.Single()" ViewTrack="@ViewTrack" />
                     </MudTabPanel>
                 }
                 else
@@ -20,7 +20,7 @@
                     @foreach (var disc in Model)
                     {
                         <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-                            <AlbumDiscView Model="@disc" />
+                            <AlbumDiscView Model="@disc" ViewTrack="@ViewTrack" />
                         </MudTabPanel>
                     }
                 }
@@ -36,4 +36,7 @@
 {
     [Parameter]
     public List<Disc> Model { get; set; } = new();
+
+    [Parameter]
+    public Func<string, string, Task> ViewTrack { get; set; }
 }

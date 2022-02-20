@@ -7,7 +7,9 @@
                    Items="@Model.Tracks">
             <RowTemplate>
                 <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
-                <MudTd>@context.Title</MudTd>
+                <MudTd>
+                    <ActionLink Typo="@Typo.body1" Text="@context.Title" OnClick="@(() => ViewTrack(context.TrackId, context.Title))" />
+                </MudTd>
                 <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
             </RowTemplate>
         </WhipTable>
@@ -17,4 +19,7 @@
 @code {
     [Parameter]
     public Disc Model { get; set; }
+
+    [Parameter]
+    public Func<string, string, Task> ViewTrack { get; set; }
 }

@@ -67,4 +67,10 @@ public class ItemViewer : IItemViewer
         var playerItem = new ViewItem(PlayerItemType.Track, track.Id, track.Title, track.Source);
         await _app.View(playerItem);
     }
+
+    public async Task ViewTrack(LibrarySource source, string id, string title)
+    {
+        var playerItem = new ViewItem(PlayerItemType.Track, id, title, source);
+        await _app.View(playerItem);
+    }
 }

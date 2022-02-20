@@ -50,5 +50,10 @@ namespace Cadenza.Components.Tabs.Items
         {
             await Viewer.ViewAlbum(Album);
         }
+
+        protected async Task ViewTrack(string id, string title)
+        {
+            await Viewer.ViewTrack(Album.Source, id, title);
+        }
     }
 }
