@@ -11,6 +11,9 @@ public class CurrentlyPlayingTabBase : ComponentBase
     [Inject]
     public IItemPlayer Player { get; set; }
 
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
     public TrackFull Model { get; set; }
 
     public bool NotCurrentlyPlaying => Model == null;
@@ -46,5 +49,20 @@ public class CurrentlyPlayingTabBase : ComponentBase
     protected async Task OnPlayArtist(Artist artist)
     {
         await Player.PlayArtist(artist.Id);
+    }
+
+    protected async Task OnViewTrack()
+    {
+        await Viewer.ViewTrack(Model.Track);
+    }
+
+    protected async Task OnViewAlbum()
+    {
+        await Viewer.ViewAlbum(Model.Album);
+    }
+
+    protected async Task OnViewArtist()
+    {
+        await Viewer.ViewArtist(Model.Artist);
     }
 }

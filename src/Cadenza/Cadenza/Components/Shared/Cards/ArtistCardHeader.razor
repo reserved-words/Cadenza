@@ -3,7 +3,7 @@
     <ItemCardHeader Type="@PlayerItemType.Artist"
                 Id="@Model.Id">
         <ChildContent>
-            <MudText Typo="Typo.h6">@Model.Name</MudText>
+            <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@OnView"></ActionLink>
 
             @if (!TitleOnly)
             {
@@ -24,4 +24,7 @@
 
     [Parameter]
     public bool TitleOnly { get; set; }
+
+    [Parameter]
+    public Func<Task> OnView { get; set; }
 }

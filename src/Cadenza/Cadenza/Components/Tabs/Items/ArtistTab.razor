@@ -8,7 +8,8 @@
                 <MudCardHeader Class="pa-3">
                     <ArtistCardHeader Model="@Artist"
                                   OnPlay="OnPlayArtist"
-                                  TitleOnly="false" />
+                                  TitleOnly="false"
+                                  OnView="OnViewArtist" />
                 </MudCardHeader>
                 <MudCardContent Class="px-2 py-0">
                     <MudDivider Class="mb-3" />
@@ -23,7 +24,7 @@
     {
         <WhipRow RowHeight="@RowHeight.Stretch">
             <ArtistReleaseGroupsView Model="@Releases"
-                                 OnPlay="@OnPlayAlbum" />
+                                     OnPlay="@OnPlayAlbum" />
         </WhipRow>
     }
 </WhipColumn>

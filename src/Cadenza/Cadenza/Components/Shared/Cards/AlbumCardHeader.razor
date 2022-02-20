@@ -1,10 +1,10 @@
 ﻿@if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Album"
-                Id="@Model.Id"
-                Source="@Model.Source">
+                    Id="@Model.Id"
+                    Source="@Model.Source">
         <ChildContent>
-            <MudText Typo="Typo.h6">@Model.Title</MudText>
+            <ActionLink Typo="Typo.h6" Text="@Model.Title" OnClick="@OnView"></ActionLink>
             <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
 
             @if (!TitleOnly)
@@ -25,4 +25,7 @@
 
     [Parameter]
     public bool TitleOnly { get; set; }
+
+    [Parameter]
+    public Func<Task> OnView { get; set; }
 }

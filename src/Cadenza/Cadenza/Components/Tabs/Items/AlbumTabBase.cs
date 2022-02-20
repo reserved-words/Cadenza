@@ -12,6 +12,9 @@ namespace Cadenza.Components.Tabs.Items
         [Inject]
         public IItemPlayer Player { get; set; }
 
+        [Inject]
+        public IItemViewer Viewer { get; set; }
+
         [Parameter]
         public LibrarySource Source { get; set; }
 
@@ -41,6 +44,11 @@ namespace Cadenza.Components.Tabs.Items
             Discs = tracks.GroupByDisc();
 
             StateHasChanged();
+        }
+
+        protected async Task OnViewAlbum()
+        {
+            await Viewer.ViewAlbum(Album);
         }
     }
 }

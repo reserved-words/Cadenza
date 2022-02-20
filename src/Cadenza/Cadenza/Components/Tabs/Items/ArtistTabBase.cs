@@ -12,6 +12,9 @@ namespace Cadenza.Components.Tabs.Items
         [Inject]
         public IItemPlayer Player { get; set; }
 
+        [Inject]
+        public IItemViewer Viewer { get; set; }
+
         [Parameter]
         public string Id { get; set; }
 
@@ -43,6 +46,11 @@ namespace Cadenza.Components.Tabs.Items
             Releases = albums.GroupByReleaseType();
 
             StateHasChanged();
+        }
+
+        protected async Task OnViewArtist()
+        {
+            await Viewer.ViewArtist(Artist);
         }
     }
 }
