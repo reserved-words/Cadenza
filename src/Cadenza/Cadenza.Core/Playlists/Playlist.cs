@@ -15,9 +15,9 @@ public class Playlist : IPlaylist
 
         _allTracks = def.Tracks.ToList();
 
-        _played = new Stack<PlayTrack>(_allTracks);
-        _playing = _allTracks[0];
+        _played = new Stack<PlayTrack>();
         _toPlay = new Stack<PlayTrack>(_allTracks);
+        _playing = _toPlay.Pop();
     }
 
     public bool CurrentIsLast => _toPlay.Count == 0;
