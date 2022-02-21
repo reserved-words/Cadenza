@@ -2,7 +2,6 @@
 using MudBlazor.Services;
 using Cadenza.Database;
 using Cadenza.Source.Local;
-using Cadenza.Source.Spotify;
 using Cadenza.Common;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
@@ -112,24 +111,22 @@ public static class Dependencies
     private static IServiceCollection AddSources(this IServiceCollection services)
     {
         return services
-            .AddSpotifySource<SpotifyConfig>()
+            .AddSpotifySource()
             .AddSpotifyCore()
             .AddLocalSource<HtmlPlayer>()
             .AddMergedRepositories();
     }
 
-    private static IServiceCollection AddSpotifySource<TConfig>(this IServiceCollection services) where TConfig : class, ISpotifyApiConfig
+    private static IServiceCollection AddSpotifySource(this IServiceCollection services)
     {
         return services
-            .AddTransient<ISpotifyApiConfig, TConfig>()
-            .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IApiHelper, ApiHelper>()
+            .AddTransient<IDeviceHelper, DeviceHelper>()
+            .AddTransient<IDevicesApi, DevicesApi>()
             .AddTransient<IPlayerApi, PlayerApi>()
-            .AddTransient<ISpotifyInterop, SpotifyInterop>();
-    }
-
-    private static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)
-    {
-        return services.GetRequiredService<SpotifyPlayer>();
+            .AddTransient<IProgressApi, ProgressApi>()
+            .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
+            .AddTransient<ISpotifyInterop, SpotifyInterop>()
+            .AddTransient<ISourcePlayer, SpotifyPlayer>();
     }
 }
