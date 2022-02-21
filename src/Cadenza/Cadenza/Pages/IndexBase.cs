@@ -24,7 +24,7 @@ public class IndexBase : ComponentBase
 
     protected int SelectedTabIndex = 0;
     
-    //protected bool UpdateIndex = false;
+    private string SwitchToTab = null;
 
     protected List<ViewItem> ItemTabs = new();
 
@@ -40,22 +40,12 @@ public class IndexBase : ComponentBase
     {
         if (ItemTabs.Any(t => t.Id == e.Item.Id))
         {
-            var tab = ItemTabs.Single(t => t.Id == e.Item.Id);
-            var index = ItemTabs.IndexOf(tab);
-            var newIndex = FixedTabCount + index;
-
-            if (SelectedTabIndex == newIndex)
-            {
-                // Display message
-            }
-            else
-            {
-                SelectedTabIndex = FixedTabCount + index;
-            }
+            ShowTab(e.Item.Id);
         }
         else
         {
             ItemTabs.Add(e.Item);
+            SwitchToTab = e.Item.Id;
         }
 
         StateHasChanged();
@@ -71,8 +61,6 @@ public class IndexBase : ComponentBase
 
     protected async Task OnStartup()
     {
-        //IsInitalised = true;
-
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
 
         if (success)
@@ -81,13 +69,6 @@ public class IndexBase : ComponentBase
         }
 
         IsInitalised = success;
-    }
-
-    protected void AddTabCallback()
-    {
-        //_tabs.Add(new TabView { Name = "Dynamic Content", Content = "A new tab", Id = Guid.NewGuid().ToString() });
-        //the tab becomes available after it is rendered. Hence, we can't set the index here
-        //UpdateIndex = true;
     }
 
     protected void CloseTabCallback(MudTabPanel panel)
@@ -102,11 +83,28 @@ public class IndexBase : ComponentBase
 
     protected override void OnAfterRender(bool firstRender)
     {
-        //if (UpdateIndex == true)
-        //{
-        //    SelectedTabIndex = (4 + ItemTabs.Count) - 1;
-        //    StateHasChanged();
-        //    UpdateIndex = false;
-        //}
+        if (SwitchToTab != null)
+        {
+            ShowTab(SwitchToTab);
+            SwitchToTab = null;
+        } 
+    }
+
+    private void ShowTab(string id)
+    {
+        var tab = ItemTabs.Single(t => t.Id == id);
+        var index = ItemTabs.IndexOf(tab);
+        var newIndex = FixedTabCount + index;
+
+        if (SelectedTabIndex == newIndex)
+        {
+            // Display message
+        }
+        else
+        {
+            SelectedTabIndex = FixedTabCount + index;
+        }
+
+        StateHasChanged();
     }
 }
