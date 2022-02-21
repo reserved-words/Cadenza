@@ -16,7 +16,8 @@
                                           OnPlay="@OnPlay" />
                                 <MudCardContent Class="pa-2">
                                     <AlbumSummaryView Model="@album"
-                                              OnPlay="@OnPlay" />
+                                                      OnPlay="@OnPlay"
+                                                      OnView="@OnView" />
                                 </MudCardContent>
                             </MudCard>
 
@@ -34,4 +35,7 @@
 
     [Parameter]
     public Func<Album, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnView { get; set; }
 }

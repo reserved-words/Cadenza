@@ -8,13 +8,13 @@
             <MudCard Class="ma-3">
                 <MudCardHeader Class="pa-3">
                     <AlbumCardHeader Model="@Album"
-                                     OnPlay="@OnPlay"
-                                     TitleOnly="false"
-                                     OnView="OnViewAlbum" />
+                                 OnPlay="@OnPlay"
+                                 TitleOnly="false"
+                                 OnView="OnViewAlbum" />
                 </MudCardHeader>
                 <MudCardContent Class="px-2 py-0">
                     <AlbumArtworkView Model="@Album"
-                                      OnPlay="@OnPlay" />
+                                  OnPlay="@OnPlay" />
                 </MudCardContent>
             </MudCard>
 
@@ -25,9 +25,7 @@
     @if (Discs != null)
     {
         <WhipRow RowHeight="@RowHeight.Full">
-            <MudCard Class="pa-0" Elevation="2">
-                <AlbumDiscsView Model="@Discs" ViewTrack="@ViewTrack" />
-            </MudCard>
+            <AlbumDiscsView Model="@Discs" ViewTrack="@ViewTrack" />
         </WhipRow>
     }
 </WhipColumn>

@@ -2,7 +2,7 @@
 {
     <MudContainer Class="d-flex pa-0 ma-0">
         <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-            <MudText Typo="Typo.body1">@Model.Title</MudText>
+            <ActionLink Typo="Typo.body1" Text="@Model.Title" OnClick="@(() => OnView(Model))"></ActionLink>
             <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
             <MudText Typo="Typo.body2">@Model.Year</MudText>
         </MudPaper>
@@ -18,4 +18,7 @@
 
     [Parameter]
     public Func<Album, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnView { get; set; }
 }

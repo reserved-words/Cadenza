@@ -12,7 +12,8 @@
                 @foreach (var group in Model)
                 {
                     <ArtistReleaseGroupView Model="@group"
-                                            OnPlay="@OnPlay" />
+                                            OnPlay="@OnPlay"
+                                            OnView="@OnView" />
                 }
             </MudTabs>
         </MudCardContent>
@@ -26,4 +27,7 @@
 
     [Parameter]
     public Func<Album, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnView { get; set; }
 }

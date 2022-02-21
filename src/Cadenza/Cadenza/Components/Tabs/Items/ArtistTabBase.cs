@@ -52,5 +52,10 @@ namespace Cadenza.Components.Tabs.Items
         {
             await Viewer.ViewArtist(Artist);
         }
+
+        protected async Task OnViewAlbum(Album album)
+        {
+            await Viewer.ViewAlbum(album);
+        }
     }
 }

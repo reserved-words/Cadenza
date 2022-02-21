@@ -2,18 +2,17 @@
 
 @if (Model != null)
 {
-    <WhipCard Padding="false">
-        <WhipTable T="@AlbumTrack"
-                   Items="@Model.Tracks">
-            <RowTemplate>
-                <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
-                <MudTd>
-                    <ActionLink Typo="@Typo.body1" Text="@context.Title" OnClick="@(() => ViewTrack(context.TrackId, context.Title))" />
-                </MudTd>
-                <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
-            </RowTemplate>
-        </WhipTable>
-    </WhipCard>
+    <WhipTable T="@AlbumTrack"
+           Items="@Model.Tracks">
+        <RowTemplate>
+            <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
+            <MudTd>
+                <ActionLink Typo="@Typo.body1" Text="@context.Title" OnClick="@(() => ViewTrack(context.TrackId, context.Title))" />
+            </MudTd>
+            <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
+        </RowTemplate>
+    </WhipTable>
+
 }
 
 @code {
