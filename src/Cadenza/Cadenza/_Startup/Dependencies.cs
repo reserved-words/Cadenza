@@ -10,6 +10,7 @@ using Cadenza.API.Wrapper.Spotify;
 using Cadenza.API.Wrapper.LastFM;
 using Cadenza.API.Wrapper.Core;
 using Cadenza.Library;
+using Cadenza.Source.Spotify.Player;
 
 namespace Cadenza;
 
@@ -115,5 +116,20 @@ public static class Dependencies
             .AddSpotifyCore()
             .AddLocalSource<HtmlPlayer>()
             .AddMergedRepositories();
+    }
+
+    private static IServiceCollection AddSpotifySource<TConfig>(this IServiceCollection services) where TConfig : class, ISpotifyApiConfig
+    {
+        return services
+            .AddTransient<ISpotifyApiConfig, TConfig>()
+            .AddTransient<ISourcePlayer, SpotifyPlayer>()
+            .AddTransient<IApiHelper, ApiHelper>()
+            .AddTransient<IPlayerApi, PlayerApi>()
+            .AddTransient<ISpotifyInterop, SpotifyInterop>();
+    }
+
+    private static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)
+    {
+        return services.GetRequiredService<SpotifyPlayer>();
     }
 }

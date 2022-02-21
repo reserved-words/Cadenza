@@ -1,6 +1,5 @@
 ﻿using Cadenza.API.Wrapper.Spotify;
 using Cadenza.Common;
-using Cadenza.Source.Spotify.Player;
 using Cadenza.Utilities;
 using Microsoft.JSInterop;
 
@@ -14,14 +13,12 @@ namespace Cadenza
         private readonly IJSRuntime _jsRuntime;
         private readonly IConnectorController _connectorController;
         private readonly IAuthoriser _authoriser;
-        private readonly ISpotifyInterop _interop;
         private readonly IInitialiser _initialiser;
-        private readonly IPlayerApi _player;
 
         private string RedirectUri => _config.GetSection("Spotify").GetValue<string>("RedirectUri");
 
         public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter, IStoreSetter storeSetter, IConfiguration config,
-            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, ISpotifyInterop interop, IInitialiser initialiser, IPlayerApi player)
+            IJSRuntime jsRuntime, IConnectorController connectorController, IAuthoriser lastFmAuthoriser, IInitialiser initialiser)
         {
             _storeGetter = storeGetter;
             _storeSetter = storeSetter;
@@ -29,9 +26,7 @@ namespace Cadenza
             _jsRuntime = jsRuntime;
             _connectorController = connectorController;
             _authoriser = lastFmAuthoriser;
-            _interop = interop;
             _initialiser = initialiser;
-            _player = player;
         }
 
         public SubTask GetConnectionTask()
@@ -48,12 +43,11 @@ namespace Cadenza
 
             subTask.AddSteps(
                  "Getting auth URL",
-                 "Initialising player",
+                 "Refreshing session",
                  (ct) => GetAuthUrl(),
-                 (at, ct) => InitialisePlayer(at, ct),
+                 (at, ct) => RefreshSession(at),
                  ("Authenticating", (url, ct) => Authorise(url, ct)),
-                 ("Creating session", (code, ct) => CreateSession(code)),
-                 ("Refreshing session", (at, ct) => RefreshSession(at)));
+                 ("Creating session", (code, ct) => CreateSession(code)));
 
             subTask.AddStep("Populating library", Populate);
 
@@ -67,19 +61,12 @@ namespace Cadenza
 
             if (accessToken != null && accessToken.Updated > DateTime.Now.AddHours(-1))
             {
-                var devices = await _player.GetDevices();
-                var device = devices?.Devices.SingleOrDefault(d => d.name == "Cadenza");
-                if (device != null)
-                {
-                    await _storeSetter.SetValue(StoreKey.SpotifyDeviceId, device.id);
-                    await Populate();
-                    return false;
-                }
+                await Populate();
+                return false;
             }
 
             await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
             await _storeSetter.Clear(StoreKey.SpotifyCode);
-            await _storeSetter.Clear(StoreKey.SpotifyDeviceId);
             await _storeSetter.Clear(StoreKey.SpotifyState);
             await _storeSetter.Clear(StoreKey.SpotifyRefreshToken);
             return true;
@@ -125,18 +112,6 @@ namespace Cadenza
         private async Task NavigateToNewTab(string url)
         {
             await _jsRuntime.InvokeVoidAsync("open", url, "_blank");
-        }
-
-        public async Task InitialisePlayer(string accessToken, CancellationToken cancellationToken)
-        {
-            //var connected = await _interop.ConnectPlayer(accessToken);
-            //if (!connected)
-            //    throw new Exception("Failed to connect to Spotify player");
-
-            //var deviceId = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyDeviceId, 60, cancellationToken);
-
-            //if (deviceId == null)
-            //    throw new Exception("No Device ID received - Spotify player not ready");
         }
 
         private async Task Populate()

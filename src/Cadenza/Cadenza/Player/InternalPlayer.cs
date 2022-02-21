@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Source.Spotify.Player;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Source.Spotify.Player;
 
 public class InternalPlayer : IAudioPlayer
 {

@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.11" />
     <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.9" />
+    <PackageReference Include="Cadenza.API.Wrapper.Spotify" Version="1.0.20" />
     <PackageReference Include="Cadenza.Domain" Version="1.0.26" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
