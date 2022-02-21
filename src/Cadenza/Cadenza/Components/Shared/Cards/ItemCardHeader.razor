@@ -13,23 +13,25 @@
     </MudPaper>
     
     <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
-        
+
         @if (Type == PlayerItemType.Artist)
         {
             <MenuArtist Class="mt-auto"
-                        ArtistId="@Id"
+                        Id="@Id"
                         Size="@Size.Large" />        
         }
         else if (Type == PlayerItemType.Album)
         {
             <MenuAlbum Class="mt-auto"
-                       AlbumId="@Id"
+                       Source="@Source.Value"
+                       Id="@Id"
                        Size="@Size.Large" />
         }
         else if (Type == PlayerItemType.Track)
         {
             <MenuTrack Class="mt-auto"
-                       TrackId="@Id"
+                       Source="@Source.Value"
+                       Id="@Id"
                        Size="@Size.Large" />        
         }
 

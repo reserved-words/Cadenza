@@ -5,11 +5,11 @@ public class MenuTrackBase : ComponentBase
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    // [Inject]
-    // public ILibraryController Library { get; set; }
-
     [Inject]
     public INotificationService Alert { get; set; }
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
 
     [Parameter]
     public string Class { get; set; } = "";
@@ -21,7 +21,10 @@ public class MenuTrackBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public string TrackId { get; set; }
+    public string Id { get; set; }
+
+    [Parameter]
+    public LibrarySource Source { get; set; }
 
     public async Task OnEdit()
     {
@@ -42,5 +45,10 @@ public class MenuTrackBase : ComponentBase
         //{
         //    Alert.Error("Error updating track");
         //}
+    }
+
+    public async Task OnPlay()
+    {
+        await Player.PlayTrack(Source, Id);
     }
 }
