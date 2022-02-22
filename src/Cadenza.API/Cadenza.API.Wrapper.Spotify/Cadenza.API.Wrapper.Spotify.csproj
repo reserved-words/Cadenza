@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Library" Version="1.0.57" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.58" />
   </ItemGroup>
 
   <ItemGroup>
