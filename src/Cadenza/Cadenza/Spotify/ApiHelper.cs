@@ -19,9 +19,8 @@ public class ApiHelper : IApiHelper
 
         var response = await _httpClient.Put(url, authHeader, data);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
-            throw new UnauthorizedApiException();
-        
+        CheckForCommonErrors(response);
+
         var error = !response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<ApiError>()
             : null;
@@ -34,8 +33,7 @@ public class ApiHelper : IApiHelper
         var authHeader = GetAuthHeader(accessToken);
         var response = await _httpClient.Get(url, authHeader);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
-            throw new UnauthorizedApiException();
+        CheckForCommonErrors(response);
 
         if (response.IsSuccessStatusCode)
         {
@@ -50,6 +48,16 @@ public class ApiHelper : IApiHelper
             var error = await response.Content.ReadFromJsonAsync<ApiError>();
             return new ApiResponse<T>(error);
         }
+    }
+
+    private void CheckForCommonErrors(HttpResponseMessage response)
+    {
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+            throw new UnauthorizedApiException();
+        
+        // actually in some cases this could mean something else - narrow down more
+        if (response.StatusCode == HttpStatusCode.NotFound)
+            throw new DeviceNotFoundException();
     }
 
     private static string GetAuthHeader(string accessToken)

@@ -15,9 +15,11 @@ public class DeviceHelper : IDeviceHelper
         _api = api;
     }
 
-    public async Task<string> GetDeviceId(string accessToken)
+    public async Task<string> GetDeviceId(string accessToken, bool forceCreateNew)
     {
-        var deviceId = await GetCurrentDeviceId(accessToken);
+        var deviceId = forceCreateNew
+            ? null
+            : await GetCurrentDeviceId(accessToken);
 
         if (deviceId == null)
         {

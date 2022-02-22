@@ -68,13 +68,18 @@ public static class ItemExtensions
 
     public static string DiscPosition(this AlbumInfo album, AlbumTrackPosition position)
     {
-        return $"Disc {position.DiscNo} of {album.DiscCount}";
+        var discNo = position.DiscNo == 0 ? 1 : position.DiscNo;
+        var discCount = album.DiscCount == 0 ? 1 : album.DiscCount;
+        return $"Disc {discNo} of {discCount}";
     }
 
     public static string TrackPosition(this AlbumInfo album, AlbumTrackPosition position)
     {
-        var trackCountIndex = position.DiscNo - 1;
-        return $"Track {position.TrackNo} of {album.TrackCounts[trackCountIndex]}";
+        var trackCountIndex = (position.DiscNo == 0 ? 1 : position.DiscNo) - 1;
+
+        return album.TrackCounts.Count > trackCountIndex
+                ? $"Track {position.TrackNo} of {album.TrackCounts[trackCountIndex]}"
+                : $"Track {position.TrackNo} of ?";
     }
 
     private static string AsList(params string[] elements)

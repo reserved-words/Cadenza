@@ -21,30 +21,40 @@ public class PlayerApi : IPlayerApi
 
     public async Task<TrackProgress> Stop(string accessToken)
     {
-        var deviceId = await _devicesApi.GetDeviceId(accessToken);
         var progress = await _progressApi.GetProgress(accessToken);
-        await _api.Put(string.Format(PauseUrlFormat, deviceId), accessToken);
+        await TryPut(PauseUrlFormat, accessToken);
         return progress;
     }
 
     public async Task Play(string trackId, string accessToken)
     {
-        var deviceId = await _devicesApi.GetDeviceId(accessToken);
-        await _api.Put(string.Format(PlayUrlFormat, deviceId), accessToken, GetTrackData(trackId));
+        await TryPut(PlayUrlFormat, accessToken, GetTrackData(trackId));
     }
 
     public async Task<TrackProgress> Pause(string accessToken)
     {
-        var deviceId = await _devicesApi.GetDeviceId(accessToken);
-        await _api.Put(string.Format(PauseUrlFormat, deviceId), accessToken);
+        await TryPut(PauseUrlFormat, accessToken);
         return await _progressApi.GetProgress(accessToken);
     }
 
     public async Task<TrackProgress> Resume(string accessToken)
     {
-        var deviceId = await _devicesApi.GetDeviceId(accessToken);
-        await _api.Put(string.Format(PlayUrlFormat, deviceId), accessToken, null);
+        await TryPut(PlayUrlFormat, accessToken);
         return await _progressApi.GetProgress(accessToken);
+    }
+
+    private async Task TryPut(string urlFormat, string accessToken, object data = null)
+    {
+        try
+        {
+            var deviceId = await _devicesApi.GetDeviceId(accessToken, false);
+            await _api.Put(string.Format(urlFormat, deviceId), accessToken, data);
+        }
+        catch (DeviceNotFoundException)
+        {
+            var deviceId = await _devicesApi.GetDeviceId(accessToken, true);
+            await _api.Put(string.Format(urlFormat, deviceId), accessToken, data);
+        }
     }
 
     private static object GetTrackData(string trackId)

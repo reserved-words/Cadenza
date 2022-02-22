@@ -2,5 +2,5 @@
 
 public interface IDeviceHelper
 {
-    Task<string> GetDeviceId(string accessToken);
+    Task<string> GetDeviceId(string accessToken, bool forceCreateNew);
 }
