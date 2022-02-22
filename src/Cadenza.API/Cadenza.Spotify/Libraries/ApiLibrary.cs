@@ -76,7 +76,7 @@ public class ApiLibrary : IStaticLibrary
                 ArtistId = albumArtistInfo.Id,
                 ArtistName = albumArtistInfo.Name,
                 Title = playlist.name,
-                ReleaseType = ReleaseType.Album,
+                ReleaseType = ReleaseType.Playlist,
                 Year = "",
                 ArtworkUrl = playlist.images.FirstOrDefault()?.url,
                 DiscCount = 1,

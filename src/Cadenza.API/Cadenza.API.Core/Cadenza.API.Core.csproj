@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.27" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.28" />
   </ItemGroup>
 
 </Project>

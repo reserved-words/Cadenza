@@ -91,7 +91,7 @@ public static class Routing
 
         app.MapGet(ApiEndpoints.Spotify.Track, (string id) => trackRepository.GetTrack(id));
         app.MapGet(ApiEndpoints.Spotify.Album, (string id) => albumRepository.GetAlbum(id));
-        app.MapGet(ApiEndpoints.Spotify.AlbumTracks, (string id) => albumRepository.GetAlbumTracks(id));
+        app.MapGet(ApiEndpoints.Spotify.AlbumTracks, (string id) => albumRepository.GetTracks(id));
 
         var azure = app.Services.GetRequiredService<SpotifyOverridesService>();
         app.MapGet(ApiEndpoints.Spotify.GetOverrides, () => azure.GetOverrides());
