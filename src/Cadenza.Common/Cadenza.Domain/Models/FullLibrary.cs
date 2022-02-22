@@ -9,4 +9,8 @@ public class FullLibrary
     public List<AlbumInfo> Albums { get; set; } = new();
 
     public List<AlbumTrackLink> AlbumTrackLinks { get; set; } = new();
+
+    public List<Playlist> Playlists { get; set; } = new();
+
+    public List<PlaylistTrackLink> PlaylistTrackLinks { get; set; } = new();
 }

@@ -43,6 +43,8 @@ public class Library : ILibrary
             result.Albums = Merge(result.Albums, source.Albums, a => a.Id, (a1, a2) => _merger.MergeAlbum(a1, a2, mergeMode));
             result.Tracks = Merge(result.Tracks, source.Tracks, a => a.Id, (a1, a2) => _merger.MergeTrack(a1, a2, mergeMode));
             result.AlbumTrackLinks = Merge(result.AlbumTrackLinks, source.AlbumTrackLinks, a => a.TrackId, (a1, a2) => _merger.MergeAlbumTrackLink(a1, a2, mergeMode));
+            result.Playlists = Merge(result.Playlists, source.Playlists, a => a.Id, (a1, a2) => _merger.MergePlaylist(a1, a2, mergeMode));
+            result.PlaylistTrackLinks = Merge(result.PlaylistTrackLinks, source.PlaylistTrackLinks, a => a.PlaylistId, (a1, a2) => _merger.MergePlaylistTrackLink(a1, a2, mergeMode));
         }
 
         return result;

@@ -19,7 +19,7 @@ public class BaseAlbumRepository : IBaseAlbumRepository
             : null;
     }
 
-    public async Task<List<AlbumTrack>> GetTracks(string id)
+    public async Task<List<AlbumTrack>> GetAlbumTracks(string id)
     {
         return _albumTracks.TryGetValue(id, out List<AlbumTrack> tracks)
             ? tracks

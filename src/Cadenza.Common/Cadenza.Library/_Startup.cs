@@ -48,6 +48,7 @@ public static class _Startup
         services.AddSingleton<IBasePlayTrackRepository, BasePlayTrackRepository>();
         services.AddSingleton<IBaseSearchRepository, BaseSearchRepository>();
         services.AddSingleton<IBaseTrackRepository, BaseTrackRepository>();
+        services.AddSingleton<IBasePlaylistRepository, BasePlaylistRepository>();
         return services;
     }
 
@@ -62,7 +63,8 @@ public static class _Startup
             .AddTransient<ISourceAlbumRepository>(sp => GetApiRepository<T>(source, sp))
             .AddTransient<ISourcePlayTrackRepository>(sp => GetApiRepository<T>(source, sp))
             .AddTransient<ISourceSearchRepository>(sp => GetApiRepository<T>(source, sp))
-            .AddTransient<ISourceTrackRepository>(sp => GetApiRepository<T>(source, sp));
+            .AddTransient<ISourceTrackRepository>(sp => GetApiRepository<T>(source, sp))
+            .AddTransient<ISourcePlaylistRepository>(sp => GetApiRepository<T>(source, sp));
     }
 
     private static ApiRepository GetApiRepository<T>(LibrarySource source, IServiceProvider sp) where T : class, IApiRepositorySettings
@@ -79,6 +81,7 @@ public static class _Startup
             .AddTransient<IMergedArtistRepository, MergedArtistRepository>()
             .AddTransient<IMergedAlbumRepository, MergedAlbumRepository>()
             .AddTransient<IMergedPlayTrackRepository, MergedPlayTrackRepository>()
-            .AddTransient<IMergedTrackRepository, MergedTrackRepository>();
+            .AddTransient<IMergedTrackRepository, MergedTrackRepository>()
+            .AddTransient<IMergedPlaylistRepository, MergedPlaylistRepository>();
     }
 }

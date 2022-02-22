@@ -2,11 +2,10 @@
 
 public interface IMerger
 {
-    void MergeArtist(ArtistInfo artist, ArtistInfo update, MergeMode mode);
-    void MergeAlbum(AlbumInfo album, AlbumInfo update, MergeMode mode);
-    void MergeTrack(TrackInfo newTrack, TrackInfo existingTrack, MergeMode mode);
+    void MergeArtist(ArtistInfo existing, ArtistInfo update, MergeMode mode);
+    void MergeAlbum(AlbumInfo existing, AlbumInfo update, MergeMode mode);
+    void MergeTrack(TrackInfo existing, TrackInfo existingTrack, MergeMode mode);
     void MergeAlbumTrackLink(AlbumTrackLink existing, AlbumTrackLink update, MergeMode mode);
-
-    void MergeArtistTrack(ArtistLinks artistLinks, string trackId);
-    void MergeArtistAlbum(ArtistLinks artistLinks, string albumId);
+    void MergePlaylist(Playlist existing, Playlist update, MergeMode mode);
+    void MergePlaylistTrackLink(PlaylistTrackLink existing, PlaylistTrackLink update, MergeMode mode);
 }
