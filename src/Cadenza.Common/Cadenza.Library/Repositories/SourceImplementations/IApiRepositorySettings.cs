@@ -22,7 +22,5 @@
         string Track { get; }
         string Album { get; }
         string AlbumTracks { get; }
-        string Playlist { get; }
-        string PlaylistTracks { get; }
     }
 }

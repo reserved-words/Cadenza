@@ -56,17 +56,14 @@ public class Merger : IMerger
         existing.Position.TrackNo = Merge(existing.Position.TrackNo, update.Position.TrackNo, mode);
     }
 
-    public void MergePlaylist(Playlist existing, Playlist update, MergeMode mode)
+    public void MergeArtistAlbum(ArtistLinks artistLinks, string albumId)
     {
-        existing.Id = Merge(existing.Id, update.Id, mode);
-        existing.Name = Merge(existing.Name, update.Name, mode);
-        existing.ArtworkUrl = Merge(existing.ArtworkUrl, update.ArtworkUrl, mode);
+        artistLinks.Albums.AddIfNotPresent(albumId);
     }
 
-    public void MergePlaylistTrackLink(PlaylistTrackLink existing, PlaylistTrackLink update, MergeMode mode)
+    public void MergeArtistTrack(ArtistLinks artistLinks, string trackId)
     {
-        existing.PlaylistId = Merge(existing.PlaylistId, update.PlaylistId, mode);
-        existing.Position = Merge(existing.Position, update.Position, mode);
+        artistLinks.Tracks.AddIfNotPresent(trackId);
     }
 
     private int Merge(int original, int update, MergeMode mode)
