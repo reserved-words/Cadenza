@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Interop\" />
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/license-report-config.json" /></VisualStudio></ProjectExtensions>

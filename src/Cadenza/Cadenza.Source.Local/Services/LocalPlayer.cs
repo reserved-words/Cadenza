@@ -7,13 +7,15 @@ namespace Cadenza.Source.Local;
 
 internal class LocalPlayer : ISourcePlayer
 {
-    private readonly IOptions<LocalApiSettings> _settings;
+    private readonly LocalApiSettings _settings;
     private readonly IAudioPlayer _audioPlayer;
+    private readonly IUrl _url;
 
-    public LocalPlayer(IAudioPlayer audioPlayer, IOptions<LocalApiSettings> settings)
+    public LocalPlayer(IAudioPlayer audioPlayer, IOptions<LocalApiSettings> settings, IUrl url)
     {
         _audioPlayer = audioPlayer;
-        _settings = settings;
+        _settings = settings.Value;
+        _url = url;
     }
 
     public LibrarySource Source => LibrarySource.Local;
@@ -30,7 +32,7 @@ internal class LocalPlayer : ISourcePlayer
 
     public async Task Play(string id)
     {
-        var uri = string.Format(_settings.GetApiEndpoint(e => e.PlayTrackUrl), id);
+        var uri = string.Format(_url.Build(_settings.BaseUrl, _settings.Endpoints.PlayTrackUrl), id);
         await _audioPlayer.Play(uri);
     }
 
