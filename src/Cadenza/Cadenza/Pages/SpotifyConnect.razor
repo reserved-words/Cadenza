@@ -1,5 +1,44 @@
 ﻿@page "/SpotifyConnect"
 
-@inherits SpotifyConnectBase
+@using Microsoft.AspNetCore.WebUtilities
 
 <p>Connecting to Spotify...</p>
+
+@code 
+{
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Inject]
+    public IStoreGetter StoreGetter { get; set; }
+
+    [Inject]
+    public IStoreSetter StoreSetter { get; set; }
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var code = QueryHelpers.ParseQuery(CurrentUri.Query).GetValueOrDefault("code").SingleOrDefault();
+        var state = QueryHelpers.ParseQuery(CurrentUri.Query).GetValueOrDefault("state").SingleOrDefault();
+
+        var storedState = await StoreGetter.GetValue<string>(StoreKey.SpotifyState);
+
+        if (storedState.Value == state)
+        {
+            await StoreSetter.SetValue(StoreKey.SpotifyCode, code);
+        }
+
+        await StoreSetter.Clear(StoreKey.SpotifyState);
+
+        await CloseTab();
+    }
+
+    public async Task CloseTab()
+    {
+        await JSRuntime.InvokeAsync<object>("close");
+    }
+}

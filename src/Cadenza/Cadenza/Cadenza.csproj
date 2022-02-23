@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Interop\" />
     <Folder Include="_Config\" />
   </ItemGroup>
 
