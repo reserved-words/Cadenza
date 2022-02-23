@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
-    <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.csproj" />
     <ProjectReference Include="..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />

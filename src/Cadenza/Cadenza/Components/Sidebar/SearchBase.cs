@@ -1,5 +1,4 @@
 ﻿using Cadenza.Core.Model;
-using Cadenza.Database;
 
 namespace Cadenza.Components.Sidebar;
 

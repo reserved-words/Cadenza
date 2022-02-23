@@ -1,7 +1,6 @@
 ﻿using Cadenza.Core.Model;
-using Cadenza.Domain;
 
-namespace Cadenza.Database;
+namespace Cadenza.Core;
 
 
 public class SearchRepositoryCache

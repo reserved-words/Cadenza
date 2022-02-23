@@ -1,5 +1,4 @@
-﻿using Cadenza.Database;
-using Cadenza.Library;
+﻿using Cadenza.Library;
 
 namespace Cadenza;
 
