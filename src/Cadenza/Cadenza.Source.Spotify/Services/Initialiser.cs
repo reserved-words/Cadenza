@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core;
 using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Settings;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 

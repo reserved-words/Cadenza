@@ -4,7 +4,6 @@ using Cadenza.Source.Local;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
 using Cadenza.Library;
-using Cadenza.Source.Spotify.Player;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Player;
 using Cadenza.Core.App;
@@ -37,7 +36,7 @@ public static class Dependencies
             .AddUIHelpers()
             .AddTimers()
             .AddAPIWrapper()
-            .AddLastFm()
+            .AddLastFm("LastFmApi")
             .AddSources();
 
         builder.Services
@@ -58,10 +57,7 @@ public static class Dependencies
     {
         return services
             .AddTransient<IStartupConnectService, StartupConnectService>()
-            .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, LastFmConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, LocalLibraryConnectionTaskBuilder>()
-            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>();
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
@@ -101,35 +97,14 @@ public static class Dependencies
             .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
     }
 
-    private static IServiceCollection AddLastFm(this IServiceCollection services)
-    {
-        return services.AddTransient<IPlayTracker, Scrobbler>()
-            .AddTransient<IFavouritesConsumer, Favourites>()
-            .AddTransient<IFavouritesController, Favourites>()
-            .AddLastFMCore();
-    }
-
     private static IServiceCollection AddSources(this IServiceCollection services)
     {
         return services
-            .AddSpotifySource()
-            .AddSpotifyCore()
-            .AddLocalSource<HtmlPlayer>()
+            .AddSpotifySource("SpotifyApi")
+            .AddLocalSource<HtmlPlayer>("LocalApi")
             .AddMergedRepositories();
     }
 
-    private static IServiceCollection AddSpotifySource(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IApiHelper, ApiHelper>()
-            .AddTransient<IDeviceHelper, DeviceHelper>()
-            .AddTransient<IDevicesApi, DevicesApi>()
-            .AddTransient<IPlayerApi, PlayerApi>()
-            .AddTransient<IProgressApi, ProgressApi>()
-            .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
-            .AddTransient<ISpotifyInterop, SpotifyInterop>()
-            .AddTransient<ISourcePlayer, SpotifyPlayer>();
-    }
 
     public static IServiceCollection ConfigureCoreAPI(this IServiceCollection services, IConfiguration config, string sectionPath)
     {

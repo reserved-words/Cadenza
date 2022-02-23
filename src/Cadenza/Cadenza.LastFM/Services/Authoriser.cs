@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
-public class Authoriser : IAuthoriser
+internal class Authoriser : IAuthoriser
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;

@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace Cadenza.LastFM;
 
-public class History : IHistory
+internal class History : IHistory
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;

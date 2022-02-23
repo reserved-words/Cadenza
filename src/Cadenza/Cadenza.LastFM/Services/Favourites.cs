@@ -7,7 +7,7 @@ using System.Net.Http.Json;
 
 namespace Cadenza.LastFM;
 
-public class Favourites : IFavouritesConsumer, IFavouritesController
+internal class Favourites : IFavouritesConsumer, IFavouritesController
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;

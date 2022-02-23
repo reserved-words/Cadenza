@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;
 
-public class LocalPlayer : ISourcePlayer
+internal class LocalPlayer : ISourcePlayer
 {
     private readonly IOptions<LocalApiSettings> _settings;
     private readonly IAudioPlayer _audioPlayer;

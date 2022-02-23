@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Cadenza.LastFM;
 
-public class Scrobbler : IPlayTracker
+internal class Scrobbler : IPlayTracker
 {
     private readonly IHttpHelper _http;
     private readonly IUrl _url;

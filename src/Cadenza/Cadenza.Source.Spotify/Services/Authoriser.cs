@@ -1,6 +1,7 @@
 ﻿using Cadenza.Core;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Model;
+using Cadenza.Source.Spotify.Settings;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
@@ -67,7 +68,7 @@ internal class Authoriser : IAuthoriser
 
     private async Task<string> GetTokenUrl()
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.TokenUrl);
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TokenUrl);
         return await _http.GetString(url);
     }
 }
