@@ -1,7 +1,7 @@
 ﻿using Cadenza.Domain;
 using Cadenza.Utilities;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Extensions;
 
 public static class ReleaseTypeExtensionMethods
 {

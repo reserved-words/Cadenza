@@ -1,7 +1,7 @@
-﻿using Cadenza.Core;
+﻿using Cadenza.Core.Common;
 using Cadenza.Core.Model;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Extensions;
 
 public static class ItemExtensions
 {

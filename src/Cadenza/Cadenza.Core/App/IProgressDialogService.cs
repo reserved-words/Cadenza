@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Tasks;
+
+namespace Cadenza.Core.App;
 
 public interface IProgressDialogService
 {

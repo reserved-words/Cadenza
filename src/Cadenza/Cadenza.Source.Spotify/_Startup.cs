@@ -1,13 +1,18 @@
-﻿//global using Cadenza.Common;
-//global using Cadenza.Domain;
-//global using Cadenza.Utilities;
+﻿using Cadenza.Domain;
+using Cadenza.Library;
+using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-//using Microsoft.Extensions.DependencyInjection;
-//using Cadenza.Source.Spotify.Player;
+namespace Cadenza.Source.Spotify;
 
-//namespace Cadenza.Source.Spotify;
-
-//public static class Startup
-//{
-    
-//}
+public static class _Startup
+{
+    public static IServiceCollection AddSpotifyCore(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<IInitialiser, Initialiser>()
+            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify);
+    }
+}

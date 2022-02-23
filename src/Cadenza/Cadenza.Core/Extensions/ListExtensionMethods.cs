@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Extensions;
 
 public static class ListExtensionMethods
 {

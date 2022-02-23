@@ -1,12 +1,13 @@
-﻿global using Cadenza.Common;
-global using Cadenza.Domain;
+﻿global using Cadenza.Domain;
 global using Cadenza.Library;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Cadenza.Core;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Options;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Extensions;
+using Cadenza.Core.Player;
 
 namespace Cadenza.Source.Local;
 

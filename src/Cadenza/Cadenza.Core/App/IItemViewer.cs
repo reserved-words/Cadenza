@@ -1,6 +1,7 @@
 ﻿using Cadenza.Core.Model;
+using Cadenza.Core.Playlists;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.App;
 
 public interface IItemViewer
 {

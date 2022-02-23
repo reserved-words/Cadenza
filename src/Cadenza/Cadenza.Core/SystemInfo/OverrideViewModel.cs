@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.SystemInfo;
 
 public class OverrideViewModel
 {

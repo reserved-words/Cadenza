@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Playlists;
+
+namespace Cadenza.Core.App;
 
 public class ItemPlayer : IItemPlayer
 {

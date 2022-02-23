@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Model;
 
 public class FileUpdate
 {

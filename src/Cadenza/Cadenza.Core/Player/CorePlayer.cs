@@ -1,4 +1,8 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Model;
+
+namespace Cadenza.Core.Player;
 
 public class CorePlayer : IPlayer
 {
@@ -19,10 +23,10 @@ public class CorePlayer : IPlayer
 
     public async Task<TrackProgress> Play(PlayTrack track)
     {
-        var service = await this.GetCurrentSourcePlayer(track.Source);
-        await service.Play((string)track.Id);
+        var service = await GetCurrentSourcePlayer(track.Source);
+        await service.Play(track.Id);
 
-        var fullTrack = await _trackRepository.GetTrack((LibrarySource)track.Source, (string)track.Id);
+        var fullTrack = await _trackRepository.GetTrack(track.Source, track.Id);
         var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
         await StoreCurrentTrack(fullTrack);
@@ -50,7 +54,7 @@ public class CorePlayer : IPlayer
     public async Task Stop()
     {
         var service = await GetCurrentSourcePlayer();
-        
+
         if (service == null)
             return;
 

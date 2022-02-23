@@ -1,4 +1,6 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Core.Common;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Tasks;
 using Cadenza.Source.Local;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;

@@ -1,6 +1,6 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core.Common;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Exceptions;
 
 public class ConnectorException : Exception
 {

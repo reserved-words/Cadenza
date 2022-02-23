@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Extensions;
 
 public static class StartupExtensionMethods
 {

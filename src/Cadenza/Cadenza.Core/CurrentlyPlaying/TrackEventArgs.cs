@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.CurrentlyPlaying;
 
 public delegate Task TrackEventHandler(object sender, TrackEventArgs e);
 

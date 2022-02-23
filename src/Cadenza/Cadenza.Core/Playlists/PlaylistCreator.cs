@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Playlists;
 
 public class PlaylistCreator : IPlaylistCreator
 {
@@ -62,11 +62,11 @@ public class PlaylistCreator : IPlaylistCreator
 
         var playTrack = new PlayTrack
         {
-             Id = id, 
-             Source = source,
-             ArtistId = track.Artist.Id,
-             AlbumId = track.Album.Id,
-             Title = track.Track.Title
+            Id = id,
+            Source = source,
+            ArtistId = track.Artist.Id,
+            AlbumId = track.Album.Id,
+            Title = track.Track.Title
         };
 
         var tracks = new List<PlayTrack> { playTrack };

@@ -1,5 +1,8 @@
-﻿using Cadenza.API.Wrapper.LastFM;
-using Cadenza.Common;
+﻿using Cadenza.Core.Common;
+using Cadenza.Core.App;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Tasks;
+using Cadenza.LastFM;
 using Microsoft.JSInterop;
 
 namespace Cadenza

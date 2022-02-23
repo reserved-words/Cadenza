@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using Cadenza.Source.Local;
-using Cadenza.Common;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
-using Cadenza.API.Wrapper.Spotify;
-using Cadenza.API.Wrapper.LastFM;
-using Cadenza.API.Wrapper.Core;
 using Cadenza.Library;
 using Cadenza.Source.Spotify.Player;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Player;
+using Cadenza.Core.App;
+using Cadenza.Core.Utilities;
+using Cadenza.Core.Playlists;
+using Cadenza.Source.Spotify;
 
 namespace Cadenza;
 
@@ -101,9 +103,9 @@ public static class Dependencies
 
     private static IServiceCollection AddLastFm(this IServiceCollection services)
     {
-        return services.AddTransient<IPlayTracker, LastFmService>()
-            .AddTransient<IFavouritesConsumer, LastFmService>()
-            .AddTransient<IFavouritesController, LastFmService>()
+        return services.AddTransient<IPlayTracker, Scrobbler>()
+            .AddTransient<IFavouritesConsumer, Favourites>()
+            .AddTransient<IFavouritesController, Favourites>()
             .AddLastFMCore();
     }
 
@@ -127,5 +129,17 @@ public static class Dependencies
             .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>();
+    }
+
+    public static IServiceCollection ConfigureCoreAPI(this IServiceCollection services, IConfiguration config, string sectionPath)
+    {
+        var section = config.GetSection(sectionPath);
+        return services.Configure<CoreApiSettings>(section);
+    }
+
+    public static IServiceCollection AddAPIWrapper(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IUrl, Url>();
     }
 }

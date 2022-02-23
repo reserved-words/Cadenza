@@ -1,6 +1,8 @@
-﻿using Microsoft.JSInterop;
+﻿using Cadenza.Core.Interfaces;
+using Cadenza.Core.Model;
+using Microsoft.JSInterop;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Player;
 
 public class HtmlPlayer : IAudioPlayer
 {

@@ -1,6 +1,7 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core.Model;
+using Cadenza.Domain;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.SystemInfo;
 
 public class FileUpdateViewModel
 {

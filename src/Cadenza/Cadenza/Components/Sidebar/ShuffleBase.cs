@@ -1,4 +1,4 @@
-﻿using Cadenza.Core;
+﻿using Cadenza.Core.App;
 
 namespace Cadenza;
 

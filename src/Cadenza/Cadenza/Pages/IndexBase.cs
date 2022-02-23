@@ -1,4 +1,6 @@
-﻿using Cadenza.Core.Model;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.CurrentlyPlaying;
+using Cadenza.Core.Model;
 
 namespace Cadenza;
 

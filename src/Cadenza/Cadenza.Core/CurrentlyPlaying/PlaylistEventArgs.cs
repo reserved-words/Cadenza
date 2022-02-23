@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Playlists;
+
+namespace Cadenza.Core.CurrentlyPlaying;
 
 public delegate Task PlaylistEventHandler(object sender, PlaylistEventArgs e);
 

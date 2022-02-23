@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Wrapper;
-using Cadenza.API.Wrapper.Core;
-using Cadenza.Source.Local;
-using Cadenza.Source.Spotify;
+﻿using Cadenza.Source.Local;
 using Cadenza.Utilities;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

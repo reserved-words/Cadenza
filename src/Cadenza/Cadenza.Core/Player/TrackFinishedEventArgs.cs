@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Player;
 
 public delegate Task TrackFinishedEventHandler(object sender, TrackFinishedEventArgs e);
 

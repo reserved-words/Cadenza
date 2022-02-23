@@ -1,6 +1,6 @@
 ﻿using Cadenza.Core.Model;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.App;
 
 public delegate Task LibraryEventHandler(object sender, LibraryEventArgs e);
 

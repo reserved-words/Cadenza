@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.CurrentlyPlaying;
+
+namespace Cadenza.Core.App;
 
 public interface IAppConsumer
 {

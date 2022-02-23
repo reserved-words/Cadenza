@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Source.Local;
+﻿using Cadenza.Core;
+
+namespace Cadenza.Source.Local;
 
 public class LocalApiSettings : ApiOptions<LocalApiEndpoints>
 {   

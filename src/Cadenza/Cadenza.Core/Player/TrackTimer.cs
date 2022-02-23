@@ -1,7 +1,7 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Player;
 
 public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrackFinishedConsumer
 {

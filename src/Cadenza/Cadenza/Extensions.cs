@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core.Common;
+
+namespace Cadenza;
 
 public static class Extensions
 {

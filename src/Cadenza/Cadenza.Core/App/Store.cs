@@ -1,7 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.App;
 
 public class Store : IStoreGetter, IStoreSetter
 {

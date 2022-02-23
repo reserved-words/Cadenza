@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core
+﻿using Cadenza.Core.Common;
+
+namespace Cadenza.Core.Interfaces
 {
     public interface IConnectorController
     {

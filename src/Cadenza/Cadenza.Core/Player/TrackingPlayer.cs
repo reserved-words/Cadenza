@@ -1,4 +1,8 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Model;
+
+namespace Cadenza.Core.Player;
 
 public class TrackingPlayer : IUtilityPlayer
 {
@@ -56,7 +60,7 @@ public class TrackingPlayer : IUtilityPlayer
 
     private static bool PlayedEnough(TrackProgress progress)
     {
-        return progress.SecondsPlayed >= 4 * 60 
+        return progress.SecondsPlayed >= 4 * 60
             || progress.PercentagePlayed >= 50;
     }
 

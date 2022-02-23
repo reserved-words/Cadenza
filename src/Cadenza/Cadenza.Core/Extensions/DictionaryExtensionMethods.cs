@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Extensions;
 
 public static class DictionaryExtensionMethods
 {
@@ -11,12 +11,5 @@ public static class DictionaryExtensionMethods
             items.Add(key, value);
         }
         return value;
-    }
-
-    public static TValue ValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
-    {
-        return dictionary.TryGetValue(key, out TValue value)
-            ? value
-            : default;
     }
 }

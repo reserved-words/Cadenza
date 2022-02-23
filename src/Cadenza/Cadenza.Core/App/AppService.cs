@@ -1,6 +1,9 @@
-﻿using Cadenza.Core.Model;
+﻿using Cadenza.Core.CurrentlyPlaying;
+using Cadenza.Core.Model;
+using Cadenza.Core.Player;
+using Cadenza.Core.Playlists;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.App;
 
 public class AppService : IAppConsumer, IAppController
 {
@@ -122,7 +125,7 @@ public class AppService : IAppConsumer, IAppController
     private async Task StopPlaylist()
     {
         await _player.Stop();
-        
+
         if (_currentPlaylist != null)
         {
             await PlaylistFinished?.Invoke(this, GetPlaylistArgs());

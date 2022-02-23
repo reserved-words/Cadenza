@@ -1,5 +1,5 @@
-﻿using Cadenza.Common;
-using Cadenza.Core;
+﻿using Cadenza.Core.Interfaces;
+using Cadenza.Core.SystemInfo;
 
 namespace Cadenza;
 

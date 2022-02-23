@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Core.Common;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Azure;

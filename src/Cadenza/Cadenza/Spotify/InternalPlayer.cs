@@ -1,4 +1,5 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Core.Interfaces;
+using Cadenza.Core.Model;
 
 namespace Cadenza.Source.Spotify.Player;
 

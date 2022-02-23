@@ -1,5 +1,5 @@
-﻿using Cadenza.Common;
-using LogLevel = Cadenza.Common.LogLevel;
+﻿using Cadenza.Core.Model.Logging;
+using LogLevel = Cadenza.Core.Model.Logging.LogLevel;
 
 namespace Cadenza;
 

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core
+﻿using Cadenza.Core.Common;
+
+namespace Cadenza.Core.Interfaces
 {
     public delegate Task ConnectorEventHandler(object sender, ConnectorEventArgs e);
 

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Source.Spotify.Player;
+﻿using Cadenza.Core.App;
+
+namespace Cadenza.Source.Spotify.Player;
 
 public class DeviceHelper : IDeviceHelper
 {

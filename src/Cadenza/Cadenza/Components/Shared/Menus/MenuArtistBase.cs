@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core.App;
+
+namespace Cadenza;
 
 public class MenuArtistBase : ComponentBase
 {

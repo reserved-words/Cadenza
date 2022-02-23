@@ -1,4 +1,8 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.CurrentlyPlaying;
+using Cadenza.Core.Playlists;
+
+namespace Cadenza;
 
 public class CurrentlyPlayingHeaderBase : ComponentBase
 {

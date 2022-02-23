@@ -1,4 +1,5 @@
-﻿using Cadenza.Library;
+﻿using Cadenza.Core.App;
+using Cadenza.Library;
 
 namespace Cadenza.Components.Tabs.Items
 {

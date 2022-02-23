@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Updates;
 
 public delegate Task AlbumUpdatedEventHandler(object sender, AlbumUpdatedEventArgs e);
 

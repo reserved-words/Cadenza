@@ -1,5 +1,4 @@
-﻿
-namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Interfaces;
 
 public interface IPlayTracker
 {

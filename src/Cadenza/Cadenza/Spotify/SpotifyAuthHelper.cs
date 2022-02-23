@@ -1,4 +1,5 @@
-﻿using Cadenza.API.Wrapper.Spotify;
+﻿using Cadenza.Core.App;
+using Cadenza.Source.Spotify.Interfaces;
 using Microsoft.JSInterop;
 
 namespace Cadenza

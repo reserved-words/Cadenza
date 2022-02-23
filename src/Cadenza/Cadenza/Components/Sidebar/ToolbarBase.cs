@@ -1,4 +1,8 @@
 ﻿
+using Cadenza.Core.Common;
+using Cadenza.Core.App;
+using Cadenza.Core.Interfaces;
+
 namespace Cadenza;
 
 public class ToolbarBase : ComponentBase

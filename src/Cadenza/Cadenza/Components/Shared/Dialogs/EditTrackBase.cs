@@ -1,4 +1,4 @@
-﻿using Cadenza.Core;
+﻿using Cadenza.Core.Updates;
 
 namespace Cadenza;
 
