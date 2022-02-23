@@ -52,7 +52,7 @@ public class DeviceHelper : IDeviceHelper
     {
         var devices = await _api.GetDevices(accessToken);
 
-        var device = devices?.Devices.SingleOrDefault(d => d.name == "Cadenza");
+        var device = devices?.Devices.FirstOrDefault(d => d.name == "Cadenza");
         if (device != null)
         {
             await _storeSetter.SetValue(StoreKey.SpotifyDeviceId, device.id);
