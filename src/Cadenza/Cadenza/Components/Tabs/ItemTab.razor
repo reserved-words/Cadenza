@@ -1,0 +1,24 @@
+﻿@using Cadenza.Components.Tabs.Items
+@using Cadenza.Core.Model
+
+<WhipTab>
+
+    @if (Item.Type == PlayerItemType.Artist)
+    {
+        <ArtistTab Id="@Item.Id" />
+    }
+    else if (Item.Type == PlayerItemType.Album)
+    {
+        <AlbumTab Id="@Item.Id" Source="@Item.Source.Value" />
+    }
+    else if (Item.Type== PlayerItemType.Track)
+    {
+        <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
+    }
+
+</WhipTab>
+
+@code {
+    [Parameter]
+    public ViewItem Item { get; set; }
+}

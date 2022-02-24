@@ -1,0 +1,11 @@
+﻿@using Cadenza.Core.Extensions
+
+@foreach (var model in Model.Links())
+{
+    <WhipIconLink Model="@model" />
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+}

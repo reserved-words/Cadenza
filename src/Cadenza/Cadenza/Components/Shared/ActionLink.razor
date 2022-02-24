@@ -1,0 +1,17 @@
+﻿<MudText Typo="@Typo">
+    <MudLink Typo="@Typo" Style="cursor: pointer;" onclick="@(() => OnClick())" Color="@Color.Dark">
+        @Text
+    </MudLink>
+</MudText>
+
+
+@code {
+    [Parameter]
+    public Typo Typo { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public Func<Task> OnClick { get; set; }
+}

@@ -65,18 +65,30 @@ public static class Routing
         app.MapGet("/Play/Album", (string id, int page, int limit) => playTrackRepository.GetByAlbum(id, page, limit));
 
         app.MapGet("/Search/Artists", (int page, int limit) => searchRepository.GetSearchArtists(page, limit));
-        app.MapGet("/Search/Albums", (int page, int limit) => searchRepository.GetSearchAlbums(page, limit));
+        app.MapGet("/Search/Albums", async (int page, int limit) =>
+        {
+            try
+            {
+                return await searchRepository.GetSearchAlbums(page, limit);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        });
         app.MapGet("/Search/Playlists", (int page, int limit) => searchRepository.GetSearchPlaylists(page, limit));
         app.MapGet("/Search/Tracks", (int page, int limit) => searchRepository.GetSearchTracks(page, limit));
 
         app.MapGet("/Track", (string id) => trackRepository.GetTrack(id));
         app.MapGet("/Album", (string id) => albumRepository.GetAlbum(id));
+        app.MapGet("/Album/Tracks", (string id) => albumRepository.GetTracks(id));
 
         var libraryService = app.Services.GetRequiredService<IArtworkService>();
 
-        app.MapGet("/Library/Artwork", async (HttpContext context) =>
+        app.MapGet("/Library/Artwork", async (HttpContext context) => 
         {
-            var id = context.Request.Query["id"];
+            var id = context.Request.Query["id"].Single();
+
             var artwork = await libraryService.GetArtwork(id);
 
             if (artwork.Bytes == null || artwork.Bytes.Length == 0)

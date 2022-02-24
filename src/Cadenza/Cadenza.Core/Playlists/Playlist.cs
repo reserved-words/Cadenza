@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Playlists;
 
 public class Playlist : IPlaylist
 {
@@ -11,22 +11,18 @@ public class Playlist : IPlaylist
 
     public Playlist(PlaylistDefinition def)
     {
-        Type = def.Type;
-        Name = def.Name;
-        MixedSource = def.MixedSource;
+        Id = def.Id;
 
         _allTracks = def.Tracks.ToList();
 
-        _played = new Stack<PlayTrack>(_allTracks);
-        _playing = _allTracks[0];
+        _played = new Stack<PlayTrack>();
         _toPlay = new Stack<PlayTrack>(_allTracks);
+        _playing = _toPlay.Pop();
     }
 
     public bool CurrentIsLast => _toPlay.Count == 0;
 
-    public PlaylistType Type { get; }
-    public string Name { get; }
-    public bool MixedSource { get; }
+    public PlaylistId Id { get; }
 
     public async Task<PlayTrack> MoveNext()
     {

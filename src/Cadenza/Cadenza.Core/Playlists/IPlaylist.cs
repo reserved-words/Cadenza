@@ -1,10 +1,8 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Playlists;
 
 public interface IPlaylist
 {
-    PlaylistType Type { get; }
-    string Name { get; }
-    bool MixedSource { get; }
+    PlaylistId Id { get; }
     Task<PlayTrack> MoveNext();
     Task<PlayTrack> MovePrevious();
     PlayTrack Current { get; }

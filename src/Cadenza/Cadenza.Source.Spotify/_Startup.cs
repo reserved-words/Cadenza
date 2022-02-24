@@ -1,26 +1,33 @@
-﻿global using Cadenza.Common;
-global using Cadenza.Domain;
-global using Cadenza.Utilities;
-
+﻿using Cadenza.Core.Interfaces;
+using Cadenza.Domain;
+using Cadenza.Library;
+using Cadenza.Source.Spotify.Api;
+using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Services;
+using Cadenza.Source.Spotify.Settings;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Cadenza.Source.Spotify.Player;
 
 namespace Cadenza.Source.Spotify;
 
-public static class Startup
+public static class _Startup
 {
-    public static IServiceCollection AddSpotifySource<TConfig>(this IServiceCollection services) where TConfig : class, ISpotifyApiConfig
+    public static IServiceCollection AddSpotifySource(this IServiceCollection services, IConfiguration config, string apiSectionName)
     {
-        return services
-            .AddTransient<ISpotifyApiConfig, TConfig>()
-            .AddTransient<ISourcePlayer, SpotifyPlayer>()
-            .AddTransient<IApiHelper, ApiHelper>()
-            .AddTransient<IPlayerApi, PlayerApi>()
-            .AddTransient<ISpotifyInterop, SpotifyInterop>();
-    }
+        services.Configure<SpotifyApiSettings>(config.GetSection(apiSectionName));
 
-    public static IAudioPlayer GetSpotifyPlayer(this IServiceProvider services)
-    {
-        return services.GetRequiredService<SpotifyPlayer>();
+        return services
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<IInitialiser, Initialiser>()
+            .AddTransient<IApiHelper, ApiHelper>()
+            .AddTransient<IDeviceHelper, DeviceHelper>()
+            .AddTransient<IDevicesApi, DevicesApi>()
+            .AddTransient<IPlayerApi, PlayerApi>()
+            .AddTransient<IProgressApi, ProgressApi>()
+            .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
+            .AddTransient<ISpotifyInterop, SpotifyInterop>()
+            .AddTransient<ISourcePlayer, SpotifyPlayer>()
+            .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
+            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify);
     }
 }

@@ -2,7 +2,7 @@
 using Cadenza.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Updates;
 
 
 public class ArtistUpdate : ItemUpdate<ArtistInfo>
@@ -11,7 +11,7 @@ public class ArtistUpdate : ItemUpdate<ArtistInfo>
         : base() { }
 
     public ArtistUpdate(ArtistInfo artist)
-        : base(ItemType.Artist, artist.Id, artist) { }
+        : base(LibraryItemType.Artist, artist.Id, artist) { }
 
 
     [Required]

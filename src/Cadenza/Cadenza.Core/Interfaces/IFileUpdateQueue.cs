@@ -1,6 +1,7 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core.Model;
+using Cadenza.Domain;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Interfaces;
 
 public interface IFileUpdateQueue
 {

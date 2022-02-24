@@ -1,7 +1,8 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Core.Extensions;
+using Cadenza.Domain;
 using System.Reflection;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Updates;
 
 public class ItemUpdate<TInterface> where TInterface : new()
 {
@@ -10,7 +11,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         Item = new();
     }
 
-    public ItemUpdate(ItemType itemType, string id, TInterface model)
+    public ItemUpdate(LibraryItemType itemType, string id, TInterface model)
     {
         ItemType = itemType;
         Id = id;
@@ -23,7 +24,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    public ItemType ItemType { get; set; }
+    public LibraryItemType ItemType { get; set; }
     public string Id { get; set; }
     public string Description { get; set; }
 

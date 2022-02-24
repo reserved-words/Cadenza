@@ -1,4 +1,4 @@
-﻿using Cadenza.API.Core.Common;
+﻿using Cadenza.Spotify;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

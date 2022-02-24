@@ -12,7 +12,7 @@
     else if (Model != null)
     {
         <WhipTable T="@RecentTrack"
-               Items="@Model">
+                   Items="@Model">
             <RowTemplate>
                 <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
                     <img src="@context.ImageUrl" width="50" height="50"><img>
@@ -25,10 +25,10 @@
                     @if (context.NowPlaying)
                     {
                         <img src="images/playing.gif" class="ma-1" />
-@*                        <MudText Typo="@Typo.body2">Now playing</MudText>*@
                     }
                     else if (context.Played.Date == DateTime.Today)
                     {
+                        <MudText Typo="@Typo.body2">Today</MudText>
                         <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
                     }
                     else

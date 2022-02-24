@@ -16,38 +16,30 @@ public class BaseTrackRepository : IBaseTrackRepository
 
     public async Task<TrackFull> GetTrack(string id)
     {
+        if (!_tracks.ContainsKey(id))
+            return null;
+
         var track = _tracks[id];
         var album = _albums[track.AlbumId];
         var artist = _artists[track.ArtistId];
         var albumTrack = _albumTracks[track.Id];
+        var albumArtist = _artists[album.ArtistId];
 
         return new TrackFull
         {
-            Id = track.Id,
-            Source = track.Source,
-            DurationSeconds = track.DurationSeconds,
-            Title = track.Title,
-            ArtistId = track.ArtistId,
-            Artist = track.ArtistName,
-            AlbumId = track.AlbumId,
-            AlbumTitle = album.Title,
-            AlbumArtistId = album.ArtistId,
-            AlbumArtist = album.ArtistName,
-            ArtworkUrl = album.ArtworkUrl,
-            ReleaseType = album.ReleaseType,
-            Year = track.Year,
-            Lyrics = track.Lyrics,
-            Tags = track.Tags?.ToList() ?? new List<string>(),
-            DiscNo = albumTrack.Position.DiscNo,
-            DiscCount = album.DiscCount,
-            TrackNo = albumTrack.Position.TrackNo,
-            TrackCount = album.TrackCounts.Count,
-            AlbumYear = album.Year
+            Track = track,
+            Artist = artist,
+            Album = album,
+            AlbumTrack = albumTrack,
+            AlbumArtist = albumArtist
         };
     }
 
     public async Task Populate()
     {
+        if (_tracks != null)
+            return;
+
         var library = await _library.Get();
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);

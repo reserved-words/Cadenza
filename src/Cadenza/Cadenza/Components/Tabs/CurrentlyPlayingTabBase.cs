@@ -1,5 +1,5 @@
-﻿using Cadenza.Core;
-using Cadenza.Library;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.CurrentlyPlaying;
 
 namespace Cadenza;
 
@@ -9,11 +9,17 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IMergedTrackRepository TrackRepository { get; set; }
+    public IStoreGetter Store { get; set; }
 
-    public TrackFull Track { get; set; }
+    [Inject]
+    public IItemPlayer Player { get; set; }
 
-    public bool NotCurrentlyPlaying => Track == null;
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
+    public TrackFull Model { get; set; }
+
+    public bool NotCurrentlyPlaying => Model == null;
 
     protected override void OnInitialized()
     {
@@ -21,46 +27,45 @@ public class CurrentlyPlayingTabBase : ComponentBase
         App.TrackFinished += OnTrackFinished;
     }
 
-    private async Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs e)
-    {
-        if (Track == null || Track.AlbumId != e.Update.Id)
-            return;
-
-        await SetTrack(Track.Source, Track.Id);
-    }
-
-    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
-    {
-        if (Track == null || Track.ArtistId != e.Update.Id)
-            return;
-
-        await SetTrack(Track.Source, Track.Id);
-    }
-
-    private async Task OnTrackUpdated(object sender, TrackUpdatedEventArgs e)
-    {
-        if (Track == null || Track.Id != e.Update.Id)
-            return;
-
-        await SetTrack(Track.Source, Track.Id);
-    }
-
     private async Task OnTrackStarted(object sender, TrackEventArgs e)
     {
-        await SetTrack(e.CurrentTrack.Source, e.CurrentTrack.Id);
+        Model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
+        StateHasChanged();
     }
 
     private async Task OnTrackFinished(object sender, TrackEventArgs e)
     {
-        await SetTrack(null, null);
+        Model = null;
+        StateHasChanged();
     }
 
-    private async Task SetTrack(LibrarySource? source, string trackId)
+    protected async Task OnPlayTrack(Track track)
     {
-        Track = source.HasValue
-            ? await TrackRepository.GetTrack(source.Value, trackId)
-            : null;
+        await Player.PlayTrack(track.Source, track.Id);
+    }
 
-        StateHasChanged();
+    protected async Task OnPlayAlbum(Album album)
+    {
+        await Player.PlayAlbum(album.Source, album.Id);
+    }
+
+    protected async Task OnPlayArtist(Artist artist)
+    {
+        await Player.PlayArtist(artist.Id);
+    }
+
+    protected async Task OnViewTrack()
+    {
+        await Viewer.ViewTrack(Model.Track);
+    }
+
+    protected async Task OnViewAlbum()
+    {
+        await Viewer.ViewAlbum(Model.Album);
+    }
+
+    protected async Task OnViewArtist()
+    {
+        await Viewer.ViewArtist(Model.Artist);
     }
 }

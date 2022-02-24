@@ -1,15 +1,17 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Core.App;
+
+namespace Cadenza;
 
 public class MenuArtistBase : ComponentBase
 {
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    // [Inject]
-    // public ILibraryController Library { get; set; }
-
     [Inject]
     public INotificationService Alert { get; set; }
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
 
     [Parameter]
     public string Class { get; set; } = "";
@@ -21,7 +23,7 @@ public class MenuArtistBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public string ArtistId { get; set; }
+    public string Id { get; set; }
 
     public async Task OnEdit()
     {
@@ -42,5 +44,10 @@ public class MenuArtistBase : ComponentBase
         //{
         //    Alert.Error("Error updating artist");
         //}
+    }
+
+    public async Task OnPlay()
+    {
+        await Player.PlayArtist(Id);
     }
 }

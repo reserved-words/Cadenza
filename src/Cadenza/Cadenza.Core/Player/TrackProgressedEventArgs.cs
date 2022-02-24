@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Player;
 
 public delegate void TrackProgressedEventHandler(object sender, TrackProgressedEventArgs e);
 

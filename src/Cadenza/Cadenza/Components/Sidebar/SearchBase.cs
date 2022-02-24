@@ -1,4 +1,4 @@
-﻿using Cadenza.Database;
+﻿using Cadenza.Core.Model;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -9,23 +9,7 @@ public class SearchBase : ComponentBase
 
     public bool IsLoading { get; set; }
 
-    protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
-    {
-        { SearchableItemType.Artist, MudBlazor.Icons.Material.Filled.PeopleAlt },
-        { SearchableItemType.Album, MudBlazor.Icons.Material.Filled.Album },
-        { SearchableItemType.Playlist, MudBlazor.Icons.Material.Filled.QueueMusic },
-        { SearchableItemType.Track, MudBlazor.Icons.Material.Filled.MusicNote }
-    };
-
-    protected static Dictionary<SearchableItemType, Color> Colors = new Dictionary<SearchableItemType, Color>
-    {
-        { SearchableItemType.Artist, Color.Primary },
-        { SearchableItemType.Album, Color.Secondary },
-        { SearchableItemType.Playlist, Color.Info },
-        { SearchableItemType.Track, Color.Success }
-    };
-
-    protected SourceSearchableItem Result { get; set; }
+    protected SourcePlayerItem Result { get; set; }
 
     protected override void OnInitialized()
     {
@@ -45,7 +29,7 @@ public class SearchBase : ComponentBase
         StateHasChanged();
     }
 
-    protected Task<IEnumerable<SourceSearchableItem>> Search(string value)
+    protected Task<IEnumerable<SourcePlayerItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;
@@ -58,6 +42,11 @@ public class SearchBase : ComponentBase
     {
         return value.Equals("the", StringComparison.InvariantCultureIgnoreCase)
             || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    protected async Task OnClear()
+    {
+        Result = null;
     }
 }
 

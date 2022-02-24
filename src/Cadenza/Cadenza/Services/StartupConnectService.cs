@@ -1,4 +1,5 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Tasks;
 
 namespace Cadenza
 {

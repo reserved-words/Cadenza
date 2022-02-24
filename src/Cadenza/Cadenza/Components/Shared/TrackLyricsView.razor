@@ -1,0 +1,9 @@
+﻿
+<MudText Typo="@Typo.body1">
+    @((MarkupString)Model.Lyrics.WithLineBreaks())
+</MudText>
+
+@code {
+    [Parameter]
+    public TrackInfo Model { get; set; }
+}

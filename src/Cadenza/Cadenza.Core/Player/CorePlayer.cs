@@ -1,4 +1,8 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Model;
+
+namespace Cadenza.Core.Player;
 
 public class CorePlayer : IPlayer
 {
@@ -22,10 +26,10 @@ public class CorePlayer : IPlayer
         var service = await GetCurrentSourcePlayer(track.Source);
         await service.Play(track.Id);
 
-        var summary = await _trackRepository.GetTrack(track.Source, track.Id);
-        var progress = new TrackProgress(0, summary.DurationSeconds);
+        var fullTrack = await _trackRepository.GetTrack(track.Source, track.Id);
+        var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
-        await StoreCurrentTrack(summary);
+        await StoreCurrentTrack(fullTrack);
         await RunUtilities(p => p.OnPlay(progress));
 
         return progress;
@@ -50,16 +54,16 @@ public class CorePlayer : IPlayer
     public async Task Stop()
     {
         var service = await GetCurrentSourcePlayer();
-        
+
         if (service == null)
             return;
 
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var summaryStoredValue = await _storeGetter.GetValue<TrackSummary>(StoreKey.CurrentTrack);
-            var summary = summaryStoredValue.Value;
-            progress = new TrackProgress(summary.DurationSeconds, summary.DurationSeconds);
+            var storedTrack = await _storeGetter.GetValue<TrackFull>(StoreKey.CurrentTrack);
+            var track = storedTrack.Value;
+            progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
         }
 
         await RunUtilities(p => p.OnStop(progress));
@@ -80,7 +84,7 @@ public class CorePlayer : IPlayer
 
     private async Task<LibrarySource?> GetCurrentSource()
     {
-        var storedSource = await _storeGetter.GetValue<LibrarySource>(StoreKey.CurrentTrackSource);
+        var storedSource = await _storeGetter.GetValue<LibrarySource?>(StoreKey.CurrentTrackSource);
         if (storedSource == null)
             return null;
 
@@ -95,9 +99,9 @@ public class CorePlayer : IPlayer
         }
     }
 
-    private async Task StoreCurrentTrack(TrackSummary summary)
+    private async Task StoreCurrentTrack(TrackFull track)
     {
-        await _storeSetter.SetValue(StoreKey.CurrentTrack, summary);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, summary?.Source);
+        await _storeSetter.SetValue(StoreKey.CurrentTrack, track);
+        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
     }
 }

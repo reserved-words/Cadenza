@@ -11,13 +11,4 @@ public class Track
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }
     public string AlbumId { get; set; }
-
-    public TimeSpan DurationTimeSpan => TimeSpan.FromSeconds(DurationSeconds);
-    public string Duration => DurationTimeSpan.ToString(DurationFormat);
-
-    private string DurationFormat => DurationTimeSpan.Hours > 0
-        ? @"hh\:mm\:ss"
-        : @"mm\:ss";
-
-    public override string ToString() => $"{ArtistName} - {Title}";
 }

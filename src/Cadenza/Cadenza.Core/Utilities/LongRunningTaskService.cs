@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Core.Interfaces;
+using Cadenza.Core.Tasks;
+
+namespace Cadenza.Core.Utilities;
 
 public class LongRunningTaskService : ILongRunningTaskService
 {
@@ -31,7 +34,7 @@ public class LongRunningTaskService : ILongRunningTaskService
                 tasks.Add(PerformTask(task, cancellationToken));
             }
 
-            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             Task.WhenAll(tasks).ContinueWith(async t =>
             {
                 if (t.IsFaulted)
@@ -74,7 +77,7 @@ public class LongRunningTaskService : ILongRunningTaskService
                     Update(TaskState.Completed, CancellationToken.None);
                 }
             });
-            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
         catch (OperationCanceledException)
         {
@@ -105,7 +108,7 @@ public class LongRunningTaskService : ILongRunningTaskService
             }
 
             object result = null;
-            
+
             foreach (var step in task.Steps)
             {
                 Update(task.Id, step.Caption, TaskState.Running, cancellationToken);

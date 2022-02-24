@@ -1,22 +1,25 @@
 ﻿using Cadenza.Library;
+using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.Local;
 
 public class JsonLibrary : IStaticLibrary
 {
-    private const string ArtworkUrlFormat = "/library/artwork?id={0}";
-
+    private readonly IConfiguration _config;
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
-    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter)
+    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config)
     {
         _dataAccess = dataAccess;
         _converter = converter;
+        _config = config;
     }
 
     public async Task<FullLibrary> Get()
     {
+        var artworkUrlFormat = _config.GetValue<string>("ArtworkUrl");
+
         var jsonArtists = await _dataAccess.GetArtists();
         var jsonAlbums = await _dataAccess.GetAlbums();
         var jsonTracks = await _dataAccess.GetTracks();
@@ -50,7 +53,7 @@ public class JsonLibrary : IStaticLibrary
         {
             var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
             album.Source = LibrarySource.Local;
-            album.ArtworkUrl = string.Format(ArtworkUrlFormat, firstTracks[album.Id]);
+            album.ArtworkUrl = string.Format(artworkUrlFormat, firstTracks[album.Id]);
             library.Albums.Add(album);
         }
 

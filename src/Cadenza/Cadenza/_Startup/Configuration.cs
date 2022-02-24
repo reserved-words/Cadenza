@@ -1,8 +1,4 @@
-﻿using Cadenza.API.Wrapper;
-using Cadenza.API.Wrapper.Core;
-using Cadenza.Source.Local;
-using Cadenza.Source.Spotify;
-using Cadenza.Utilities;
+﻿using Cadenza.Utilities;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Cadenza;
@@ -21,9 +17,7 @@ public static class Configuration
         builder.Configuration.AddJsonStream(stream);
 
         builder.Services.ConfigureLogger(builder.Configuration, "Logging");
-//        builder.Services.ConfigureSpotifyOverrides(builder.Configuration, "SpotifyOverrides");
-        builder.Services.ConfigureLocalApi(builder.Configuration, "LocalApi");
-        builder.Services.ConfigureCoreAPI(builder.Configuration, "PlayerApi");
+        builder.Services.ConfigureCoreAPI(builder.Configuration, "CoreApi");
 
         return builder;
     }

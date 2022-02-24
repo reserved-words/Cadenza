@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Utilities;
+﻿namespace Cadenza.Utilities;
 
 public class Merger : IMerger
 {
@@ -58,24 +56,6 @@ public class Merger : IMerger
         existing.Position.TrackNo = Merge(existing.Position.TrackNo, update.Position.TrackNo, mode);
     }
 
-    public void MergeAlbumArtist(AlbumLinks albumLinks, string artistId)
-    {
-        albumLinks.ArtistId = artistId;
-    }
-
-    public void MergeAlbumTrack(AlbumLinks albumLinks, string trackId, AlbumTrackPosition position)
-    {
-        var link = albumLinks.Tracks.GetOrAdd(lnk => lnk.TrackId == trackId);
-
-        link.AlbumId ??= albumLinks.AlbumId;
-        link.TrackId ??= trackId;
-
-        if (link.Position.TrackNo == 0)
-        {
-            link.Position = position;
-        }
-    }
-
     public void MergeArtistAlbum(ArtistLinks artistLinks, string albumId)
     {
         artistLinks.Albums.AddIfNotPresent(albumId);
@@ -84,21 +64,6 @@ public class Merger : IMerger
     public void MergeArtistTrack(ArtistLinks artistLinks, string trackId)
     {
         artistLinks.Tracks.AddIfNotPresent(trackId);
-    }
-
-    public void MergeTrackArtist(TrackLinks trackLinks, string artistId)
-    {
-        trackLinks.ArtistId = artistId;
-    }
-
-    public void MergeTrackAlbum(TrackLinks trackLinks, string albumId, AlbumTrackPosition position)
-    {
-        trackLinks.AlbumId ??= albumId;
-
-        if (trackLinks.Position.TrackNo == 0)
-        {
-            trackLinks.Position = position;
-        }
     }
 
     private int Merge(int original, int update, MergeMode mode)

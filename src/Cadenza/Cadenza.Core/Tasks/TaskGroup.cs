@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Tasks;
 
 public class TaskGroup
 {

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Model;
 
 public class TrackProgress
 {
@@ -17,5 +17,5 @@ public class TrackProgress
     public int TotalSeconds { get; set; }
 
     public int SecondsRemaining => TotalSeconds - SecondsPlayed;
-    public int PercentagePlayed => TotalSeconds == 0 ? 0 : (SecondsPlayed * 100 / TotalSeconds);
+    public int PercentagePlayed => TotalSeconds == 0 ? 0 : SecondsPlayed * 100 / TotalSeconds;
 }

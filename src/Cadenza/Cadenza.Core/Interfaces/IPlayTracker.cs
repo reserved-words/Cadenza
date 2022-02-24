@@ -1,9 +1,7 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Interfaces;
 
 public interface IPlayTracker
 {
-    Task RecordPlay(TrackSummary track, DateTime timestamp);
-    Task UpdateNowPlaying(TrackSummary track, int duration);
+    Task RecordPlay(TrackFull track, DateTime timestamp);
+    Task UpdateNowPlaying(TrackFull track, int duration);
 }

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Tasks;
 
 public class SubTask
 {
@@ -12,6 +12,19 @@ public class SubTask
     public void AddStep(string caption, Func<object, CancellationToken, Task<object>> task)
     {
         Steps.Add(new TaskStep { Caption = caption, Task = task });
+    }
+
+    public void AddStep<T>(string caption, Func<CancellationToken, Task<T>> task)
+    {
+        Steps.Add(new TaskStep
+        {
+            Caption = caption,
+            Task = new Func<object, CancellationToken, Task<object>>(async (o, ct) =>
+            {
+                await task(ct);
+                return true;
+            })
+        });
     }
 
     public void AddStep(string caption, Func<Task> task)

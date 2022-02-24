@@ -1,5 +1,5 @@
-﻿using Cadenza.API.Core.Common;
-using Cadenza.Domain;
+﻿using Cadenza.Domain;
+using Cadenza.Spotify;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
@@ -59,7 +59,7 @@ public class SpotifyOverridesService : IOverridesService
         {
             Id = o.id,
             Item = o.item,
-            ItemType = o.itemType.Parse<ItemType>(),
+            ItemType = o.itemType.Parse<LibraryItemType>(),
             Property = o.propertyName.Parse<ItemProperty>(),
             OriginalValue = o.originalValue,
             UpdatedValue = o.overrideValue

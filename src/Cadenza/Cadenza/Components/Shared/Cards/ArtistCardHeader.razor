@@ -1,0 +1,31 @@
+﻿@using Cadenza.Core.Extensions
+@if (Model != null)
+{
+    <ItemCardHeader Type="@PlayerItemType.Artist"
+                Id="@Model.Id">
+        <ChildContent>
+            <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@OnView"></ActionLink>
+
+            @if (!TitleOnly)
+            {
+                <MudText Typo="Typo.body1">@Model.Location()</MudText>
+                <MudText Typo="Typo.body1">@Model.Grouping | @Model.Genre</MudText>
+            }
+
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+
+    [Parameter]
+    public Func<Artist, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+
+    [Parameter]
+    public Func<Task> OnView { get; set; }
+}

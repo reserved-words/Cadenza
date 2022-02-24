@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Core.Model;
+
+namespace Cadenza.Core.Interfaces;
 
 public interface IAudioPlayer
 {

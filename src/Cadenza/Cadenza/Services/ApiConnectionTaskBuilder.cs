@@ -1,17 +1,24 @@
-﻿using Cadenza.API.Wrapper.Core;
-using Cadenza.Common;
+﻿using Cadenza.Core.Common;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core.Tasks;
+using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza
 {
     public class ApiConnectionTaskBuilder : IConnectionTaskBuilder
     {
+        private readonly CoreApiSettings _apiSettings;
         private readonly IConnectorController _connectorController;
-        private readonly IConnectionChecker _connectionChecker;
+        private readonly IUrl _url;
+        private readonly IHttpHelper _http;
 
-        public ApiConnectionTaskBuilder(IConnectorController connectorController, IConnectionChecker connectionChecker)
+        public ApiConnectionTaskBuilder(IConnectorController connectorController, IUrl url, IHttpHelper http, IOptions<CoreApiSettings> apiSettings)
         {
             _connectorController = connectorController;
-            _connectionChecker = connectionChecker;
+            _url = url;
+            _http = http;
+            _apiSettings = apiSettings.Value;
         }
 
         public SubTask GetConnectionTask()
@@ -30,9 +37,10 @@ namespace Cadenza
             return subTask;
         }
 
-        private async Task Connect()
+        public async Task Connect()
         {
-            await _connectionChecker.CheckConnection();
+            var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Connect);
+            await _http.GetString(url);
         }
     }
 }

@@ -1,111 +1,46 @@
-﻿using Cadenza.Common;
-using Cadenza.Utilities;
-using Cadenza.Database;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Model;
 
 namespace Cadenza.Components.Sidebar;
 
 public class SearchResultBase : ComponentBase
 {
-    [Inject]
-    public INotificationService Notifications { get; set; }
 
     [Inject]
-    public IPlaylistCreator PlaylistCreator { get; set; }
+    public IItemPlayer Player { get; set; }
 
     [Inject]
-    public IPlaylistPlayer Player { get; set; }
-
-    [Inject]
-    public IIdGenerator IdGenerator { get; set; }
-
-    [Inject]
-    public IAppController App { get; set; }
-
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    public IItemViewer Viewer { get; set; }
 
     [Parameter]
-    public SourceSearchableItem Result { get; set; }
+    public SourcePlayerItem Result { get; set; }
 
     [Parameter]
-    public LibrarySource? ResultSource { get; set; }
-
-    public bool DisplayArtistLink => Result != null && Result.Type != SearchableItemType.Playlist;
-    public bool DisplayAlbumLink => Result != null && Result.Type != SearchableItemType.Artist;
-    public bool DisplayTrackLink => Result != null && Result.Type == SearchableItemType.Track;
+    public Func<Task> OnClear { get; set; }
 
     protected async Task OnPlay()
     {
-        try
-        {
-            await Play();
-        }
-        catch (ConnectorException ex)
-        {
-            // await App.DisableConnector(ex.Connector, ex.Error, ex.Message);
-        }
-    }
-
-    private async Task Play()
-    {
-        if (Result.Type == SearchableItemType.Artist)
+        if (Result.Type == PlayerItemType.Artist)
         {
             await Player.PlayArtist(Result.Id);
         }
-        else if (Result.Type == SearchableItemType.Album)
+        else if (Result.Type == PlayerItemType.Album)
         {
-            await Player.PlayAlbum(ResultSource.Value, Result.Id);
+            await Player.PlayAlbum(Result.Source.Value, Result.Id);
         }
-        else if (Result.Type == SearchableItemType.Playlist)
+        else if (Result.Type == PlayerItemType.Track)
         {
-            await Player.PlayPlaylist(Result.Id);
-        }
-        else if (Result.Type == SearchableItemType.Track)
-        {
-            await Player.PlayTrack(ResultSource.Value, Result.Id);
+            await Player.PlayTrack(Result.Source.Value, Result.Id);
         }
     }
 
-    protected void OnViewTrack()
+    protected async Task OnViewItem()
     {
-        if (Result.Type != SearchableItemType.Track)
-        {
-            return;
-        }
-
-        var url = $"/Track/{Result.Id}";
-        NavigationManager.NavigateTo(url);
+        await Viewer.ViewSearchResult(Result);
     }
 
-    protected void OnViewAlbum()
+    protected async Task Clear()
     {
-        if (Result.Type != SearchableItemType.Artist || Result.Type == SearchableItemType.Playlist)
-        {
-            return;
-        }
-
-        var albumId = Result.Type == SearchableItemType.Album
-            ? Result.Id
-            : IdGenerator.GenerateId(Result.Artist, Result.Album);
-
-        var url = $"/Album/{albumId}";
-        
-        NavigationManager.NavigateTo(url);
+        await OnClear();
     }
-
-    protected void OnViewArtist()
-    {
-        var artistId = IdGenerator.GenerateId(Result.Artist);
-        var url = $"/Artist/{artistId}";
-        NavigationManager.NavigateTo(url);
-    }
-
-    protected static Dictionary<SearchableItemType, string> Icons = new Dictionary<SearchableItemType, string>
-    {
-        { SearchableItemType.Artist, MudBlazor.Icons.Material.Filled.PeopleAlt },
-        { SearchableItemType.Album, MudBlazor.Icons.Material.Filled.Album },
-        { SearchableItemType.Playlist, MudBlazor.Icons.Material.Filled.QueueMusic },
-        { SearchableItemType.Track, MudBlazor.Icons.Material.Filled.MusicNote }
-    };
 }
-

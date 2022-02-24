@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core;
+﻿using Cadenza.Core.Model;
+
+namespace Cadenza.Core.Player;
 
 public interface IPlayer
 {

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza", "Cadenza\Cadenza.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connections", "Connections", "{48E201A1-2F02-4424-A3B7-0E92564A19E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Database", "Cadenza.Database\Cadenza.Database.csproj", "{864422F5-B367-446C-8D74-AF9B5D5983FB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Core", "Cadenza.Core\Cadenza.Core.csproj", "{1DAA360C-2949-489B-A465-C205FE9EFA2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.LastFM", "Cadenza.LastFM\Cadenza.LastFM.csproj", "{6993D179-D28A-40F4-A490-33036232E1B9}"
@@ -35,10 +33,6 @@ Global
 		{2B3621BC-990F-4912-B9F1-BA741E75779A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B3621BC-990F-4912-B9F1-BA741E75779A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B3621BC-990F-4912-B9F1-BA741E75779A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{864422F5-B367-446C-8D74-AF9B5D5983FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{864422F5-B367-446C-8D74-AF9B5D5983FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{864422F5-B367-446C-8D74-AF9B5D5983FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{864422F5-B367-446C-8D74-AF9B5D5983FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DAA360C-2949-489B-A465-C205FE9EFA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU

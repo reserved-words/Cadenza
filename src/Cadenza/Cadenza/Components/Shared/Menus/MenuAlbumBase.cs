@@ -1,5 +1,4 @@
-﻿using Cadenza.Components.Shared.Dialogs;
-using Cadenza.Core;
+﻿using Cadenza.Core.App;
 
 namespace Cadenza;
 
@@ -8,14 +7,11 @@ public class MenuAlbumBase : ComponentBase
     [Inject]
     public IDialogService DialogService { get; set; }
 
-    // [Inject]
-    // public ILibraryController LibraryController { get; set; }
-
     [Inject]
     public INotificationService Alert { get; set; }
 
-    //[Inject]
-    //public IAlbumRepository Repository { get; set; }
+    [Inject]
+    public IItemPlayer Player { get; set; }
 
     [Parameter]
     public string Class { get; set; }
@@ -27,7 +23,10 @@ public class MenuAlbumBase : ComponentBase
     public Size Size { get; set; } = Size.Large;
 
     [Parameter]
-    public string AlbumId { get; set; }
+    public string Id { get; set; }
+
+    [Parameter]
+    public LibrarySource Source { get; set; }
 
     public async Task OnEdit()
     {
@@ -50,9 +49,8 @@ public class MenuAlbumBase : ComponentBase
         //}
     }
 
-    public async Task OnViewTracklist()
+    public async Task OnPlay()
     {
-        //var album = await Repository.GetAlbum(AlbumId);
-        //await DialogService.Display<AlbumTracklist, AlbumInfo>(album, "Tracklist");
+        await Player.PlayAlbum(Source, Id);
     }
 }

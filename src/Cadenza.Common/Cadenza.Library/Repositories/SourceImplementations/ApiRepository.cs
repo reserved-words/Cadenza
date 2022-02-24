@@ -4,8 +4,8 @@
     {
         private readonly IApiRepositorySettings _settings;
 
-        public ApiRepository(IHttpHelper http, ISource source, IApiRepositorySettings settings)
-            : base(http, settings, source)
+        public ApiRepository(LibrarySource source, IHttpHelper http, IApiRepositorySettings settings)
+            : base(source, http, settings)
         {
             _settings = settings;
         }
@@ -35,9 +35,9 @@
             return await Get<ListResponse<Artist>>(_settings.AlbumArtists, page, limit);
         }
 
-        public async Task<ListResponse<AlbumInfo>> GetAlbums(string artistId, int page, int limit)
+        public async Task<ListResponse<Album>> GetAlbums(string id, int page, int limit)
         {
-            return await Get<ListResponse<AlbumInfo>>(_settings.ArtistAlbums, page, limit);
+            return await Get<ListResponse<Album>>(_settings.ArtistAlbums, id, page, limit);
         }
 
         public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
@@ -55,29 +55,34 @@
             return await Get<ListResponse<Artist>>(_settings.TrackArtists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchAlbums(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchAlbums(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchAlbums, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchAlbums, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchArtists(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchArtists(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchArtists, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchArtists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchPlaylists(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchPlaylists(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchPlaylists, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchPlaylists, page, limit);
         }
 
-        public async Task<ListResponse<SearchableItem>> GetSearchTracks(int page, int limit)
+        public async Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit)
         {
-            return await Get<ListResponse<SearchableItem>>(_settings.SearchTracks, page, limit);
+            return await Get<ListResponse<PlayerItem>>(_settings.SearchTracks, page, limit);
         }
 
         public async Task<AlbumInfo> GetAlbum(string id)
         {
             return await Get<AlbumInfo>(_settings.Album, id);
+        }
+
+        public async Task<List<AlbumTrack>> GetTracks(string id)
+        {
+            return await Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
         }
     }
 }

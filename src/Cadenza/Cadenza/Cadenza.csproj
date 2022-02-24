@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.API.Wrapper.Core" Version="1.0.8" />
-    <PackageReference Include="Cadenza.API.Wrapper.LastFM" Version="1.0.7" />
-    <PackageReference Include="Cadenza.Domain" Version="1.0.21" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.28" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
@@ -30,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
-    <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.csproj" />
     <ProjectReference Include="..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />

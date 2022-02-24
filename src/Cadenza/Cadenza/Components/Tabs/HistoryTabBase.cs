@@ -1,4 +1,6 @@
-﻿using Cadenza.API.Core.LastFM;
+﻿using Cadenza.Core.Common;
+using Cadenza.Core.Interfaces;
+using Cadenza.LastFM;
 
 namespace Cadenza;
 

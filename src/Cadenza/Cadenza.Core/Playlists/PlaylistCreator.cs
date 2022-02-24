@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Core;
+﻿namespace Cadenza.Core.Playlists;
 
 public class PlaylistCreator : IPlaylistCreator
 {
@@ -26,16 +26,19 @@ public class PlaylistCreator : IPlaylistCreator
         var tracks = await _repository.GetByArtist(id);
 
         var firstSource = tracks.First().Source;
-        var mixedSource = tracks.Any(t => t.Source != firstSource);
+
+        LibrarySource? source = tracks.All(t => t.Source == firstSource)
+            ? firstSource
+            : null;
+
+        var playlistId = new PlaylistId(id, source, PlaylistType.Artist, artist.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Artist,
-            Name = artist.Name,
-            Tracks = shuffledTracks.ToList(),
-            MixedSource = mixedSource
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
         };
     }
 
@@ -44,12 +47,12 @@ public class PlaylistCreator : IPlaylistCreator
         var tracks = await _repository.GetByAlbum(id);
         var album = await _albumRepository.GetAlbum(source, id);
 
+        var playlistId = new PlaylistId(id, source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Album,
-            Name = $"{album.Title} by {album.ArtistName}",
-            Tracks = tracks.ToList(),
-            MixedSource = false
+            Id = playlistId,
+            Tracks = tracks.ToList()
         };
     }
 
@@ -59,21 +62,21 @@ public class PlaylistCreator : IPlaylistCreator
 
         var playTrack = new PlayTrack
         {
-             Id = id, 
-             Source = source,
-             ArtistId = track.ArtistId,
-             AlbumId = track.AlbumId,
-             Title = track.Title
+            Id = id,
+            Source = source,
+            ArtistId = track.Artist.Id,
+            AlbumId = track.Album.Id,
+            Title = track.Track.Title
         };
 
         var tracks = new List<PlayTrack> { playTrack };
 
+        var playlistId = new PlaylistId(id, source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.Track,
-            Name = $"{track.Title} by {track.Artist}",
-            Tracks = tracks,
-            MixedSource = false
+            Id = playlistId,
+            Tracks = tracks
         };
     }
 
@@ -83,12 +86,12 @@ public class PlaylistCreator : IPlaylistCreator
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
+        var playlistId = new PlaylistId("", null, PlaylistType.All, "All Library");
+
         return new PlaylistDefinition
         {
-            Type = PlaylistType.All,
-            Name = $"All Library",
-            Tracks = shuffledTracks.ToList(),
-            MixedSource = true
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
         };
     }
 }

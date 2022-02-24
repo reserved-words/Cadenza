@@ -2,7 +2,7 @@
 using Cadenza.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Updates;
 
 public class AlbumUpdate : ItemUpdate<AlbumInfo>
 {
@@ -10,7 +10,7 @@ public class AlbumUpdate : ItemUpdate<AlbumInfo>
         : base() { }
 
     public AlbumUpdate(AlbumInfo album)
-        : base(ItemType.Album, album.Id, album) { }
+        : base(LibraryItemType.Album, album.Id, album) { }
 
     [Required]
     public string Title

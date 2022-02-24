@@ -14,11 +14,14 @@ public class LibraryOrganiser : ILibraryOrganiser
     public void MergeAlbumTrackLink(List<JsonAlbumTrackLink> jsonAlbumTrackLinks, JsonAlbumTrackLink newAlbumTrackLink)
     {
         var existingTrackLink = jsonAlbumTrackLinks.SingleOrDefault(a => a.TrackPath == newAlbumTrackLink.TrackPath);
-        if (existingTrackLink != null)
+        if (existingTrackLink == null)
+        {
+            existingTrackLink = newAlbumTrackLink;
+        }
+        else
         {
             jsonAlbumTrackLinks.Remove(existingTrackLink);
         }
-        existingTrackLink = new JsonAlbumTrackLink { TrackPath = newAlbumTrackLink.TrackPath };
         existingTrackLink = _merger.Merge(existingTrackLink, newAlbumTrackLink);
         jsonAlbumTrackLinks.Add(existingTrackLink);
     }
@@ -28,7 +31,7 @@ public class LibraryOrganiser : ILibraryOrganiser
         var existingAlbum = jsonAlbums.SingleOrDefault(t => t.Id == newAlbum.Id);
         if (existingAlbum == null)
         {
-            existingAlbum = new JsonAlbum { Id = newAlbum.Id, ArtistId = newAlbum.ArtistId };
+            existingAlbum = newAlbum;
         }
         else
         {
@@ -58,7 +61,7 @@ public class LibraryOrganiser : ILibraryOrganiser
         var existingTrackArtist = artists.SingleOrDefault(t => t.Id == newArtist.Id);
         if (existingTrackArtist == null)
         {
-            existingTrackArtist = new JsonArtist { Id = newArtist.Id };
+            existingTrackArtist = newArtist;
         }
         else
         {

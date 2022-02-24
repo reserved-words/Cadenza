@@ -23,10 +23,11 @@ public class BaseArtistRepository : IBaseArtistRepository
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
     }
 
-    public async Task<ListResponse<AlbumInfo>> GetAlbums(string artistId, int page, int limit)
+    public async Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
     {
-        return _albums[artistId]
-            .ToListResponse<AlbumInfo>(a => a.Id, page, limit);
+        return _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
+            ? albums.ToListResponse<Album>(a => a.Id, page, limit)
+            : ListResponse<Album>.Empty;
     }
 
     public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
@@ -38,7 +39,9 @@ public class BaseArtistRepository : IBaseArtistRepository
 
     public async Task<ArtistInfo> GetArtist(string id)
     {
-        return _artists[id];
+        return _artists.TryGetValue(id, out ArtistInfo artist)
+            ? artist
+            : null;
     }
 
     public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
@@ -50,6 +53,9 @@ public class BaseArtistRepository : IBaseArtistRepository
 
     public async Task Populate()
     {
+        if (_artists != null)
+            return;
+
         var library = await _library.Get();
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);

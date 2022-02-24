@@ -15,4 +15,10 @@ public class MergedAlbumRepository : IMergedAlbumRepository
         var sourceRepository = _sources.Single(s => s.Source == source);
         return await sourceRepository.GetAlbum(id);
     }
+
+    public async Task<List<AlbumTrack>> GetTracks(LibrarySource source, string albumId)
+    {
+        var sourceRepository = _sources.Single(s => s.Source == source);
+        return await sourceRepository.GetTracks(albumId);
+    }
 }

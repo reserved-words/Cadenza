@@ -1,5 +1,4 @@
-﻿using Cadenza.Database;
-using Cadenza.Library;
+﻿using Cadenza.Library;
 
 namespace Cadenza;
 
@@ -22,6 +21,8 @@ public class SearchSyncService : ISearchSyncService
         _cache.StartUpdate();
 
         _cache.Clear();
+
+        var reps = string.Join(", ", _repositories.Select(r => r.Source));
 
         foreach (var repository in _repositories)
         {

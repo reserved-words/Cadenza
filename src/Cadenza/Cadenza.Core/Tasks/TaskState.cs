@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Common;
+namespace Cadenza.Core.Tasks;
 
 public enum TaskState
 {
     None,
-    
+
     Starting,
     Running,
     Completing,

@@ -1,0 +1,31 @@
+﻿@inherits ArtistTabBase
+
+<WhipColumn md="3">
+    @if (Artist != null)
+    {
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <MudCard Class="ma-3">
+                <MudCardHeader Class="pa-3">
+                    <ArtistCardHeader Model="@Artist"
+                                      OnPlay="OnPlayArtist"
+                                      TitleOnly="false"
+                                      OnView="OnViewArtist" />
+                </MudCardHeader>
+                <MudCardContent Class="px-2 py-0">
+                    <MudDivider Class="mb-3" />
+                    <ArtistLinksView Model="@Artist" />
+                </MudCardContent>
+            </MudCard>
+        </WhipRow>
+    }
+</WhipColumn>
+<WhipColumn md="9">
+    @if (Releases != null)
+    {
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <ArtistReleaseGroupsView Model="@Releases"
+                                     OnPlay="@OnPlayAlbum"
+                                     OnView="@OnViewAlbum" />
+        </WhipRow>
+    }
+</WhipColumn>

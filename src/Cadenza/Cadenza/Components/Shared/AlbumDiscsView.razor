@@ -1,0 +1,42 @@
+﻿@using Cadenza.Core.Model
+
+@if (Model != null)
+{
+    <MudCard Elevation="0"
+             Class="fixed-height-margin"
+             Style="display: flex; flex-direction: column;">
+
+        <MudCardContent Style="flex-grow: 1;"
+                        Class="fixed-height-scroll pa-1">
+            <MudTabs>
+                @if (Model.Count == 1)
+                {
+                    <MudTabPanel Text="Tracks">
+                        <AlbumDiscView Model="@Model.Single()" ViewTrack="@ViewTrack" />
+                    </MudTabPanel>
+                }
+                else
+                {
+                    @foreach (var disc in Model)
+                    {
+                        <MudTabPanel Text="@("Disc " + disc.DiscNo)">
+                            <AlbumDiscView Model="@disc" ViewTrack="@ViewTrack" />
+                        </MudTabPanel>
+                    }
+                }
+
+            </MudTabs>
+
+        </MudCardContent>
+    </MudCard>
+}
+
+
+@code
+{
+    [Parameter]
+    public List<Disc> Model { get; set; } = new();
+
+    [Parameter]
+    public Func<string, string, Task> ViewTrack { get; set; }
+}

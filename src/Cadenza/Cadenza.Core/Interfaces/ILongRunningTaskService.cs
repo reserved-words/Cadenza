@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common;
+﻿using Cadenza.Core.Tasks;
+
+namespace Cadenza.Core.Interfaces;
 
 public interface ILongRunningTaskService
 {

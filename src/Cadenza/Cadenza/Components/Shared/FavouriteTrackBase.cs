@@ -1,4 +1,5 @@
-﻿using Cadenza.Common;
+﻿using Cadenza.Core.Common;
+using Cadenza.Core.Interfaces;
 
 namespace Cadenza.Components.Shared;
 

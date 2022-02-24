@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common;
+﻿namespace Cadenza.Core.Tasks;
 
 public delegate Task TaskGroupProgressEventHandler(object sender, TaskGroupProgressEventArgs e);
 public delegate Task SubTaskProgressEventHandler(object sender, SubTaskProgressEventArgs e);

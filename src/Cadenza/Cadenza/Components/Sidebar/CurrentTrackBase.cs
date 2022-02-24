@@ -1,4 +1,7 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.CurrentlyPlaying;
+using Cadenza.Core.Player;
+using Cadenza.Utilities;
 
 namespace Cadenza;
 
@@ -15,29 +18,32 @@ public class CurrentTrackBase : ComponentBase
     [Inject]
     public IStoreGetter Store { get; set; }
 
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
     public bool Loading { get; set; } = false;
 
     public bool Empty => _model == null && !Loading;
 
     public double Progress { get; set; }
 
-    public string AlbumArtist => _model?.AlbumArtist ?? "Album Artist";
+    public string AlbumArtist => _model?.Album.ArtistName ?? "Album Artist";
 
-    public string AlbumTitle => _model?.AlbumTitle ?? "Album Title";
+    public string AlbumTitle => _model?.Album.Title ?? "Album Title";
 
-    public string Artist => _model?.Artist ?? "Artist Name";
+    public string Artist => _model?.Artist.Name ?? "Artist Name";
 
-    public string ArtworkUrl => _model?.ArtworkUrl ?? ArtworkPlaceholderUrl;
+    public string ArtworkUrl => _model?.Album.ArtworkUrl ?? ArtworkPlaceholderUrl;
 
-    public string ReleaseType => _model?.ReleaseType.GetDisplayName() ?? "Release Type";
+    public string ReleaseType => _model?.Album.ReleaseType.GetDisplayName() ?? "Release Type";
 
-    public string SourceIcon => _model?.Source.GetIcon();
+    public string SourceIcon => _model?.Track.Source.GetIcon();
 
-    public string Title => _model?.Title ?? "Track Title";
+    public string Title => _model?.Track.Title ?? "Track Title";
 
-    public string Year => _model?.Year ?? "Year";
+    public string Year => _model?.Album.Year ?? "Year";
 
-    private TrackSummary _model;
+    private TrackFull _model;
 
     protected override void OnInitialized()
     {
@@ -83,7 +89,7 @@ public class CurrentTrackBase : ComponentBase
     {
         Loading = false;
         Progress = 0;
-        _model = (await Store.GetValue<TrackSummary>(StoreKey.CurrentTrack)).Value;
+        _model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
         StateHasChanged();
     }
 
@@ -91,5 +97,25 @@ public class CurrentTrackBase : ComponentBase
     {
         Progress = e.ProgressPercentage;
         StateHasChanged();
+    }
+
+    protected async Task OnViewAlbum()
+    {
+        await Viewer.ViewAlbum(_model.Album);
+    }
+
+    protected async Task OnViewArtist()
+    {
+        await Viewer.ViewArtist(_model.Artist);
+    }
+
+    protected async Task OnViewTrack()
+    {
+        await Viewer.ViewTrack(_model.Track);
+    }
+
+    protected async Task OnViewAlbumArtist()
+    {
+        await Viewer.ViewArtist(_model.Album.ArtistId, _model.Album.ArtistName);
     }
 }

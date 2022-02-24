@@ -24,47 +24,47 @@ public class JsonMerger : IJsonMerger
     {
         var modelTrack = _trackConverter.ToAppModel(track, artists);
         var modelUpdate = _trackConverter.ToAppModel(update, artists);
-        return Merge(modelTrack, modelUpdate, MergeMode.ReplaceIfOriginalIsEmpty);
+        return Merge(modelTrack, modelUpdate, MergeMode.Merge);
     }
 
     public JsonArtist Merge(JsonArtist artist, JsonArtist update)
     {
         var modelArtist = _artistConverter.ToAppModel(artist);
         var modelUpdate = _artistConverter.ToAppModel(update);
-        return Merge(modelArtist, modelUpdate, MergeMode.ReplaceIfOriginalIsEmpty);
+        return Merge(modelArtist, modelUpdate, MergeMode.Merge);
     }
 
     public JsonAlbum Merge(JsonAlbum album, JsonAlbum update, List<JsonArtist> artists)
     {
         var modelAlbum = _albumConverter.ToAppModel(album, artists);
         var modelUpdate = _albumConverter.ToAppModel(update, artists);
-        return Merge(modelAlbum, modelUpdate, MergeMode.ReplaceIfOriginalIsEmpty);
+        return Merge(modelAlbum, modelUpdate, MergeMode.Merge);
     }
 
     public JsonAlbumTrackLink Merge(JsonAlbumTrackLink existing, JsonAlbumTrackLink update)
     {
-        existing.AlbumId = _valueMerger.Merge(existing.AlbumId, update.AlbumId, MergeMode.ReplaceIfOriginalIsEmpty);
-        existing.TrackNo = _valueMerger.Merge(existing.TrackNo, update.TrackNo, MergeMode.ReplaceIfOriginalIsEmpty);
-        existing.DiscNo = _valueMerger.Merge(existing.DiscNo, update.DiscNo, MergeMode.ReplaceIfOriginalIsEmpty);
+        existing.AlbumId = _valueMerger.Merge(existing.AlbumId, update.AlbumId, MergeMode.Merge);
+        existing.TrackNo = _valueMerger.Merge(existing.TrackNo, update.TrackNo, MergeMode.Merge);
+        existing.DiscNo = _valueMerger.Merge(existing.DiscNo, update.DiscNo, MergeMode.Merge);
         return existing;
     }
 
     public JsonTrack Update(JsonTrack track, TrackInfo update, List<JsonArtist> artists)
     {
         var existingTrack = _trackConverter.ToAppModel(track, artists);
-        return Merge(existingTrack, update, MergeMode.ReplaceAlways);
+        return Merge(existingTrack, update, MergeMode.Update);
     }
 
     public JsonArtist Update(JsonArtist artist, ArtistInfo update)
     {
         var existingArtist = _artistConverter.ToAppModel(artist);
-        return Merge(existingArtist, update, MergeMode.ReplaceAlways);
+        return Merge(existingArtist, update, MergeMode.Update);
     }
 
     public JsonAlbum Update(JsonAlbum album, AlbumInfo update, List<JsonArtist> artists)
     {
         var existingAlbum = _albumConverter.ToAppModel(album, artists);
-        return Merge(existingAlbum, update, MergeMode.ReplaceAlways);
+        return Merge(existingAlbum, update, MergeMode.Update);
     }
 
     private JsonTrack Merge(TrackInfo existing, TrackInfo update, MergeMode mode)

@@ -6,16 +6,15 @@ namespace Cadenza.Library.Repositories
     {
         private readonly IApiRepositorySettings _settings;
         private readonly IHttpHelper _http;
-        private readonly ISource _source;
 
-        public ApiRepositoryBase(IHttpHelper http, IApiRepositorySettings settings, ISource source)
+        public ApiRepositoryBase(LibrarySource source, IHttpHelper http, IApiRepositorySettings settings)
         {
+            Source = source;
             _http = http;
             _settings = settings;
-            _source = source;
         }
 
-        public LibrarySource Source => _source.Source;
+        public LibrarySource Source { get; }
 
         public async Task<T> Get<T>(string endpoint, int page, int limit)
         {

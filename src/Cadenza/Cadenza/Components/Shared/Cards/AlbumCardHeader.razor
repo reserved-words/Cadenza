@@ -1,0 +1,31 @@
+﻿@if (Model != null)
+{
+    <ItemCardHeader Type="@PlayerItemType.Album"
+                    Id="@Model.Id"
+                    Source="@Model.Source">
+        <ChildContent>
+            <ActionLink Typo="Typo.h6" Text="@Model.Title" OnClick="@OnView"></ActionLink>
+            <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
+
+            @if (!TitleOnly)
+            {
+                <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+                <MudText Typo="Typo.body2">@Model.Year</MudText>
+            }
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Parameter]
+    public Album Model { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlay { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+
+    [Parameter]
+    public Func<Task> OnView { get; set; }
+}

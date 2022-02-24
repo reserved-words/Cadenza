@@ -1,7 +1,7 @@
 ﻿using Cadenza.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Core;
+namespace Cadenza.Core.Updates;
 
 public class TrackUpdate : ItemUpdate<TrackInfo>
 {
@@ -9,7 +9,7 @@ public class TrackUpdate : ItemUpdate<TrackInfo>
         : base() { }
 
     public TrackUpdate(TrackInfo track)
-        : base(ItemType.Track, track.Id, track) { }
+        : base(LibraryItemType.Track, track.Id, track) { }
 
 
     [Required]

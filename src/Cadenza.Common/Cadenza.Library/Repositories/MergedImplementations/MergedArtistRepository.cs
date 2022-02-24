@@ -17,9 +17,9 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
         return await Fetch((repository, page, limit) => repository.GetAlbumArtists(page, limit));
     }
 
-    public async Task<List<AlbumInfo>> GetArtistAlbums(string artistId)
+    public async Task<List<Album>> GetArtistAlbums(string id)
     {
-        return await Fetch((repository, page, limit) => repository.GetAlbums(artistId, page, limit));
+        return await Fetch((repository, page, limit) => repository.GetAlbums(id, page, limit));
     }
 
     public async Task<List<Artist>> GetAllArtists()
@@ -40,7 +40,11 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
             else
             {
                 var update = await source.GetArtist(id);
-                _merger.MergeArtist(artist, update, MergeMode.Merge);
+                
+                if (update != null)
+                {
+                    _merger.MergeArtist(artist, update, MergeMode.Merge);
+                }
             }
         }
 

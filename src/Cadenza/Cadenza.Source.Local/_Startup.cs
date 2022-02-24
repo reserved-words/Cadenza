@@ -1,36 +1,27 @@
-﻿global using Cadenza.Common;
-global using System.Net.Http.Json;
-global using Cadenza.Domain;
-global using Cadenza.Utilities;
+﻿global using Cadenza.Domain;
 global using Cadenza.Library;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Cadenza.Core;
-using Microsoft.JSInterop;
 using Microsoft.Extensions.Options;
+using Cadenza.Core.Interfaces;
+using Cadenza.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.Source.Local;
 
 public static class Startup
 {
-    public static IServiceCollection AddLocalSource<TAudioPlayer>(this IServiceCollection services) where TAudioPlayer : class, IAudioPlayer
+    public static IServiceCollection AddLocalSource<TAudioPlayer>(this IServiceCollection services, IConfiguration config, string apiSectionName) where TAudioPlayer : class, IAudioPlayer
     {
+        services.Configure<LocalApiSettings>(config.GetSection(apiSectionName));
+
         return services
-            .AddTransient<ISourcePlayer>(sp => sp.GetLocalPlayer())
-            .AddApiRepositories<LocalApiRepositorySettings>(LibrarySource.Local);
-    }
-
-    public static ISourcePlayer GetLocalPlayer(this IServiceProvider services)
-    {
-        var jsRuntime = services.GetRequiredService<IJSRuntime>();
-        var htmlPlayer = new HtmlPlayer(jsRuntime);
-        var settings = services.GetRequiredService<IOptions<LocalApiSettings>>();
-        return new LocalPlayer(htmlPlayer, settings);
-    }
-
-    public static IServiceCollection ConfigureLocalApi(this IServiceCollection services, IConfiguration config, params string[] sections)
-    {
-        return services.ConfigureOptions<LocalApiSettings>(config, sections);
+            .AddTransient<TAudioPlayer>()
+            .AddTransient<ISourcePlayer>(sp => new LocalPlayer(
+                sp.GetRequiredService<TAudioPlayer>(),
+                sp.GetRequiredService<IOptions<LocalApiSettings>>(),
+                sp.GetRequiredService<IUrl>()))
+            .AddApiRepositories<LocalApiRepositorySettings>(LibrarySource.Local)
+            .AddTransient<IConnectionTaskBuilder, LocalConnectionTaskBuilder>();
     }
 }

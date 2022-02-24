@@ -1,7 +1,7 @@
 ﻿@page "/"
 @page "/player"
+@using Cadenza.Components.Tabs.Items
 @inherits IndexBase
-
 
 <MudLayout>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
@@ -10,20 +10,33 @@
     <MudMainContent>
         @if (IsInitalised)
         {
-            <MudTabs Outlined="true" KeepPanelsAlive="false">
-                <MudTabPanel Text="History" Icon="@Icons.Material.Filled.History">
+            <MudDynamicTabs Outlined="true"
+                            CloseTab="@((panel) => CloseTabCallback(panel))"
+                            @bind-ActivePanelIndex="SelectedTabIndex"
+                            KeepPanelsAlive="true">
+
+                <MudTabPanel Icon="fas fa-history" Class="mud-tab-fixed">
                     <HistoryTab />
                 </MudTabPanel>
-                <MudTabPanel Text="Currently Playing" Icon="@Icons.Material.Filled.MusicNote">
-                    <CurrentlyPlayingTab />
-                </MudTabPanel>
-                <MudTabPanel Text="Library" Icon="@Icons.Material.Filled.LibraryBooks">
-                    <LibraryTab />
-                </MudTabPanel>
-                <MudTabPanel Text="System" Icon="@Icons.Material.Filled.Info">
+
+                @if (Playing)
+                {
+                    <MudTabPanel Icon="fas fa-volume-up" Class="mud-tab-fixed">
+                        <CurrentlyPlayingTab />
+                    </MudTabPanel>
+                }
+
+                <MudTabPanel Icon="fas fa-cog" Class="mud-tab-fixed">
                     <SystemInfoTab />
                 </MudTabPanel>
-            </MudTabs>
+
+                @foreach (var item in ItemTabs)
+                {
+                    <MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
+                        <ItemTab Item="@item" />
+                    </MudTabPanel>
+                }
+            </MudDynamicTabs>
         }
     </MudMainContent>
 </MudLayout>
