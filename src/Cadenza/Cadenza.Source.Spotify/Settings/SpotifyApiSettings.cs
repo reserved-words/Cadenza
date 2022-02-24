@@ -9,7 +9,6 @@ internal class SpotifyApiSettings : ApiOptions<SpotifyApiEndpoints>
 
 internal class SpotifyApiEndpoints
 {
-    public string Connect { get; set; }
     public string Populate { get; set; }
     public string AuthUrl { get; set; }
     public string TokenUrl { get; set; }

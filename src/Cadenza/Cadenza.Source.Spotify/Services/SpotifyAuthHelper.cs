@@ -1,8 +1,8 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Core.Interop;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Settings;
 using Microsoft.Extensions.Options;
-using Microsoft.JSInterop;
 
 namespace Cadenza.Source.Spotify.Services;
 
@@ -15,17 +15,19 @@ internal class SpotifyAuthHelper : ISpotifyAuthHelper
     private readonly IStoreGetter _storeGetter;
     private readonly IStoreSetter _storeSetter;
     private readonly SpotifyApiSettings _settings;
-    private readonly IJSRuntime _jsRuntime;
     private readonly IAuthoriser _authoriser;
+    private readonly INavigation _navigationInterop;
+    private readonly IMessenger _messenger;
 
     public SpotifyAuthHelper(IStoreGetter storeGetter, IStoreSetter storeSetter, IOptions<SpotifyApiSettings> settings,
-        IJSRuntime jsRuntime, IAuthoriser lastFmAuthoriser)
+         IAuthoriser lastFmAuthoriser, INavigation navigationInterop, IMessenger messenger)
     {
         _storeGetter = storeGetter;
         _storeSetter = storeSetter;
         _settings = settings.Value;
-        _jsRuntime = jsRuntime;
         _authoriser = lastFmAuthoriser;
+        _navigationInterop = navigationInterop;
+        _messenger = messenger;
     }
 
     public async Task<string> GetAccessToken(CancellationToken cancellationToken)
@@ -81,18 +83,11 @@ internal class SpotifyAuthHelper : ISpotifyAuthHelper
 
     private async Task<string> Authorise(string authUrl, CancellationToken cancellationToken)
     {
-        await NavigateToNewTab(authUrl);
-
-        var code = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyCode, 60, cancellationToken);
+var code = await _navigationInterop.OpenNewTabAndAwaitValue<string>(authUrl, StoreKey.SpotifyCode, cancellationToken);
 
         if (code == null)
             throw new Exception("No code received - need to authenticate on Spotify website");
 
         return code.Value;
-    }
-
-    private async Task NavigateToNewTab(string url)
-    {
-        await _jsRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 }

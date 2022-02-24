@@ -1,4 +1,5 @@
 ﻿using Cadenza.Domain;
+using Cadenza.Spotify;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
