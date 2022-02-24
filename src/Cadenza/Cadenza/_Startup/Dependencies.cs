@@ -10,6 +10,8 @@ using Cadenza.Core.App;
 using Cadenza.Core.Utilities;
 using Cadenza.Core.Playlists;
 using Cadenza.Source.Spotify;
+using Cadenza.Core.Interop;
+using Cadenza.Interop;
 
 namespace Cadenza;
 
@@ -29,6 +31,7 @@ public static class Dependencies
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddStartupServices()
+            .AddInteropServices()
             .AddUtilities()
             .AddHttpClient(http)
             .AddLogger(http)
@@ -36,8 +39,8 @@ public static class Dependencies
             .AddUIHelpers()
             .AddTimers()
             .AddAPIWrapper()
-            .AddLastFm("LastFmApi")
-            .AddSources();
+            .AddLastFm(builder.Configuration, "LastFmApi")
+            .AddSources(builder.Configuration);
 
         builder.Services
             .AddTransient<IStartupSyncService, StartupSyncService>()
@@ -51,6 +54,13 @@ public static class Dependencies
             .AddTransient<IUtilityPlayer, TrackingPlayer>();
 
         return builder;
+    }
+
+    private static IServiceCollection AddInteropServices(this IServiceCollection services)
+    {
+        return services.AddTransient<INavigation, NavigationInterop>()
+            .AddTransient<IStoreGetter, StoreInterop>()
+            .AddTransient<IStoreSetter, StoreInterop>();
     }
 
     private static IServiceCollection AddStartupServices(this IServiceCollection services)
@@ -83,9 +93,7 @@ public static class Dependencies
             })
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IProgressDialogService, ProgressDialogService>()
-            .AddTransient<INotificationService, MudNotificationService>()
-            .AddTransient<IStoreGetter, Store>()
-            .AddTransient<IStoreSetter, Store>();
+            .AddTransient<INotificationService, MudNotificationService>();
     }
 
     private static IServiceCollection AddTimers(this IServiceCollection services)
@@ -97,11 +105,11 @@ public static class Dependencies
             .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
     }
 
-    private static IServiceCollection AddSources(this IServiceCollection services)
+    private static IServiceCollection AddSources(this IServiceCollection services, IConfiguration config)
     {
         return services
-            .AddSpotifySource("SpotifyApi")
-            .AddLocalSource<HtmlPlayer>("LocalApi")
+            .AddSpotifySource(config, "SpotifyApi")
+            .AddLocalSource<HtmlPlayer>(config, "LocalApi")
             .AddMergedRepositories();
     }
 

@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 
 namespace Cadenza.Core.App;
 
-public class Store : IStoreGetter, IStoreSetter
+public class StoreInterop : IStoreGetter, IStoreSetter
 {
     private readonly IJSRuntime _js;
 
-    public Store(IJSRuntime js)
+    public StoreInterop(IJSRuntime js)
     {
         _js = js;
     }
@@ -57,21 +57,4 @@ public class Store : IStoreGetter, IStoreSetter
         var json = JsonConvert.SerializeObject(storedValue);
         await _js.InvokeVoidAsync("setStoredValue", key.ToString(), json);
     }
-}
-
-public class StoredValue<T>
-{
-    public StoredValue()
-    {
-
-    }
-
-    public StoredValue(T value)
-    {
-        Value = value;
-        Updated = DateTime.Now;
-    }
-
-    public T Value { get; set; }
-    public DateTime Updated { get; set; }
 }

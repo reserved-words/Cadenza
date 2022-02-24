@@ -17,17 +17,15 @@ internal class SpotifyAuthHelper : ISpotifyAuthHelper
     private readonly SpotifyApiSettings _settings;
     private readonly IAuthoriser _authoriser;
     private readonly INavigation _navigationInterop;
-    private readonly IMessenger _messenger;
 
     public SpotifyAuthHelper(IStoreGetter storeGetter, IStoreSetter storeSetter, IOptions<SpotifyApiSettings> settings,
-         IAuthoriser lastFmAuthoriser, INavigation navigationInterop, IMessenger messenger)
+         IAuthoriser lastFmAuthoriser, INavigation navigationInterop)
     {
         _storeGetter = storeGetter;
         _storeSetter = storeSetter;
         _settings = settings.Value;
         _authoriser = lastFmAuthoriser;
         _navigationInterop = navigationInterop;
-        _messenger = messenger;
     }
 
     public async Task<string> GetAccessToken(CancellationToken cancellationToken)
@@ -83,7 +81,9 @@ internal class SpotifyAuthHelper : ISpotifyAuthHelper
 
     private async Task<string> Authorise(string authUrl, CancellationToken cancellationToken)
     {
-var code = await _navigationInterop.OpenNewTabAndAwaitValue<string>(authUrl, StoreKey.SpotifyCode, cancellationToken);
+        await _navigationInterop.OpenNewTab(authUrl);
+
+        var code = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyCode, 60, cancellationToken);
 
         if (code == null)
             throw new Exception("No code received - need to authenticate on Spotify website");
