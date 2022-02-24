@@ -67,30 +67,6 @@ stages:
         command: 'pack'
         packagesToPack: '**/Cadenza.Library.csproj'
         versioningScheme: 'off'        
-    - task: DotNetCoreCLI@2
-      displayName: 'Pack Cadenza.API.Core'
-      inputs:
-        command: 'pack'
-        packagesToPack: '**/Cadenza.API.Core.csproj'
-        versioningScheme: 'off'        
-    - task: DotNetCoreCLI@2
-      displayName: 'Pack Cadenza.API.Wrapper.Core'
-      inputs:
-        command: 'pack'
-        packagesToPack: '**/Cadenza.API.Wrapper.Core.csproj'
-        versioningScheme: 'off'        
-    - task: DotNetCoreCLI@2
-      displayName: 'Pack Cadenza.API.Wrapper.LastFM'
-      inputs:
-        command: 'pack'
-        packagesToPack: '**/Cadenza.API.Wrapper.LastFM.csproj'
-        versioningScheme: 'off'        
-    - task: DotNetCoreCLI@2
-      displayName: 'Pack Cadenza.API.Wrapper.Spotify'
-      inputs:
-        command: 'pack'
-        packagesToPack: '**/Cadenza.API.Wrapper.Spotify.csproj'
-        versioningScheme: 'off'        
     - task: NuGetCommand@2
       displayName: 'Push Packages'
       inputs:
