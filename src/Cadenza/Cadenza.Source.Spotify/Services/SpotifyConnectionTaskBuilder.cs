@@ -3,7 +3,6 @@ using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
 using Cadenza.Source.Spotify.Interfaces;
-using Cadenza.Utilities;
 
 namespace Cadenza.Source.Spotify.Services;
 
@@ -12,13 +11,15 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
     private readonly IStoreGetter _storeGetter;
     private readonly IConnectorController _connectorController;
     private readonly ISpotifyAuthHelper _authHelper;
+    private readonly IInitialiser _initialiser;
 
     public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter,
-        IConnectorController connectorController, ISpotifyAuthHelper authHelper)
+        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IInitialiser initialiser)
     {
         _storeGetter = storeGetter;
         _connectorController = connectorController;
         _authHelper = authHelper;
+        _initialiser = initialiser;
     }
 
     public SubTask GetConnectionTask()
@@ -44,13 +45,7 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
         try
         {
             var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-
-            var httpClient = new HttpClient();
-            var http = new HttpHelper(httpClient);
-            var url = $"http://localhost:5141/Spotify/Library/Populate?accessToken={accessToken.Value}";
-            var response = await http.Post(url, null, null);
-
-            // await _initialiser.Populate(accessToken.Value);
+            await _initialiser.Populate(accessToken.Value);
         }
         catch (Exception ex)
         {

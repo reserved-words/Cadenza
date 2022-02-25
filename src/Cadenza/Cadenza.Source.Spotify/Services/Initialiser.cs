@@ -21,8 +21,8 @@ internal class Initialiser : IInitialiser
 
     public async Task Populate(string accessToken)
     {
-        var url = _url.Build(_settings.BaseUrl, _settings.Endpoints.Populate);
-        await _http.Post(url, null, accessToken);
+        var url = _url.Build(_settings.BaseUrl, _settings.Endpoints.Populate, ("accessToken", accessToken));
+        await _http.Post(url, null, null);
     }
 
     private string GetApiEndpoint(string endpoint)
