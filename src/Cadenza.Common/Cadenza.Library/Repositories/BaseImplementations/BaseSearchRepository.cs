@@ -40,7 +40,7 @@ public class BaseSearchRepository : IBaseSearchRepository
         _genres = library.Artists
             .Select(a => a.Genre)
             .Distinct()
-            .Select(g => new SearchableGenre(g))
+            .Select(g => new SearchableGenre(g ?? ""))
             .ToList();
 
         _playlists = new List<SearchablePlaylist>();

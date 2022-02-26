@@ -68,7 +68,7 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
             .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
 
         _genreArtists = library.Artists
-            .GroupBy(a => a.Genre)
+            .GroupBy(a => a.Genre ?? "None")
             .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
 
         _tracks = library.Tracks
