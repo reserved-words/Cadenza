@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.26" />
-    <PackageReference Include="Cadenza.Library" Version="1.0.57" />
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.12" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.29" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.61" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.15" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="TagLibSharp" Version="2.2.0" />

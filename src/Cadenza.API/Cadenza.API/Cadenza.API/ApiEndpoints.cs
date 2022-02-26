@@ -36,11 +36,15 @@ public static class ApiEndpoints
         public const string PlayTracks = "/Spotify/Play/Tracks";
         public const string PlayArtist = "/Spotify/Play/Artist";
         public const string PlayAlbum = "/Spotify/Play/Album";
+        public const string PlayGenre = "/Spotify/Play/Genre";
+        public const string PlayGrouping = "/Spotify/Play/Grouping";
 
         public const string SearchArtists = "/Spotify/Search/Artists";
         public const string SearchAlbums = "/Spotify/Search/Albums";
         public const string SearchTracks = "/Spotify/Search/Tracks";
         public const string SearchPlaylists = "/Spotify/Search/Playlists";
+        public const string SearchGroupings = "/Spotify/Search/Groupings";
+        public const string SearchGenres = "/Spotify/Search/Genres";
 
         public const string Track = "/Spotify/Track";
         public const string Album = "/Spotify/Album";

@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.28" />
-    <PackageReference Include="Cadenza.Utilities" Version="1.0.14" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.29" />
+    <PackageReference Include="Cadenza.Utilities" Version="1.0.15" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
