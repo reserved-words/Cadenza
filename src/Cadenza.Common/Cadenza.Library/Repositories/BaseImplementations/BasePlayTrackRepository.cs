@@ -7,6 +7,8 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
     private List<PlayTrack> _tracks;
     private Dictionary<string, List<PlayTrack>> _albumTracks;
     private Dictionary<string, List<PlayTrack>> _artistTracks;
+    private Dictionary<Grouping, List<string>> _groupingArtists;
+    private Dictionary<string, List<string>> _genreArtists;
 
     public BasePlayTrackRepository(ILibrary library)
     {
@@ -32,12 +34,42 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
             : ListResponse<PlayTrack>.Empty;
     }
 
+    public async Task<ListResponse<PlayTrack>> GetByGenre(string id, int page, int limit)
+    {
+        var genreArtists = _genreArtists.TryGetValue(id, out List<string> artistIds)
+            ? artistIds
+            : new List<string>();
+
+        return genreArtists
+            .SelectMany(a => _artistTracks[a])
+            .ToListResponse(t => t.Id, page, limit);
+    }
+
+    public async Task<ListResponse<PlayTrack>> GetByGrouping(Grouping id, int page, int limit)
+    {
+        var groupingArtists = _groupingArtists.TryGetValue(id, out List<string> artistIds)
+            ? artistIds
+            : new List<string>();
+
+        return groupingArtists
+            .SelectMany(a => _artistTracks[a])
+            .ToListResponse(t => t.Id, page, limit);
+    }
+
     public async Task Populate()
     {
         if (_tracks != null)
             return;
 
         var library = await _library.Get();
+
+        _groupingArtists = library.Artists
+            .GroupBy(a => a.Grouping)
+            .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
+
+        _genreArtists = library.Artists
+            .GroupBy(a => a.Genre)
+            .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
 
         _tracks = library.Tracks
             .Select(t => new PlayTrack

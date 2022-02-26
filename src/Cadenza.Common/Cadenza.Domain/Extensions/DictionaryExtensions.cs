@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Utilities;
+﻿namespace Cadenza.Domain;
 
-public static class DictionaryExtensionMethods
+public static class DictionaryExtensions
 {
     public static T GetOrAdd<T>(this Dictionary<string, T> items, string key) where T : new()
     {

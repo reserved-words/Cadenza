@@ -6,4 +6,6 @@ public interface ISearchRepository
     Task<ListResponse<PlayerItem>> GetSearchArtists(int page, int limit);
     Task<ListResponse<PlayerItem>> GetSearchPlaylists(int page, int limit);
     Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit);
+    Task<ListResponse<PlayerItem>> GetSearchGenres(int page, int limit);
+    Task<ListResponse<PlayerItem>> GetSearchGroupings(int page, int limit);
 }

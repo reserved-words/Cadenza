@@ -6,6 +6,8 @@ public class BaseSearchRepository : IBaseSearchRepository
     private List<SearchableArtist> _artists;
     private List<SearchablePlaylist> _playlists;
     private List<SearchableTrack> _tracks;
+    private List<SearchableGenre> _genres;
+    private List<SearchableGrouping> _groupings;
 
     private readonly ILibrary _library;
 
@@ -27,6 +29,18 @@ public class BaseSearchRepository : IBaseSearchRepository
 
         _artists = library.Artists
             .Select(a => new SearchableArtist(a.Id, a.Name))
+            .ToList();
+
+        _groupings = library.Artists
+            .Select(a => a.Grouping)
+            .Distinct()
+            .Select(g => new SearchableGrouping(g))
+            .ToList();
+
+        _genres = library.Artists
+            .Select(a => a.Genre)
+            .Distinct()
+            .Select(g => new SearchableGenre(g))
             .ToList();
 
         _playlists = new List<SearchablePlaylist>();
@@ -52,6 +66,16 @@ public class BaseSearchRepository : IBaseSearchRepository
     public async Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit)
     {
         return _tracks.ToListResponse<SearchableTrack, PlayerItem>(t => t.Id, page, limit);
+    }
+
+    public async Task<ListResponse<PlayerItem>> GetSearchGenres(int page, int limit)
+    {
+        return _genres.ToListResponse<SearchableGenre, PlayerItem>(t => t.Id, page, limit);
+    }
+
+    public async Task<ListResponse<PlayerItem>> GetSearchGroupings(int page, int limit)
+    {
+        return _groupings.ToListResponse<SearchableGrouping, PlayerItem>(t => t.Id, page, limit);
     }
 
     private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)

@@ -5,6 +5,8 @@ public enum PlayerItemType
     Artist,
     Album,
     Track,
-    Playlist
+    Playlist,
+    Grouping,
+    Genre
 }
 

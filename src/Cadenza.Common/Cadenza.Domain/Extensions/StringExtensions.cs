@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Utilities;
+﻿namespace Cadenza.Domain;
 
-public static class StringExtensionMethods
+public static class StringExtensions
 {
     public static TEnum Parse<TEnum>(this string str, TEnum? defaultValue = null) where TEnum : struct, Enum
     {

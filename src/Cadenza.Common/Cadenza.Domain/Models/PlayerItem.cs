@@ -49,3 +49,15 @@ public class SearchableTrack : PlayerItem
         : base(PlayerItemType.Track, id, title, artist, album, album + (albumArtist == artist ? "" : $" ({albumArtist})")) { }
 }
 
+public class SearchableGrouping : PlayerItem
+{
+    public SearchableGrouping(Grouping id)
+        : base(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName(), null, null, null) { }
+}
+
+public class SearchableGenre : PlayerItem
+{
+    public SearchableGenre(string id)
+        : base(PlayerItemType.Genre, id, id, null, null, null) { }
+}
+
