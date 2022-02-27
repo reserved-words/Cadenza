@@ -10,6 +10,8 @@ public class BaseArtistRepository : IBaseArtistRepository
     private Dictionary<string, List<AlbumInfo>> _albums;
     private List<string> _albumArtists;
     private List<string> _trackArtists;
+    private Dictionary<Grouping, List<ArtistInfo>> _groupings;
+    private Dictionary<string, List<ArtistInfo>> _genres;
 
     public BaseArtistRepository(ILibrary library)
     {
@@ -44,6 +46,16 @@ public class BaseArtistRepository : IBaseArtistRepository
             : null;
     }
 
+    public async Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
+    {
+        return _genres[id].ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+    }
+
+    public async Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+    {
+        return _groupings[id].ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+    }
+
     public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
     {
         return _trackArtists
@@ -59,6 +71,9 @@ public class BaseArtistRepository : IBaseArtistRepository
         var library = await _library.Get();
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
+        _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
+        _genres = library.Artists.GroupBy(a => a.Genre).ToDictionary(g => g.Key, g => g.ToList());
+
         _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
 
         _albumArtists = library.Albums.Select(a => a.ArtistId).Distinct().ToList();

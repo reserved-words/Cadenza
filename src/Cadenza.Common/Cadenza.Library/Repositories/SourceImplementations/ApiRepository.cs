@@ -55,6 +55,16 @@
             return await Get<ListResponse<Artist>>(_settings.AllArtists, page, limit);
         }
 
+        public async Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+        {
+            return await Get<ListResponse<Artist>>(_settings.ArtistsByGrouping, id.ToString(), page, limit);
+        }
+
+        public async Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
+        {
+            return await Get<ListResponse<Artist>>(_settings.ArtistsByGenre, id, page, limit);
+        }
+
         public async Task<ArtistInfo> GetArtist(string id)
         {
             return await Get<ArtistInfo>(_settings.Artist, id);

@@ -9,6 +9,8 @@
         string AllArtists { get; }
         string AlbumArtists { get; }
         string TrackArtists { get; }
+        string ArtistsByGrouping { get; }
+        string ArtistsByGenre { get; }
 
         string PlayTracks { get; }
         string PlayArtist { get; }
