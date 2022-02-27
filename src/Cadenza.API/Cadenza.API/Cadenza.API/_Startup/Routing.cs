@@ -68,12 +68,11 @@ public static class Routing
             await trackRepository.Populate();
         });
 
-        app.MapGet(ApiEndpoints.Spotify.AllArtists, async (int page, int limit) =>
-        {
-            return await artistRepository.GetAllArtists(page, limit);
-        });
+        app.MapGet(ApiEndpoints.Spotify.AllArtists, (int page, int limit) => artistRepository.GetAllArtists(page, limit));
         app.MapGet(ApiEndpoints.Spotify.AlbumArtists, (int page, int limit) => artistRepository.GetAlbumArtists(page, limit));
         app.MapGet(ApiEndpoints.Spotify.TrackArtists, (int page, int limit) => artistRepository.GetTrackArtists(page, limit));
+        app.MapGet(ApiEndpoints.Spotify.GroupingArtists, (Grouping id, int page, int limit) => artistRepository.GetArtistsByGrouping(id, page, limit));
+        app.MapGet(ApiEndpoints.Spotify.GenreArtists, (string id, int page, int limit) => artistRepository.GetArtistsByGenre(id, page, limit));
         app.MapGet(ApiEndpoints.Spotify.Artist, (string id) => artistRepository.GetArtist(id));
         app.MapGet(ApiEndpoints.Spotify.ArtistAlbums, (string id, int page, int limit) => artistRepository.GetAlbums(id, page, limit));
 

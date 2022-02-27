@@ -46,25 +46,19 @@ public static class Routing
 
         app.MapPost("/Startup", async () =>
         {
-            try
-            {
-                await library.Populate();
-                await albumRepository.Populate();
-                await artistRepository.Populate();
-                await playTrackRepository.Populate();
-                await searchRepository.Populate();
-                await trackRepository.Populate();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            await library.Populate();
+            await albumRepository.Populate();
+            await artistRepository.Populate();
+            await playTrackRepository.Populate();
+            await searchRepository.Populate();
+            await trackRepository.Populate();
         });
 
         app.MapGet("/Artists", (int page, int limit) => artistRepository.GetAllArtists(page, limit));
         app.MapGet("/Artists/Album", (int page, int limit) => artistRepository.GetAlbumArtists(page, limit));
         app.MapGet("/Artists/Track", (int page, int limit) => artistRepository.GetTrackArtists(page, limit));
+        app.MapGet("/Artists/Grouping", (Grouping id, int page, int limit) => artistRepository.GetArtistsByGrouping(id, page, limit));
+        app.MapGet("/Artists/Genre", (string id, int page, int limit) => artistRepository.GetArtistsByGenre(id, page, limit));
         app.MapGet("/Artist", (string id) => artistRepository.GetArtist(id));
         app.MapGet("/Artist/Albums", (string id, int page, int limit) => artistRepository.GetAlbums(id, page, limit));
 
