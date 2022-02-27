@@ -34,7 +34,12 @@ public class SearchBase : ComponentBase
         if (IsCommon(value))
             return null;
 
-        var results = Cache.Items.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        var results = Cache.Items
+            .Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase))
+            .OrderBy(x => x.Type)
+            .ThenBy(x => x.Name)
+            .AsEnumerable();
+
         return Task.FromResult(results);
     }
 

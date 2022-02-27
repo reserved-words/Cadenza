@@ -29,6 +29,8 @@ public class SearchSyncService : ISearchSyncService
             await FetchArtists(repository);
             await FetchAlbums(repository);
             await FetchTracks(repository);
+            await FetchGenres(repository);
+            await FetchGroupings(repository);
         }
 
         _cache.FinishUpdate();
@@ -67,6 +69,30 @@ public class SearchSyncService : ISearchSyncService
         {
             response = await repository.GetSearchArtists(response.Page + 1, ItemFetchLimit);
             _cache.AddArtists(repository.Source, response.Items);
+        }
+    }
+
+    private async Task FetchGenres(ISourceSearchRepository repository)
+    {
+        var response = await repository.GetSearchGenres(1, ItemFetchLimit);
+        _cache.AddGenres(repository.Source, response.Items);
+
+        while (response.Page < response.TotalPages)
+        {
+            response = await repository.GetSearchGenres(response.Page + 1, ItemFetchLimit);
+            _cache.AddGenres(repository.Source, response.Items);
+        }
+    }
+
+    private async Task FetchGroupings(ISourceSearchRepository repository)
+    {
+        var response = await repository.GetSearchGroupings(1, ItemFetchLimit);
+        _cache.AddGroupings(response.Items);
+
+        while (response.Page < response.TotalPages)
+        {
+            response = await repository.GetSearchGroupings(response.Page + 1, ItemFetchLimit);
+            _cache.AddGroupings(response.Items);
         }
     }
 }

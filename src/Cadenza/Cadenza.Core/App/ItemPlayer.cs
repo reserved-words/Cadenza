@@ -27,6 +27,20 @@ public class ItemPlayer : IItemPlayer
         await _app.Play(playlist);
     }
 
+    public async Task PlayGrouping(Grouping id)
+    {
+        await _app.LoadingPlaylist();
+        var playlist = await _playlistCreator.CreateGroupingPlaylist(id);
+        await _app.Play(playlist);
+    }
+
+    public async Task PlayGenre(string id)
+    {
+        await _app.LoadingPlaylist();
+        var playlist = await _playlistCreator.CreateGenrePlaylist(id);
+        await _app.Play(playlist);
+    }
+
     public async Task PlayPlaylist(string id)
     {
         throw new NotImplementedException();

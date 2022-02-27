@@ -11,9 +11,17 @@
     {
         <AlbumTab Id="@Item.Id" Source="@Item.Source.Value" />
     }
-    else if (Item.Type== PlayerItemType.Track)
+    else if (Item.Type == PlayerItemType.Track)
     {
         <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
+    }
+    else if (Item.Type == PlayerItemType.Grouping)
+    {
+        <GroupingTab Id="@Item.Id" />
+    }
+    else if (Item.Type == PlayerItemType.Genre)
+    {
+        <GenreTab Id="@Item.Id" />
     }
 
 </WhipTab>

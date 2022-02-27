@@ -19,15 +19,21 @@ internal class SpotifyApiRepositorySettings : IApiRepositorySettings
     public string AllArtists => _settings.Endpoints.AllArtists;
     public string AlbumArtists => _settings.Endpoints.AlbumArtists;
     public string TrackArtists => _settings.Endpoints.TrackArtists;
+    public string ArtistsByGrouping => _settings.Endpoints.GroupingArtists;
+    public string ArtistsByGenre => _settings.Endpoints.GenreArtists;
 
     public string PlayTracks => _settings.Endpoints.PlayTracks;
     public string PlayArtist => _settings.Endpoints.PlayArtist;
     public string PlayAlbum => _settings.Endpoints.PlayAlbum;
+    public string PlayGenre => _settings.Endpoints.PlayGenre;
+    public string PlayGrouping => _settings.Endpoints.PlayGrouping;
 
     public string SearchArtists => _settings.Endpoints.SearchArtists;
     public string SearchAlbums => _settings.Endpoints.SearchAlbums;
     public string SearchTracks => _settings.Endpoints.SearchTracks;
     public string SearchPlaylists => _settings.Endpoints.SearchPlaylists;
+    public string SearchGenres => _settings.Endpoints.SearchGenres;
+    public string SearchGroupings => _settings.Endpoints.SearchGroupings;
 
     public string Track => _settings.Endpoints.Track;
     public string Album => _settings.Endpoints.Album;

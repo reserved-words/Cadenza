@@ -34,6 +34,18 @@
                        Id="@Id"
                        Size="@Size.Large" />        
         }
+        else if (Type == PlayerItemType.Grouping)
+        {
+            <MenuGrouping Class="mt-auto"
+                          Id="@Id"
+                          Size="@Size.Large" />        
+        }
+        else if (Type == PlayerItemType.Genre)
+        {
+            <MenuGenre Class="mt-auto"
+                       Id="@Id"
+                       Size="@Size.Large" />        
+        }
 
     </MudPaper>
 </MudContainer>

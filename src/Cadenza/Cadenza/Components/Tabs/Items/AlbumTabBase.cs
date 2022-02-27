@@ -5,6 +5,7 @@ using Cadenza.Library;
 
 namespace Cadenza.Components.Tabs.Items
 {
+
     public class AlbumTabBase : ComponentBase
     {
         [Inject]

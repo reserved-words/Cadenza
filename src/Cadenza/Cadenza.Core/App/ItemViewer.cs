@@ -38,15 +38,27 @@ public class ItemViewer : IItemViewer
         await ViewArtist(id, name);
     }
 
+    public async Task ViewGenre(string id)
+    {
+        var playerItem = new ViewItem(PlayerItemType.Genre, id, id, null);
+        await _app.View(playerItem);
+    }
+
+    public async Task ViewGrouping(Grouping id)
+    {
+        var playerItem = new ViewItem(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName(), null);
+        await _app.View(playerItem);
+    }
+
     public async Task ViewPlaying(PlaylistId playlist)
     {
-        PlayerItemType? type = null;
-
-        type = playlist.Type switch
+        PlayerItemType? type = playlist.Type switch
         {
             PlaylistType.Album => PlayerItemType.Album,
             PlaylistType.Artist => PlayerItemType.Artist,
             PlaylistType.Track => PlayerItemType.Track,
+            PlaylistType.Grouping => PlayerItemType.Grouping,
+            PlaylistType.Genre => PlayerItemType.Genre,
             _ => null
         };
 
