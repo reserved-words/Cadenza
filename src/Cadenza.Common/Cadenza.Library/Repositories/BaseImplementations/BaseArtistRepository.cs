@@ -72,7 +72,7 @@ public class BaseArtistRepository : IBaseArtistRepository
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
-        _genres = library.Artists.GroupBy(a => a.Genre).ToDictionary(g => g.Key, g => g.ToList());
+        _genres = library.Artists.GroupBy(a => a.Genre ?? "None").ToDictionary(g => g.Key, g => g.ToList());
 
         _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
 
