@@ -2,11 +2,11 @@
 
 public enum PlayerItemType
 {
-    Artist,
-    Album,
-    Track,
-    Playlist,
-    Grouping,
-    Genre
+    Grouping = 0,
+    Genre = 1,
+    Artist = 2,
+    Album = 3,
+    Track = 4,
+    Playlist = 5
 }
 
