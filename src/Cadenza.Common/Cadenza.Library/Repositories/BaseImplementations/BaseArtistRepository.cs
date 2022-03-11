@@ -18,49 +18,67 @@ public class BaseArtistRepository : IBaseArtistRepository
         _library = library;
     }
 
-    public async Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
     {
-        return _albumArtists
+        var result = _albumArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
+    public Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
     {
-        return _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
+        var result = _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
             ? albums.ToListResponse<Album>(a => a.Id, page, limit)
             : ListResponse<Album>.Empty;
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
     {
-        return _artists
+        var result = _artists
             .Values
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ArtistInfo> GetArtist(string id)
+    public Task<ArtistInfo> GetArtist(string id)
     {
-        return _artists.TryGetValue(id, out ArtistInfo artist)
+        var result = _artists.TryGetValue(id, out ArtistInfo artist)
             ? artist
             : null;
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
+    public Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
     {
-        return _genres[id].ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+        var artists = _genres.TryGetValue(id, out List<ArtistInfo> result)
+            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
+            : ListResponse<Artist>.Empty;
+
+        return Task.FromResult(artists);
     }
 
-    public async Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+    public Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
     {
-        return _groupings[id].ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+        var artists = _groupings.TryGetValue(id, out List<ArtistInfo> result)
+            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
+            : ListResponse<Artist>.Empty;
+
+        return Task.FromResult(artists);
     }
 
-    public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
     {
-        return _trackArtists
+        var result = _trackArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
     public async Task Populate()
