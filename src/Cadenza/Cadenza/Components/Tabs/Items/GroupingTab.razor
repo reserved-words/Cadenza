@@ -10,8 +10,7 @@
             </MudCardHeader>
             <MudCardContent Class="pa-0">
                 <WhipTable T="@string"
-                           Items="@Genres"
-                           SelectedItem="@SelectedGenre">
+                           Items="@Genres">
                     <RowTemplate>
                         <MudTd>
                             <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnViewGenre(context))" />
@@ -27,9 +26,13 @@
 
     @if (SelectedGenre != null)
     {
-        <MudCard Elevation="0"
-                 Class="fixed-height-margin"
+        <MudCard Class="fixed-height-margin"
                  Style="display: flex; flex-direction: column;">
+
+            <MudCardHeader Class="pa-3">
+                <GenreCardHeader Id="@SelectedGenre"
+                                 OnView="@(() => OnViewSelectedGenre())" />
+            </MudCardHeader>
 
             <MudCardContent Style="flex-grow: 1;"
                             Class="fixed-height-scroll pa-0">
@@ -42,6 +45,7 @@
                     </RowTemplate>
                 </WhipTable>
             </MudCardContent>
+
         </MudCard>
     }
 

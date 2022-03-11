@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Library" Version="1.0.64" />
+    <PackageReference Include="Cadenza.Library" Version="1.0.65" />
     <PackageReference Include="Cadenza.Utilities" Version="1.0.15" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />

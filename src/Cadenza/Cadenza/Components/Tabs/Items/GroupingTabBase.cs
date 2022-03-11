@@ -67,7 +67,13 @@ namespace Cadenza.Components.Tabs.Items
 
         protected async Task OnViewGenre(string id)
         {
-            await Viewer.ViewGenre(id);
+            SelectedGenre = id;
+            StateHasChanged();
+        }
+
+        protected async Task OnViewSelectedGenre()
+        {
+            await Viewer.ViewGenre(SelectedGenre);
         }
     }
 }
