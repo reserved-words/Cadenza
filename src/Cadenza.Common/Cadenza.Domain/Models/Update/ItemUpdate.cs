@@ -1,87 +1,81 @@
-﻿using System.Reflection;
-
-namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain;
 
 public class ItemUpdate<TInterface> where TInterface : new()
 {
     public ItemUpdate()
     {
-        Item = new();
+        OriginalItem = new();
+        UpdatedItem = new();
     }
 
-    public ItemUpdate(LibraryItemType itemType, string id, TInterface model)
+    public ItemUpdate(LibraryItemType type, string id, string name, TInterface originalItem)
     {
-        ItemType = itemType;
         Id = id;
-        Description = model.ToString();
-        Item = model;
-
-        foreach (var kvp in OriginalValues)
-        {
-            UpdatedValues[kvp.Key] = kvp.Value;
-        }
+        Name = name;
+        Type = type;
+        OriginalItem = originalItem;
+        UpdatedItem = new TInterface();
+        CopyValues(originalItem, UpdatedItem);
     }
 
-    public LibraryItemType ItemType { get; set; }
     public string Id { get; set; }
-    public string Description { get; set; }
 
-    private TInterface _item;
-    public TInterface Item
+    public string Name { get; set; }
+
+    public LibraryItemType Type { get; set; }
+
+    public TInterface OriginalItem { get; set; }
+
+    public TInterface UpdatedItem { get; set; }
+
+    public void ApplyUpdates()
     {
-        get { return _item; }
-        set
-        {
-            _item = value;
-            var props = typeof(TInterface).GetProperties();
-            foreach (var prop in props)
-            {
-                var propertyName = GetPropertyName(prop);
-
-                if (!propertyName.HasValue)
-                    continue;
-
-                OriginalValues[propertyName.Value] = prop.GetValue(value)?.ToString();
-            }
-        }
+        CopyValues(UpdatedItem, OriginalItem);
     }
 
-    public Dictionary<ItemProperty, string> OriginalValues { get; set; } = new();
-    public Dictionary<ItemProperty, string> UpdatedValues { get; set; } = new();
+    private static void CopyValues(TInterface sourceItem, TInterface targetItem)
+    {
+        var properties = typeof(TInterface).GetProperties();
 
-    public bool IsUpdated => Updates.Any();
-    public List<ItemPropertyUpdate> Updates => GetUpdates();
+        foreach (var property in properties)
+        {
+            property.SetValue(targetItem, property.GetValue(sourceItem));
+        }
+    }
 
     private List<ItemPropertyUpdate> GetUpdates()
     {
-        return UpdatedValues
-            .Join(OriginalValues,
-                u => u.Key,
-                o => o.Key,
-                (u, o) => new ItemPropertyUpdate
+        var updates = new List<ItemPropertyUpdate>();
+
+        var properties = typeof(TInterface).GetProperties();
+
+        foreach (var property in properties)
+        {
+            var originalValue = property.GetValue(OriginalItem)?.ToString();
+            var updatedValue = property.GetValue(UpdatedItem)?.ToString();
+            if (!AreEqual(originalValue, updatedValue))
+            {
+                var itemProperty = property.GetCustomAttributes(false)
+                    .OfType<ItemPropertyAttribute>()
+                    .Single()
+                    .Property;
+
+                updates.Add(new ItemPropertyUpdate
                 {
-                    ItemType = ItemType,
+                    ItemType = Type,
                     Id = Id,
-                    Property = u.Key,
-                    Item = Description,
-                    OriginalValue = o.Value,
-                    UpdatedValue = u.Value
-                })
-            .Where(p => !AreEqual(p.OriginalValue, p.UpdatedValue))
-            .ToList();
+                    Property = itemProperty,
+                    Item = Name,
+                    OriginalValue = originalValue,
+                    UpdatedValue = updatedValue
+                });
+            }
+        }
+
+        return updates;
     }
 
-    protected string GetUpdated(ItemProperty property)
-    {
-        return UpdatedValues.ValueOrDefault(property);
-    }
-
-    protected void SetUpdated(ItemProperty property, string value)
-    {
-        UpdatedValues[property] = value;
-    }
-
-    private bool AreEqual(string originalValue, string updatedValue)
+    private static bool AreEqual(string originalValue, string updatedValue)
     {
         if (originalValue == null && updatedValue == null)
             return true;
@@ -90,10 +84,5 @@ public class ItemUpdate<TInterface> where TInterface : new()
             return false;
 
         return originalValue == updatedValue;
-    }
-    public static ItemProperty? GetPropertyName(PropertyInfo propertyInfo)
-    {
-        var attr = propertyInfo.GetCustomAttribute<ItemPropertyAttribute>();
-        return attr?.Property;
     }
 }

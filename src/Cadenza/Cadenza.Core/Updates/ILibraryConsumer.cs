@@ -2,8 +2,8 @@
 
 public interface ILibraryConsumer
 {
-    event AlbumUpdatedEventHandler AlbumUpdated;
+    //event AlbumUpdatedEventHandler AlbumUpdated;
     event ArtistUpdatedEventHandler ArtistUpdated;
-    event TrackUpdatedEventHandler TrackUpdated;
+    //event TrackUpdatedEventHandler TrackUpdated;
 
 }

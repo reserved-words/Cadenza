@@ -1,7 +1,7 @@
-﻿using Cadenza.Core.Updates;
+﻿//using Cadenza.Core.Updates;
 
-namespace Cadenza;
+//namespace Cadenza;
 
-public class EditAlbumBase : FormBase<AlbumUpdate>
-{
-}
+//public class EditAlbumBase : FormBase<AlbumUpdate>
+//{
+//}

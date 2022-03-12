@@ -12,6 +12,8 @@ public class EditArtistBase : FormBase<ArtistInfo>
 
     public ArtistUpdate Update { get; set; }
 
+    public ArtistInfo EditableItem => Update.UpdatedItem;
+
     protected override void OnParametersSet()
     {
         Update = new ArtistUpdate(Model);
@@ -23,6 +25,9 @@ public class EditArtistBase : FormBase<ArtistInfo>
         {
             await Updater.UpdateArtist(Update);
             Alert.Success("Artist updated");
+
+            // If succeeds, apply updates and raise an event to let rest of app know it's been updated
+
             Submit();
         }
         catch (Exception ex)
