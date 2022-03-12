@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Utilities;
+
+namespace Cadenza.Local;
 
 public class ImageSrcGenerator : IImageSrcGenerator
 {

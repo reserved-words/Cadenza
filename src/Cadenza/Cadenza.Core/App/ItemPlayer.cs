@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.Playlists;
+using Cadenza.Domain;
 
 namespace Cadenza.Core.App;
 
