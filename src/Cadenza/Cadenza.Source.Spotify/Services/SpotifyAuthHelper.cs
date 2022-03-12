@@ -32,7 +32,9 @@ internal class SpotifyAuthHelper : ISpotifyAuthHelper
     {
         var storedAccessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
 
-        if (storedAccessToken == null || storedAccessToken.Updated.AddMinutes(AccessTokenExpiryMinutes) <= DateTime.Now)
+        if (storedAccessToken == null
+            || storedAccessToken.Value == null 
+            || storedAccessToken.Updated.AddMinutes(AccessTokenExpiryMinutes) <= DateTime.Now)
         {
             return await CreateSession(CancellationToken.None);
         }
