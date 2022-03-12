@@ -1,8 +1,9 @@
 ﻿<HistoryCard Title="Top Albums"
-             Subtitle="Last week"
+             Period="@HistoryPeriod.Week"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top albums..."
-             Items="@Model">
+             Items="@Model"
+             GetItems="@GetItems">
     <RowTemplate>
         <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
             <img src="@context.ImageUrl" width="45" height="45"><img>
@@ -26,4 +27,7 @@
 
     [Parameter]
     public bool IsLoading { get; set; }
+
+    [Parameter]
+    public Func<HistoryPeriod, Task<List<PlayedAlbum>>> GetItems { get; set; }
 }

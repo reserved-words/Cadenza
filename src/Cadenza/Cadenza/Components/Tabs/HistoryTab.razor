@@ -11,17 +11,20 @@
             <MudGrid Class="pa-0 ma-0" Spacing="0">
                 <MudItem md="6" Class="pa-0 ma-0">
                     <HistoryArtists Model="@TopArtists"
-                                    IsLoading="@IsLoading"/>
+                                    IsLoading="@IsLoading"
+                                    GetItems="@GetArtists"/>
                 </MudItem>
                 <MudItem md="6" Class="pa-0 ma-0">
                     <HistoryTracks Model="@TopTracks"
-                                   IsLoading="@IsLoading"/>
+                                   IsLoading="@IsLoading"
+                                   GetItems="@GetTracks"/>
                 </MudItem>
             </MudGrid>
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Fixed">
             <HistoryAlbums Model="@TopAlbums"
-                           IsLoading="@IsLoading"/>
+                           IsLoading="@IsLoading"
+                           GetItems="@GetAlbums"/>
         </WhipRow>
     </WhipColumn>
 </WhipTab>

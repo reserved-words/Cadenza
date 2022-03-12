@@ -1,8 +1,9 @@
 ﻿<HistoryCard Title="Top Artists"
-             Subtitle="Last week"
+             Period="@HistoryPeriod.Week"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top artists..."
-             Items="@Model">
+             Items="@Model"
+             GetItems="@GetItems">
     <RowTemplate>
         <MudTd Style="width: 1px;">
             @context.Rank
@@ -23,4 +24,7 @@
 
     [Parameter]
     public bool IsLoading { get; set; }
+    
+    [Parameter]
+    public Func<HistoryPeriod, Task<List<PlayedArtist>>> GetItems { get; set; }
 }
