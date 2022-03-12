@@ -14,7 +14,7 @@
             <ActionLink Typo="Typo.body1" OnClick="@OnViewArtist" Text="@Artist" />
         </CardHeaderContent>
         <CardHeaderActions>
-            <FavouriteTrack Artist="@Artist" Title="@Title" />
+            <FavouriteTrack Artist="@Artist" Title="@Title" IsFavourite="@null" />
         </CardHeaderActions>
     </MudCardHeader>
     <img src="@ArtworkUrl" class="artwork" />

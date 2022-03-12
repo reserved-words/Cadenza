@@ -32,14 +32,14 @@ internal class Favourites : IFavouritesConsumer, IFavouritesController
 
     public async Task Favourite(string artist, string title)
     {
-        var track = GetTrack(artist, title);
+        var track = await GetTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Favourite);
         await _http.Post(url, null, track);
     }
 
     public async Task Unfavourite(string artist, string title)
     {
-        var track = GetTrack(artist, title);
+        var track = await GetTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Unfavourite);
         await _http.Post(url, null, track);
     }

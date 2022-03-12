@@ -31,7 +31,18 @@ public class FavouriteTrackBase : ComponentBase
         
         var status = ConnectorService.GetStatus(Connector.LastFm);
 
-        await LoadData(status);
+        if (status != ConnectorStatus.Connected)
+            return;
+
+        IsEnabled = true;
+
+        if (!IsFavourite.HasValue)
+        {
+            IsFavourite = false;
+            IsFavourite = await Favourites.IsFavourite(Artist, Title);
+        }
+
+        StateHasChanged();
     }
 
     public async Task Favourite()
@@ -44,19 +55,5 @@ public class FavouriteTrackBase : ComponentBase
     {
         await FavouritesController.Unfavourite(Artist, Title);
         IsFavourite = false;
-    }
-
-    private async Task LoadData(ConnectorStatus status)
-    {
-        if (status != ConnectorStatus.Connected)
-            return;
-
-        if (!IsFavourite.HasValue)
-        {
-            IsFavourite = false;
-            IsFavourite = await Favourites.IsFavourite(Artist, Title);
-        }
-
-        StateHasChanged();
     }
 }
