@@ -94,4 +94,34 @@ public class PlaylistCreator : IPlaylistCreator
             Tracks = shuffledTracks.ToList()
         };
     }
+
+    public async Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping id)
+    {
+        var tracks = await _repository.GetByGrouping(id);
+
+        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Grouping, id.GetDisplayName());
+
+        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
+
+        return new PlaylistDefinition
+        {
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
+        };
+    }
+
+    public async Task<PlaylistDefinition> CreateGenrePlaylist(string id)
+    {
+        var tracks = await _repository.GetByGenre(id);
+
+        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Genre, id);
+
+        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
+
+        return new PlaylistDefinition
+        {
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
+        };
+    }
 }

@@ -1,0 +1,19 @@
+﻿@using Cadenza.Core.Extensions
+
+@if (Id != null)
+{
+    <ItemCardHeader Type="@PlayerItemType.Genre"
+                    Id="@Id">
+        <ChildContent>
+            <ActionLink Typo="Typo.h6" Text="@Id" OnClick="@OnView"></ActionLink>
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public Func<Task> OnView { get; set; }
+}

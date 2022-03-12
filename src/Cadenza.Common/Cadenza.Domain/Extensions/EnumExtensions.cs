@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Domain;
 
-public static class EnumExtensionMethods
+public static class EnumExtensions
 {
     public static T GetAttribute<T>(this Enum en) where T : Attribute
     {

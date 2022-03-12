@@ -43,11 +43,13 @@ public static class Extensions
     public static string GetIcon(this PlayerItemType type)
 	{
         return type switch
-		{
-			PlayerItemType.Artist => "fas fa-users", // Icons.Material.Filled.PeopleAlt,
-			PlayerItemType.Album => "fas fa-compact-disc", // Icons.Material.Filled.Album,
+        {
+            PlayerItemType.Artist => "fas fa-users", // Icons.Material.Filled.PeopleAlt,
+            PlayerItemType.Album => "fas fa-compact-disc", // Icons.Material.Filled.Album,
             PlayerItemType.Track => "fas fa-music", // Icons.Material.Filled.MusicNote,
             PlayerItemType.Playlist => "fas fa-list-ol",
+            PlayerItemType.Grouping => "fas fa-box",
+            PlayerItemType.Genre => "fas fa-boxes",
         };
     }
 

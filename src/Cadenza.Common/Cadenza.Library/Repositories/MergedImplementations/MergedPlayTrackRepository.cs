@@ -23,4 +23,14 @@ public class MergedPlayTrackRepository : MergedRepositoryBase<ISourcePlayTrackRe
     {
         return await Fetch((repository, page, limit) => repository.GetByArtist(id, page, limit));
     }
+
+    public async Task<List<PlayTrack>> GetByGenre(string id)
+    {
+        return await Fetch((repository, page, limit) => repository.GetByGenre(id, page, limit));
+    }
+
+    public async Task<List<PlayTrack>> GetByGrouping(Grouping id)
+    {
+        return await Fetch((repository, page, limit) => repository.GetByGrouping(id, page, limit));
+    }
 }

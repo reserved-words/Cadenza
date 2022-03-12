@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Utilities;
+﻿namespace Cadenza.Domain;
 
-public static class ListExtensionMethods
+public static class ListExtensions
 {
     public static void AddIfNotPresent<T>(this List<T> items, T item)
     {

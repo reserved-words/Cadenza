@@ -57,25 +57,21 @@ public static class Routing
         app.MapGet("/Artists", (int page, int limit) => artistRepository.GetAllArtists(page, limit));
         app.MapGet("/Artists/Album", (int page, int limit) => artistRepository.GetAlbumArtists(page, limit));
         app.MapGet("/Artists/Track", (int page, int limit) => artistRepository.GetTrackArtists(page, limit));
+        app.MapGet("/Artists/Grouping", (Grouping id, int page, int limit) => artistRepository.GetArtistsByGrouping(id, page, limit));
+        app.MapGet("/Artists/Genre", (string id, int page, int limit) => artistRepository.GetArtistsByGenre(id, page, limit));
         app.MapGet("/Artist", (string id) => artistRepository.GetArtist(id));
         app.MapGet("/Artist/Albums", (string id, int page, int limit) => artistRepository.GetAlbums(id, page, limit));
 
         app.MapGet("/Play/Tracks", (int page, int limit) => playTrackRepository.GetAll(page, limit));
         app.MapGet("/Play/Artist", (string id, int page, int limit) => playTrackRepository.GetByArtist(id, page, limit));
         app.MapGet("/Play/Album", (string id, int page, int limit) => playTrackRepository.GetByAlbum(id, page, limit));
+        app.MapGet("/Play/Genre", (string id, int page, int limit) => playTrackRepository.GetByGenre(id, page, limit));
+        app.MapGet("/Play/Grouping", (Grouping id, int page, int limit) => playTrackRepository.GetByGrouping(id, page, limit));
 
         app.MapGet("/Search/Artists", (int page, int limit) => searchRepository.GetSearchArtists(page, limit));
-        app.MapGet("/Search/Albums", async (int page, int limit) =>
-        {
-            try
-            {
-                return await searchRepository.GetSearchAlbums(page, limit);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        });
+        app.MapGet("/Search/Groupings", (int page, int limit) => searchRepository.GetSearchGroupings(page, limit));
+        app.MapGet("/Search/Genres", (int page, int limit) => searchRepository.GetSearchGenres(page, limit));
+        app.MapGet("/Search/Albums", (int page, int limit) => searchRepository.GetSearchAlbums(page, limit));
         app.MapGet("/Search/Playlists", (int page, int limit) => searchRepository.GetSearchPlaylists(page, limit));
         app.MapGet("/Search/Tracks", (int page, int limit) => searchRepository.GetSearchTracks(page, limit));
 

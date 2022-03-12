@@ -1,15 +1,20 @@
-﻿@using Cadenza.Core.Extensions
+﻿@using Cadenza.Core.App
+@using Cadenza.Core.Extensions
 @if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Artist"
-                Id="@Model.Id">
+                    Id="@Model.Id">
         <ChildContent>
-            <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@OnView"></ActionLink>
+            <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@(() => Viewer.ViewArtist(Model.Id))"></ActionLink>
 
             @if (!TitleOnly)
             {
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
-                <MudText Typo="Typo.body1">@Model.Grouping | @Model.Genre</MudText>
+                <MudText Typo="Typo.body1">
+                    <ActionLink Typo="Typo.body1" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
+                    | 
+                    <ActionLink Typo="Typo.body1" Text="@Model.Genre" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
+                </MudText>
             }
 
         </ChildContent>
@@ -17,15 +22,12 @@
 }
 
 @code {
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
     [Parameter]
     public ArtistInfo Model { get; set; }
 
     [Parameter]
-    public Func<Artist, Task> OnPlay { get; set; }
-
-    [Parameter]
     public bool TitleOnly { get; set; }
-
-    [Parameter]
-    public Func<Task> OnView { get; set; }
 }

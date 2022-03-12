@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cadenza.Domain" Version="1.0.28" />
+    <PackageReference Include="Cadenza.Domain" Version="1.0.30" />
     <PackageReference Include="IndexedDB.Blazor" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />

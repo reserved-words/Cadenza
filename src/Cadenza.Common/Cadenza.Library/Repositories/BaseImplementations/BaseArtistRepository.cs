@@ -10,45 +10,75 @@ public class BaseArtistRepository : IBaseArtistRepository
     private Dictionary<string, List<AlbumInfo>> _albums;
     private List<string> _albumArtists;
     private List<string> _trackArtists;
+    private Dictionary<Grouping, List<ArtistInfo>> _groupings;
+    private Dictionary<string, List<ArtistInfo>> _genres;
 
     public BaseArtistRepository(ILibrary library)
     {
         _library = library;
     }
 
-    public async Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
     {
-        return _albumArtists
+        var result = _albumArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
+    public Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
     {
-        return _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
+        var result = _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
             ? albums.ToListResponse<Album>(a => a.Id, page, limit)
             : ListResponse<Album>.Empty;
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
     {
-        return _artists
+        var result = _artists
             .Values
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ArtistInfo> GetArtist(string id)
+    public Task<ArtistInfo> GetArtist(string id)
     {
-        return _artists.TryGetValue(id, out ArtistInfo artist)
+        var result = _artists.TryGetValue(id, out ArtistInfo artist)
             ? artist
             : null;
+
+        return Task.FromResult(result);
     }
 
-    public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
+    public Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
     {
-        return _trackArtists
+        var artists = _genres.TryGetValue(id, out List<ArtistInfo> result)
+            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
+            : ListResponse<Artist>.Empty;
+
+        return Task.FromResult(artists);
+    }
+
+    public Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+    {
+        var artists = _groupings.TryGetValue(id, out List<ArtistInfo> result)
+            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
+            : ListResponse<Artist>.Empty;
+
+        return Task.FromResult(artists);
+    }
+
+    public Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
+    {
+        var result = _trackArtists
             .Select(a => _artists[a])
             .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+
+        return Task.FromResult(result);
     }
 
     public async Task Populate()
@@ -59,6 +89,9 @@ public class BaseArtistRepository : IBaseArtistRepository
         var library = await _library.Get();
 
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
+        _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
+        _genres = library.Artists.GroupBy(a => a.Genre ?? "None").ToDictionary(g => g.Key, g => g.ToList());
+
         _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
 
         _albumArtists = library.Albums.Select(a => a.ArtistId).Distinct().ToList();
