@@ -35,8 +35,6 @@ public class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrac
     {
         if (_current.IsTrackFinished)
         {
-            //_current.Dispose();
-            //_current = null;
             TrackFinished?.Invoke(this, new TrackFinishedEventArgs());
         }
         else

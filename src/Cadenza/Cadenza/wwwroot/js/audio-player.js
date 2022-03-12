@@ -9,6 +9,8 @@ var play = function (url){
     }
 
     a.play();
+
+    return progress(a);
 }
 
 var pause = function () {
