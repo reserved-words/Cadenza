@@ -56,11 +56,27 @@ public class HistoryTabBase : ComponentBase
             return;
         }
 
-        TopTracks = (await History.GetPlayedTracks(HistoryPeriod.Week, 5, 1)).ToList();
-        TopAlbums = (await History.GetPlayedAlbums(HistoryPeriod.Week, 5, 1)).ToList();
-        TopArtists = (await History.GetPlayedArtists(HistoryPeriod.Week, 5, 1)).ToList();
+        TopArtists = await GetArtists(HistoryPeriod.Week);
+        TopAlbums = await GetAlbums(HistoryPeriod.Week);
+        TopTracks = await GetTracks(HistoryPeriod.Week);
+
         IsLoading = false;
 
         IsPopulated = true;
+    }
+
+    protected async Task<List<PlayedArtist>> GetArtists(HistoryPeriod period)
+    {
+        return (await History.GetPlayedArtists(period, 5, 1)).ToList();
+    }
+
+    protected async Task<List<PlayedAlbum>> GetAlbums(HistoryPeriod period)
+    {
+        return (await History.GetPlayedAlbums(period, 5, 1)).ToList();
+    }
+
+    protected async Task<List<PlayedTrack>> GetTracks(HistoryPeriod period)
+    {
+        return (await History.GetPlayedTracks(period, 5, 1)).ToList();
     }
 }

@@ -1,46 +1,35 @@
 ﻿@inherits HistoryRecentBase
 
-<WhipCard Title="Recent Tracks"
-          Padding=false>
-    @if (IsLoading)
-    {
-        <WhipContainer>
-            <MudText>Loading recent tracks...</MudText>
-        </WhipContainer>
-
-    }
-    else if (Model != null)
-    {
-        <WhipTable T="@RecentTrack"
-                   Items="@Model">
-            <RowTemplate>
-                <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
-                    <img src="@context.ImageUrl" width="50" height="50"><img>
-                </MudTd>
-                <MudTd Class="pa-1">
-                    <MudText Typo="@Typo.body1">@context.Title</MudText>
-                    <MudText Typo="@Typo.body2">@context.Artist</MudText>
-                </MudTd>
-                <MudTd Style="width: 1px; text-align: right;" Class="pa-1">
-                    @if (context.NowPlaying)
-                    {
-                        <img src="images/playing.gif" class="ma-1" />
-                    }
-                    else if (context.Played.Date == DateTime.Today)
-                    {
-                        <MudText Typo="@Typo.body2">Today</MudText>
-                        <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
-                    }
-                    else
-                    {
-                        <MudText Typo="@Typo.body2">@context.Played.ToString("dd/MM/yyyy")</MudText>
-                        <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
-                    }
-                </MudTd>
-                <MudTd Style="width: 1px; text-align: right;">
-                    <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" />
-                </MudTd>
-            </RowTemplate>
-        </WhipTable>
-    }
-</WhipCard>
+<HistoryCard Title="Recent Tracks"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading recent tracks..."
+             Items="@Model">
+    <RowTemplate>
+        <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
+            <img src="@context.ImageUrl" width="50" height="50"><img>
+        </MudTd>
+        <MudTd Class="pa-1">
+            <MudText Typo="@Typo.body1">@context.Title</MudText>
+            <MudText Typo="@Typo.body2">@context.Artist</MudText>
+        </MudTd>
+        <MudTd Style="width: 1px; text-align: right;" Class="pa-1">
+            @if (context.NowPlaying)
+            {
+                <img src="images/playing.gif" class="ma-1" />
+            }
+            else if (context.Played.Date == DateTime.Today)
+            {
+                <MudText Typo="@Typo.body2">Today</MudText>
+                <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
+            }
+            else
+            {
+                <MudText Typo="@Typo.body2">@context.Played.ToString("dd/MM/yyyy")</MudText>
+                <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
+            }
+        </MudTd>
+        <MudTd Style="width: 1px; text-align: right;">
+            <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" />
+        </MudTd>
+    </RowTemplate>
+</HistoryCard>
