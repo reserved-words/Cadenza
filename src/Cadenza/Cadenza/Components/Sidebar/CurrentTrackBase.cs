@@ -1,7 +1,6 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Player;
-using Cadenza.Utilities;
 
 namespace Cadenza;
 
