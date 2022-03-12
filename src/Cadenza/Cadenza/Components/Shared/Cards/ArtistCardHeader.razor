@@ -10,11 +10,8 @@
             @if (!TitleOnly)
             {
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
-                <MudText Typo="Typo.body1">
-                    <ActionLink Typo="Typo.body1" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
-                    | 
-                    <ActionLink Typo="Typo.body1" Text="@Model.Genre" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
-                </MudText>
+                <ActionLink Typo="Typo.body2" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
+                <ActionLink Typo="Typo.body2" Text="@Model.Genre" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
             }
 
         </ChildContent>
