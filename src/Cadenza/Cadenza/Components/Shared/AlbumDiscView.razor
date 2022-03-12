@@ -9,6 +9,12 @@
             <MudTd>
                 <ActionLink Typo="@Typo.body1" Text="@context.Title" OnClick="@(() => ViewTrack(context.TrackId, context.Title))" />
             </MudTd>
+            <MudTd>
+                @if (context.ArtistId != AlbumArtistId)
+                {
+                    <ActionLink Typo="@Typo.body1" Text="@context.ArtistName" OnClick="@(() => ViewArtist(context.ArtistId, context.ArtistName))" />
+                }
+            </MudTd>
             <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
         </RowTemplate>
     </WhipTable>
@@ -20,5 +26,11 @@
     public Disc Model { get; set; }
 
     [Parameter]
+    public string AlbumArtistId { get; set; }
+
+    [Parameter]
     public Func<string, string, Task> ViewTrack { get; set; }
+
+    [Parameter]
+    public Func<string, string, Task> ViewArtist { get; set; }
 }

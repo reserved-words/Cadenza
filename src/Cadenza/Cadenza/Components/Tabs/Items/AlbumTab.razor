@@ -24,7 +24,7 @@
     @if (Discs != null)
     {
         <WhipRow RowHeight="@RowHeight.Full">
-            <AlbumDiscsView Model="@Discs" ViewTrack="@ViewTrack" />
+            <AlbumDiscsView Model="@Discs" ViewTrack="@ViewTrack" ViewArtist="@ViewArtist" AlbumArtistId="@Album.ArtistId" />
         </WhipRow>
     }
 </WhipColumn>
