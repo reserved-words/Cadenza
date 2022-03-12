@@ -50,11 +50,12 @@ public class ApiLibrary : IStaticLibrary
 
             var trackArtists = new List<ArtistInfo>();
 
-            foreach (var track in tracks)
+            for (var i = 0; i < tracks.Count; i++)
             {
+                var track = tracks[i];
                 var trackArtistInfo = AddArtist(library, track.track.artists);
                 var trackInfo = GetTrackInfo(track, trackArtistInfo, playlist.id);
-                var albumTrack = GetPlaylistTrack(playlist.id, track);
+                var albumTrack = GetPlaylistTrack(playlist.id, track, i + 1);
                 library.Tracks.Add(trackInfo);
                 library.AlbumTrackLinks.Add(albumTrack);
                 trackArtists.Add(trackArtistInfo);
@@ -179,13 +180,13 @@ public class ApiLibrary : IStaticLibrary
         };
     }
 
-    private AlbumTrackLink GetPlaylistTrack(string playlistId, SpotifyApiPlaylistItem item)
+    private AlbumTrackLink GetPlaylistTrack(string playlistId, SpotifyApiPlaylistItem item, int trackNo)
     {
         return new AlbumTrackLink
         {
             TrackId = GetTrackId(item.track.id, playlistId),
             AlbumId = playlistId,
-            Position = new AlbumTrackPosition(1, item.track.track_number)
+            Position = new AlbumTrackPosition(1, trackNo)
         };
     }
 
