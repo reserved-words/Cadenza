@@ -1,31 +1,21 @@
-﻿<WhipCard Title="Top Artists"
-          Subtitle="Last week"
-          Padding=false>
-    @if (IsLoading)
-    {
-        <WhipContainer>
-            <MudText>Loading top artists...</MudText>
-        </WhipContainer>
-    }
-    else if (Model != null)
-    {
-        <WhipTable T="@PlayedArtist"
-                   Items="@Model">
-            <RowTemplate>
-                <MudTd Style="width: 1px;">
-                    @context.Rank
-                </MudTd>
-                <MudTd>
-                    <MudText Typo="@Typo.body1">@context.Name</MudText>
-                    <MudText Typo="@Typo.body2">-</MudText>
-                </MudTd>
-                <MudTd Style="text-align: right;">
-                    @context.Plays
-                </MudTd Style="width: 1px;">
-            </RowTemplate>
-        </WhipTable>
-    }
-</WhipCard>
+﻿<HistoryCard Title="Top Artists"
+             Subtitle="Last week"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading top artists..."
+             Items="@Model">
+    <RowTemplate>
+        <MudTd Style="width: 1px;">
+            @context.Rank
+        </MudTd>
+        <MudTd>
+            <MudText Typo="@Typo.body1">@context.Name</MudText>
+            <MudText Typo="@Typo.body2">-</MudText>
+        </MudTd>
+        <MudTd Style="text-align: right; width: 1px;">
+            @context.Plays
+        </MudTd>
+    </RowTemplate>
+</HistoryCard>
 
 @code {
     [Parameter]

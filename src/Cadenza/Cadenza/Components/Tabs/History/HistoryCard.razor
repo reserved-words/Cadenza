@@ -1,0 +1,70 @@
+﻿
+
+<MudCard Elevation="2"
+         Class="fixed-height-margin"
+         Style="display: flex; flex-direction: column;">
+
+    <MudCardHeader Style="flex-grow: 0;" Class="pa-3">
+        <CardHeaderContent>
+            <MudContainer Class="d-flex pa-0 ma-0">
+
+                <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+                    <MudText Typo="@Typo.h6">@Title</MudText>
+                    @if (Subtitle != null)
+                    {
+                        <MudText Typo="@Typo.body1">@Subtitle</MudText>
+                    }
+                </MudPaper>
+
+                <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
+                    <MudMenu Icon="@Icons.Material.Filled.Settings"
+                             Class="mt-auto"
+                             Size="@Size.Medium"
+                             Direction="@Direction.Left">
+                        @*                        <MudMenuItem OnClick="OnPlay">Play</MudMenuItem>
+                            <MudMenuItem OnClick="OnEdit">Edit</MudMenuItem>
+                        *@
+                    </MudMenu>
+                </MudPaper>
+            </MudContainer>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    @if (IsLoading)
+    {
+        <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-2 pt-0">
+            <WhipContainer>
+                <MudText>@LoadingCaption</MudText>
+            </WhipContainer>
+        </MudCardContent>
+    }
+    else if (Items != null)
+    {
+        <WhipTable T="@T"
+               Items="@Items"
+               RowTemplate="@RowTemplate" />
+    }
+
+</MudCard>
+
+@typeparam T
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Subtitle { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public string LoadingCaption { get; set; }
+
+    [Parameter]
+    public List<T> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> RowTemplate { get; set; }
+}

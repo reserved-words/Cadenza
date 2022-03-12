@@ -1,34 +1,24 @@
-﻿<WhipCard Title="Top Albums"
-          Subtitle="Last week"
-          Padding=false>
-    @if (IsLoading)
-    {
-        <WhipContainer>
-            <MudText>Loading top albums...</MudText>
-        </WhipContainer>
-    }
-    else if (Model != null)
-    {
-        <WhipTable T="@PlayedAlbum"
-                   Items="@Model">
-            <RowTemplate>
-                <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
-                    <img src="@context.ImageUrl" width="45" height="45"><img>
-                </MudTd>
-                <MudTd Style="width: 1px;">
-                    @context.Rank
-                </MudTd>
-                <MudTd>
-                    <MudText Typo="@Typo.body1">@context.Title</MudText>
-                    <MudText Typo="@Typo.body2">@context.Artist</MudText>
-                </MudTd>
-                <MudTd Style="text-align: right;">
-                    @context.Plays
-                </MudTd Style="width: 1px;">
-            </RowTemplate>
-        </WhipTable>    
-    }
-</WhipCard>
+﻿<HistoryCard Title="Top Albums"
+             Subtitle="Last week"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading top albums..."
+             Items="@Model">
+    <RowTemplate>
+        <MudTd Style="width: 1px;" Class="px-1 pt-1 pb-0">
+            <img src="@context.ImageUrl" width="45" height="45"><img>
+        </MudTd>
+        <MudTd Style="width: 1px;">
+            @context.Rank
+        </MudTd>
+        <MudTd>
+            <MudText Typo="@Typo.body1">@context.Title</MudText>
+            <MudText Typo="@Typo.body2">@context.Artist</MudText>
+        </MudTd>
+        <MudTd Style="text-align: right; width: 1px;">
+            @context.Plays
+        </MudTd>
+    </RowTemplate>         
+</HistoryCard>
 
 @code {
     [Parameter]
