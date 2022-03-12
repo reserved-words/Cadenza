@@ -1,12 +1,12 @@
 ﻿@inherits EditArtistBase
 
-<WhipDialog Cancel="Cancel"
+<WhipDialog Cancel="OnCancel"
             CancelCaption="Cancel"
-            Submit="Submit"
+            Submit="OnSubmit"
             SubmitCaption="OK">
 
     <ChildContent>
-        <EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+        <EditForm Model="@Model">
             <DataAnnotationsValidator />
             <MudCard>
                 <MudCardContent>
@@ -44,13 +44,3 @@
     </ChildContent>
 
 </WhipDialog>
-
-@code {
-    bool success;
-
-    private void OnValidSubmit(EditContext context)
-    {
-        success = true;
-        StateHasChanged();
-    }
-}

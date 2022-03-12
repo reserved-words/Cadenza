@@ -1,8 +1,6 @@
-﻿using Cadenza.Core.Extensions;
-using Cadenza.Domain;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace Cadenza.Core.Updates;
+namespace Cadenza.Domain;
 
 public class ItemUpdate<TInterface> where TInterface : new()
 {
