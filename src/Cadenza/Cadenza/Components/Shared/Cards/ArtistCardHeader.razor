@@ -1,5 +1,6 @@
 ﻿@using Cadenza.Core.App
 @using Cadenza.Core.Extensions
+@using Cadenza.Core.Updates
 @if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Artist"
@@ -22,9 +23,26 @@
     [Inject]
     public IItemViewer Viewer { get; set; }
 
+    [Inject]
+    public IUpdatesConsumer UpdatesConsumer { get; set; }
+
     [Parameter]
     public ArtistInfo Model { get; set; }
 
     [Parameter]
     public bool TitleOnly { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UpdatesConsumer.ArtistUpdated += OnArtistUpdated;
+    }
+
+    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
+    {
+        if (args.Artist.Id != Model.Id)
+            return;
+
+        Model = args.Artist;
+        StateHasChanged();
+    }
 }

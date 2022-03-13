@@ -1,4 +1,5 @@
-﻿using Cadenza.Update.LibraryUpdaters;
+﻿using Cadenza.Core.App;
+using Cadenza.Update.LibraryUpdaters;
 
 namespace Cadenza;
 
@@ -9,6 +10,9 @@ public class EditArtistBase : FormBase<ArtistInfo>
 
     [Inject]
     public INotificationService Alert { get; set; }
+
+    [Inject]
+    public IUpdatesController UpdatesService { get; set; }
 
     public ArtistUpdate Update { get; set; }
 
@@ -25,9 +29,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
         {
             await Updater.UpdateArtist(Update);
             Alert.Success("Artist updated");
-
-            // If succeeds, apply updates and raise an event to let rest of app know it's been updated
-
+            await UpdatesService.UpdateArtist(Update);
             Submit();
         }
         catch (Exception ex)

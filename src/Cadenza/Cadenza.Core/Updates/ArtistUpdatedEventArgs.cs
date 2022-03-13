@@ -4,10 +4,10 @@ public delegate Task ArtistUpdatedEventHandler(object sender, ArtistUpdatedEvent
 
 public class ArtistUpdatedEventArgs : EventArgs
 {
-    public ArtistUpdatedEventArgs(ArtistUpdate update)
+    public ArtistUpdatedEventArgs(ArtistInfo artist)
     {
-        Update = update;
+        Artist = artist;
     }
 
-    public ArtistUpdate Update { get; }
+    public ArtistInfo Artist { get; }
 }
