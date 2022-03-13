@@ -20,21 +20,19 @@ public static class Routing
     private static WebApplication AddLastFmRoutes(this WebApplication app)
     {
         var lfmAuth = app.Services.GetRequiredService<LastFM.IAuthoriser>();
-
-        var history = app.Services.GetRequiredService<IHistory>();
-        var scrobbler = app.Services.GetRequiredService<IScrobbler>();
-        var favourites = app.Services.GetRequiredService<IFavourites>();
-
         app.MapGet(ApiEndpoints.LastFm.AuthUrl, (string redirectUri) => lfmAuth.GetAuthUrl(redirectUri));
         app.MapGet(ApiEndpoints.LastFm.CreateSession, (string token) => lfmAuth.CreateSession(token));
 
+        var scrobbler = app.Services.GetRequiredService<IScrobbler>();
         app.MapPost(ApiEndpoints.LastFm.Scrobble, (Scrobble scrobble) => scrobbler.RecordPlay(scrobble));
         app.MapPost(ApiEndpoints.LastFm.UpdateNowPlaying, (Scrobble scrobble) => scrobbler.UpdateNowPlaying(scrobble));
 
+        var favourites = app.Services.GetRequiredService<IFavourites>();
         app.MapGet(ApiEndpoints.LastFm.IsFavourite, (string artist, string title) => favourites.IsFavourite(artist, title));
         app.MapPost(ApiEndpoints.LastFm.Favourite, (Core.LastFM.Track track) => favourites.Favourite(track));
         app.MapPost(ApiEndpoints.LastFm.Unfavourite, (Core.LastFM.Track track) => favourites.Unfavourite(track));
 
+        var history = app.Services.GetRequiredService<IHistory>();
         app.MapGet(ApiEndpoints.LastFm.RecentTracks, (int limit, int page) => history.GetRecentTracks(limit, page));
         app.MapGet(ApiEndpoints.LastFm.TopTracks, (HistoryPeriod period, int limit, int page) => history.GetPlayedTracks(period, limit, page));
         app.MapGet(ApiEndpoints.LastFm.TopAlbums, (HistoryPeriod period, int limit, int page) => history.GetPlayedAlbums(period, limit, page));
@@ -51,7 +49,6 @@ public static class Routing
         app.MapGet(ApiEndpoints.Spotify.AuthUrl, (string state, string redirectUri) => authoriser.GetAuthUrl(state, redirectUri));
 
         var apiToken = app.Services.GetRequiredService<IApiToken>();
-
         var library = app.Services.GetRequiredService<ILibrary>();
         var albums = app.Services.GetRequiredService<IAlbumCache>();
         var artists = app.Services.GetRequiredService<IArtistCache>();

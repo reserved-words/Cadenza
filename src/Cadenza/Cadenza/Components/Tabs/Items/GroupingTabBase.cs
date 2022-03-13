@@ -43,46 +43,29 @@ namespace Cadenza.Components.Tabs.Items
 
         private async Task UpdateGrouping()
         {
-            var grouping = Id.Parse<Grouping>();
-            var artists = await Repository.GetArtistsByGrouping(grouping);
+            var currentGenre = SelectedGenre;
+
+            var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
             _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre);
             Genres = _artistsByGenre.Keys.ToList();
+
+            if (currentGenre != null && Genres.Contains(currentGenre))
+            {
+                SelectedGenre = currentGenre;
+            }
+
             StateHasChanged();
         }
 
-        private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
+        private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
         {
             var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate);
             var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate);
 
             if (!isGroupingUpdated && !isGenreUpdated)
-            {
-                return Task.CompletedTask;
-            }
+                return;
 
-            if (groupingUpdate?.OriginalValue == Id)
-            {
-                _artistsByGenre.RemoveWhere(a => a.Id == e.Update.Id);
-            }
-
-            if (groupingUpdate?.UpdatedValue == Id)
-            {
-                _artistsByGenre.AddThenSort(e.Update.UpdatedItem, a => a.Genre, a => a.Name);
-            }
-
-            if (genreUpdate?.OriginalValue == Id)
-            {
-                Artists.RemoveWhere(a => a.Id == e.Update.Id);
-            }
-            
-            if (genreUpdate?.UpdatedValue == Id)
-            {
-                Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
-            }
-
-            StateHasChanged();
-
-            return Task.CompletedTask;
+            await UpdateGrouping();
         }
 
         protected async Task OnView()
