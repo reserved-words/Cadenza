@@ -2,7 +2,7 @@
 
 namespace Cadenza.Library;
 
-public class BaseArtistRepository : IBaseArtistRepository
+public class ArtistCache : IArtistCache
 {
     private readonly ILibrary _library;
 
@@ -13,7 +13,7 @@ public class BaseArtistRepository : IBaseArtistRepository
     private Dictionary<Grouping, List<ArtistInfo>> _groupings;
     private Dictionary<string, List<ArtistInfo>> _genres;
 
-    public BaseArtistRepository(ILibrary library)
+    public ArtistCache(ILibrary library)
     {
         _library = library;
     }

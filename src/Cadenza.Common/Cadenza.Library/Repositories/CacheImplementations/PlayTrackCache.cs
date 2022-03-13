@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class BasePlayTrackRepository : IBasePlayTrackRepository
+public class PlayTrackCache : IPlayTrackCache
 {
     private readonly ILibrary _library;
 
@@ -10,7 +10,7 @@ public class BasePlayTrackRepository : IBasePlayTrackRepository
     private Dictionary<Grouping, List<string>> _groupingArtists;
     private Dictionary<string, List<string>> _genreArtists;
 
-    public BasePlayTrackRepository(ILibrary library)
+    public PlayTrackCache(ILibrary library)
     {
         _library = library;
     }

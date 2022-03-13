@@ -1,13 +1,13 @@
 ﻿namespace Cadenza.Library;
 
-public class BaseAlbumRepository : IBaseAlbumRepository
+public class AlbumCache : IAlbumCache
 {
     private readonly ILibrary _library;
 
     private Dictionary<string, AlbumInfo> _albums;
     private Dictionary<string, List<AlbumTrack>> _albumTracks;
 
-    public BaseAlbumRepository(ILibrary library)
+    public AlbumCache(ILibrary library)
     {
         _library = library;
     }
