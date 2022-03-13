@@ -1,6 +1,5 @@
 ﻿using Cadenza.Domain;
 using Cadenza.Library;
-using Cadenza.Utilities;
 
 namespace Cadenza.Spotify.Libraries;
 
@@ -116,5 +115,13 @@ internal class OverridesLibrary : IStaticLibrary
     {
         return overrides.SingleOrDefault(a => a.Property == ItemProperty.ReleaseType)?.UpdatedValue.Parse<ReleaseType>()
                         ?? ReleaseType.Album;
+    }
+
+    public async Task UpdateArtist(ArtistUpdate update)
+    {
+        var success = await _service.AddOverrides(update.Updates);
+
+        if (!success)
+            throw new Exception("Failed to save overrides");
     }
 }

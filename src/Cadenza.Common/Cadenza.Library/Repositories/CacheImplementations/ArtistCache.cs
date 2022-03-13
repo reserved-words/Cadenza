@@ -123,10 +123,10 @@ public class ArtistCache : IArtistCache
         }
     }
 
-    public Task UpdateArtist(ArtistUpdate update)
+    public async Task UpdateArtist(ArtistUpdate update)
     {
         if (!_artists.TryGetValue(update.Id, out ArtistInfo artist))
-            return Task.CompletedTask;
+            return;
 
         update.ApplyUpdates(artist);
 
@@ -144,6 +144,6 @@ public class ArtistCache : IArtistCache
             _groupings.GetOrAdd(updatedGrouping).Add(artist);
         }
 
-        return Task.CompletedTask;
+        await _library.UpdateArtist(update);
     }
 }

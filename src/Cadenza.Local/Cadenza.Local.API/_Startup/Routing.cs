@@ -16,18 +16,18 @@ public static class Routing
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
+        var id3UpdateQueue = app.Services.GetRequiredService<IFileUpdateService>();
         var artists = app.Services.GetRequiredService<IArtistCache>();
-        // This will just update the cache. Also need to update source libraries
-        app.MapPost("/Update/Artist", (ArtistUpdate update) => artists.UpdateArtist(update));
 
-        //var updateQueue = app.Services.GetService<IFileUpdateService>();
-        //var updaterFactory = app.Services.GetService<Func<IUpdater>>();
-        //var updater = updaterFactory();
-        //app.MapPost("/Update/Album", (AlbumInfo album, List<ItemPropertyUpdate> updates) => updater.Update(album, updates));
-        //app.MapPost("/Update/Artist", (ArtistInfo artist, List<ItemPropertyUpdate> updates) => updater.Update(artist, updates));
-        //app.MapPost("/Update/Track", (TrackInfo track, List<ItemPropertyUpdate> updates) => updater.Update(track, updates));
-        //app.MapGet("/Update/Queue", () => updateQueue.Get());
-        //app.MapDelete("/Update/Unqueue", ([FromBody] ItemPropertyUpdate update) => updateQueue.Remove(update));
+        app.MapPost("/Update/Artist", async (ArtistUpdate update) =>
+        {
+            await artists.UpdateArtist(update);
+            foreach (var updatedItem in update.Updates)
+            {
+                await id3UpdateQueue.Add(updatedItem);
+            }
+        });
+
         return app;
     }
 
