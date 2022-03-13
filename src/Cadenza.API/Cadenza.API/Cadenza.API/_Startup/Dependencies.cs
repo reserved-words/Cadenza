@@ -1,4 +1,7 @@
-﻿namespace Cadenza.API._Startup;
+﻿using Cadenza.API.Interfaces;
+using Cadenza.API.Services;
+
+namespace Cadenza.API._Startup;
 
 public static class Dependencies
 {
@@ -9,7 +12,9 @@ public static class Dependencies
             .AddLastFM()
             .AddSpotify()
             .AddUtilities()
-            .AddLogger();
+            .AddLogger()
+            .AddTransient<IApiLibraryService, ApiLibraryService>()
+            .AddTransient<IApiUpdateService, ApiUpdateService>();
 
         return builder;
     }

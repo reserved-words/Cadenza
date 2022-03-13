@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Core;
+﻿namespace Cadenza.API;
 
 public static class ApiEndpoints
 {

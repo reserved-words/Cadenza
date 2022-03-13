@@ -111,17 +111,22 @@ public class ArtistCache : IArtistCache
         }
     }
 
-    public async Task UpdateArtist(ArtistUpdate update)
+    public Task UpdateArtist(ArtistUpdate update)
     {
         if (!_artists.TryGetValue(update.Id, out ArtistInfo artist))
-            return;
+            return Task.CompletedTask;
 
         update.ApplyUpdates(artist);
 
         if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
         {
-            _genres[genreUpdate.OriginalValue].Remove(artist);
-            _genres.GetOrAdd(genreUpdate.UpdatedValue).Add(artist);
+            if (_genres.ContainsKey(genreUpdate.OriginalValue))
+            {
+                _genres[genreUpdate.OriginalValue].RemoveWhere(a => a.Id == update.Id);
+            }
+            var genreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
+            genreArtists.RemoveWhere(a => a.Id == update.Id);
+            genreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
         }
 
         if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
@@ -129,7 +134,10 @@ public class ArtistCache : IArtistCache
             var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
             var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();
             _groupings[originalGrouping].Remove(artist);
-            _groupings.GetOrAdd(updatedGrouping).Add(artist);
+            _groupings[updatedGrouping].RemoveWhere(a => a.Id == update.Id);
+            _groupings[updatedGrouping].AddThenSort(update.UpdatedItem, a => a.Genre);
         }
+
+        return Task.CompletedTask;
     }
 }

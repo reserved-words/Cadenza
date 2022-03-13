@@ -1,4 +1,5 @@
 ﻿using Cadenza.Library;
+using Cadenza.Local.API.Interfaces;
 
 namespace Cadenza.Local.API;
 
@@ -32,7 +33,9 @@ public static class Dependencies
             .AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>()
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
             .AddTransient<IArtworkService, ArtworkService>()
-            .AddTransient<IPlayService, PlayService>();
+            .AddTransient<IPlayService, PlayService>()
+            .AddTransient<IApiLibraryService, ApiLibraryService>()
+            .AddTransient<IApiUpdateService, ApiUpdateService>();
 
         return services;
     }
