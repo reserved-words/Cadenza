@@ -43,7 +43,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    private List<ItemPropertyUpdate> GetUpdates()
+    public List<ItemPropertyUpdate> GetUpdates()
     {
         var updates = new List<ItemPropertyUpdate>();
 

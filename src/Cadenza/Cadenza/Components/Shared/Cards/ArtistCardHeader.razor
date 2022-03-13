@@ -4,7 +4,7 @@
 @if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Artist"
-                    Id="@Model.Id">
+                Id="@Model.Id">
         <ChildContent>
             <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@(() => Viewer.ViewArtist(Model.Id))"></ActionLink>
 
@@ -37,12 +37,14 @@
         UpdatesConsumer.ArtistUpdated += OnArtistUpdated;
     }
 
-    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
+    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
     {
-        if (args.Artist.Id != Model.Id)
-            return;
+        if (args.Artist.Id == Model.Id)
+        {
+            Model = args.Artist;
+            StateHasChanged();
+        }
 
-        Model = args.Artist;
-        StateHasChanged();
+        return Task.CompletedTask;
     }
 }
