@@ -65,4 +65,13 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
     {
         return await Fetch((repository, page, limit) => repository.GetArtistsByGenre(id, page, limit));
     }
+
+
+    public async Task UpdateArtist(ArtistUpdate update)
+    {
+        foreach (var source in Sources)
+        {
+            await source.UpdateArtist(update);
+        }
+    }
 }

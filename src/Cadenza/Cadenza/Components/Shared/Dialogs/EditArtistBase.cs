@@ -1,12 +1,12 @@
 ﻿using Cadenza.Core.App;
-using Cadenza.Update.LibraryUpdaters;
+using Cadenza.Library;
 
 namespace Cadenza;
 
 public class EditArtistBase : FormBase<ArtistInfo>
 {
     [Inject]
-    public IMergedArtistUpdater Updater { get; set; }
+    public IMergedArtistRepository Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
@@ -27,7 +27,8 @@ public class EditArtistBase : FormBase<ArtistInfo>
     {
         try
         {
-            await Updater.UpdateArtist(Update);
+            Update.ConfirmUpdates();
+            await Repository.UpdateArtist(Update);
             Alert.Success("Artist updated");
             await UpdatesService.UpdateArtist(Update);
             Submit();

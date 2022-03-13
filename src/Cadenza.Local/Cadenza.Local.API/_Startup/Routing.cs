@@ -16,6 +16,10 @@ public static class Routing
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
+        var artists = app.Services.GetRequiredService<IArtistCache>();
+        // This will just update the cache. Also need to update source libraries
+        app.MapPost("/Update/Artist", (ArtistUpdate update) => artists.UpdateArtist(update));
+
         //var updateQueue = app.Services.GetService<IFileUpdateService>();
         //var updaterFactory = app.Services.GetService<Func<IUpdater>>();
         //var updater = updaterFactory();

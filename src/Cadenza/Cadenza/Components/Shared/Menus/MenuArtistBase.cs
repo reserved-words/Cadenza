@@ -1,8 +1,6 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
 using Cadenza.Core.App;
-using Cadenza.Core.Updates;
 using Cadenza.Library;
-using Cadenza.Update.LibraryUpdaters;
 
 namespace Cadenza;
 

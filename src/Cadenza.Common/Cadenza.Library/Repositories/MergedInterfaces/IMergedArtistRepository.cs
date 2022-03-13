@@ -9,4 +9,5 @@ public interface IMergedArtistRepository
     Task<List<Artist>> GetArtistsByGenre(string id);
     Task<ArtistInfo> GetArtist(string id);
     Task<List<Album>> GetArtistAlbums(string artistId);
+    Task UpdateArtist(ArtistUpdate update);
 }

@@ -28,9 +28,22 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
     public TInterface UpdatedItem { get; set; }
 
-    public void ApplyUpdates()
+    public List<ItemPropertyUpdate> Updates { get; set; } = new();
+
+    public void ApplyUpdates(TInterface item)
     {
-        CopyValues(UpdatedItem, OriginalItem);
+        CopyValues(UpdatedItem, item);
+    }
+
+    public void ConfirmUpdates()
+    {
+        Updates = GetUpdates();
+    }
+
+    public bool IsUpdated(ItemProperty property, out ItemPropertyUpdate update)
+    {
+        update = Updates.SingleOrDefault(p => p.Property == property);
+        return update != null;
     }
 
     private static void CopyValues(TInterface sourceItem, TInterface targetItem)
@@ -43,7 +56,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    public List<ItemPropertyUpdate> GetUpdates()
+    private List<ItemPropertyUpdate> GetUpdates()
     {
         var updates = new List<ItemPropertyUpdate>();
 

@@ -1,7 +1,7 @@
 ﻿
-namespace Cadenza.Update.LibraryUpdaters;
+//namespace Cadenza.Update.LibraryUpdaters;
 
-public interface IMergedArtistUpdater
-{
-    Task UpdateArtist(ArtistUpdate model);
-}
+//public interface IMergedArtistUpdater
+//{
+//    Task UpdateArtist(ArtistUpdate model);
+//}

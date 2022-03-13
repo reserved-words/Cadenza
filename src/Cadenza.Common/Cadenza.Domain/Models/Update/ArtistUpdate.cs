@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain;
 
 public class ArtistUpdate : ItemUpdate<ArtistInfo>
 {

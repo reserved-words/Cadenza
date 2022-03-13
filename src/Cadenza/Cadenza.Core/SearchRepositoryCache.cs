@@ -35,18 +35,15 @@ public class SearchRepositoryCache
 
     private Task OnArtistUpdated(object sender, Updates.ArtistUpdatedEventArgs e)
     {
-        if (e.UpdatedProperties.Contains(ItemProperty.Genre))
-        {
-            AddIfMissing(PlayerItemType.Genre, e.Artist.Genre, e.Artist.Genre);
-        }
+        AddIfMissing(PlayerItemType.Genre, e.Update.UpdatedItem.Genre);
         return Task.CompletedTask;
     }
 
-    private void AddIfMissing(PlayerItemType type, string id, string name)
+    private void AddIfMissing(PlayerItemType type, string id, string name = null)
     {
         if (!Items.Any(i => i.Type == type && i.Id == id))
         {
-            Items.Add(new SourcePlayerItem(null, new PlayerItem(type, id, name, null, null, null)));
+            Items.Add(new SourcePlayerItem(null, new PlayerItem(type, id, name ?? id, null, null, null)));
         }
     }
 

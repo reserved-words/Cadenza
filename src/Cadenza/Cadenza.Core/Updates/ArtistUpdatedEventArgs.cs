@@ -4,12 +4,10 @@ public delegate Task ArtistUpdatedEventHandler(object sender, ArtistUpdatedEvent
 
 public class ArtistUpdatedEventArgs : EventArgs
 {
-    public ArtistUpdatedEventArgs(ArtistInfo artist, List<ItemProperty> updatedProperties)
+    public ArtistUpdatedEventArgs(ArtistUpdate update)
     {
-        Artist = artist;
-        UpdatedProperties = updatedProperties;
+        Update = update;
     }
 
-    public ArtistInfo Artist { get; }
-    public List<ItemProperty> UpdatedProperties { get; }
+    public ArtistUpdate Update { get; }
 }

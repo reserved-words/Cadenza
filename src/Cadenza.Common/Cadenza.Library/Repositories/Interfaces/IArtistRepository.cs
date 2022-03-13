@@ -9,4 +9,5 @@ public interface IArtistRepository
     Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit);
     Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit);
     Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit);
+    Task UpdateArtist(ArtistUpdate update);
 }

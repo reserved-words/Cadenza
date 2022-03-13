@@ -12,7 +12,6 @@ using Cadenza.Core.Playlists;
 using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
-using Cadenza.Update;
 
 namespace Cadenza;
 
@@ -115,8 +114,7 @@ public static class Dependencies
         return services
             .AddSpotifySource(config, "SpotifyApi")
             .AddLocalSource<HtmlPlayer>(config, "LocalApi")
-            .AddMergedRepositories()
-            .AddMergedUpdaters();
+            .AddMergedRepositories();
     }
 
 

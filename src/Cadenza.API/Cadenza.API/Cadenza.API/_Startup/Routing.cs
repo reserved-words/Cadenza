@@ -13,7 +13,8 @@ public static class Routing
 
         return app
             .AddLastFmRoutes()
-            .AddSpotifyRoutes();
+            .AddSpotifyRoutes()
+            .AddSpotifyUpdateRoutes();
     }
 
     private static WebApplication AddLastFmRoutes(this WebApplication app)
@@ -101,6 +102,15 @@ public static class Routing
         app.MapGet(ApiEndpoints.Spotify.GetOverrides, () => azure.GetOverrides());
         app.MapGet(ApiEndpoints.Spotify.AddOverrides, (r) => throw new NotImplementedException());
         app.MapGet(ApiEndpoints.Spotify.RemovedOverride, (r) => throw new NotImplementedException());
+
+        return app;
+    }
+
+    private static WebApplication AddSpotifyUpdateRoutes(this WebApplication app)
+    {
+        var artists = app.Services.GetRequiredService<IArtistCache>();
+        // This will just update the cache. Also need to update source libraries
+        app.MapPost(ApiEndpoints.Spotify.UpdateArtist, (ArtistUpdate update) => artists.UpdateArtist(update));
 
         return app;
     }

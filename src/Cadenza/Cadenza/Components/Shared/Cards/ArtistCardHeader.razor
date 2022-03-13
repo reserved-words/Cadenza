@@ -39,9 +39,9 @@
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
     {
-        if (args.Artist.Id == Model.Id)
+        if (args.Update.Id == Model.Id)
         {
-            Model = args.Artist;
+            args.Update.ApplyUpdates(Model);
             StateHasChanged();
         }
 

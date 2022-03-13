@@ -122,4 +122,28 @@ public class ArtistCache : IArtistCache
             _albums[album.ArtistId].Add(album);
         }
     }
+
+    public Task UpdateArtist(ArtistUpdate update)
+    {
+        if (!_artists.TryGetValue(update.Id, out ArtistInfo artist))
+            return Task.CompletedTask;
+
+        update.ApplyUpdates(artist);
+
+        if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+        {
+            _genres[genreUpdate.OriginalValue].Remove(artist);
+            _genres.GetOrAdd(genreUpdate.UpdatedValue).Add(artist);
+        }
+
+        if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
+        {
+            var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
+            var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();
+            _groupings[originalGrouping].Remove(artist);
+            _groupings.GetOrAdd(updatedGrouping).Add(artist);
+        }
+
+        return Task.CompletedTask;
+    }
 }

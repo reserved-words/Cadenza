@@ -1,10 +1,14 @@
 ﻿
-namespace Cadenza.Update.LibraryUpdaters;
+//using Cadenza.Library;
 
-internal class MergedArtistUpdater : IMergedArtistUpdater
-{
-    public async Task UpdateArtist(ArtistUpdate model)
-    {
-        // new NotImplementedException();
-    }
-}
+//namespace Cadenza.Update.LibraryUpdaters;
+
+//internal class MergedArtistUpdater : IMergedArtistUpdater
+//{
+//    private readonly IEnumerable<ISourceArtistRepository> _sources;
+
+//    public MergedArtistUpdater(IEnumerable<ISourceArtistRepository> sources)
+//    {
+//        _sources = sources;
+//    }
+//}
