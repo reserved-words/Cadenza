@@ -52,28 +52,32 @@ namespace Cadenza.Components.Tabs.Items
 
         private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
         {
-            if (e.Update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
+            var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate);
+            var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate);
+
+            if (!isGroupingUpdated && !isGenreUpdated)
             {
-                if (groupingUpdate.OriginalValue == Id)
-                {
-                    _artistsByGenre.RemoveWhere(a => a.Id == e.Update.Id);
-                }
-                else if (groupingUpdate.UpdatedValue == Id)
-                {
-                    _artistsByGenre.AddThenSort(e.Update.UpdatedItem, a => a.Genre, a => a.Name);
-                }
+                return Task.CompletedTask;
             }
 
-            if (e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+            if (groupingUpdate?.OriginalValue == Id)
             {
-                if (genreUpdate.OriginalValue == Id)
-                {
-                    Artists.RemoveWhere(a => a.Id == e.Update.Id);
-                }
-                else if (genreUpdate.UpdatedValue == Id)
-                {
-                    Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
-                }
+                _artistsByGenre.RemoveWhere(a => a.Id == e.Update.Id);
+            }
+
+            if (groupingUpdate?.UpdatedValue == Id)
+            {
+                _artistsByGenre.AddThenSort(e.Update.UpdatedItem, a => a.Genre, a => a.Name);
+            }
+
+            if (genreUpdate?.OriginalValue == Id)
+            {
+                Artists.RemoveWhere(a => a.Id == e.Update.Id);
+            }
+            
+            if (genreUpdate?.UpdatedValue == Id)
+            {
+                Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
             }
 
             StateHasChanged();

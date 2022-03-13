@@ -28,6 +28,13 @@ public class EditArtistBase : FormBase<ArtistInfo>
         try
         {
             Update.ConfirmUpdates();
+
+            if (!Update.Updates.Any())
+            {
+                Cancel();
+                return;
+            }
+
             await Repository.UpdateArtist(Update);
             Alert.Success("Artist updated");
             await UpdatesService.UpdateArtist(Update);

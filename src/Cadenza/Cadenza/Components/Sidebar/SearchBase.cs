@@ -35,7 +35,7 @@ public class SearchBase : ComponentBase
             return null;
 
         var results = Cache.Items
-            .Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase))
+            .Where(x => x.Name != null && x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase))
             .OrderBy(x => x.Type)
             .ThenBy(x => x.Name)
             .AsEnumerable();

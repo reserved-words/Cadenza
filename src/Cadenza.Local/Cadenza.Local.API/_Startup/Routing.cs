@@ -17,11 +17,13 @@ public static class Routing
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
         var id3UpdateQueue = app.Services.GetRequiredService<IFileUpdateService>();
+        var library = app.Services.GetRequiredService<ILibrary>();
         var artists = app.Services.GetRequiredService<IArtistCache>();
 
         app.MapPost("/Update/Artist", async (ArtistUpdate update) =>
         {
             await artists.UpdateArtist(update);
+            await library.UpdateArtist(update);
             foreach (var updatedItem in update.Updates)
             {
                 await id3UpdateQueue.Add(updatedItem);

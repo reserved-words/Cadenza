@@ -60,4 +60,17 @@ public static class ListExtensions
         var list = items[key];
         list.AddThenSort(item, sortValue);
     }
+
+    public static TValue TryGetValue<TKey, TValue>(this Dictionary<TKey, List<TValue>> items, Predicate<TValue> filter)
+    {
+        foreach (var key in items.Keys)
+        {
+            var list = items[key];
+            var item = list.SingleOrDefault(i => filter(i));
+            if (item != null)
+                return item;
+        }
+
+        return default;
+    }
 }

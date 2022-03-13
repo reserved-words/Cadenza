@@ -109,9 +109,14 @@ public static class Routing
 
     private static WebApplication AddSpotifyUpdateRoutes(this WebApplication app)
     {
+        var library = app.Services.GetRequiredService<ILibrary>();
         var artists = app.Services.GetRequiredService<IArtistCache>();
         // This will just update the cache. Also need to update source libraries
-        app.MapPost(ApiEndpoints.Spotify.UpdateArtist, (ArtistUpdate update) => artists.UpdateArtist(update));
+        app.MapPost(ApiEndpoints.Spotify.UpdateArtist, async (ArtistUpdate update) => 
+        {
+            await artists.UpdateArtist(update);
+            await library.UpdateArtist(update);
+        });
 
         return app;
     }

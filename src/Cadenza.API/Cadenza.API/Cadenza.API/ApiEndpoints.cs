@@ -56,7 +56,7 @@ public static class ApiEndpoints
         public const string GetOverrides = "/Spotify/GetOverrides";
         public const string RemovedOverride = "/Spotify/RemovedOverride";
 
-        public const string UpdateArtist = "/Spotify/UpdateArtist";
+        public const string UpdateArtist = "/Spotify/Update/Artist";
     }
 
 }
