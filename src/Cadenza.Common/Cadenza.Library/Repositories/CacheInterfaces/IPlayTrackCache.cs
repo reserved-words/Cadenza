@@ -2,5 +2,5 @@
 
 public interface IPlayTrackCache : IPlayTrackRepository
 {
-    Task Populate();
+    Task Populate(FullLibrary library);
 }

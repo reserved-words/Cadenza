@@ -2,5 +2,5 @@
 
 public interface ITrackCache : ITrackRepository
 {
-    Task Populate();
+    Task Populate(FullLibrary library);
 }

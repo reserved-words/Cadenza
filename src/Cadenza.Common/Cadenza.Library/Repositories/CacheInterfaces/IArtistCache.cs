@@ -2,5 +2,5 @@
 
 public interface IArtistCache : IArtistRepository
 {
-    Task Populate();
+    Task Populate(FullLibrary library);
 }

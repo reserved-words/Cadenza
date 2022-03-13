@@ -2,5 +2,5 @@
 
 public interface IAlbumCache : IAlbumRepository
 {
-    Task Populate();
+    Task Populate(FullLibrary library);
 }

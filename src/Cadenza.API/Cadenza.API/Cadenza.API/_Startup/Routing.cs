@@ -63,11 +63,12 @@ public static class Routing
         {
             apiToken.SetAccessToken(accessToken);
             await library.Populate();
-            await albums.Populate();
-            await artists.Populate();
-            await playTracks.Populate();
-            await searchItems.Populate();
-            await tracks.Populate();
+            var fullLibrary = await library.Get();
+            await albums.Populate(fullLibrary);
+            await artists.Populate(fullLibrary);
+            await playTracks.Populate(fullLibrary);
+            await searchItems.Populate(fullLibrary);
+            await tracks.Populate(fullLibrary);
         });
 
         app.MapGet(ApiEndpoints.Spotify.AllArtists, (int page, int limit) => artists.GetAllArtists(page, limit));

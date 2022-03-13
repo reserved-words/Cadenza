@@ -51,11 +51,12 @@ public static class Routing
         app.MapPost("/Startup", async () =>
         {
             await library.Populate();
-            await albums.Populate();
-            await artists.Populate();
-            await playTracks.Populate();
-            await searchItems.Populate();
-            await tracks.Populate();
+            var fullLibrary = await library.Get();
+            await albums.Populate(fullLibrary);
+            await artists.Populate(fullLibrary);
+            await playTracks.Populate(fullLibrary);
+            await searchItems.Populate(fullLibrary);
+            await tracks.Populate(fullLibrary);
         });
 
         app.MapGet("/Artists", (int page, int limit) => artists.GetAllArtists(page, limit));

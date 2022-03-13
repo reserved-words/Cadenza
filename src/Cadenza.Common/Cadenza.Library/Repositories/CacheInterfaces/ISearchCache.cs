@@ -2,5 +2,5 @@
 
 public interface ISearchCache : ISearchRepository
 {
-    Task Populate();
+    Task Populate(FullLibrary library);
 }

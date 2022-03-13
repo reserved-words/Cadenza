@@ -2,15 +2,8 @@
 
 public class AlbumCache : IAlbumCache
 {
-    private readonly ILibrary _library;
-
     private Dictionary<string, AlbumInfo> _albums;
     private Dictionary<string, List<AlbumTrack>> _albumTracks;
-
-    public AlbumCache(ILibrary library)
-    {
-        _library = library;
-    }
 
     public async Task<AlbumInfo> GetAlbum(string id)
     {
@@ -26,13 +19,8 @@ public class AlbumCache : IAlbumCache
             : null;
     }
 
-    public async Task Populate()
+    public async Task Populate(FullLibrary library)
     {
-        if (_albums != null)
-            return;
-
-        var library = await _library.Get();
-
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
 
         var albums = library.AlbumTrackLinks

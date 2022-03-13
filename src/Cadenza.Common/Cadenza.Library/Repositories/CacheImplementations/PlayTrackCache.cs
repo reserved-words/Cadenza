@@ -2,18 +2,11 @@
 
 public class PlayTrackCache : IPlayTrackCache
 {
-    private readonly ILibrary _library;
-
     private List<PlayTrack> _tracks;
     private Dictionary<string, List<PlayTrack>> _albumTracks;
     private Dictionary<string, List<PlayTrack>> _artistTracks;
     private Dictionary<Grouping, List<string>> _groupingArtists;
     private Dictionary<string, List<string>> _genreArtists;
-
-    public PlayTrackCache(ILibrary library)
-    {
-        _library = library;
-    }
 
     public async Task<ListResponse<PlayTrack>> GetAll(int page, int limit)
     {
@@ -56,13 +49,8 @@ public class PlayTrackCache : IPlayTrackCache
             .ToListResponse(t => t.Id, page, limit);
     }
 
-    public async Task Populate()
+    public async Task Populate(FullLibrary library)
     {
-        if (_tracks != null)
-            return;
-
-        var library = await _library.Get();
-
         _groupingArtists = library.Artists
             .GroupBy(a => a.Grouping)
             .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());

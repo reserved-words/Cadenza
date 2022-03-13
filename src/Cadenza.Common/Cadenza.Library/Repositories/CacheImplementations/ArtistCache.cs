@@ -4,19 +4,12 @@ namespace Cadenza.Library;
 
 public class ArtistCache : IArtistCache
 {
-    private readonly ILibrary _library;
-
     private Dictionary<string, ArtistInfo> _artists;
     private Dictionary<string, List<AlbumInfo>> _albums;
     private List<string> _albumArtists;
     private List<string> _trackArtists;
     private Dictionary<Grouping, List<ArtistInfo>> _groupings;
     private Dictionary<string, List<ArtistInfo>> _genres;
-
-    public ArtistCache(ILibrary library)
-    {
-        _library = library;
-    }
 
     public Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
     {
@@ -81,13 +74,8 @@ public class ArtistCache : IArtistCache
         return Task.FromResult(result);
     }
 
-    public async Task Populate()
+    public async Task Populate(FullLibrary library)
     {
-        if (_artists != null)
-            return;
-
-        var library = await _library.Get();
-
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
         _genres = library.Artists.GroupBy(a => a.Genre ?? "None").ToDictionary(g => g.Key, g => g.ToList());
@@ -143,7 +131,5 @@ public class ArtistCache : IArtistCache
             _groupings[originalGrouping].Remove(artist);
             _groupings.GetOrAdd(updatedGrouping).Add(artist);
         }
-
-        await _library.UpdateArtist(update);
     }
 }
