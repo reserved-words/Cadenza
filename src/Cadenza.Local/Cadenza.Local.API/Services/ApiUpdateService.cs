@@ -16,6 +16,11 @@ public class ApiUpdateService : IApiUpdateService
         _artistCache = artistCache;
     }
 
+    public async Task<FileUpdateQueue> GetUpdates()
+    {
+        return await _id3UpdateQueue.Get();
+    }
+
     public async Task UpdateArtist(ArtistUpdate update)
     {
         var artist = await _artistCache.GetArtist(update.Id);

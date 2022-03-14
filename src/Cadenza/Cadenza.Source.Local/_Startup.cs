@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core;
 using Microsoft.Extensions.Configuration;
+using Cadenza.Source.Local.Services;
 
 namespace Cadenza.Source.Local;
 
@@ -22,6 +23,7 @@ public static class Startup
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
                 sp.GetRequiredService<IUrl>()))
             .AddApiRepositories<LocalApiRepositorySettings>(LibrarySource.Local)
-            .AddTransient<IConnectionTaskBuilder, LocalConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LocalConnectionTaskBuilder>()
+            .AddTransient<IFileUpdateQueue, UpdateQueueService>();
     }
 }

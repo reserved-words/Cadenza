@@ -18,6 +18,7 @@ public static class Routing
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
         var apiService = app.Services.GetRequiredService<IApiUpdateService>();
+        app.MapGet("/Update/Get", () => apiService.GetUpdates());
         app.MapPost("/Update/Artist", (ArtistUpdate update) => apiService.UpdateArtist(update));
         return app;
     }

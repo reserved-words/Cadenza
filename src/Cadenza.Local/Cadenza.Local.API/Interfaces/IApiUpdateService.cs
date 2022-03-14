@@ -3,4 +3,5 @@
 public interface IApiUpdateService
 {
     Task UpdateArtist(ArtistUpdate update);
+    Task<FileUpdateQueue> GetUpdates();
 }
