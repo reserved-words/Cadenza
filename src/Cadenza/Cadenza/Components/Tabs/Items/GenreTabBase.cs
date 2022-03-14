@@ -40,7 +40,7 @@ namespace Cadenza.Components.Tabs.Items
 
             if (genreUpdate.UpdatedValue == Id)
             {
-                Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
+                Artists = Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
             }
 
             StateHasChanged();
