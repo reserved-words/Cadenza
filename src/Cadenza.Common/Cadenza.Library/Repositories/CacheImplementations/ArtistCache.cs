@@ -120,22 +120,25 @@ public class ArtistCache : IArtistCache
 
         if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
         {
-            if (_genres.ContainsKey(genreUpdate.OriginalValue))
-            {
-                _genres[genreUpdate.OriginalValue].RemoveWhere(a => a.Id == update.Id);
-            }
-            var genreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
-            genreArtists.RemoveWhere(a => a.Id == update.Id);
-            genreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
+            var originalGenreArtists = _genres.GetOrAdd(genreUpdate.OriginalValue);
+            var updatedGenreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
+
+            originalGenreArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGenreArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGenreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
         }
 
         if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
         {
             var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
             var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();
-            _groupings[originalGrouping].Remove(artist);
-            _groupings[updatedGrouping].RemoveWhere(a => a.Id == update.Id);
-            _groupings[updatedGrouping].AddThenSort(update.UpdatedItem, a => a.Genre);
+            
+            var originalGroupingArtists = _groupings.GetOrAdd(originalGrouping);
+            var updatedGroupingArtists = _groupings.GetOrAdd(updatedGrouping);
+
+            originalGroupingArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGroupingArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGroupingArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
         }
 
         return Task.CompletedTask;
