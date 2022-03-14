@@ -58,12 +58,12 @@ public class MergedArtistRepository : MergedRepositoryBase<ISourceArtistReposito
 
     public async Task<List<Artist>> GetArtistsByGrouping(Grouping id)
     {
-        return await Fetch((repository, page, limit) => repository.GetArtistsByGrouping(id, page, limit));
+        return await FetchArtists((repository, page, limit) => repository.GetArtistsByGrouping(id, page, limit));
     }
 
     public async Task<List<Artist>> GetArtistsByGenre(string id)
     {
-        return await Fetch((repository, page, limit) => repository.GetArtistsByGenre(id, page, limit));
+        return await FetchArtists((repository, page, limit) => repository.GetArtistsByGenre(id, page, limit));
     }
 
 
