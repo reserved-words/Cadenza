@@ -46,7 +46,7 @@ namespace Cadenza.Components.Tabs.Items
             var currentGenre = SelectedGenre;
 
             var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
-            _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre);
+            _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
             Genres = _artistsByGenre.Keys.ToList();
 
             if (currentGenre != null && Genres.Contains(currentGenre))

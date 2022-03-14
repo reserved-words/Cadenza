@@ -12,7 +12,7 @@
             {
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
                 <ActionLink Typo="Typo.body2" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
-                <ActionLink Typo="Typo.body2" Text="@Model.Genre" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
+                <ActionLink Typo="Typo.body2" Text="@(Model.Genre ?? "None")" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
             }
 
         </ChildContent>
