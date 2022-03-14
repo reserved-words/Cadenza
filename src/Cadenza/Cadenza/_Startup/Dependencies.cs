@@ -30,6 +30,7 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddTransient<IOverridesService, OverrideService>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()

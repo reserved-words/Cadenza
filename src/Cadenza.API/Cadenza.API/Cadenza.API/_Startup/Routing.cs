@@ -13,6 +13,7 @@ public static class Routing
 
         return app
             .AddLastFmRoutes()
+            .AddOverrideRoutes()
             .AddSpotifyRoutes()
             .AddSpotifyUpdateRoutes();
     }
@@ -38,6 +39,14 @@ public static class Routing
         app.MapGet(ApiEndpoints.LastFm.TopAlbums, (HistoryPeriod period, int limit, int page) => history.GetPlayedAlbums(period, limit, page));
         app.MapGet(ApiEndpoints.LastFm.TopArtists, (HistoryPeriod period, int limit, int page) => history.GetPlayedArtists(period, limit, page));
 
+        return app;
+    }
+
+    private static WebApplication AddOverrideRoutes(this WebApplication app)
+    {
+        var azure = app.Services.GetRequiredService<SpotifyOverridesService>();
+        app.MapGet(ApiEndpoints.Overrides.Get, () => azure.GetOverrides());
+        app.MapDelete(ApiEndpoints.Overrides.Remove, (r) => throw new NotImplementedException());
         return app;
     }
 
@@ -82,7 +91,7 @@ public static class Routing
         app.MapGet(ApiEndpoints.Spotify.PlayGenre, (string id, int page, int limit) => playTracks.GetByGenre(id, page, limit));
         app.MapGet(ApiEndpoints.Spotify.PlayGrouping, (Grouping id, int page, int limit) => playTracks.GetByGrouping(id, page, limit));
 
-        app.MapGet(ApiEndpoints.Spotify.SearchArtists, (int page, int limit) => 
+        app.MapGet(ApiEndpoints.Spotify.SearchArtists, (int page, int limit) =>
         {
             return searchItems.GetSearchArtists(page, limit);
         });
@@ -95,11 +104,6 @@ public static class Routing
         app.MapGet(ApiEndpoints.Spotify.Track, (string id) => tracks.GetTrack(id));
         app.MapGet(ApiEndpoints.Spotify.Album, (string id) => albums.GetAlbum(id));
         app.MapGet(ApiEndpoints.Spotify.AlbumTracks, (string id) => albums.GetTracks(id));
-
-        var azure = app.Services.GetRequiredService<SpotifyOverridesService>();
-        app.MapGet(ApiEndpoints.Spotify.GetOverrides, () => azure.GetOverrides());
-        app.MapGet(ApiEndpoints.Spotify.AddOverrides, (r) => throw new NotImplementedException());
-        app.MapGet(ApiEndpoints.Spotify.RemovedOverride, (r) => throw new NotImplementedException());
 
         return app;
     }

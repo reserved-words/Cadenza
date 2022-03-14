@@ -4,7 +4,6 @@
                  Filter="@FilterFunc"
                  Title="Data Overrides">
     <HeaderContent>
-        <MudTh>Source</MudTh>
         <MudTh>Type</MudTh>
         <MudTh>Item</MudTh>
         <MudTh>Property</MudTh>
@@ -14,22 +13,19 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd>
-            @context.Source
-        </MudTd>
-        <MudTd>
             @context.ItemType
         </MudTd>
         <MudTd>
             @context.Item
         </MudTd>
         <MudTd>
-            @context.PropertyName
+            @context.Property
         </MudTd>
         <MudTd>
             @context.OriginalValue
         </MudTd>
         <MudTd>
-            @context.OverrideValue
+            @context.UpdatedValue
         </MudTd>
         <MudTd>
             <MudIconButton OnClick="@(() => Remove(context))"

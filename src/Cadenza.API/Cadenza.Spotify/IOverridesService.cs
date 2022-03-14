@@ -1,11 +1,10 @@
 ﻿using Cadenza.Domain;
 
-namespace Cadenza.Spotify
+namespace Cadenza.Spotify;
+
+public interface IOverridesService
 {
-    public interface IOverridesService
-    {
-        Task<bool> AddOverrides(List<ItemPropertyUpdate> updates);
-        Task<List<ItemPropertyUpdate>> GetOverrides();
-        Task<bool> RemoveOverride(string id, ItemProperty property);
-    }
+    Task<bool> AddOverrides(List<ItemPropertyUpdate> updates);
+    Task<List<ItemPropertyUpdate>> GetOverrides();
+    Task<bool> RemoveOverride(string id, ItemProperty property);
 }

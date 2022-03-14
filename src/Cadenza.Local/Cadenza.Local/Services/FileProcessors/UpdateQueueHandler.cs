@@ -43,7 +43,7 @@ public class UpdateQueueHandler : IUpdateQueueHandler
             {
                 var itemUpdates = updates[itemType][id];
 
-                ProcessUpdates(itemType, id, itemUpdates);
+                await ProcessUpdates(itemType, id, itemUpdates);
             }
         }
     }
