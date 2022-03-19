@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Core;
+﻿namespace Cadenza.API;
 
 public static class ApiEndpoints
 {
@@ -52,9 +52,12 @@ public static class ApiEndpoints
         public const string Album = "/Spotify/Album";
         public const string AlbumTracks = "/Spotify/Album/Tracks";
 
-        public const string AddOverrides = "/Spotify/AddOverrides";
-        public const string GetOverrides = "/Spotify/GetOverrides";
-        public const string RemovedOverride = "/Spotify/RemovedOverride";
+        public const string UpdateArtist = "/Spotify/Update/Artist";
     }
 
+    public static class Overrides
+    {
+        public const string Get = "/Overrides/Get";
+        public const string Remove = "/Overrides/Remove";
+    }
 }

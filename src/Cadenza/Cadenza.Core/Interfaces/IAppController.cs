@@ -13,5 +13,6 @@ public interface IAppController
     Task LoadingPlaylist();
 
     Task Play(PlaylistDefinition playlistDefinition);
+
     Task View(ViewItem item);
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Library;
 
-public class BaseSearchRepository : IBaseSearchRepository
+public class SearchCache : ISearchCache
 {
     private List<SearchableAlbum> _albums;
     private List<SearchableArtist> _artists;
@@ -9,20 +9,8 @@ public class BaseSearchRepository : IBaseSearchRepository
     private List<SearchableGenre> _genres;
     private List<SearchableGrouping> _groupings;
 
-    private readonly ILibrary _library;
-
-    public BaseSearchRepository(ILibrary library)
+    public async Task Populate(FullLibrary library)
     {
-        _library = library;
-    }
-
-    public async Task Populate()
-    {
-        if (_albums != null)
-            return;
-
-        var library = await _library.Get();
-
         _albums = library.Albums
             .Select(a => new SearchableAlbum(a.Id, a.Title, a.ArtistName))
             .ToList();

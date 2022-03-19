@@ -1,6 +1,11 @@
 ﻿namespace Cadenza.Library.Repositories
 {
-    internal class ApiRepository : ApiRepositoryBase, ISourceTrackRepository, ISourcePlayTrackRepository, ISourceArtistRepository, ISourceSearchRepository, ISourceAlbumRepository
+    internal class ApiRepository : ApiRepositoryBase, 
+        ISourceTrackRepository, 
+        ISourcePlayTrackRepository, 
+        ISourceArtistRepository, 
+        ISourceSearchRepository, 
+        ISourceAlbumRepository
     {
         private readonly IApiRepositorySettings _settings;
 
@@ -113,6 +118,11 @@
         public async Task<List<AlbumTrack>> GetTracks(string id)
         {
             return await Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
+        }
+
+        public async Task UpdateArtist(ArtistUpdate update)
+        {
+            await Post(_settings.UpdateArtist, update);
         }
     }
 }

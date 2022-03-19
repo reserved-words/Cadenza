@@ -1,10 +1,18 @@
-﻿using Cadenza.Core.Model;
+﻿using Cadenza.Core.App;
+using Cadenza.Core.Model;
 
 namespace Cadenza.Core;
 
 
 public class SearchRepositoryCache
 {
+    private readonly IUpdatesConsumer _updates;
+
+    public SearchRepositoryCache(IUpdatesConsumer updates)
+    {
+        _updates = updates;
+    }
+
     public event EventHandler UpdateStarted;
     public event EventHandler UpdateCompleted;
 
@@ -21,6 +29,22 @@ public class SearchRepositoryCache
     public void FinishUpdate()
     {
         UpdateCompleted?.Invoke(this, EventArgs.Empty);
+
+        _updates.ArtistUpdated += OnArtistUpdated;
+    }
+
+    private Task OnArtistUpdated(object sender, Updates.ArtistUpdatedEventArgs e)
+    {
+        AddIfMissing(PlayerItemType.Genre, e.Update.UpdatedItem.Genre);
+        return Task.CompletedTask;
+    }
+
+    private void AddIfMissing(PlayerItemType type, string id, string name = null)
+    {
+        if (!Items.Any(i => i.Type == type && i.Id == id))
+        {
+            Items.Add(new SourcePlayerItem(null, new PlayerItem(type, id, name ?? id, null, null, null)));
+        }
     }
 
     public void AddTracks(LibrarySource source, List<PlayerItem> items)

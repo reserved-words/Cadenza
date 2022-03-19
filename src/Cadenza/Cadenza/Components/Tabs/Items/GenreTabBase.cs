@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Core.Updates;
 using Cadenza.Library;
 
 namespace Cadenza.Components.Tabs.Items
@@ -14,10 +15,38 @@ namespace Cadenza.Components.Tabs.Items
         [Inject]
         public IItemViewer Viewer { get; set; }
 
+        [Inject]
+        public IUpdatesConsumer Updates { get; set; }
+
         [Parameter]
         public string Id { get; set; }
 
         public List<Artist> Artists { get; set; } = new();
+
+        protected override void OnInitialized()
+        {
+            Updates.ArtistUpdated += OnArtistUpdated;
+        }
+
+        private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
+        {
+            if (!e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+                return Task.CompletedTask;
+
+            if (genreUpdate.OriginalValue == Id)
+            {
+                Artists.RemoveWhere(a => a.Id == e.Update.Id);
+            }
+
+            if (genreUpdate.UpdatedValue == Id)
+            {
+                Artists = Artists.AddThenSort(e.Update.UpdatedItem, a => a.Name);
+            }
+
+            StateHasChanged();
+
+            return Task.CompletedTask;
+        }
 
         protected override async Task OnParametersSetAsync()
         {

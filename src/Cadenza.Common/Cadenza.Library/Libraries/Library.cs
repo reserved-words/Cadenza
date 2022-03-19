@@ -70,4 +70,12 @@ public class Library : ILibrary
 
         return existing;
     }
+
+    public async Task UpdateArtist(ArtistUpdate update)
+    {
+        foreach (var source in _sourceFactory.GetSources())
+        {
+            await source.UpdateArtist(update);
+        }
+    }
 }

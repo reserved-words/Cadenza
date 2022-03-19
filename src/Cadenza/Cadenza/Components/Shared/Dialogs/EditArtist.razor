@@ -1,22 +1,22 @@
 ﻿@inherits EditArtistBase
 
-<WhipDialog Cancel="Cancel"
+<WhipDialog Cancel="OnCancel"
             CancelCaption="Cancel"
-            Submit="Submit"
+            Submit="OnSubmit"
             SubmitCaption="OK">
 
     <ChildContent>
-        <EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+        <EditForm Model="@EditableItem">
             <DataAnnotationsValidator />
             <MudCard>
                 <MudCardContent>
                     <MudTextField Label="Name"
                                   ReadOnly="true"
                                   Disabled="true"
-                                  @bind-Value="Model.Name" />
+                                  @bind-Value="EditableItem.Name" />
                     <MudSelect Label="Grouping"
-                               @bind-Value="Model.Grouping"
-                               For="@(() => Model.Grouping)">
+                               @bind-Value="EditableItem.Grouping"
+                               For="@(() => EditableItem.Grouping)">
                         @foreach (var type in Enum.GetValues<Grouping>())
                         {
                             <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
@@ -24,33 +24,23 @@
                     </MudSelect>
                     <MudTextField MaxLength="50"
                                   Label="Genre"
-                                  @bind-Value="Model.Genre"
-                                  For="@(() => Model.Genre)" />
+                                  @bind-Value="EditableItem.Genre"
+                                  For="@(() => EditableItem.Genre)" />
                     <MudTextField MaxLength="50"
                                   Label="City"
-                                  @bind-Value="Model.City"
-                                  For="@(() => Model.City)" />
+                                  @bind-Value="EditableItem.City"
+                                  For="@(() => EditableItem.City)" />
                     <MudTextField MaxLength="50"
                                   Label="State"
-                                  @bind-Value="Model.State"
-                                  For="@(() => Model.State)" />
+                                  @bind-Value="EditableItem.State"
+                                  For="@(() => EditableItem.State)" />
                     <MudTextField MaxLength="50"
                                   Label="Country"
-                                  @bind-Value="Model.Country"
-                                  For="@(() => Model.Country)" />
+                                  @bind-Value="EditableItem.Country"
+                                  For="@(() => EditableItem.Country)" />
                 </MudCardContent>
             </MudCard>
         </EditForm>
     </ChildContent>
 
 </WhipDialog>
-
-@code {
-    bool success;
-
-    private void OnValidSubmit(EditContext context)
-    {
-        success = true;
-        StateHasChanged();
-    }
-}

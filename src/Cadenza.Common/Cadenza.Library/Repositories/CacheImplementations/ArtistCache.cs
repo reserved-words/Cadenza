@@ -2,21 +2,14 @@
 
 namespace Cadenza.Library;
 
-public class BaseArtistRepository : IBaseArtistRepository
+public class ArtistCache : IArtistCache
 {
-    private readonly ILibrary _library;
-
     private Dictionary<string, ArtistInfo> _artists;
     private Dictionary<string, List<AlbumInfo>> _albums;
     private List<string> _albumArtists;
     private List<string> _trackArtists;
     private Dictionary<Grouping, List<ArtistInfo>> _groupings;
     private Dictionary<string, List<ArtistInfo>> _genres;
-
-    public BaseArtistRepository(ILibrary library)
-    {
-        _library = library;
-    }
 
     public Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
     {
@@ -81,17 +74,11 @@ public class BaseArtistRepository : IBaseArtistRepository
         return Task.FromResult(result);
     }
 
-    public async Task Populate()
+    public async Task Populate(FullLibrary library)
     {
-        if (_artists != null)
-            return;
-
-        var library = await _library.Get();
-
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
         _genres = library.Artists.GroupBy(a => a.Genre ?? "None").ToDictionary(g => g.Key, g => g.ToList());
-
         _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
 
         _albumArtists = library.Albums.Select(a => a.ArtistId).Distinct().ToList();
@@ -121,5 +108,38 @@ public class BaseArtistRepository : IBaseArtistRepository
 
             _albums[album.ArtistId].Add(album);
         }
+    }
+
+    public Task UpdateArtist(ArtistUpdate update)
+    {
+        if (!_artists.TryGetValue(update.Id, out ArtistInfo artist))
+            return Task.CompletedTask;
+
+        update.ApplyUpdates(artist);
+
+        if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+        {
+            var originalGenreArtists = _genres.GetOrAdd(genreUpdate.OriginalValue);
+            var updatedGenreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
+
+            originalGenreArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGenreArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGenreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
+        }
+
+        if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
+        {
+            var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
+            var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();
+            
+            var originalGroupingArtists = _groupings.GetOrAdd(originalGrouping);
+            var updatedGroupingArtists = _groupings.GetOrAdd(updatedGrouping);
+
+            originalGroupingArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGroupingArtists.RemoveWhere(a => a.Id == update.Id);
+            updatedGroupingArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
+        }
+
+        return Task.CompletedTask;
     }
 }

@@ -38,6 +38,8 @@ internal class LocalApiRepositorySettings : IApiRepositorySettings
     public string Track => _settings.Endpoints.Track;
     public string Album => _settings.Endpoints.Album;
     public string AlbumTracks => _settings.Endpoints.AlbumTracks;
+
+    public string UpdateArtist => _settings.Endpoints.UpdateArtist;
 }
 
 

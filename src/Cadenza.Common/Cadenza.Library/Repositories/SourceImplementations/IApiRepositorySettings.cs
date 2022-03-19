@@ -28,5 +28,7 @@
         string Track { get; }
         string Album { get; }
         string AlbumTracks { get; }
+
+        string UpdateArtist { get; }
     }
 }

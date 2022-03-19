@@ -3,4 +3,5 @@
 public interface IStaticLibrary
 {
     Task<FullLibrary> Get();
+    Task UpdateArtist(ArtistUpdate update);
 }

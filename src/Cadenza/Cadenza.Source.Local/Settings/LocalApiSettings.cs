@@ -11,7 +11,7 @@ internal class LocalApiEndpoints
     public string Connect { get; set; }
     public string Populate { get; set; }
 
-    public string QueuedUpdates { get; set; }
+    public string GetUpdates { get; set; }
     public string PlayTrackUrl { get; set; }
     public string UpdateAlbum { get; set; }
     public string UpdateArtist { get; set; }

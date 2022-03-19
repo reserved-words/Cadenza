@@ -1,48 +1,37 @@
 ﻿using Cadenza.Core.Interfaces;
-using Cadenza.Core.SystemInfo;
 
 namespace Cadenza;
 
 public class SystemOverridesBase : ComponentBase
 {
     [Inject]
-    public Dictionary<LibrarySource, IOverridesService> Services { get; set; }
+    public IOverridesService Service { get; set; }
 
-    public List<OverrideViewModel> Items { get; set; } = new();
+    public List<ItemPropertyUpdate> Items { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        foreach (var source in Services.Keys)
-        {
-            var items = await Services[source].GetOverrides();
-            if (items == null || !items.Any())
-                continue;
-
-            Items.AddRange(items.Select(i => new OverrideViewModel(source, i)));
-        }
+        Items = await Service.GetOverrides();
     }
 
-    protected async Task Remove(OverrideViewModel dataOverride)
+    protected async Task Remove(ItemPropertyUpdate dataOverride)
     {
-        var service = Services[dataOverride.Source];
-        var success = await service.RemoveOverride(dataOverride.Id, dataOverride.PropertyName);
+        var success = await Service.RemoveOverride(dataOverride.Id, dataOverride.Property);
         if (success)
         {
             Items.Remove(dataOverride);
         }
     }
 
-    protected bool FilterFunc(OverrideViewModel item, string searchString)
+    protected bool FilterFunc(ItemPropertyUpdate item, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (item.Source.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (item.PropertyName.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (item.Property.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (item.OriginalValue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (item.OverrideValue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (item.UpdatedValue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;

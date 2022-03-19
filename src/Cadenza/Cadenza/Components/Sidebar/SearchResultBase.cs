@@ -20,17 +20,25 @@ public class SearchResultBase : ComponentBase
 
     protected async Task OnPlay()
     {
-        if (Result.Type == PlayerItemType.Artist)
+        switch (Result.Type)
         {
-            await Player.PlayArtist(Result.Id);
-        }
-        else if (Result.Type == PlayerItemType.Album)
-        {
-            await Player.PlayAlbum(Result.Source.Value, Result.Id);
-        }
-        else if (Result.Type == PlayerItemType.Track)
-        {
-            await Player.PlayTrack(Result.Source.Value, Result.Id);
+            case PlayerItemType.Grouping:
+                await Player.PlayGrouping(Result.Id.Parse<Grouping>());
+                break;
+            case PlayerItemType.Genre:
+                await Player.PlayGenre(Result.Id);
+                break;
+            case PlayerItemType.Artist:
+                await Player.PlayArtist(Result.Id);
+                break;
+            case PlayerItemType.Album:
+                await Player.PlayAlbum(Result.Source.Value, Result.Id);
+                break;
+            case PlayerItemType.Track:
+                await Player.PlayTrack(Result.Source.Value, Result.Id);
+                break;
+            case PlayerItemType.Playlist:
+                break;
         }
     }
 

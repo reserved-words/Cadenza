@@ -37,6 +37,13 @@ namespace Cadenza.Library.Repositories
             return await response.Content.ReadFromJsonAsync<T>();
         }
 
+        public async Task Post<T>(string endpoint, T data)
+        {
+            var url = GetApiEndpoint(endpoint);
+            var response = await _http.Post(url, null, data);
+            return;
+        }
+
         private string GetApiEndpoint(string endpoint)
         {
             return $"{_settings.BaseUrl}{endpoint}";

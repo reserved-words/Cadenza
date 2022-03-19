@@ -30,6 +30,7 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddTransient<IOverridesService, OverrideService>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()
@@ -72,9 +73,13 @@ public static class Dependencies
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        return services.AddSingleton<AppService>()
+        return services
+            .AddSingleton<AppService>()
+            .AddSingleton<ItemUpdatesHandler>()
             .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>())
-            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>());
+            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>())
+            .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<ItemUpdatesHandler>())
+            .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<ItemUpdatesHandler>());
     }
 
     private static IServiceCollection AddUIHelpers(this IServiceCollection services)

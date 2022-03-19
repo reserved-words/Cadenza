@@ -1,18 +1,11 @@
 ﻿namespace Cadenza.Library;
 
-public class BaseTrackRepository : IBaseTrackRepository
+public class TrackCache : ITrackCache
 {
-    private readonly ILibrary _library;
-
     private Dictionary<string, TrackInfo> _tracks;
     private Dictionary<string, AlbumInfo> _albums;
     private Dictionary<string, ArtistInfo> _artists;
     private Dictionary<string, AlbumTrackLink> _albumTracks;
-
-    public BaseTrackRepository(ILibrary library)
-    {
-        _library = library;
-    }
 
     public async Task<TrackFull> GetTrack(string id)
     {
@@ -35,12 +28,8 @@ public class BaseTrackRepository : IBaseTrackRepository
         };
     }
 
-    public async Task Populate()
+    public async Task Populate(FullLibrary library)
     {
-        if (_tracks != null)
-            return;
-
-        var library = await _library.Get();
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);

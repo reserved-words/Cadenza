@@ -1,20 +1,18 @@
 ﻿@using Cadenza.Core.App
 @using Cadenza.Core.Extensions
+@using Cadenza.Core.Updates
 @if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Artist"
-                    Id="@Model.Id">
+                Id="@Model.Id">
         <ChildContent>
             <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@(() => Viewer.ViewArtist(Model.Id))"></ActionLink>
 
             @if (!TitleOnly)
             {
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
-                <MudText Typo="Typo.body1">
-                    <ActionLink Typo="Typo.body1" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
-                    | 
-                    <ActionLink Typo="Typo.body1" Text="@Model.Genre" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
-                </MudText>
+                <ActionLink Typo="Typo.body2" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
+                <ActionLink Typo="Typo.body2" Text="@(Model.Genre ?? "None")" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
             }
 
         </ChildContent>
@@ -25,9 +23,28 @@
     [Inject]
     public IItemViewer Viewer { get; set; }
 
+    [Inject]
+    public IUpdatesConsumer UpdatesConsumer { get; set; }
+
     [Parameter]
     public ArtistInfo Model { get; set; }
 
     [Parameter]
     public bool TitleOnly { get; set; }
+
+    protected override void OnInitialized()
+    {
+        UpdatesConsumer.ArtistUpdated += OnArtistUpdated;
+    }
+
+    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
+    {
+        if (args.Update.Id == Model.Id)
+        {
+            args.Update.ApplyUpdates(Model);
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
+    }
 }

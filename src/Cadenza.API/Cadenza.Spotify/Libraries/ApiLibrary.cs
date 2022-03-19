@@ -209,4 +209,9 @@ public class ApiLibrary : IStaticLibrary
     {
         return _idGenerator.GenerateId(artistName);
     }
+
+    public Task UpdateArtist(ArtistUpdate update)
+    {
+        return Task.CompletedTask;
+    }
 }

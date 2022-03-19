@@ -43,11 +43,11 @@ public static class _Startup
         // call only once from each API
         services.AddTransient<IValueMerger, ValueMerger>();
         services.AddTransient<IMerger, Merger>();
-        services.AddSingleton<IBaseArtistRepository, BaseArtistRepository>();
-        services.AddSingleton<IBaseAlbumRepository, BaseAlbumRepository>();
-        services.AddSingleton<IBasePlayTrackRepository, BasePlayTrackRepository>();
-        services.AddSingleton<IBaseSearchRepository, BaseSearchRepository>();
-        services.AddSingleton<IBaseTrackRepository, BaseTrackRepository>();
+        services.AddSingleton<IArtistCache, ArtistCache>();
+        services.AddSingleton<IAlbumCache, AlbumCache>();
+        services.AddSingleton<IPlayTrackCache, PlayTrackCache>();
+        services.AddSingleton<ISearchCache, SearchCache>();
+        services.AddSingleton<ITrackCache, TrackCache>();
         return services;
     }
 

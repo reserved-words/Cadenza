@@ -1,14 +1,16 @@
-﻿using Cadenza.Core.App;
+﻿using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Core.App;
+using Cadenza.Library;
 
 namespace Cadenza;
 
 public class MenuArtistBase : ComponentBase
 {
     [Inject]
-    public IDialogService DialogService { get; set; }
+    public IMergedArtistRepository Repository { get; set; }
 
     [Inject]
-    public INotificationService Alert { get; set; }
+    public IDialogService DialogService { get; set; }
 
     [Inject]
     public IItemPlayer Player { get; set; }
@@ -27,23 +29,8 @@ public class MenuArtistBase : ComponentBase
 
     public async Task OnEdit()
     {
-        //var artistUpdate = new ArtistUpdate(Artist);
-
-        //var (saved, data) = await DialogService.DisplayForm<EditArtist, ArtistUpdate>(artistUpdate, "Edit Artist");
-
-        //if (!saved)
-        //    return;
-
-        //var success = await Library.UpdateArtist(data);
-
-        //if (success)
-        //{
-        //    Alert.Success("Artist updated");
-        //}
-        //else
-        //{
-        //    Alert.Error("Error updating artist");
-        //}
+        var artist = await Repository.GetArtist(Id);
+        await DialogService.DisplayForm<EditArtist, ArtistInfo>(artist, "Edit Artist");
     }
 
     public async Task OnPlay()

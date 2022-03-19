@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain;
-
-namespace Cadenza.Core.Interfaces;
+﻿namespace Cadenza.Core.Interfaces;
 
 public interface IOverridesService
 {
