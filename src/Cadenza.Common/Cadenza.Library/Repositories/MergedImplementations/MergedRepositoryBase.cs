@@ -23,6 +23,18 @@ public abstract class MergedRepositoryBase<TSourceRepository>
         return result;
     }
 
+    protected async Task<List<TItem>> Fetch<TItem>(Func<TSourceRepository, Task<List<TItem>>> get)
+    {
+        var result = new List<TItem>();
+
+        foreach (var source in Sources)
+        {
+            result.AddRange(await get(source));
+        }
+
+        return result;
+    }
+
     protected async Task<List<Artist>> FetchArtists(Func<TSourceRepository, int, int, Task<ListResponse<Artist>>> get)
     {
         var result = new List<Artist>();

@@ -13,11 +13,11 @@ public class PlayTrackCache : IPlayTrackCache
         return _tracks.ToListResponse(t => t.Id, page, limit);
     }
 
-    public async Task<ListResponse<PlayTrack>> GetByAlbum(string id, int page, int limit)
+    public async Task<List<PlayTrack>> GetByAlbum(string id)
     {
         return _albumTracks.TryGetValue(id, out List<PlayTrack> tracks)
-            ? tracks.ToListResponse(t => t.Id, page, limit)
-            : ListResponse<PlayTrack>.Empty;
+            ? tracks
+            : new List<PlayTrack>();
     }
 
     public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)

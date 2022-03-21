@@ -25,9 +25,9 @@
             return await Get<ListResponse<PlayTrack>>(_settings.PlayTracks, page, limit);
         }
 
-        public async Task<ListResponse<PlayTrack>> GetByAlbum(string id, int page, int limit)
+        public async Task<List<PlayTrack>> GetByAlbum(string id)
         {
-            return await Get<ListResponse<PlayTrack>>(_settings.PlayAlbum, id, page, limit);
+            return await Get<List<PlayTrack>>(_settings.PlayAlbum, id);
         }
 
         public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)

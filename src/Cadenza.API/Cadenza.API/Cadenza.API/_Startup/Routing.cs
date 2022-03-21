@@ -87,7 +87,7 @@ public static class Routing
 
         app.MapGet(ApiEndpoints.Spotify.PlayTracks, (int page, int limit) => playTracks.GetAll(page, limit));
         app.MapGet(ApiEndpoints.Spotify.PlayArtist, (string id, int page, int limit) => playTracks.GetByArtist(id, page, limit));
-        app.MapGet(ApiEndpoints.Spotify.PlayAlbum, (string id, int page, int limit) => playTracks.GetByAlbum(id, page, limit));
+        app.MapGet(ApiEndpoints.Spotify.PlayAlbum, (string id) => playTracks.GetByAlbum(id));
         app.MapGet(ApiEndpoints.Spotify.PlayGenre, (string id, int page, int limit) => playTracks.GetByGenre(id, page, limit));
         app.MapGet(ApiEndpoints.Spotify.PlayGrouping, (Grouping id, int page, int limit) => playTracks.GetByGrouping(id, page, limit));
 
