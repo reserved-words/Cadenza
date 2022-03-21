@@ -9,14 +9,14 @@ public class MergedPlayTrackRepository : MergedRepositoryBase<ISourcePlayTrackRe
 
     protected override int ItemFetchLimit => 500;
 
+    public async Task<List<PlayTrack>> GetByAlbum(string id)
+    {
+        return await Fetch((repository) => repository.GetByAlbum(id));
+    }
+
     public async Task<List<PlayTrack>> GetAll()
     {
         return await Fetch((repository, page, limit) => repository.GetAll(page, limit));
-    }
-
-    public async Task<List<PlayTrack>> GetByAlbum(string id)
-    {
-        return await Fetch((repository, page, limit) => repository.GetByAlbum(id, page, limit));
     }
 
     public async Task<List<PlayTrack>> GetByArtist(string id)

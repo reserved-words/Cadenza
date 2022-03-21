@@ -48,7 +48,7 @@ public static class Routing
         var playTracks = app.Services.GetRequiredService<IPlayTrackCache>();
         app.MapGet("/Play/Tracks", (int page, int limit) => playTracks.GetAll(page, limit));
         app.MapGet("/Play/Artist", (string id, int page, int limit) => playTracks.GetByArtist(id, page, limit));
-        app.MapGet("/Play/Album", (string id, int page, int limit) => playTracks.GetByAlbum(id, page, limit));
+        app.MapGet("/Play/Album", (string id) => playTracks.GetByAlbum(id));
         app.MapGet("/Play/Genre", (string id, int page, int limit) => playTracks.GetByGenre(id, page, limit));
         app.MapGet("/Play/Grouping", (Grouping id, int page, int limit) => playTracks.GetByGrouping(id, page, limit));
 

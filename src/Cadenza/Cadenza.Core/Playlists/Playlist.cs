@@ -12,11 +12,12 @@ public class Playlist : IPlaylist
     public Playlist(PlaylistDefinition def)
     {
         Id = def.Id;
-
         _allTracks = def.Tracks.ToList();
 
+        var toPlay = new List<PlayTrack>(_allTracks);
+        toPlay.Reverse();
         _played = new Stack<PlayTrack>();
-        _toPlay = new Stack<PlayTrack>(_allTracks);
+        _toPlay = new Stack<PlayTrack>(toPlay);
         _playing = _toPlay.Pop();
     }
 
