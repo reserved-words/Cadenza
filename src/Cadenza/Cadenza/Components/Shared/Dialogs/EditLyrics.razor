@@ -13,7 +13,12 @@
                     <MudTextField @bind-Value="EditableItem.Lyrics"
                                   For="@(() => EditableItem.Lyrics)"
                                   Lines="30" />
+
                 </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">Load</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@OnSearch">Search</MudButton>
+                </MudCardActions>
             </MudCard>
         </EditForm>
     </ChildContent>
