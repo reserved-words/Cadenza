@@ -49,14 +49,15 @@ public class EditLyricsBase : FormBase<TrackInfo>
 
             await Repository.UpdateTrack(Update);
             Alert.Success("Lyrics updated");
-            await UpdatesService.UpdateLyrics(Update);
-            Submit();
         }
         catch (Exception ex)
         {
             // Log error
             Alert.Error("Error updating lyrics");
         }
+
+        await UpdatesService.UpdateLyrics(Update);
+        Submit();
     }
 
     protected void OnCancel()

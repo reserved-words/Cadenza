@@ -5,17 +5,24 @@ namespace Cadenza.Local;
 
 public class JsonLibrary : IStaticLibrary
 {
+    private readonly IAlbumConverter _albumConverter;
     private readonly IArtistConverter _artistConverter;
+    private readonly IBase64Converter _base64Converter;
+    private readonly ITrackConverter _trackConverter;
     private readonly IConfiguration _config;
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
-    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config, IArtistConverter artistConverter)
+    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config, IArtistConverter artistConverter, 
+        IAlbumConverter albumConverter, ITrackConverter trackConverter, IBase64Converter base64Converter)
     {
         _dataAccess = dataAccess;
         _converter = converter;
         _config = config;
         _artistConverter = artistConverter;
+        _albumConverter = albumConverter;
+        _trackConverter = trackConverter;
+        _base64Converter = base64Converter;
     }
 
     public async Task<FullLibrary> Get()
@@ -62,6 +69,23 @@ public class JsonLibrary : IStaticLibrary
         return library;
     }
 
+    public async Task UpdateAlbum(AlbumUpdate update)
+    {
+        var albums = await _dataAccess.GetAlbums();
+
+        var jsonAlbum = albums.SingleOrDefault(a => a.Id == update.Id);
+        if (jsonAlbum == null)
+            return;
+
+        albums.Remove(jsonAlbum);
+        var artists = await _dataAccess.GetArtists();
+        var album = _albumConverter.ToAppModel(jsonAlbum, artists);
+        update.ApplyUpdates(album);
+        jsonAlbum = _albumConverter.ToJsonModel(album);
+        albums.Add(jsonAlbum);
+        await _dataAccess.SaveAlbums(albums);
+    }
+
     public async Task UpdateArtist(ArtistUpdate update)
     {
         var artists = await _dataAccess.GetArtists();
@@ -75,5 +99,21 @@ public class JsonLibrary : IStaticLibrary
         jsonArtist = _artistConverter.ToJsonModel(artist);
         artists.Add(jsonArtist);
         await _dataAccess.SaveArtists(artists);
+    }
+
+    public async Task UpdateTrack(TrackUpdate update)
+    {
+        var tracks = await _dataAccess.GetTracks();
+        var jsonTrack = tracks.SingleOrDefault(a => a.Path == _base64Converter.FromBase64(update.Id));
+        if (jsonTrack == null)
+            return;
+
+        tracks.Remove(jsonTrack);
+        var artists = await _dataAccess.GetArtists();
+        var track = _trackConverter.ToAppModel(jsonTrack, artists);
+        update.ApplyUpdates(track);
+        jsonTrack = _trackConverter.ToJsonModel(track);
+        tracks.Add(jsonTrack);
+        await _dataAccess.SaveTracks(tracks);
     }
 }

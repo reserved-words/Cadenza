@@ -117,7 +117,23 @@ internal class OverridesLibrary : IStaticLibrary
                         ?? ReleaseType.Album;
     }
 
+    public async Task UpdateAlbum(AlbumUpdate update)
+    {
+        var success = await _service.AddOverrides(update.Updates);
+
+        if (!success)
+            throw new Exception("Failed to save overrides");
+    }
+
     public async Task UpdateArtist(ArtistUpdate update)
+    {
+        var success = await _service.AddOverrides(update.Updates);
+
+        if (!success)
+            throw new Exception("Failed to save overrides");
+    }
+
+    public async Task UpdateTrack(TrackUpdate update)
     {
         var success = await _service.AddOverrides(update.Updates);
 

@@ -5,14 +5,15 @@ namespace Cadenza.Core.App;
 public class ItemUpdatesHandler : IUpdatesController, IUpdatesConsumer
 {
     public event ArtistUpdatedEventHandler ArtistUpdated;
+    public event LyricsUpdatedEventHandler LyricsUpdated;
 
     public async Task UpdateArtist(ArtistUpdate update)
     {
         await ArtistUpdated?.Invoke(this, new ArtistUpdatedEventArgs(update));
     }
 
-    public Task UpdateLyrics(TrackUpdate artist)
+    public async Task UpdateLyrics(TrackUpdate update)
     {
-        throw new NotImplementedException();
+        await LyricsUpdated?.Invoke(this, new LyricsUpdatedEventArgs(update));
     }
 }

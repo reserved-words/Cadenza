@@ -111,7 +111,9 @@ public static class Routing
     private static WebApplication AddSpotifyUpdateRoutes(this WebApplication app)
     {
         var apiService = app.Services.GetRequiredService<IApiUpdateService>();
+        app.MapPost(ApiEndpoints.Spotify.UpdateAlbum, (AlbumUpdate update) => apiService.UpdateAlbum(update));
         app.MapPost(ApiEndpoints.Spotify.UpdateArtist, (ArtistUpdate update) => apiService.UpdateArtist(update));
+        app.MapPost(ApiEndpoints.Spotify.UpdateTrack, (TrackUpdate update) => apiService.UpdateTrack(update));
         return app;
     }
 }

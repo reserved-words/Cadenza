@@ -15,8 +15,9 @@ public class MergedTrackRepository : IMergedTrackRepository
         return await sourceRepository.GetTrack(id);
     }
 
-    public Task UpdateTrack(TrackUpdate update)
+    public async Task UpdateTrack(TrackUpdate update)
     {
-        throw new NotImplementedException();
+        var sourceRepository = _sources.Single(s => s.Source == update.OriginalItem.Source);
+        await sourceRepository.UpdateTrack(update);
     }
 }
