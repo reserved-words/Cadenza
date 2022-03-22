@@ -10,4 +10,9 @@ public class ItemUpdatesHandler : IUpdatesController, IUpdatesConsumer
     {
         await ArtistUpdated?.Invoke(this, new ArtistUpdatedEventArgs(update));
     }
+
+    public Task UpdateLyrics(TrackUpdate artist)
+    {
+        throw new NotImplementedException();
+    }
 }
