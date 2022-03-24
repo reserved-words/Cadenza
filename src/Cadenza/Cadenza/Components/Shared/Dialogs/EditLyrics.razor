@@ -11,20 +11,11 @@
             <DataAnnotationsValidator />
 
             <MudTextField Class="textarea"
-                            @bind-Value="EditableItem.Lyrics"
-                            For="@(() => EditableItem.Lyrics)"
-                            Lines="30" />
+                          @bind-Value="EditableItem.Lyrics"
+                          For="@(() => EditableItem.Lyrics)"
+                          Lines="30" />
 
-@*            <MudCard Class="pa-0">
-                <MudCardContent Class="pa-1">
-
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Load</MudButton>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@OnSearch">Search</MudButton>
-                </MudCardActions>
-            </MudCard>
-*@        </EditForm>
+        </EditForm>
     </ChildContent>
 
 </WhipDialog>
