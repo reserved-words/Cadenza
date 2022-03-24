@@ -52,4 +52,14 @@ public class AlbumCache : IAlbumCache
             Position = position
         };
     }
+
+    public Task UpdateAlbum(AlbumUpdate update)
+    {
+        if (!_albums.TryGetValue(update.Id, out AlbumInfo album))
+            return Task.CompletedTask;
+
+        update.ApplyUpdates(album);
+
+        return Task.CompletedTask;
+    }
 }

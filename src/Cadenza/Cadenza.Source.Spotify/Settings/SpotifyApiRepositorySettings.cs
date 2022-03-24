@@ -39,5 +39,7 @@ internal class SpotifyApiRepositorySettings : IApiRepositorySettings
     public string Album => _settings.Endpoints.Album;
     public string AlbumTracks => _settings.Endpoints.AlbumTracks;
 
+    public string UpdateAlbum => _settings.Endpoints.UpdateAlbum;
     public string UpdateArtist => _settings.Endpoints.UpdateArtist;
+    public string UpdateTrack => _settings.Endpoints.UpdateTrack;
 }

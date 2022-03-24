@@ -35,4 +35,14 @@ public class TrackCache : ITrackCache
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _albumTracks = library.AlbumTrackLinks.ToDictionary(a => a.TrackId, a => a);
     }
+
+    public Task UpdateTrack(TrackUpdate update)
+    {
+        if (!_tracks.TryGetValue(update.Id, out TrackInfo track))
+            return Task.CompletedTask;
+
+        update.ApplyUpdates(track);
+
+        return Task.CompletedTask;
+    }
 }

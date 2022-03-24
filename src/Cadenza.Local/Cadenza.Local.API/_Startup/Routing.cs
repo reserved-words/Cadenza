@@ -19,7 +19,9 @@ public static class Routing
     {
         var apiService = app.Services.GetRequiredService<IApiUpdateService>();
         app.MapGet("/Update/Get", () => apiService.GetUpdates());
+        app.MapPost("/Update/Album", (AlbumUpdate update) => apiService.UpdateAlbum(update));
         app.MapPost("/Update/Artist", (ArtistUpdate update) => apiService.UpdateArtist(update));
+        app.MapPost("/Update/Track", (TrackUpdate update) => apiService.UpdateTrack(update));
         return app;
     }
 

@@ -14,4 +14,10 @@ public class MergedTrackRepository : IMergedTrackRepository
         var sourceRepository = _sources.Single(s => s.Source == source);
         return await sourceRepository.GetTrack(id);
     }
+
+    public async Task UpdateTrack(TrackUpdate update)
+    {
+        var sourceRepository = _sources.Single(s => s.Source == update.OriginalItem.Source);
+        await sourceRepository.UpdateTrack(update);
+    }
 }

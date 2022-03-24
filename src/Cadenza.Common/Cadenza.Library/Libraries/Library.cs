@@ -71,11 +71,27 @@ public class Library : ILibrary
         return existing;
     }
 
+    public async Task UpdateAlbum(AlbumUpdate update)
+    {
+        foreach (var source in _sourceFactory.GetSources())
+        {
+            await source.UpdateAlbum(update);
+        }
+    }
+
     public async Task UpdateArtist(ArtistUpdate update)
     {
         foreach (var source in _sourceFactory.GetSources())
         {
             await source.UpdateArtist(update);
+        }
+    }
+
+    public async Task UpdateTrack(TrackUpdate update)
+    {
+        foreach (var source in _sourceFactory.GetSources())
+        {
+            await source.UpdateTrack(update);
         }
     }
 }

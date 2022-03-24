@@ -40,6 +40,11 @@ public class ItemUpdate<TInterface> where TInterface : new()
         Updates = GetUpdates();
     }
 
+    public bool IsUpdated(ItemProperty property)
+    {
+        return Updates.Any(p => p.Property == property);
+    }
+
     public bool IsUpdated(ItemProperty property, out ItemPropertyUpdate update)
     {
         update = Updates.SingleOrDefault(p => p.Property == property);

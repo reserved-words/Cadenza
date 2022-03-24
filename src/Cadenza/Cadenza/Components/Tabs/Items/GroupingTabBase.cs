@@ -59,8 +59,8 @@ namespace Cadenza.Components.Tabs.Items
 
         private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
         {
-            var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate);
-            var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate);
+            var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping);
+            var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre);
 
             if (!isGroupingUpdated && !isGenreUpdated)
                 return;

@@ -124,5 +124,10 @@
         {
             await Post(_settings.UpdateArtist, update);
         }
+
+        public async Task UpdateTrack(TrackUpdate update)
+        {
+            await Post(_settings.UpdateTrack, update);
+        }
     }
 }
