@@ -80,3 +80,17 @@ div.fixed-height-margin.no-side-margin {
 .mud-tab {
     min-width: 40px;
 }
+
+/*remove margin at top of textarea inputs*/
+.textarea.mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+    margin-top: 0;
+}
+
+.mud-dialog .mud-dialog-content {
+    padding-top:0;
+    padding-bottom: 0;
+}
+
+.mud-dialog .mud-dialog-actions .mud-paper {
+    padding: 0 0.5rem;
+}

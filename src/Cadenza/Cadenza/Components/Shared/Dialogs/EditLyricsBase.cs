@@ -24,9 +24,25 @@ public class EditLyricsBase : FormBase<TrackInfo>
 
     public TrackInfo EditableItem => Update.UpdatedItem;
 
+    public List<DialogAction> Actions { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Actions = new List<DialogAction>
+        {
+            new DialogAction("Load", OnLoad),
+            new DialogAction("Search", OnSearch)
+        };
+    }
+
     protected override void OnParametersSet()
     {
         Update = new TrackUpdate(Model);
+    }
+
+    protected async Task OnLoad()
+    {
+
     }
 
     protected async Task OnSearch()

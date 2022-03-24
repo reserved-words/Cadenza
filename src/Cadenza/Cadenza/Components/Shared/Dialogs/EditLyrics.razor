@@ -3,16 +3,20 @@
 <WhipDialog Cancel="OnCancel"
             CancelCaption="Cancel"
             Submit="OnSubmit"
-            SubmitCaption="OK">
+            SubmitCaption="OK"
+            Actions="@Actions">
 
     <ChildContent>
         <EditForm Model="@EditableItem">
             <DataAnnotationsValidator />
-            <MudCard Class="pa-0">
+
+            <MudTextField Class="textarea"
+                            @bind-Value="EditableItem.Lyrics"
+                            For="@(() => EditableItem.Lyrics)"
+                            Lines="30" />
+
+@*            <MudCard Class="pa-0">
                 <MudCardContent Class="pa-1">
-                    <MudTextField @bind-Value="EditableItem.Lyrics"
-                                  For="@(() => EditableItem.Lyrics)"
-                                  Lines="30" />
 
                 </MudCardContent>
                 <MudCardActions>
@@ -20,7 +24,7 @@
                     <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@OnSearch">Search</MudButton>
                 </MudCardActions>
             </MudCard>
-        </EditForm>
+*@        </EditForm>
     </ChildContent>
 
 </WhipDialog>
