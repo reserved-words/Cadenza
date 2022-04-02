@@ -363,3 +363,9 @@ FodyWeavers.xsd
 
 # Dev settings
 *launchSettings.json
+
+# Azure
+*local.settings.json
+*serviceDependencies.local.json
+*storage1.arm.json
+!**/src/Cadenza.Azure.Functions/Functions/Logs
