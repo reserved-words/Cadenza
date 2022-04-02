@@ -12,10 +12,12 @@ resources:
 variables:
   Project: '**/Cadenza.Azure.Functions.csproj'
   AppType: 'functionApp'
-  
+
 stages:
 - stage: buildAndDeploy
   displayName: 'Build and Deploy'
+  variables:
+  - group: azureTestSettings
     
   jobs:
   - job: build
@@ -36,8 +38,6 @@ stages:
 
   - job: deployTest
     displayName: 'Deploy to Test'
-    variables:
-    - group: azureTestSettings
     steps:
     - task: AzureFunctionApp@1
       displayName: 'Deploy Azure Function App'
