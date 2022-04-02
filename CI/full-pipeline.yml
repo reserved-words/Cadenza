@@ -99,22 +99,12 @@ stages:
       inputs:
         rootFolderOrFile: 'publish_output/'
         includeRootFolder: false
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-
-  - job: deployAzureFunction
-    displayName: 'Deploy Azure Function'
-    steps:
-    - download: current
-      artifact: drop
-      patterns: '**/*.zip'
     - task: AzureFunctionApp@1
       displayName: 'Deploy Azure Function App'
       inputs:
         azureSubscription: '$(LiveSubscription)'
         appType: '$(AzureAppType)'
         appName: '$(LiveAppName)'
-        package: '$(Pipeline.Workspace)\**\*.zip'
       
 - stage: github
   displayName: 'GitHub'
