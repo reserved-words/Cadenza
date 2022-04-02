@@ -1,34 +1,46 @@
-using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos.Table;
+using System;
+using Cadenza.Azure.Functions.Models;
+using System.Linq;
 
 namespace Cadenza.Azure.Logs
 {
     public static class DeleteClearedLogs
     {
         [FunctionName("DeleteClearedLogs")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+        public static async Task Run(
+            [TimerTrigger("0 0 0 * * *")] TimerInfo myTimer,
+            [Table("Logs", Connection = "AzureWebJobsStorage")] CloudTable logTable, 
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var monthAgo = DateTime.Now.AddMonths(-1);
+            var threeMonthsAgo = DateTime.Now.AddMonths(-3);
 
-            string name = req.Query["name"];
+            var clearedFilter = TableQuery.CombineFilters(
+                TableQuery.GenerateFilterConditionForDate("DateCreated", QueryComparisons.LessThan, monthAgo),
+                TableOperators.And,
+                TableQuery.GenerateFilterConditionForBool("Cleared", QueryComparisons.Equal, true));
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            var oldFilter = TableQuery.GenerateFilterConditionForDate("DateCreated", QueryComparisons.LessThan, threeMonthsAgo);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var clearedQuery = new TableQuery<LogEntity>().Where(clearedFilter);
+            var oldQuery = new TableQuery<LogEntity>().Where(oldFilter);
 
-            return new OkObjectResult(responseMessage);
+            var clearedErrors = (await logTable.ExecuteQuerySegmentedAsync(clearedQuery, null)).ToList();
+            var oldErrors = (await logTable.ExecuteQuerySegmentedAsync(oldQuery, null)).ToList();
+
+            foreach (var entity in clearedErrors)
+            {
+                await logTable.ExecuteAsync(TableOperation.Delete(entity));
+            }
+
+            foreach (var entity in oldErrors)
+            {
+                await logTable.ExecuteAsync(TableOperation.Delete(entity));
+            }
         }
     }
 }

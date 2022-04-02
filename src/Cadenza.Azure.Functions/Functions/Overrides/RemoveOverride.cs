@@ -6,6 +6,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos.Table;
+using System;
 
 namespace Cadenza.Azure.Overrides
 {
@@ -14,21 +16,40 @@ namespace Cadenza.Azure.Overrides
         [FunctionName("RemoveOverride")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
+            [Table("Overrides", Connection = "AzureWebJobsStorage")] CloudTable overridesTable,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            string requestBody = string.Empty;
+            using (StreamReader streamReader = new StreamReader(req.Body))
+            {
+                requestBody = await streamReader.ReadToEndAsync();
+            }
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var partitionKey = data.id.ToString();
+            var rowKey = data.propertyName.ToString();
 
-            return new OkObjectResult(responseMessage);
+            try
+            {
+                var retrieveOperation = TableOperation.Retrieve<TableEntity>(partitionKey, rowKey);
+
+                var result = await overridesTable.ExecuteAsync(retrieveOperation);
+
+                if (result.Result is TableEntity entityFound)
+                {
+                    await overridesTable.ExecuteAsync(TableOperation.Delete(entityFound));
+                    return new OkObjectResult("removed");
+                }
+                else
+                {
+                    return new NotFoundObjectResult("not found");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
     }
 }

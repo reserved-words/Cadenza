@@ -6,6 +6,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos.Table;
+using Cadenza.Azure.Functions.Models;
 
 namespace Cadenza.Azure.Overrides
 {
@@ -14,21 +16,45 @@ namespace Cadenza.Azure.Overrides
         [FunctionName("AddOverride")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [Table("Overrides", Connection = "AzureWebJobsStorage")] CloudTable overridesTable,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            string requestBody = string.Empty;
+            using (StreamReader streamReader = new StreamReader(req.Body))
+            {
+                requestBody = await streamReader.ReadToEndAsync();
+            }
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var model = new OverrideEntity
+            {
+                PartitionKey = data.id,
+                RowKey = data.propertyName,
+                Item = data.item,
+                ItemType = data.itemType,
+                OriginalValue = data.originalValue,
+                OverrideValue = data.overrideValue
+            };
 
-            return new OkObjectResult(responseMessage);
+            var retrieveOperation = TableOperation.Retrieve<OverrideEntity>(model.PartitionKey, model.RowKey);
+
+            var result = await overridesTable.ExecuteAsync(retrieveOperation);
+
+            if (result.Result is OverrideEntity entityFound)
+            {
+                entityFound.OverrideValue = model.OverrideValue;
+                var replaceOperation = TableOperation.Replace(entityFound);
+                await overridesTable.ExecuteAsync(replaceOperation);
+                log.LogInformation("Updated existing");
+            }
+            else
+            {
+                var insertOperation = TableOperation.Insert(model);
+                await overridesTable.ExecuteAsync(insertOperation);
+                log.LogInformation("Inserted new");
+            }
+
+            return new OkObjectResult("ok");
         }
     }
 }
