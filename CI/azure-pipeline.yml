@@ -10,7 +10,7 @@ resources:
   - repository: self
 
 variables:
-  - group: azureTestSettings
+  - group: azureSettings
   - name: 'Project'
     value: '**/Cadenza.Azure.Functions.csproj'
   - name: 'AppType'
@@ -45,8 +45,8 @@ stages:
     - task: AzureFunctionApp@1
       displayName: 'Deploy Azure Function App'
       inputs:
-        azureSubscription: '$(Subscription)'
+        azureSubscription: '$(TestSubscription)'
         appType: '$(AppType)'
-        appName: '$(AppName)'
+        appName: '$(TestAppName)'
         package: '$(Pipeline.Workspace)\**\*.zip'
       
