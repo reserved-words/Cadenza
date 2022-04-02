@@ -10,11 +10,21 @@ resources:
   - repository: self
 
 variables:
-  RestoreBuildProjects: '**/*.csproj'
-  TestProjects: '**/*[Tt]ests/*.csproj'
-  BuildConfiguration: 'Release'
-  SettingsFiles: '**/*appsettings.json'
-  PackageFeed: '12e84f5d-ac38-404d-8917-342d1a6b6267/9576344f-fdaa-4dd0-811d-1ff637c3c3bf'
+- group: azureSettings
+- name: 'AzureProject'
+  value: '**/Cadenza.Azure.Functions.csproj'
+- name: 'AzureAppType'
+  value: 'functionApp'
+- name: 'RestoreBuildProjects'
+  value: '**/*.csproj'
+- name: 'TestProjects'
+  value: '**/*[Tt]ests/*.csproj'
+- name: 'BuildConfiguration'
+  value: 'Release'
+- name: 'SettingsFiles'
+  value: '**/*appsettings.json'
+- name: 'PackageFeed'
+  value: '12e84f5d-ac38-404d-8917-342d1a6b6267/9576344f-fdaa-4dd0-811d-1ff637c3c3bf'
 
 stages:
 - stage: build
@@ -72,6 +82,39 @@ stages:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: 'Cadenza-drop' 
       condition: succeededOrFailed()
+
+- stage: buildAndDeployAzureFunctions
+  displayName: 'Build and Deploy Azure Functions'
+  jobs:
+  - job: build
+    displayName: 'Build'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Build project'
+      inputs:
+        projects: '$(AzureProject)'
+        arguments: '--output publish_output --configuration Release'
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: 'publish_output/'
+        includeRootFolder: false
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+
+  - job: deployAzureFunction
+    displayName: 'Deploy Azure Function'
+    steps:
+    - download: current
+      artifact: drop
+      patterns: '**/*.zip'
+    - task: AzureFunctionApp@1
+      displayName: 'Deploy Azure Function App'
+      inputs:
+        azureSubscription: '$(LiveSubscription)'
+        appType: '$(AzureAppType)'
+        appName: '$(LiveAppName)'
+        package: '$(Pipeline.Workspace)\**\*.zip'
       
 - stage: github
   displayName: 'GitHub'
