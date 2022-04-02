@@ -39,6 +39,8 @@ stages:
   - job: deployTest
     displayName: 'Deploy to Test'
     steps:
+    - download: current
+      artifact: drop
     - task: AzureFunctionApp@1
       displayName: 'Deploy Azure Function App'
       inputs:
