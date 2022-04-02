@@ -10,15 +10,15 @@ resources:
   - repository: self
 
 variables:
-  Project: '**/Cadenza.Azure.Functions.csproj'
-  AppType: 'functionApp'
+  - group: azureTestSettings
+  - name: 'Project'
+    value: '**/Cadenza.Azure.Functions.csproj'
+  - name: 'AppType'
+    value: 'functionApp'
 
 stages:
 - stage: buildAndDeploy
   displayName: 'Build and Deploy'
-  variables:
-  - group: azureTestSettings
-    
   jobs:
   - job: build
     displayName: 'Build'
