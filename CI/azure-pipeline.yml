@@ -49,18 +49,3 @@ stages:
         appType: '$(AppType)'
         appName: '$(TestAppName)'
         package: '$(Pipeline.Workspace)\**\*.zip'
-
-  - job: deployLive
-    displayName: 'Deploy to Live'
-    steps:
-    - download: current
-      artifact: drop
-      patterns: '**/*.zip'
-    - task: AzureFunctionApp@1
-      displayName: 'Deploy Azure Function App'
-      inputs:
-        azureSubscription: '$(LiveSubscription)'
-        appType: '$(AppType)'
-        appName: '$(LiveAppName)'
-        package: '$(Pipeline.Workspace)\**\*.zip'
-      
