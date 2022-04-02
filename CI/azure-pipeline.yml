@@ -1,6 +1,3 @@
-trigger:
-- main
-
 pool:
   name: Azure Pipelines
   vmImage: 'windows-latest'
