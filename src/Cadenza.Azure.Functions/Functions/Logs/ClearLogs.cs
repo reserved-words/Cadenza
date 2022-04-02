@@ -9,12 +9,13 @@ using Newtonsoft.Json;
 using Cadenza.Azure.Functions.Models;
 using Microsoft.Azure.Cosmos.Table;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cadenza.Azure.Logs
 {
-    public static class ClearLog
+    public static class ClearLogs
     {
-        [FunctionName("ClearLog")]
+        [FunctionName("ClearLogs")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req,
             [Table("Logs", Connection = "AzureWebJobsStorage")] CloudTable logTable,
@@ -25,23 +26,18 @@ namespace Cadenza.Azure.Logs
             {
                 requestBody = await streamReader.ReadToEndAsync();
             }
+            var logList = JsonConvert.DeserializeObject<LogList>(requestBody);
 
-            List<string> idsToClear = new List<string>();
-
-            try
+            if (logList.Ids == null || !logList.Ids.Any())
             {
-                idsToClear = JsonConvert.DeserializeObject<List<string>>(requestBody);
-            }
-            catch
-            {
-                return new BadRequestObjectResult("Please include in the request body a list of ApplicationName / LogID pairs to clear");
+                return new BadRequestObjectResult("Please include in the request body a list log IDs to clear");
             }
 
             var cleared = 0;
             var notFound = 0;
             var alreadyCleared = 0;
 
-            foreach (var id in idsToClear)
+            foreach (var id in logList.Ids)
             {
                 var retrieveOperation = TableOperation.Retrieve<LogEntity>(PartitionKey.Log.ToString(), id);
                 var result = await logTable.ExecuteAsync(retrieveOperation);
@@ -76,5 +72,10 @@ namespace Cadenza.Azure.Logs
 
             return new OkObjectResult(response);
         }
+    }
+
+    public class LogList
+    {
+        public List<string> Ids { get; set; }
     }
 }
