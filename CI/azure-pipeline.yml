@@ -45,4 +45,5 @@ stages:
         azureSubscription: '$(Subscription)'
         appType: '$(AppType)'
         appName: '$(AppName)'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       
