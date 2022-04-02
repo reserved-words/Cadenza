@@ -41,11 +41,12 @@ stages:
     steps:
     - download: current
       artifact: drop
+      patterns: '**/*.zip'
     - task: AzureFunctionApp@1
       displayName: 'Deploy Azure Function App'
       inputs:
         azureSubscription: '$(Subscription)'
         appType: '$(AppType)'
         appName: '$(AppName)'
-        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        package: '$(Pipeline.Workspace)\**\*.zip'
       
