@@ -31,7 +31,6 @@ public class ExternalSourceService : IExternalSourceService
         {
             // todo - in the sync service, regularly remove artists with no albums
 
-
             var jsonLibrary = await _dataAccess.GetAll(LibrarySource.Spotify); // todo - get the source properly
 
             foreach (var artist in library.Artists)
