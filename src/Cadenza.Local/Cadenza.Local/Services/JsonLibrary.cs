@@ -66,7 +66,42 @@ public class JsonLibrary : IStaticLibrary
             library.Albums.Add(album);
         }
 
+        foreach (var source in Enum.GetValues<LibrarySource>())
+        {
+            if (source == LibrarySource.Local)
+                continue;
+
+            await AddSource(library, source, jsonArtists);
+        }
+
         return library;
+    }
+
+    private async Task AddSource(FullLibrary library, LibrarySource source, List<JsonArtist> jsonArtists)
+    {
+        var jsonAlbums = await _dataAccess.GetAlbums(source);
+        var jsonTracks = await _dataAccess.GetTracks(source);
+        var jsonAlbumTrackLinks = await _dataAccess.GetAlbumTrackLinks(source);
+
+        foreach (var jsonAlbumTrackLink in jsonAlbumTrackLinks)
+        {
+            var albumTrack = _converter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
+            library.AlbumTrackLinks.Add(albumTrack);
+        }
+
+        foreach (var jsonTrack in jsonTracks)
+        {
+            var track = _converter.ConvertTrack(jsonTrack, jsonArtists);
+            track.Source = source;
+            library.Tracks.Add(track);
+        }
+
+        foreach (var jsonAlbum in jsonAlbums)
+        {
+            var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
+            album.Source = source;
+            library.Albums.Add(album);
+        }
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)

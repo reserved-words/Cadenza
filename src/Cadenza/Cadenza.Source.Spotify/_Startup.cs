@@ -18,7 +18,6 @@ public static class _Startup
         services.Configure<SpotifyApiSettings>(config.GetSection(apiSectionName));
 
         return services
-            .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IInitialiser, Initialiser>()
             .AddTransient<IApiHelper, ApiHelper>()
             .AddTransient<IDeviceHelper, DeviceHelper>()
@@ -29,8 +28,8 @@ public static class _Startup
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
-            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify)
-            .AddTransient<IBuilder, Builder>()
+            //.AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify)
+            //.AddTransient<IBuilder, Builder>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IApiCaller, ApiCaller>()
             .AddSingleton<IApiToken, ApiToken>();

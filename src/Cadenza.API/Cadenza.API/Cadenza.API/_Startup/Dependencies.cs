@@ -6,6 +6,7 @@ public static class Dependencies
     {
         builder.Services
             .AddLastFM()
+            .AddSpotify()
             .AddUtilities()
             .AddLogger();
 
