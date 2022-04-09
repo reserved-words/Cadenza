@@ -9,7 +9,6 @@ public static class Services
         services
            .AddUtilities()
            .AddLogger()
-           .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
            .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
            .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()
            .AddTransient<IPlayedFilesHandler, PlayedFilesHandler>()
