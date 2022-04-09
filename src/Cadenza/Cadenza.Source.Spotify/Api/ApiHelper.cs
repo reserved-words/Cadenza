@@ -1,6 +1,6 @@
-﻿using Cadenza.Source.Spotify.Exceptions;
+﻿using Cadenza.Source.Spotify.Api.Interfaces;
+using Cadenza.Source.Spotify.Exceptions;
 using Cadenza.Source.Spotify.Interfaces;
-using Cadenza.Source.Spotify.Model;
 using Cadenza.Utilities;
 using System.Net;
 using System.Net.Http.Json;
@@ -9,11 +9,34 @@ namespace Cadenza.Source.Spotify.Api;
 
 internal class ApiHelper : IApiHelper
 {
+    private readonly IApiToken _apiToken;
     private readonly IHttpHelper _httpClient;
 
-    public ApiHelper(IHttpHelper httpClient)
+    public ApiHelper(IHttpHelper httpClient, IApiToken apiToken)
     {
         _httpClient = httpClient;
+        _apiToken = apiToken;
+    }
+
+    public async Task<ApiResponse<T>> Get<T>(string url) where T : class
+    {
+        var accessToken = _apiToken.GetAccessToken();
+        var authHeader = $"Bearer {accessToken}";
+        var response = await _httpClient.Get(url, authHeader);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = response.StatusCode == HttpStatusCode.NoContent
+                ? null
+                : await response.Content.ReadFromJsonAsync<T>();
+
+            return new ApiResponse<T>(data);
+        }
+        else
+        {
+            var error = await response.Content.ReadFromJsonAsync<ApiError>();
+            return new ApiResponse<T>(error);
+        }
     }
 
     public async Task<ApiResponse> Put(string url, string accessToken, object data = null)
@@ -68,3 +91,4 @@ internal class ApiHelper : IApiHelper
         return $"Bearer {accessToken}";
     }
 }
+

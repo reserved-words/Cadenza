@@ -12,6 +12,7 @@ using Cadenza.Core.Playlists;
 using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
+using Cadenza.Source.Spotify.Libraries;
 
 namespace Cadenza;
 
@@ -30,7 +31,8 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IOverridesService, OverrideService>()
+            .AddTransient<IStaticLibrary, ApiLibrary>()
+           // .AddTransient<IOverridesService, OverrideService>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()

@@ -62,7 +62,8 @@ public static class Routing
         app.MapGet("/Search/Playlists", (int page, int limit) => searchItems.GetSearchPlaylists(page, limit));
         app.MapGet("/Search/Tracks", (int page, int limit) => searchItems.GetSearchTracks(page, limit));
 
-
+        var externalSourceService = app.Services.GetRequiredService<IExternalSourceService>();
+        app.MapPost("/Source/Add", (FullLibrary library) => externalSourceService.AddLibrary(library));
 
         var artworkService = app.Services.GetRequiredService<IArtworkService>();
         app.MapGet("/Library/Artwork", async (HttpContext context) => 

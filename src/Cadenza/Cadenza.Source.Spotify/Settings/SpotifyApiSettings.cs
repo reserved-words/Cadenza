@@ -2,12 +2,12 @@
 
 namespace Cadenza.Source.Spotify.Settings;
 
-internal class SpotifyApiSettings : ApiOptions<SpotifyApiEndpoints>
+public class SpotifyApiSettings : ApiOptions<SpotifyApiEndpoints>
 {
     public string RedirectUri { get; set; }
 }
 
-internal class SpotifyApiEndpoints
+public class SpotifyApiEndpoints
 {
     public string Populate { get; set; }
     public string AuthUrl { get; set; }

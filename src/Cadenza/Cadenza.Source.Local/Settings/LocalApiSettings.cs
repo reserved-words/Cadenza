@@ -42,6 +42,8 @@ internal class LocalApiEndpoints
     public string Track { get; set; }
     public string Album { get; set; }
     public string AlbumTracks { get; set; }
+
+    public string AddSource { get; set; }
 }
 
 

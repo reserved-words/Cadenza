@@ -3,23 +3,34 @@ using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
 using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Api.Interfaces;
+using Cadenza.Library;
+using Cadenza.Utilities;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
 {
+    private readonly IApiToken _apiToken;
     private readonly IStoreGetter _storeGetter;
     private readonly IConnectorController _connectorController;
     private readonly ISpotifyAuthHelper _authHelper;
-    private readonly IInitialiser _initialiser;
+    private readonly IStaticLibrary _apiLibrary;
+    private readonly IHttpHelper _httpHelper;
+    private readonly IConfiguration _config;
 
     public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter,
-        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IInitialiser initialiser)
+        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IInitialiser initialiser, IApiToken apiToken, IStaticLibrary apiLibrary, IHttpHelper httpHelper, IConfiguration config)
     {
         _storeGetter = storeGetter;
         _connectorController = connectorController;
         _authHelper = authHelper;
-        _initialiser = initialiser;
+        _apiToken = apiToken;
+        _apiLibrary = apiLibrary;
+        _httpHelper = httpHelper;
+        _config = config;
     }
 
     public SubTask GetConnectionTask()
@@ -45,7 +56,14 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
         try
         {
             var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-            await _initialiser.Populate(accessToken.Value);
+            _apiToken.SetAccessToken(accessToken.Value);
+            var fullLibrary = await _apiLibrary.Get();
+
+            var baseUrl = _config.GetValue<string>("LocalApi:BaseUrl");
+            var endpoint = _config.GetValue<string>("LocalApi:Endpoints:AddSource");
+            var url = $"{baseUrl}{endpoint}";
+
+            await _httpHelper.Post(url, null, fullLibrary);
         }
         catch (Exception ex)
         {

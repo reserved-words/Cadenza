@@ -35,7 +35,8 @@ public static class Dependencies
             .AddTransient<IArtworkService, ArtworkService>()
             .AddTransient<IPlayService, PlayService>()
             .AddTransient<IApiLibraryService, ApiLibraryService>()
-            .AddTransient<IApiUpdateService, ApiUpdateService>();
+            .AddTransient<IApiUpdateService, ApiUpdateService>()
+            .AddTransient<IExternalSourceService, ExternalSourceService>();
 
         return services;
     }

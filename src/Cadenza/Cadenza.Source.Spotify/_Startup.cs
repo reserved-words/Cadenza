@@ -2,6 +2,7 @@
 using Cadenza.Domain;
 using Cadenza.Library;
 using Cadenza.Source.Spotify.Api;
+using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Services;
 using Cadenza.Source.Spotify.Settings;
@@ -28,6 +29,11 @@ public static class _Startup
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
-            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify);
+            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify)
+            .AddTransient<IBuilder, Builder>()
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<IApiCaller, ApiCaller>()
+            .AddSingleton<IApiToken, ApiToken>();
+;
     }
 }
