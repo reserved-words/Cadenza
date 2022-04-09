@@ -26,11 +26,6 @@ public class Worker : BackgroundService
                 if (stoppingToken.IsCancellationRequested)
                     return;
 
-                await _updater.UpdateAddedFiles();
-
-                if (stoppingToken.IsCancellationRequested)
-                    return;
-
                 await _updater.UpdateModifiedFiles();
 
                 if (stoppingToken.IsCancellationRequested)

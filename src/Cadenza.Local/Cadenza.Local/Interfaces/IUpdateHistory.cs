@@ -2,7 +2,7 @@
 
 public interface IUpdateHistory
 {
-    Task<DateTime> GetDateProcessedModifiedFiles();
+    Task<DateTime> GetDateLastUpdated(LibrarySource source);
 
-    Task SetDateProcessedModifiedFiles(DateTime date);
+    Task UpdateDateLastUpdated(DateTime date, LibrarySource source);
 }

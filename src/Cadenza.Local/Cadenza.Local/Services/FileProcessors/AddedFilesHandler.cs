@@ -23,7 +23,7 @@ public class AddedFilesHandler : IAddedFilesHandler
 
     public async Task Sync()
     {
-        var jsonItems = await _dataAccess.GetAll();
+        var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
         var filepaths = await _fileFetcher.GetAddedFiles();
 
@@ -54,6 +54,6 @@ public class AddedFilesHandler : IAddedFilesHandler
 
         _organiser.RemoveOrphanedItems(jsonItems);
 
-        await _dataAccess.SaveAll(jsonItems);
+        await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
     }
 }

@@ -21,7 +21,7 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
 
     public async Task Sync()
     {
-        var jsonItems = await _dataAccess.GetAll();
+        var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
         var updatesFetched = DateTime.Now;
 
@@ -54,8 +54,8 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
 
         _organiser.RemoveOrphanedItems(jsonItems);
 
-        await _dataAccess.SaveAll(jsonItems);
+        await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
 
-        _fileFetcher.UpdateTimeModifiedFilesUpdated(updatesFetched);
+        await _fileFetcher.UpdateTimeModifiedFilesUpdated(updatesFetched);
     }
 }

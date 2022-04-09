@@ -20,10 +20,10 @@ public class DeletedFilesHandler : IDeletedFilesHandler
         if (!filepaths.Any())
             return;
 
-        var jsonData = await _dataAccess.GetAll();
+        var jsonData = await _dataAccess.GetAll(LibrarySource.Local);
 
         _organiser.RemoveTracks(jsonData, filepaths);
 
-        await _dataAccess.SaveAll(jsonData);
+        await _dataAccess.SaveAll(jsonData, LibrarySource.Local);
     }
 }

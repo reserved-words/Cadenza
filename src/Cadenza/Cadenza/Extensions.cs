@@ -20,8 +20,7 @@ public static class Extensions
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            LibrarySource.Spotify => "fab fa-spotify",
-            LibrarySource.Cloud => Icons.Material.Filled.Cloud
+            LibrarySource.Spotify => "fab fa-spotify"
         };
     }
 

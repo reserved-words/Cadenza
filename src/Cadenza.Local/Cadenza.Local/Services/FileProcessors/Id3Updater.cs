@@ -42,7 +42,7 @@ public class Id3Updater : IId3Updater
 
     private async Task<List<string>> GetAlbumTracks(string id)
     {
-        var albumTrackLinks = await _dataAccess.GetAlbumTrackLinks();
+        var albumTrackLinks = await _dataAccess.GetAlbumTrackLinks(LibrarySource.Local);
 
         return albumTrackLinks
             .Where(t => t.AlbumId == id)
@@ -52,7 +52,7 @@ public class Id3Updater : IId3Updater
 
     private async Task<List<string>> GetArtistTracks(string id)
     {
-        var tracks = await _dataAccess.GetTracks();
+        var tracks = await _dataAccess.GetTracks(LibrarySource.Local);
         return tracks
             .Where(t => t.ArtistId == id)
             .Select(t => t.Path)
