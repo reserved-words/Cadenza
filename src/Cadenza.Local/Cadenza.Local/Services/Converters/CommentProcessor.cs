@@ -2,7 +2,7 @@
 using Cadenza.Local.Common.Model;
 using System.Xml.Linq;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.Converters;
 
 public class CommentProcessor : ICommentProcessor
 {

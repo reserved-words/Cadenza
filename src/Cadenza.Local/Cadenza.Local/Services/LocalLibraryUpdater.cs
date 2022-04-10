@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class LocalLibraryUpdater : ILocalLibraryUpdater
 {
@@ -15,7 +15,7 @@ public class LocalLibraryUpdater : ILocalLibraryUpdater
         IModifiedFilesHandler modifiedFilesHandler,
         IDeletedFilesHandler deletedFilesHandler,
         IPlayedFilesHandler playedFilesHandler,
-        IUpdateQueueHandler updateQueueHandler, 
+        IUpdateQueueHandler updateQueueHandler,
         IAddedFilesHandler addedFilesHandler)
     {
         _modifiedFilesHandler = modifiedFilesHandler;

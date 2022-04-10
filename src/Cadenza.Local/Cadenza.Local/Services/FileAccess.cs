@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Model;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class FileAccess : IFileAccess
 {

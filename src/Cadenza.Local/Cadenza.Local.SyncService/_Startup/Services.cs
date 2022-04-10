@@ -2,6 +2,10 @@
 using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
+using Cadenza.Local.Services;
+using Cadenza.Local.Services.Converters;
+using Cadenza.Local.Services.FileProcessors;
+using FileAccess = Cadenza.Local.Services.FileAccess;
 
 namespace Cadenza.Local.SyncService;
 
@@ -12,6 +16,7 @@ public static class Services
         services
            .AddUtilities()
            .AddLogger()
+           .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
            .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
            .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()
            .AddTransient<IPlayedFilesHandler, PlayedFilesHandler>()

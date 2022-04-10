@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Model.Json;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.Converters;
 
 public class JsonToModelConverter : IJsonToModelConverter
 {

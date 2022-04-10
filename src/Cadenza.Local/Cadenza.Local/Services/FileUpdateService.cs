@@ -1,9 +1,10 @@
 ﻿using Cadenza.Domain;
 using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Model;
+using Cadenza.Local.Config;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class FileUpdateService : IFileUpdateService
 {

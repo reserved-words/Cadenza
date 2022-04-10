@@ -1,8 +1,9 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Model.Json;
+using Cadenza.Local.Config;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class DataAccess : IDataAccess
 {

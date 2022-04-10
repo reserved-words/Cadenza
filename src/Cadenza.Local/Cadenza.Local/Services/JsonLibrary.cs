@@ -4,7 +4,7 @@ using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Model.Json;
 using Microsoft.Extensions.Configuration;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class JsonLibrary : ILibrary
 {
@@ -16,7 +16,7 @@ public class JsonLibrary : ILibrary
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
-    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config, IArtistConverter artistConverter, 
+    public JsonLibrary(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config, IArtistConverter artistConverter,
         IAlbumConverter albumConverter, ITrackConverter trackConverter, IBase64Converter base64Converter)
     {
         _dataAccess = dataAccess;

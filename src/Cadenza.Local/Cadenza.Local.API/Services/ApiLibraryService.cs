@@ -1,5 +1,6 @@
 ﻿using Cadenza.Library;
 using Cadenza.Local.API.Interfaces;
+using Cadenza.Local.Common.Interfaces.Cache;
 
 namespace Cadenza.Local.API;
 

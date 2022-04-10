@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Domain;
+using Cadenza.Library;
+
+namespace Cadenza.Local.Common.Interfaces.Cache;
 
 public interface IAlbumCache : IAlbumRepository
 {

@@ -1,7 +1,8 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
+using Cadenza.Local.Common.Model;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.FileProcessors;
 
 public class UpdateQueueHandler : IUpdateQueueHandler
 {

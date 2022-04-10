@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Local.Common.Interfaces.Cache;
+
+namespace Cadenza.Local.Services.Cache;
 
 public class SearchCache : ISearchCache
 {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.Converters;
 
 public static class XElementExtensionMethods
 {

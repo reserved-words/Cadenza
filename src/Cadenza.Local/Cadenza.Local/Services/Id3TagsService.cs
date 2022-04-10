@@ -2,7 +2,7 @@
 using Cadenza.Local.Common.Model.Id3;
 using TagLib;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class Id3TagsService : IId3TagsService
 {

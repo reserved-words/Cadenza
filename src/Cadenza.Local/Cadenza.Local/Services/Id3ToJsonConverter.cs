@@ -2,7 +2,7 @@
 using Cadenza.Local.Common.Model.Id3;
 using Cadenza.Local.Common.Model.Json;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class Id3ToJsonConverter : IId3ToJsonConverter
 {

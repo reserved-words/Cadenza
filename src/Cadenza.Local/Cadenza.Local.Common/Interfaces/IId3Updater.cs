@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Domain;
+using Cadenza.Local.Common.Model;
+
+namespace Cadenza.Local.Common.Interfaces;
 
 public interface IId3Updater
 {

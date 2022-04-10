@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Common.Model;
 
 public class ItemPropertyUpdateResult
 {

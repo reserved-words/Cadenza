@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Cadenza.Local.Common.Interfaces.Cache;
+using Newtonsoft.Json;
 
-namespace Cadenza.Library;
+namespace Cadenza.Local.Services.Cache;
 
 public class ArtistCache : IArtistCache
 {
@@ -135,7 +136,7 @@ public class ArtistCache : IArtistCache
         {
             var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
             var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();
-            
+
             var originalGroupingArtists = _groupings.GetOrAdd(originalGrouping);
             var updatedGroupingArtists = _groupings.GetOrAdd(updatedGrouping);
 

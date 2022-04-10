@@ -4,7 +4,7 @@ using Cadenza.Local.Common.Model;
 using Cadenza.Local.Common.Model.Id3;
 using Cadenza.Local.Common.Model.Json;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.Converters;
 
 public class ArtistConverter : IArtistConverter
 {

@@ -1,6 +1,7 @@
-﻿using Cadenza.Utilities;
+﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Utilities;
 
-namespace Cadenza.Local.Common.Interfaces;
+namespace Cadenza.Local.Services;
 
 public class ImageSrcGenerator : IImageSrcGenerator
 {

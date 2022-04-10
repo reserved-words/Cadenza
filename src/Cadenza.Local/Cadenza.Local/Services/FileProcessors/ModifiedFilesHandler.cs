@@ -2,7 +2,7 @@
 using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.FileProcessors;
 
 public class ModifiedFilesHandler : IModifiedFilesHandler
 {

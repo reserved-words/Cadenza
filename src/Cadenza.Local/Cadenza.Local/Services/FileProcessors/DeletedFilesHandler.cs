@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services.FileProcessors;
 
 public class DeletedFilesHandler : IDeletedFilesHandler
 {
