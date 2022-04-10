@@ -11,13 +11,15 @@ public static class Routing
 
         return app
             .AddLibraryRoutes()
-            .AddPlayerRoutes()
-            .AddUpdaterRoutes();
+            .AddUpdaterRoutes()
+            .AddPlayerRoute()
+            .AddArtworkRoute()
+            .AddExternalSourceRoute();
     }
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
-        var apiService = app.Services.GetRequiredService<IApiUpdateService>();
+        var apiService = app.Services.GetRequiredService<IUpdateService>();
         app.MapGet("/Update/Get", () => apiService.GetUpdates());
         app.MapPost("/Update/Album", (AlbumUpdate update) => apiService.UpdateAlbum(update));
         app.MapPost("/Update/Artist", (ArtistUpdate update) => apiService.UpdateArtist(update));
@@ -25,16 +27,35 @@ public static class Routing
         return app;
     }
 
-    private static WebApplication AddPlayerRoutes(this WebApplication app)
+    private static WebApplication AddPlayerRoute(this WebApplication app)
     {
         var play = app.Services.GetService<IPlayService>();
         app.MapGet("/Play/Track/{id}", async (string id) => (await play.GetTrackPlayPath(id)).Stream());
         return app;
     }
 
+    private static WebApplication AddArtworkRoute(this WebApplication app)
+    {
+        var artworkService = app.Services.GetRequiredService<IArtworkService>();
+        app.MapGet("/Library/Artwork", async (HttpContext context) =>
+        {
+            var id = context.Request.Query["id"].Single();
+            var artwork = await artworkService.GetArtwork(id);
+            await context.WriteArtwork(artwork);
+        });
+        return app;
+    }
+
+    private static WebApplication AddExternalSourceRoute(this WebApplication app)
+    {
+        var externalSourceService = app.Services.GetRequiredService<IExternalSourceService>();
+        app.MapPost("/Source/Add", (ExternalSourceLibrary library) => externalSourceService.AddLibrary(library));
+        return app;
+    }
+
     private static WebApplication AddLibraryRoutes(this WebApplication app)
     {
-        var apiLibraryService = app.Services.GetRequiredService<IApiLibraryService>();
+        var apiLibraryService = app.Services.GetRequiredService<ILibraryService>();
         app.MapPost("/Startup", () => apiLibraryService.Populate());
         app.MapGet("/Artists", () => apiLibraryService.GetAllArtists());
         app.MapGet("/Artists/Album", () => apiLibraryService.GetAlbumArtists());
@@ -61,17 +82,6 @@ public static class Routing
         app.MapGet("/Search/Albums", () => searchItems.GetSearchAlbums());
         app.MapGet("/Search/Playlists", () => searchItems.GetSearchPlaylists());
         app.MapGet("/Search/Tracks", () => searchItems.GetSearchTracks());
-
-        var externalSourceService = app.Services.GetRequiredService<IExternalSourceService>();
-        app.MapPost("/Source/Add", (FullLibrary library) => externalSourceService.AddLibrary(library));
-
-        var artworkService = app.Services.GetRequiredService<IArtworkService>();
-        app.MapGet("/Library/Artwork", async (HttpContext context) => 
-        {
-            var id = context.Request.Query["id"].Single();
-            var artwork = await artworkService.GetArtwork(id);
-            await context.WriteArtwork(artwork);
-        });
 
         return app;
     }

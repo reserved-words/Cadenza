@@ -48,8 +48,8 @@ public static class Dependencies
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
             .AddTransient<IArtworkService, ArtworkService>()
             .AddTransient<IPlayService, PlayService>()
-            .AddTransient<IApiLibraryService, ApiLibraryService>()
-            .AddTransient<IApiUpdateService, ApiUpdateService>()
+            .AddTransient<ILibraryService, LibraryService>()
+            .AddTransient<IUpdateService, UpdateService>()
             .AddTransient<IExternalSourceService, ExternalSourceService>();
 
         return services;

@@ -7,6 +7,7 @@ using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Library;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Configuration;
+using Cadenza.Domain;
 
 namespace Cadenza.Source.Spotify.Services;
 
@@ -58,6 +59,11 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
         var baseUrl = _config.GetValue<string>("LocalApi:BaseUrl");
         var endpoint = _config.GetValue<string>("LocalApi:Endpoints:AddSource");
         var url = $"{baseUrl}{endpoint}";
-        await _httpHelper.Post(url, null, fullLibrary);
+        var sourceLibrary = new ExternalSourceLibrary
+        {
+            Source = LibrarySource.Spotify,
+            Library = fullLibrary
+        };
+        await _httpHelper.Post(url, null, sourceLibrary);
     }
 }

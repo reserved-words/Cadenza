@@ -23,11 +23,11 @@ public class ExternalSourceService : IExternalSourceService
         _albumTrackLinkConverter = albumTrackLinkConverter;
     }
 
-    public async Task AddLibrary(FullLibrary library)
+    public async Task AddLibrary(ExternalSourceLibrary sourceLibrary)
     {
-        // todo - in the sync service, regularly remove artists with no albums
+        var library = sourceLibrary.Library;
 
-        var jsonLibrary = await _dataAccess.GetAll(LibrarySource.Spotify); // todo - get the source properly
+        var jsonLibrary = await _dataAccess.GetAll(sourceLibrary.Source);
 
         foreach (var artist in library.Artists)
         {
@@ -83,6 +83,6 @@ public class ExternalSourceService : IExternalSourceService
         jsonLibrary.Tracks = jsonLibrary.Tracks.Where(a => trackPathsToKeep.Contains(a.Path)).ToList();
         jsonLibrary.AlbumTrackLinks = jsonLibrary.AlbumTrackLinks.Where(a => trackPathsToKeep.Contains(a.TrackPath)).ToList();
 
-        await _dataAccess.SaveAll(jsonLibrary, LibrarySource.Spotify);
+        await _dataAccess.SaveAll(jsonLibrary, sourceLibrary.Source);
     }
 }

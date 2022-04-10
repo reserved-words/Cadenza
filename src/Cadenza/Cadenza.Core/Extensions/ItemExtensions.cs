@@ -46,15 +46,14 @@ public static class ItemExtensions
 
     private static LinkViewModel GetLinkViewModel(this ArtistInfo artist, LinkType linkType)
     {
-        var link = artist?.Links?.FirstOrDefault(l => l.Type == linkType);
-        var name = link?.Name ?? linkType.GetDefault(artist.Name);
+        var name = linkType.GetDefault(artist.Name);
         var url = linkType.GetUrl(name);
 
         return new LinkViewModel
         {
             Type = linkType,
             Url = url,
-            Disabled = link != null && link.Name == null
+            Disabled = false
         };
     }
 

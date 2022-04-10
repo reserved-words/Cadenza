@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Local.API.Interfaces;
 
-public interface IApiLibraryService
+public interface ILibraryService
 {
     Task Populate();
     Task<List<Artist>> GetAllArtists();

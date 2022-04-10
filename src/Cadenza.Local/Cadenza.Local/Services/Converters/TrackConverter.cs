@@ -1,6 +1,5 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.Converters;
-using Cadenza.Local.Common.Model.Id3;
 using Cadenza.Local.Common.Model.Json;
 
 namespace Cadenza.Local.Services.Converters;
@@ -48,37 +47,11 @@ public class TrackConverter : ITrackConverter
             AlbumId = track.AlbumId,
             Title = track.Title,
             DurationSeconds = track.DurationSeconds,
-            Year = Nullify(track.Year),
-            Lyrics = Nullify(track.Lyrics),
+            Year = track.Year.Nullify(),
+            Lyrics = track.Lyrics.Nullify(),
             Tags = track.Tags == null
                 ? null
-                : Nullify(string.Join("|", track.Tags))
+                : string.Join("|", track.Tags).Nullify()
         };
-    }
-
-    public JsonTrack ToJsonModel(Id3Data data)
-    {
-        var commentData = _commentProcessor.GetData(data.Track.Comment);
-
-        return new JsonTrack
-        {
-            Path = data.Track.Filepath,
-            ArtistId = _idGenerator.GenerateId(data.Artist.Name),
-            AlbumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title),
-            Title = data.Track.Title,
-            DurationSeconds = (int)data.Track.Duration.TotalSeconds,
-            Year = Nullify(commentData.TrackYear),
-            Lyrics = Nullify(data.Track.Lyrics),
-            Tags = commentData.Tags == null
-                ? null
-                : Nullify(string.Join("|", commentData.Tags))
-        };
-    }
-
-    private string Nullify(string text)
-    {
-        return string.IsNullOrWhiteSpace(text)
-            ? null
-            : text;
     }
 }

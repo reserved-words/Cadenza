@@ -2,5 +2,5 @@
 
 public interface IExternalSourceService
 {
-    Task AddLibrary(FullLibrary library);
+    Task AddLibrary(ExternalSourceLibrary library);
 }

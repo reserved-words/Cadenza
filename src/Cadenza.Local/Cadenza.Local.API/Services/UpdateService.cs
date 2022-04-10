@@ -6,7 +6,7 @@ using Cadenza.Local.Common.Model;
 
 namespace Cadenza.Local.API;
 
-public class ApiUpdateService : IApiUpdateService
+public class UpdateService : IUpdateService
 {
     private readonly IFileUpdateService _id3UpdateQueue;
     private readonly ILibrary _library;
@@ -14,7 +14,7 @@ public class ApiUpdateService : IApiUpdateService
     private readonly IArtistCache _artistCache;
     private readonly ITrackCache _trackCache;
 
-    public ApiUpdateService(IFileUpdateService updateQueue, ILibrary library, IArtistCache artistCache, IAlbumCache albumCache, ITrackCache trackCache)
+    public UpdateService(IFileUpdateService updateQueue, ILibrary library, IArtistCache artistCache, IAlbumCache albumCache, ITrackCache trackCache)
     {
         _id3UpdateQueue = updateQueue;
         _library = library;

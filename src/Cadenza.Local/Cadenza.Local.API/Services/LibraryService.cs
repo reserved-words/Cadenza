@@ -4,7 +4,7 @@ using Cadenza.Local.Common.Interfaces.Cache;
 
 namespace Cadenza.Local.API;
 
-public class ApiLibraryService : IApiLibraryService
+public class LibraryService : ILibraryService
 {
     private readonly ILibrary _library;
     private readonly IAlbumCache _albumCache;
@@ -13,7 +13,7 @@ public class ApiLibraryService : IApiLibraryService
     private readonly ISearchCache _searchCache;
     private readonly ITrackCache _trackCache;
 
-    public ApiLibraryService(ILibrary library, IAlbumCache albumCache, IArtistCache artistCache, IPlayTrackCache playTrackCache, ISearchCache searchCache, ITrackCache trackCache)
+    public LibraryService(ILibrary library, IAlbumCache albumCache, IArtistCache artistCache, IPlayTrackCache playTrackCache, ISearchCache searchCache, ITrackCache trackCache)
     {
         _library = library;
         _albumCache = albumCache;

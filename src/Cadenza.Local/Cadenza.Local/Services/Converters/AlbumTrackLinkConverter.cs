@@ -1,5 +1,4 @@
 ﻿using Cadenza.Local.Common.Interfaces.Converters;
-using Cadenza.Local.Common.Model.Id3;
 using Cadenza.Local.Common.Model.Json;
 
 namespace Cadenza.Local.Services.Converters;
@@ -7,12 +6,10 @@ namespace Cadenza.Local.Services.Converters;
 public class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
 {
     private readonly IBase64Converter _base64Converter;
-    private readonly IIdGenerator _idGenerator;
 
-    public AlbumTrackLinkConverter(IBase64Converter base64Converter, IIdGenerator idGenerator)
+    public AlbumTrackLinkConverter(IBase64Converter base64Converter)
     {
         _base64Converter = base64Converter;
-        _idGenerator = idGenerator;
     }
 
     public AlbumTrackLink ToAppModel(JsonAlbumTrackLink link)
@@ -35,21 +32,6 @@ public class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
                     ? null
                     : link.Position.DiscNo,
             TrackNo = link.Position.TrackNo
-        };
-    }
-
-    public JsonAlbumTrackLink ToJsonModel(Id3Data id3Data)
-    {
-        // need a single place to do these conversions
-
-        var albumId = _idGenerator.GenerateId(id3Data.Album.ArtistName, id3Data.Album.Title);
-
-        return new JsonAlbumTrackLink
-        {
-            TrackPath = id3Data.Track.Filepath,
-            AlbumId = albumId,
-            DiscNo = id3Data.Disc.DiscNo,
-            TrackNo = id3Data.Track.TrackNo
         };
     }
 }
