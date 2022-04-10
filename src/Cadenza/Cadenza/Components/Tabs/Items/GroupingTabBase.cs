@@ -7,7 +7,7 @@ namespace Cadenza.Components.Tabs.Items
     public class GroupingTabBase : ComponentBase
     {
         [Inject]
-        public IMergedArtistRepository Repository { get; set; }
+        public IArtistRepository Repository { get; set; }
 
         [Inject]
         public IItemPlayer Player { get; set; }

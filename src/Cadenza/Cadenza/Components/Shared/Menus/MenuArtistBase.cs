@@ -7,7 +7,7 @@ namespace Cadenza;
 public class MenuArtistBase : ComponentBase
 {
     [Inject]
-    public IMergedArtistRepository Repository { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }

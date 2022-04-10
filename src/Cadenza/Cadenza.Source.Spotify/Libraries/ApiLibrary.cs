@@ -8,7 +8,7 @@ using Cadenza.Utilities;
 
 namespace Cadenza.Source.Spotify.Libraries;
 
-public class ApiLibrary : IStaticLibrary
+public class ApiLibrary : ILibrary
 {
     private readonly IIdGenerator _idGenerator;
     private readonly IApiCaller _api;

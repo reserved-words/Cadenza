@@ -12,29 +12,12 @@ namespace Cadenza.Library;
 public static class _Startup
 {
     public static IServiceCollection AddLibrary<TSource>(this IServiceCollection services)
-        where TSource : class, IStaticLibrary
+        where TSource : class, ILibrary
     {
         // call only once from API
         services.AddTransient<IValueMerger, ValueMerger>();
         services.AddTransient<IMerger, Merger>();
-        services.AddTransient<IStaticLibrary, TSource>();
-        services.AddTransient<ISourceFactory, SourceFactory>();
-        services.AddSingleton<ILibrary, Library>();
-        return services;
-    }
-
-    public static IServiceCollection AddLibrary<TSource, TOverride>(this IServiceCollection services)
-        where TSource : class, IStaticLibrary
-        where TOverride : class, IStaticLibrary
-    {
-        // call only once from API
-        services.AddTransient<IValueMerger, ValueMerger>();
-        services.AddTransient<IMerger, Merger>();
-        services.AddTransient<IStaticLibrary, TSource>();
-        services.AddTransient<IStaticLibrary, TOverride>();
-        services.AddTransient<ISourceFactory, SourceFactory>();
-        services.AddSingleton<ILibrary, Library>();
-
+        services.AddTransient<ILibrary, TSource>();
         return services;
     }
 
@@ -53,32 +36,17 @@ public static class _Startup
 
     public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services, LibrarySource source) where T : class, IApiRepositorySettings
     {
-        // call multiple times from Blazor app
-        // need to register multiple instances of each source repository interface
-
         return services
             .AddTransient<T>()
-            .AddTransient<ISourceArtistRepository>(sp => GetApiRepository<T>(source, sp))
-            .AddTransient<ISourceAlbumRepository>(sp => GetApiRepository<T>(source, sp))
-            .AddTransient<ISourcePlayTrackRepository>(sp => GetApiRepository<T>(source, sp))
-            .AddTransient<ISourceSearchRepository>(sp => GetApiRepository<T>(source, sp))
-            .AddTransient<ISourceTrackRepository>(sp => GetApiRepository<T>(source, sp));
+            .AddTransient<IArtistRepository>(sp => GetApiRepository<T>(sp))
+            .AddTransient<IAlbumRepository>(sp => GetApiRepository<T>(sp))
+            .AddTransient<IPlayTrackRepository>(sp => GetApiRepository<T>(sp))
+            .AddTransient<ISearchRepository>(sp => GetApiRepository<T>(sp))
+            .AddTransient<ITrackRepository>(sp => GetApiRepository<T>(sp));
     }
 
-    private static ApiRepository GetApiRepository<T>(LibrarySource source, IServiceProvider sp) where T : class, IApiRepositorySettings
+    private static ApiRepository GetApiRepository<T>(IServiceProvider sp) where T : class, IApiRepositorySettings
     {
-        return new ApiRepository(source, sp.GetService<IHttpHelper>(), sp.GetService<T>());
-    }
-
-    public static IServiceCollection AddMergedRepositories(this IServiceCollection services)
-    {
-        // call only once from Blazor app
-        return services
-            .AddTransient<IValueMerger, ValueMerger>()
-            .AddTransient<IMerger, Merger>()
-            .AddTransient<IMergedArtistRepository, MergedArtistRepository>()
-            .AddTransient<IMergedAlbumRepository, MergedAlbumRepository>()
-            .AddTransient<IMergedPlayTrackRepository, MergedPlayTrackRepository>()
-            .AddTransient<IMergedTrackRepository, MergedTrackRepository>();
+        return new ApiRepository(sp.GetService<IHttpHelper>(), sp.GetService<T>());
     }
 }

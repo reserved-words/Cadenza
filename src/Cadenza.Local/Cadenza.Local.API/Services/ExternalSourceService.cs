@@ -9,21 +9,16 @@ public class ExternalSourceService : IExternalSourceService
     private readonly IArtistConverter _artistConverter;
     private readonly ITrackConverter _trackConverter;
     private readonly IAlbumTrackLinkConverter _albumTrackLinkConverter;
-    private readonly IBase64Converter _base64Converter;
-
 
     public ExternalSourceService(IDataAccess dataAccess, IArtistConverter artistConverter,
-        IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackLinkConverter albumTrackLinkConverter, IBase64Converter base64Converter)
+        IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackLinkConverter albumTrackLinkConverter)
     {
         _dataAccess = dataAccess;
         _artistConverter = artistConverter;
         _albumConverter = albumConverter;
         _trackConverter = trackConverter;
         _albumTrackLinkConverter = albumTrackLinkConverter;
-        _base64Converter = base64Converter;
     }
-
-
 
     public async Task AddLibrary(FullLibrary library)
     {
@@ -55,7 +50,6 @@ public class ExternalSourceService : IExternalSourceService
 
             foreach (var track in library.Tracks)
             {
-                track.Id = _base64Converter.ToBase64(track.Id); // todo - no need for this, just there because local does it
                 var jsonTrack = jsonLibrary.Tracks.SingleOrDefault(a => a.Path == track.Id);
                 if (jsonTrack == null)
                 {
@@ -66,11 +60,17 @@ public class ExternalSourceService : IExternalSourceService
 
             foreach (var albumTrack in library.AlbumTrackLinks)
             {
-                albumTrack.TrackId = _base64Converter.ToBase64(albumTrack.TrackId); // todo - no need for this, just there because local does it
                 var jsonAlbumTrack = jsonLibrary.AlbumTrackLinks.SingleOrDefault(a => a.TrackPath == albumTrack.TrackId);
                 if (jsonAlbumTrack == null)
                 {
-                    jsonAlbumTrack = _albumTrackLinkConverter.ToJsonModel(albumTrack);
+                    // todo - should use converter but need to sort out track ID / path issue
+                    jsonAlbumTrack = new JsonAlbumTrackLink
+                    {
+                        AlbumId = albumTrack.AlbumId,
+                        TrackPath = albumTrack.TrackId,
+                        TrackNo = albumTrack.Position.TrackNo,
+                        DiscNo = albumTrack.Position.DiscNo
+                    };
                     jsonLibrary.AlbumTrackLinks.Add(jsonAlbumTrack);
                 }
             }

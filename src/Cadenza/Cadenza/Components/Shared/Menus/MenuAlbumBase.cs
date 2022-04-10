@@ -51,6 +51,6 @@ public class MenuAlbumBase : ComponentBase
 
     public async Task OnPlay()
     {
-        await Player.PlayAlbum(Source, Id);
+        await Player.PlayAlbum(Id);
     }
 }

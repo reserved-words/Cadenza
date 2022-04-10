@@ -4,15 +4,12 @@ namespace Cadenza;
 
 public class SearchSyncService : ISearchSyncService
 {
-    private const int ItemFetchLimit = 500;
-
-    private readonly IEnumerable<ISourceSearchRepository> _repositories;
-
+    private readonly ISearchRepository _repository;
     private readonly SearchRepositoryCache _cache;
 
-    public SearchSyncService(IEnumerable<ISourceSearchRepository> repositories, SearchRepositoryCache cache)
+    public SearchSyncService(ISearchRepository repository, SearchRepositoryCache cache)
     {
-        _repositories = repositories;
+        _repository = repository;
         _cache = cache;
     }
 
@@ -22,77 +19,42 @@ public class SearchSyncService : ISearchSyncService
 
         _cache.Clear();
 
-        var reps = string.Join(", ", _repositories.Select(r => r.Source));
-
-        foreach (var repository in _repositories)
-        {
-            await FetchArtists(repository);
-            await FetchAlbums(repository);
-            await FetchTracks(repository);
-            await FetchGenres(repository);
-            await FetchGroupings(repository);
-        }
+        await FetchArtists();
+        await FetchAlbums();
+        await FetchTracks();
+        await FetchGenres();
+        await FetchGroupings();
 
         _cache.FinishUpdate();
     }
 
-    private async Task FetchTracks(ISourceSearchRepository repository)
+    private async Task FetchTracks()
     {
-        var response = await repository.GetSearchTracks(1, ItemFetchLimit);
-        _cache.AddTracks(repository.Source, response.Items);
-
-        while (response.Page < response.TotalPages)
-        {
-            response = await repository.GetSearchTracks(response.Page + 1, ItemFetchLimit);
-            _cache.AddTracks(repository.Source, response.Items);
-        }
+        var response = await _repository.GetSearchTracks();
+        _cache.AddTracks(response);
     }
 
-    private async Task FetchAlbums(ISourceSearchRepository repository)
+    private async Task FetchAlbums()
     {
-        var response = await repository.GetSearchAlbums(1, ItemFetchLimit);
-        _cache.AddAlbums(repository.Source, response.Items);
-
-        while (response.Page < response.TotalPages)
-        {
-            response = await repository.GetSearchAlbums(response.Page + 1, ItemFetchLimit);
-            _cache.AddAlbums(repository.Source, response.Items);
-        }
+        var response = await _repository.GetSearchAlbums();
+        _cache.AddAlbums(response);
     }
 
-    private async Task FetchArtists(ISourceSearchRepository repository)
+    private async Task FetchArtists()
     {
-        var response = await repository.GetSearchArtists(1, ItemFetchLimit);
-        _cache.AddArtists(repository.Source, response.Items);
-
-        while (response.Page < response.TotalPages)
-        {
-            response = await repository.GetSearchArtists(response.Page + 1, ItemFetchLimit);
-            _cache.AddArtists(repository.Source, response.Items);
-        }
+        var response = await _repository.GetSearchArtists();
+        _cache.AddArtists(response);
     }
 
-    private async Task FetchGenres(ISourceSearchRepository repository)
+    private async Task FetchGenres()
     {
-        var response = await repository.GetSearchGenres(1, ItemFetchLimit);
-        _cache.AddGenres(repository.Source, response.Items);
-
-        while (response.Page < response.TotalPages)
-        {
-            response = await repository.GetSearchGenres(response.Page + 1, ItemFetchLimit);
-            _cache.AddGenres(repository.Source, response.Items);
-        }
+        var response = await _repository.GetSearchGenres();
+        _cache.AddGenres(response);
     }
 
-    private async Task FetchGroupings(ISourceSearchRepository repository)
+    private async Task FetchGroupings()
     {
-        var response = await repository.GetSearchGroupings(1, ItemFetchLimit);
-        _cache.AddGroupings(response.Items);
-
-        while (response.Page < response.TotalPages)
-        {
-            response = await repository.GetSearchGroupings(response.Page + 1, ItemFetchLimit);
-            _cache.AddGroupings(response.Items);
-        }
+        var response = await _repository.GetSearchGroupings();
+        _cache.AddGroupings(response);
     }
 }

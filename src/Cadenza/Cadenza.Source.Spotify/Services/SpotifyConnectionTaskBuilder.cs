@@ -16,12 +16,12 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
     private readonly IStoreGetter _storeGetter;
     private readonly IConnectorController _connectorController;
     private readonly ISpotifyAuthHelper _authHelper;
-    private readonly IStaticLibrary _apiLibrary;
+    private readonly ILibrary _apiLibrary;
     private readonly IHttpHelper _httpHelper;
     private readonly IConfiguration _config;
 
     public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter,
-        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IApiToken apiToken, IStaticLibrary apiLibrary, IHttpHelper httpHelper, IConfiguration config)
+        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IApiToken apiToken, ILibrary apiLibrary, IHttpHelper httpHelper, IConfiguration config)
     {
         _storeGetter = storeGetter;
         _connectorController = connectorController;

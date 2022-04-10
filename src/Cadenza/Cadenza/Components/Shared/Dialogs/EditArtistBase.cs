@@ -6,7 +6,7 @@ namespace Cadenza;
 public class EditArtistBase : FormBase<ArtistInfo>
 {
     [Inject]
-    public IMergedArtistRepository Repository { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }

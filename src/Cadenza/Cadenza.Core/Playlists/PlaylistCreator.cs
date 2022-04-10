@@ -3,13 +3,13 @@
 public class PlaylistCreator : IPlaylistCreator
 {
     private readonly IShuffler _shuffler;
-    private readonly IMergedAlbumRepository _albumRepository;
-    private readonly IMergedArtistRepository _artistRepository;
-    private readonly IMergedPlayTrackRepository _repository;
-    private readonly IMergedTrackRepository _trackRepository;
+    private readonly IAlbumRepository _albumRepository;
+    private readonly IArtistRepository _artistRepository;
+    private readonly IPlayTrackRepository _repository;
+    private readonly ITrackRepository _trackRepository;
 
-    public PlaylistCreator(IShuffler shuffler, IMergedPlayTrackRepository repository, IMergedArtistRepository artistRepository,
-        IMergedAlbumRepository albumRepository, IMergedTrackRepository trackRepository)
+    public PlaylistCreator(IShuffler shuffler, IPlayTrackRepository repository, IArtistRepository artistRepository,
+        IAlbumRepository albumRepository, ITrackRepository trackRepository)
     {
         _shuffler = shuffler;
         _repository = repository;
@@ -20,8 +20,6 @@ public class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateArtistPlaylist(string id)
     {
-        // this is the album tracks, probably need to change this to their actual tracks
-
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.GetByArtist(id);
 
@@ -42,12 +40,12 @@ public class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(LibrarySource source, string id)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id)
     {
         var tracks = await _repository.GetByAlbum(id);
-        var album = await _albumRepository.GetAlbum(source, id);
+        var album = await _albumRepository.GetAlbum(id);
 
-        var playlistId = new PlaylistId(id, source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
+        var playlistId = new PlaylistId(id, album.Source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
 
         return new PlaylistDefinition
         {
@@ -56,14 +54,14 @@ public class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateTrackPlaylist(LibrarySource source, string id)
+    public async Task<PlaylistDefinition> CreateTrackPlaylist(string id)
     {
-        var track = await _trackRepository.GetTrack(source, id);
+        var track = await _trackRepository.GetTrack(id);
 
         var playTrack = new PlayTrack
         {
             Id = id,
-            Source = source,
+            Source = track.Track.Source,
             ArtistId = track.Artist.Id,
             AlbumId = track.Album.Id,
             Title = track.Track.Title
@@ -71,7 +69,7 @@ public class PlaylistCreator : IPlaylistCreator
 
         var tracks = new List<PlayTrack> { playTrack };
 
-        var playlistId = new PlaylistId(id, source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+        var playlistId = new PlaylistId(id, playTrack.Source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
 
         return new PlaylistDefinition
         {

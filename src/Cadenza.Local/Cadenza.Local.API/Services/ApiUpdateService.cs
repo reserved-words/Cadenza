@@ -34,6 +34,10 @@ public class ApiUpdateService : IApiUpdateService
 
         await _albumCache.UpdateAlbum(update);
         await _library.UpdateAlbum(update);
+
+        if (update.UpdatedItem.Source != LibrarySource.Local)
+            return;
+
         foreach (var updatedItem in update.Updates)
         {
             await _id3UpdateQueue.Add(updatedItem);
@@ -64,6 +68,10 @@ public class ApiUpdateService : IApiUpdateService
 
         await _trackCache.UpdateTrack(update);
         await _library.UpdateTrack(update);
+
+        if (update.UpdatedItem.Source != LibrarySource.Local)
+            return;
+
         foreach (var updatedItem in update.Updates)
         {
             await _id3UpdateQueue.Add(updatedItem);

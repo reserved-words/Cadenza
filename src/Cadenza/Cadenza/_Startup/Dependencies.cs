@@ -31,7 +31,7 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IStaticLibrary, ApiLibrary>()
+            .AddTransient<ILibrary, ApiLibrary>()
            // .AddTransient<IOverridesService, OverrideService>()
             .AddStartupServices()
             .AddInteropServices()
@@ -116,8 +116,7 @@ public static class Dependencies
     {
         return services
             .AddSpotifySource(config, "SpotifyApi")
-            .AddLocalSource<HtmlPlayer>(config, "LocalApi")
-            .AddMergedRepositories();
+            .AddLocalSource<HtmlPlayer>(config, "LocalApi");
     }
 
 

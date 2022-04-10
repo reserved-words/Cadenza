@@ -36,34 +36,34 @@ public class SearchCache : ISearchCache
         _tracks = PopulateSearchableTracks(library);
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchAlbums(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchAlbums()
     {
-        return _albums.ToListResponse<SearchableAlbum, PlayerItem>(t => t.Id, page, limit);
+        return _albums.OfType<PlayerItem>().ToList();
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchArtists(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchArtists()
     {
-        return _artists.ToListResponse<SearchableArtist, PlayerItem>(t => t.Id, page, limit);
+        return _artists.OfType<PlayerItem>().ToList();
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchPlaylists(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchPlaylists()
     {
-        return _playlists.ToListResponse<SearchablePlaylist, PlayerItem>(t => t.Id, page, limit);
+        return _playlists.OfType<PlayerItem>().ToList();
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchTracks(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchTracks()
     {
-        return _tracks.ToListResponse<SearchableTrack, PlayerItem>(t => t.Id, page, limit);
+        return _tracks.OfType<PlayerItem>().ToList();
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchGenres(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchGenres()
     {
-        return _genres.ToListResponse<SearchableGenre, PlayerItem>(t => t.Id, page, limit);
+        return _genres.OfType<PlayerItem>().ToList();
     }
 
-    public async Task<ListResponse<PlayerItem>> GetSearchGroupings(int page, int limit)
+    public async Task<List<PlayerItem>> GetSearchGroupings()
     {
-        return _groupings.ToListResponse<SearchableGrouping, PlayerItem>(t => t.Id, page, limit);
+        return _groupings.OfType<PlayerItem>().ToList();
     }
 
     private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)

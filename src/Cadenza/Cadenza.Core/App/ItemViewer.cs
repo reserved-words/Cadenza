@@ -16,19 +16,19 @@ public class ItemViewer : IItemViewer
 
     public async Task ViewAlbum(Album album)
     {
-        var playerItem = new ViewItem(PlayerItemType.Album, album.Id, album.Title, album.Source);
+        var playerItem = new ViewItem(PlayerItemType.Album, album.Id, album.Title);
         await _app.View(playerItem);
     }
 
     public async Task ViewArtist(Artist artist)
     {
-        var playerItem = new ViewItem(PlayerItemType.Artist, artist.Id, artist.Name, null);
+        var playerItem = new ViewItem(PlayerItemType.Artist, artist.Id, artist.Name);
         await _app.View(playerItem);
     }
 
     public async Task ViewArtist(string id, string name)
     {
-        var playerItem = new ViewItem(PlayerItemType.Artist, id, name, null);
+        var playerItem = new ViewItem(PlayerItemType.Artist, id, name);
         await _app.View(playerItem);
     }
 
@@ -40,13 +40,13 @@ public class ItemViewer : IItemViewer
 
     public async Task ViewGenre(string id)
     {
-        var playerItem = new ViewItem(PlayerItemType.Genre, id, id, null);
+        var playerItem = new ViewItem(PlayerItemType.Genre, id, id);
         await _app.View(playerItem);
     }
 
     public async Task ViewGrouping(Grouping id)
     {
-        var playerItem = new ViewItem(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName(), null);
+        var playerItem = new ViewItem(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName());
         await _app.View(playerItem);
     }
 
@@ -65,25 +65,25 @@ public class ItemViewer : IItemViewer
         if (!type.HasValue)
             return;
 
-        var playerItem = new ViewItem(type.Value, playlist.Id, playlist.Name, playlist.Source);
+        var playerItem = new ViewItem(type.Value, playlist.Id, playlist.Name);
         await _app.View(playerItem);
     }
 
-    public async Task ViewSearchResult(SourcePlayerItem item)
+    public async Task ViewSearchResult(PlayerItem item)
     {
-        var playerItem = new ViewItem(item.Type, item.Id, item.Name, item.Source);
+        var playerItem = new ViewItem(item.Type, item.Id, item.Name);
         await _app.View(playerItem);
     }
 
     public async Task ViewTrack(Track track)
     {
-        var playerItem = new ViewItem(PlayerItemType.Track, track.Id, track.Title, track.Source);
+        var playerItem = new ViewItem(PlayerItemType.Track, track.Id, track.Title);
         await _app.View(playerItem);
     }
 
-    public async Task ViewTrack(LibrarySource source, string id, string title)
+    public async Task ViewTrack(string id, string title)
     {
-        var playerItem = new ViewItem(PlayerItemType.Track, id, title, source);
+        var playerItem = new ViewItem(PlayerItemType.Track, id, title);
         await _app.View(playerItem);
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.Local;
 
-public class JsonLibrary : IStaticLibrary
+public class JsonLibrary : ILibrary
 {
     private readonly IAlbumConverter _albumConverter;
     private readonly IArtistConverter _artistConverter;
@@ -85,7 +85,12 @@ public class JsonLibrary : IStaticLibrary
 
         foreach (var jsonAlbumTrackLink in jsonAlbumTrackLinks)
         {
-            var albumTrack = _converter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
+            var albumTrack = new AlbumTrackLink
+            {
+                AlbumId = jsonAlbumTrackLink.AlbumId,
+                TrackId = jsonAlbumTrackLink.TrackPath,
+                Position = new AlbumTrackPosition(jsonAlbumTrackLink.DiscNo ?? 1, jsonAlbumTrackLink.TrackNo)
+            };
             library.AlbumTrackLinks.Add(albumTrack);
         }
 
@@ -139,7 +144,11 @@ public class JsonLibrary : IStaticLibrary
     public async Task UpdateTrack(TrackUpdate update)
     {
         var tracks = await _dataAccess.GetTracks(update.UpdatedItem.Source);
-        var jsonTrack = tracks.SingleOrDefault(a => a.Path == _base64Converter.FromBase64(update.Id));
+
+        // todo - sort this out
+        var path = update.UpdatedItem.Source == LibrarySource.Local ? _base64Converter.FromBase64(update.Id) : update.Id;
+
+        var jsonTrack = tracks.SingleOrDefault(a => a.Path == path);
         if (jsonTrack == null)
             return;
 

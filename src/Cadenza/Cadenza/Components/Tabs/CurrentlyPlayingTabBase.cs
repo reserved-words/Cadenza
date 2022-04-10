@@ -41,12 +41,12 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     protected async Task OnPlayTrack(Track track)
     {
-        await Player.PlayTrack(track.Source, track.Id);
+        await Player.PlayTrack(track.Id);
     }
 
     protected async Task OnPlayAlbum(Album album)
     {
-        await Player.PlayAlbum(album.Source, album.Id);
+        await Player.PlayAlbum(album.Id);
     }
 
     protected async Task OnPlayArtist(Artist artist)

@@ -11,29 +11,30 @@ public class ArtistCache : IArtistCache
     private Dictionary<Grouping, List<ArtistInfo>> _groupings;
     private Dictionary<string, List<ArtistInfo>> _genres;
 
-    public Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
+    public Task<List<Artist>> GetAlbumArtists()
     {
         var result = _albumArtists
             .Select(a => _artists[a])
-            .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+            .OfType<Artist>()
+            .ToList();
 
         return Task.FromResult(result);
     }
 
-    public Task<ListResponse<Album>> GetAlbums(string artistId, int page, int limit)
+    public Task<List<Album>> GetAlbums(string artistId)
     {
         var result = _albums.TryGetValue(artistId, out List<AlbumInfo> albums)
-            ? albums.ToListResponse<Album>(a => a.Id, page, limit)
-            : ListResponse<Album>.Empty;
+            ? albums.OfType<Album>().ToList()
+            : new List<Album>();
 
         return Task.FromResult(result);
     }
 
-    public Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
+    public Task<List<Artist>> GetAllArtists()
     {
         var result = _artists
-            .Values
-            .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+            .Values.OfType<Artist>().ToList()
+            .ToList();
 
         return Task.FromResult(result);
     }
@@ -47,29 +48,30 @@ public class ArtistCache : IArtistCache
         return Task.FromResult(result);
     }
 
-    public Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
+    public Task<List<Artist>> GetArtistsByGenre(string id)
     {
         var artists = _genres.TryGetValue(id, out List<ArtistInfo> result)
-            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
-            : ListResponse<Artist>.Empty;
+            ? result.OfType<Artist>().ToList()
+            : new List<Artist>();
 
         return Task.FromResult(artists);
     }
 
-    public Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+    public Task<List<Artist>> GetArtistsByGrouping(Grouping id)
     {
         var artists = _groupings.TryGetValue(id, out List<ArtistInfo> result)
-            ? result.ToListResponse<Artist>(a => a.Id, page, limit)
-            : ListResponse<Artist>.Empty;
+            ? result.OfType<Artist>().ToList()
+            : new List<Artist>();
 
         return Task.FromResult(artists);
     }
 
-    public Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
+    public Task<List<Artist>> GetTrackArtists()
     {
         var result = _trackArtists
             .Select(a => _artists[a])
-            .ToListResponse<ArtistInfo, Artist>(a => a.Id, page, limit);
+            .OfType<Artist>()
+            .ToList();
 
         return Task.FromResult(result);
     }

@@ -27,19 +27,19 @@ public class ApiLibraryService : IApiLibraryService
         return await _albumCache.GetAlbum(id);
     }
 
-    public async Task<ListResponse<Artist>> GetAlbumArtists(int page, int limit)
+    public async Task<List<Artist>> GetAlbumArtists()
     {
-        return await _artistCache.GetAlbumArtists(page, limit);
+        return await _artistCache.GetAlbumArtists();
     }
 
-    public async Task<ListResponse<Album>> GetAlbums(string id, int page, int limit)
+    public async Task<List<Album>> GetAlbums(string id)
     {
-        return await _artistCache.GetAlbums(id, page, limit);
+        return await _artistCache.GetAlbums(id);
     }
 
-    public async Task<ListResponse<Artist>> GetAllArtists(int page, int limit)
+    public async Task<List<Artist>> GetAllArtists()
     {
-        return await _artistCache.GetAllArtists(page, limit);
+        return await _artistCache.GetAllArtists();
     }
 
     public async Task<ArtistInfo> GetArtist(string id)
@@ -47,14 +47,14 @@ public class ApiLibraryService : IApiLibraryService
         return await _artistCache.GetArtist(id);
     }
 
-    public async Task<ListResponse<Artist>> GetArtistsByGenre(string id, int page, int limit)
+    public async Task<List<Artist>> GetArtistsByGenre(string id)
     {
-        return await _artistCache.GetArtistsByGenre(id, page, limit);
+        return await _artistCache.GetArtistsByGenre(id);
     }
 
-    public async Task<ListResponse<Artist>> GetArtistsByGrouping(Grouping id, int page, int limit)
+    public async Task<List<Artist>> GetArtistsByGrouping(Grouping id)
     {
-        return await _artistCache.GetArtistsByGrouping(id, page, limit);
+        return await _artistCache.GetArtistsByGrouping(id);
     }
 
     public async Task<TrackFull> GetTrack(string id)
@@ -62,9 +62,9 @@ public class ApiLibraryService : IApiLibraryService
         return await _trackCache.GetTrack(id);
     }
 
-    public async Task<ListResponse<Artist>> GetTrackArtists(int page, int limit)
+    public async Task<List<Artist>> GetTrackArtists()
     {
-        return await _artistCache.GetTrackArtists(page, limit);
+        return await _artistCache.GetTrackArtists();
     }
 
     public async Task<List<AlbumTrack>> GetTracks(string id)
@@ -74,12 +74,19 @@ public class ApiLibraryService : IApiLibraryService
 
     public async Task Populate()
     {
-        await _library.Populate();
-        var fullLibrary = await _library.Get();
-        await _albumCache.Populate(fullLibrary);
-        await _artistCache.Populate(fullLibrary);
-        await _playTrackCache.Populate(fullLibrary);
-        await _searchCache.Populate(fullLibrary);
-        await _trackCache.Populate(fullLibrary);
+        try
+        {
+            var fullLibrary = await _library.Get();
+            await _albumCache.Populate(fullLibrary);
+            await _artistCache.Populate(fullLibrary);
+            await _playTrackCache.Populate(fullLibrary);
+            await _searchCache.Populate(fullLibrary);
+            await _trackCache.Populate(fullLibrary);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 }

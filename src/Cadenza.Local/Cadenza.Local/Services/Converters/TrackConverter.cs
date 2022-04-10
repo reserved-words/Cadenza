@@ -19,7 +19,8 @@ public class TrackConverter : ITrackConverter
 
         return new TrackInfo
         {
-            Id = _base64Converter.ToBase64(track.Path),
+            Id = track.Source == LibrarySource.Local ? _base64Converter.ToBase64(track.Path) : track.Path,
+            Source = track.Source,
             ArtistId = track.ArtistId,
             ArtistName = artist.Name,
             AlbumId = track.AlbumId,
@@ -36,7 +37,8 @@ public class TrackConverter : ITrackConverter
     {
         return new JsonTrack
         {
-            Path = _base64Converter.FromBase64(track.Id),
+            Path = track.Source == LibrarySource.Local ? _base64Converter.FromBase64(track.Id) : track.Id,
+            Source = track.Source,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,
             Title = track.Title,

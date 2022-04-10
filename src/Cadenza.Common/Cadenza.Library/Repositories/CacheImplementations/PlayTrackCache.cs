@@ -8,9 +8,9 @@ public class PlayTrackCache : IPlayTrackCache
     private Dictionary<Grouping, List<string>> _groupingArtists;
     private Dictionary<string, List<string>> _genreArtists;
 
-    public async Task<ListResponse<PlayTrack>> GetAll(int page, int limit)
+    public async Task<List<PlayTrack>> GetAll()
     {
-        return _tracks.ToListResponse(t => t.Id, page, limit);
+        return _tracks.ToList();
     }
 
     public async Task<List<PlayTrack>> GetByAlbum(string id)
@@ -20,14 +20,14 @@ public class PlayTrackCache : IPlayTrackCache
             : new List<PlayTrack>();
     }
 
-    public async Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit)
+    public async Task<List<PlayTrack>> GetByArtist(string id)
     {
         return _artistTracks.TryGetValue(id, out List<PlayTrack> tracks)
-            ? tracks.ToListResponse(t => t.Id, page, limit)
-            : ListResponse<PlayTrack>.Empty;
+            ? tracks
+            : new List<PlayTrack>();
     }
 
-    public async Task<ListResponse<PlayTrack>> GetByGenre(string id, int page, int limit)
+    public async Task<List<PlayTrack>> GetByGenre(string id)
     {
         var genreArtists = _genreArtists.TryGetValue(id, out List<string> artistIds)
             ? artistIds
@@ -35,10 +35,10 @@ public class PlayTrackCache : IPlayTrackCache
 
         return genreArtists
             .SelectMany(a => _artistTracks[a])
-            .ToListResponse(t => t.Id, page, limit);
+            .ToList();
     }
 
-    public async Task<ListResponse<PlayTrack>> GetByGrouping(Grouping id, int page, int limit)
+    public async Task<List<PlayTrack>> GetByGrouping(Grouping id)
     {
         var groupingArtists = _groupingArtists.TryGetValue(id, out List<string> artistIds)
             ? artistIds
@@ -46,7 +46,7 @@ public class PlayTrackCache : IPlayTrackCache
 
         return groupingArtists
             .SelectMany(a => _artistTracks[a])
-            .ToListResponse(t => t.Id, page, limit);
+            .ToList();
     }
 
     public async Task Populate(FullLibrary library)

@@ -32,11 +32,32 @@ public class AlbumCache : IAlbumCache
 
         foreach (var album in albums)
         {
-            _albumTracks[album.Key] = album
-                .OrderBy(t => t.Position.DiscNo)
-                .ThenBy(t => t.Position.TrackNo)
-                .Select(t => GetAlbumTrack(t.Position, tracks[t.TrackId]))
-                .ToList();
+            try
+            {
+                _albumTracks[album.Key] = album
+                        .OrderBy(t => t.Position.DiscNo)
+                        .ThenBy(t => t.Position.TrackNo)
+                        .Select(t =>
+                        {
+                            try
+                            {
+                                var result = GetAlbumTrack(t.Position, tracks[t.TrackId]);
+                                return result;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                throw;
+                            }
+                        })
+                        .ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 

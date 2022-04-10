@@ -51,6 +51,6 @@ public class MenuTrackBase : ComponentBase
 
     public async Task OnPlay()
     {
-        await Player.PlayTrack(Source, Id);
+        await Player.PlayTrack(Id);
     }
 }

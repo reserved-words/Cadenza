@@ -25,7 +25,7 @@ public class MusicDirectoryAccess : IMusicDirectory
     {
         var files = await GetFiles();
         return files
-            .Where(f => f.DateModified > sinceDate)
+            .Where(f => f.DateModified > sinceDate || f.DateCreated > sinceDate)
             .Select(f => f.Path)
             .ToList();
     }

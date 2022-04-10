@@ -6,7 +6,7 @@ namespace Cadenza;
 public class MenuLyricsBase : ComponentBase
 {
     [Inject]
-    public IMergedTrackRepository Repository { get; set; }
+    public ITrackRepository Repository { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }
@@ -28,7 +28,7 @@ public class MenuLyricsBase : ComponentBase
 
     public async Task OnEdit()
     {
-        var track = await Repository.GetTrack(Source, Id);
+        var track = await Repository.GetTrack(Id);
         await DialogService.DisplayForm<EditLyrics, TrackInfo>(track.Track, "Edit Lyrics", false);
     }
 }

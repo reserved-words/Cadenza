@@ -9,7 +9,7 @@ public class EditLyricsBase : FormBase<TrackInfo>
     private const string SearchUrl = "https://www.google.com/search?q=%22{0}%22+%22{1}%22+lyrics";
 
     [Inject]
-    public IMergedTrackRepository Repository { get; set; }
+    public ITrackRepository Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
