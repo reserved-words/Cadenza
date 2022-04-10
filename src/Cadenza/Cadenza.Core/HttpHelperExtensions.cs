@@ -6,40 +6,19 @@ public static class HttpHelperExtensions
 {
     public static async Task<T> Get<T>(this IHttpHelper http, string url)
     {
-        try
-        {
-            var response = await http.Get(url);
-            return await response.Get<T>();
-        }
-        catch (Exception ex)
-        {
-            throw new HttpException();
-        }
+        var response = await http.Get(url);
+        return await response.Get<T>();
     }
     public static async Task<string> GetString(this IHttpHelper http, string url)
     {
-        try
-        {
-            var response = await http.Get(url);
-            return await response.GetString();
-        }
-        catch (Exception ex)
-        {
-            throw new HttpException();
-        }
+        var response = await http.Get(url);
+        return await response.GetString();
     }
 
     public static async Task Post(this IHttpHelper http, string url)
     {
-        try
-        {
-            var response = await http.Post(url, null, null);
-            response.Validate();
-        }
-        catch (Exception ex)
-        {
-            throw new HttpException();
-        }
+        var response = await http.Post(url, null, null);
+        response.Validate();
     }
 
     private static async Task<string> GetString(this HttpResponseMessage response)

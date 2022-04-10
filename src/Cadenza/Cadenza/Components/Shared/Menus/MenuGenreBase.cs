@@ -25,9 +25,9 @@ public class MenuGenreBase : ComponentBase
     [Parameter]
     public string Id { get; set; }
 
-    public async Task OnEdit()
+    public Task OnEdit()
     {
-
+        return Task.CompletedTask;
     }
 
     public async Task OnPlay()

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Interfaces;
+﻿using Cadenza.Local.Common.Model;
+
+namespace Cadenza.Local.API.Interfaces;
 
 public interface IApiUpdateService
 {

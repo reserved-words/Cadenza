@@ -85,7 +85,7 @@ public class LongRunningTaskService : ILongRunningTaskService
             // Add any cancellation tasks
             Update(TaskState.Cancelled, CancellationToken.None);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Add any cancellation tasks
             Update(TaskState.Errored, CancellationToken.None);

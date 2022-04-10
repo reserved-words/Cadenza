@@ -74,19 +74,11 @@ public class ApiLibraryService : IApiLibraryService
 
     public async Task Populate()
     {
-        try
-        {
-            var fullLibrary = await _library.Get();
-            await _albumCache.Populate(fullLibrary);
-            await _artistCache.Populate(fullLibrary);
-            await _playTrackCache.Populate(fullLibrary);
-            await _searchCache.Populate(fullLibrary);
-            await _trackCache.Populate(fullLibrary);
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
+        var fullLibrary = await _library.Get();
+        await _albumCache.Populate(fullLibrary);
+        await _artistCache.Populate(fullLibrary);
+        await _playTrackCache.Populate(fullLibrary);
+        await _searchCache.Populate(fullLibrary);
+        await _trackCache.Populate(fullLibrary);
     }
 }

@@ -52,19 +52,12 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
 
     private async Task Populate()
     {
-        try
-        {
-            var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-            _apiToken.SetAccessToken(accessToken.Value);
-            var fullLibrary = await _apiLibrary.Get();
-            var baseUrl = _config.GetValue<string>("LocalApi:BaseUrl");
-            var endpoint = _config.GetValue<string>("LocalApi:Endpoints:AddSource");
-            var url = $"{baseUrl}{endpoint}";
-            await _httpHelper.Post(url, null, fullLibrary);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Failed to populate Spotify library");
-        }
+        var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
+        _apiToken.SetAccessToken(accessToken.Value);
+        var fullLibrary = await _apiLibrary.Get();
+        var baseUrl = _config.GetValue<string>("LocalApi:BaseUrl");
+        var endpoint = _config.GetValue<string>("LocalApi:Endpoints:AddSource");
+        var url = $"{baseUrl}{endpoint}";
+        await _httpHelper.Post(url, null, fullLibrary);
     }
 }

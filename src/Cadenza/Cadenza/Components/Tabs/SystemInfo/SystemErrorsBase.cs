@@ -9,7 +9,7 @@ public partial class SystemErrorsBase : ComponentBase
 
     public ErrorLog SelectedItem { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         var random = new Random();
 

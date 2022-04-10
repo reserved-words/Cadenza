@@ -8,48 +8,57 @@ public class PlayTrackCache : IPlayTrackCache
     private Dictionary<Grouping, List<string>> _groupingArtists;
     private Dictionary<string, List<string>> _genreArtists;
 
-    public async Task<List<PlayTrack>> GetAll()
+    public Task<List<PlayTrack>> GetAll()
     {
-        return _tracks.ToList();
+        var result = _tracks.ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> GetByAlbum(string id)
+    public Task<List<PlayTrack>> GetByAlbum(string id)
     {
-        return _albumTracks.TryGetValue(id, out List<PlayTrack> tracks)
+        var result = _albumTracks.TryGetValue(id, out List<PlayTrack> tracks)
             ? tracks
             : new List<PlayTrack>();
+
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> GetByArtist(string id)
+    public Task<List<PlayTrack>> GetByArtist(string id)
     {
-        return _artistTracks.TryGetValue(id, out List<PlayTrack> tracks)
+        var result = _artistTracks.TryGetValue(id, out List<PlayTrack> tracks)
             ? tracks
             : new List<PlayTrack>();
+
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> GetByGenre(string id)
+    public Task<List<PlayTrack>> GetByGenre(string id)
     {
         var genreArtists = _genreArtists.TryGetValue(id, out List<string> artistIds)
             ? artistIds
             : new List<string>();
 
-        return genreArtists
+        var result = genreArtists
             .SelectMany(a => _artistTracks[a])
             .ToList();
+
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> GetByGrouping(Grouping id)
+    public Task<List<PlayTrack>> GetByGrouping(Grouping id)
     {
         var groupingArtists = _groupingArtists.TryGetValue(id, out List<string> artistIds)
             ? artistIds
             : new List<string>();
 
-        return groupingArtists
+        var result = groupingArtists
             .SelectMany(a => _artistTracks[a])
             .ToList();
+
+        return Task.FromResult(result);
     }
 
-    public async Task Populate(FullLibrary library)
+    public Task Populate(FullLibrary library)
     {
         _groupingArtists = library.Artists
             .GroupBy(a => a.Grouping)
@@ -92,5 +101,7 @@ public class PlayTrackCache : IPlayTrackCache
                 .Select(t => trackDictionary[t.TrackId])
                 .ToList();
         }
+
+        return Task.CompletedTask;
     }
 }

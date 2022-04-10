@@ -47,9 +47,10 @@ public class SearchBase : ComponentBase
             || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    protected async Task OnClear()
+    protected Task OnClear()
     {
         Result = null;
+        return Task.CompletedTask;
     }
 }
 

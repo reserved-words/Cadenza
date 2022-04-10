@@ -9,7 +9,7 @@ public class SearchCache : ISearchCache
     private List<SearchableGenre> _genres;
     private List<SearchableGrouping> _groupings;
 
-    public async Task Populate(FullLibrary library)
+    public Task Populate(FullLibrary library)
     {
         _albums = library.Albums
             .Select(a => new SearchableAlbum(a.Id, a.Title, a.ArtistName))
@@ -34,36 +34,44 @@ public class SearchCache : ISearchCache
         _playlists = new List<SearchablePlaylist>();
 
         _tracks = PopulateSearchableTracks(library);
+
+        return Task.CompletedTask;
     }
 
-    public async Task<List<PlayerItem>> GetSearchAlbums()
+    public Task<List<PlayerItem>> GetSearchAlbums()
     {
-        return _albums.OfType<PlayerItem>().ToList();
+        var result = _albums.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetSearchArtists()
+    public Task<List<PlayerItem>> GetSearchArtists()
     {
-        return _artists.OfType<PlayerItem>().ToList();
+        var result = _artists.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetSearchPlaylists()
+    public Task<List<PlayerItem>> GetSearchPlaylists()
     {
-        return _playlists.OfType<PlayerItem>().ToList();
+        var result = _playlists.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetSearchTracks()
+    public Task<List<PlayerItem>> GetSearchTracks()
     {
-        return _tracks.OfType<PlayerItem>().ToList();
+        var result = _tracks.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetSearchGenres()
+    public Task<List<PlayerItem>> GetSearchGenres()
     {
-        return _genres.OfType<PlayerItem>().ToList();
+        var result = _genres.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetSearchGroupings()
+    public Task<List<PlayerItem>> GetSearchGroupings()
     {
-        return _groupings.OfType<PlayerItem>().ToList();
+        var result = _groupings.OfType<PlayerItem>().ToList();
+        return Task.FromResult(result);
     }
 
     private List<SearchableTrack> PopulateSearchableTracks(FullLibrary library)

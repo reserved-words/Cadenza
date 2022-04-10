@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Model.Json;
+
+namespace Cadenza.Local;
 
 public class UpdateHistory : IUpdateHistory
 {

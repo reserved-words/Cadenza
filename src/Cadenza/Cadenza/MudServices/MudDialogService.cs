@@ -9,7 +9,7 @@ public class MudDialogService : IDialogService
         _mudService = mudService;
     }
 
-    public async Task Display<TView, TModel>(TModel model, string title, bool narrow = false)
+    public Task Display<TView, TModel>(TModel model, string title, bool narrow = false)
         where TView : ViewBase<TModel>
         where TModel : class
     {
@@ -21,6 +21,8 @@ public class MudDialogService : IDialogService
             MaxWidth = narrow ? MaxWidth.Small : MaxWidth.Medium,
             FullWidth = !narrow
         });
+
+        return Task.CompletedTask;
     }
 
     public async Task<(bool Saved, TModel Data)> DisplayForm<TForm, TModel>(TModel model, string title, bool narrow = false)

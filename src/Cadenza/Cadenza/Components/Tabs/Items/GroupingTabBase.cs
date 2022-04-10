@@ -88,10 +88,11 @@ namespace Cadenza.Components.Tabs.Items
             await Player.PlayGenre(id);
         }
 
-        protected async Task OnViewGenre(string id)
+        protected Task OnViewGenre(string id)
         {
             SelectedGenre = id;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
         protected async Task OnViewSelectedGenre()

@@ -7,7 +7,7 @@ public class TrackCache : ITrackCache
     private Dictionary<string, ArtistInfo> _artists;
     private Dictionary<string, AlbumTrackLink> _albumTracks;
 
-    public async Task<TrackFull> GetTrack(string id)
+    public Task<TrackFull> GetTrack(string id)
     {
         if (!_tracks.ContainsKey(id))
             return null;
@@ -18,7 +18,7 @@ public class TrackCache : ITrackCache
         var albumTrack = _albumTracks[track.Id];
         var albumArtist = _artists[album.ArtistId];
 
-        return new TrackFull
+        var result = new TrackFull
         {
             Track = track,
             Artist = artist,
@@ -26,14 +26,17 @@ public class TrackCache : ITrackCache
             AlbumTrack = albumTrack,
             AlbumArtist = albumArtist
         };
+
+        return Task.FromResult(result);
     }
 
-    public async Task Populate(FullLibrary library)
+    public Task Populate(FullLibrary library)
     {
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _albumTracks = library.AlbumTrackLinks.ToDictionary(a => a.TrackId, a => a);
+        return Task.CompletedTask;
     }
 
     public Task UpdateTrack(TrackUpdate update)

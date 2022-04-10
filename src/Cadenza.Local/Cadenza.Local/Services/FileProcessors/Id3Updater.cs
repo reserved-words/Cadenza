@@ -1,4 +1,8 @@
 ﻿
+using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Model;
+using Cadenza.Local.Common.Model.Id3;
+
 namespace Cadenza.Local;
 
 public class Id3Updater : IId3Updater

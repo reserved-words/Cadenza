@@ -40,9 +40,9 @@ public class EditLyricsBase : FormBase<TrackInfo>
         Update = new TrackUpdate(Model);
     }
 
-    protected async Task OnLoad()
+    protected Task OnLoad()
     {
-
+        return Task.CompletedTask;
     }
 
     protected async Task OnSearch()
@@ -69,7 +69,7 @@ public class EditLyricsBase : FormBase<TrackInfo>
         catch (Exception ex)
         {
             // Log error
-            Alert.Error("Error updating lyrics");
+            Alert.Error("Error updating lyrics: " + ex.Message);
         }
 
         await UpdatesService.UpdateLyrics(Update);

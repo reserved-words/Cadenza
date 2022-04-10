@@ -76,7 +76,7 @@ public class ArtistCache : IArtistCache
         return Task.FromResult(result);
     }
 
-    public async Task Populate(FullLibrary library)
+    public Task Populate(FullLibrary library)
     {
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
@@ -110,6 +110,8 @@ public class ArtistCache : IArtistCache
 
             _albums[album.ArtistId].Add(album);
         }
+
+        return Task.CompletedTask;
     }
 
     public Task UpdateArtist(ArtistUpdate update)

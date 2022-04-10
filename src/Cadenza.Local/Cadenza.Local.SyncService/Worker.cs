@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.SyncService;
+﻿using Cadenza.Local.Common.Interfaces;
+
+namespace Cadenza.Local.SyncService;
 
 public class Worker : BackgroundService
 {

@@ -25,7 +25,6 @@ public class AppService : IAppConsumer, IAppController
     public event PlaylistEventHandler PlaylistLoading;
     public event PlaylistEventHandler PlaylistStarted;
 
-    public event LibraryEventHandler LibraryUpdated;
     public event ItemEventHandler ItemRequested;
 
     private IPlaylist _currentPlaylist;

@@ -1,4 +1,6 @@
 ﻿using Cadenza.Domain;
+using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Model;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local;

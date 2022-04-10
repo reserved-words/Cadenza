@@ -42,7 +42,7 @@ public class ItemPlayer : IItemPlayer
         await _app.Play(playlist);
     }
 
-    public async Task PlayPlaylist(string id)
+    public Task PlayPlaylist(string id)
     {
         throw new NotImplementedException();
     }

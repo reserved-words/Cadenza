@@ -5,21 +5,25 @@ public class AlbumCache : IAlbumCache
     private Dictionary<string, AlbumInfo> _albums;
     private Dictionary<string, List<AlbumTrack>> _albumTracks;
 
-    public async Task<AlbumInfo> GetAlbum(string id)
+    public Task<AlbumInfo> GetAlbum(string id)
     {
-        return _albums.TryGetValue(id, out AlbumInfo album)
+        var result = _albums.TryGetValue(id, out AlbumInfo album)
             ? album
             : null;
+
+        return Task.FromResult(result);
     }
 
-    public async Task<List<AlbumTrack>> GetTracks(string id)
+    public Task<List<AlbumTrack>> GetTracks(string id)
     {
-        return _albumTracks.TryGetValue(id, out List<AlbumTrack> tracks)
+        var result = _albumTracks.TryGetValue(id, out List<AlbumTrack> tracks)
             ? tracks
             : null;
+
+        return Task.FromResult(result);
     }
 
-    public async Task Populate(FullLibrary library)
+    public Task Populate(FullLibrary library)
     {
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
 
@@ -32,33 +36,14 @@ public class AlbumCache : IAlbumCache
 
         foreach (var album in albums)
         {
-            try
-            {
-                _albumTracks[album.Key] = album
-                        .OrderBy(t => t.Position.DiscNo)
-                        .ThenBy(t => t.Position.TrackNo)
-                        .Select(t =>
-                        {
-                            try
-                            {
-                                var result = GetAlbumTrack(t.Position, tracks[t.TrackId]);
-                                return result;
-
-                            }
-                            catch (Exception ex)
-                            {
-
-                                throw;
-                            }
-                        })
-                        .ToList();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            _albumTracks[album.Key] = album
+                .OrderBy(t => t.Position.DiscNo)
+                .ThenBy(t => t.Position.TrackNo)
+                .Select(t => GetAlbumTrack(t.Position, tracks[t.TrackId]))
+                .ToList();
         }
+
+        return Task.CompletedTask;
     }
 
     private static AlbumTrack GetAlbumTrack(AlbumTrackPosition position, Track track)

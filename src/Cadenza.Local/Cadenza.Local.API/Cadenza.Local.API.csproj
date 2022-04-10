@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Local\Cadenza.Local.csproj" />
   </ItemGroup>
 

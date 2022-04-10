@@ -33,10 +33,11 @@ public class CurrentlyPlayingTabBase : ComponentBase
         StateHasChanged();
     }
 
-    private async Task OnTrackFinished(object sender, TrackEventArgs e)
+    private Task OnTrackFinished(object sender, TrackEventArgs e)
     {
         Model = null;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
     protected async Task OnPlayTrack(Track track)

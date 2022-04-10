@@ -1,4 +1,6 @@
-﻿using TagLib;
+﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Model.Id3;
+using TagLib;
 
 namespace Cadenza.Local;
 

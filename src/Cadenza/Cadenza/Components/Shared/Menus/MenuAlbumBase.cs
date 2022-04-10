@@ -28,8 +28,10 @@ public class MenuAlbumBase : ComponentBase
     [Parameter]
     public LibrarySource Source { get; set; }
 
-    public async Task OnEdit()
+    public Task OnEdit()
     {
+        return Task.CompletedTask;
+
         //var albumUpdate = new AlbumUpdate(Album);
 
         //var (saved, data) = await DialogService.DisplayForm<EditAlbum, AlbumUpdate>(albumUpdate, "Edit Album");

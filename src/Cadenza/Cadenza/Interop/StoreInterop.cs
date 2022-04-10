@@ -14,26 +14,18 @@ public class StoreInterop : IStoreGetter, IStoreSetter
 
     public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken)
     {
-        try
+        var startTime = DateTime.Now;
+        var endTime = startTime.AddSeconds(timeoutSeconds);
+
+        var token = await GetValue<T>(storeKey);
+
+        while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
         {
-            var startTime = DateTime.Now;
-            var endTime = startTime.AddSeconds(timeoutSeconds);
-
-            var token = await GetValue<T>(storeKey);
-
-            while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
-            {
-                await Task.Delay(500);
-                token = await GetValue<T>(storeKey);
-            }
-
-            return token;
+            await Task.Delay(500);
+            token = await GetValue<T>(storeKey);
         }
-        catch (Exception ex)
-        {
 
-            throw;
-        }
+        return token;
     }
 
     public async Task Clear(StoreKey key)

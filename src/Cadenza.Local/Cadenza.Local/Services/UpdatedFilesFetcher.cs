@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Local.Common.Interfaces;
+
+namespace Cadenza.Local;
 
 public class UpdatedFilesFetcher : IUpdatedFilesFetcher
 {
