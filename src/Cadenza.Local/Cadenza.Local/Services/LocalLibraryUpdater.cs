@@ -5,6 +5,7 @@ namespace Cadenza.Local;
 
 public class LocalLibraryUpdater : ILocalLibraryUpdater
 {
+    private readonly IAddedFilesHandler _addedFilesHandler;
     private readonly IModifiedFilesHandler _modifiedFilesHandler;
     private readonly IDeletedFilesHandler _deletedFilesHandler;
     private readonly IPlayedFilesHandler _playedFilesHandler;
@@ -14,12 +15,19 @@ public class LocalLibraryUpdater : ILocalLibraryUpdater
         IModifiedFilesHandler modifiedFilesHandler,
         IDeletedFilesHandler deletedFilesHandler,
         IPlayedFilesHandler playedFilesHandler,
-        IUpdateQueueHandler updateQueueHandler)
+        IUpdateQueueHandler updateQueueHandler, 
+        IAddedFilesHandler addedFilesHandler)
     {
         _modifiedFilesHandler = modifiedFilesHandler;
         _deletedFilesHandler = deletedFilesHandler;
         _playedFilesHandler = playedFilesHandler;
         _updateQueueHandler = updateQueueHandler;
+        _addedFilesHandler = addedFilesHandler;
+    }
+
+    public async Task UpdateAddedFiles()
+    {
+        await _addedFilesHandler.Sync();
     }
 
     public async Task UpdateDeletedFiles()

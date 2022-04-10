@@ -23,6 +23,11 @@ public class Worker : BackgroundService
         {
             try
             {
+                await _updater.UpdateAddedFiles();
+
+                if (stoppingToken.IsCancellationRequested)
+                    return;
+
                 await _updater.UpdateDeletedFiles();
 
                 if (stoppingToken.IsCancellationRequested)

@@ -25,7 +25,7 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         return _listComparer.GetMissingItems(filesInDirectory, pathsInJson);
     }
 
-    public async Task<List<string>> GetFilesModifiedSinceLastUpdate()
+    public async Task<List<string>> GetModifiedFiles()
     {
         var lastUpdate = await _updateHistory.GetDateLastUpdated(LibrarySource.Local);
         return await _musicDirectory.GetModifiedFiles(lastUpdate);

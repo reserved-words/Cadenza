@@ -4,7 +4,7 @@ using Cadenza.Local.Common.Interfaces.FileProcessors;
 
 namespace Cadenza.Local;
 
-public class ModifiedFilesHandler : IModifiedFilesHandler
+public class AddedFilesHandler : IAddedFilesHandler
 {
     private readonly IUpdatedFilesFetcher _fileFetcher;
     private readonly IId3TagsService _id3Service;
@@ -13,7 +13,7 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
     private readonly IId3ToJsonConverter _converter;
     private readonly ILibraryOrganiser _organiser;
 
-    public ModifiedFilesHandler(IId3TagsService id3Service, ILibraryOrganiser organiser, IId3ToJsonConverter converter,
+    public AddedFilesHandler(IId3TagsService id3Service, ILibraryOrganiser organiser, IId3ToJsonConverter converter,
         IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher)
     {
         _id3Service = id3Service;
@@ -27,13 +27,11 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
     {
         var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
-        var updatesFetched = DateTime.Now;
-
-        var filepaths = await _fileFetcher.GetModifiedFiles();
+        var filepaths = await _fileFetcher.GetAddedFiles();
 
         foreach (var filePath in filepaths)
         {
-            Console.WriteLine($"Modifying file {filePath}");
+            Console.WriteLine($"Adding file {filePath}");
 
             var id3Track = _id3Service.GetId3Data(filePath);
 
@@ -59,7 +57,5 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
         _organiser.RemoveOrphanedItems(jsonItems);
 
         await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
-
-        await _fileFetcher.UpdateTimeModifiedFilesUpdated(updatesFetched);
     }
 }
