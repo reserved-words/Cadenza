@@ -142,7 +142,7 @@ public class ApiLibrary : ISpotifyLibrary
             ArtistId = albumArtist.Id,
             ArtistName = albumArtist.Name,
             Title = album.name,
-            ReleaseType = ReleaseType.Album, // check - possibly Spotify has ones that correspond
+            ReleaseType = ReleaseType.Album,
             Year = GetReleaseYear(album),
             ArtworkUrl = album.images.FirstOrDefault()?.url,
             DiscCount = album.tracks.items.Max(t => t.disc_number)
@@ -210,30 +210,13 @@ public class ApiLibrary : ISpotifyLibrary
         return _idGenerator.GenerateId(artistName);
     }
 
-    public async Task<List<SpotifyArtist>> Search(string text)
+    public async Task AddAlbum(string id)
     {
-        var searchResults = await _api.SearchArtists(text);
-        return searchResults
-            .Select(a => new SpotifyArtist
-            {
-                Id = a.id,
-                Name = a.name
-            })
-            .ToList();
+        await _api.AddAlbum(id);
     }
 
-    public async Task<List<SpotifyAlbum>> GetArtistAlbums(string artistId)
+    public async Task AddPlaylist(string id)
     {
-        var searchResults = await _api.GetArtistAlbums(artistId);
-        return searchResults
-            .Select(a => new SpotifyAlbum
-            {
-                Id = a.id,
-                Title = a.name,
-                Artist = a.artists.First().name,
-                Year = GetReleaseYear(a),
-                ArtworkUrl = a.images.FirstOrDefault()?.url
-            })
-            .ToList();
+        await _api.AddPlaylist(id);
     }
 }

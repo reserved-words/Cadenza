@@ -11,4 +11,7 @@ public interface IApiCaller
     Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId);
     Task<List<SpotifyApiArtist>> SearchArtists(string searchText);
     Task<List<SpotifyApiAlbum>> GetArtistAlbums(string artistId);
+    Task<List<SpotifyApiPlaylist>> GetArtistPlaylists(string artistName);
+    Task AddAlbum(string albumId);  
+    Task AddPlaylist(string playlistId);
 }

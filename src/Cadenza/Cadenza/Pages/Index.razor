@@ -11,9 +11,9 @@
         @if (IsInitalised)
         {
             <MudDynamicTabs Outlined="true"
-                        CloseTab="@((panel) => CloseTabCallback(panel))"
-                        @bind-ActivePanelIndex="SelectedTabIndex"
-                        KeepPanelsAlive="true">
+                            CloseTab="@((panel) => CloseTabCallback(panel))"
+                            @bind-ActivePanelIndex="SelectedTabIndex"
+                            KeepPanelsAlive="true">
 
                 <MudTabPanel Icon="fas fa-history" Class="mud-tab-fixed">
                     <HistoryTab />
@@ -40,6 +40,7 @@
                         <ItemTab Item="@item" />
                     </MudTabPanel>
                 }
+
             </MudDynamicTabs>
         }
     </MudMainContent>

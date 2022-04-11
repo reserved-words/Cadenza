@@ -32,6 +32,7 @@ public static class Dependencies
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddTransient<ISpotifyLibrary, ApiLibrary>()
+            .AddTransient<ISpotifySearcher, ApiSearcher>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()

@@ -1,6 +1,4 @@
 ﻿using Cadenza.Core.Interfaces;
-using Cadenza.Domain;
-using Cadenza.Library;
 using Cadenza.Source.Spotify.Api;
 using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Interfaces;

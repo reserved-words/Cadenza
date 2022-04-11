@@ -1,12 +1,12 @@
-﻿using Cadenza.Source.Spotify.Model;
-
-namespace Cadenza.Source.Spotify.Interfaces;
+﻿namespace Cadenza.Source.Spotify.Interfaces;
 
 internal interface IApiHelper
 {
     Task<ApiResponse<T>> Get<T>(string url) where T : class;
-    Task<ApiResponse> Put(string url, string accessToken, object data = null);
     Task<ApiResponse<T>> Get<T>(string url, string accessToken) where T : class;
+    Task<ApiResponse> Post(string url, object data = null);
+    Task<ApiResponse> Put(string url, string accessToken, object data = null);
+    Task<ApiResponse> Put(string url, object data = null);
 }
 
 public class ApiErrorDetails

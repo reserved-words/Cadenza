@@ -21,13 +21,11 @@ internal class ApiHelper : IApiHelper
     public async Task<ApiResponse<T>> Get<T>(string url) where T : class
     {
         var accessToken = _apiToken.GetAccessToken();
-        var authHeader = $"Bearer {accessToken}";
+        var authHeader = GetAuthHeader(accessToken);
         var response = await _httpClient.Get(url, authHeader);
 
         if (response.IsSuccessStatusCode)
         {
-            var test = await response.Content.ReadAsStringAsync();
-
             var data = response.StatusCode == HttpStatusCode.NoContent
                 ? null
                 : await response.Content.ReadFromJsonAsync<T>();
@@ -39,6 +37,28 @@ internal class ApiHelper : IApiHelper
             var error = await response.Content.ReadFromJsonAsync<ApiError>();
             return new ApiResponse<T>(error);
         }
+    }
+
+    public async Task<ApiResponse> Post(string url, object data = null)
+    {
+        var accessToken = _apiToken.GetAccessToken();
+        var authHeader = GetAuthHeader(accessToken);
+
+        var response = await _httpClient.Post(url, authHeader, data);
+
+        CheckForCommonErrors(response);
+
+        var error = !response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<ApiError>()
+            : null;
+
+        return new ApiResponse(error?.Error);
+    }
+
+    public async Task<ApiResponse> Put(string url, object data = null)
+    {
+        var accessToken = _apiToken.GetAccessToken();
+        return await Put(url, accessToken, data);
     }
 
     public async Task<ApiResponse> Put(string url, string accessToken, object data = null)

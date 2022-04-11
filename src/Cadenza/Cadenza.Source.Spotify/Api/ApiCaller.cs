@@ -14,6 +14,9 @@ internal class ApiCaller : IApiCaller
     private const string PlaylistTracksUrl = "https://api.spotify.com/v1/playlists/{0}/tracks?limit=50&fields=total,next,items(track)";
     private const string SearchArtistsUrl = "https://api.spotify.com/v1/search?q={0}&type=artist";
     private const string ArtistAlbumsUrl = "https://api.spotify.com/v1/artists/{0}/albums?include_groups=album&limit=50&market=GB";
+    private const string ArtistPlaylistsUrl = "https://api.spotify.com/v1/search?q={0}&type=playlist";
+    private const string SaveAlbumsUrl = "https://api.spotify.com/v1/me/albums";
+    private const string FollowPlaylistUrl = "https://api.spotify.com/v1/playlists/{0}/followers";
 
     private readonly IApiHelper _api;
 
@@ -43,11 +46,18 @@ internal class ApiCaller : IApiCaller
         return await GetListResponse<SpotifyApiPlaylist>(PlaylistsUrl);
     }
 
-    public async Task<List<SpotifyApiArtist>> SearchArtists(string searchText)
+    public async Task<List<SpotifyApiArtist>> SearchArtists(string artistName)
     {
-        var url = string.Format(SearchArtistsUrl, searchText);
+        var url = string.Format(SearchArtistsUrl, artistName);
         var data = await GetResponse<SpotifyApiSearchResponse>(url);
-        return data.Artists.items.Where(a => a.name.Equals(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        return data.Artists.items.Where(a => a.name.Equals(artistName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+    }
+
+    public async Task<List<SpotifyApiPlaylist>> GetArtistPlaylists(string artistName)
+    {
+        var url = string.Format(ArtistPlaylistsUrl, artistName);
+        var data = await GetResponse<SpotifyApiSearchResponse>(url);
+        return data.Playlists.items.Where(p => p.owner.display_name == "Spotify").ToList();
     }
 
     private async Task<List<T>> GetListResponse<T>(string uri)
@@ -96,5 +106,18 @@ internal class ApiCaller : IApiCaller
         }
 
         return apiResponse.Data;
+    }
+
+    public async Task AddAlbum(string albumId)
+    {
+        var url = string.Format(SaveAlbumsUrl, albumId);
+        var data = new { ids = new[] { albumId } };
+        var test = await _api.Put(url, data);
+    }
+
+    public async Task AddPlaylist(string playlistId)
+    {
+        var url = string.Format(FollowPlaylistUrl, playlistId);
+        var test = await _api.Put(url);
     }
 }
