@@ -2,7 +2,10 @@
 
 <WhipTab>
     <WhipColumn md="3">
-        <WhipRow RowHeight="@RowHeight.Full">
+        <WhipRow RowHeight="@RowHeight.Fixed">
+            <SpotifySync Loading="@Loading" Library="@FullLibrary" />
+        </WhipRow>
+        <WhipRow RowHeight="@RowHeight.Stretch">
             <SpotifySearch />
         </WhipRow>
     </WhipColumn>

@@ -14,7 +14,7 @@ public static class Routing
             .AddUpdaterRoutes()
             .AddPlayerRoute()
             .AddArtworkRoute()
-            .AddExternalSourceRoute();
+            .AddExternalSourceRoutes();
     }
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
@@ -46,10 +46,14 @@ public static class Routing
         return app;
     }
 
-    private static WebApplication AddExternalSourceRoute(this WebApplication app)
+    private static WebApplication AddExternalSourceRoutes(this WebApplication app)
     {
         var externalSourceService = app.Services.GetRequiredService<IExternalSourceService>();
         app.MapPost("/Source/Add", (ExternalSourceLibrary library) => externalSourceService.AddLibrary(library));
+        app.MapGet("/Source/Updated", async (LibrarySource source) => new
+        {
+            SyncDate = await externalSourceService.GetLastSyncDate(source)
+        });
         return app;
     }
 

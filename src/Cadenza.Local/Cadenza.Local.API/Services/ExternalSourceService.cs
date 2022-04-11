@@ -77,5 +77,13 @@ public class ExternalSourceService : IExternalSourceService
         jsonLibrary.AlbumTrackLinks = jsonLibrary.AlbumTrackLinks.Where(a => trackIdsToKeep.Contains(a.TrackId)).ToList();
 
         await _dataAccess.SaveAll(jsonLibrary, sourceLibrary.Source);
+
+        await _dataAccess.SaveUpdateHistory(new JsonUpdateHistory {  ModifiedFilesLastUpdated = DateTime.Now }, sourceLibrary.Source);
+    }
+
+    public async Task<DateTime?> GetLastSyncDate(LibrarySource source)
+    {
+        var updateHistory = await _dataAccess.GetUpdateHistory(source);
+        return updateHistory?.ModifiedFilesLastUpdated;
     }
 }

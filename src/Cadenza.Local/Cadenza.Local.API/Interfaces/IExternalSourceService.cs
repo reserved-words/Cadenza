@@ -3,4 +3,5 @@
 public interface IExternalSourceService
 {
     Task AddLibrary(ExternalSourceLibrary library);
+    Task<DateTime?> GetLastSyncDate(LibrarySource source);
 }

@@ -1,4 +1,4 @@
-﻿using Cadenza.Source.Spotify.Api.Interfaces;
+﻿using Cadenza.Core.App;
 using Cadenza.Source.Spotify.Exceptions;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Utilities;
@@ -9,19 +9,18 @@ namespace Cadenza.Source.Spotify.Api;
 
 internal class ApiHelper : IApiHelper
 {
-    private readonly IApiToken _apiToken;
+    private readonly IStoreGetter _store;
     private readonly IHttpHelper _httpClient;
 
-    public ApiHelper(IHttpHelper httpClient, IApiToken apiToken)
+    public ApiHelper(IHttpHelper httpClient, IStoreGetter store)
     {
         _httpClient = httpClient;
-        _apiToken = apiToken;
+        _store = store;
     }
 
     public async Task<ApiResponse<T>> Get<T>(string url) where T : class
     {
-        var accessToken = _apiToken.GetAccessToken();
-        var authHeader = GetAuthHeader(accessToken);
+        var authHeader = await GetAuthHeader();
         var response = await _httpClient.Get(url, authHeader);
 
         if (response.IsSuccessStatusCode)
@@ -41,8 +40,7 @@ internal class ApiHelper : IApiHelper
 
     public async Task<ApiResponse> Post(string url, object data = null)
     {
-        var accessToken = _apiToken.GetAccessToken();
-        var authHeader = GetAuthHeader(accessToken);
+        var authHeader = await GetAuthHeader();
 
         var response = await _httpClient.Post(url, authHeader, data);
 
@@ -57,13 +55,13 @@ internal class ApiHelper : IApiHelper
 
     public async Task<ApiResponse> Put(string url, object data = null)
     {
-        var accessToken = _apiToken.GetAccessToken();
+        var accessToken = await GetAccessToken();
         return await Put(url, accessToken, data);
     }
 
     public async Task<ApiResponse> Put(string url, string accessToken, object data = null)
     {
-        var authHeader = GetAuthHeader(accessToken);
+        var authHeader = await GetAuthHeader(accessToken);
 
         var response = await _httpClient.Put(url, authHeader, data);
 
@@ -78,7 +76,7 @@ internal class ApiHelper : IApiHelper
 
     public async Task<ApiResponse<T>> Get<T>(string url, string accessToken) where T : class
     {
-        var authHeader = GetAuthHeader(accessToken);
+        var authHeader = await GetAuthHeader(accessToken);
         var response = await _httpClient.Get(url, authHeader);
 
         CheckForCommonErrors(response);
@@ -108,9 +106,15 @@ internal class ApiHelper : IApiHelper
             throw new DeviceNotFoundException();
     }
 
-    private static string GetAuthHeader(string accessToken)
+    private async Task<string> GetAuthHeader(string accessToken = null)
     {
+        accessToken ??= await GetAccessToken();
         return $"Bearer {accessToken}";
+    }
+
+    private async Task<string> GetAccessToken()
+    {
+        return (await _store.GetValue<string>(StoreKey.SpotifyAccessToken)).Value;
     }
 }
 

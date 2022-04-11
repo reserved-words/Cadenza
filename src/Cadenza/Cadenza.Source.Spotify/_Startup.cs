@@ -26,8 +26,7 @@ public static class _Startup
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IApiCaller, ApiCaller>()
-            .AddSingleton<IApiToken, ApiToken>();
+            .AddTransient<IApiCaller, ApiCaller>();
 ;
     }
 }
