@@ -4,3 +4,8 @@ public class SpotifyApiPlaylistItem
 {
     public SpotifyApiPlaylistItemTrack track { get; set; }
 }
+
+public class SpotifyApiSearchItem
+{
+
+}

@@ -11,7 +11,7 @@ public static class Extensions
             Connector.API => Icons.Material.Filled.Api,
             Connector.Local => LibrarySource.Local.GetIcon(),
             Connector.Spotify => LibrarySource.Spotify.GetIcon(),
-            Connector.LastFm => "fab fa-lastfm-square",
+            Connector.LastFm => Icon.LastFm,
             _ => throw new NotImplementedException()
         };
     }
@@ -21,7 +21,7 @@ public static class Extensions
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            LibrarySource.Spotify => "fab fa-spotify",
+            LibrarySource.Spotify => Icon.Spotify,
             _ => throw new NotImplementedException()
         };
     }
@@ -30,13 +30,13 @@ public static class Extensions
     {
         return link.Type switch
         {
-            LinkType.LastFm => "fab fa-lastfm-square",
+            LinkType.LastFm => Icon.LastFm,
             LinkType.BandsInTown => Icons.Filled.Event,
-            LinkType.BandCamp => "fab fa-bandcamp",
+            LinkType.BandCamp => Icon.BandCamp,
             LinkType.YouTube => Icons.Custom.Brands.YouTube,
             LinkType.Twitter => Icons.Custom.Brands.Twitter,
             LinkType.Facebook => Icons.Custom.Brands.Facebook,
-            LinkType.Wikipedia => "fab fa-wikipedia-w",
+            LinkType.Wikipedia => Icon.Wikipedia,
             LinkType.Search => Icons.Custom.Brands.Google,
             _ => throw new NotImplementedException()
         };

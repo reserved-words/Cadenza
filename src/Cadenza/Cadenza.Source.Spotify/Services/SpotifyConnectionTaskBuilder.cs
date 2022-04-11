@@ -4,10 +4,10 @@ using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Api.Interfaces;
-using Cadenza.Library;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Configuration;
 using Cadenza.Domain;
+using Cadenza.Core;
 
 namespace Cadenza.Source.Spotify.Services;
 
@@ -17,12 +17,12 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
     private readonly IStoreGetter _storeGetter;
     private readonly IConnectorController _connectorController;
     private readonly ISpotifyAuthHelper _authHelper;
-    private readonly ILibrary _apiLibrary;
+    private readonly ISpotifyLibrary _apiLibrary;
     private readonly IHttpHelper _httpHelper;
     private readonly IConfiguration _config;
 
     public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter,
-        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IApiToken apiToken, ILibrary apiLibrary, IHttpHelper httpHelper, IConfiguration config)
+        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IApiToken apiToken, ISpotifyLibrary apiLibrary, IHttpHelper httpHelper, IConfiguration config)
     {
         _storeGetter = storeGetter;
         _connectorController = connectorController;

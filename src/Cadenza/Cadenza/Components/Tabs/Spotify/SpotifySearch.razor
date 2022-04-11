@@ -1,0 +1,48 @@
+﻿@inherits SpotifySearchBase
+
+<SpotifyCard Title="Search"
+             IsLoading="false">
+    <ChildContent>
+        <MudTextField @bind-Value="SearchText"
+                      Label="Search artist"
+                      OnBlur="@OnSearch"
+                      Disabled="@Searching"
+                      Variant="Variant.Outlined"
+                      Adornment="Adornment.End"
+                      AdornmentIcon="@Icons.Filled.Search" />
+
+        @if (ArtistSearchResults != null || Searching)
+        {
+            <MudContainer Class="mx-0 my-3 pa-0">
+                @if (Searching)
+                {
+                    <MudPaper Class="pa-3">
+                        <MudText Typo="@Typo.body1">Searching...</MudText>
+                    </MudPaper>
+                }
+                else if (!ArtistSearchResults.Any())
+                {
+                    <MudPaper Class="px-3 py-0">
+                        <MudText Typo="@Typo.body1">No results found</MudText>
+                    </MudPaper>
+                }
+                else
+                {
+                    <MudCard Class="ma-0 pa-0">
+                        <WhipTable T="SpotifyArtist"
+                           Items="@ArtistSearchResults">
+                            <RowTemplate>
+                                <MudTd>
+                                    <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnViewArtist(context.Id))" Color="@Color.Dark">
+                                        @context.Name
+                                    </MudLink>
+                                </MudTd>
+                            </RowTemplate>
+                        </WhipTable>
+                    </MudCard>
+                }
+            </MudContainer>
+        }
+
+    </ChildContent>
+</SpotifyCard>

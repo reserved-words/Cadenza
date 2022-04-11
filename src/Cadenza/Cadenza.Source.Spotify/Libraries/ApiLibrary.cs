@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain;
-using Cadenza.Library;
+﻿using Cadenza.Core;
+using Cadenza.Domain;
 using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Api.Model.Albums;
 using Cadenza.Source.Spotify.Api.Model.Common;
@@ -8,7 +8,7 @@ using Cadenza.Utilities;
 
 namespace Cadenza.Source.Spotify.Libraries;
 
-public class ApiLibrary : ILibrary
+public class ApiLibrary : ISpotifyLibrary
 {
     private readonly IIdGenerator _idGenerator;
     private readonly IApiCaller _api;
@@ -210,18 +210,15 @@ public class ApiLibrary : ILibrary
         return _idGenerator.GenerateId(artistName);
     }
 
-    public Task UpdateAlbum(AlbumUpdate update)
+    public async Task<List<SpotifyArtist>> Search(string text)
     {
-        return Task.CompletedTask;
-    }
-
-    public Task UpdateArtist(ArtistUpdate update)
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task UpdateTrack(TrackUpdate update)
-    {
-        return Task.CompletedTask;
+        var searchResults = await _api.SearchArtists(text);
+        return searchResults
+            .Select(a => new SpotifyArtist
+            {
+                Id = a.id,
+                Name = a.name
+            })
+            .ToList();
     }
 }

@@ -1,0 +1,26 @@
+﻿@inherits SpotifyTabBase
+
+<WhipTab>
+    <WhipColumn md="3">
+        <WhipRow RowHeight="@RowHeight.Full">
+            <SpotifySearch />
+        </WhipRow>
+    </WhipColumn>
+    <WhipColumn md="9">
+        <WhipRow RowHeight="@RowHeight.Full">
+            <SpotifyCard IsLoading="@Loading"
+                         LoadingCaption="Loading library...">
+                <ChildContent>
+                    <MudTabs Style="width: 100%; height: 100%;">
+                        <MudTabPanel Text="Playlists" Style="width: 100%; height: 100%;">
+                            <SpotifyItems Items="@Playlists" />
+                        </MudTabPanel>
+                        <MudTabPanel Text="Albums" Style="width: 100%; height: 100%;">
+                            <SpotifyItems Items="@Albums" />
+                        </MudTabPanel>
+                    </MudTabs>
+                </ChildContent>
+            </SpotifyCard>
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>
