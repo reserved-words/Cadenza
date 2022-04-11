@@ -94,3 +94,8 @@ div.fixed-height-margin.no-side-margin {
 .mud-dialog .mud-dialog-actions .mud-paper {
     padding: 0 0.5rem;
 }
+
+/*remove button for creating new tabs*/
+.mud-tabs-header.mud-tabs-header-after {
+    display: none !important;
+}
