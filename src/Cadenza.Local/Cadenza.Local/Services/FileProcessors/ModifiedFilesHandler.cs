@@ -52,7 +52,7 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
             var newAlbum = _converter.ConvertAlbum(id3Track);
             _organiser.MergeAlbum(jsonItems.Albums, jsonItems.Artists, newAlbum);
 
-            var newAlbumTrackLink = _converter.ConvertAlbumTrackLink(id3Track);
+            var newAlbumTrackLink = _converter.ConvertAlbumTrackLink(newTrack.Id, id3Track);
             _organiser.MergeAlbumTrackLink(jsonItems.AlbumTrackLinks, newAlbumTrackLink);
         }
 

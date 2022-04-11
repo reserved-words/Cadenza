@@ -1,5 +1,4 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.Converters;
+﻿using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Model.Json;
 
 namespace Cadenza.Local.Services.Converters;
@@ -7,14 +6,10 @@ namespace Cadenza.Local.Services.Converters;
 public class TrackConverter : ITrackConverter
 {
     private readonly IBase64Converter _base64Converter;
-    private readonly IIdGenerator _idGenerator;
-    private readonly ICommentProcessor _commentProcessor;
 
-    public TrackConverter(IBase64Converter base64Converter, IIdGenerator idGenerator, ICommentProcessor commentProcessor)
+    public TrackConverter(IBase64Converter base64Converter)
     {
         _base64Converter = base64Converter;
-        _idGenerator = idGenerator;
-        _commentProcessor = commentProcessor;
     }
 
     public TrackInfo ToAppModel(JsonTrack track, ICollection<JsonArtist> artists)
@@ -23,7 +18,7 @@ public class TrackConverter : ITrackConverter
 
         return new TrackInfo
         {
-            Id = track.Source == LibrarySource.Local ? _base64Converter.ToBase64(track.Path) : track.Path,
+            Id = track.Id,
             Source = track.Source,
             ArtistId = track.ArtistId,
             ArtistName = artist.Name,
@@ -41,7 +36,8 @@ public class TrackConverter : ITrackConverter
     {
         return new JsonTrack
         {
-            Path = track.Source == LibrarySource.Local ? _base64Converter.FromBase64(track.Id) : track.Id,
+            Id = track.Id,
+            Path = track.Source == LibrarySource.Local ? _base64Converter.FromBase64(track.Id) : null,
             Source = track.Source,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,

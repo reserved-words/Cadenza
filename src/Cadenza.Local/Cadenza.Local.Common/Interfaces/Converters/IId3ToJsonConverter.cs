@@ -9,5 +9,5 @@ public interface IId3ToJsonConverter
     JsonAlbum ConvertAlbum(Id3Data id3Data);
     JsonTrack ConvertTrack(Id3Data id3Data);
     JsonArtist ConvertTrackArtist(Id3Data id3Data);
-    JsonAlbumTrackLink ConvertAlbumTrackLink(Id3Data id3Data);
+    JsonAlbumTrackLink ConvertAlbumTrackLink(string id, Id3Data id3Data);
 }

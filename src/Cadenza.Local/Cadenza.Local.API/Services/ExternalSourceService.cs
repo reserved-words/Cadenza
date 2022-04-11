@@ -51,7 +51,7 @@ public class ExternalSourceService : IExternalSourceService
 
         foreach (var track in library.Tracks)
         {
-            var jsonTrack = jsonLibrary.Tracks.SingleOrDefault(a => a.Path == track.Id);
+            var jsonTrack = jsonLibrary.Tracks.SingleOrDefault(a => a.Id == track.Id);
             if (jsonTrack == null)
             {
                 jsonTrack = _trackConverter.ToJsonModel(track);
@@ -61,27 +61,20 @@ public class ExternalSourceService : IExternalSourceService
 
         foreach (var albumTrack in library.AlbumTrackLinks)
         {
-            var jsonAlbumTrack = jsonLibrary.AlbumTrackLinks.SingleOrDefault(a => a.TrackPath == albumTrack.TrackId);
+            var jsonAlbumTrack = jsonLibrary.AlbumTrackLinks.SingleOrDefault(a => a.TrackId == albumTrack.TrackId);
             if (jsonAlbumTrack == null)
             {
-                // todo - should use converter but need to sort out track ID / path issue
-                jsonAlbumTrack = new JsonAlbumTrackLink
-                {
-                    AlbumId = albumTrack.AlbumId,
-                    TrackPath = albumTrack.TrackId,
-                    TrackNo = albumTrack.Position.TrackNo,
-                    DiscNo = albumTrack.Position.DiscNo
-                };
+                jsonAlbumTrack = _albumTrackLinkConverter.ToJsonModel(albumTrack);
                 jsonLibrary.AlbumTrackLinks.Add(jsonAlbumTrack);
             }
         }
 
         var albumIdsToKeep = library.Albums.Select(a => a.Id).ToList();
-        var trackPathsToKeep = library.Tracks.Select(a => a.Id).ToList();
+        var trackIdsToKeep = library.Tracks.Select(a => a.Id).ToList();
 
         jsonLibrary.Albums = jsonLibrary.Albums.Where(a => albumIdsToKeep.Contains(a.Id)).ToList();
-        jsonLibrary.Tracks = jsonLibrary.Tracks.Where(a => trackPathsToKeep.Contains(a.Path)).ToList();
-        jsonLibrary.AlbumTrackLinks = jsonLibrary.AlbumTrackLinks.Where(a => trackPathsToKeep.Contains(a.TrackPath)).ToList();
+        jsonLibrary.Tracks = jsonLibrary.Tracks.Where(t => trackIdsToKeep.Contains(t.Id)).ToList();
+        jsonLibrary.AlbumTrackLinks = jsonLibrary.AlbumTrackLinks.Where(a => trackIdsToKeep.Contains(a.TrackId)).ToList();
 
         await _dataAccess.SaveAll(jsonLibrary, sourceLibrary.Source);
     }

@@ -7,13 +7,15 @@ namespace Cadenza.Local.Services;
 
 public class Id3ToJsonConverter : IId3ToJsonConverter
 {
+    private readonly IBase64Converter _base64Converter;
     private readonly IIdGenerator _idGenerator;
     private readonly ICommentProcessor _commentProcessor;
 
-    public Id3ToJsonConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor)
+    public Id3ToJsonConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor, IBase64Converter base64Converter)
     {
         _idGenerator = idGenerator;
         _commentProcessor = commentProcessor;
+        _base64Converter = base64Converter;
     }
 
     public JsonAlbum ConvertAlbum(Id3Data data)
@@ -53,15 +55,13 @@ public class Id3ToJsonConverter : IId3ToJsonConverter
         };
     }
 
-    public JsonAlbumTrackLink ConvertAlbumTrackLink(Id3Data id3Data)
+    public JsonAlbumTrackLink ConvertAlbumTrackLink(string id, Id3Data id3Data)
     {
-        // need a single place to do these conversions
-
         var albumId = _idGenerator.GenerateId(id3Data.Album.ArtistName, id3Data.Album.Title);
 
         return new JsonAlbumTrackLink
         {
-            TrackPath = id3Data.Track.Filepath,
+            TrackId = id,
             AlbumId = albumId,
             DiscNo = id3Data.Disc.DiscNo,
             TrackNo = id3Data.Track.TrackNo
@@ -74,7 +74,7 @@ public class Id3ToJsonConverter : IId3ToJsonConverter
 
         return new JsonTrack
         {
-            Path = data.Track.Filepath,
+            Id = _base64Converter.ToBase64(data.Track.Filepath),
             ArtistId = _idGenerator.GenerateId(data.Artist.Name),
             AlbumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title),
             Title = data.Track.Title,

@@ -22,14 +22,14 @@ public class Id3Updater : IId3Updater
     public async Task<List<ItemPropertyUpdateResult>> UpdateAlbum(string id, List<ItemPropertyUpdate> updates)
     {
         var results = GetEmptyResults(updates);
-        var tracks = await GetAlbumTracks(id);
+        var tracks = await GetAlbumTrackPaths(id);
         UpdateAllTracks(tracks, results);
         return results;
     }
 
     public async Task<List<ItemPropertyUpdateResult>> UpdateArtist(string id, List<ItemPropertyUpdate> updates)
     {
-        var tracks = await GetArtistTracks(id);
+        var tracks = await GetArtistTrackPaths(id);
         var results = GetEmptyResults(updates);
         UpdateAllTracks(tracks, results);
         return results;
@@ -43,17 +43,16 @@ public class Id3Updater : IId3Updater
         return Task.FromResult(results);
     }
 
-    private async Task<List<string>> GetAlbumTracks(string id)
+    private async Task<List<string>> GetAlbumTrackPaths(string id)
     {
-        var albumTrackLinks = await _dataAccess.GetAlbumTrackLinks(LibrarySource.Local);
-
-        return albumTrackLinks
+        var tracks = await _dataAccess.GetTracks(LibrarySource.Local);
+        return tracks
             .Where(t => t.AlbumId == id)
-            .Select(t => t.TrackPath)
+            .Select(t => t.Path)
             .ToList();
     }
 
-    private async Task<List<string>> GetArtistTracks(string id)
+    private async Task<List<string>> GetArtistTrackPaths(string id)
     {
         var tracks = await _dataAccess.GetTracks(LibrarySource.Local);
         return tracks

@@ -4,6 +4,7 @@ namespace Cadenza.Local.Common.Model.Json;
 
 public class JsonTrack
 {
+    public string Id { get; set; }
     public string Path { get; set; }
     public LibrarySource Source { get; set; }
     public string AlbumId { get; set; }
