@@ -1,11 +1,10 @@
 ﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.FileProcessors;
 using Cadenza.Local.Config;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Local.Services.FileProcessors;
+namespace Cadenza.Local.SyncService.Updaters;
 
-public class PlayedFilesHandler : IPlayedFilesHandler
+public class PlayedFilesHandler : IUpdateService
 {
     private readonly IFileAccess _fileAccess;
     private readonly IOptions<CurrentlyPlaying> _currentlyPlaying;
@@ -18,7 +17,7 @@ public class PlayedFilesHandler : IPlayedFilesHandler
         _musicLibrary = musicLibrary;
     }
 
-    public async Task RemovePlayedFiles()
+    public async Task Run()
     {
         var directory = Path.Combine(_currentlyPlaying.Value.BaseDirectory, _currentlyPlaying.Value.DirectoryName);
 

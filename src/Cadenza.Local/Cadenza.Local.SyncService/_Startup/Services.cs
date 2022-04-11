@@ -1,14 +1,12 @@
-﻿using Cadenza.Library;
-using Cadenza.Local.Common.Interfaces;
+﻿using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.Converters;
-using Cadenza.Local.Common.Interfaces.FileProcessors;
 using Cadenza.Local.MusicFiles;
 using Cadenza.Local.Services;
 using Cadenza.Local.Services.Converters;
-using Cadenza.Local.Services.FileProcessors;
+using Cadenza.Local.SyncService.Updaters;
 using FileAccess = Cadenza.Local.Services.FileAccess;
 
-namespace Cadenza.Local.SyncService;
+namespace Cadenza.Local.SyncService._Startup;
 
 public static class Services
 {
@@ -18,11 +16,7 @@ public static class Services
            .AddUtilities()
            .AddLogger()
            .AddMusicFileLibrary()
-           .AddTransient<IAddedFilesHandler, AddedFilesHandler>()
-           .AddTransient<IDeletedFilesHandler, DeletedFilesHandler>()
-           .AddTransient<IModifiedFilesHandler, ModifiedFilesHandler>()
-           .AddTransient<IPlayedFilesHandler, PlayedFilesHandler>()
-           .AddTransient<IUpdateQueueHandler, UpdateQueueHandler>()
+           .AddUpdaters()
            .AddTransient<IArtistConverter, ArtistConverter>()
            .AddTransient<IAlbumConverter, AlbumConverter>()
            .AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>()
@@ -37,9 +31,18 @@ public static class Services
            .AddTransient<IMusicDirectory, MusicDirectoryAccess>()
            .AddTransient<IUpdatedFilesFetcher, UpdatedFilesFetcher>()
            .AddTransient<IUpdateHistory, UpdateHistory>()
-           .AddTransient<ILocalLibraryUpdater, LocalLibraryUpdater>()
            .AddTransient<IMerger, Merger>();
 
         return services;
+    }
+
+    private static IServiceCollection AddUpdaters(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IUpdateService, AddedFilesHandler>()
+            .AddTransient<IUpdateService, DeletedFilesHandler>()
+            .AddTransient<IUpdateService, ModifiedFilesHandler>()
+            .AddTransient<IUpdateService, PlayedFilesHandler>()
+            .AddTransient<IUpdateService, UpdateQueueHandler>();
     }
 }

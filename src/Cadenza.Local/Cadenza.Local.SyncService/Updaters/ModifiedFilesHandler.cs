@@ -1,36 +1,39 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.FileProcessors;
+﻿using Cadenza.Domain;
+using Cadenza.Local.Common.Interfaces;
 
-namespace Cadenza.Local.Services.FileProcessors;
+namespace Cadenza.Local.SyncService.Updaters;
 
-public class AddedFilesHandler : IAddedFilesHandler
+public class ModifiedFilesHandler : IUpdateService
 {
     private readonly IUpdatedFilesFetcher _fileFetcher;
     private readonly IDataAccess _dataAccess;
     private readonly ILibraryOrganiser _organiser;
-    private readonly IMusicFileLibrary _musicFiles;
+    private readonly IMusicFileLibrary _musicFileLibrary;
 
-    public AddedFilesHandler(ILibraryOrganiser organiser, IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher, IMusicFileLibrary musicFiles)
+    public ModifiedFilesHandler(ILibraryOrganiser organiser, IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher, IMusicFileLibrary musicFileLibrary)
     {
         _organiser = organiser;
         _dataAccess = dataAccess;
         _fileFetcher = fileFetcher;
-        _musicFiles = musicFiles;
+        _musicFileLibrary = musicFileLibrary;
     }
 
-    public async Task Sync()
+    public async Task Run()
     {
         var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
-        var filepaths = await _fileFetcher.GetAddedFiles();
+        var updatesFetched = DateTime.Now;
 
-        foreach (var filePath in filepaths)
+        var filepaths = await _fileFetcher.GetModifiedFiles();
+
+        foreach (var filepath in filepaths)
         {
-            Console.WriteLine($"Adding file {filePath}");
+            Console.WriteLine($"Modifying file {filepath}");
 
-            var data = _musicFiles.GetFileData(filePath);
+            var data = _musicFileLibrary.GetFileData(filepath);
 
             _organiser.MergeArtist(jsonItems.Artists, data.TrackArtist);
+
             if (data.AlbumArtist.Id != data.TrackArtist.Id)
             {
                 _organiser.MergeArtist(jsonItems.Artists, data.AlbumArtist);
@@ -44,5 +47,7 @@ public class AddedFilesHandler : IAddedFilesHandler
         _organiser.RemoveOrphanedItems(jsonItems);
 
         await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
+
+        await _fileFetcher.UpdateTimeModifiedFilesUpdated(updatesFetched);
     }
 }

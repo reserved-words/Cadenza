@@ -1,6 +1,6 @@
 ﻿using Cadenza.Local.Common.Interfaces;
 
-namespace Cadenza.Local.Services.FileProcessors;
+namespace Cadenza.Local.Services;
 
 public class LocalFileUpdater : ILocalFilesUpdater
 {

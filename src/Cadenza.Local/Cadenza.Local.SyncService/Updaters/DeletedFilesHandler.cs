@@ -1,9 +1,9 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.FileProcessors;
+﻿using Cadenza.Domain;
+using Cadenza.Local.Common.Interfaces;
 
-namespace Cadenza.Local.Services.FileProcessors;
+namespace Cadenza.Local.SyncService.Updaters;
 
-public class DeletedFilesHandler : IDeletedFilesHandler
+public class DeletedFilesHandler : IUpdateService
 {
     private readonly IDataAccess _dataAccess;
     private readonly IUpdatedFilesFetcher _fileFetcher;
@@ -16,7 +16,7 @@ public class DeletedFilesHandler : IDeletedFilesHandler
         _dataAccess = dataAccess;
     }
 
-    public async Task Sync()
+    public async Task Run()
     {
         var filepaths = await _fileFetcher.GetRemovedFiles();
 

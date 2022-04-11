@@ -1,10 +1,9 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.FileProcessors;
-using Cadenza.Local.Common.Model;
+﻿using Cadenza.Domain;
+using Cadenza.Local.Common.Interfaces;
 
-namespace Cadenza.Local.Services.FileProcessors;
+namespace Cadenza.Local.SyncService.Updaters;
 
-public class UpdateQueueHandler : IUpdateQueueHandler
+public class UpdateQueueHandler : IUpdateService
 {
     private readonly IFileUpdateService _service;
     private readonly ILocalFilesUpdater _updater;
@@ -15,7 +14,7 @@ public class UpdateQueueHandler : IUpdateQueueHandler
         _updater = udpater;
     }
 
-    public async Task Process()
+    public async Task Run()
     {
         var queue = await _service.Get();
 

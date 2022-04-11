@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cadenza.Local.SyncService
+namespace Cadenza.Local.SyncService._Startup
 {
     public static class Configuration
     {
@@ -17,7 +17,7 @@ namespace Cadenza.Local.SyncService
                 .AddJsonFile(settingsPath, false)
                 .Build();
 
-            services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton(configuration);
 
             services
                 .ConfigureLogger(configuration, "Logging")
