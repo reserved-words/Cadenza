@@ -1,11 +1,12 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.Converters;
-using Cadenza.Local.Common.Model.Id3;
+﻿using Cadenza.Domain;
 using Cadenza.Local.Common.Model.Json;
+using Cadenza.Local.MusicFiles.Interfaces;
+using Cadenza.Local.MusicFiles.Model;
+using Cadenza.Utilities;
 
-namespace Cadenza.Local.Services;
+namespace Cadenza.Local.MusicFiles.Services;
 
-public class Id3ToJsonConverter : IId3ToJsonConverter
+internal class Id3ToJsonConverter : IId3ToJsonConverter
 {
     private readonly IBase64Converter _base64Converter;
     private readonly IIdGenerator _idGenerator;

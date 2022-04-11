@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Local.Common", "Cad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Spotify", "Cadenza.API\Cadenza.Spotify\Cadenza.Spotify.csproj", "{2359FA99-2838-40B5-97F3-43ED4B5C1B80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Local.MusicFiles", "Cadenza.Local\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj", "{0EB56250-A515-46A9-9146-841302E1F484}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{2359FA99-2838-40B5-97F3-43ED4B5C1B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2359FA99-2838-40B5-97F3-43ED4B5C1B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2359FA99-2838-40B5-97F3-43ED4B5C1B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EB56250-A515-46A9-9146-841302E1F484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EB56250-A515-46A9-9146-841302E1F484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EB56250-A515-46A9-9146-841302E1F484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EB56250-A515-46A9-9146-841302E1F484}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{5AFF2F0D-8FA9-4555-A8A1-0D16D4F69176} = {1A9C254D-ECF6-42A9-BAC1-F1678E8DBBBD}
 		{07997B30-8E6C-4361-8C0E-490EB0CDB7F6} = {8F390E8D-A249-454A-8446-6E9443D96585}
 		{2359FA99-2838-40B5-97F3-43ED4B5C1B80} = {89F6ECE8-7907-4F76-9165-39696EA42F68}
+		{0EB56250-A515-46A9-9146-841302E1F484} = {8F390E8D-A249-454A-8446-6E9443D96585}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC17F3E1-56B9-47E8-83C4-C7358F820CD1}

@@ -7,9 +7,9 @@ namespace Cadenza.Local.Services.FileProcessors;
 public class UpdateQueueHandler : IUpdateQueueHandler
 {
     private readonly IFileUpdateService _service;
-    private readonly IId3Updater _updater;
+    private readonly IMusicFilesUpdater _updater;
 
-    public UpdateQueueHandler(IFileUpdateService service, IId3Updater udpater)
+    public UpdateQueueHandler(IFileUpdateService service, IMusicFilesUpdater udpater)
     {
         _service = service;
         _updater = udpater;
@@ -54,37 +54,42 @@ public class UpdateQueueHandler : IUpdateQueueHandler
 
     private async Task ProcessUpdates(LibraryItemType itemType, string id, List<ItemPropertyUpdate> updates)
     {
-        List<ItemPropertyUpdateResult> results;
-
-        switch (itemType)
+        try
         {
-            case LibraryItemType.Artist:
-                results = await _updater.UpdateArtist(id, updates);
-                break;
-            case LibraryItemType.Album:
-                results = await _updater.UpdateAlbum(id, updates);
-                break;
-            case LibraryItemType.Track:
-                results = await _updater.UpdateTrack(id, updates);
-                break;
-            default:
-                throw new NotImplementedException();
-        }
+            switch (itemType)
+            {
+                case LibraryItemType.Artist:
+                    await _updater.UpdateArtist(id, updates);
+                    break;
+                case LibraryItemType.Album:
+                    await _updater.UpdateAlbum(id, updates);
+                    break;
+                case LibraryItemType.Track:
+                    await _updater.UpdateTrack(id, updates);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
 
-        MarkProcessed(results);
+            MarkProcessed(updates, null);
+        }
+        catch (Exception ex)
+        {
+            MarkProcessed(updates, ex);
+        }
     }
 
-    private void MarkProcessed(List<ItemPropertyUpdateResult> results)
+    private void MarkProcessed(List<ItemPropertyUpdate> updates, Exception error)
     {
-        foreach (var result in results)
+        foreach (var update in updates)
         {
-            if (result.Completed)
+            if (error == null)
             {
-                _service.Remove(result.Update);
+                _service.Remove(update);
             }
-            else if (result.Error != null)
+            else
             {
-                _service.LogError(result.Update, result.Error);
+                _service.LogError(update, error);
             }
         }
     }

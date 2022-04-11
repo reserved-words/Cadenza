@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Local.Common.Model.Id3;
+﻿namespace Cadenza.Local.MusicFiles.Model;
 
-public class AlbumId3Data
+internal class AlbumId3Data
 {
     public string Title { get; set; }
     public string SortTitle { get; set; }

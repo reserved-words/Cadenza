@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
 
-namespace Cadenza.Local.Services.Converters;
+namespace Cadenza.Local.MusicFiles.Extensions;
 
-public static class XElementExtensionMethods
+internal static class XElementExtensions
 {
     public static string GetValue(this XElement xml, string key)
     {

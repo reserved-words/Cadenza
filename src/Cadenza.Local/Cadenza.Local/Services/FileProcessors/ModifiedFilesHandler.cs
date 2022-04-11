@@ -1,5 +1,4 @@
 ﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.Common.Interfaces.FileProcessors;
 
 namespace Cadenza.Local.Services.FileProcessors;
@@ -7,20 +6,16 @@ namespace Cadenza.Local.Services.FileProcessors;
 public class ModifiedFilesHandler : IModifiedFilesHandler
 {
     private readonly IUpdatedFilesFetcher _fileFetcher;
-    private readonly IId3TagsService _id3Service;
-
     private readonly IDataAccess _dataAccess;
-    private readonly IId3ToJsonConverter _converter;
     private readonly ILibraryOrganiser _organiser;
+    private readonly IMusicFileLibrary _musicFileLibrary;
 
-    public ModifiedFilesHandler(IId3TagsService id3Service, ILibraryOrganiser organiser, IId3ToJsonConverter converter,
-        IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher)
+    public ModifiedFilesHandler(ILibraryOrganiser organiser, IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher, IMusicFileLibrary musicFileLibrary)
     {
-        _id3Service = id3Service;
         _organiser = organiser;
-        _converter = converter;
         _dataAccess = dataAccess;
         _fileFetcher = fileFetcher;
+        _musicFileLibrary = musicFileLibrary;
     }
 
     public async Task Sync()
@@ -31,29 +26,22 @@ public class ModifiedFilesHandler : IModifiedFilesHandler
 
         var filepaths = await _fileFetcher.GetModifiedFiles();
 
-        foreach (var filePath in filepaths)
+        foreach (var filepath in filepaths)
         {
-            Console.WriteLine($"Modifying file {filePath}");
+            Console.WriteLine($"Modifying file {filepath}");
 
-            var id3Track = _id3Service.GetId3Data(filePath);
+            var data = _musicFileLibrary.GetFileData(filepath);
 
-            var newTrackArtist = _converter.ConvertTrackArtist(id3Track);
-            _organiser.MergeArtist(jsonItems.Artists, newTrackArtist);
+            _organiser.MergeArtist(jsonItems.Artists, data.TrackArtist);
 
-            var newAlbumArtist = _converter.ConvertAlbumArtist(id3Track);
-            if (newAlbumArtist.Id != newTrackArtist.Id)
+            if (data.AlbumArtist.Id != data.TrackArtist.Id)
             {
-                _organiser.MergeArtist(jsonItems.Artists, newAlbumArtist);
+                _organiser.MergeArtist(jsonItems.Artists, data.AlbumArtist);
             }
 
-            var newTrack = _converter.ConvertTrack(id3Track);
-            _organiser.MergeTrack(jsonItems.Tracks, jsonItems.Artists, newTrack);
-
-            var newAlbum = _converter.ConvertAlbum(id3Track);
-            _organiser.MergeAlbum(jsonItems.Albums, jsonItems.Artists, newAlbum);
-
-            var newAlbumTrackLink = _converter.ConvertAlbumTrackLink(newTrack.Id, id3Track);
-            _organiser.MergeAlbumTrackLink(jsonItems.AlbumTrackLinks, newAlbumTrackLink);
+            _organiser.MergeTrack(jsonItems.Tracks, jsonItems.Artists, data.Track);
+            _organiser.MergeAlbum(jsonItems.Albums, jsonItems.Artists, data.Album);
+            _organiser.MergeAlbumTrackLink(jsonItems.AlbumTrackLinks, data.AlbumTrackLink);
         }
 
         _organiser.RemoveOrphanedItems(jsonItems);

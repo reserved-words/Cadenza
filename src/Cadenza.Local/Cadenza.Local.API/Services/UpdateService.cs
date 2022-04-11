@@ -8,7 +8,7 @@ namespace Cadenza.Local.API;
 
 public class UpdateService : IUpdateService
 {
-    private readonly IFileUpdateService _id3UpdateQueue;
+    private readonly IFileUpdateService _localFileUpdateQueue;
     private readonly ILibrary _library;
     private readonly IAlbumCache _albumCache;
     private readonly IArtistCache _artistCache;
@@ -16,7 +16,7 @@ public class UpdateService : IUpdateService
 
     public UpdateService(IFileUpdateService updateQueue, ILibrary library, IArtistCache artistCache, IAlbumCache albumCache, ITrackCache trackCache)
     {
-        _id3UpdateQueue = updateQueue;
+        _localFileUpdateQueue = updateQueue;
         _library = library;
         _artistCache = artistCache;
         _albumCache = albumCache;
@@ -25,7 +25,7 @@ public class UpdateService : IUpdateService
 
     public async Task<FileUpdateQueue> GetUpdates()
     {
-        return await _id3UpdateQueue.Get();
+        return await _localFileUpdateQueue.Get();
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)
@@ -43,7 +43,7 @@ public class UpdateService : IUpdateService
 
         foreach (var updatedItem in update.Updates)
         {
-            await _id3UpdateQueue.Add(updatedItem);
+            await _localFileUpdateQueue.Add(updatedItem);
         }
     }
 
@@ -58,7 +58,7 @@ public class UpdateService : IUpdateService
         await _library.UpdateArtist(update);
         foreach (var updatedItem in update.Updates)
         {
-            await _id3UpdateQueue.Add(updatedItem);
+            await _localFileUpdateQueue.Add(updatedItem);
         }
     }
 
@@ -77,7 +77,7 @@ public class UpdateService : IUpdateService
 
         foreach (var updatedItem in update.Updates)
         {
-            await _id3UpdateQueue.Add(updatedItem);
+            await _localFileUpdateQueue.Add(updatedItem);
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Model.Id3;
+﻿using Cadenza.Local.MusicFiles.Interfaces;
+using Cadenza.Local.MusicFiles.Model;
+using Cadenza.Utilities;
 using TagLib;
 
-namespace Cadenza.Local.Services;
+namespace Cadenza.Local.MusicFiles.Services;
 
-public class Id3TagsService : IId3TagsService
+internal class Id3TagsService : IId3TagsService
 {
     private static Dictionary<string, string> _artistNameExceptions = new Dictionary<string, string> {
             { "", "No Artist" },

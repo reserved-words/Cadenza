@@ -3,6 +3,7 @@ using Cadenza.Local.API.Interfaces;
 using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Interfaces.Cache;
 using Cadenza.Local.Common.Interfaces.Converters;
+using Cadenza.Local.MusicFiles;
 using Cadenza.Local.Services;
 using Cadenza.Local.Services.Cache;
 using Cadenza.Local.Services.Converters;
@@ -33,10 +34,9 @@ public static class Dependencies
         services
             .AddUtilities()
             .AddLogger()
-            .AddTransient<ICommentProcessor, CommentProcessor>()
+            .AddMusicFileLibrary()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
-            .AddTransient<IId3TagsService, Id3TagsService>()
             .AddTransient<IJsonConverter, JsonConverter>()
             .AddTransient<IJsonMerger, JsonMerger>()
             .AddTransient<IFileUpdateService, FileUpdateService>()

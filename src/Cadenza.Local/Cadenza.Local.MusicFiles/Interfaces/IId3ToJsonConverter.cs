@@ -1,9 +1,9 @@
-﻿using Cadenza.Local.Common.Model.Id3;
-using Cadenza.Local.Common.Model.Json;
+﻿using Cadenza.Local.Common.Model.Json;
+using Cadenza.Local.MusicFiles.Model;
 
-namespace Cadenza.Local.Common.Interfaces.Converters;
+namespace Cadenza.Local.MusicFiles.Interfaces;
 
-public interface IId3ToJsonConverter
+internal interface IId3ToJsonConverter
 {
     JsonArtist ConvertAlbumArtist(Id3Data id3Data);
     JsonAlbum ConvertAlbum(Id3Data id3Data);

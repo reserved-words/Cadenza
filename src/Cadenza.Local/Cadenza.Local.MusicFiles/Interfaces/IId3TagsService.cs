@@ -1,8 +1,8 @@
-﻿using Cadenza.Local.Common.Model.Id3;
+﻿using Cadenza.Local.MusicFiles.Model;
 
-namespace Cadenza.Local.Common.Interfaces;
+namespace Cadenza.Local.MusicFiles.Interfaces;
 
-public interface IId3TagsService
+internal interface IId3TagsService
 {
     Id3Data GetId3Data(string filepath);
 

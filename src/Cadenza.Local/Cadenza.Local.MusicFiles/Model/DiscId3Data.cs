@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Local.Common.Model.Id3;
+﻿namespace Cadenza.Local.MusicFiles.Model;
 
-public class DiscId3Data
+internal class DiscId3Data
 {
     public int TrackCount { get; set; }
     public int DiscNo { get; set; }
