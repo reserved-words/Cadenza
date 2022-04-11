@@ -34,7 +34,7 @@ public static class Dependencies
         services
             .AddUtilities()
             .AddLogger()
-            .AddMusicFileLibrary()
+            .AddMusicFileArtwork()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IJsonConverter, JsonConverter>()

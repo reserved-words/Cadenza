@@ -2,7 +2,7 @@
 
 namespace Cadenza.Local.Common.Interfaces;
 
-public interface IMusicFilesUpdater
+public interface ILocalFilesUpdater
 {
     Task UpdateArtist(string id, List<ItemPropertyUpdate> updates);
     Task UpdateAlbum(string id, List<ItemPropertyUpdate> updates);

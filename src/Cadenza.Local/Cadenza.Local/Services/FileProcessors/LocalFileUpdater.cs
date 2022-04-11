@@ -2,13 +2,13 @@
 
 namespace Cadenza.Local.Services.FileProcessors;
 
-public class MusicFilesUpdater : IMusicFilesUpdater
+public class LocalFileUpdater : ILocalFilesUpdater
 {
     private readonly IBase64Converter _base64Converter;
     private readonly IMusicFileLibrary _musicFileFilbrary;
     private readonly IDataAccess _dataAccess;
 
-    public MusicFilesUpdater(IDataAccess dataAccess, IBase64Converter base64Converter, IMusicFileLibrary musicFileFilbrary)
+    public LocalFileUpdater(IDataAccess dataAccess, IBase64Converter base64Converter, IMusicFileLibrary musicFileFilbrary)
     {
         _dataAccess = dataAccess;
         _base64Converter = base64Converter;

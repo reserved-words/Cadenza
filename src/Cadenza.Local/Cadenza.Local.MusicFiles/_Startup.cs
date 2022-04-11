@@ -14,4 +14,11 @@ public static class _Startup
             .AddTransient<IId3ToJsonConverter, Id3ToJsonConverter>()
             .AddTransient<IMusicFileLibrary, MusicFileLibrary>();
     }
+
+    public static IServiceCollection AddMusicFileArtwork(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IId3TagsService, Id3TagsService>()
+            .AddTransient<IMusicFileArtworkService, MusicFileArtworkService>();
+    }
 }

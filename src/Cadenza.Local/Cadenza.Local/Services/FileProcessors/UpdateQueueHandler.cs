@@ -7,9 +7,9 @@ namespace Cadenza.Local.Services.FileProcessors;
 public class UpdateQueueHandler : IUpdateQueueHandler
 {
     private readonly IFileUpdateService _service;
-    private readonly IMusicFilesUpdater _updater;
+    private readonly ILocalFilesUpdater _updater;
 
-    public UpdateQueueHandler(IFileUpdateService service, IMusicFilesUpdater udpater)
+    public UpdateQueueHandler(IFileUpdateService service, ILocalFilesUpdater udpater)
     {
         _service = service;
         _updater = udpater;

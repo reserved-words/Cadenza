@@ -30,7 +30,7 @@ public static class Services
            .AddTransient<IDataAccess, DataAccess>()
            .AddTransient<IFileAccess, FileAccess>()
            .AddTransient<IFileUpdateService, FileUpdateService>()
-           .AddTransient<IMusicFilesUpdater, MusicFilesUpdater>()
+           .AddTransient<ILocalFilesUpdater, LocalFileUpdater>()
            .AddTransient<IJsonConverter, JsonConverter>()
            .AddTransient<IJsonMerger, JsonMerger>()
            .AddTransient<ILibraryOrganiser, LibraryOrganiser>()

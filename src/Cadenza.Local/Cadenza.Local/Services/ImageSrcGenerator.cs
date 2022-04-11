@@ -5,9 +5,9 @@ namespace Cadenza.Local.Services;
 public class ImageSrcGenerator : IImageSrcGenerator
 {
     private readonly IBase64Converter _base64Converter;
-    private readonly IMusicFileLibrary _musicFileLibrary;
+    private readonly IMusicFileArtworkService _musicFileLibrary;
 
-    public ImageSrcGenerator(IBase64Converter base64Converter, IMusicFileLibrary musicFileLibrary)
+    public ImageSrcGenerator(IBase64Converter base64Converter, IMusicFileArtworkService musicFileLibrary)
     {
         _base64Converter = base64Converter;
         _musicFileLibrary = musicFileLibrary;

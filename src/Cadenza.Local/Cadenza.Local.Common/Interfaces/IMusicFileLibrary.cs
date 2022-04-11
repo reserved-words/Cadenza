@@ -7,5 +7,4 @@ public interface IMusicFileLibrary
 {
     JsonFileData GetFileData(string filepath);
     void UpdateFileData(string filepath, List<ItemPropertyUpdate> updates);
-    (byte[] Bytes, string Type) GetArtwork(string filepath);
 }
