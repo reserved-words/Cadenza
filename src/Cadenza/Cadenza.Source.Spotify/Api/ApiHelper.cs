@@ -26,6 +26,8 @@ internal class ApiHelper : IApiHelper
 
         if (response.IsSuccessStatusCode)
         {
+            var test = await response.Content.ReadAsStringAsync();
+
             var data = response.StatusCode == HttpStatusCode.NoContent
                 ? null
                 : await response.Content.ReadFromJsonAsync<T>();

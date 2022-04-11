@@ -221,4 +221,19 @@ public class ApiLibrary : ISpotifyLibrary
             })
             .ToList();
     }
+
+    public async Task<List<SpotifyAlbum>> GetArtistAlbums(string artistId)
+    {
+        var searchResults = await _api.GetArtistAlbums(artistId);
+        return searchResults
+            .Select(a => new SpotifyAlbum
+            {
+                Id = a.id,
+                Title = a.name,
+                Artist = a.artists.First().name,
+                Year = GetReleaseYear(a),
+                ArtworkUrl = a.images.FirstOrDefault()?.url
+            })
+            .ToList();
+    }
 }

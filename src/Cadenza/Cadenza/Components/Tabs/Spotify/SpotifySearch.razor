@@ -16,13 +16,13 @@
             <MudContainer Class="mx-0 my-3 pa-0">
                 @if (Searching)
                 {
-                    <MudPaper Class="pa-3">
+                    <MudPaper Class="pa-3" Elevation=1>
                         <MudText Typo="@Typo.body1">Searching...</MudText>
                     </MudPaper>
                 }
                 else if (!ArtistSearchResults.Any())
                 {
-                    <MudPaper Class="px-3 py-0">
+                    <MudPaper Class="pa-3" Elevation=1>
                         <MudText Typo="@Typo.body1">No results found</MudText>
                     </MudPaper>
                 }
@@ -33,7 +33,7 @@
                            Items="@ArtistSearchResults">
                             <RowTemplate>
                                 <MudTd>
-                                    <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnViewArtist(context.Id))" Color="@Color.Dark">
+                                    <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnViewArtist(context))" Color="@Color.Dark">
                                         @context.Name
                                     </MudLink>
                                 </MudTd>

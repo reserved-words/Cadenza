@@ -1,0 +1,29 @@
+﻿@inherits SpotifyArtistViewBase
+
+<WhipDialog Cancel="Cancel" CancelCaption="Close">
+
+    <ChildContent>
+        <MudCard Elevation="0" Class="pa-0 ma-0">
+
+            <MudGrid Spacing="1">
+                @foreach (var item in Model.Albums)
+                {
+                    <MudItem xs="3" sm="2">
+                        <MudCard Elevation="1"
+                             Class="pa-0 ma-0">
+                            <img class="artwork" src="@item.ArtworkUrl" />
+                            <MudCardContent Class="pa-2">
+                                <MudText Typo="Typo.body1">@item.Title</MudText>
+                                <MudText Typo="Typo.body2">@item.Artist</MudText>
+                                <MudText Typo="Typo.body2">@item.Year</MudText>
+                            </MudCardContent>
+                        </MudCard>
+
+                    </MudItem>
+                }
+            </MudGrid>
+
+        </MudCard>
+    </ChildContent>
+
+</WhipDialog>

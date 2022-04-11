@@ -1,9 +1,14 @@
-﻿namespace Cadenza.Components.Tabs.Spotify;
+﻿using Cadenza.Components.Shared.Dialogs;
+
+namespace Cadenza.Components.Tabs.Spotify;
 
 public class SpotifySearchBase : ComponentBase
 {
     [Inject]
     public ISpotifyLibrary Library { get; set; }
+
+    [Inject]
+    public IDialogService DialogService { get; set; }
 
     public bool Searching { get; set; }
 
@@ -24,8 +29,15 @@ public class SpotifySearchBase : ComponentBase
         Searching = false;
     }
 
-    public async Task OnViewArtist(string id)
+    public async Task OnViewArtist(SpotifyArtist artist)
     {
+        var albums = await Library.GetArtistAlbums(artist.Id);
+        var artistProfile = new SpotifyArtistProfile
+        {
+            Artist = artist,
+            Albums = albums
+        };
 
+        await DialogService.Display<SpotifyArtistView, SpotifyArtistProfile>(artistProfile, $"Spotify Artist - {artist.Name}");
     }
 }

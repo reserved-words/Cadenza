@@ -13,12 +13,19 @@ internal class ApiCaller : IApiCaller
     private const string PlaylistsUrl = "https://api.spotify.com/v1/me/playlists?limit=50&fields=total,next,items";
     private const string PlaylistTracksUrl = "https://api.spotify.com/v1/playlists/{0}/tracks?limit=50&fields=total,next,items(track)";
     private const string SearchArtistsUrl = "https://api.spotify.com/v1/search?q={0}&type=artist";
+    private const string ArtistAlbumsUrl = "https://api.spotify.com/v1/artists/{0}/albums?include_groups=album&limit=50&market=GB";
 
     private readonly IApiHelper _api;
 
     public ApiCaller(IApiHelper api)
     {
         _api = api;
+    }
+
+    public async Task<List<SpotifyApiAlbum>> GetArtistAlbums(string artistId)
+    {
+        var url = string.Format(ArtistAlbumsUrl, artistId);
+        return await GetListResponse<SpotifyApiAlbum>(url);
     }
 
     public async Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId)
@@ -38,9 +45,9 @@ internal class ApiCaller : IApiCaller
 
     public async Task<List<SpotifyApiArtist>> SearchArtists(string searchText)
     {
-        var uri = string.Format(SearchArtistsUrl, searchText);
-        var data = await GetResponse<SpotifyApiSearchResponse>(uri);
-        return data.Artists.items;
+        var url = string.Format(SearchArtistsUrl, searchText);
+        var data = await GetResponse<SpotifyApiSearchResponse>(url);
+        return data.Artists.items.Where(a => a.name.Equals(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
     }
 
     private async Task<List<T>> GetListResponse<T>(string uri)
