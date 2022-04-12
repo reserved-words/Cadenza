@@ -1,4 +1,4 @@
-﻿using Cadenza.Source.Spotify.Model;
+﻿using Cadenza.Source.Spotify.Api.Model.Auth;
 
 namespace Cadenza.Source.Spotify.Interfaces;
 

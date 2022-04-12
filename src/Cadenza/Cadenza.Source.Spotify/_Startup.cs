@@ -16,6 +16,7 @@ public static class _Startup
         services.Configure<SpotifyApiSettings>(config.GetSection(apiSectionName));
 
         return services
+            .AddSpotifyApi<SpotifyTokenProvider>()
             .AddTransient<IDeviceHelper, DeviceHelper>()
             .AddTransient<IPlayerService, PlayerService>()
             .AddTransient<IProgressService, ProgressService>()

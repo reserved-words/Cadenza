@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Source.Spotify.Model;
+﻿namespace Cadenza.Source.Spotify.Api.Model.Auth;
 
 public class RefreshTokenResponse
 {

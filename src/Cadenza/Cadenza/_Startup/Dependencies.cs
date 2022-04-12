@@ -117,7 +117,6 @@ public static class Dependencies
     private static IServiceCollection AddSources(this IServiceCollection services, IConfiguration config)
     {
         return services
-            .AddSpotifyApi<SpotifyTokenProvider>()
             .AddSpotifySource(config, "SpotifyApi")
             .AddLocalSource<HtmlPlayer>(config, "LocalApi");
     }

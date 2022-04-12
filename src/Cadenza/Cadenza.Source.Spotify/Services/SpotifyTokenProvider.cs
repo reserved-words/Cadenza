@@ -1,13 +1,14 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Interop;
 using Cadenza.Source.Spotify.Api.Interfaces;
-using Cadenza.Source.Spotify.Model;
+using Cadenza.Source.Spotify.Api.Model.Auth;
+using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Settings;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Spotify.Services;
 
-public class SpotifyTokenProvider : ITokenProvider
+internal class SpotifyTokenProvider : ITokenProvider
 {
     private readonly IStoreGetter _storeGetter;
     private readonly IStoreSetter _storeSetter;

@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core;
-using Cadenza.Source.Spotify.Model;
+using Cadenza.Source.Spotify.Api.Model.Auth;
+using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Settings;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
@@ -25,14 +26,14 @@ public class Authoriser : IAuthoriser
         var authHeader = await GetAuthHeader();
         var tokenUrl = await GetTokenUrl();
 
-        var requestData = new Dictionary<string, string>
+        var requestData = new CreateSessionRequest
         {
-            { "code", code },
-            { "redirect_uri", redirectUri },
-            { "grant_type", "authorization_code" }
+            code = code,
+            redirect_uri = redirectUri,
+            grant_type = "authorization_code"
         };
 
-        var response = await _http.Post(tokenUrl, authHeader, requestData);
+        var response = await _http.Post(tokenUrl, authHeader, requestData.AsPostData());
 
         return response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<CreateSessionResponse>()
@@ -53,16 +54,16 @@ public class Authoriser : IAuthoriser
 
     public async Task<RefreshTokenResponse> RefreshSession(string refreshToken)
     {
-        var requestData = new Dictionary<string, string>
+        var requestData = new RefreshTokenRequest
         {
-            { "grant_type", "refresh_token" },
-            { "refresh_token", refreshToken }
+            grant_type = "refresh_token",
+            refresh_token = refreshToken
         };
 
         var authHeader = await GetAuthHeader();
         var tokenUrl = await GetTokenUrl();
 
-        var response = await _http.Post(tokenUrl, authHeader, requestData);
+        var response = await _http.Post(tokenUrl, authHeader, requestData.AsPostData());
 
         return response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<RefreshTokenResponse>()
