@@ -1,4 +1,5 @@
-﻿using Cadenza.Source.Spotify.Api.Interfaces;
+﻿using Cadenza.Source.Spotify.Api.Exceptions;
+using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Api.Internal;
 using Cadenza.Source.Spotify.Api.Model.Player;
 
@@ -25,16 +26,6 @@ internal class PlayerApi : IPlayerApi
 
     public async Task Play(string deviceId, string trackId = null)
     {
-        //try
-        //{
-
-        //}
-        //catch (UnauthorizedApiException)
-        //{
-        //    accessToken = await CreateNewSession();
-        //    await _playerApi.Play(trackId);
-        //}
-
         var data = trackId == null ? null : GetTrackData(trackId);
         await _api.Put(string.Format(PlayUrlFormat, deviceId), data);
     }
@@ -54,18 +45,4 @@ internal class PlayerApi : IPlayerApi
         var response = await _api.Get<SpotifyApiPlayState>(PlayStateUrl);
         return response.Data;
     }
-
-    //private async Task TryPut(string urlFormat, string accessToken, object data = null)
-    //{
-    //    try
-    //    {
-    //        var deviceId = await _devicesApi.GetDeviceId(accessToken, false);
-    //        await _api.Put(string.Format(urlFormat, deviceId), accessToken, data);
-    //    }
-    //    catch (DeviceNotFoundException)
-    //    {
-    //        var deviceId = await _devicesApi.GetDeviceId(accessToken, true);
-    //        await _api.Put(string.Format(urlFormat, deviceId), accessToken, data);
-    //    }
-    //}
 }

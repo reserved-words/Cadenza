@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Spotify.Interfaces;
 
-public interface IPlayerService
+internal interface IPlayerService
 {
     Task<TrackProgress> Pause();
     Task Play(string trackId);

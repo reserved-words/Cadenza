@@ -2,7 +2,7 @@
 
 namespace Cadenza.Source.Spotify.Interfaces;
 
-public interface IProgressService
+internal interface IProgressService
 {
     Task<TrackProgress> GetProgress();
 }

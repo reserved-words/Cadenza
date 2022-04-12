@@ -20,7 +20,7 @@ public class IndexBase : ComponentBase
 
     public bool Playing { get; set; }
 
-    public int FixedTabCount => Playing ? 3 : 2;
+    public int FixedTabCount => Playing ? 4 : 3;
 
     protected bool IsInitalised { get; private set; }
 

@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.Model;
+using Cadenza.Source.Spotify.Api.Exceptions;
 using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Interfaces;
 
@@ -19,28 +20,38 @@ internal class PlayerService : IPlayerService
 
     public async Task<TrackProgress> Stop()
     {
-        var deviceId = await _devicesApi.GetDeviceId(false);
-        await _api.Pause(deviceId);
+        await Try((deviceId) => _api.Pause(deviceId));
         return await _progressApi.GetProgress();
     }
 
     public async Task Play(string trackId)
     {
-        var deviceId = await _devicesApi.GetDeviceId(false);
-        await _api.Play(deviceId, trackId);
+        await Try((deviceId) => _api.Play(deviceId, trackId));
     }
 
     public async Task<TrackProgress> Pause()
     {
-        var deviceId = await _devicesApi.GetDeviceId(false);
-        await _api.Pause(deviceId);
+        await Try((deviceId) => _api.Pause(deviceId));
         return await _progressApi.GetProgress();
     }
 
     public async Task<TrackProgress> Resume()
     {
-        var deviceId = await _devicesApi.GetDeviceId(false);
-        await _api.Play(deviceId);
+        await Try((deviceId) => _api.Play(deviceId));
         return await _progressApi.GetProgress();
+    }
+
+    private async Task Try(Func<string, Task> deviceAction)
+    {
+        try
+        {
+            var deviceId = await _devicesApi.GetDeviceId(false);
+            await deviceAction(deviceId);
+        }
+        catch (NotFoundException)
+        {
+            var deviceId = await _devicesApi.GetDeviceId(true);
+            await deviceAction(deviceId);
+        }
     }
 }
