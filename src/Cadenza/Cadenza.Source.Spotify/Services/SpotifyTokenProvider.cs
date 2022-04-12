@@ -57,7 +57,7 @@ public class SpotifyTokenProvider : ITokenProvider
 
     private async Task<string> GetValidRefreshToken()
     {
-        return await GetValidStoredToken(StoreKey.SpotifyAccessToken);
+        return await GetValidStoredToken(StoreKey.SpotifyRefreshToken);
     }
 
     private async Task<string> GetValidStoredToken(StoreKey key)
