@@ -25,7 +25,7 @@ public static class HttpHelperExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            throw new HttpException();
+            throw new HttpException(response);
         }
 
         return await response.Content.ReadAsStringAsync();
@@ -35,7 +35,7 @@ public static class HttpHelperExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            throw new HttpException();
+            throw new HttpException(response);
         }
 
         return await response.Content.ReadFromJsonAsync<T>();
@@ -45,7 +45,7 @@ public static class HttpHelperExtensions
     {
         if (!response.IsSuccessStatusCode)
         {
-            throw new HttpException();
+            throw new HttpException(response);
         }
     }
 }

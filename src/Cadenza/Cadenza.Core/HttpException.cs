@@ -2,11 +2,9 @@
 
 public class HttpException : Exception
 {
-    // TODO: Less generic error message
-    public HttpException(HttpExceptionType type = HttpExceptionType.UnexpectedError)
-        : base("Failed to connect to Cadenza API")
+    public HttpException(HttpResponseMessage response)
+        : base($"{response.StatusCode} ({response.RequestMessage.RequestUri})")
     {
-        Type = type;
     }
 
     public HttpExceptionType Type { get; }
