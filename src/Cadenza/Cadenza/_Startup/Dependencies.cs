@@ -13,6 +13,8 @@ using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
 using Cadenza.Source.Spotify.Libraries;
+using Cadenza.Source.Spotify.Services;
+using Cadenza.Source.Spotify.Api;
 
 namespace Cadenza;
 
@@ -115,6 +117,7 @@ public static class Dependencies
     private static IServiceCollection AddSources(this IServiceCollection services, IConfiguration config)
     {
         return services
+            .AddSpotifyApi<SpotifyTokenProvider>()
             .AddSpotifySource(config, "SpotifyApi")
             .AddLocalSource<HtmlPlayer>(config, "LocalApi");
     }

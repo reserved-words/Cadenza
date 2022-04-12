@@ -53,7 +53,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Local.Common", "Cad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Spotify", "Cadenza.API\Cadenza.Spotify\Cadenza.Spotify.csproj", "{2359FA99-2838-40B5-97F3-43ED4B5C1B80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Local.MusicFiles", "Cadenza.Local\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj", "{0EB56250-A515-46A9-9146-841302E1F484}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Local.MusicFiles", "Cadenza.Local\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj", "{0EB56250-A515-46A9-9146-841302E1F484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Source.Spotify.Api", "Cadenza.Source.Spotify.Api\Cadenza.Source.Spotify.Api.csproj", "{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +139,10 @@ Global
 		{0EB56250-A515-46A9-9146-841302E1F484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EB56250-A515-46A9-9146-841302E1F484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EB56250-A515-46A9-9146-841302E1F484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,6 +169,7 @@ Global
 		{07997B30-8E6C-4361-8C0E-490EB0CDB7F6} = {8F390E8D-A249-454A-8446-6E9443D96585}
 		{2359FA99-2838-40B5-97F3-43ED4B5C1B80} = {89F6ECE8-7907-4F76-9165-39696EA42F68}
 		{0EB56250-A515-46A9-9146-841302E1F484} = {8F390E8D-A249-454A-8446-6E9443D96585}
+		{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A} = {48E201A1-2F02-4424-A3B7-0E92564A19E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC17F3E1-56B9-47E8-83C4-C7358F820CD1}

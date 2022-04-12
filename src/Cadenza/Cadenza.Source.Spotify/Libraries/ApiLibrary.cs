@@ -2,7 +2,7 @@
 using Cadenza.Domain;
 using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Api.Model.Albums;
-using Cadenza.Source.Spotify.Api.Model.Common;
+using Cadenza.Source.Spotify.Api.Model.Artist;
 using Cadenza.Source.Spotify.Api.Model.Playlists;
 using Cadenza.Utilities;
 
@@ -11,19 +11,21 @@ namespace Cadenza.Source.Spotify.Libraries;
 public class ApiLibrary : ISpotifyLibrary
 {
     private readonly IIdGenerator _idGenerator;
-    private readonly IApiCaller _api;
+    private readonly ISearchApi _searchApi;
+    private readonly IUserApi _userApi;
 
-    public ApiLibrary(IApiCaller api, IIdGenerator idGenerator)
+    public ApiLibrary(IUserApi userApi, IIdGenerator idGenerator, ISearchApi searchApi)
     {
-        _api = api;
+        _userApi = userApi;
         _idGenerator = idGenerator;
+        _searchApi = searchApi;
     }
 
     public async Task<FullLibrary> Get()
     {
         var library = new FullLibrary();
 
-        var albumsResponse = await _api.GetUserAlbums();
+        var albumsResponse = await _userApi.GetUserAlbums();
 
         foreach (var item in albumsResponse)
         {
@@ -42,11 +44,11 @@ public class ApiLibrary : ISpotifyLibrary
             }
         }
 
-        var playlists = await _api.GetUserPlaylists();
+        var playlists = await _userApi.GetUserPlaylists();
 
         foreach (var playlist in playlists)
         {
-            var tracks = await _api.GetPlaylistTracks(playlist.id);
+            var tracks = await _searchApi.GetPlaylistTracks(playlist.id);
 
             var trackArtists = new List<ArtistInfo>();
 
@@ -212,11 +214,11 @@ public class ApiLibrary : ISpotifyLibrary
 
     public async Task AddAlbum(string id)
     {
-        await _api.AddAlbum(id);
+        await _userApi.AddAlbum(id);
     }
 
     public async Task AddPlaylist(string id)
     {
-        await _api.AddPlaylist(id);
+        await _userApi.AddPlaylist(id);
     }
 }

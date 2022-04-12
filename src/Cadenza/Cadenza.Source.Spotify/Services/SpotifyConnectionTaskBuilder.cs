@@ -1,19 +1,19 @@
 ﻿using Cadenza.Core.Common;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
-using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Api.Interfaces;
 
 namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
 {
     private readonly IConnectorController _connectorController;
-    private readonly ISpotifyAuthHelper _authHelper;
+    private readonly ITokenProvider _tokenProvider;
 
-    public SpotifyConnectionTaskBuilder(IConnectorController connectorController, ISpotifyAuthHelper authHelper)
+    public SpotifyConnectionTaskBuilder(IConnectorController connectorController, ITokenProvider tokenProvider)
     {
         _connectorController = connectorController;
-        _authHelper = authHelper;
+        _tokenProvider = tokenProvider;
     }
 
     public SubTask GetConnectionTask()
@@ -27,7 +27,7 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
             OnCompleted = () => _connectorController.SetStatus(Connector.Spotify, ConnectorStatus.Connected)
         };
 
-        subTask.AddStep("Creating session", _authHelper.GetAccessToken);
+        subTask.AddStep("Creating session", () => _tokenProvider.GenerateTokens(false));
 
         return subTask;
     }

@@ -8,9 +8,9 @@ namespace Cadenza.Source.Spotify.Libraries;
 
 public class ApiSearcher : ISpotifySearcher
 {
-    private readonly IApiCaller _api;
+    private readonly ISearchApi _api;
 
-    public ApiSearcher(IApiCaller api)
+    public ApiSearcher(ISearchApi api)
     {
         _api = api;
     }

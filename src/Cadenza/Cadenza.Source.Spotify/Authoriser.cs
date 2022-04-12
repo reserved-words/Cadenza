@@ -20,7 +20,7 @@ public class Authoriser : IAuthoriser
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task<SpotifyTokens> CreateSession(string code, string redirectUri)
+    public async Task<CreateSessionResponse> CreateSession(string code, string redirectUri)
     {
         var authHeader = await GetAuthHeader();
         var tokenUrl = await GetTokenUrl();
@@ -34,7 +34,9 @@ public class Authoriser : IAuthoriser
 
         var response = await _http.Post(tokenUrl, authHeader, requestData);
 
-        return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<CreateSessionResponse>()
+            : null;
     }
 
     public async Task<string> GetAuthHeader()
@@ -49,7 +51,7 @@ public class Authoriser : IAuthoriser
         return await _http.GetString(url);
     }
 
-    public async Task<SpotifyTokens> RefreshSession(string refreshToken)
+    public async Task<RefreshTokenResponse> RefreshSession(string refreshToken)
     {
         var requestData = new Dictionary<string, string>
         {
@@ -62,7 +64,9 @@ public class Authoriser : IAuthoriser
 
         var response = await _http.Post(tokenUrl, authHeader, requestData);
 
-        return await response.Content.ReadFromJsonAsync<SpotifyTokens>();
+        return response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<RefreshTokenResponse>()
+            : null;
     }
 
     private async Task<string> GetTokenUrl()

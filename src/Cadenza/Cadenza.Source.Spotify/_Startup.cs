@@ -16,17 +16,14 @@ public static class _Startup
         services.Configure<SpotifyApiSettings>(config.GetSection(apiSectionName));
 
         return services
-            .AddTransient<IApiHelper, ApiHelper>()
             .AddTransient<IDeviceHelper, DeviceHelper>()
-            .AddTransient<IDevicesApi, DevicesApi>()
-            .AddTransient<IPlayerApi, PlayerApi>()
-            .AddTransient<IProgressApi, ProgressApi>()
-            .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
+            .AddTransient<IPlayerService, PlayerService>()
+            .AddTransient<IProgressService, ProgressService>()
+            .AddTransient<ITokenProvider, SpotifyTokenProvider>()
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
-            .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IApiCaller, ApiCaller>();
+            .AddTransient<IAuthoriser, Authoriser>();
 ;
     }
 }

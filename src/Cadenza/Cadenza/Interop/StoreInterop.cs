@@ -43,9 +43,9 @@ public class StoreInterop : IStoreGetter, IStoreSetter
         return JsonConvert.DeserializeObject<StoredValue<T>>(json);
     }
 
-    public async Task SetValue<T>(StoreKey key, T value)
+    public async Task SetValue<T>(StoreKey key, T value, int? expiresInSeconds = null)
     {
-        var storedValue = new StoredValue<T>(value);
+        var storedValue = new StoredValue<T>(value, expiresInSeconds);
         var json = JsonConvert.SerializeObject(storedValue);
         await _js.InvokeVoidAsync("setStoredValue", key.ToString(), json);
     }
