@@ -24,7 +24,8 @@ public static class _Startup
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
-            .AddTransient<IAuthoriser, Authoriser>();
+            .AddTransient<IAuthoriser, Authoriser>()
+            .AddTransient<ISpotifySession, SpotifySession>();
 ;
     }
 }

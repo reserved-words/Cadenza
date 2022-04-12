@@ -1,7 +1,5 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.Interop;
+﻿using Cadenza.Core.Interop;
 using Cadenza.Source.Spotify.Api.Interfaces;
-using Cadenza.Source.Spotify.Api.Model.Auth;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Settings;
 using Microsoft.Extensions.Options;
@@ -10,16 +8,14 @@ namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyTokenProvider : ITokenProvider
 {
-    private readonly IStoreGetter _storeGetter;
-    private readonly IStoreSetter _storeSetter;
+    private readonly ISpotifySession _session;
     private readonly SpotifyApiSettings _settings;
     private readonly IAuthoriser _authoriser;
     private readonly INavigation _navigationInterop;
 
-    public SpotifyTokenProvider(IStoreGetter storeGetter, IStoreSetter storeSetter, IOptions<SpotifyApiSettings> settings, IAuthoriser authoriser, INavigation navigation)
+    public SpotifyTokenProvider(ISpotifySession session, IOptions<SpotifyApiSettings> settings, IAuthoriser authoriser, INavigation navigation)
     {
-        _storeGetter = storeGetter;
-        _storeSetter = storeSetter;
+        _session = session;
         _settings = settings.Value;
         _authoriser = authoriser;
         _navigationInterop = navigation;
@@ -28,19 +24,19 @@ internal class SpotifyTokenProvider : ITokenProvider
     public async Task<string> GetAccessToken(bool renew)
     {
         await GenerateTokens(renew);
-        return await GetValidAccessToken();
+        return await _session.GetValidAccessToken();
     }
 
     public async Task GenerateTokens(bool renew)
     {
         if (!renew)
         {
-            var accessToken = await GetValidAccessToken();
+            var accessToken = await _session.GetValidAccessToken();
             if (accessToken != null)
                 return;
         }
 
-        var refreshToken = await GetValidRefreshToken();
+        var refreshToken = await _session.GetValidRefreshToken();
         if (refreshToken != null)
         {
             var isSessionRefreshed = await RefreshSession(refreshToken);
@@ -51,69 +47,22 @@ internal class SpotifyTokenProvider : ITokenProvider
         await CreateSession();
     }
 
-    private async Task<string> GetValidAccessToken()
-    {
-        return await GetValidStoredToken(StoreKey.SpotifyAccessToken);
-    }
-
-    private async Task<string> GetValidRefreshToken()
-    {
-        return await GetValidStoredToken(StoreKey.SpotifyRefreshToken);
-    }
-
-    private async Task<string> GetValidStoredToken(StoreKey key)
-    {
-        var storedAccessToken = await _storeGetter.GetValue<string>(key);
-
-        if (storedAccessToken == null)
-            return null;
-
-        if (storedAccessToken.IsExpired)
-            return null;
-
-        return storedAccessToken.Value;
-    }
-
     private async Task<bool> RefreshSession(string refreshToken)
     {
         var tokens = await _authoriser.RefreshSession(refreshToken);
         if (tokens == null)
             return false;
 
-        await PopulateSessionValues(tokens);
+        await _session.Populate(tokens);
         return true;
     }
 
     private async Task CreateSession()
     {
-        await ClearSessionValues();
+        await _session.Clear();
         var code = await Authorise();
         var tokens = await _authoriser.CreateSession(code, _settings.RedirectUri);
-        await PopulateSessionValues(tokens);
-    }
-
-    private async Task ClearSessionValues()
-    {
-        await _storeSetter.Clear(StoreKey.SpotifyAccessToken);
-        await _storeSetter.Clear(StoreKey.SpotifyCode);
-        await _storeSetter.Clear(StoreKey.SpotifyState);
-        await _storeSetter.Clear(StoreKey.SpotifyRefreshToken);
-    }
-
-    private async Task PopulateSessionValues(RefreshTokenResponse tokens)
-    {
-        await _storeSetter.Clear(StoreKey.SpotifyCode);
-        await _storeSetter.Clear(StoreKey.SpotifyState);
-        await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token, tokens.expires_in);
-        await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
-    }
-
-    private async Task PopulateSessionValues(CreateSessionResponse tokens)
-    {
-        await _storeSetter.Clear(StoreKey.SpotifyCode);
-        await _storeSetter.Clear(StoreKey.SpotifyState);
-        await _storeSetter.SetValue(StoreKey.SpotifyAccessToken, tokens.access_token, tokens.expires_in);
-        await _storeSetter.SetValue(StoreKey.SpotifyRefreshToken, tokens.refresh_token);
+        await _session.Populate(tokens);
     }
 
     private async Task<string> Authorise()
@@ -122,19 +71,17 @@ internal class SpotifyTokenProvider : ITokenProvider
 
         await _navigationInterop.OpenNewTab(authUrl);
 
-        var code = await _storeGetter.AwaitValue<string>(StoreKey.SpotifyCode, 60, CancellationToken.None);
+        var code = await _session.AwaitCode();
 
         if (code == null)
             throw new Exception("No code received - need to authenticate on Spotify website");
 
-        return code.Value;
+        return code;
     }
 
     private async Task<string> GetAuthUrl()
     {
-        var guid = Guid.NewGuid();
-        var state = guid.ToString().Substring(0, 16);
-        await _storeSetter.SetValue(StoreKey.SpotifyState, state);
+        var state = await _session.SetState();
         return await _authoriser.GetAuthUrl(state, _settings.RedirectUri);
     }
 }
