@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.Interfaces;
 using Cadenza.Core.SystemInfo;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs.SystemInfo;
 
 public class SystemUpdateQueueBase : ComponentBase
 {

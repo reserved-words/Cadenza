@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Tasks;
 
-namespace Cadenza
+namespace Cadenza.Services
 {
     public class StartupConnectService : IStartupConnectService
     {

@@ -1,4 +1,4 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Interfaces;
 
 public interface INotificationService
 {

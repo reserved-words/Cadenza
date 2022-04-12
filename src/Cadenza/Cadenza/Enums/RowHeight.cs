@@ -1,4 +1,4 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Enums;
 
 public enum RowHeight
 {

@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.Common;
 using Cadenza.Core.Interfaces;
 
-namespace Cadenza.Components.Shared;
+namespace Cadenza.Components.Shared.Views;
 
 public class FavouriteTrackBase : ComponentBase
 {
@@ -28,7 +28,7 @@ public class FavouriteTrackBase : ComponentBase
     protected override async Task OnParametersSetAsync()
     {
         IsEnabled = false;
-        
+
         var status = ConnectorService.GetStatus(Connector.LastFm);
 
         if (status != ConnectorStatus.Connected)

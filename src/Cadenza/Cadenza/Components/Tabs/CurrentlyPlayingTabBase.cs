@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {

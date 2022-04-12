@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Spotify", "Cadenza.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Local.MusicFiles", "Cadenza.Local\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj", "{0EB56250-A515-46A9-9146-841302E1F484}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Source.Spotify.Api", "Cadenza.Source.Spotify.Api\Cadenza.Source.Spotify.Api.csproj", "{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Source.Spotify.Api", "Cadenza.Source.Spotify.Api\Cadenza.Source.Spotify.Api.csproj", "{B8B165A4-BEA8-4F10-BCAD-64C5DCD1033A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.Model.Logging;
 using LogLevel = Cadenza.Core.Model.Logging.LogLevel;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs.SystemInfo;
 
 public partial class SystemErrorsBase : ComponentBase
 {

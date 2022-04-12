@@ -1,8 +1,8 @@
-﻿
-using Cadenza.Core.Common;
+﻿using Cadenza.Core.Common;
 using Cadenza.Core.Interfaces;
+using Cadenza.Interfaces;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class ToolbarSourceBase : ComponentBase
 {

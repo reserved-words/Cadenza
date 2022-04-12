@@ -1,6 +1,6 @@
 ﻿using Cadenza.Core.Tasks;
 
-namespace Cadenza;
+namespace Cadenza.Services;
 
 public class StartupSyncService : IStartupSyncService
 {

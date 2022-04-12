@@ -3,7 +3,6 @@ using MudBlazor.Services;
 using Cadenza.Source.Local;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
-using Cadenza.Library;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Player;
 using Cadenza.Core.App;
@@ -13,10 +12,12 @@ using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
 using Cadenza.Source.Spotify.Libraries;
-using Cadenza.Source.Spotify.Services;
-using Cadenza.Source.Spotify.Api;
+using Cadenza.MudServices;
+using Cadenza.Services;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza._Startup;
 
 public static class Dependencies
 {

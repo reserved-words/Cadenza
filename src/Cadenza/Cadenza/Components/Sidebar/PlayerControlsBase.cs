@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class PlayerControlsBase : ComponentBase
 {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Interfaces;
+
+namespace Cadenza.MudServices;
 
 public class MudNotificationService : INotificationService
 {

@@ -1,8 +1,12 @@
-﻿using Cadenza.Core.App;
+﻿using Cadenza.Components.Shared;
+using Cadenza.Components.Tabs;
+using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Model;
+using Cadenza.Interfaces;
+using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Cadenza;
+namespace Cadenza.Pages;
 
 public class IndexBase : ComponentBase
 {
@@ -20,18 +24,24 @@ public class IndexBase : ComponentBase
 
     public bool Playing { get; set; }
 
-    public int FixedTabCount => Playing ? 4 : 3;
-
     protected bool IsInitalised { get; private set; }
 
-    protected int SelectedTabIndex = 0;
+    protected List<ViewItem> ItemTabs = new(); 
     
-    private string SwitchToTab = null;
+    public List<DynamicTabsItem> FixedItems = new();
 
-    protected List<ViewItem> ItemTabs = new();
+    public List<DynamicTabsItem> DynamicItems = new();
 
     protected override async Task OnInitializedAsync()
     {
+        FixedItems = new List<DynamicTabsItem>
+        {
+            new DynamicTabsItem("Home", "Home", "fas fa-history", typeof(HistoryTab)),
+            new DynamicTabsItem("Playing", "Playing", "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
+            new DynamicTabsItem("Spotify", "Spotify", Icon.Spotify, typeof(SpotifyTab)),
+            new DynamicTabsItem("System", "System", "fas fa-cog", typeof(SystemInfoTab))
+        };
+
         App.TrackStarted += App_TrackStarted;
         App.ItemRequested += App_ItemRequested;
 
@@ -40,14 +50,12 @@ public class IndexBase : ComponentBase
 
     private Task App_ItemRequested(object sender, ItemEventArgs e)
     {
-        if (ItemTabs.Any(t => t.Id == e.Item.Id))
+        if (!DynamicItems.Any(t => t.Id == e.Item.Id))
         {
-            ShowTab(e.Item.Id);
-        }
-        else
-        {
-            ItemTabs.Add(e.Item);
-            SwitchToTab = e.Item.Id;
+             DynamicItems.Add(new DynamicTabsItem(e.Item.Id, e.Item.Name, e.Item.Type.GetIcon(), typeof(ItemTab), new Dictionary<string, object>
+             {
+                 { "Item", e.Item },
+             }));
         }
 
         StateHasChanged();
@@ -56,8 +64,8 @@ public class IndexBase : ComponentBase
 
     private Task App_TrackStarted(object sender, TrackEventArgs e)
     {
-        Playing = true;
-        StateHasChanged();
+        //Playing = true;
+        //StateHasChanged();
         return Task.CompletedTask;
     }
 
@@ -73,40 +81,40 @@ public class IndexBase : ComponentBase
         IsInitalised = success;
     }
 
-    protected void CloseTabCallback(MudTabPanel panel)
-    {
-        var itemId = panel.Tag.ToString();
-        if (ItemTabs.Any(i => i.Id == itemId))
-        {
-            var tab = ItemTabs.Single(i => i.Id == itemId);
-            ItemTabs.Remove(tab);
-        }
-    }
+    //protected void CloseTabCallback(MudTabPanel panel)
+    //{
+    //    var itemId = panel.Tag.ToString();
+    //    if (ItemTabs.Any(i => i.Id == itemId))
+    //    {
+    //        var tab = ItemTabs.Single(i => i.Id == itemId);
+    //        ItemTabs.Remove(tab);
+    //    }
+    //}
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (SwitchToTab != null)
-        {
-            ShowTab(SwitchToTab);
-            SwitchToTab = null;
-        } 
-    }
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if (SwitchToTab != null)
+    //    {
+    //        ShowTab(SwitchToTab);
+    //        SwitchToTab = null;
+    //    }
+    //}
 
-    private void ShowTab(string id)
-    {
-        var tab = ItemTabs.Single(t => t.Id == id);
-        var index = ItemTabs.IndexOf(tab);
-        var newIndex = FixedTabCount + index;
+    //private void ShowTab(string id)
+    //{
+    //    var tab = ItemTabs.Single(t => t.Id == id);
+    //    var index = ItemTabs.IndexOf(tab);
+    //    var newIndex = FixedTabCount + index;
 
-        if (SelectedTabIndex == newIndex)
-        {
-            // Display message
-        }
-        else
-        {
-            SelectedTabIndex = FixedTabCount + index;
-        }
+    //    if (SelectedTabIndex == newIndex)
+    //    {
+    //        // Display message
+    //    }
+    //    else
+    //    {
+    //        SelectedTabIndex = FixedTabCount + index;
+    //    }
 
-        StateHasChanged();
-    }
+    //    StateHasChanged();
+    //}
 }

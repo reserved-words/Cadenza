@@ -2,7 +2,7 @@
 using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Playlists;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class CurrentlyPlayingHeaderBase : ComponentBase
 {

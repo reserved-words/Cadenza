@@ -1,4 +1,4 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Components.Tabs;
 
 public class SpotifyTabBase : ComponentBase
 {
@@ -11,7 +11,7 @@ public class SpotifyTabBase : ComponentBase
 
     public List<AlbumInfo> Playlists { get; set; }
 
-    public FullLibrary FullLibrary {get; set;}
+    public FullLibrary FullLibrary { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

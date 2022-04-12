@@ -1,4 +1,6 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.Components.Tabs.Spotify;
 

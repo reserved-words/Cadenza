@@ -1,8 +1,9 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Interop;
+using Cadenza.Interfaces;
 using Cadenza.Library;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Dialogs;
 
 public class EditLyricsBase : FormBase<TrackInfo>
 {

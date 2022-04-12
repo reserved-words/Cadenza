@@ -1,0 +1,22 @@
+﻿@inherits DynamicTabsBase
+
+<MudDynamicTabs Outlined="true"
+                CloseTab="@((panel) => CloseTabCallback(panel))"
+                @bind-ActivePanelIndex="SelectedTabIndex"
+                KeepPanelsAlive="true">
+
+    @foreach (var item in FixedItems)
+    {
+        <MudTabPanel Icon="@item.Icon" Class="mud-tab-fixed">
+            @item.RenderFragment
+        </MudTabPanel>
+    }
+
+    @foreach (var item in DynamicItems)
+    {
+        <MudTabPanel Text="@item.Title" Icon="@item.Icon" Tag="@item.Id">
+            @item.RenderFragment
+        </MudTabPanel>
+    }
+
+</MudDynamicTabs>

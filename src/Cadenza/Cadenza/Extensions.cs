@@ -69,4 +69,23 @@ public static class Extensions
             ? duration.ToString(@"hh\:mm\:ss")
             : duration.ToString(@"mm\:ss");
     }
+
+    public static RenderFragment RenderFragment(this Type type, Dictionary<string, object> parameters = null)
+    {
+        return (builder) => 
+        {
+            var sequence = 0;
+            builder.OpenComponent(sequence++, type);
+
+            if (parameters != null)
+            {
+                foreach (var p in parameters)
+                {
+                    builder.AddAttribute(sequence++, p.Key, p.Value);
+                }
+            }
+
+            builder.CloseComponent(); 
+        };
+    }
 }

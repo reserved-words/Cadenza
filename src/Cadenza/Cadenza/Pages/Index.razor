@@ -10,38 +10,9 @@
     <MudMainContent>
         @if (IsInitalised)
         {
-            <MudDynamicTabs Outlined="true"
-                            CloseTab="@((panel) => CloseTabCallback(panel))"
-                            @bind-ActivePanelIndex="SelectedTabIndex"
-                            KeepPanelsAlive="true">
-
-                <MudTabPanel Icon="fas fa-history" Class="mud-tab-fixed">
-                    <HistoryTab />
-                </MudTabPanel>
-
-                @if (Playing)
-                {
-                    <MudTabPanel Icon="fas fa-volume-up" Class="mud-tab-fixed">
-                        <CurrentlyPlayingTab />
-                    </MudTabPanel>
-                }
-
-                <MudTabPanel Icon="@Icon.Spotify" Class="mud-tab-fixed">
-                    <SpotifyTab />
-                </MudTabPanel>
-
-                <MudTabPanel Icon="fas fa-cog" Class="mud-tab-fixed">
-                    <SystemInfoTab />
-                </MudTabPanel>
-
-                @foreach (var item in ItemTabs)
-                {
-                    <MudTabPanel Text="@item.Name" Icon="@item.Type.GetIcon()" Tag="@item.Id">
-                        <ItemTab Item="@item" />
-                    </MudTabPanel>
-                }
-
-            </MudDynamicTabs>
+            <DynamicTabs FixedItems="@FixedItems"
+                         DynamicItems="@DynamicItems" />
         }
+
     </MudMainContent>
 </MudLayout>

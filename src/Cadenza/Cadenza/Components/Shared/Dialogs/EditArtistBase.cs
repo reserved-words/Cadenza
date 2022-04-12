@@ -1,7 +1,8 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Interfaces;
 using Cadenza.Library;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Dialogs;
 
 public class EditArtistBase : FormBase<ArtistInfo>
 {

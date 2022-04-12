@@ -2,7 +2,7 @@
 using Cadenza.Core.Interfaces;
 using Cadenza.LastFM;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs;
 
 public class HistoryTabBase : ComponentBase
 {

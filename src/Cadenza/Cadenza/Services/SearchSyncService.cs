@@ -1,6 +1,6 @@
 ﻿using Cadenza.Library;
 
-namespace Cadenza;
+namespace Cadenza.Services;
 
 public class SearchSyncService : ISearchSyncService
 {

@@ -2,8 +2,9 @@
 using Cadenza.Core.Common;
 using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
+using Cadenza.Interfaces;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class ToolbarBase : ComponentBase
 {

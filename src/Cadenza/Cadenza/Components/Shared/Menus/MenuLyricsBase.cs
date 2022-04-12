@@ -1,7 +1,9 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Interfaces;
 using Cadenza.Library;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuLyricsBase : ComponentBase
 {

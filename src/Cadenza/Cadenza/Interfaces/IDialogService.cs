@@ -1,4 +1,6 @@
-﻿namespace Cadenza;
+﻿using Cadenza.Components.Shared.Dialogs;
+
+namespace Cadenza.Interfaces;
 
 public interface IDialogService
 {
