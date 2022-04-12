@@ -10,15 +10,18 @@ internal class SpotifyTokenProvider : ITokenProvider
 {
     private readonly ISpotifySession _session;
     private readonly SpotifyApiSettings _settings;
-    private readonly IAuthoriser _authoriser;
+    private readonly IAuthApi _authApi;
+    private readonly IAuthHelper _authHelper;
     private readonly INavigation _navigationInterop;
 
-    public SpotifyTokenProvider(ISpotifySession session, IOptions<SpotifyApiSettings> settings, IAuthoriser authoriser, INavigation navigation)
+    public SpotifyTokenProvider(ISpotifySession session, IOptions<SpotifyApiSettings> settings, IAuthApi authApi, 
+        INavigation navigation, IAuthHelper authHelper)
     {
         _session = session;
         _settings = settings.Value;
-        _authoriser = authoriser;
+        _authApi = authApi;
         _navigationInterop = navigation;
+        _authHelper = authHelper;
     }
 
     public async Task<string> GetAccessToken(bool renew)
@@ -49,7 +52,7 @@ internal class SpotifyTokenProvider : ITokenProvider
 
     private async Task<bool> RefreshSession(string refreshToken)
     {
-        var tokens = await _authoriser.RefreshSession(refreshToken);
+        var tokens = await _authApi.RefreshSession(refreshToken);
         if (tokens == null)
             return false;
 
@@ -61,7 +64,7 @@ internal class SpotifyTokenProvider : ITokenProvider
     {
         await _session.Clear();
         var code = await Authorise();
-        var tokens = await _authoriser.CreateSession(code, _settings.RedirectUri);
+        var tokens = await _authApi.CreateSession(code, _settings.RedirectUri);
         await _session.Populate(tokens);
     }
 
@@ -82,6 +85,6 @@ internal class SpotifyTokenProvider : ITokenProvider
     private async Task<string> GetAuthUrl()
     {
         var state = await _session.SetState();
-        return await _authoriser.GetAuthUrl(state, _settings.RedirectUri);
+        return await _authHelper.GetAuthUrl(state, _settings.RedirectUri);
     }
 }
