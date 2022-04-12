@@ -49,7 +49,6 @@ public static class Dependencies
             .AddSources(builder.Configuration);
 
         builder.Services
-            .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IItemPlayer, ItemPlayer>()
             .AddTransient<IItemViewer, ItemViewer>();

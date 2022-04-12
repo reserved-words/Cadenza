@@ -10,7 +10,42 @@ public class DynamicTabsBase : ComponentBase
     [Parameter]
     public List<DynamicTabsItem> DynamicItems { get; set; } = new();
 
+    [Parameter]
+    public string SelectedItem { get; set; }
+
     public int SelectedTabIndex { get; set; }
+
+    private IEnumerable<DynamicTabsItem> _allItems => FixedItems.Concat(DynamicItems);
+
+    protected override void OnParametersSet()
+    {
+        // SetSelectedItem();
+    }
+
+    protected void CloseTabCallback(MudTabPanel panel)
+    {
+        var itemId = panel.Tag.ToString();
+        if (DynamicItems.Any(i => i.Id == itemId))
+        {
+            var tab = DynamicItems.Single(i => i.Id == itemId);
+            DynamicItems.Remove(tab);
+        }
+    }
+
+    private void SetSelectedItem()
+    {
+        var allItems = _allItems.ToList();
+        var currentlySelectedItem = allItems[SelectedTabIndex];
+        if (currentlySelectedItem.Id == SelectedItem)
+            return;
+
+        var item = allItems.SingleOrDefault(i => i.Id == SelectedItem);
+        if (item != null)
+        {
+            var selectIndex = allItems.IndexOf(item);
+            SelectedTabIndex = selectIndex;
+        }
+    }
 
     //private void AddTab(DynamicTabsItem tab)
     //{
@@ -27,24 +62,15 @@ public class DynamicTabsBase : ComponentBase
     //    StateHasChanged();
     //}
 
-    protected void CloseTabCallback(MudTabPanel panel)
+    protected override void OnAfterRender(bool firstRender)
     {
-        var itemId = panel.Tag.ToString();
-        if (DynamicItems.Any(i => i.Id == itemId))
-        {
-            var tab = DynamicItems.Single(i => i.Id == itemId);
-            DynamicItems.Remove(tab);
-        }
+        //if (SwitchToTab != null)
+        //{
+        //    ShowTab(SwitchToTab);
+        //    SwitchToTab = null;
+        //}
+        SetSelectedItem();
     }
-
-    //protected override void OnAfterRender(bool firstRender)
-    //{
-    //    if (SwitchToTab != null)
-    //    {
-    //        ShowTab(SwitchToTab);
-    //        SwitchToTab = null;
-    //    }
-    //}
 
     //private void ShowTab(string id)
     //{
@@ -61,7 +87,7 @@ public class DynamicTabsBase : ComponentBase
     //}
 }
 
-public struct DynamicTabsItem
+public class DynamicTabsItem
 {
     public DynamicTabsItem(string id, string title, string icon, Type component, Dictionary<string, object> parameters = null)
     {

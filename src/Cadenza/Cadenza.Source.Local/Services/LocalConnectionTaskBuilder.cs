@@ -12,12 +12,14 @@ namespace Cadenza
         private readonly IConnectorController _connectorController;
         private readonly IOptions<LocalApiSettings> _apiSettings;
         private readonly IHttpHelper _http;
+        private readonly ISearchSyncService _searchSyncService;
 
-        public LocalConnectionTaskBuilder(IConnectorController connectorController, IOptions<LocalApiSettings> apiSettings, IHttpHelper http)
+        public LocalConnectionTaskBuilder(IConnectorController connectorController, IOptions<LocalApiSettings> apiSettings, IHttpHelper http, ISearchSyncService searchSyncService)
         {
             _connectorController = connectorController;
             _apiSettings = apiSettings;
             _http = http;
+            _searchSyncService = searchSyncService;
         }
 
         public SubTask GetConnectionTask()
@@ -33,6 +35,7 @@ namespace Cadenza
 
             subTask.AddStep("Checking connection", Connect);
             subTask.AddStep("Populating library", Populate);
+            subTask.AddStep("Populating search items", () => _searchSyncService.PopulateSearchItems());
 
             return subTask;
         }

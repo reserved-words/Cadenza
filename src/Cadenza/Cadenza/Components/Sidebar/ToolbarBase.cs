@@ -1,5 +1,4 @@
-﻿
-using Cadenza.Core.Common;
+﻿using Cadenza.Core.Common;
 using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
 using Cadenza.Interfaces;
@@ -18,9 +17,6 @@ public class ToolbarBase : ComponentBase
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
-    public IStartupSyncService SyncService { get; set; }
-
-    [Inject]
     public IStoreSetter StoreSetter { get; set; }
 
     [Inject]
@@ -37,11 +33,6 @@ public class ToolbarBase : ComponentBase
                 Status = ConnectorStatus.Loading
             })
             .ToList();
-    }
-
-    protected async Task OnSync()
-    {
-        var success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", false, "Would you like to re-sync source libraries?");
     }
 
     protected async Task OnClearSession()

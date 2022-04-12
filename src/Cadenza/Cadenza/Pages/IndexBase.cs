@@ -14,9 +14,6 @@ public class IndexBase : ComponentBase
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
-    public IStartupSyncService SyncService { get; set; }
-
-    [Inject]
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
@@ -31,6 +28,8 @@ public class IndexBase : ComponentBase
     public List<DynamicTabsItem> FixedItems = new();
 
     public List<DynamicTabsItem> DynamicItems = new();
+
+    public string SelectedItem { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,6 +57,8 @@ public class IndexBase : ComponentBase
              }));
         }
 
+        SelectedItem = e.Item.Id;
+
         StateHasChanged();
         return Task.CompletedTask;
     }
@@ -72,11 +73,6 @@ public class IndexBase : ComponentBase
     protected async Task OnStartup()
     {
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
-
-        if (success)
-        {
-            success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", true);
-        }
 
         IsInitalised = success;
     }
