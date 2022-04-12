@@ -29,7 +29,6 @@ public static class Routing
 
         var authoriser = app.Services.GetRequiredService<Spotify.Interfaces.IAuthoriser>();
         app.MapGet(ApiEndpoints.Spotify.AuthHeader, () => authoriser.GetAuthHeader());
-        app.MapGet(ApiEndpoints.Spotify.TokenUrl, () => authoriser.GetTokenUrl());
         app.MapGet(ApiEndpoints.Spotify.AuthUrl, (string state, string redirectUri) => authoriser.GetAuthUrl(state, redirectUri));
 
         return app;

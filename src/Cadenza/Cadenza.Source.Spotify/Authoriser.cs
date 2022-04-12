@@ -10,6 +10,8 @@ namespace Cadenza.Source.Spotify;
 
 public class Authoriser : IAuthoriser
 {
+    private const string TokenUrl = "https://accounts.spotify.com/api/token";
+
     private readonly IUrl _url;
     private readonly IHttpHelper _http;
     private readonly SpotifyApiSettings _apiSettings;
@@ -24,7 +26,6 @@ public class Authoriser : IAuthoriser
     public async Task<CreateSessionResponse> CreateSession(string code, string redirectUri)
     {
         var authHeader = await GetAuthHeader();
-        var tokenUrl = await GetTokenUrl();
 
         var requestData = new CreateSessionRequest
         {
@@ -33,7 +34,7 @@ public class Authoriser : IAuthoriser
             grant_type = "authorization_code"
         };
 
-        var response = await _http.Post(tokenUrl, authHeader, requestData.AsPostData());
+        var response = await _http.Post(TokenUrl, authHeader, requestData.AsPostData());
 
         return response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<CreateSessionResponse>()
@@ -61,18 +62,11 @@ public class Authoriser : IAuthoriser
         };
 
         var authHeader = await GetAuthHeader();
-        var tokenUrl = await GetTokenUrl();
 
-        var response = await _http.Post(tokenUrl, authHeader, requestData.AsPostData());
+        var response = await _http.Post(TokenUrl, authHeader, requestData.AsPostData());
 
         return response.IsSuccessStatusCode
             ? await response.Content.ReadFromJsonAsync<RefreshTokenResponse>()
             : null;
-    }
-
-    private async Task<string> GetTokenUrl()
-    {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TokenUrl);
-        return await _http.GetString(url);
     }
 }

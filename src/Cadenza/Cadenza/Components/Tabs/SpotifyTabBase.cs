@@ -20,18 +20,10 @@ public class SpotifyTabBase : ComponentBase
 
     private async Task Populate()
     {
-        try
-        {
-            Loading = true;
-            FullLibrary = await Library.Get();
-            Albums = FullLibrary.Albums.Where(a => a.ReleaseType != ReleaseType.Playlist).ToList();
-            Playlists = FullLibrary.Albums.Where(a => a.ReleaseType == ReleaseType.Playlist).ToList();
-            Loading = false;
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
+        Loading = true;
+        FullLibrary = await Library.Get();
+        Albums = FullLibrary.Albums.Where(a => a.ReleaseType != ReleaseType.Playlist).ToList();
+        Playlists = FullLibrary.Albums.Where(a => a.ReleaseType == ReleaseType.Playlist).ToList();
+        Loading = false;
     }
 }

@@ -28,9 +28,4 @@ public class Authoriser : IAuthoriser
         var result = _builder.BuildAuthHeader(_config.Value.ClientId, _config.Value.ClientSecret);
         return Task.FromResult(result);
     }
-    public Task<string> GetTokenUrl()
-    {
-        var result = _config.Value.TokenUri;
-        return Task.FromResult(result);
-    }
 }
