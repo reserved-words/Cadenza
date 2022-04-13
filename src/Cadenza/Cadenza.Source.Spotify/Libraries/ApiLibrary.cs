@@ -1,5 +1,4 @@
-﻿using Cadenza.Core;
-using Cadenza.Domain;
+﻿using Cadenza.Domain;
 using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Api.Model.Albums;
 using Cadenza.Source.Spotify.Api.Model.Artist;

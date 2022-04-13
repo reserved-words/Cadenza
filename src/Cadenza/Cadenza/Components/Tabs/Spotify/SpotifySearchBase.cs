@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Components.Tabs.Spotify;
+﻿using Cadenza.Source.Spotify;
+using Cadenza.Source.Spotify.Model;
+
+namespace Cadenza.Components.Tabs.Spotify;
 
 public class SpotifySearchBase : ComponentBase
 {

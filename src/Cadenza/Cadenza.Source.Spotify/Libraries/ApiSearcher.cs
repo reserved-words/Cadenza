@@ -1,10 +1,8 @@
-﻿using Cadenza.Core;
-using Cadenza.Source.Spotify.Api.Interfaces;
+﻿using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Api.Model.Albums;
+using Cadenza.Source.Spotify.Model;
 
 namespace Cadenza.Source.Spotify.Libraries;
-
-// TODO : Loads of tidying up to do within Spotify project, converting to Cadenza model items etc
 
 public class ApiSearcher : ISpotifySearcher
 {
@@ -61,5 +59,34 @@ public class ApiSearcher : ISpotifySearcher
         return DateTime.TryParse(album.release_date, out DateTime result)
             ? result.Year.ToString()
             : "";
+    }
+
+    public async Task<List<SpotifyTrack>> GetPlaylistTracks(string playlistId)
+    {
+        var tracks = await _api.GetPlaylistTracks(playlistId);
+        return tracks.Select(t => new SpotifyTrack
+        {
+            Id = t.track.id,
+            Title = t.track.name,
+            Artist = t.track.artists.First().name,
+            Duration = t.track.duration_ms/1000,
+            TrackNo = t.track.track_number
+        })
+        .ToList();
+    }
+
+    public async Task<List<SpotifyTrack>> GetAlbumTracks(string albumId)
+    {
+        var tracks = await _api.GetAlbumTracks(albumId);
+        return tracks.Select(t => new SpotifyTrack
+        {
+            Id = t.id,
+            Title = t.name,
+            Artist = t.artists.First().name,
+            Duration = t.duration_ms / 1000,
+            DiscNo = t.disc_number,
+            TrackNo = t.track_number
+        })
+        .ToList();
     }
 }

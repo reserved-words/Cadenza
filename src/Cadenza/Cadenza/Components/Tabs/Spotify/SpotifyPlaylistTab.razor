@@ -1,0 +1,32 @@
+﻿@inherits SpotifyPlaylistTabBase
+
+<WhipColumn md="3">
+    <WhipRow RowHeight="@RowHeight.Fixed">
+
+        <MudCard Class="ma-3">
+            <MudCardHeader Class="pa-3">
+                <MudText Typo="@Typo.h6">@Model.Playlist.Title</MudText>
+                <MudText Typo="@Typo.body1">@Model.Playlist.CreatedBy</MudText>
+            </MudCardHeader>
+            <MudCardContent Class="px-2 py-0">
+                <img class="artwork" src="@Model.Playlist.ArtworkUrl" />
+            </MudCardContent>
+        </MudCard>
+
+    </WhipRow>
+</WhipColumn>
+<WhipColumn md="9">
+
+    <MudCard>
+        <WhipTable T="@SpotifyTrack"
+                   Items="@Model.Tracks">
+            <RowTemplate>
+                <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
+                <MudTd>@context.Title</MudTd>
+                <MudTd>@context.Artist</MudTd>
+                <MudTd Style="width:1px; text-align: right;">@context.Duration</MudTd>
+            </RowTemplate>
+        </WhipTable>
+    </MudCard>
+
+</WhipColumn>

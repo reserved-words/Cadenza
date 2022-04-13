@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Components.Tabs.Spotify
+﻿using Cadenza.Source.Spotify;
+using Cadenza.Source.Spotify.Model;
+
+namespace Cadenza.Components.Tabs.Spotify
 {
     public class SpotifyArtistTabBase : ComponentBase
     {
@@ -7,6 +10,12 @@
 
         [Parameter]
         public SpotifyArtistSearchResult Model { get; set; }
+
+        [Parameter]
+        public Func<SpotifyAlbum, Task> OnShowAlbum { get; set; }
+
+        [Parameter]
+        public Func<SpotifyPlaylist, Task> OnShowPlaylist { get; set; }
 
         protected async Task AddAlbum(string id)
         {

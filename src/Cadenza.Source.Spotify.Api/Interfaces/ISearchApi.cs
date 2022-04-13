@@ -6,6 +6,7 @@ namespace Cadenza.Source.Spotify.Api.Interfaces;
 
 public interface ISearchApi
 {
+    Task<List<SpotifyApiAlbumTracksItem>> GetAlbumTracks(string albumId);
     Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId);
     Task<List<SpotifyApiArtist>> SearchArtists(string searchText);
     Task<List<SpotifyApiAlbum>> GetArtistAlbums(string artistId);

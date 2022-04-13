@@ -4,7 +4,7 @@ using Cadenza.Source.Spotify.Settings;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Source.Spotify;
+namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyAuthHelper : IAuthHelper
 {

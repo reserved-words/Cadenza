@@ -9,7 +9,10 @@
                         Class="pa-0 ma-0">
                     <img class="artwork" src="@playlist.ArtworkUrl" />
                     <MudCardContent Class="pa-2">
-                        <MudText Typo="Typo.body1">@playlist.Title</MudText>
+                        <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowPlaylist(playlist))" Color="@Color.Dark">
+                            @playlist.Title
+                        </MudLink>
+
                         <MudText Typo="Typo.body2">@playlist.CreatedBy</MudText>
                     </MudCardContent>
                     <MudCardActions>
@@ -27,7 +30,9 @@
                         Class="pa-0 ma-0">
                     <img class="artwork" src="@album.ArtworkUrl" />
                     <MudCardContent Class="pa-2">
-                        <MudText Typo="Typo.body1">@album.Title</MudText>
+                        <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowAlbum(album))" Color="@Color.Dark">
+                            @album.Title
+                        </MudLink>
                         <MudText Typo="Typo.body2">@album.Artist</MudText>
                         <MudText Typo="Typo.body2">@album.Year</MudText>
                     </MudCardContent>

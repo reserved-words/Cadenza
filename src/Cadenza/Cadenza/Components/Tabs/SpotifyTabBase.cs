@@ -1,6 +1,7 @@
-﻿using Cadenza.Components.Shared.Dialogs;
-using Cadenza.Components.Shared;
+﻿using Cadenza.Components.Shared;
 using Cadenza.Components.Tabs.Spotify;
+using Cadenza.Source.Spotify;
+using Cadenza.Source.Spotify.Model;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.Components.Tabs;
@@ -11,20 +12,19 @@ public class SpotifyTabBase : ComponentBase
     public ISpotifyLibrary Library { get; set; }
 
     [Inject]
+    public ISpotifySearcher Searcher { get; set; }
+
+    [Inject]
     public IDialogService DialogService { get; set; }
 
     public bool Loading { get; set; } = true;
 
     public List<AlbumInfo> Albums { get; set; } = new();
-
     public List<AlbumInfo> Playlists { get; set; } = new();
-
     public FullLibrary FullLibrary { get; set; }
 
     public List<DynamicTabsItem> FixedItems = new();
-
     public List<DynamicTabsItem> DynamicItems = new();
-
     public string SelectedItem { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -47,6 +47,23 @@ public class SpotifyTabBase : ComponentBase
         Loading = false;
     }
 
+    protected async Task ShowAlbum(SpotifyAlbum album)
+    {
+        if (!DynamicItems.Any(t => t.Id == album.Id))
+        {
+            var tracks = await Searcher.GetAlbumTracks(album.Id);
+            var result = new SpotifyAlbumSearchResult
+            {
+                Album = album,
+                Tracks = tracks
+            };
+            DynamicItems.Add(GetAlbumTab(result));
+        }
+
+        SelectedItem = album.Id;
+        StateHasChanged();
+    }
+
     protected Task ShowArtist(SpotifyArtistSearchResult result)
     {
         if (!DynamicItems.Any(t => t.Id == result.Artist.Id))
@@ -59,9 +76,43 @@ public class SpotifyTabBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private static DynamicTabsItem GetArtistTab(SpotifyArtistSearchResult result)
+    protected async Task ShowPlaylist(SpotifyPlaylist playlist)
+    {
+        if (!DynamicItems.Any(t => t.Id == playlist.Id))
+        {
+            var tracks = await Searcher.GetPlaylistTracks(playlist.Id);
+            var result = new SpotifyPlaylistSearchResult
+            {
+                Playlist = playlist,
+                Tracks = tracks
+            };
+            DynamicItems.Add(GetPlaylistTab(result));
+        }
+
+        SelectedItem = playlist.Id;
+        StateHasChanged();
+    }
+
+    private DynamicTabsItem GetAlbumTab(SpotifyAlbumSearchResult result)
+    {
+        return new DynamicTabsItem(result.Album.Id, result.Album.Title, PlayerItemType.Album.GetIcon(), typeof(SpotifyAlbumTab), new Dictionary<string, object>
+        {
+            { "Model", result },
+        });
+    }
+
+    private DynamicTabsItem GetArtistTab(SpotifyArtistSearchResult result)
     {
         return new DynamicTabsItem(result.Artist.Id, result.Artist.Name, PlayerItemType.Artist.GetIcon(), typeof(SpotifyArtistTab), new Dictionary<string, object>
+        {
+            { "Model", result },
+            { "OnShowAlbum", new Func<SpotifyAlbum, Task>(ShowAlbum) }
+        });
+    }
+
+    private DynamicTabsItem GetPlaylistTab(SpotifyPlaylistSearchResult result)
+    {
+        return new DynamicTabsItem(result.Playlist.Id, result.Playlist.Title, PlayerItemType.Playlist.GetIcon(), typeof(SpotifyPlaylistTab), new Dictionary<string, object>
         {
             { "Model", result },
         });

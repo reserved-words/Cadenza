@@ -9,6 +9,7 @@ namespace Cadenza.Source.Spotify.Api;
 
 internal class SearchApi : ISearchApi
 {
+    private const string AlbumTracksUrl = "https://api.spotify.com/v1/albums/{0}/tracks";
     private const string PlaylistTracksUrl = "https://api.spotify.com/v1/playlists/{0}/tracks?limit=50&fields=total,next,items(track)";
     private const string SearchArtistsUrl = "https://api.spotify.com/v1/search?q={0}&type=artist";
     private const string ArtistAlbumsUrl = "https://api.spotify.com/v1/artists/{0}/albums?include_groups=album&limit=50&market=GB";
@@ -25,6 +26,11 @@ internal class SearchApi : ISearchApi
     {
         var url = string.Format(ArtistAlbumsUrl, artistId);
         return await GetListResponse<SpotifyApiAlbum>(url);
+    }
+
+    public async Task<List<SpotifyApiAlbumTracksItem>> GetAlbumTracks(string albumId)
+    {
+        return await GetListResponse<SpotifyApiAlbumTracksItem>(string.Format(AlbumTracksUrl, albumId));
     }
 
     public async Task<List<SpotifyApiPlaylistItem>> GetPlaylistTracks(string playlistId)
