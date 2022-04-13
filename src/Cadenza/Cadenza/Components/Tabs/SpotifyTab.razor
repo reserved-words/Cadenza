@@ -6,7 +6,7 @@
             <SpotifySync Loading="@Loading" Library="@FullLibrary" />
         </WhipRow>
         <WhipRow RowHeight="@RowHeight.Stretch">
-            <SpotifySearch />
+            <SpotifySearch OnShowArtist="@ShowArtist" />
         </WhipRow>
     </WhipColumn>
     <WhipColumn md="9">
@@ -14,14 +14,18 @@
             <SpotifyCard IsLoading="@Loading"
                          LoadingCaption="Loading library...">
                 <ChildContent>
-                    <MudTabs Style="width: 100%; height: 100%;">
-                        <MudTabPanel Text="Playlists" Style="width: 100%; height: 100%;">
-                            <SpotifyItems Items="@Playlists" />
-                        </MudTabPanel>
-                        <MudTabPanel Text="Albums" Style="width: 100%; height: 100%;">
-                            <SpotifyItems Items="@Albums" />
-                        </MudTabPanel>
-                    </MudTabs>
+                    @if (Loading)
+                    {
+                        <MudContainer Class="pa-3">
+                            <p>Loading...</p>
+                        </MudContainer>
+                    }
+                    else
+                    {
+                        <DynamicTabs FixedItems="@FixedItems"
+                                     DynamicItems="@DynamicItems"
+                                     SelectedItem="@SelectedItem" />
+                    }
                 </ChildContent>
             </SpotifyCard>
         </WhipRow>

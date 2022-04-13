@@ -17,11 +17,7 @@ public class IndexBase : ComponentBase
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool Playing { get; set; }
-
     protected bool IsInitalised { get; private set; }
-
-    protected List<ViewItem> ItemTabs = new();
 
     public List<DynamicTabsItem> FixedItems = new();
 
@@ -33,10 +29,10 @@ public class IndexBase : ComponentBase
     {
         FixedItems = new List<DynamicTabsItem>
         {
-            new DynamicTabsItem("Home", "Home", "fas fa-history", typeof(HistoryTab)),
-            new DynamicTabsItem("Playing", "Playing", "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
-            new DynamicTabsItem("Spotify", "Spotify", Icon.Spotify, typeof(SpotifyTab)),
-            new DynamicTabsItem("System", "System", "fas fa-cog", typeof(SystemInfoTab))
+            new DynamicTabsItem("Home", null, "fas fa-history", typeof(HistoryTab)),
+            new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
+            new DynamicTabsItem("Spotify", null, Icon.Spotify, typeof(SpotifyTab)),
+            new DynamicTabsItem("System", null, "fas fa-cog", typeof(SystemInfoTab))
         };
 
         App.ItemRequested += App_ItemRequested;

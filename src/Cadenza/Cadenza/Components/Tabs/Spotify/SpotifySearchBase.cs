@@ -1,16 +1,12 @@
-﻿using Cadenza.Components.Shared.Dialogs;
-using Cadenza.Interfaces;
-using IDialogService = Cadenza.Interfaces.IDialogService;
-
-namespace Cadenza.Components.Tabs.Spotify;
+﻿namespace Cadenza.Components.Tabs.Spotify;
 
 public class SpotifySearchBase : ComponentBase
 {
     [Inject]
     public ISpotifySearcher Library { get; set; }
 
-    [Inject]
-    public IDialogService DialogService { get; set; }
+    [Parameter]
+    public Func<SpotifyArtistProfile, Task> OnShowArtist { get; set; }
 
     public bool Searching { get; set; }
 
@@ -43,6 +39,6 @@ public class SpotifySearchBase : ComponentBase
             Playlists = playlists
         };
 
-        await DialogService.Display<SpotifyArtistView, SpotifyArtistProfile>(artistProfile, $"Spotify Artist - {artist.Name}");
+        await OnShowArtist(artistProfile);
     }
 }
