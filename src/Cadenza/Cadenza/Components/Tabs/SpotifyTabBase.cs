@@ -47,8 +47,23 @@ public class SpotifyTabBase : ComponentBase
         Loading = false;
     }
 
-    protected async Task ShowArtist(SpotifyArtistProfile result)
+    protected Task ShowArtist(SpotifyArtistSearchResult result)
     {
-        await DialogService.Display<SpotifyArtistView, SpotifyArtistProfile>(result, $"Search Result - {result.Artist.Name}");
+        if (!DynamicItems.Any(t => t.Id == result.Artist.Id))
+        {
+            DynamicItems.Add(GetArtistTab(result));
+        }
+
+        SelectedItem = result.Artist.Id;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private static DynamicTabsItem GetArtistTab(SpotifyArtistSearchResult result)
+    {
+        return new DynamicTabsItem(result.Artist.Id, result.Artist.Name, PlayerItemType.Artist.GetIcon(), typeof(SpotifyArtistTab), new Dictionary<string, object>
+        {
+            { "Model", result },
+        });
     }
 }

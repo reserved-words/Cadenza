@@ -29,7 +29,7 @@ public class SpotifyAlbum
     public string ArtworkUrl { get; set; }
 }
 
-public class SpotifyArtistProfile
+public class SpotifyArtistSearchResult
 {
     public SpotifyArtist Artist { get; set; }
     public List<SpotifyAlbum> Albums { get; set; }

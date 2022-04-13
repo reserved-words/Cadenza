@@ -6,7 +6,7 @@ public class SpotifySearchBase : ComponentBase
     public ISpotifySearcher Library { get; set; }
 
     [Parameter]
-    public Func<SpotifyArtistProfile, Task> OnShowArtist { get; set; }
+    public Func<SpotifyArtistSearchResult, Task> OnShowArtist { get; set; }
 
     public bool Searching { get; set; }
 
@@ -32,7 +32,7 @@ public class SpotifySearchBase : ComponentBase
         var albums = await Library.GetArtistAlbums(artist.Id);
         var playlists = await Library.GetArtistPlaylists(artist.Name);
 
-        var artistProfile = new SpotifyArtistProfile
+        var artistProfile = new SpotifyArtistSearchResult
         {
             Artist = artist,
             Albums = albums,

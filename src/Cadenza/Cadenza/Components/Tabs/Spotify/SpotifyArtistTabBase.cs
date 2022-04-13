@@ -1,9 +1,12 @@
-﻿namespace Cadenza.Components.Shared.Dialogs
+﻿namespace Cadenza.Components.Tabs.Spotify
 {
-    public class SpotifyArtistViewBase : ViewBase<SpotifyArtistProfile>
+    public class SpotifyArtistTabBase : ComponentBase
     {
         [Inject]
         public ISpotifyLibrary Library { get; set; }
+
+        [Parameter]
+        public SpotifyArtistSearchResult Model { get; set; }
 
         protected async Task AddAlbum(string id)
         {
