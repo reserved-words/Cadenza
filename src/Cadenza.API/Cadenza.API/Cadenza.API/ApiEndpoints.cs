@@ -23,6 +23,5 @@ public static class ApiEndpoints
     {
         public const string AuthHeader = "/Spotify/AuthHeader";
         public const string AuthUrl = "/Spotify/AuthUrl";
-        public const string TokenUrl = "/Spotify/TokenUrl";
     }
 }

@@ -13,6 +13,7 @@ public class Authoriser : IAuthoriser
         _config = config;
         _builder = builder;
     }
+
     public Task<string> GetAuthUrl(string state, string redirectUri)
     {
         var result = _builder.BuildUrl(_config.Value.AuthUri,
@@ -23,6 +24,7 @@ public class Authoriser : IAuthoriser
             ("state", state));
         return Task.FromResult(result);
     }
+
     public Task<string> GetAuthHeader()
     {
         var result = _builder.BuildAuthHeader(_config.Value.ClientId, _config.Value.ClientSecret);
