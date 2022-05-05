@@ -2,11 +2,17 @@
 
 <WhipTab>
     <WhipColumn md="3">
-        <WhipRow RowHeight="@RowHeight.Fixed">
-            <SpotifySync Loading="@Loading" Library="@FullLibrary" />
-        </WhipRow>
         <WhipRow RowHeight="@RowHeight.Stretch">
-            <SpotifySearch OnShowArtist="@ShowArtist" />
+
+            <SpotifyCard Title="Spotify"
+                         IsLoading="@Loading">
+                <ChildContent>
+                    <SpotifySync Loading="@Loading"
+                                 Library="@FullLibrary" />
+                    <SpotifySearch OnShowArtist="@ShowArtist" />
+                </ChildContent>
+            </SpotifyCard>
+
         </WhipRow>
     </WhipColumn>
     <WhipColumn md="9">

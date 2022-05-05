@@ -1,5 +1,6 @@
 ﻿using Cadenza.Source.Spotify;
 using Cadenza.Source.Spotify.Model;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Cadenza.Components.Tabs.Spotify;
 
@@ -28,6 +29,11 @@ public class SpotifySearchBase : ComponentBase
         Searching = true;
         ArtistSearchResults = await Library.SearchArtist(SearchText);
         Searching = false;
+
+        if (ArtistSearchResults.Count == 1)
+        {
+            await OnViewArtist(ArtistSearchResults.Single());
+        }
     }
 
     public async Task OnViewArtist(SpotifyArtist artist)
@@ -43,5 +49,13 @@ public class SpotifySearchBase : ComponentBase
         };
 
         await OnShowArtist(artistProfile);
+    }
+
+    public async Task OnSearchKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter")
+            return;
+
+        await OnSearch();
     }
 }

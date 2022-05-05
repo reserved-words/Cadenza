@@ -1,10 +1,15 @@
 ﻿@inherits SpotifySyncBase
 
-<SpotifyCard Title="Sync"
-             IsLoading="@Loading">
-    <ChildContent>
-        <MudButton StartIcon="@Icons.Material.Filled.Sync" OnClick="@(() => OnSync())">Sync</MudButton>
-        <MudText Typo="Typo.body1">@SyncDateCaption</MudText>
-    </ChildContent>
-</SpotifyCard>
-
+<MudPaper Elevation="1"
+          Class="pa-2 mb-3 d-flex flex-row">
+    <MudButton Class="mr-2"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               StartIcon="@Icons.Material.Filled.Sync"
+               OnClick="@(() => OnSync())">Sync</MudButton>
+    <MudPaper Elevation="0"
+              Class="pa-0 ma-0 d-flex flex-column">
+        <MudText Typo="Typo.body1">Last synced</MudText>
+        <MudText Typo="Typo.body2">@SyncDateCaption</MudText>
+    </MudPaper>
+</MudPaper>

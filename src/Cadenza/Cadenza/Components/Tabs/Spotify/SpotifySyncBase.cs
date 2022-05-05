@@ -24,8 +24,8 @@ public class SpotifySyncBase : ComponentBase
     public DateTime? LastSyncDate { get; set; }
 
     public string SyncDateCaption => LastSyncDate.HasValue
-        ? $"Library last synced on {LastSyncDate.Value.ToString("dd MMM yyyy")} at {LastSyncDate.Value.ToString("HH:mm:ss")}"
-        : "No last library sync date available";
+        ? $"{LastSyncDate.Value.ToString("dd MMM yyyy")} {LastSyncDate.Value.ToString("HH:mm:ss")}"
+        : "Not available";
 
     protected override async Task OnInitializedAsync()
     {
