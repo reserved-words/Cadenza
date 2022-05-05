@@ -5,26 +5,44 @@
 
         <MudCard Class="ma-3">
             <MudCardHeader Class="pa-3">
-                <MudText Typo="@Typo.h6">@Model.Playlist.Title</MudText>
-                <MudText Typo="@Typo.body1">@Model.Playlist.CreatedBy</MudText>
+                <MudPaper Elevation="0"
+                          Class="mud-dialog-actions pa-0 d-flex flex-column">
+                    <MudText Typo="@Typo.h6">@Model.Playlist.Title</MudText>
+                    <MudText Typo="@Typo.body1">@Model.Playlist.CreatedBy</MudText>
+                </MudPaper>
             </MudCardHeader>
             <MudCardContent Class="px-2 py-0">
                 <img class="artwork" src="@Model.Playlist.ArtworkUrl" />
             </MudCardContent>
+            <MudCardActions>
+                @*                                    <MudIcon Color="@Color.Warning"
+                    Icon="@Icons.Material.Filled.Warning"></MudIcon>
+                *@
+                @if (Model.Playlist.IsInLibrary)
+                {
+                    <MudButton Color="@Color.Dark"
+                           StartIcon="@Icons.Material.Filled.Remove">Remove</MudButton>
+                }
+                else
+                {
+                    <MudButton Color="@Color.Dark"
+                           StartIcon="@Icons.Material.Filled.Add">Add</MudButton>
+                }
+            </MudCardActions>
         </MudCard>
 
     </WhipRow>
 </WhipColumn>
 <WhipColumn md="9">
 
-    <MudCard>
+    <MudCard Class="ma-3">
         <WhipTable T="@SpotifyTrack"
                    Items="@Model.Tracks">
             <RowTemplate>
                 <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
                 <MudTd>@context.Title</MudTd>
                 <MudTd>@context.Artist</MudTd>
-                <MudTd Style="width:1px; text-align: right;">@context.Duration</MudTd>
+                <MudTd Style="width:1px; text-align: right;">@context.Duration.ToDurationDisplay()</MudTd>
             </RowTemplate>
         </WhipTable>
     </MudCard>

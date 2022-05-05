@@ -7,4 +7,5 @@ public class SpotifyAlbum
     public string Artist { get; set; }
     public string Year { get; set; }
     public string ArtworkUrl { get; set; }
+    public bool IsInLibrary { get; set; }
 }

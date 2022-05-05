@@ -103,6 +103,16 @@ public class SpotifyTabBase : ComponentBase
 
     private DynamicTabsItem GetArtistTab(SpotifyArtistSearchResult result)
     {
+        foreach (var playlist in result.Playlists)
+        {
+            playlist.IsInLibrary = Playlists.Any(p => p.Id == playlist.Id);
+        }
+
+        foreach (var album in result.Albums)
+        {
+            album.IsInLibrary = Albums.Any(a => a.Id == album.Id);
+        }
+
         return new DynamicTabsItem(result.Artist.Id, result.Artist.Name, PlayerItemType.Artist.GetIcon(), typeof(SpotifyArtistTab), new Dictionary<string, object>
         {
             { "Model", result },
