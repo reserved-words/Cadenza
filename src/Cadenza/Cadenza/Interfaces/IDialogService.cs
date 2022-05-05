@@ -1,4 +1,4 @@
-﻿using Cadenza.Components.Shared.Dialogs;
+﻿using Cadenza.UI.Shared.Dialogs;
 
 namespace Cadenza.Interfaces;
 

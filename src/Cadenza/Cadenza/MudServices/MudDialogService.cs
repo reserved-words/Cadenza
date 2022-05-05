@@ -1,5 +1,5 @@
-﻿using Cadenza.Components.Shared.Dialogs;
-using Cadenza.Interfaces;
+﻿using Cadenza.Interfaces;
+using Cadenza.UI.Shared.Dialogs;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.MudServices;

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Extensions;
+﻿using System.Globalization;
+
+namespace Cadenza.Core.Extensions;
 
 public static class DurationExtensions
 {
@@ -6,7 +8,7 @@ public static class DurationExtensions
     {
         var timeSpan = TimeSpan.FromSeconds(durationSeconds);
         return timeSpan.Hours > 0
-            ? timeSpan.ToString(@"hh:\mm:\ss")
-            : timeSpan.ToString(@"mm:\ss");
+            ? timeSpan.ToString(@"hh\:mm\:ss", CultureInfo.CurrentUICulture)
+            : timeSpan.ToString(@"mm\:ss", CultureInfo.CurrentUICulture);
     }
 }

@@ -1,0 +1,36 @@
+﻿
+<MudCard Elevation="2"
+         Class="my-3">
+
+    <MudCardContent Class="pa-0">
+
+        @if (Loading)
+        {
+            <MudContainer Class="pa-3">
+                <p>Loading...</p>
+            </MudContainer>
+        }
+        else
+        {
+            <DynamicTabs FixedItems="@FixedItems"
+                         DynamicItems="@DynamicItems"
+                         SelectedItem="@SelectedTabId" />
+        }
+
+    </MudCardContent>
+
+</MudCard>
+
+@code {
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public List<DynamicTabsItem> FixedItems { get; set; }
+
+    [Parameter]
+    public List<DynamicTabsItem> DynamicItems { get; set; }
+
+    [Parameter]
+    public string SelectedTabId { get; set; }
+}

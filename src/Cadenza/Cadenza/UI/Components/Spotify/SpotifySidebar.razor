@@ -1,0 +1,20 @@
+﻿
+<MudContainer Class="pa-3">
+    <MudText Typo="@Typo.h6">Spotify</MudText>
+
+    <SpotifySync Loading="@Loading"
+                 Library="@Library" />
+
+    <SpotifySearch OnShowArtist="@OnShowArtist" />
+</MudContainer>
+
+@code {
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public FullLibrary Library { get; set; }
+
+    [Parameter]
+    public Func<SpotifyArtistSearchResult, Task> OnShowArtist { get; set; }
+}

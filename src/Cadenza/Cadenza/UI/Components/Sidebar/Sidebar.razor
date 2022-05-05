@@ -1,0 +1,29 @@
+﻿
+<TabGrid>
+    <TabGridColumn md="12">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <CurrentlyPlayingHeader />
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <CurrentTrack />
+            </WhipContainer>
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <PlayerControls />
+            </WhipContainer>
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <WhipContainer>
+                <Shuffle />
+            </WhipContainer>
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+            <Search />
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <Toolbar />
+        </TabGridRow>
+    </TabGridColumn>
+</TabGrid>

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Components\Tabs\SystemInfo\SystemErrors.razor" />
-    <None Include="Components\Tabs\SystemInfo\SystemUpdateQueue.razor" />
+    <None Include="UI\Components\SystemInfo\SystemErrors.razor" />
+    <None Include="UI\Components\SystemInfo\SystemUpdateQueue.razor" />
   </ItemGroup>
 
   <ItemGroup>

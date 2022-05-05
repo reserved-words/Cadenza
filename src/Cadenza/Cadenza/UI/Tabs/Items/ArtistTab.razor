@@ -1,0 +1,19 @@
+﻿@inherits ArtistTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <ArtistDetail Artist="@Artist" />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+            <ArtistReleases Releases="@Releases"
+                            OnViewAlbum="@OnViewAlbum"
+                            OnPlayAlbum="@OnPlayAlbum" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

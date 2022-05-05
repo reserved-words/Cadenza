@@ -1,0 +1,30 @@
+﻿
+<MudGrid Class="pa-0 ma-0" Spacing="0">
+    <MudItem md="6" Class="pa-0 ma-0">
+        <HistoryArtists Model="@Artists"
+                        IsLoading="@IsLoading"
+                        GetItems="@GetArtists"/>
+    </MudItem>
+    <MudItem md="6" Class="pa-0 ma-0">
+        <HistoryTracks Model="@Tracks"
+                        IsLoading="@IsLoading"
+                        GetItems="@GetTracks"/>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public List<PlayedArtist> Artists { get; set; }
+
+    [Parameter]
+    public List<PlayedTrack> Tracks { get; set; }
+
+    [Parameter]
+    public Func<HistoryPeriod, Task<List<PlayedArtist>>> GetArtists { get; set; }
+
+    [Parameter]
+    public Func<HistoryPeriod, Task<List<PlayedTrack>>> GetTracks { get; set; }
+}

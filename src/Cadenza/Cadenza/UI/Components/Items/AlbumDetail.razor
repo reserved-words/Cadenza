@@ -1,0 +1,27 @@
+﻿
+@if (Album != null)
+{
+    <MudCard Class="ma-3">
+        <MudCardHeader Class="pa-3">
+            <AlbumCardHeader Model="@Album"
+                            TitleOnly="false"
+                            OnView="OnViewAlbum" />
+        </MudCardHeader>
+        <MudCardContent Class="px-2 py-0">
+            <AlbumArtworkView Model="@Album"
+                              OnPlay="@OnPlayAlbum" />
+        </MudCardContent>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public AlbumInfo Album { get; set; }
+
+    [Parameter]
+    public Func<Task> OnViewAlbum { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlayAlbum { get; set; }
+
+}

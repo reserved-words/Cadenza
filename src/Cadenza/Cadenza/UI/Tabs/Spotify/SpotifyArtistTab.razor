@@ -1,0 +1,11 @@
+﻿@inherits SpotifyArtistTabBase
+
+<TabGrid>
+    <TabGridColumn md="12">
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+            <SpotifyArtistReleases Model="@Model"
+                                   OnShowAlbum="@OnShowAlbum"
+                                   OnShowPlaylist="@OnShowPlaylist" />
+        </TabGridRow>
+    </TabGridColumn>
+</TabGrid>

@@ -1,0 +1,19 @@
+﻿@using Cadenza.Core.Model
+
+@if (Releases != null)
+{
+    <ArtistReleaseGroupsView Model="@Releases"
+                             OnPlay="@OnPlayAlbum"
+                             OnView="@OnViewAlbum" />
+}
+
+@code {
+    [Parameter]
+    public List<ArtistReleaseGroup> Releases { get; set; }
+
+    [Parameter]
+    public Func<Album, Task> OnPlayAlbum { get; set; }
+        
+    [Parameter]
+    public Func<Album, Task> OnViewAlbum { get; set; }
+}

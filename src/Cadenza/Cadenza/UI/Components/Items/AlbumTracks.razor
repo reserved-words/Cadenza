@@ -1,0 +1,19 @@
+﻿
+@if (Discs != null)
+{
+    <AlbumDiscsView Model="@Discs" ViewTrack="@ViewTrack" ViewArtist="@ViewArtist" AlbumArtistId="@Album.ArtistId" />
+}
+
+@code {
+    [Parameter]
+    public AlbumInfo Album { get; set; } = new();
+
+    [Parameter]
+    public List<Core.Model.Disc> Discs { get; set; } = new();
+
+    [Parameter]
+    public Func<string, string, Task> ViewTrack { get; set; }
+
+    [Parameter]
+    public Func<string, string, Task> ViewArtist { get; set; }
+}

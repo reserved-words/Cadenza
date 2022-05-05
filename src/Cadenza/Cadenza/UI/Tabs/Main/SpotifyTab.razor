@@ -1,0 +1,20 @@
+﻿@inherits SpotifyTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <SpotifySidebar Loading="@Loading"
+                            Library="@FullLibrary"
+                            OnShowArtist="@ShowArtist" />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <SpotifyMain FixedItems="@FixedItems"
+                         DynamicItems="@DynamicItems"
+                         SelectedTabId="@SelectedItem" />
+        </TabGridRow>
+    </TabGridColumn>
+</TabGrid>

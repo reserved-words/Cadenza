@@ -1,0 +1,18 @@
+﻿@if (Artist != null)
+{
+    <MudCard Class="ma-3">
+        <MudCardHeader Class="pa-3">
+            <ArtistCardHeader Model="@Artist"
+                            TitleOnly="false" />
+        </MudCardHeader>
+        <MudCardContent Class="px-2 py-0">
+            <MudDivider Class="mb-3" />
+            <ArtistLinksView Model="@Artist" />
+        </MudCardContent>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Artist { get; set; }
+}

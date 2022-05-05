@@ -1,8 +1,7 @@
-﻿using Cadenza.Components.Shared;
-using Cadenza.Components.Tabs;
-using Cadenza.Core.App;
-using Cadenza.Core.Model;
+﻿using Cadenza.Core.App;
 using Cadenza.Interfaces;
+using Cadenza.UI.Shared;
+using Cadenza.UI.Tabs.Main;
 
 namespace Cadenza.Pages;
 

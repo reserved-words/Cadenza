@@ -1,0 +1,13 @@
+﻿
+<TabGrid>
+    <TabGridColumn md="12">
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+            <SpotifyItems Items="@Items" />
+        </TabGridRow>
+    </TabGridColumn>
+</TabGrid>
+
+@code {
+    [Parameter]
+    public List<AlbumInfo> Items { get; set; } = new();
+}

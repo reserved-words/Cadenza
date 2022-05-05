@@ -1,0 +1,22 @@
+﻿@inherits AlbumTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <AlbumDetail Album="@Album"
+                         OnViewAlbum="@OnViewAlbum"
+                         OnPlayAlbum="@OnPlay" />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Full">
+             <AlbumTracks Album="@Album"
+                          Discs="@Discs"
+                          ViewArtist="@ViewArtist"
+                          ViewTrack="@ViewTrack" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

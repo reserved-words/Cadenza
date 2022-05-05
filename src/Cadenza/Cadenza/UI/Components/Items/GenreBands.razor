@@ -1,0 +1,25 @@
+﻿
+<MudCard Elevation="0"
+            Class="fixed-height-margin"
+            Style="display: flex; flex-direction: column;">
+
+    <MudCardContent Style="flex-grow: 1;"
+                    Class="fixed-height-scroll pa-0">
+        <WhipTable T="@Artist"
+                   Items="@Artists">
+            <RowTemplate>
+                <MudTd>
+                    <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewArtist(context))" />
+                </MudTd>
+            </RowTemplate>
+        </WhipTable>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public List<Artist> Artists { get; set; }
+
+    [Parameter]
+    public Func<Artist, Task> OnViewArtist { get; set; }
+}
