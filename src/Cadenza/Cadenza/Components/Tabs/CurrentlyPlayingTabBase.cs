@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {
@@ -33,20 +33,21 @@ public class CurrentlyPlayingTabBase : ComponentBase
         StateHasChanged();
     }
 
-    private async Task OnTrackFinished(object sender, TrackEventArgs e)
+    private Task OnTrackFinished(object sender, TrackEventArgs e)
     {
         Model = null;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
     protected async Task OnPlayTrack(Track track)
     {
-        await Player.PlayTrack(track.Source, track.Id);
+        await Player.PlayTrack(track.Id);
     }
 
     protected async Task OnPlayAlbum(Album album)
     {
-        await Player.PlayAlbum(album.Source, album.Id);
+        await Player.PlayAlbum(album.Id);
     }
 
     protected async Task OnPlayArtist(Artist artist)

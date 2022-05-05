@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Interfaces;
 
 namespace Cadenza.Source.Spotify.Services;
@@ -9,29 +10,31 @@ internal class DeviceHelper : IDeviceHelper
     private readonly IStoreSetter _storeSetter;
     private readonly ISpotifyInterop _interop;
     private readonly IDevicesApi _api;
+    private readonly ITokenProvider _tokenProvider;
 
-    public DeviceHelper(ISpotifyInterop interop, IStoreGetter storeGetter, IStoreSetter storeSetter, IDevicesApi api)
+    public DeviceHelper(ISpotifyInterop interop, IStoreGetter storeGetter, IStoreSetter storeSetter, IDevicesApi api, ITokenProvider tokenProvider)
     {
         _interop = interop;
         _storeGetter = storeGetter;
         _storeSetter = storeSetter;
         _api = api;
+        _tokenProvider = tokenProvider;
     }
 
-    public async Task<string> GetDeviceId(string accessToken, bool forceCreateNew)
+    public async Task<string> GetDeviceId(bool forceCreateNew)
     {
         var deviceId = forceCreateNew
             ? null
-            : await GetCurrentDeviceId(accessToken);
+            : await GetCurrentDeviceId();
 
         if (deviceId == null)
         {
-            deviceId = await GetNewDeviceId(accessToken);
+            deviceId = await GetNewDeviceId();
         }
 
         if (deviceId == null)
         {
-            deviceId = await GetCurrentDeviceId(accessToken);
+            deviceId = await GetCurrentDeviceId();
         }
 
         if (deviceId == null)
@@ -40,8 +43,10 @@ internal class DeviceHelper : IDeviceHelper
         return deviceId;
     }
 
-    private async Task<string> GetNewDeviceId(string accessToken)
+    private async Task<string> GetNewDeviceId()
     {
+        var accessToken = await _tokenProvider.GetAccessToken(false);
+
         var connected = await _interop.ConnectPlayer(accessToken);
         if (!connected)
             throw new Exception("Failed to connect to Spotify player");
@@ -51,9 +56,9 @@ internal class DeviceHelper : IDeviceHelper
         return deviceId?.Value;
     }
 
-    private async Task<string> GetCurrentDeviceId(string accessToken)
+    private async Task<string> GetCurrentDeviceId()
     {
-        var devices = await _api.GetDevices(accessToken);
+        var devices = await _api.GetDevices();
 
         var device = devices?.Devices.FirstOrDefault(d => d.name == "Cadenza");
         if (device != null)

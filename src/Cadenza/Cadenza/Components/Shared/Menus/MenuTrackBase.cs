@@ -1,6 +1,8 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuTrackBase : ComponentBase
 {
@@ -28,8 +30,10 @@ public class MenuTrackBase : ComponentBase
     [Parameter]
     public LibrarySource Source { get; set; }
 
-    public async Task OnEdit()
+    public Task OnEdit()
     {
+        return Task.CompletedTask;
+
         //var update = new TrackUpdate(Track);
 
         //var (saved, data) = await DialogService.DisplayForm<EditTrack, TrackUpdate>(update, "Edit Track");
@@ -51,6 +55,6 @@ public class MenuTrackBase : ComponentBase
 
     public async Task OnPlay()
     {
-        await Player.PlayTrack(Source, Id);
+        await Player.PlayTrack(Id);
     }
 }

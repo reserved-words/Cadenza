@@ -1,13 +1,15 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
 using Cadenza.Core.App;
+using Cadenza.Interfaces;
 using Cadenza.Library;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuArtistBase : ComponentBase
 {
     [Inject]
-    public IMergedArtistRepository Repository { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }

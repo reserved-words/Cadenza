@@ -2,7 +2,7 @@
 using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Player;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class CurrentTrackBase : ComponentBase
 {

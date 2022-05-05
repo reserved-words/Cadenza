@@ -4,8 +4,8 @@ public interface IPlayTrackRepository
 {
     Task<List<PlayTrack>> GetByAlbum(string id);
 
-    Task<ListResponse<PlayTrack>> GetAll(int page, int limit);
-    Task<ListResponse<PlayTrack>> GetByArtist(string id, int page, int limit);
-    Task<ListResponse<PlayTrack>> GetByGenre(string id, int page, int limit);
-    Task<ListResponse<PlayTrack>> GetByGrouping(Grouping id, int page, int limit);
+    Task<List<PlayTrack>> GetAll();
+    Task<List<PlayTrack>> GetByArtist(string id);
+    Task<List<PlayTrack>> GetByGenre(string id);
+    Task<List<PlayTrack>> GetByGrouping(Grouping id);
 }

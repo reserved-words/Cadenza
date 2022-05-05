@@ -11,9 +11,9 @@ public class CorePlayer : IPlayer
     private readonly IStoreSetter _storeSetter;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
-    private readonly IMergedTrackRepository _trackRepository;
+    private readonly ITrackRepository _trackRepository;
 
-    public CorePlayer(IStoreGetter store, IEnumerable<ISourcePlayer> sourcePlayers, IStoreSetter storeSetter, IEnumerable<IUtilityPlayer> utilityPlayers, IMergedTrackRepository trackRepository)
+    public CorePlayer(IStoreGetter store, IEnumerable<ISourcePlayer> sourcePlayers, IStoreSetter storeSetter, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
     {
         _storeGetter = store;
         _storeSetter = storeSetter;
@@ -27,7 +27,7 @@ public class CorePlayer : IPlayer
         var service = await GetCurrentSourcePlayer(track.Source);
         await service.Play(track.Id);
 
-        var fullTrack = await _trackRepository.GetTrack(track.Source, track.Id);
+        var fullTrack = await _trackRepository.GetTrack(track.Id);
         var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
         await StoreCurrentTrack(fullTrack);

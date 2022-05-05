@@ -1,4 +1,4 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Components.Shared.Dialogs;
 
 public class ViewBase<T> : ComponentBase
 {

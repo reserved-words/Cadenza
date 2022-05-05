@@ -9,11 +9,11 @@
     }
     else if (Item.Type == PlayerItemType.Album)
     {
-        <AlbumTab Id="@Item.Id" Source="@Item.Source.Value" />
+        <AlbumTab Id="@Item.Id" />
     }
     else if (Item.Type == PlayerItemType.Track)
     {
-        <TrackTab Id="@Item.Id" Source="@Item.Source.Value" />
+        <TrackTab Id="@Item.Id" />
     }
     else if (Item.Type == PlayerItemType.Grouping)
     {

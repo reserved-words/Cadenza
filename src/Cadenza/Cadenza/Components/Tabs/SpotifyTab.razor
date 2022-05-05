@@ -1,0 +1,43 @@
+﻿@inherits SpotifyTabBase
+
+<WhipTab>
+    <WhipColumn md="3">
+        <WhipRow RowHeight="@RowHeight.Full">
+
+            <MudContainer Class="pa-3">
+                <MudText Typo="@Typo.h6">Spotify</MudText>
+
+                <SpotifySync Loading="@Loading"
+                             Library="@FullLibrary" />
+
+                <SpotifySearch OnShowArtist="@ShowArtist" />
+            </MudContainer>
+
+        </WhipRow>
+    </WhipColumn>
+    <WhipColumn md="9">
+        <WhipRow RowHeight="@RowHeight.Full">
+            <MudCard Elevation="2"
+                     Class="my-3">
+
+                <MudCardContent Class="pa-0">
+
+                    @if (Loading)
+                    {
+                        <MudContainer Class="pa-3">
+                            <p>Loading...</p>
+                        </MudContainer>
+                    }
+                    else
+                    {
+                        <DynamicTabs FixedItems="@FixedItems"
+                                     DynamicItems="@DynamicItems"
+                                     SelectedItem="@SelectedItem" />
+                    }
+
+                </MudCardContent>
+
+            </MudCard>
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>

@@ -3,7 +3,6 @@ using MudBlazor.Services;
 using Cadenza.Source.Local;
 using Cadenza.Utilities;
 using Cadenza.LastFM;
-using Cadenza.Library;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Player;
 using Cadenza.Core.App;
@@ -12,8 +11,13 @@ using Cadenza.Core.Playlists;
 using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
+using Cadenza.Source.Spotify.Libraries;
+using Cadenza.MudServices;
+using Cadenza.Services;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza._Startup;
 
 public static class Dependencies
 {
@@ -30,7 +34,8 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IOverridesService, OverrideService>()
+            .AddTransient<ISpotifyLibrary, ApiLibrary>()
+            .AddTransient<ISpotifySearcher, ApiSearcher>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()
@@ -44,7 +49,6 @@ public static class Dependencies
             .AddSources(builder.Configuration);
 
         builder.Services
-            .AddTransient<IStartupSyncService, StartupSyncService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IItemPlayer, ItemPlayer>()
             .AddTransient<IItemViewer, ItemViewer>();
@@ -114,8 +118,7 @@ public static class Dependencies
     {
         return services
             .AddSpotifySource(config, "SpotifyApi")
-            .AddLocalSource<HtmlPlayer>(config, "LocalApi")
-            .AddMergedRepositories();
+            .AddLocalSource<HtmlPlayer>(config, "LocalApi");
     }
 
 

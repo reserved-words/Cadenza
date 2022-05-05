@@ -1,8 +1,10 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.CurrentlyPlaying;
+﻿using Cadenza.Components.Shared;
+using Cadenza.Components.Tabs;
+using Cadenza.Core.App;
 using Cadenza.Core.Model;
+using Cadenza.Interfaces;
 
-namespace Cadenza;
+namespace Cadenza.Pages;
 
 public class IndexBase : ComponentBase
 {
@@ -10,29 +12,29 @@ public class IndexBase : ComponentBase
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
-    public IStartupSyncService SyncService { get; set; }
-
-    [Inject]
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
     public IAppConsumer App { get; set; }
 
-    public bool Playing { get; set; }
-
-    public int FixedTabCount => Playing ? 3 : 2;
-
     protected bool IsInitalised { get; private set; }
 
-    protected int SelectedTabIndex = 0;
-    
-    private string SwitchToTab = null;
+    public List<DynamicTabsItem> FixedItems = new();
 
-    protected List<ViewItem> ItemTabs = new();
+    public List<DynamicTabsItem> DynamicItems = new();
+
+    public string SelectedItem { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        App.TrackStarted += App_TrackStarted;
+        FixedItems = new List<DynamicTabsItem>
+        {
+            new DynamicTabsItem("Home", null, "fas fa-history", typeof(HistoryTab)),
+            new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
+            new DynamicTabsItem("Spotify", null, Icon.Spotify, typeof(SpotifyTab)),
+            new DynamicTabsItem("System", null, "fas fa-cog", typeof(SystemInfoTab))
+        };
+
         App.ItemRequested += App_ItemRequested;
 
         await OnStartup();
@@ -40,73 +42,27 @@ public class IndexBase : ComponentBase
 
     private Task App_ItemRequested(object sender, ItemEventArgs e)
     {
-        if (ItemTabs.Any(t => t.Id == e.Item.Id))
+        if (!DynamicItems.Any(t => t.Id == e.Item.Id))
         {
-            ShowTab(e.Item.Id);
-        }
-        else
-        {
-            ItemTabs.Add(e.Item);
-            SwitchToTab = e.Item.Id;
+            DynamicItems.Add(GetItemTab(e));
         }
 
+        SelectedItem = e.Item.Id;
         StateHasChanged();
         return Task.CompletedTask;
     }
 
-    private Task App_TrackStarted(object sender, TrackEventArgs e)
+    private static DynamicTabsItem GetItemTab(ItemEventArgs e)
     {
-        Playing = true;
-        StateHasChanged();
-        return Task.CompletedTask;
+        return new DynamicTabsItem(e.Item.Id, e.Item.Name, e.Item.Type.GetIcon(), typeof(ItemTab), new Dictionary<string, object>
+        {
+            { "Item", e.Item },
+        });
     }
 
     protected async Task OnStartup()
     {
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
-
-        if (success)
-        {
-            success = await DialogService.Run(() => SyncService.GetStartupTasks(), "Sync Library", true);
-        }
-
         IsInitalised = success;
-    }
-
-    protected void CloseTabCallback(MudTabPanel panel)
-    {
-        var itemId = panel.Tag.ToString();
-        if (ItemTabs.Any(i => i.Id == itemId))
-        {
-            var tab = ItemTabs.Single(i => i.Id == itemId);
-            ItemTabs.Remove(tab);
-        }
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (SwitchToTab != null)
-        {
-            ShowTab(SwitchToTab);
-            SwitchToTab = null;
-        } 
-    }
-
-    private void ShowTab(string id)
-    {
-        var tab = ItemTabs.Single(t => t.Id == id);
-        var index = ItemTabs.IndexOf(tab);
-        var newIndex = FixedTabCount + index;
-
-        if (SelectedTabIndex == newIndex)
-        {
-            // Display message
-        }
-        else
-        {
-            SelectedTabIndex = FixedTabCount + index;
-        }
-
-        StateHasChanged();
     }
 }

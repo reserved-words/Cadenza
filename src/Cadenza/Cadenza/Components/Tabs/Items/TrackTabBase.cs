@@ -6,7 +6,7 @@ namespace Cadenza.Components.Tabs.Items
     public class TrackTabBase : ComponentBase
     {
         [Inject]
-        public IMergedTrackRepository Repository { get; set; }
+        public ITrackRepository Repository { get; set; }
 
         [Inject]
         public IItemPlayer Player { get; set; }
@@ -17,9 +17,6 @@ namespace Cadenza.Components.Tabs.Items
         [Parameter]
         public string Id { get; set; }
 
-        [Parameter]
-        public LibrarySource Source { get; set; }
-
         public TrackFull Model { get; set; }
 
         protected override async Task OnParametersSetAsync()
@@ -29,12 +26,12 @@ namespace Cadenza.Components.Tabs.Items
 
         protected async Task OnPlayTrack(Track track)
         {
-            await Player.PlayTrack(track.Source, track.Id);
+            await Player.PlayTrack(track.Id);
         }
 
         protected async Task OnPlayAlbum(Album album)
         {
-            await Player.PlayAlbum(album.Source, album.Id);
+            await Player.PlayAlbum(album.Id);
         }
 
         protected async Task OnPlayArtist(Artist artist)
@@ -44,7 +41,7 @@ namespace Cadenza.Components.Tabs.Items
 
         private async Task UpdateTrack()
         {
-            Model = await Repository.GetTrack(Source, Id);
+            Model = await Repository.GetTrack(Id);
 
             StateHasChanged();
         }

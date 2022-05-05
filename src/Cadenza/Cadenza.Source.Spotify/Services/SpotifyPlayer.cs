@@ -8,30 +8,32 @@ namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyPlayer : ISourcePlayer
 {
-    private readonly IAudioPlayer _internalPlayer;
-    public SpotifyPlayer(ISpotifyAuthHelper authHelper, IPlayerApi playerApi)
+    private readonly IPlayerService _playerApi;
+
+    public SpotifyPlayer(IPlayerService playerApi)
     {
-        _internalPlayer = new InternalPlayer(authHelper, playerApi);
+        _playerApi = playerApi;
     }
+
     public LibrarySource Source => LibrarySource.Spotify;
+
+    public async Task Play(string trackId)
+    {
+        await _playerApi.Play(trackId);
+    }
 
     public async Task<TrackProgress> Pause()
     {
-        return await _internalPlayer.Pause();
-    }
-
-    public async Task Play(string id)
-    {
-        await _internalPlayer.Play(id);
+        return await _playerApi.Pause();
     }
 
     public async Task<TrackProgress> Resume()
     {
-        return await _internalPlayer.Resume();
+        return await _playerApi.Resume();
     }
 
     public async Task<TrackProgress> Stop()
     {
-        return await _internalPlayer.Stop();
+        return await _playerApi.Stop();
     }
 }

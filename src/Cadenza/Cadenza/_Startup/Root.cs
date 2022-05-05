@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace Cadenza
+namespace Cadenza._Startup
 {
     public static class ComponentRegistration
     {

@@ -1,6 +1,8 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuAlbumBase : ComponentBase
 {
@@ -28,8 +30,10 @@ public class MenuAlbumBase : ComponentBase
     [Parameter]
     public LibrarySource Source { get; set; }
 
-    public async Task OnEdit()
+    public Task OnEdit()
     {
+        return Task.CompletedTask;
+
         //var albumUpdate = new AlbumUpdate(Album);
 
         //var (saved, data) = await DialogService.DisplayForm<EditAlbum, AlbumUpdate>(albumUpdate, "Edit Album");
@@ -51,6 +55,6 @@ public class MenuAlbumBase : ComponentBase
 
     public async Task OnPlay()
     {
-        await Player.PlayAlbum(Source, Id);
+        await Player.PlayAlbum(Id);
     }
 }

@@ -4,7 +4,7 @@ using Cadenza.Core.Tasks;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza
+namespace Cadenza.Services
 {
     public class ApiConnectionTaskBuilder : IConnectionTaskBuilder
     {

@@ -1,6 +1,9 @@
 ﻿using Cadenza.Library;
+using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Interfaces.Converters;
+using Cadenza.Local.Common.Model.Json;
 
-namespace Cadenza.Local;
+namespace Cadenza.Local.Services;
 
 public class JsonMerger : IJsonMerger
 {

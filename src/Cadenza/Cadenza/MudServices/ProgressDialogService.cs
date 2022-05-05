@@ -1,8 +1,9 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
 using Cadenza.Core.App;
 using Cadenza.Core.Tasks;
+using Cadenza.Interfaces;
 
-namespace Cadenza;
+namespace Cadenza.MudServices;
 
 public class ProgressDialogService : IProgressDialogService
 {

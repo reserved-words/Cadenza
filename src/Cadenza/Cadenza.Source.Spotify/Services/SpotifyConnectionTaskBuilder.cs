@@ -1,25 +1,19 @@
 ﻿using Cadenza.Core.Common;
-using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
-using Cadenza.Source.Spotify.Interfaces;
+using Cadenza.Source.Spotify.Api.Interfaces;
 
 namespace Cadenza.Source.Spotify.Services;
 
 internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
 {
-    private readonly IStoreGetter _storeGetter;
     private readonly IConnectorController _connectorController;
-    private readonly ISpotifyAuthHelper _authHelper;
-    private readonly IInitialiser _initialiser;
+    private readonly ITokenProvider _tokenProvider;
 
-    public SpotifyConnectionTaskBuilder(IStoreGetter storeGetter,
-        IConnectorController connectorController, ISpotifyAuthHelper authHelper, IInitialiser initialiser)
+    public SpotifyConnectionTaskBuilder(IConnectorController connectorController, ITokenProvider tokenProvider)
     {
-        _storeGetter = storeGetter;
         _connectorController = connectorController;
-        _authHelper = authHelper;
-        _initialiser = initialiser;
+        _tokenProvider = tokenProvider;
     }
 
     public SubTask GetConnectionTask()
@@ -33,23 +27,8 @@ internal class SpotifyConnectionTaskBuilder : IConnectionTaskBuilder
             OnCompleted = () => _connectorController.SetStatus(Connector.Spotify, ConnectorStatus.Connected)
         };
 
-        subTask.AddStep("Creating session", _authHelper.GetAccessToken);
-
-        subTask.AddStep("Populating library", Populate);
+        subTask.AddStep("Creating session", () => _tokenProvider.GenerateTokens(false));
 
         return subTask;
-    }
-
-    private async Task Populate()
-    {
-        try
-        {
-            var accessToken = await _storeGetter.GetValue<string>(StoreKey.SpotifyAccessToken);
-            await _initialiser.Populate(accessToken.Value);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Failed to populate Spotify library");
-        }
     }
 }

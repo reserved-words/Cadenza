@@ -1,12 +1,14 @@
 ﻿using Cadenza.Components.Shared.Dialogs;
+using Cadenza.Interfaces;
 using Cadenza.Library;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuLyricsBase : ComponentBase
 {
     [Inject]
-    public IMergedTrackRepository Repository { get; set; }
+    public ITrackRepository Repository { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }
@@ -28,7 +30,7 @@ public class MenuLyricsBase : ComponentBase
 
     public async Task OnEdit()
     {
-        var track = await Repository.GetTrack(Source, Id);
+        var track = await Repository.GetTrack(Id);
         await DialogService.DisplayForm<EditLyrics, TrackInfo>(track.Track, "Edit Lyrics", false);
     }
 }

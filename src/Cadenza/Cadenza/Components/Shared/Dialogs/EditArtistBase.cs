@@ -1,12 +1,13 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Interfaces;
 using Cadenza.Library;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Dialogs;
 
 public class EditArtistBase : FormBase<ArtistInfo>
 {
     [Inject]
-    public IMergedArtistRepository Repository { get; set; }
+    public IArtistRepository Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
@@ -43,7 +44,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
         catch (Exception ex)
         {
             // Log error
-            Alert.Error("Error updating artist");
+            Alert.Error("Error updating artist: " + ex.Message);
         }
     }
 

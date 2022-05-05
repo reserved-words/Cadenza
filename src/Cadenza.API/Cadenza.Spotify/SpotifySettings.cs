@@ -6,5 +6,4 @@ public class SpotifySettings
     public string ClientSecret { get; set; }
     public string Scopes { get; set; }
     public string AuthUri { get; set; }
-    public string TokenUri { get; set; }
 }

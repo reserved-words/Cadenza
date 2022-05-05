@@ -9,16 +9,13 @@ namespace Cadenza.Components.Tabs.Items
     public class AlbumTabBase : ComponentBase
     {
         [Inject]
-        public IMergedAlbumRepository Repository { get; set; }
+        public IAlbumRepository Repository { get; set; }
 
         [Inject]
         public IItemPlayer Player { get; set; }
 
         [Inject]
         public IItemViewer Viewer { get; set; }
-
-        [Parameter]
-        public LibrarySource Source { get; set; }
 
         [Parameter]
         public string Id { get; set; }
@@ -34,14 +31,14 @@ namespace Cadenza.Components.Tabs.Items
 
         protected async Task OnPlay(Album album)
         {
-            await Player.PlayAlbum(album.Source, album.Id);
+            await Player.PlayAlbum(album.Id);
         }
 
         private async Task UpdateAlbum()
         {
-            Album = await Repository.GetAlbum(Source, Id);
+            Album = await Repository.GetAlbum(Id);
 
-            var tracks = await Repository.GetTracks(Source, Id);
+            var tracks = await Repository.GetTracks(Id);
 
             Discs = tracks.GroupByDisc();
 
@@ -55,7 +52,7 @@ namespace Cadenza.Components.Tabs.Items
 
         protected async Task ViewTrack(string id, string title)
         {
-            await Viewer.ViewTrack(Album.Source, id, title);
+            await Viewer.ViewTrack(id, title);
         }
 
         protected async Task ViewArtist(string id, string name)

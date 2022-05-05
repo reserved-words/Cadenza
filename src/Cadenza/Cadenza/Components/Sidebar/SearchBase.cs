@@ -1,6 +1,4 @@
-﻿using Cadenza.Core.Model;
-
-namespace Cadenza.Components.Sidebar;
+﻿namespace Cadenza.Components.Sidebar;
 
 public class SearchBase : ComponentBase
 {
@@ -9,7 +7,7 @@ public class SearchBase : ComponentBase
 
     public bool IsLoading { get; set; }
 
-    protected SourcePlayerItem Result { get; set; }
+    protected PlayerItem Result { get; set; }
 
     protected override void OnInitialized()
     {
@@ -29,7 +27,7 @@ public class SearchBase : ComponentBase
         StateHasChanged();
     }
 
-    protected Task<IEnumerable<SourcePlayerItem>> Search(string value)
+    protected Task<IEnumerable<PlayerItem>> Search(string value)
     {
         if (IsCommon(value))
             return null;
@@ -49,9 +47,10 @@ public class SearchBase : ComponentBase
             || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    protected async Task OnClear()
+    protected Task OnClear()
     {
         Result = null;
+        return Task.CompletedTask;
     }
 }
 

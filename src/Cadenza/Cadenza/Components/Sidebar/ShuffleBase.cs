@@ -1,6 +1,6 @@
 ﻿using Cadenza.Core.App;
 
-namespace Cadenza;
+namespace Cadenza.Components.Sidebar;
 
 public class ShuffleBase : ComponentBase
 {

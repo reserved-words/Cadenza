@@ -21,10 +21,11 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="TagLibSharp" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj" />
     <ProjectReference Include="..\Cadenza.Local\Cadenza.Local.csproj" />
   </ItemGroup>
 

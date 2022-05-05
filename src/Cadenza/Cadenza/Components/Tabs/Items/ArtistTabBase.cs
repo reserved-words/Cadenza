@@ -8,7 +8,7 @@ namespace Cadenza.Components.Tabs.Items
     public class ArtistTabBase : ComponentBase
     {
         [Inject]
-        public IMergedArtistRepository Repository { get; set; }
+        public IArtistRepository Repository { get; set; }
 
         [Inject]
         public IItemPlayer Player { get; set; }
@@ -35,14 +35,14 @@ namespace Cadenza.Components.Tabs.Items
 
         protected async Task OnPlayAlbum(Album album)
         {
-            await Player.PlayAlbum(album.Source, album.Id);
+            await Player.PlayAlbum(album.Id);
         }
 
         private async Task UpdateArtist()
         {
             Artist = await Repository.GetArtist(Id);
 
-            var albums = await Repository.GetArtistAlbums(Id);
+            var albums = await Repository.GetAlbums(Id);
 
             Releases = albums.GroupByReleaseType();
 

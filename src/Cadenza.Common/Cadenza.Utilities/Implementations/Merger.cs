@@ -18,7 +18,6 @@ public class Merger : IMerger
         artist.City = Merge(artist.City, update.City, mode);
         artist.State = Merge(artist.State, update.State, mode);
         artist.Country = Merge(artist.Country, update.Country, mode);
-        artist.Links = MergeLinks(artist.Links, update.Links, mode);
     }
 
     public void MergeAlbum(AlbumInfo album, AlbumInfo update, MergeMode mode)
@@ -89,11 +88,6 @@ public class Merger : IMerger
     private Grouping Merge(Grouping original, Grouping update, MergeMode mode)
     {
         return _merger.Merge(original, update, mode);
-    }
-
-    private ICollection<Link> MergeLinks(ICollection<Link> original, ICollection<Link> update, MergeMode mode)
-    {
-        return _merger.MergeList(original, update, mode);
     }
 
     private ICollection<string> MergeTags(ICollection<string> original, ICollection<string> update, MergeMode mode)

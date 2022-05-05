@@ -25,7 +25,7 @@ public class Playlist : IPlaylist
 
     public PlaylistId Id { get; }
 
-    public async Task<PlayTrack> MoveNext()
+    public Task<PlayTrack> MoveNext()
     {
         _played.Push(_playing);
 
@@ -33,10 +33,10 @@ public class Playlist : IPlaylist
             ? null
             : _toPlay.Pop();
 
-        return _playing;
+        return Task.FromResult(_playing);
     }
 
-    public async Task<PlayTrack> MovePrevious()
+    public Task<PlayTrack> MovePrevious()
     {
         if (_played.Count > 0)
         {
@@ -47,6 +47,6 @@ public class Playlist : IPlaylist
             _playing = _played.Pop();
         }
 
-        return _playing;
+        return Task.FromResult(_playing);
     }
 }

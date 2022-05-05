@@ -1,5 +1,13 @@
 ﻿using Cadenza.Library;
 using Cadenza.Local.API.Interfaces;
+using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Interfaces.Cache;
+using Cadenza.Local.Common.Interfaces.Converters;
+using Cadenza.Local.MusicFiles;
+using Cadenza.Local.Services;
+using Cadenza.Local.Services.Cache;
+using Cadenza.Local.Services.Converters;
+using FileAccess = Cadenza.Local.Services.FileAccess;
 
 namespace Cadenza.Local.API;
 
@@ -14,15 +22,21 @@ public static class Dependencies
 
     private static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
+        services.AddSingleton<IArtistCache, ArtistCache>();
+        services.AddSingleton<IAlbumCache, AlbumCache>();
+        services.AddSingleton<IPlayTrackCache, PlayTrackCache>();
+        services.AddSingleton<ISearchCache, SearchCache>();
+        services.AddSingleton<ITrackCache, TrackCache>();
+        services.AddTransient<IValueMerger, ValueMerger>();
+        services.AddTransient<IMerger, Merger>();
+        services.AddTransient<ILibrary, JsonLibrary>();
+
         services
             .AddUtilities()
             .AddLogger()
-            .AddLibrary<JsonLibrary>()
-            .AddBaseRepositories()
-            .AddTransient<ICommentProcessor, CommentProcessor>()
+            .AddMusicFileArtwork()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IFileAccess, FileAccess>()
-            .AddTransient<IId3TagsService, Id3TagsService>()
             .AddTransient<IJsonConverter, JsonConverter>()
             .AddTransient<IJsonMerger, JsonMerger>()
             .AddTransient<IFileUpdateService, FileUpdateService>()
@@ -34,8 +48,9 @@ public static class Dependencies
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
             .AddTransient<IArtworkService, ArtworkService>()
             .AddTransient<IPlayService, PlayService>()
-            .AddTransient<IApiLibraryService, ApiLibraryService>()
-            .AddTransient<IApiUpdateService, ApiUpdateService>();
+            .AddTransient<ILibraryService, LibraryService>()
+            .AddTransient<IUpdateService, UpdateService>()
+            .AddTransient<IExternalSourceService, ExternalSourceService>();
 
         return services;
     }

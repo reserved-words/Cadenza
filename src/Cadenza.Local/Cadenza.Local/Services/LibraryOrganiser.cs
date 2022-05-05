@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local;
+﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.Common.Model.Json;
+
+namespace Cadenza.Local.Services;
 
 public class LibraryOrganiser : ILibraryOrganiser
 {
@@ -13,7 +16,7 @@ public class LibraryOrganiser : ILibraryOrganiser
 
     public void MergeAlbumTrackLink(List<JsonAlbumTrackLink> jsonAlbumTrackLinks, JsonAlbumTrackLink newAlbumTrackLink)
     {
-        var existingTrackLink = jsonAlbumTrackLinks.SingleOrDefault(a => a.TrackPath == newAlbumTrackLink.TrackPath);
+        var existingTrackLink = jsonAlbumTrackLinks.SingleOrDefault(a => a.TrackId == newAlbumTrackLink.TrackId);
         if (existingTrackLink == null)
         {
             existingTrackLink = newAlbumTrackLink;
@@ -43,7 +46,7 @@ public class LibraryOrganiser : ILibraryOrganiser
 
     public void MergeTrack(List<JsonTrack> jsonTracks, List<JsonArtist> jsonArtists, JsonTrack newTrack)
     {
-        var existingTrack = jsonTracks.SingleOrDefault(t => t.Path == newTrack.Path);
+        var existingTrack = jsonTracks.SingleOrDefault(t => t.Id == newTrack.Id);
         if (existingTrack == null)
         {
             existingTrack = newTrack;
@@ -126,12 +129,14 @@ public class LibraryOrganiser : ILibraryOrganiser
             var track = jsonData.Tracks.SingleOrDefault(t => t.Path == path);
             if (track != null)
             {
+                var id = track.Id;
                 jsonData.Tracks.Remove(track);
-            }
-            var albumTrackLink = jsonData.AlbumTrackLinks.SingleOrDefault(t => t.TrackPath == path);
-            if (track != null)
-            {
-                jsonData.AlbumTrackLinks.Remove(albumTrackLink);
+
+                var albumTrackLink = jsonData.AlbumTrackLinks.SingleOrDefault(t => t.TrackId == id);
+                if (albumTrackLink != null)
+                {
+                    jsonData.AlbumTrackLinks.Remove(albumTrackLink);
+                }
             }
         }
 

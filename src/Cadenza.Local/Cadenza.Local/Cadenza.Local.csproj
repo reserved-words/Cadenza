@@ -8,13 +8,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="TagLibSharp" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Domain.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Library\Cadenza.Library.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Utilities\Cadenza.Utilities.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
   </ItemGroup>
 
 </Project>

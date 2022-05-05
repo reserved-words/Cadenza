@@ -1,0 +1,23 @@
+﻿
+<MudGrid Spacing="1" Class="ma-3">
+    @foreach (var item in Items)
+    {
+        <MudItem xs="3" md="2">
+            <MudCard Elevation="1"
+                 Class="pa-0 ma-0">
+                <img class="artwork" src="@item.ArtworkUrl" />
+                <MudCardContent Class="pa-2">
+                    <MudText Typo="Typo.body1">@item.Title</MudText>
+                    <MudText Typo="Typo.body2">@item.ArtistName</MudText>
+                    <MudText Typo="Typo.body2">@item.Year</MudText>
+                </MudCardContent>
+            </MudCard>
+
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Parameter]
+    public List<AlbumInfo> Items { get; set; }
+}

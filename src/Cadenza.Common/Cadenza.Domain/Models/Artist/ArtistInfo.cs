@@ -10,6 +10,4 @@ public class ArtistInfo : Artist
 
     [ItemProperty(ItemProperty.Country)]
     public string Country { get; set; }
-
-    public ICollection<Link> Links { get; set; } = new List<Link>();
 }

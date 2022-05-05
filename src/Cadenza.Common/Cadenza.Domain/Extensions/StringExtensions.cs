@@ -42,4 +42,11 @@ public static class StringExtensions
 
         return false;
     }
+
+    public static string Nullify(this string text)
+    {
+        return string.IsNullOrWhiteSpace(text)
+            ? null
+            : text;
+    }
 }

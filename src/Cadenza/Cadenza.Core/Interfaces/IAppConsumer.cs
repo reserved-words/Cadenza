@@ -13,6 +13,5 @@ public interface IAppConsumer
     event PlaylistEventHandler PlaylistLoading;
     event PlaylistEventHandler PlaylistStarted;
 
-    event LibraryEventHandler LibraryUpdated;
     event ItemEventHandler ItemRequested;
 }

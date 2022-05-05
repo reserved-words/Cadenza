@@ -4,9 +4,9 @@ public interface IPlaylistCreator
 {
     Task<PlaylistDefinition> CreateArtistPlaylist(string id);
 
-    Task<PlaylistDefinition> CreateAlbumPlaylist(LibrarySource source, string id);
+    Task<PlaylistDefinition> CreateAlbumPlaylist(string id);
 
-    Task<PlaylistDefinition> CreateTrackPlaylist(LibrarySource source, string id);
+    Task<PlaylistDefinition> CreateTrackPlaylist(string id);
 
     Task<PlaylistDefinition> CreateLibraryPlaylist(string first = null);
 

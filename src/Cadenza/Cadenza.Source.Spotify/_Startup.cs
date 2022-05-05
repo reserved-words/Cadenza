@@ -1,7 +1,6 @@
 ﻿using Cadenza.Core.Interfaces;
-using Cadenza.Domain;
-using Cadenza.Library;
 using Cadenza.Source.Spotify.Api;
+using Cadenza.Source.Spotify.Api.Interfaces;
 using Cadenza.Source.Spotify.Interfaces;
 using Cadenza.Source.Spotify.Services;
 using Cadenza.Source.Spotify.Settings;
@@ -17,17 +16,14 @@ public static class _Startup
         services.Configure<SpotifyApiSettings>(config.GetSection(apiSectionName));
 
         return services
-            .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IInitialiser, Initialiser>()
-            .AddTransient<IApiHelper, ApiHelper>()
+            .AddSpotifyApi<SpotifyTokenProvider, SpotifyAuthHelper>()
             .AddTransient<IDeviceHelper, DeviceHelper>()
-            .AddTransient<IDevicesApi, DevicesApi>()
-            .AddTransient<IPlayerApi, PlayerApi>()
-            .AddTransient<IProgressApi, ProgressApi>()
-            .AddTransient<ISpotifyAuthHelper, SpotifyAuthHelper>()
+            .AddTransient<IPlayerService, PlayerService>()
+            .AddTransient<IProgressService, ProgressService>()
+            .AddTransient<ITokenProvider, SpotifyTokenProvider>()
             .AddTransient<ISpotifyInterop, SpotifyInterop>()
             .AddTransient<ISourcePlayer, SpotifyPlayer>()
             .AddTransient<IConnectionTaskBuilder, SpotifyConnectionTaskBuilder>()
-            .AddApiRepositories<SpotifyApiRepositorySettings>(LibrarySource.Spotify);
+            .AddTransient<ISpotifySession, SpotifySession>();
     }
 }

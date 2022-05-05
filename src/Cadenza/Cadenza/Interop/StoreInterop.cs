@@ -1,7 +1,8 @@
-﻿using Microsoft.JSInterop;
+﻿using Cadenza.Core.App;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
-namespace Cadenza.Core.App;
+namespace Cadenza.Interop;
 
 public class StoreInterop : IStoreGetter, IStoreSetter
 {
@@ -14,26 +15,18 @@ public class StoreInterop : IStoreGetter, IStoreSetter
 
     public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken)
     {
-        try
+        var startTime = DateTime.Now;
+        var endTime = startTime.AddSeconds(timeoutSeconds);
+
+        var token = await GetValue<T>(storeKey);
+
+        while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
         {
-            var startTime = DateTime.Now;
-            var endTime = startTime.AddSeconds(timeoutSeconds);
-
-            var token = await GetValue<T>(storeKey);
-
-            while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
-            {
-                await Task.Delay(500);
-                token = await GetValue<T>(storeKey);
-            }
-
-            return token;
+            await Task.Delay(500);
+            token = await GetValue<T>(storeKey);
         }
-        catch (Exception ex)
-        {
 
-            throw;
-        }
+        return token;
     }
 
     public async Task Clear(StoreKey key)
@@ -51,9 +44,9 @@ public class StoreInterop : IStoreGetter, IStoreSetter
         return JsonConvert.DeserializeObject<StoredValue<T>>(json);
     }
 
-    public async Task SetValue<T>(StoreKey key, T value)
+    public async Task SetValue<T>(StoreKey key, T value, int? expiresInSeconds = null)
     {
-        var storedValue = new StoredValue<T>(value);
+        var storedValue = new StoredValue<T>(value, expiresInSeconds);
         var json = JsonConvert.SerializeObject(storedValue);
         await _js.InvokeVoidAsync("setStoredValue", key.ToString(), json);
     }

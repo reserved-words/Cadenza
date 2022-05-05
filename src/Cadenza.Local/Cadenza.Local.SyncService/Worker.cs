@@ -1,14 +1,14 @@
 ﻿namespace Cadenza.Local.SyncService;
 
-public class Worker : BackgroundService
+internal class Worker : BackgroundService
 {
     private readonly IConfiguration _config;
-    private readonly ILocalLibraryUpdater _updater;
+    private readonly IEnumerable<IUpdateService> _updaters;
 
-    public Worker(ILocalLibraryUpdater updater, IConfiguration config)
+    public Worker(IEnumerable<IUpdateService> updaters, IConfiguration config)
     {
         _config = config;
-        _updater = updater;
+        _updaters = updaters;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -21,35 +21,20 @@ public class Worker : BackgroundService
         {
             try
             {
-                await _updater.UpdateDeletedFiles();
+                foreach (var updater in _updaters)
+                {
+                    await updater.Run();
 
-                if (stoppingToken.IsCancellationRequested)
-                    return;
-
-                await _updater.UpdateAddedFiles();
-
-                if (stoppingToken.IsCancellationRequested)
-                    return;
-
-                await _updater.UpdateModifiedFiles();
-
-                if (stoppingToken.IsCancellationRequested)
-                    return;
-
-                await _updater.RemovePlayedFiles();
-
-                if (stoppingToken.IsCancellationRequested)
-                    return;
-
-                await _updater.ProcessUpdateQueue();
-
+                    if (stoppingToken.IsCancellationRequested)
+                        return;
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+
             await Task.Delay(runFrequencyInMilliseconds, stoppingToken);
         }
-
     }
 }

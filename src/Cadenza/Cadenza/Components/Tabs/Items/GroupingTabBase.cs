@@ -7,7 +7,7 @@ namespace Cadenza.Components.Tabs.Items
     public class GroupingTabBase : ComponentBase
     {
         [Inject]
-        public IMergedArtistRepository Repository { get; set; }
+        public IArtistRepository Repository { get; set; }
 
         [Inject]
         public IItemPlayer Player { get; set; }
@@ -88,10 +88,11 @@ namespace Cadenza.Components.Tabs.Items
             await Player.PlayGenre(id);
         }
 
-        protected async Task OnViewGenre(string id)
+        protected Task OnViewGenre(string id)
         {
             SelectedGenre = id;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
         protected async Task OnViewSelectedGenre()

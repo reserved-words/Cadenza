@@ -1,6 +1,8 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Interfaces;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Menus;
 
 public class MenuGroupingBase : ComponentBase
 {
@@ -25,8 +27,9 @@ public class MenuGroupingBase : ComponentBase
     [Parameter]
     public string Id { get; set; }
 
-    public async Task OnEdit()
+    public Task OnEdit()
     {
+        return Task.CompletedTask;
     }
 
     public async Task OnPlay()

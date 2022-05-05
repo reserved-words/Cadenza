@@ -1,5 +1,4 @@
 ﻿using Cadenza.Core.App;
-using Cadenza.Core.Model;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -13,7 +12,7 @@ public class SearchResultBase : ComponentBase
     public IItemViewer Viewer { get; set; }
 
     [Parameter]
-    public SourcePlayerItem Result { get; set; }
+    public PlayerItem Result { get; set; }
 
     [Parameter]
     public Func<Task> OnClear { get; set; }
@@ -32,10 +31,10 @@ public class SearchResultBase : ComponentBase
                 await Player.PlayArtist(Result.Id);
                 break;
             case PlayerItemType.Album:
-                await Player.PlayAlbum(Result.Source.Value, Result.Id);
+                await Player.PlayAlbum(Result.Id);
                 break;
             case PlayerItemType.Track:
-                await Player.PlayTrack(Result.Source.Value, Result.Id);
+                await Player.PlayTrack(Result.Id);
                 break;
             case PlayerItemType.Playlist:
                 break;

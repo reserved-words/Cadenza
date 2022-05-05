@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Local.Common.Interfaces;
+
+namespace Cadenza.Local.API;
 
 public class ArtworkService : IArtworkService
 {

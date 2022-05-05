@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local;
+﻿namespace Cadenza.Local.Config;
 
 public class MusicLibrary
 {

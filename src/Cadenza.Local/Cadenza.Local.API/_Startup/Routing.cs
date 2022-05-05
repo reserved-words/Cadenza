@@ -1,5 +1,5 @@
-﻿using Cadenza.Library;
-using Cadenza.Local.API.Interfaces;
+﻿using Cadenza.Local.API.Interfaces;
+using Cadenza.Local.Common.Interfaces.Cache;
 
 namespace Cadenza.Local.API;
 
@@ -11,13 +11,15 @@ public static class Routing
 
         return app
             .AddLibraryRoutes()
-            .AddPlayerRoutes()
-            .AddUpdaterRoutes();
+            .AddUpdaterRoutes()
+            .AddPlayerRoute()
+            .AddArtworkRoute()
+            .AddExternalSourceRoutes();
     }
 
     private static WebApplication AddUpdaterRoutes(this WebApplication app)
     {
-        var apiService = app.Services.GetRequiredService<IApiUpdateService>();
+        var apiService = app.Services.GetRequiredService<IUpdateService>();
         app.MapGet("/Update/Get", () => apiService.GetUpdates());
         app.MapPost("/Update/Album", (AlbumUpdate update) => apiService.UpdateAlbum(update));
         app.MapPost("/Update/Artist", (ArtistUpdate update) => apiService.UpdateArtist(update));
@@ -25,50 +27,65 @@ public static class Routing
         return app;
     }
 
-    private static WebApplication AddPlayerRoutes(this WebApplication app)
+    private static WebApplication AddPlayerRoute(this WebApplication app)
     {
         var play = app.Services.GetService<IPlayService>();
         app.MapGet("/Play/Track/{id}", async (string id) => (await play.GetTrackPlayPath(id)).Stream());
         return app;
     }
 
-    private static WebApplication AddLibraryRoutes(this WebApplication app)
+    private static WebApplication AddArtworkRoute(this WebApplication app)
     {
-        var apiLibraryService = app.Services.GetRequiredService<IApiLibraryService>();
-        app.MapPost("/Startup", () => apiLibraryService.Populate());
-        app.MapGet("/Artists", (int page, int limit) => apiLibraryService.GetAllArtists(page, limit));
-        app.MapGet("/Artists/Album", (int page, int limit) => apiLibraryService.GetAlbumArtists(page, limit));
-        app.MapGet("/Artists/Track", (int page, int limit) => apiLibraryService.GetTrackArtists(page, limit));
-        app.MapGet("/Artists/Grouping", (Grouping id, int page, int limit) => apiLibraryService.GetArtistsByGrouping(id, page, limit));
-        app.MapGet("/Artists/Genre", (string id, int page, int limit) => apiLibraryService.GetArtistsByGenre(id, page, limit));
-        app.MapGet("/Artist", (string id) => apiLibraryService.GetArtist(id));
-        app.MapGet("/Artist/Albums", (string id, int page, int limit) => apiLibraryService.GetAlbums(id, page, limit));
-        app.MapGet("/Track", (string id) => apiLibraryService.GetTrack(id));
-        app.MapGet("/Album", (string id) => apiLibraryService.GetAlbum(id));
-        app.MapGet("/Album/Tracks", (string id) => apiLibraryService.GetTracks(id));
-
-        var playTracks = app.Services.GetRequiredService<IPlayTrackCache>();
-        app.MapGet("/Play/Tracks", (int page, int limit) => playTracks.GetAll(page, limit));
-        app.MapGet("/Play/Artist", (string id, int page, int limit) => playTracks.GetByArtist(id, page, limit));
-        app.MapGet("/Play/Album", (string id) => playTracks.GetByAlbum(id));
-        app.MapGet("/Play/Genre", (string id, int page, int limit) => playTracks.GetByGenre(id, page, limit));
-        app.MapGet("/Play/Grouping", (Grouping id, int page, int limit) => playTracks.GetByGrouping(id, page, limit));
-
-        var searchItems = app.Services.GetRequiredService<ISearchCache>();
-        app.MapGet("/Search/Artists", (int page, int limit) => searchItems.GetSearchArtists(page, limit));
-        app.MapGet("/Search/Groupings", (int page, int limit) => searchItems.GetSearchGroupings(page, limit));
-        app.MapGet("/Search/Genres", (int page, int limit) => searchItems.GetSearchGenres(page, limit));
-        app.MapGet("/Search/Albums", (int page, int limit) => searchItems.GetSearchAlbums(page, limit));
-        app.MapGet("/Search/Playlists", (int page, int limit) => searchItems.GetSearchPlaylists(page, limit));
-        app.MapGet("/Search/Tracks", (int page, int limit) => searchItems.GetSearchTracks(page, limit));
-
         var artworkService = app.Services.GetRequiredService<IArtworkService>();
-        app.MapGet("/Library/Artwork", async (HttpContext context) => 
+        app.MapGet("/Library/Artwork", async (HttpContext context) =>
         {
             var id = context.Request.Query["id"].Single();
             var artwork = await artworkService.GetArtwork(id);
             await context.WriteArtwork(artwork);
         });
+        return app;
+    }
+
+    private static WebApplication AddExternalSourceRoutes(this WebApplication app)
+    {
+        var externalSourceService = app.Services.GetRequiredService<IExternalSourceService>();
+        app.MapPost("/Source/Add", (ExternalSourceLibrary library) => externalSourceService.AddLibrary(library));
+        app.MapGet("/Source/Updated", async (LibrarySource source) => new
+        {
+            SyncDate = await externalSourceService.GetLastSyncDate(source)
+        });
+        return app;
+    }
+
+    private static WebApplication AddLibraryRoutes(this WebApplication app)
+    {
+        var apiLibraryService = app.Services.GetRequiredService<ILibraryService>();
+        app.MapPost("/Startup", () => apiLibraryService.Populate());
+        app.MapGet("/Artists", () => apiLibraryService.GetAllArtists());
+        app.MapGet("/Artists/Album", () => apiLibraryService.GetAlbumArtists());
+        app.MapGet("/Artists/Track", () => apiLibraryService.GetTrackArtists());
+        app.MapGet("/Artists/Grouping", (Grouping id) => apiLibraryService.GetArtistsByGrouping(id));
+        app.MapGet("/Artists/Genre", (string id) => apiLibraryService.GetArtistsByGenre(id));
+        app.MapGet("/Artist", (string id) => apiLibraryService.GetArtist(id));
+        app.MapGet("/Artist/Albums", (string id) => apiLibraryService.GetAlbums(id));
+        app.MapGet("/Track", (string id) => apiLibraryService.GetTrack(id));
+        app.MapGet("/Album", (string id) => apiLibraryService.GetAlbum(id));
+        app.MapGet("/Album/Tracks", (string id) => apiLibraryService.GetTracks(id));
+
+        var playTracks = app.Services.GetRequiredService<IPlayTrackCache>();
+        app.MapGet("/Play/Tracks", () => playTracks.GetAll());
+        app.MapGet("/Play/Artist", (string id) => playTracks.GetByArtist(id));
+        app.MapGet("/Play/Album", (string id) => playTracks.GetByAlbum(id));
+        app.MapGet("/Play/Genre", (string id) => playTracks.GetByGenre(id));
+        app.MapGet("/Play/Grouping", (Grouping id) => playTracks.GetByGrouping(id));
+
+        var searchItems = app.Services.GetRequiredService<ISearchCache>();
+        app.MapGet("/Search/Artists", () => searchItems.GetSearchArtists());
+        app.MapGet("/Search/Groupings", () => searchItems.GetSearchGroupings());
+        app.MapGet("/Search/Genres", () => searchItems.GetSearchGenres());
+        app.MapGet("/Search/Albums", () => searchItems.GetSearchAlbums());
+        app.MapGet("/Search/Playlists", () => searchItems.GetSearchPlaylists());
+        app.MapGet("/Search/Tracks", () => searchItems.GetSearchTracks());
 
         return app;
     }

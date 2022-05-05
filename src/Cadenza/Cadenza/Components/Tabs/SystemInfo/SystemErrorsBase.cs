@@ -1,7 +1,7 @@
 ﻿using Cadenza.Core.Model.Logging;
 using LogLevel = Cadenza.Core.Model.Logging.LogLevel;
 
-namespace Cadenza;
+namespace Cadenza.Components.Tabs.SystemInfo;
 
 public partial class SystemErrorsBase : ComponentBase
 {
@@ -9,7 +9,7 @@ public partial class SystemErrorsBase : ComponentBase
 
     public ErrorLog SelectedItem { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         var random = new Random();
 

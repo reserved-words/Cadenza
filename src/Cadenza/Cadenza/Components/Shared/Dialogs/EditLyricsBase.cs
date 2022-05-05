@@ -1,15 +1,16 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Interop;
+using Cadenza.Interfaces;
 using Cadenza.Library;
 
-namespace Cadenza;
+namespace Cadenza.Components.Shared.Dialogs;
 
 public class EditLyricsBase : FormBase<TrackInfo>
 {
     private const string SearchUrl = "https://www.google.com/search?q=%22{0}%22+%22{1}%22+lyrics";
 
     [Inject]
-    public IMergedTrackRepository Repository { get; set; }
+    public ITrackRepository Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
@@ -40,9 +41,9 @@ public class EditLyricsBase : FormBase<TrackInfo>
         Update = new TrackUpdate(Model);
     }
 
-    protected async Task OnLoad()
+    protected Task OnLoad()
     {
-
+        return Task.CompletedTask;
     }
 
     protected async Task OnSearch()
@@ -69,7 +70,7 @@ public class EditLyricsBase : FormBase<TrackInfo>
         catch (Exception ex)
         {
             // Log error
-            Alert.Error("Error updating lyrics");
+            Alert.Error("Error updating lyrics: " + ex.Message);
         }
 
         await UpdatesService.UpdateLyrics(Update);
