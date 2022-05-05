@@ -33,8 +33,8 @@ public class SpotifyTabBase : ComponentBase
 
         FixedItems = new List<DynamicTabsItem>
         {
-            new DynamicTabsItem("Playlists", "Playlists", Icon.Spotify, typeof(SpotifyPlaylists), new Dictionary<string, object>{ { "Items", Playlists } }),
-            new DynamicTabsItem("Albums", "Albums", Icon.Spotify, typeof(SpotifyAlbums), new Dictionary<string, object>{ { "Items", Albums } })
+            new DynamicTabsItem("Albums", "Albums", Icon.Spotify, typeof(SpotifyAlbums), new Dictionary<string, object>{ { "Items", Albums } }),
+            new DynamicTabsItem("Playlists", "Playlists", Icon.Spotify, typeof(SpotifyPlaylists), new Dictionary<string, object>{ { "Items", Playlists } })
         };
     }
 

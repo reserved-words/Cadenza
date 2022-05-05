@@ -1,5 +1,11 @@
 ﻿
-<SpotifyItems Items="@Items" />
+<WhipTab>
+    <WhipColumn md="12">
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <SpotifyItems Items="@Items" />
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>
 
 @code {
     [Parameter]

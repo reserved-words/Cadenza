@@ -2,7 +2,7 @@
 
 <WhipTab>
     <WhipColumn md="3">
-        <WhipRow RowHeight="@RowHeight.Fixed">
+        <WhipRow RowHeight="@RowHeight.Stretch">
 
             <MudCard Class="ma-3">
                 <MudCardHeader Class="pa-3">
@@ -18,19 +18,19 @@
         </WhipRow>
     </WhipColumn>
     <WhipColumn md="9">
-
-        <MudCard>
-            <WhipTable T="@SpotifyTrack"
-                       Items="@Model.Tracks">
-                <RowTemplate>
-                    <MudTd Style="width:1px; text-align: right;">@context.DiscNo</MudTd>
-                    <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
-                    <MudTd>@context.Title</MudTd>
-                    <MudTd>@context.Artist</MudTd>
-                    <MudTd Style="width:1px; text-align: right;">@context.Duration</MudTd>
-                </RowTemplate>
-            </WhipTable>
-        </MudCard>
-
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <MudCard>
+                <WhipTable T="@SpotifyTrack"
+                           Items="@Model.Tracks">
+                    <RowTemplate>
+                        <MudTd Style="width:1px; text-align: right;">@context.DiscNo</MudTd>
+                        <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
+                        <MudTd>@context.Title</MudTd>
+                        <MudTd>@context.Artist</MudTd>
+                        <MudTd Style="width:1px; text-align: right;">@context.Duration</MudTd>
+                    </RowTemplate>
+                </WhipTable>
+            </MudCard>
+        </WhipRow>
     </WhipColumn>
 </WhipTab>

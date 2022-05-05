@@ -1,48 +1,55 @@
 ﻿@inherits SpotifyArtistTabBase
 
-<MudCard Elevation=0>
-    <MudGrid Spacing="1">
-        @foreach (var playlist in Model.Playlists)
-        {
-            <MudItem xs="3" sm="2">
-                <MudCard Elevation="1"
-                        Class="pa-0 ma-0">
-                    <img class="artwork" src="@playlist.ArtworkUrl" />
-                    <MudCardContent Class="pa-2">
-                        <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowPlaylist(playlist))" Color="@Color.Dark">
-                            @playlist.Title
-                        </MudLink>
+<WhipTab>
+    <WhipColumn md="12">
+        <WhipRow RowHeight="@RowHeight.Stretch">
+            <MudCard Elevation=0
+                      Class="ma-3">
+                <MudGrid Spacing="1">
+                    @foreach (var playlist in Model.Playlists)
+                    {
+                        <MudItem xs="3" sm="2">
+                            <MudCard Elevation="1"
+                                 Class="pa-0 ma-0">
+                                <img class="artwork" src="@playlist.ArtworkUrl" />
+                                <MudCardContent Class="pa-2">
+                                    <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowPlaylist(playlist))" Color="@Color.Dark">
+                                        @playlist.Title
+                                    </MudLink>
 
-                        <MudText Typo="Typo.body2">@playlist.CreatedBy</MudText>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Color="@Color.Dark"
-                                    OnClick="@(() => AddPlaylist(playlist.Id))">Add to Library</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-        }
+                                    <MudText Typo="Typo.body2">@playlist.CreatedBy</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Color="@Color.Dark"
+                                           OnClick="@(() => AddPlaylist(playlist.Id))">Add to Library</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    }
 
-        @foreach (var album in Model.Albums)
-        {
-            <MudItem xs="3" sm="2">
-                <MudCard Elevation="1"
-                        Class="pa-0 ma-0">
-                    <img class="artwork" src="@album.ArtworkUrl" />
-                    <MudCardContent Class="pa-2">
-                        <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowAlbum(album))" Color="@Color.Dark">
-                            @album.Title
-                        </MudLink>
-                        <MudText Typo="Typo.body2">@album.Artist</MudText>
-                        <MudText Typo="Typo.body2">@album.Year</MudText>
-                    </MudCardContent>
-                </MudCard>
-                <MudCardActions>
-                    <MudButton Color="@Color.Dark"
-                                OnClick="@(() => AddAlbum(album.Id))">Add to Library</MudButton>
-                </MudCardActions>
-            </MudItem>
-        }
-    </MudGrid>
+                    @foreach (var album in Model.Albums)
+                    {
+                        <MudItem xs="3" sm="2">
+                            <MudCard Elevation="1"
+                                 Class="pa-0 ma-0">
+                                <img class="artwork" src="@album.ArtworkUrl" />
+                                <MudCardContent Class="pa-2">
+                                    <MudLink Typo="@Typo.body1" Style="cursor: pointer;" onclick="@(() => OnShowAlbum(album))" Color="@Color.Dark">
+                                        @album.Title
+                                    </MudLink>
+                                    <MudText Typo="Typo.body2">@album.Artist</MudText>
+                                    <MudText Typo="Typo.body2">@album.Year</MudText>
+                                </MudCardContent>
+                            </MudCard>
+                            <MudCardActions>
+                                <MudButton Color="@Color.Dark"
+                                       OnClick="@(() => AddAlbum(album.Id))">Add to Library</MudButton>
+                            </MudCardActions>
+                        </MudItem>
+                    }
+                </MudGrid>
 
-</MudCard>
+            </MudCard>
+        </WhipRow>
+    </WhipColumn>
+</WhipTab>
