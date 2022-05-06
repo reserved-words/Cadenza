@@ -1,15 +1,15 @@
 ﻿
 @if (Album != null)
 {
-    <MudCard Class="ma-3">
-        <MudCardHeader Class="pa-3">
+    <AppCard>
+        <HeaderContent>
             <AlbumCardHeader Model="@Album"
                              TitleOnly="false" />
-        </MudCardHeader>
-        <MudCardContent Class="px-2 py-0">
+        </HeaderContent>
+        <ChildContent>
             <AlbumArtworkView Model="@Album" />
-        </MudCardContent>
-    </MudCard>
+        </ChildContent>
+    </AppCard>
 }
 
 @code {

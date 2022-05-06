@@ -1,19 +1,18 @@
-﻿<MudCard Class="ma-3">
-    <MudCardHeader Class="pa-3">
+﻿<AppCard>
+    <HeaderContent>
         <AlbumCardHeader Model="@Album"
                          TitleOnly="true" />
-    </MudCardHeader>
-    <MudCardContent Class="pa-2">
+    </HeaderContent>
+    <ChildContent>
         <AlbumArtworkView Model="@Album" />
-        <MudPaper Elevation="0"
-                  Class="pa-0 mt-3 mb-1">
+        <AppCaptions>
             <MudText Typo="@Typo.body1">@Album.ReleaseType.GetDisplayName()</MudText>
             <MudText Typo="@Typo.body1">@Album.Year</MudText>
             <MudText Typo="@Typo.body1">@Album.DiscPosition(AlbumTrack.Position)</MudText>
             <MudText Typo="@Typo.body1">@Album.TrackPosition(AlbumTrack.Position)</MudText>
-        </MudPaper>
-    </MudCardContent>
-</MudCard>
+        </AppCaptions>
+    </ChildContent>
+</AppCard>
 
 @code {
     [Parameter]

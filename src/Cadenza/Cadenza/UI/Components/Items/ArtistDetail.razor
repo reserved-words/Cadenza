@@ -1,15 +1,14 @@
 ﻿@if (Artist != null)
 {
-    <MudCard Class="ma-3">
-        <MudCardHeader Class="pa-3">
+    <AppCardDivided>
+        <HeaderContent>
             <ArtistCardHeader Model="@Artist"
-                            TitleOnly="false" />
-        </MudCardHeader>
-        <MudCardContent Class="px-2 py-0">
-            <MudDivider Class="mb-3" />
+                              TitleOnly="false" />
+        </HeaderContent>
+        <ChildContent>
             <ArtistLinksView Model="@Artist" />
-        </MudCardContent>
-    </MudCard>
+        </ChildContent>
+    </AppCardDivided>
 }
 
 @code {

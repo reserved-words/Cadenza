@@ -1,7 +1,27 @@
 ﻿
 @if (Discs != null)
 {
-    <AlbumDiscsView Model="@Discs" AlbumArtistId="@Album.ArtistId" />
+    <AppCardScrollContainer Elevation="0">
+        <ChildContent>
+            <MudTabs>
+                @if (Discs.Count == 1)
+                {
+                    <MudTabPanel Text="Tracks">
+                        <AlbumDisc Model="@Discs.Single()" AlbumArtistId="@Album.ArtistId" />
+                    </MudTabPanel>
+                }
+                else
+                {
+                    @foreach (var disc in Discs)
+                    {
+                        <MudTabPanel Text="@("Disc " + disc.DiscNo)">
+                            <AlbumDisc Model="@disc" AlbumArtistId="@Album.ArtistId" />
+                        </MudTabPanel>
+                    }
+                }
+            </MudTabs>
+        </ChildContent>
+    </AppCardScrollContainer>
 }
 
 @code {

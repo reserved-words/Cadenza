@@ -1,0 +1,27 @@
+﻿@using Cadenza.Core.App
+@using Cadenza.Core.Model
+
+<AppTable T="@AlbumTrack"
+          Items="@Model.Tracks">
+    <RowTemplate>
+        <MudTd Class="td-int">@context.Position.TrackNo</MudTd>
+        <MudTd>
+            <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" />
+        </MudTd>
+        <MudTd>
+            @if (context.ArtistId != AlbumArtistId)
+            {
+                <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
+            }
+        </MudTd>
+        <MudTd Class="td-int">@context.Duration()</MudTd>
+    </RowTemplate>
+</AppTable>
+
+@code {
+    [Parameter]
+    public Disc Model { get; set; }
+
+    [Parameter]
+    public string AlbumArtistId { get; set; }
+}

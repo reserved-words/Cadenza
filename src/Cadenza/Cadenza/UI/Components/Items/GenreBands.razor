@@ -1,21 +1,17 @@
 ﻿@using Cadenza.Core.App
 
-<MudCard Elevation="0"
-            Class="fixed-height-margin"
-            Style="display: flex; flex-direction: column;">
-
-    <MudCardContent Style="flex-grow: 1;"
-                    Class="fixed-height-scroll pa-0">
+<AppCardScrollContainer>
+    <ChildContent>
         <AppTable T="@Artist"
-                   Items="@Artists">
+                  Items="@Artists">
             <RowTemplate>
                 <MudTd>
                     <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
                 </MudTd>
             </RowTemplate>
         </AppTable>
-    </MudCardContent>
-</MudCard>
+    </ChildContent>
+</AppCardScrollContainer>
 
 @code {
     [Parameter]

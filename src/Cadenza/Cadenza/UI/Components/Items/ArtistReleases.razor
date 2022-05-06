@@ -2,7 +2,16 @@
 
 @if (Releases != null)
 {
-    <ArtistReleaseGroupsView Model="@Releases" />
+    <AppCardScrollContainer>
+        <ChildContent>
+            <MudTabs>
+                @foreach (var group in Releases)
+                {
+                    <ArtistReleaseGroupView Model="@group" />
+                }
+            </MudTabs>
+        </ChildContent>
+    </AppCardScrollContainer>
 }
 
 @code {

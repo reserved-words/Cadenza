@@ -1,26 +1,25 @@
 ﻿@using Cadenza.Core.App
+
 @if (Genre != null)
 {
-    <MudCard Class="fixed-height-margin"
-             Style="display: flex; flex-direction: column;">
+    <AppCardScrollContainer>
 
-        <MudCardHeader Class="pa-3">
+        <HeaderContent>
             <GenreCardHeader Id="@Genre" />
-        </MudCardHeader>
+        </HeaderContent>
 
-        <MudCardContent Style="flex-grow: 1;"
-                        Class="fixed-height-scroll pa-0">
+        <ChildContent>
             <AppTable T="@Artist"
-                       Items="@Artists">
+                      Items="@Artists">
                 <RowTemplate>
                     <MudTd>
                         <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
                     </MudTd>
                 </RowTemplate>
             </AppTable>
-        </MudCardContent>
+        </ChildContent>
 
-    </MudCard>
+    </AppCardScrollContainer>
 }
 
 @code {

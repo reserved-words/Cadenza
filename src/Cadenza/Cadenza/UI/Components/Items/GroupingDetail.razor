@@ -1,9 +1,9 @@
 ﻿
-<MudCard Class="ma-3">
-    <MudCardHeader Class="pa-3">
+<AppCardScrollContainer>
+    <HeaderContent>
         <GroupingCardHeader Id="@Grouping" />
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
+    </HeaderContent>
+    <ChildContent>
         <AppTable T="@string"
                    Items="@Genres">
             <RowTemplate>
@@ -12,8 +12,8 @@
                 </MudTd>
             </RowTemplate>
         </AppTable>
-    </MudCardContent>
-</MudCard>
+    </ChildContent>
+</AppCardScrollContainer>
 
 @code {
 
