@@ -1,0 +1,11 @@
+﻿<MudItem md="@md" Class="pa-0 ma-0">
+    @ChildContent
+</MudItem>
+
+@code {
+    [Parameter]
+    public int md { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

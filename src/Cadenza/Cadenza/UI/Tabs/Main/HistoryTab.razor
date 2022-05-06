@@ -10,16 +10,29 @@
 
     <TabGridColumn md="8">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <HistoryArtistsTracks IsLoading="@IsLoading"
-                                  Artists="@TopArtists"
-                                  Tracks="@TopTracks"
-                                  GetArtists="@GetArtists"
-                                  GetTracks="@GetTracks" />
+
+            <SubGrid>
+                <SubGridColumn md="6">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <HistoryArtists Model="@TopArtists"
+                                        IsLoading="@IsLoading"
+                                        GetItems="@GetArtists" />
+                    </SubGridRow>
+                </SubGridColumn>
+                <SubGridColumn md="6">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <HistoryTracks Model="@TopTracks"
+                                       IsLoading="@IsLoading"
+                                       GetItems="@GetTracks" />
+                                   </SubGridRow>
+                </SubGridColumn>
+            </SubGrid>
+
         </TabGridRow>
         <TabGridRow RowHeight="@RowHeight.Fixed">
             <HistoryAlbums Model="@TopAlbums"
                            IsLoading="@IsLoading"
-                           GetItems="@GetAlbums"/>
+                           GetItems="@GetAlbums" />
         </TabGridRow>
     </TabGridColumn>
 
