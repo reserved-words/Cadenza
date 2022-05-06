@@ -1,13 +1,13 @@
 ﻿
-<AppCardDivided>
+<AppCardScrollContainer>
     <HeaderContent>
         <LyricsCardHeader Id="@Model.Id"
-                        Source="@Model.Source" />
+                          Source="@Model.Source" />
     </HeaderContent>
     <ChildContent>
         <TrackLyricsView Model="@Model" />
     </ChildContent>
-</AppCardDivided>
+</AppCardScrollContainer>
 
 @code {
     [Parameter]
