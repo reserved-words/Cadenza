@@ -1,4 +1,5 @@
-﻿
+﻿@inherits HistoryTracksBase
+
 <HistoryCard Title="Top Tracks"
              Period="@HistoryPeriod.Week"
              IsLoading="@IsLoading"
@@ -18,14 +19,3 @@
         </MudTd>
     </RowTemplate>
 </HistoryCard>
-
-@code {
-    [Parameter]
-    public List<PlayedTrack> Model { get; set; }
-
-    [Parameter]
-    public bool IsLoading { get; set; }
-
-    [Parameter]
-    public Func<HistoryPeriod, Task<List<PlayedTrack>>> GetItems { get; set; }
-}

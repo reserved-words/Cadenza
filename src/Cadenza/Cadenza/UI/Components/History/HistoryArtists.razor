@@ -1,4 +1,6 @@
-﻿<HistoryCard Title="Top Artists"
+﻿@inherits HistoryArtistsBase
+
+<HistoryCard Title="Top Artists"
              Period="@HistoryPeriod.Week"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top artists..."
@@ -17,14 +19,3 @@
         </MudTd>
     </RowTemplate>
 </HistoryCard>
-
-@code {
-    [Parameter]
-    public List<PlayedArtist> Model { get; set; }
-
-    [Parameter]
-    public bool IsLoading { get; set; }
-    
-    [Parameter]
-    public Func<HistoryPeriod, Task<List<PlayedArtist>>> GetItems { get; set; }
-}

@@ -1,5 +1,4 @@
-﻿@inherits HistoryTabBase
-
+﻿
 <TabGrid>
 
     <TabGridColumn md="4">
@@ -14,25 +13,19 @@
             <SubGrid>
                 <SubGridColumn md="6">
                     <SubGridRow RowHeight="@RowHeight.Fixed">
-                        <HistoryArtists Model="@TopArtists"
-                                        IsLoading="@IsLoading"
-                                        GetItems="@GetArtists" />
+                        <HistoryArtists />
                     </SubGridRow>
                 </SubGridColumn>
                 <SubGridColumn md="6">
                     <SubGridRow RowHeight="@RowHeight.Fixed">
-                        <HistoryTracks Model="@TopTracks"
-                                       IsLoading="@IsLoading"
-                                       GetItems="@GetTracks" />
-                                   </SubGridRow>
+                        <HistoryTracks />
+                    </SubGridRow>
                 </SubGridColumn>
             </SubGrid>
 
         </TabGridRow>
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <HistoryAlbums Model="@TopAlbums"
-                           IsLoading="@IsLoading"
-                           GetItems="@GetAlbums" />
+            <HistoryAlbums />
         </TabGridRow>
     </TabGridColumn>
 
