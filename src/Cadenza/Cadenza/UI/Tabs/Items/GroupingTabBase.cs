@@ -1,5 +1,4 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.Updates;
+﻿using Cadenza.Core.Updates;
 using Cadenza.Library;
 
 namespace Cadenza.UI.Tabs.Items
