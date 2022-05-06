@@ -1,0 +1,17 @@
+﻿<MudCard Class="ma-3 pa-0">
+    <MudCardHeader Class="ma-0 pa-2">
+        @HeaderContent
+    </MudCardHeader>
+    <MudCardContent Class="px-2 pt-0 pb-2">
+        <MudDivider Class="pa-0 ma-0 mb-2" />
+        @ChildContent
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public RenderFragment HeaderContent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

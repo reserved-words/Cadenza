@@ -1,14 +1,13 @@
 ﻿
-<MudCard Class="ma-3">
-    <MudCardHeader Class="pa-3">
+<AppCardDivided>
+    <HeaderContent>
         <TrackCardHeader Model="@Model"
-                        TitleOnly="false" />
-    </MudCardHeader>
-    <MudCardContent Class="px-2 pt-0 pb-2">
-        <MudDivider Class="pa-0 ma-0 mb-2" />
+                         TitleOnly="false" />
+    </HeaderContent>
+    <ChildContent>
         <TrackTagsView Model="@Model" />
-    </MudCardContent>
-</MudCard>
+    </ChildContent>
+</AppCardDivided>
 
 @code {
     [Parameter]

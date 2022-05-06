@@ -1,14 +1,13 @@
 ﻿
-<MudCard Class="ma-3">
-    <MudCardHeader Class="pa-3">
+<AppCardDivided>
+    <HeaderContent>
         <LyricsCardHeader Id="@Model.Id"
                         Source="@Model.Source" />
-    </MudCardHeader>
-    <MudCardContent Class="px-3 pt-0 pb-3">
-        <MudDivider Class="pa-0 ma-0 mb-3" />
+    </HeaderContent>
+    <ChildContent>
         <TrackLyricsView Model="@Model" />
-    </MudCardContent>
-</MudCard>
+    </ChildContent>
+</AppCardDivided>
 
 @code {
     [Parameter]

@@ -1,14 +1,18 @@
 ﻿@inherits CurrentlyPlayingHeaderBase
 
-<WhipCard Padding="false"
-          Bordered="false">
-    <MudText Typo="Typo.h6">Currently Playing</MudText>
-    @if (ShowViewLink)
-    {
-        <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
-    }
-    else
-    {
-        <MudText Typo="Typo.body1">@PlaylistName</MudText>
-    }
-</WhipCard>
+<MudCard Elevation="2"
+         Class="fixed-height-margin"
+         Style="display: flex; flex-direction: column;">
+
+    <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-0">
+        <MudText Typo="Typo.h6">Currently Playing</MudText>
+        @if (ShowViewLink)
+        {
+            <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
+        }
+        else
+        {
+            <MudText Typo="Typo.body1">@PlaylistName</MudText>
+        }
+    </MudCardContent>
+</MudCard>

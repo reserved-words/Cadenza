@@ -30,6 +30,10 @@ public class DynamicTabsBase : ComponentBase
     private void SetSelectedItem()
     {
         var allItems = _allItems.ToList();
+
+        if (allItems.Count <= SelectedTabIndex)
+            return;
+
         var currentlySelectedItem = allItems[SelectedTabIndex];
         if (currentlySelectedItem.Id == SelectedItem)
             return;
