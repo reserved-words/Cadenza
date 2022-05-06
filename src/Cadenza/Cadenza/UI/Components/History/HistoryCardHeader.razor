@@ -1,14 +1,14 @@
-﻿<MudContainer Class="d-flex pa-0 ma-0">
+﻿<AppCardHeader>
 
-    <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+    <MainContent>
         <MudText Typo="@Typo.h6">@Title</MudText>
         @if (ShowPeriodOption)
         {
             <MudText Typo="@Typo.body1">@Period.Value.GetDisplayName()</MudText>
         }
-    </MudPaper>
+    </MainContent>
 
-    <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
+    <MenuContent>
         @if (ShowPeriodOption)
         {
             <MudMenu Icon="@Icons.Material.Filled.Settings"
@@ -22,8 +22,9 @@
                 }
             </MudMenu>
         }
-    </MudPaper>
-</MudContainer>
+    </MenuContent>
+
+</AppCardHeader>
 
 @typeparam T
 
