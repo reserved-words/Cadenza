@@ -1,15 +1,14 @@
 ﻿
 <MudCard Class="ma-3">
     <MudCardHeader Class="pa-3">
-        <GroupingCardHeader Id="@Grouping"
-                            OnView="@OnViewGrouping" />
+        <GroupingCardHeader Id="@Grouping" />
     </MudCardHeader>
     <MudCardContent Class="pa-0">
         <WhipTable T="@string"
                    Items="@Genres">
             <RowTemplate>
                 <MudTd>
-                    <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnViewGenre(context))" />
+                    <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnSelectGenre(context))" />
                 </MudTd>
             </RowTemplate>
         </WhipTable>
@@ -25,8 +24,5 @@
     public Grouping Grouping { get; set; }
 
     [Parameter]
-    public Func<string, Task> OnViewGenre { get; set; }
-
-    [Parameter]
-    public Func<Task> OnViewGrouping { get; set; }
+    public Func<string, Task> OnSelectGenre { get; set; }
 }

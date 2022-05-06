@@ -1,8 +1,7 @@
 ﻿
 <MudCard Class="ma-3">
     <MudCardHeader Class="pa-3">
-        <GenreCardHeader Id="@Id"
-                         OnView="@OnView" />
+        <GenreCardHeader Id="@Id" />
     </MudCardHeader>
     <MudCardContent Class="px-2 py-0">
 
@@ -12,7 +11,4 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-
-    [Parameter]
-    public Func<Task> OnView { get; set; }
 }

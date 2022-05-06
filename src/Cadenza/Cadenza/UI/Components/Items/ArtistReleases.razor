@@ -2,18 +2,10 @@
 
 @if (Releases != null)
 {
-    <ArtistReleaseGroupsView Model="@Releases"
-                             OnPlay="@OnPlayAlbum"
-                             OnView="@OnViewAlbum" />
+    <ArtistReleaseGroupsView Model="@Releases" />
 }
 
 @code {
     [Parameter]
     public List<ArtistReleaseGroup> Releases { get; set; }
-
-    [Parameter]
-    public Func<Album, Task> OnPlayAlbum { get; set; }
-        
-    [Parameter]
-    public Func<Album, Task> OnViewAlbum { get; set; }
 }

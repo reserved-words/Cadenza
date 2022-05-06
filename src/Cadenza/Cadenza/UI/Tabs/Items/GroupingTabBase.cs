@@ -10,12 +10,6 @@ namespace Cadenza.UI.Tabs.Items
         public IArtistRepository Repository { get; set; }
 
         [Inject]
-        public IItemPlayer Player { get; set; }
-
-        [Inject]
-        public IItemViewer Viewer { get; set; }
-
-        [Inject]
         public IUpdatesConsumer Updates { get; set; }
 
         [Parameter]
@@ -68,36 +62,11 @@ namespace Cadenza.UI.Tabs.Items
             await UpdateGrouping();
         }
 
-        protected async Task OnView()
-        {
-            await Viewer.ViewGrouping(Grouping);
-        }
-
-        protected async Task OnPlayArtist(Artist artist)
-        {
-            await Player.PlayArtist(artist.Id);
-        }
-
-        protected async Task OnViewArtist(Artist artist)
-        {
-            await Viewer.ViewArtist(artist);
-        }
-
-        protected async Task OnPlayGenre(string id)
-        {
-            await Player.PlayGenre(id);
-        }
-
-        protected Task OnViewGenre(string id)
+        protected Task OnSelectGenre(string id)
         {
             SelectedGenre = id;
             StateHasChanged();
             return Task.CompletedTask;
-        }
-
-        protected async Task OnViewSelectedGenre()
-        {
-            await Viewer.ViewGenre(SelectedGenre);
         }
     }
 }

@@ -4,18 +4,14 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <AlbumDetail Album="@Album"
-                         OnViewAlbum="@OnViewAlbum"
-                         OnPlayAlbum="@OnPlay" />
+            <AlbumDetail Album="@Album" />
         </TabGridRow>
     </TabGridColumn>
 
     <TabGridColumn md="9">
         <TabGridRow RowHeight="@RowHeight.Full">
              <AlbumTracks Album="@Album"
-                          Discs="@Discs"
-                          ViewArtist="@ViewArtist"
-                          ViewTrack="@ViewTrack" />
+                          Discs="@Discs" />
         </TabGridRow>
     </TabGridColumn>
 

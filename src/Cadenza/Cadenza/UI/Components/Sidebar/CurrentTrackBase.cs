@@ -1,5 +1,4 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.CurrentlyPlaying;
+﻿using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Player;
 
 namespace Cadenza.UI.Components.Sidebar;
@@ -17,14 +16,16 @@ public class CurrentTrackBase : ComponentBase
     [Inject]
     public IStoreGetter Store { get; set; }
 
-    [Inject]
-    public IItemViewer Viewer { get; set; }
-
     public bool Loading { get; set; } = false;
 
     public bool Empty => _model == null && !Loading;
 
     public double Progress { get; set; }
+
+    public string AlbumId => _model?.Album.Id;
+    public string AlbumArtistId => _model?.Album.ArtistId;
+    public string TrackId => _model?.Track.Id;
+    public string TrackArtistId => _model?.Artist.Id;
 
     public string AlbumArtist => _model?.Album.ArtistName ?? "Album Artist";
 
@@ -96,25 +97,5 @@ public class CurrentTrackBase : ComponentBase
     {
         Progress = e.ProgressPercentage;
         StateHasChanged();
-    }
-
-    protected async Task OnViewAlbum()
-    {
-        await Viewer.ViewAlbum(_model.Album);
-    }
-
-    protected async Task OnViewArtist()
-    {
-        await Viewer.ViewArtist(_model.Artist);
-    }
-
-    protected async Task OnViewTrack()
-    {
-        await Viewer.ViewTrack(_model.Track);
-    }
-
-    protected async Task OnViewAlbumArtist()
-    {
-        await Viewer.ViewArtist(_model.Album.ArtistId, _model.Album.ArtistName);
     }
 }

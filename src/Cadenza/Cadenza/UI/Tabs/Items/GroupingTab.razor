@@ -7,17 +7,14 @@
         <TabGridRow RowHeight="@RowHeight.Fixed">
             <GroupingDetail Genres="@Genres"
                             Grouping="@Grouping"
-                            OnViewGenre="@OnViewGenre"
-                            OnViewGrouping="@OnView" />
+                            OnSelectGenre="@OnSelectGenre" />
         </TabGridRow>
     </TabGridColumn>
 
     <TabGridColumn md="9">
         <TabGridRow RowHeight="@RowHeight.Full">
             <GroupingArtists Artists="@Artists"
-                             Genre="@SelectedGenre"
-                             OnViewArtist="@OnViewArtist"
-                             OnViewGenre="@OnViewSelectedGenre" />
+                             Genre="@SelectedGenre" />
         </TabGridRow>
     </TabGridColumn>
 

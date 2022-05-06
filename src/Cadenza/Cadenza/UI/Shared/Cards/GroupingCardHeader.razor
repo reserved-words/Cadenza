@@ -3,7 +3,7 @@
 <ItemCardHeader Type="@PlayerItemType.Grouping"
                 Id="@Id.ToString()">
     <ChildContent>
-        <ActionLink Typo="Typo.h6" Text="@Name" OnClick="@OnView"></ActionLink>
+        <GroupingLink Typo="@Typo.h6" Grouping="@Id"></GroupingLink>
     </ChildContent>
 </ItemCardHeader>
 
@@ -12,8 +12,5 @@
     [Parameter]
     public Grouping Id { get; set; }
 
-    [Parameter]
-    public Func<Task> OnView { get; set; }
 
-    public string Name => Id.GetDisplayName();
 }

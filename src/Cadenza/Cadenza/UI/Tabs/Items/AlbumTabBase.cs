@@ -1,5 +1,4 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.Extensions;
+﻿using Cadenza.Core.Extensions;
 using Cadenza.Core.Model;
 using Cadenza.Library;
 
@@ -10,12 +9,6 @@ namespace Cadenza.UI.Tabs.Items
     {
         [Inject]
         public IAlbumRepository Repository { get; set; }
-
-        [Inject]
-        public IItemPlayer Player { get; set; }
-
-        [Inject]
-        public IItemViewer Viewer { get; set; }
 
         [Parameter]
         public string Id { get; set; }
@@ -29,11 +22,6 @@ namespace Cadenza.UI.Tabs.Items
             await UpdateAlbum();
         }
 
-        protected async Task OnPlay(Album album)
-        {
-            await Player.PlayAlbum(album.Id);
-        }
-
         private async Task UpdateAlbum()
         {
             Album = await Repository.GetAlbum(Id);
@@ -43,21 +31,6 @@ namespace Cadenza.UI.Tabs.Items
             Discs = tracks.GroupByDisc();
 
             StateHasChanged();
-        }
-
-        protected async Task OnViewAlbum()
-        {
-            await Viewer.ViewAlbum(Album);
-        }
-
-        protected async Task ViewTrack(string id, string title)
-        {
-            await Viewer.ViewTrack(id, title);
-        }
-
-        protected async Task ViewArtist(string id, string name)
-        {
-            await Viewer.ViewArtist(id, name);
         }
     }
 }

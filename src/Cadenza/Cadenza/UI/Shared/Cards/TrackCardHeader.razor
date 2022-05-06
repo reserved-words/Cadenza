@@ -3,7 +3,7 @@
                 Id="@Model.Id"
                 Source="@Model.Source">
     <ChildContent>
-        <ActionLink Typo="Typo.h6" Text="@Model.Title" OnClick="@OnView"></ActionLink>
+        <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
         <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
 
         @if (!TitleOnly)
@@ -20,7 +20,4 @@
 
     [Parameter]
     public bool TitleOnly { get; set; }
-
-    [Parameter]
-    public Func<Task> OnView { get; set; }
 }

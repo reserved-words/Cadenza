@@ -1,4 +1,5 @@
-﻿@using Cadenza.Core.Model
+﻿@using Cadenza.Core.App
+@using Cadenza.Core.Model
 
 @if (Model != null)
 {
@@ -7,12 +8,12 @@
         <RowTemplate>
             <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
             <MudTd>
-                <ActionLink Typo="@Typo.body1" Text="@context.Title" OnClick="@(() => ViewTrack(context.TrackId, context.Title))" />
+                <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" />
             </MudTd>
             <MudTd>
                 @if (context.ArtistId != AlbumArtistId)
                 {
-                    <ActionLink Typo="@Typo.body1" Text="@context.ArtistName" OnClick="@(() => ViewArtist(context.ArtistId, context.ArtistName))" />
+                    <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
                 }
             </MudTd>
             <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
@@ -27,10 +28,4 @@
 
     [Parameter]
     public string AlbumArtistId { get; set; }
-
-    [Parameter]
-    public Func<string, string, Task> ViewTrack { get; set; }
-
-    [Parameter]
-    public Func<string, string, Task> ViewArtist { get; set; }
 }

@@ -6,13 +6,13 @@
     <ItemCardHeader Type="@PlayerItemType.Artist"
                 Id="@Model.Id">
         <ChildContent>
-            <ActionLink Typo="Typo.h6" Text="@Model.Name" OnClick="@(() => Viewer.ViewArtist(Model.Id))"></ActionLink>
+            <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
 
             @if (!TitleOnly)
             {
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
-                <ActionLink Typo="Typo.body2" Text="@Model.Grouping.GetDisplayName()" OnClick="@(() => Viewer.ViewGrouping(Model.Grouping))"></ActionLink>
-                <ActionLink Typo="Typo.body2" Text="@(Model.Genre ?? "None")" OnClick="@(() => Viewer.ViewGenre(Model.Genre))"></ActionLink>
+                <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
+                <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
             }
 
         </ChildContent>
@@ -20,9 +20,6 @@
 }
 
 @code {
-    [Inject]
-    public IItemViewer Viewer { get; set; }
-
     [Inject]
     public IUpdatesConsumer UpdatesConsumer { get; set; }
 

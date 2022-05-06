@@ -6,8 +6,7 @@
 
     <TabGridColumn md="4">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackDetail Model="@Model.Track"
-                         OnViewTrack="@OnViewTrack" />
+            <TrackDetail Model="@Model.Track" />
         </TabGridRow>
         <TabGridRow RowHeight="@RowHeight.Fixed">
            <TrackArtist Model="@Model.Artist" />
@@ -17,9 +16,7 @@
     <TabGridColumn md="4">
         <TabGridRow RowHeight="@RowHeight.Fixed">
             <TrackAlbum Album="@Model.Album"
-                        AlbumTrack="@Model.AlbumTrack"
-                        OnViewAlbum="@OnViewAlbum"
-                        OnPlayAlbum="@OnPlayAlbum" />
+                        AlbumTrack="@Model.AlbumTrack" />
         </TabGridRow>
     </TabGridColumn>
 

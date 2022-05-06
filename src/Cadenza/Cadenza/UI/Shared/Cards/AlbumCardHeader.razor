@@ -1,10 +1,11 @@
-﻿@if (Model != null)
+﻿@using Cadenza.Core.App
+@if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Album"
                     Id="@Model.Id"
                     Source="@Model.Source">
         <ChildContent>
-            <ActionLink Typo="Typo.h6" Text="@Model.Title" OnClick="@OnView"></ActionLink>
+            <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
             <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
 
             @if (!TitleOnly)
@@ -22,7 +23,4 @@
 
     [Parameter]
     public bool TitleOnly { get; set; }
-
-    [Parameter]
-    public Func<Task> OnView { get; set; }
 }

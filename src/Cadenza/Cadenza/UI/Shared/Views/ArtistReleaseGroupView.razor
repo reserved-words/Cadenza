@@ -12,12 +12,9 @@
                         <MudItem xs="6" sm="3">
                             <MudCard Elevation="1"
                              Class="pa-0 ma-0">
-                                <AlbumArtworkView Model="@album"
-                                          OnPlay="@OnPlay" />
+                                <AlbumArtworkView Model="@album" />
                                 <MudCardContent Class="pa-2">
-                                    <AlbumSummaryView Model="@album"
-                                                      OnPlay="@OnPlay"
-                                                      OnView="@OnView" />
+                                    <AlbumSummaryView Model="@album" />
                                 </MudCardContent>
                             </MudCard>
 
@@ -32,10 +29,4 @@
 @code {
     [Parameter]
     public ArtistReleaseGroup Model { get; set; }
-
-    [Parameter]
-    public Func<Album, Task> OnPlay { get; set; }
-
-    [Parameter]
-    public Func<Album, Task> OnView { get; set; }
 }

@@ -2,8 +2,7 @@
 <MudCard Class="ma-3">
     <MudCardHeader Class="pa-3">
         <TrackCardHeader Model="@Model"
-                        TitleOnly="false"
-                        OnView="OnViewTrack" />
+                        TitleOnly="false" />
     </MudCardHeader>
     <MudCardContent Class="px-2 pt-0 pb-2">
         <MudDivider Class="pa-0 ma-0 mb-2" />
@@ -14,7 +13,4 @@
 @code {
     [Parameter]
     public TrackInfo Model { get; set; }
-
-    [Parameter]
-    public Func<Task> OnViewTrack { get; set; }
 }
