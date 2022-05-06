@@ -1,56 +1,36 @@
-﻿
-
-<MudCard Elevation="2"
-         Class="fixed-height-margin"
-         Style="display: flex; flex-direction: column;">
-
-    <MudCardHeader Style="flex-grow: 0;" Class="pa-3">
-        <CardHeaderContent>
-            <MudContainer Class="d-flex pa-0 ma-0">
-
-                <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-                    <MudText Typo="@Typo.h6">@Title</MudText>
-                    @if (Period.HasValue)
-                    {
-                        <MudText Typo="@Typo.body1">@Period.Value.GetDisplayName()</MudText>
-                    }
-                </MudPaper>
-
-                <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
-                    @if (GetItems != null)
-                    {
-                        <MudMenu Icon="@Icons.Material.Filled.Settings"
-                                 Class="mt-auto"
-                                 Size="@Size.Medium"
-                                 Direction="@Direction.Left">
-
-                            @foreach (var period in Enum.GetValues<HistoryPeriod>())
-                            {
-                                <MudMenuItem OnClick="@(() => OnUpdate(period))">@period.GetDisplayName()</MudMenuItem>
-                            }
-                        </MudMenu>
-                    }
-                </MudPaper>
-            </MudContainer>
-        </CardHeaderContent>
-    </MudCardHeader>
-
-    @if (IsLoading)
-    {
-        <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-2 pt-0">
+﻿@if (IsLoading)
+{
+    <AppCardScrollContainer>
+        <HeaderContent>
+            <HistoryCardHeader T="@T"
+                               ShowPeriodOption="@ShowPeriodOption"
+                               Title="@Title"
+                               OnUpdate="@OnUpdate" />
+        </HeaderContent>
+        <ChildContent>
             <WhipContainer>
                 <MudText>@LoadingCaption</MudText>
             </WhipContainer>
-        </MudCardContent>
-    }
-    else if (Items != null)
-    {
-        <WhipTable T="@T"
-                   Items="@Items"
-                   RowTemplate="@RowTemplate" />
-    }
+        </ChildContent>
+    </AppCardScrollContainer>
 
-</MudCard>
+}
+else if (Items != null)
+{
+    <AppCardTableContainer>
+        <HeaderContent>
+            <HistoryCardHeader T="@T"
+                               ShowPeriodOption="@ShowPeriodOption"
+                               Title="@Title"
+                               OnUpdate="@OnUpdate" />
+        </HeaderContent>
+        <ChildContent>
+            <AppTable T="@T"
+                      Items="@Items"
+                      RowTemplate="@RowTemplate" />
+        </ChildContent>
+    </AppCardTableContainer>
+}
 
 @typeparam T
 
@@ -59,7 +39,7 @@
     public string Title { get; set; }
 
     [Parameter]
-    public HistoryPeriod? Period { get; set; }
+    public bool ShowPeriodOption { get; set; } = true;
 
     [Parameter]
     public bool IsLoading { get; set; }
@@ -79,8 +59,9 @@
     protected async Task OnUpdate(HistoryPeriod period)
     {
         IsLoading = true;
-        Period = period;
+        StateHasChanged();
         Items = await GetItems(period);
         IsLoading = false;
+        StateHasChanged();
     }
 }

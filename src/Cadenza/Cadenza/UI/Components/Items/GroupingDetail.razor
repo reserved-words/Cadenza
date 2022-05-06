@@ -4,14 +4,14 @@
         <GroupingCardHeader Id="@Grouping" />
     </MudCardHeader>
     <MudCardContent Class="pa-0">
-        <WhipTable T="@string"
+        <AppTable T="@string"
                    Items="@Genres">
             <RowTemplate>
                 <MudTd>
                     <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnSelectGenre(context))" />
                 </MudTd>
             </RowTemplate>
-        </WhipTable>
+        </AppTable>
     </MudCardContent>
 </MudCard>
 

@@ -6,14 +6,14 @@
 
     <MudCardContent Style="flex-grow: 1;"
                     Class="fixed-height-scroll pa-0">
-        <WhipTable T="@Artist"
+        <AppTable T="@Artist"
                    Items="@Artists">
             <RowTemplate>
                 <MudTd>
                     <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
                 </MudTd>
             </RowTemplate>
-        </WhipTable>
+        </AppTable>
     </MudCardContent>
 </MudCard>
 

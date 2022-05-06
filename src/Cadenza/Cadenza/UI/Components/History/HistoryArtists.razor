@@ -1,20 +1,19 @@
 ﻿@inherits HistoryArtistsBase
 
 <HistoryCard Title="Top Artists"
-             Period="@HistoryPeriod.Week"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top artists..."
              Items="@Model"
              GetItems="@GetItems">
     <RowTemplate>
-        <MudTd Style="width: 1px;">
+        <MudTd Class="td-int">
             @context.Rank
         </MudTd>
         <MudTd>
             <MudText Typo="@Typo.body1">@context.Name</MudText>
             <MudText Typo="@Typo.body2">-</MudText>
         </MudTd>
-        <MudTd Style="text-align: right; width: 1px;">
+        <MudTd Class="td-int">
             @context.Plays
         </MudTd>
     </RowTemplate>

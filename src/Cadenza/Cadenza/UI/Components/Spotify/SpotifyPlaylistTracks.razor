@@ -1,6 +1,6 @@
 ﻿
 <MudCard Class="ma-3">
-            <WhipTable T="@SpotifyTrack"
+            <AppTable T="@SpotifyTrack"
                        Items="@Tracks">
                 <RowTemplate>
                     <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
@@ -8,7 +8,7 @@
                     <MudTd>@context.Artist</MudTd>
                     <MudTd Style="width:1px; text-align: right;">@context.Duration.ToDurationDisplay()</MudTd>
                 </RowTemplate>
-            </WhipTable>
+            </AppTable>
         </MudCard>
 
 @code {

@@ -1,4 +1,4 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿@import url('open-iconic/font/css/open-iconfixed-heightic-bootstrap.min.css');
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -68,11 +68,6 @@ table tbody tr td .show-on-hover {
     padding-bottom: 8px;
 }
 
-div.fixed-height-margin.no-side-margin {
-    margin-left: 0;
-    margin-right: 0;
-}
-
 .mud-dynamic-tabs .mud-tabs-toolbar .mud-tab.mud-tab-fixed .mud-icon-button {
     display: none;
 }
@@ -98,4 +93,20 @@ div.fixed-height-margin.no-side-margin {
 /*remove button for creating new tabs*/
 .mud-tabs-header.mud-tabs-header-after {
     display: none !important;
+}
+
+table tbody tr td {
+    padding: 1rem;
+}
+
+table tbody tr td.td-int,
+table tbody tr td.td-icon,
+table tbody tr td.td-datetime {
+    text-align: right;
+    width: 1px;
+}
+
+table tbody tr td.td-img {
+    width: 1px;
+    padding: 1rem 1rem 0 1rem;
 }

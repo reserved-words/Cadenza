@@ -1,0 +1,47 @@
+﻿<MudContainer Class="d-flex pa-0 ma-0">
+
+    <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
+        <MudText Typo="@Typo.h6">@Title</MudText>
+        @if (ShowPeriodOption)
+        {
+            <MudText Typo="@Typo.body1">@Period.Value.GetDisplayName()</MudText>
+        }
+    </MudPaper>
+
+    <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
+        @if (ShowPeriodOption)
+        {
+            <MudMenu Icon="@Icons.Material.Filled.Settings"
+                     Class="mt-auto"
+                     Size="@Size.Medium"
+                     Direction="@Direction.Left">
+
+                @foreach (var period in Enum.GetValues<HistoryPeriod>())
+                {
+                    <MudMenuItem OnClick="@(() => Update(period))">@period.GetDisplayName()</MudMenuItem>
+                }
+            </MudMenu>
+        }
+    </MudPaper>
+</MudContainer>
+
+@typeparam T
+
+@code {
+    public HistoryPeriod? Period { get; set; } = HistoryPeriod.Week;
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public bool ShowPeriodOption { get; set; } = true;
+
+    [Parameter]
+    public Func<HistoryPeriod, Task> OnUpdate { get; set; }
+
+    protected async Task Update(HistoryPeriod period)
+    {
+        await OnUpdate(period);
+        Period = period;
+    }
+}

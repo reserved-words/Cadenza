@@ -3,7 +3,7 @@
 
 @if (Model != null)
 {
-    <WhipTable T="@AlbumTrack"
+    <AppTable T="@AlbumTrack"
            Items="@Model.Tracks">
         <RowTemplate>
             <MudTd Style="width:1px; text-align: right;">@context.Position.TrackNo</MudTd>
@@ -18,7 +18,7 @@
             </MudTd>
             <MudTd Style="width:1px; text-align: right;">@context.Duration()</MudTd>
         </RowTemplate>
-    </WhipTable>
+    </AppTable>
 
 }
 
