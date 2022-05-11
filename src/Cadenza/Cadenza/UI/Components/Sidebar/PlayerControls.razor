@@ -1,16 +1,14 @@
 ﻿@inherits PlayerControlsBase
 
-<MudContainer Class="pa-0 ma-0">
-    <MudButtonGroup Color="Color.Dark" Variant="Variant.Filled" Class="ma-0 pa-0">
-        <MudIconButton Icon="@Icons.Material.Filled.SkipPrevious" OnClick="OnSkipPrevious" Disabled="@(!CanSkipPrevious)" />
-        <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" OnClick="OnResume" Disabled="@(!CanPlay)" Class="@PlayButtonClass()" />
-        <MudIconButton Icon="@Icons.Material.Filled.Pause" OnClick="OnPause" Disabled="@(!CanPause)" Class="@PauseButtonClass()" />
-        <MudIconButton Icon="@Icons.Material.Filled.SkipNext" OnClick="OnSkipNext" Disabled="@(!CanSkipNext)" />
-    </MudButtonGroup>
-</MudContainer>
+<MudButtonGroup Color="Color.Dark" Variant="Variant.Filled" Class="ma-0 pa-0">
+    <MudIconButton Icon="@Icons.Material.Filled.SkipPrevious" OnClick="OnSkipPrevious" Disabled="@(!CanSkipPrevious)" />
+    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" OnClick="OnResume" Disabled="@(!CanPlay)" Class="@PlayButtonClass()" />
+    <MudIconButton Icon="@Icons.Material.Filled.Pause" OnClick="OnPause" Disabled="@(!CanPause)" Class="@PauseButtonClass()" />
+    <MudIconButton Icon="@Icons.Material.Filled.SkipNext" OnClick="OnSkipNext" Disabled="@(!CanSkipNext)" />
+</MudButtonGroup>
 
 @code {
-    
+
     private string PlayButtonClass()
     {
         var show = (!CanPlay && !CanPause)
