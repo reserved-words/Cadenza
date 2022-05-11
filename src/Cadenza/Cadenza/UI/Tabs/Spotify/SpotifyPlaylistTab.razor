@@ -1,15 +1,15 @@
 ﻿@inherits SpotifyPlaylistTabBase
 
-<TabGrid>
-    <TabGridColumn md="3">
-        <TabGridRow RowHeight="@RowHeight.Stretch">
+<SubGrid>
+    <SubGridColumn md="3">
+        <SubGridRow RowHeight="@RowHeight.Stretch">
             <SpotifyPlaylistDetail Model="@Model.Playlist" />
-        </TabGridRow>
-    </TabGridColumn>
+        </SubGridRow>
+    </SubGridColumn>
     
-    <TabGridColumn md="9">
-        <TabGridRow RowHeight="@RowHeight.Stretch">
+    <SubGridColumn md="9">
+        <SubGridRow RowHeight="@RowHeight.Stretch">
             <SpotifyPlaylistTracks Tracks="@Model.Tracks" />
-        </TabGridRow>
-    </TabGridColumn>
-</TabGrid>
+        </SubGridRow>
+    </SubGridColumn>
+</SubGrid>
