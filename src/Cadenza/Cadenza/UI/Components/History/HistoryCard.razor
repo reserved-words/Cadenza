@@ -1,6 +1,6 @@
 ﻿@if (IsLoading)
 {
-    <AppCardScrollContainer>
+    <AppCardScrollContainer Elevation="3">
         <HeaderContent>
             <HistoryCardHeader T="@T"
                                ShowPeriodOption="@ShowPeriodOption"
@@ -17,7 +17,7 @@
 }
 else if (Items != null)
 {
-    <AppCardScrollContainer>
+    <AppCardScrollContainer Elevation="3">
         <HeaderContent>
             <HistoryCardHeader T="@T"
                                ShowPeriodOption="@ShowPeriodOption"

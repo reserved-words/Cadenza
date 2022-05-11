@@ -15,7 +15,6 @@ async function waitForSpotifyWebPlaybackSDKToLoad() {
 
 async function startSpotifyPlayer(accessToken) {
 
-
     const { Player } = await waitForSpotifyWebPlaybackSDKToLoad();
 
     const sdk = new Player({
@@ -26,7 +25,7 @@ async function startSpotifyPlayer(accessToken) {
 
     sdk.on("authentication_error", ({ message }) => {
         // This happens if the access token is invalid or null
-        console.log('Authentication error: ' + message);
+        console.error('Authentication error: ' + message);
     });
 
     sdk.on('initialization_error', ({ message }) => {
@@ -52,7 +51,6 @@ async function startSpotifyPlayer(accessToken) {
 
     try {
         let connected = await sdk.connect();
-
         return connected;
     }
     catch (err) {

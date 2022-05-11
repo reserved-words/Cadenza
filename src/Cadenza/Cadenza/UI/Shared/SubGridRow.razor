@@ -17,7 +17,7 @@
         ? "flex-grow: 1;"
         : "";
 
-    public string RowClass => RowHeight == RowHeight.Fixed
+    public string RowClass => "sub-grid-row" + (RowHeight == RowHeight.Fixed
         ? ""
-        : "fixed-height";
+        : "fixed-height");
 }

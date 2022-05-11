@@ -1,4 +1,5 @@
 ﻿@using Cadenza.Enums
+
 <div class="@RowClass" style="@RowStyle">
     @ChildContent
 </div>
@@ -16,7 +17,7 @@
         ? "flex-grow: 1;"
         : "";
 
-    public string RowClass => RowHeight == RowHeight.Fixed
+    public string RowClass => "tab-grid-row " + (RowHeight == RowHeight.Fixed
         ? ""
-        : "fixed-height";
+        : "fixed-height");
 }
