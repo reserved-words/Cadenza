@@ -1,20 +1,29 @@
 ﻿
-<AppTableScrollContainer>
+<AppCardScrollContainer Elevation="0">
     <ChildContent>
-        <AppTable T="@SpotifyTrack"
-                  Items="@Tracks">
-            <RowTemplate>
-                @*                        <MudTd Style="width:1px; text-align: right;">@context.DiscNo</MudTd>*@
-                <MudTd Class="td-int">@context.TrackNo</MudTd>
-                <MudTd>@context.Title</MudTd>
-                <MudTd>@context.Artist</MudTd>
-                <MudTd Class="td-int">@context.Duration.ToDurationDisplay()</MudTd>
-            </RowTemplate>
-        </AppTable>
+        <MudTabs>
+            @if (Discs.Count() == 1)
+            {
+                <MudTabPanel Text="Tracks">
+                    <SpotifyAlbumDisc Items="@Discs.Single().ToList()" />
+                </MudTabPanel>
+            }
+            else
+            {
+                @foreach (var disc in Discs)
+                {
+                    <MudTabPanel Text="@("Disc " + disc.Key)">
+                        <SpotifyAlbumDisc Items="@disc.ToList()" />
+                    </MudTabPanel>
+                }
+            }
+        </MudTabs>
     </ChildContent>
-</AppTableScrollContainer>
+</AppCardScrollContainer>
 
 @code {
     [Parameter]
     public List<SpotifyTrack> Tracks { get; set; }
+
+    public IEnumerable<IGrouping<int, SpotifyTrack>> Discs => Tracks.GroupBy(t => t.DiscNo);
 }
