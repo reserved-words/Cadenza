@@ -3,7 +3,7 @@
 @if (Model != null)
 {
     <MudTabPanel Text="@Model.Group.GetDisplayName()">
-        <AppCardScrollContainer Elevation="0">
+        <AppScrollContainer Elevation="0">
             <ChildContent>
                 <AppGrid Items="@Model.Albums">
                     <ImageTemplate>
@@ -14,7 +14,7 @@
                     </CaptionTemplate>
                 </AppGrid>
             </ChildContent>
-        </AppCardScrollContainer>
+        </AppScrollContainer>
     </MudTabPanel>
 }
 

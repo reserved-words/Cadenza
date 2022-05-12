@@ -2,16 +2,12 @@
 
 @if (Releases != null)
 {
-    <AppCardScrollContainer>
-        <ChildContent>
-            <MudTabs>
-                @foreach (var group in Releases)
-                {
-                    <ArtistReleaseGroupView Model="@group" />
-                }
-            </MudTabs>
-        </ChildContent>
-    </AppCardScrollContainer>
+    <MudTabs>
+        @foreach (var group in Releases)
+        {
+            <ArtistReleaseGroupView Model="@group" />
+        }
+    </MudTabs>
 }
 
 @code {
