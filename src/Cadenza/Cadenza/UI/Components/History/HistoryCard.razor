@@ -3,14 +3,12 @@
     <AppCardScrollContainer Elevation="3">
         <HeaderContent>
             <HistoryCardHeader T="@T"
-                               ShowPeriodOption="@ShowPeriodOption"
-                               Title="@Title"
-                               OnUpdate="@OnUpdate" />
+                           ShowPeriodOption="@ShowPeriodOption"
+                           Title="@Title"
+                           OnUpdate="@OnUpdate" />
         </HeaderContent>
         <ChildContent>
-            <WhipContainer>
-                <MudText>@LoadingCaption</MudText>
-            </WhipContainer>
+            <MudText Typo="@Typo.body1">@LoadingCaption</MudText>
         </ChildContent>
     </AppCardScrollContainer>
 
@@ -20,14 +18,14 @@ else if (Items != null)
     <AppCardScrollContainer Elevation="3">
         <HeaderContent>
             <HistoryCardHeader T="@T"
-                               ShowPeriodOption="@ShowPeriodOption"
-                               Title="@Title"
-                               OnUpdate="@OnUpdate" />
+                           ShowPeriodOption="@ShowPeriodOption"
+                           Title="@Title"
+                           OnUpdate="@OnUpdate" />
         </HeaderContent>
         <ChildContent>
             <AppTable T="@T"
-                      Items="@Items"
-                      RowTemplate="@RowTemplate" />
+                  Items="@Items"
+                  RowTemplate="@RowTemplate" />
         </ChildContent>
     </AppCardScrollContainer>
 }

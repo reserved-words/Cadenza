@@ -1,10 +1,10 @@
 ﻿@using Cadenza.Core.Model.Logging
 @inherits SystemErrorsBase
 
-<AppCardScrollContainer>
-    <WhipSystemTable Items="@Items"
-                     Filter="@FilterFunc"
-                     Title="Error Logs">
+<AppTableScrollContainer>
+    <AppDataTable Items="@Items"
+                    Filter="@FilterFunc"
+                    Title="Error Logs">
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<ErrorLog, object>(x=>x.Level)"></MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<ErrorLog, object>(x=>x.LoggedAt)">Logged At</MudTableSortLabel></MudTh>
@@ -54,8 +54,8 @@
                 <MudIconButton Variant="Variant.Outlined" Color="@Color.Default" Icon="@Icons.Material.Filled.Delete" Size="@Size.Small"></MudIconButton>
             </MudTd>
         </RowTemplate>
-    </WhipSystemTable>
+    </AppDataTable>
 
-</AppCardScrollContainer>
+</AppTableScrollContainer>
 
 

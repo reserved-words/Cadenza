@@ -1,7 +1,7 @@
 ﻿@inherits SystemUpdateQueueBase
 
-<AppCardScrollContainer>
-    <WhipSystemTable Items="@Items"
+<AppTableScrollContainer>
+    <AppDataTable Items="@Items"
                      Filter="@FilterFunc"
                      Title="File Updates Queue">
         <HeaderContent>
@@ -33,9 +33,9 @@
                 @if (context.NumberOfFailedAttempts > 0)
                 {
                     <MudIconButton Variant="Variant.Outlined"
-                               Color="@Color.Error"
-                               Icon="@Icons.Material.Filled.Error"
-                               Size="@Size.Small"></MudIconButton>
+                                   Color="@Color.Error"
+                                   Icon="@Icons.Material.Filled.Error"
+                                   Size="@Size.Small"></MudIconButton>
                 }
             </MudTd>
             <MudTd>
@@ -46,5 +46,5 @@
                                Size="@Size.Small"></MudIconButton>
             </MudTd>
         </RowTemplate>
-    </WhipSystemTable>
-</AppCardScrollContainer>
+    </AppDataTable>
+</AppTableScrollContainer>
