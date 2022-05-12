@@ -1,9 +1,13 @@
 ﻿
-<AppCard>
+<AppCard Elevation="3">
     <HeaderContent>
-        <MudText Typo="@Typo.h6">@Model.Title</MudText>
-        <MudText Typo="@Typo.body1">@Model.Artist</MudText>
-        <MudText Typo="@Typo.body1">@Model.Year</MudText>
+        <AppCardHeader>
+            <MainContent>
+                <MudText Typo="@Typo.h6">@Model.Title</MudText>
+                <MudText Typo="@Typo.body1">@Model.Artist</MudText>
+                <MudText Typo="@Typo.body1">@Model.Year</MudText>
+            </MainContent>
+        </AppCardHeader>
     </HeaderContent>
     <ChildContent>
         <img class="artwork" src="@Model.ArtworkUrl" />

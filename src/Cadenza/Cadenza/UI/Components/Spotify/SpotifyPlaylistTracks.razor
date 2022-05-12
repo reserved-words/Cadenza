@@ -1,15 +1,15 @@
 ﻿
 <MudCard Class="ma-3">
-            <AppTable T="@SpotifyTrack"
-                       Items="@Tracks">
-                <RowTemplate>
-                    <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
-                    <MudTd>@context.Title</MudTd>
-                    <MudTd>@context.Artist</MudTd>
-                    <MudTd Style="width:1px; text-align: right;">@context.Duration.ToDurationDisplay()</MudTd>
-                </RowTemplate>
-            </AppTable>
-        </MudCard>
+    <AppTable T="@SpotifyTrack"
+              Items="@Tracks">
+        <RowTemplate>
+            <MudTd Style="width:1px; text-align: right;">@context.TrackNo</MudTd>
+            <MudTd>@context.Title</MudTd>
+            <MudTd>@context.Artist</MudTd>
+            <MudTd Style="width:1px; text-align: right;">@context.Duration.ToDurationDisplay()</MudTd>
+        </RowTemplate>
+    </AppTable>
+</MudCard>
 
 @code {
     [Parameter]

@@ -1,25 +1,17 @@
 ﻿<AppScrollContainer>
     <ChildContent>
-        <MudGrid Spacing="2">
-            @foreach (var item in Items)
-            {
-                <MudItem xs="3" md="2">
-                    <MudCard Elevation="1"
-                             Class="pa-0 ma-0">
-                        <img class="artwork" src="@item.ArtworkUrl" />
-                        <MudCardContent Class="pa-2">
-                            <MudText Typo="Typo.body1">@item.Title</MudText>
-                            <MudText Typo="Typo.body2">@item.ArtistName</MudText>
-                            <MudText Typo="Typo.body2">@item.Year</MudText>
-                        </MudCardContent>
-                    </MudCard>
-
-                </MudItem>
-            }
-        </MudGrid>
+        <AppGrid Items="@Items" ItemXs="3" ItemMd="2">
+            <ImageTemplate>
+                <img class="artwork" src="@context.ArtworkUrl" />
+            </ImageTemplate>
+            <CaptionTemplate>
+                <MudText Typo="Typo.body1">@context.Title</MudText>
+                <MudText Typo="Typo.body2">@context.ArtistName</MudText>
+                <MudText Typo="Typo.body2">@context.Year</MudText>
+            </CaptionTemplate>
+        </AppGrid>
     </ChildContent>
 </AppScrollContainer>
-
 
 @code {
     [Parameter]

@@ -1,16 +1,17 @@
 ﻿
-<MudCard Class="ma-3">
-    <MudCardHeader Class="pa-3">
-        <MudPaper Elevation="0"
-                  Class="mud-dialog-actions pa-0 d-flex flex-column">
-            <MudText Typo="@Typo.h6">@Model.Title</MudText>
-            <MudText Typo="@Typo.body1">@Model.CreatedBy</MudText>
-        </MudPaper>
-    </MudCardHeader>
-    <MudCardContent Class="px-2 py-0">
+<AppCard Elevation="3">
+    <HeaderContent>
+        <AppCardHeader>
+            <MainContent>
+                <MudText Typo="@Typo.h6">@Model.Title</MudText>
+                <MudText Typo="@Typo.body1">@Model.CreatedBy</MudText>
+            </MainContent>
+        </AppCardHeader>
+    </HeaderContent>
+    <ChildContent>
         <img class="artwork" src="@Model.ArtworkUrl" />
-    </MudCardContent>
-    <MudCardActions>
+    </ChildContent>
+    <Actions>
         @*                                    <MudIcon Color="@Color.Warning"
             Icon="@Icons.Material.Filled.Warning"></MudIcon>
         *@
@@ -24,8 +25,8 @@
             <MudButton Color="@Color.Dark"
                    StartIcon="@Icons.Material.Filled.Add">Add</MudButton>
         }
-    </MudCardActions>
-</MudCard>
+    </Actions>
+</AppCard>
 
 
 @code {

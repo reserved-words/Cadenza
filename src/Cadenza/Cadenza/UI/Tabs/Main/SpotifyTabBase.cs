@@ -116,7 +116,8 @@ public class SpotifyTabBase : ComponentBase
         return new DynamicTabsItem(result.Artist.Id, result.Artist.Name, PlayerItemType.Artist.GetIcon(), typeof(SpotifyArtistTab), new Dictionary<string, object>
         {
             { "Model", result },
-            { "OnShowAlbum", new Func<SpotifyAlbum, Task>(ShowAlbum) }
+            { "OnShowAlbum", new Func<SpotifyAlbum, Task>(ShowAlbum) },
+            { "OnShowPlaylist", new Func<SpotifyPlaylist, Task>(ShowPlaylist) }
         });
     }
 
