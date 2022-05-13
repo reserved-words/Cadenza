@@ -1,13 +1,22 @@
-﻿
+﻿@using Cadenza.Source.Spotify
+
 <SubGrid>
     <SubGridColumn md="12">
         <SubGridRow RowHeight="@RowHeight.Full">
-            <SpotifyItems Items="@Items" />
+            <SpotifyItems Items="@Items" OnRemove="@Remove" />
         </SubGridRow>
     </SubGridColumn>
 </SubGrid>
 
 @code {
+    [Inject]
+    public ISpotifyLibrary Library { get; set; }
+
     [Parameter]
     public List<AlbumInfo> Items { get; set; } = new();
+
+    private async Task Remove(string id)
+    {
+        await Library.RemovePlaylist(id);
+    }
 }

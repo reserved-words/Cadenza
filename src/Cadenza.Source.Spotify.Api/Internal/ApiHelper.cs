@@ -48,11 +48,28 @@ internal class ApiHelper : IApiHelper
         return new ApiResponse(error?.Error);
     }
 
+    public async Task<ApiResponse> Delete(string url, object data = null)
+    {
+        var response = await TryCall((bool renewToken) => AuthorisedDelete(renewToken, url, data));
+
+        var error = !response.IsSuccessStatusCode
+            ? await response.Content.ReadFromJsonAsync<ApiError>()
+            : null;
+
+        return new ApiResponse(error?.Error);
+    }
+
     private async Task<HttpResponseMessage> AuthorisedGet(bool renewToken, string url)
     {
         var authHeader = await GetAuthHeader(renewToken);
         var response = await _httpClient.Get(url, authHeader);
         return response;
+    }
+
+    private async Task<HttpResponseMessage> AuthorisedDelete(bool renewToken, string url, object data = null)
+    {
+        var authHeader = await GetAuthHeader(renewToken);
+        return await _httpClient.Delete(url, authHeader, data);
     }
 
     private async Task<HttpResponseMessage> AuthorisedPut(bool renewToken, string url, object data = null)

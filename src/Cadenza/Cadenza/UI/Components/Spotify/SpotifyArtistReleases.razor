@@ -1,4 +1,5 @@
-﻿<AppScrollContainer>
+﻿@using Cadenza.Source.Spotify
+<AppScrollContainer>
     <ChildContent>
         <MudGrid Spacing="2">
             @foreach (var playlist in Model.Playlists)
@@ -21,12 +22,13 @@
                             @if (playlist.IsInLibrary)
                             {
                                 <MudButton Color="@Color.Dark"
-                                   StartIcon="@Icons.Material.Filled.Remove">Remove</MudButton>
+                                           StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
                             }
                             else
                             {
                                 <MudButton Color="@Color.Dark"
-                                   StartIcon="@Icons.Material.Filled.Add">Add</MudButton>
+                                           StartIcon="@Icons.Material.Filled.Add"
+                                           OnClick="@(() => AddPlaylist(playlist.Id))">Add</MudButton>
                             }
                         </MudCardActions>
                     </MudCard>
@@ -53,12 +55,13 @@
                             @if (album.IsInLibrary)
                             {
                                 <MudButton Color="@Color.Dark"
-                                   StartIcon="@Icons.Material.Filled.Remove">Remove</MudButton>
+                                           StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
                             }
                             else
                             {
                                 <MudButton Color="@Color.Dark"
-                                   StartIcon="@Icons.Material.Filled.Add">Add</MudButton>
+                                           StartIcon="@Icons.Material.Filled.Add"
+                                           OnClick="@(() => AddAlbum(album.Id))">Add</MudButton>
                             }
                         </MudCardActions>
                     </MudCard>
@@ -69,6 +72,9 @@
 </AppScrollContainer>
 
 @code {
+    [Inject]
+    public ISpotifyLibrary Library { get; set; }
+
     [Parameter]
     public SpotifyArtistSearchResult Model { get; set; }
 
@@ -77,4 +83,14 @@
 
     [Parameter]
     public Func<SpotifyPlaylist, Task> OnShowPlaylist { get; set; }
+
+    private async Task AddAlbum(string id)
+    {
+        await Library.AddAlbum(id);
+    }
+
+    private async Task AddPlaylist(string id)
+    {
+        await Library.AddPlaylist(id);
+    }
 }

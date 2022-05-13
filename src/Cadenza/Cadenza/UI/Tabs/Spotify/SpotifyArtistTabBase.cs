@@ -16,14 +16,5 @@ namespace Cadenza.UI.Tabs.Spotify
 
         [Parameter]
         public Func<SpotifyPlaylist, Task> OnShowPlaylist { get; set; }
-
-        protected async Task AddAlbum(string id)
-        {
-            await Library.AddAlbum(id);
-        }
-        protected async Task AddPlaylist(string id)
-        {
-            await Library.AddPlaylist(id);
-        }
     }
 }

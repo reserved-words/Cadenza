@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.Source.Spotify
+
 <AppCard Elevation="3">
     <HeaderContent>
         <AppCardHeader>
@@ -18,18 +19,27 @@
         @if (Model.IsInLibrary)
         {
             <MudButton Color="@Color.Dark"
-                   StartIcon="@Icons.Material.Filled.Remove">Remove</MudButton>
+                       StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
         }
         else
         {
             <MudButton Color="@Color.Dark"
-                   StartIcon="@Icons.Material.Filled.Add">Add</MudButton>
+                       StartIcon="@Icons.Material.Filled.Add"
+                       OnClick="@OnAddPlaylist">Add</MudButton>
         }
     </Actions>
 </AppCard>
 
 
 @code {
+    [Inject]
+    public ISpotifyLibrary Library { get; set; }
+
     [Parameter]
     public SpotifyPlaylist Model { get; set; }
+
+    private async Task OnAddPlaylist()
+    {
+        await Library.AddPlaylist(Model.Id);
+    }
 }

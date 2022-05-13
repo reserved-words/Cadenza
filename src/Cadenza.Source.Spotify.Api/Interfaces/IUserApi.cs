@@ -9,5 +9,6 @@ public interface IUserApi
     Task<List<SpotifyApiPlaylist>> GetUserPlaylists();
     Task AddAlbum(string albumId);
     Task AddPlaylist(string playlistId);
-
+    Task RemoveAlbum(string albumId);
+    Task RemovePlaylist(string playlistId);
 }

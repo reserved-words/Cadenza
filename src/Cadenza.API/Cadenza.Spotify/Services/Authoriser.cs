@@ -19,9 +19,10 @@ public class Authoriser : IAuthoriser
         var result = _builder.BuildUrl(_config.Value.AuthUri,
             ("response_type", "code"),
             ("client_id", _config.Value.ClientId),
-            ("scope", _config.Value.Scopes),
+            ("scope", string.Join(" ", _config.Value.Scopes)),
             ("redirect_uri", redirectUri),
             ("state", state));
+
         return Task.FromResult(result);
     }
 

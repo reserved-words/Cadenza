@@ -10,10 +10,5 @@ namespace Cadenza.UI.Tabs.Spotify
 
         [Parameter]
         public SpotifyPlaylistSearchResult Model { get; set; }
-
-        protected async Task AddAlbum(string id)
-        {
-            await Library.AddPlaylist(id);
-        }
     }
 }
