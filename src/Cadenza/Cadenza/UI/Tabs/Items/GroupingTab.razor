@@ -1,0 +1,21 @@
+﻿@using Cadenza.Enums
+@inherits GroupingTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <GroupingDetail Genres="@Genres"
+                            Grouping="@Grouping"
+                            OnSelectGenre="@OnSelectGenre" />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <GroupingArtists Artists="@Artists"
+                             Genre="@SelectedGenre" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

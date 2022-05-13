@@ -1,0 +1,65 @@
+﻿@if (IsLoading)
+{
+    <AppCardScrollContainer Elevation="3">
+        <HeaderContent>
+            <HistoryCardHeader T="@T"
+                           ShowPeriodOption="@ShowPeriodOption"
+                           Title="@Title"
+                           OnUpdate="@OnUpdate" />
+        </HeaderContent>
+        <ChildContent>
+            <MudText Typo="@Typo.body1">@LoadingCaption</MudText>
+        </ChildContent>
+    </AppCardScrollContainer>
+
+}
+else if (Items != null)
+{
+    <AppCardScrollContainer Elevation="3">
+        <HeaderContent>
+            <HistoryCardHeader T="@T"
+                           ShowPeriodOption="@ShowPeriodOption"
+                           Title="@Title"
+                           OnUpdate="@OnUpdate" />
+        </HeaderContent>
+        <ChildContent>
+            <AppTable T="@T"
+                  Items="@Items"
+                  RowTemplate="@RowTemplate" />
+        </ChildContent>
+    </AppCardScrollContainer>
+}
+
+@typeparam T
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public bool ShowPeriodOption { get; set; } = true;
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public string LoadingCaption { get; set; }
+
+    [Parameter]
+    public List<T> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> RowTemplate { get; set; }
+
+    [Parameter]
+    public Func<HistoryPeriod, Task<List<T>>> GetItems { get; set; }
+
+    protected async Task OnUpdate(HistoryPeriod period)
+    {
+        IsLoading = true;
+        StateHasChanged();
+        Items = await GetItems(period);
+        IsLoading = false;
+        StateHasChanged();
+    }
+}

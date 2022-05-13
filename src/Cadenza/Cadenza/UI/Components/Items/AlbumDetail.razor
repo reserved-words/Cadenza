@@ -1,0 +1,19 @@
+﻿
+@if (Album != null)
+{
+    <AppCard>
+        <HeaderContent>
+            <AlbumCardHeader Model="@Album"
+                             TitleOnly="false" />
+        </HeaderContent>
+        <ChildContent>
+            <AlbumArtworkView Model="@Album" />
+        </ChildContent>
+    </AppCard>
+}
+
+@code {
+    [Parameter]
+    public AlbumInfo Album { get; set; }
+
+}

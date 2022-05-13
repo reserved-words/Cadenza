@@ -1,0 +1,23 @@
+﻿
+<ItemCardHeader Type="@PlayerItemType.Track"
+                Id="@Model.Id"
+                Source="@Model.Source">
+    <ChildContent>
+        <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+        <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
+
+        @if (!TitleOnly)
+        {
+            <MudText Typo="Typo.body1">@Model.Year</MudText>
+        }
+
+    </ChildContent>
+</ItemCardHeader>
+
+@code {
+    [Parameter]
+    public TrackInfo Model { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+}

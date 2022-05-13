@@ -1,0 +1,20 @@
+﻿@inherits HistoryArtistsBase
+
+<HistoryCard Title="Top Artists"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading top artists..."
+             Items="@Model"
+             GetItems="@GetItems">
+    <RowTemplate>
+        <MudTd Class="td-int">
+            @context.Rank
+        </MudTd>
+        <MudTd>
+            <MudText Typo="@Typo.body1">@context.Name</MudText>
+            <MudText Typo="@Typo.body2">-</MudText>
+        </MudTd>
+        <MudTd Class="td-int">
+            @context.Plays
+        </MudTd>
+    </RowTemplate>
+</HistoryCard>

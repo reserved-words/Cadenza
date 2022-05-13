@@ -1,0 +1,28 @@
+﻿
+<AppCardScrollContainer>
+    <HeaderContent>
+        <GroupingCardHeader Id="@Grouping" />
+    </HeaderContent>
+    <ChildContent>
+        <AppTable T="@string"
+                   Items="@Genres">
+            <RowTemplate>
+                <MudTd>
+                    <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnSelectGenre(context))" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+
+    [Parameter]
+    public List<string> Genres { get; set; }
+
+    [Parameter]
+    public Grouping Grouping { get; set; }
+
+    [Parameter]
+    public Func<string, Task> OnSelectGenre { get; set; }
+}

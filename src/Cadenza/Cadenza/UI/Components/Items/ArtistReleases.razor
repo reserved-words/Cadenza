@@ -1,0 +1,16 @@
+﻿@using Cadenza.Core.Model
+
+@if (Releases != null)
+{
+    <MudTabs>
+        @foreach (var group in Releases)
+        {
+            <ArtistReleaseGroupView Model="@group" />
+        }
+    </MudTabs>
+}
+
+@code {
+    [Parameter]
+    public List<ArtistReleaseGroup> Releases { get; set; }
+}

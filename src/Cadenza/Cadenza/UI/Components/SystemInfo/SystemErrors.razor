@@ -1,0 +1,61 @@
+﻿@using Cadenza.Core.Model.Logging
+@inherits SystemErrorsBase
+
+<AppTableScrollContainer>
+    <AppDataTable Items="@Items"
+                    Filter="@FilterFunc"
+                    Title="Error Logs">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<ErrorLog, object>(x=>x.Level)"></MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<ErrorLog, object>(x=>x.LoggedAt)">Logged At</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<ErrorLog, object>(x=>x.Application)">Application</MudTableSortLabel></MudTh>
+            <MudTh>Message</MudTh>
+            <MudTh></MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Style="width: 1px;">
+                @if (context.Level == LogLevel.Error)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" />
+                }
+                else if (context.Level == LogLevel.Warning)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" />
+                }
+                else if (context.Level == LogLevel.Info)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Info" Color="Color.Default" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Default" />
+                }
+            </MudTd>
+            <MudTd Style="width: 1px; white-space: nowrap;">
+                @context.LoggedAt.ToString("yyyy-MM-dd HH:mm:ss")
+            </MudTd>
+            <MudTd Style="width: 1px; white-space: nowrap;">
+                @context.Application
+            </MudTd>
+            <MudTd>
+                @context.Message
+            </MudTd>
+            <MudTd Style="width: 1px;">
+                @if (context.StackTrace != null)
+                {
+                    <MudIconButton Variant="Variant.Outlined"
+                               Color="@Color.Primary"
+                               Icon="@Icons.Material.Filled.MoreHoriz"
+                               Size="@Size.Small"></MudIconButton>
+                }
+            </MudTd>
+            <MudTd Style="width: 1px;">
+                <MudIconButton Variant="Variant.Outlined" Color="@Color.Default" Icon="@Icons.Material.Filled.Delete" Size="@Size.Small"></MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </AppDataTable>
+
+</AppTableScrollContainer>
+
+

@@ -1,0 +1,15 @@
+﻿@inherits CurrentlyPlayingHeaderBase
+
+<AppCard>
+    <ChildContent>
+        <MudText Typo="Typo.h6">Currently Playing</MudText>
+        @if (ShowViewLink)
+        {
+            <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
+        }
+        else
+        {
+            <MudText Typo="Typo.body1">@PlaylistName</MudText>
+        }
+    </ChildContent>
+</AppCard>

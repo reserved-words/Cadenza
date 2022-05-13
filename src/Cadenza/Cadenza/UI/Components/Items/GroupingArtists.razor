@@ -1,0 +1,31 @@
+﻿@using Cadenza.Core.App
+
+@if (Genre != null)
+{
+    <AppCardScrollContainer>
+
+        <HeaderContent>
+            <GenreCardHeader Id="@Genre" />
+        </HeaderContent>
+
+        <ChildContent>
+            <AppTable T="@Artist"
+                      Items="@Artists">
+                <RowTemplate>
+                    <MudTd>
+                        <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                    </MudTd>
+                </RowTemplate>
+            </AppTable>
+        </ChildContent>
+
+    </AppCardScrollContainer>
+}
+
+@code {
+    [Parameter]
+    public List<Artist> Artists { get; set; }
+
+    [Parameter]
+    public string Genre { get; set; }
+}

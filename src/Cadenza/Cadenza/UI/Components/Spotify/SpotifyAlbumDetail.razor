@@ -1,0 +1,45 @@
+﻿@using Cadenza.Source.Spotify
+
+<AppCard Elevation="3">
+    <HeaderContent>
+        <AppCardHeader>
+            <MainContent>
+                <MudText Typo="@Typo.h6">@Model.Title</MudText>
+                <MudText Typo="@Typo.body1">@Model.Artist</MudText>
+                <MudText Typo="@Typo.body1">@Model.Year</MudText>
+            </MainContent>
+        </AppCardHeader>
+    </HeaderContent>
+    <ChildContent>
+        <img class="artwork" src="@Model.ArtworkUrl" />
+    </ChildContent>
+    <Actions>
+        @*                                    <MudIcon Color="@Color.Warning"
+            Icon="@Icons.Material.Filled.Warning"></MudIcon>
+        *@
+        @if (Model.IsInLibrary)
+        {
+            <MudButton Color="@Color.Dark"
+                       StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
+        }
+        else
+        {
+            <MudButton Color="@Color.Dark"
+                       StartIcon="@Icons.Material.Filled.Add"
+                       OnClick="@OnAddAlbum">Add</MudButton>
+        }
+    </Actions>
+</AppCard>
+
+@code {
+    [Inject]
+    public ISpotifyLibrary Library { get; set; }
+
+    [Parameter]
+    public SpotifyAlbum Model { get; set; }
+
+    private async Task OnAddAlbum()
+    {
+        await Library.AddAlbum(Model.Id);
+    }
+}

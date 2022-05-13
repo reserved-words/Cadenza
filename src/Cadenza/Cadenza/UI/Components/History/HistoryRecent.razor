@@ -1,0 +1,46 @@
+﻿@inherits HistoryRecentBase
+
+<HistoryCard Title="Recent Tracks"
+             ShowPeriodOption="false"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading recent tracks..."
+             Items="@Model">
+    <RowTemplate>
+        <MudTd Class="td-img">
+            <img src="@context.ImageUrl" width="50" height="50"><img>
+        </MudTd>
+
+        <MudTd>
+            <MudText Typo="@Typo.body1">@context.Title</MudText>
+            <MudText Typo="@Typo.body2">@context.Artist</MudText>
+        </MudTd>
+
+        @if (context.NowPlaying)
+        {
+            <MudTd Class="td-icon">
+                <img src="images/playing.gif" class="ma-1" />
+            </MudTd>
+        }
+        else
+        {
+            <MudTd Class="td-datetime">
+
+                @if (context.Played.Date == DateTime.Today)
+                {
+                    <MudText Typo="@Typo.body2">Today</MudText>
+                }
+                else
+                {
+                    <MudText Typo="@Typo.body2">@context.Played.ToString("dd/MM/yyyy")</MudText>
+                }
+
+                <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
+
+            </MudTd>
+        }
+
+        <MudTd Class="td-icon">
+            <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" />
+        </MudTd>
+    </RowTemplate>
+</HistoryCard>

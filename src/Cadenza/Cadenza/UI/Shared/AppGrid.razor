@@ -1,0 +1,53 @@
+﻿<MudGrid Spacing="2">
+    @foreach (var item in Items)
+    {
+        <MudItem xs="@ItemXs" sm="@ItemSm" md="@ItemMd" lg="@ItemLg">
+            <MudCard Elevation="1"
+                     Class="pa-0 ma-0">
+
+                @ImageTemplate(item)
+                
+                <MudCardContent Class="pa-2 d-flex flex-column">
+                    @CaptionTemplate(item)
+                </MudCardContent>
+
+                @if (ActionsTemplate != null)
+                {
+                    <MudCardActions>
+                        @ActionsTemplate(item)
+                    </MudCardActions>
+                }
+
+            </MudCard>
+
+        </MudItem>
+    }
+</MudGrid>
+
+@typeparam T
+
+@code {
+    [Parameter]
+    public List<T> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> ImageTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> CaptionTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> ActionsTemplate { get; set; }
+
+    [Parameter]
+    public int ItemXs { get; set; } = 12;
+
+    [Parameter]
+    public int ItemSm { get; set; } = 4;
+
+    [Parameter]
+    public int ItemMd { get; set; } = 3;
+
+    [Parameter]
+    public int ItemLg { get; set; } = 2;
+}

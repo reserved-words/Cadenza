@@ -1,0 +1,17 @@
+﻿@if (Artist != null)
+{
+    <AppCardDivided>
+        <HeaderContent>
+            <ArtistCardHeader Model="@Artist"
+                              TitleOnly="false" />
+        </HeaderContent>
+        <ChildContent>
+            <ArtistLinksView Model="@Artist" />
+        </ChildContent>
+    </AppCardDivided>
+}
+
+@code {
+    [Parameter]
+    public ArtistInfo Artist { get; set; }
+}

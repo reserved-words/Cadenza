@@ -1,0 +1,32 @@
+﻿
+<TabGrid>
+
+    <TabGridColumn md="4">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <HistoryRecent />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="8">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+
+            <SubGrid>
+                <SubGridColumn md="6">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <HistoryArtists />
+                    </SubGridRow>
+                </SubGridColumn>
+                <SubGridColumn md="6">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <HistoryTracks />
+                    </SubGridRow>
+                </SubGridColumn>
+            </SubGrid>
+
+        </TabGridRow>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <HistoryAlbums />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

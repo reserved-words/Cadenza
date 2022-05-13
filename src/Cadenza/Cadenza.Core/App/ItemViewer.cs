@@ -14,15 +14,9 @@ public class ItemViewer : IItemViewer
         _idGenerator = idGenerator;
     }
 
-    public async Task ViewAlbum(Album album)
+    public async Task ViewAlbum(string id, string title)
     {
-        var playerItem = new ViewItem(PlayerItemType.Album, album.Id, album.Title);
-        await _app.View(playerItem);
-    }
-
-    public async Task ViewArtist(Artist artist)
-    {
-        var playerItem = new ViewItem(PlayerItemType.Artist, artist.Id, artist.Name);
+        var playerItem = new ViewItem(PlayerItemType.Album, id, title);
         await _app.View(playerItem);
     }
 
@@ -72,12 +66,6 @@ public class ItemViewer : IItemViewer
     public async Task ViewSearchResult(PlayerItem item)
     {
         var playerItem = new ViewItem(item.Type, item.Id, item.Name);
-        await _app.View(playerItem);
-    }
-
-    public async Task ViewTrack(Track track)
-    {
-        var playerItem = new ViewItem(PlayerItemType.Track, track.Id, track.Title);
         await _app.View(playerItem);
     }
 

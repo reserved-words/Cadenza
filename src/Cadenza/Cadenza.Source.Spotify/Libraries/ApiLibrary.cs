@@ -220,4 +220,14 @@ public class ApiLibrary : ISpotifyLibrary
     {
         await _userApi.AddPlaylist(id);
     }
+
+    public async Task RemoveAlbum(string id)
+    {
+        await _userApi.RemoveAlbum(id);
+    }
+
+    public async Task RemovePlaylist(string id)
+    {
+        await _userApi.RemovePlaylist(id);
+    }
 }

@@ -3,6 +3,7 @@ using Cadenza.Source.Spotify.Api.Internal;
 using Cadenza.Source.Spotify.Api.Model;
 using Cadenza.Source.Spotify.Api.Model.Albums;
 using Cadenza.Source.Spotify.Api.Model.Playlists;
+using Cadenza.Source.Spotify.Api.Responses;
 
 namespace Cadenza.Source.Spotify.Api;
 
@@ -10,8 +11,8 @@ internal class UserApi : IUserApi
 {
     private const string AlbumsUrl = "https://api.spotify.com/v1/me/albums?limit=50&fields=total,next,items";
     private const string PlaylistsUrl = "https://api.spotify.com/v1/me/playlists?limit=50&fields=total,next,items";
-    private const string SaveAlbumsUrl = "https://api.spotify.com/v1/me/albums";
-    private const string FollowPlaylistUrl = "https://api.spotify.com/v1/playlists/{0}/followers";
+    private const string UserAlbumsUrl = "https://api.spotify.com/v1/me/albums";
+    private const string PlaylistFollowersUrl = "https://api.spotify.com/v1/playlists/{0}/followers";
 
     private readonly IApiHelper _api;
 
@@ -63,31 +64,39 @@ internal class UserApi : IUserApi
         return items;
     }
 
-    private async Task<T> GetResponse<T>(string uri) where T : class
-    {
-        var apiResponse = await _api.Get<T>(uri);
-
-        if (apiResponse.Error != null)
-        {
-            var ex = new Exception("API error");
-            ex.Data.Add("Message", apiResponse.Error.Error.Message);
-            ex.Data.Add("Status", apiResponse.Error.Error.Status);
-            throw ex;
-        }
-
-        return apiResponse.Data;
-    }
-
     public async Task AddAlbum(string albumId)
     {
-        var url = string.Format(SaveAlbumsUrl, albumId);
+        var url = string.Format(UserAlbumsUrl, albumId);
         var data = new { ids = new[] { albumId } };
-        await _api.Put(url, data);
+        var response = await _api.Put(url, data);
+        CheckForErrors(response);
     }
 
     public async Task AddPlaylist(string playlistId)
     {
-        var url = string.Format(FollowPlaylistUrl, playlistId);
-        await _api.Put(url);
+        var url = string.Format(PlaylistFollowersUrl, playlistId);
+        var response = await _api.Put(url);
+        CheckForErrors(response);
+    }
+
+    public async Task RemoveAlbum(string albumId)
+    {
+        var url = string.Format(UserAlbumsUrl, albumId);
+        var data = new { ids = new[] { albumId } };
+        var response = await _api.Delete(url, data);
+        CheckForErrors(response);
+    }
+
+    public async Task RemovePlaylist(string playlistId)
+    {
+        var url = string.Format(PlaylistFollowersUrl, playlistId);
+        var response = await _api.Delete(url);
+        CheckForErrors(response);
+    }
+
+    private static void CheckForErrors(ApiResponse response)
+    {
+        if (response.Error != null)
+            throw new Exception($"{response.Error.Status}: {response.Error.Message}");
     }
 }

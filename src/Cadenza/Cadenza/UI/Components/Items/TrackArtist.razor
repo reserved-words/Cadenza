@@ -1,0 +1,14 @@
+﻿<AppCardDivided>
+    <HeaderContent>
+        <ArtistCardHeader Model="@Model"
+                          TitleOnly="false" />
+    </HeaderContent>
+    <ChildContent>
+        <ArtistLinksView Model="@Model" />
+    </ChildContent>
+</AppCardDivided>
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+}

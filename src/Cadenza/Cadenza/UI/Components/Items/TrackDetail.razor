@@ -1,0 +1,14 @@
+﻿<AppCardDivided>
+    <HeaderContent>
+        <TrackCardHeader Model="@Model"
+                         TitleOnly="false" />
+    </HeaderContent>
+    <ChildContent>
+        <TrackTagsView Model="@Model" />
+    </ChildContent>
+</AppCardDivided>
+
+@code {
+    [Parameter]
+    public TrackInfo Model { get; set; }
+}

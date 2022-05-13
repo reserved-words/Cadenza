@@ -1,0 +1,18 @@
+﻿@using Cadenza.Core.App
+@if (Model != null)
+{
+    <img class="artwork" src="@Model.ArtworkUrl" @ondblclick="@Play" />
+}
+
+@code {
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    [Parameter]
+    public Album Model { get; set; }
+
+    public async Task Play()
+    {
+        await Player.PlayAlbum(Model.Id);
+    }
+}

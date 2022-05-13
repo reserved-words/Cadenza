@@ -31,14 +31,6 @@ div.mud-tabs-panels {
     margin: 0;
 }
 
-.fixed-height-margin {
-    height: calc(100% - 20px);
-    max-height: calc(100% - 20px);
-    overflow-y: hidden;
-    padding: 0;
-    margin: 10px;
-}
-
 .fixed-height-scroll {
     height: 100%;
     max-height: 100%;
@@ -49,3 +41,67 @@ div.mud-tabs-panels {
     top: 0;
     height: 100%;
 }
+
+div.tab-grid {
+    margin: 0;
+    padding: 0.5rem;
+    height: 100%;
+}
+
+div.tab-grid-col {
+    margin: 0;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+div.tab-grid-row {
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+div.sub-grid {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+div.sub-grid-col {
+    margin: 0;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+    div.sub-grid-col:first-of-type {
+        padding: 0 0.5rem 0 0;
+    }
+
+    div.sub-grid-col:last-of-type {
+        padding: 0 0 0 0.5rem;
+    }
+
+    div.sub-grid-col:only-of-type {
+        padding: 0;
+    }
+
+div.sub-grid-row {
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+    div.sub-grid-row:first-of-type {
+        padding: 0 0 0.5rem 0;
+    }
+
+    div.sub-grid-row:last-of-type {
+        padding: 0.5rem 0 0 0;
+    }
+
+    div.sub-grid-row:only-of-type {
+        margin: 0;
+        padding: 0;
+        max-height: 100%;
+        height: 100%;
+    }

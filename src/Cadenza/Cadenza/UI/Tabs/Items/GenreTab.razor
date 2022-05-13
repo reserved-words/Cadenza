@@ -1,0 +1,17 @@
+﻿@inherits GenreTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <GenreDetail Id="@Id" />
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow>
+            <GenreBands Artists="@Artists" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

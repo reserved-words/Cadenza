@@ -1,0 +1,17 @@
+﻿<AppTableScrollContainer>
+    <ChildContent>
+        <AppTable T="@SpotifyTrack"
+                  Items="@Tracks">
+            <RowTemplate>
+                <MudTd>@context.Title</MudTd>
+                <MudTd>@context.Artist</MudTd>
+                <MudTd Style="width:1px; text-align: right;">@context.Duration.ToDurationDisplay()</MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppTableScrollContainer>
+
+@code {
+    [Parameter]
+    public List<SpotifyTrack> Tracks { get; set; }
+}

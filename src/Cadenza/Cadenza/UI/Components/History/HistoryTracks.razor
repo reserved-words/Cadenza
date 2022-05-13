@@ -1,0 +1,20 @@
+﻿@inherits HistoryTracksBase
+
+<HistoryCard Title="Top Tracks"
+             IsLoading="@IsLoading"
+             LoadingCaption="Loading top tracks..."
+             Items="@Model"
+             GetItems="@GetItems">
+    <RowTemplate>
+        <MudTd Class="td-int">
+            @context.Rank
+        </MudTd>
+        <MudTd>
+            <MudText Typo="@Typo.body1">@context.Title</MudText>
+            <MudText Typo="@Typo.body2">@context.Artist</MudText>
+        </MudTd>
+        <MudTd Class="td-int">
+            @context.Plays
+        </MudTd>
+    </RowTemplate>
+</HistoryCard>

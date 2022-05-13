@@ -1,0 +1,21 @@
+﻿
+<DynamicTabs FixedItems="@FixedItems"
+             DynamicItems="@DynamicItems"
+             SelectedItem="@SelectedTabId" />
+
+@code {
+    public string SelectedTabId { get; set; }
+    public List<DynamicTabsItem> FixedItems = new();
+    public List<DynamicTabsItem> DynamicItems = new();
+
+    public string SelectedItem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        FixedItems = new List<DynamicTabsItem>
+        {
+            new DynamicTabsItem("System Errors", "Errors", Icons.Material.Filled.Error, typeof(SystemErrors)),
+            new DynamicTabsItem("Updates Queue", "Queue", Icons.Material.Filled.Queue, typeof(SystemUpdateQueue))
+        };
+    }
+}

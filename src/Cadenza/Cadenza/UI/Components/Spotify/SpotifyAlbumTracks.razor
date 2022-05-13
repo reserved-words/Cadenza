@@ -1,0 +1,29 @@
+﻿
+<AppCardScrollContainer Elevation="0">
+    <ChildContent>
+        <MudTabs>
+            @if (Discs.Count() == 1)
+            {
+                <MudTabPanel Text="Tracks">
+                    <SpotifyAlbumDisc Items="@Discs.Single().ToList()" />
+                </MudTabPanel>
+            }
+            else
+            {
+                @foreach (var disc in Discs)
+                {
+                    <MudTabPanel Text="@("Disc " + disc.Key)">
+                        <SpotifyAlbumDisc Items="@disc.ToList()" />
+                    </MudTabPanel>
+                }
+            }
+        </MudTabs>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter]
+    public List<SpotifyTrack> Tracks { get; set; }
+
+    public IEnumerable<IGrouping<int, SpotifyTrack>> Discs => Tracks.GroupBy(t => t.DiscNo);
+}
