@@ -1,5 +1,4 @@
-﻿using Cadenza.Interfaces;
-using Cadenza.Utilities;
+﻿using Cadenza.Utilities;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.UI.Components.Spotify;

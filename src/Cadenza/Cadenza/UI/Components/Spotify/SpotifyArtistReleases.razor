@@ -1,4 +1,5 @@
-﻿@using Cadenza.Source.Spotify
+﻿@using Cadenza.Interfaces
+@using Cadenza.Source.Spotify
 <AppScrollContainer>
     <ChildContent>
         <MudGrid Spacing="2">
@@ -22,13 +23,13 @@
                             @if (playlist.IsInLibrary)
                             {
                                 <MudButton Color="@Color.Dark"
-                                           StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
+                                   StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
                             }
                             else
                             {
                                 <MudButton Color="@Color.Dark"
-                                           StartIcon="@Icons.Material.Filled.Add"
-                                           OnClick="@(() => AddPlaylist(playlist.Id))">Add</MudButton>
+                                   StartIcon="@Icons.Material.Filled.Add"
+                                   OnClick="@(() => AddPlaylist(playlist.Id))">Add</MudButton>
                             }
                         </MudCardActions>
                     </MudCard>
@@ -55,13 +56,13 @@
                             @if (album.IsInLibrary)
                             {
                                 <MudButton Color="@Color.Dark"
-                                           StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
+                                   StartIcon="@Icons.Material.Filled.CheckBox">Added</MudButton>
                             }
                             else
                             {
                                 <MudButton Color="@Color.Dark"
-                                           StartIcon="@Icons.Material.Filled.Add"
-                                           OnClick="@(() => AddAlbum(album.Id))">Add</MudButton>
+                                   StartIcon="@Icons.Material.Filled.Add"
+                                   OnClick="@(() => AddAlbum(album.Id))">Add</MudButton>
                             }
                         </MudCardActions>
                     </MudCard>
@@ -75,6 +76,9 @@
     [Inject]
     public ISpotifyLibrary Library { get; set; }
 
+    [Inject]
+    public INotificationService Notifications { get; set; }
+
     [Parameter]
     public SpotifyArtistSearchResult Model { get; set; }
 
@@ -86,11 +90,27 @@
 
     private async Task AddAlbum(string id)
     {
-        await Library.AddAlbum(id);
+        try
+        {
+            await Library.AddAlbum(id);
+            Notifications.Error("Item added");
+        }
+        catch (Exception ex)
+        {
+            Notifications.Error(ex.Message);
+        }
     }
 
     private async Task AddPlaylist(string id)
     {
-        await Library.AddPlaylist(id);
+        try
+        {
+            await Library.AddPlaylist(id);
+            Notifications.Error("Item added");
+        }
+        catch (Exception ex)
+        {
+            Notifications.Error(ex.Message);
+        }
     }
 }
