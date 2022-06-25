@@ -46,6 +46,12 @@ internal class PlayerService : IPlayerService
         try
         {
             var deviceId = await _devicesApi.GetDeviceId(false);
+
+            if (deviceId == null)
+            {
+                deviceId = await _devicesApi.GetDeviceId(true);
+            }
+
             await deviceAction(deviceId);
         }
         catch (NotFoundException)

@@ -27,28 +27,20 @@ public class DynamicTabsBase : ComponentBase
         }
     }
 
-    private void SetSelectedItem()
-    {
-        var allItems = _allItems.ToList();
-
-        if (allItems.Count <= SelectedTabIndex)
-            return;
-
-        var currentlySelectedItem = allItems[SelectedTabIndex];
-        if (currentlySelectedItem.Id == SelectedItem)
-            return;
-
-        var item = allItems.SingleOrDefault(i => i.Id == SelectedItem);
-        if (item != null)
-        {
-            var selectIndex = allItems.IndexOf(item);
-            SelectedTabIndex = selectIndex;
-            StateHasChanged();
-        }
-    }
-
     protected override void OnAfterRender(bool firstRender)
     {
-        SetSelectedItem();
+        if (SelectedItem != null)
+        {
+            var allItems = _allItems.ToList();
+
+            var item = allItems.SingleOrDefault(i => i.Id == SelectedItem);
+            if (item != null)
+            {
+                SelectedTabIndex = allItems.IndexOf(item);
+                StateHasChanged();
+            }
+
+            SelectedItem = null;
+        }
     }
 }

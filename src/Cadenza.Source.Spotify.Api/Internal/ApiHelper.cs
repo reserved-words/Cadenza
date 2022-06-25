@@ -97,7 +97,7 @@ internal class ApiHelper : IApiHelper
     {
         var response = await apiCall(false);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.NotFound)
         {
             response = await apiCall(true);
         }

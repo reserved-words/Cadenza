@@ -1,4 +1,5 @@
-﻿@using Cadenza.Source.Spotify
+﻿@using Cadenza.Interfaces
+@using Cadenza.Source.Spotify
 
 <AppCard Elevation="3">
     <HeaderContent>
@@ -35,11 +36,22 @@
     [Inject]
     public ISpotifyLibrary Library { get; set; }
 
+    [Inject]
+    public INotificationService Notifications { get; set; }
+
     [Parameter]
     public SpotifyPlaylist Model { get; set; }
 
     private async Task OnAddPlaylist()
     {
-        await Library.AddPlaylist(Model.Id);
+        try
+        {
+            await Library.AddAlbum(Model.Id);
+            Notifications.Error("Item added");
+        }
+        catch (Exception ex)
+        {
+            Notifications.Error(ex.Message);
+        }
     }
 }

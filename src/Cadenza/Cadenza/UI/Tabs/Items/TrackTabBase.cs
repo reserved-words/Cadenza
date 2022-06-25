@@ -10,7 +10,7 @@ namespace Cadenza.UI.Tabs.Items
         [Parameter]
         public string Id { get; set; }
 
-        public TrackFull Model { get; set; }
+        public TrackFull Model { get; set; } = new();
 
         protected override async Task OnParametersSetAsync()
         {
