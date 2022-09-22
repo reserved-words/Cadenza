@@ -27,7 +27,6 @@
     <ProjectReference Include="..\Cadenza.Core\Cadenza.Core.csproj" />
     <ProjectReference Include="..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
     <ProjectReference Include="..\Cadenza.Source.Local\Cadenza.Source.Local.csproj" />
-    <ProjectReference Include="..\Cadenza.Source.Spotify\Cadenza.Source.Spotify.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/license-report-config.json" /></VisualStudio></ProjectExtensions>

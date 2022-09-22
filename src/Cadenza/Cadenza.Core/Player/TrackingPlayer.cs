@@ -39,7 +39,7 @@ public class TrackingPlayer : IUtilityPlayer
     {
         var currentTrack = await CurrentTrack();
 
-        if (currentTrack == null || !Tracking(currentTrack))
+        if (currentTrack == null)
             return;
 
         if (!PlayedEnough(progress))
@@ -52,7 +52,7 @@ public class TrackingPlayer : IUtilityPlayer
     {
         var currentTrack = await CurrentTrack();
 
-        if (currentTrack == null || !Tracking(currentTrack))
+        if (currentTrack == null)
             return;
 
         await _tracker.UpdateNowPlaying(currentTrack, progress?.SecondsRemaining ?? 1);
@@ -62,12 +62,6 @@ public class TrackingPlayer : IUtilityPlayer
     {
         return progress.SecondsPlayed >= 4 * 60
             || progress.PercentagePlayed >= 50;
-    }
-
-    private static bool Tracking(TrackFull track)
-    {
-        // Need a better way to do this - source profile
-        return track.Track.Source != LibrarySource.Spotify;
     }
 
     private async Task<TrackFull> CurrentTrack()

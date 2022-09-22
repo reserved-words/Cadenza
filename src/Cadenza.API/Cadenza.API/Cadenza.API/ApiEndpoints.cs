@@ -18,10 +18,4 @@ public static class ApiEndpoints
         public const string AuthUrl = "/LastFm/AuthUrl";
         public const string CreateSession = "/LastFm/CreateSession";
     }
-
-    public static class Spotify
-    {
-        public const string AuthHeader = "/Spotify/AuthHeader";
-        public const string AuthUrl = "/Spotify/AuthUrl";
-    }
 }

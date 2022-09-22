@@ -6,7 +6,6 @@ public static class Icon
 {
     public const string BandCamp = "fab fa-bandcamp";
     public const string LastFm = "fab fa-lastfm-square";
-    public const string Spotify = "fab fa-spotify";
     public const string Wikipedia = "fab fa-wikipedia-w";
 
     public static readonly string Add = Material.Filled.Add;

@@ -2,6 +2,5 @@
 
 public enum LibrarySource
 {
-    Local,
-    Spotify
+    Local
 }

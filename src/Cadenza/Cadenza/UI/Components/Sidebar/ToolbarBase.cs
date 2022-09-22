@@ -45,7 +45,6 @@ public class ToolbarBase : ComponentBase
         }
 
         await ConnectorService.SetStatus(Connector.LastFm, ConnectorStatus.Disabled);
-        await ConnectorService.SetStatus(Connector.Spotify, ConnectorStatus.Disabled);
 
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connect Services", false, "Reconnect services?");
     }

@@ -4,8 +4,7 @@
     {
         API,
         LastFm,
-        Local,
-        Spotify
+        Local
     }
 
     public enum ConnectorStatus

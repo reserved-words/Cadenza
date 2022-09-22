@@ -5,13 +5,10 @@ using Cadenza.Utilities;
 using Cadenza.LastFM;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Player;
-using Cadenza.Core.App;
 using Cadenza.Core.Utilities;
 using Cadenza.Core.Playlists;
-using Cadenza.Source.Spotify;
 using Cadenza.Core.Interop;
 using Cadenza.Interop;
-using Cadenza.Source.Spotify.Libraries;
 using Cadenza.MudServices;
 using Cadenza.Services;
 using Cadenza.Interfaces;
@@ -34,8 +31,6 @@ public static class Dependencies
             .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<ISpotifyLibrary, ApiLibrary>()
-            .AddTransient<ISpotifySearcher, ApiSearcher>()
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()
@@ -117,7 +112,6 @@ public static class Dependencies
     private static IServiceCollection AddSources(this IServiceCollection services, IConfiguration config)
     {
         return services
-            .AddSpotifySource(config, "SpotifyApi")
             .AddLocalSource<HtmlPlayer>(config, "LocalApi");
     }
 

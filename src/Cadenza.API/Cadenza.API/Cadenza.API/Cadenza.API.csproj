@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
-    <ProjectReference Include="..\..\Cadenza.Spotify\Cadenza.Spotify.csproj" />
   </ItemGroup>
 
   <ItemGroup>

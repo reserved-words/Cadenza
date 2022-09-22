@@ -40,25 +40,15 @@ internal class Scrobbler : IPlayTracker
     {
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
-        // Might be a better way to do this in future but for now omit album details for Spotify playlists
-        return track.Album.ReleaseType == ReleaseType.Playlist
-            ? new Scrobble
-            {
-                SessionKey = sessionKey.Value,
-                Timestamp = timestamp ?? DateTime.Now,
-                Artist = track.Artist.Name,
-                Title = track.Track.Title,
-                Duration = duration ?? track.Track.DurationSeconds
-            }
-            : new Scrobble
-            {
-                SessionKey = sessionKey.Value,
-                Timestamp = timestamp ?? DateTime.Now,
-                Artist = track.Artist.Name,
-                Title = track.Track.Title,
-                AlbumTitle = track.Album.Title,
-                AlbumArtist = track.Album.ArtistName,
-                Duration = duration ?? track.Track.DurationSeconds
-            };
+        return new Scrobble
+        {
+            SessionKey = sessionKey.Value,
+            Timestamp = timestamp ?? DateTime.Now,
+            Artist = track.Artist.Name,
+            Title = track.Track.Title,
+            AlbumTitle = track.Album.Title,
+            AlbumArtist = track.Album.ArtistName,
+            Duration = duration ?? track.Track.DurationSeconds
+        };
     }
 }

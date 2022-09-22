@@ -10,7 +10,6 @@ public static class Extensions
         {
             Connector.API => Icons.Material.Filled.Api,
             Connector.Local => LibrarySource.Local.GetIcon(),
-            Connector.Spotify => LibrarySource.Spotify.GetIcon(),
             Connector.LastFm => Icon.LastFm,
             _ => throw new NotImplementedException()
         };
@@ -21,7 +20,6 @@ public static class Extensions
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            LibrarySource.Spotify => Icon.Spotify,
             _ => throw new NotImplementedException()
         };
     }
