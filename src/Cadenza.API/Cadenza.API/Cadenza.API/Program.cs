@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args)
 var app = builder.Build()
     .AddCors()
     .AddDocumentation()
-    .AddRoutes()
     .AddDocumentationUI();
 
 app.Run();

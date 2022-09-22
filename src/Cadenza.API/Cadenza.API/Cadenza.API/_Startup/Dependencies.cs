@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API._Startup;
+﻿using Cadenza.API.LastFM;
+
+namespace Cadenza.API._Startup;
 
 public static class Dependencies
 {
