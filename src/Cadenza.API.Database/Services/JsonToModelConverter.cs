@@ -1,10 +1,10 @@
 ﻿using Cadenza.API.Common.Model.Json;
 using Cadenza.Domain;
-using Cadenza.API.Common.Interfaces.Converters;
+using Cadenza.API.Database.Interfaces;
 
-namespace Cadenza.API.Database.Services.Converters;
+namespace Cadenza.API.Database.Services;
 
-public class JsonToModelConverter : IJsonToModelConverter
+internal class JsonToModelConverter : IJsonToModelConverter
 {
     private readonly IArtistConverter _artistConverter;
     private readonly IAlbumConverter _albumConverter;

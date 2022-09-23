@@ -1,13 +1,11 @@
-﻿
-
-using Cadenza.API.Common.Interfaces.Converters;
-using Cadenza.API.Common.Model.Json;
+﻿using Cadenza.API.Common.Model.Json;
+using Cadenza.API.Database.Interfaces;
 using Cadenza.Domain;
 using Cadenza.Utilities;
 
-namespace Cadenza.API.Database.Services.Converters;
+namespace Cadenza.API.Database.Services;
 
-public class TrackConverter : ITrackConverter
+internal class TrackConverter : ITrackConverter
 {
     private readonly IBase64Converter _base64Converter;
 

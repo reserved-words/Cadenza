@@ -1,7 +1,7 @@
 ﻿using Cadenza.API.Common.Interfaces.Cache;
 using Cadenza.Domain;
 
-namespace Cadenza.API.Database.Services.Cache;
+namespace Cadenza.API.Cache;
 
 public class SearchCache : ISearchCache
 {

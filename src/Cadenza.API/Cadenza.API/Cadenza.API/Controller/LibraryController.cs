@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Common.Interfaces.Cache;
-using Cadenza.API.Interfaces;
+﻿using Cadenza.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;

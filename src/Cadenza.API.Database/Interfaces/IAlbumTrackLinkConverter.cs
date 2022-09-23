@@ -1,9 +1,9 @@
 ﻿using Cadenza.API.Common.Model.Json;
 using Cadenza.Domain;
 
-namespace Cadenza.API.Common.Interfaces.Converters;
+namespace Cadenza.API.Database.Interfaces;
 
-public interface IAlbumTrackLinkConverter
+internal interface IAlbumTrackLinkConverter
 {
     JsonAlbumTrackLink ToJsonModel(AlbumTrackLink link);
     AlbumTrackLink ToAppModel(JsonAlbumTrackLink link);

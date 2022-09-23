@@ -1,10 +1,10 @@
-﻿using Cadenza.API.Common.Interfaces.Converters;
-using Cadenza.API.Common.Model.Json;
+﻿using Cadenza.API.Common.Model.Json;
+using Cadenza.API.Database.Interfaces;
 using Cadenza.Domain;
 
-namespace Cadenza.API.Database.Services.Converters;
+namespace Cadenza.API.Database.Services;
 
-public class AlbumConverter : IAlbumConverter
+internal class AlbumConverter : IAlbumConverter
 {
     public AlbumInfo ToAppModel(JsonAlbum album, ICollection<JsonArtist> artists)
     {

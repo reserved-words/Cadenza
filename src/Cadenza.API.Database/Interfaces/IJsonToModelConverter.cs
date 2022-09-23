@@ -1,9 +1,9 @@
 ﻿using Cadenza.API.Common.Model.Json;
 using Cadenza.Domain;
 
-namespace Cadenza.API.Common.Interfaces.Converters;
+namespace Cadenza.API.Database.Interfaces;
 
-public interface IJsonToModelConverter
+internal interface IJsonToModelConverter
 {
     ArtistInfo ConvertArtist(JsonArtist artist);
     AlbumInfo ConvertAlbum(JsonAlbum album, ICollection<JsonArtist> artists);

@@ -4,7 +4,7 @@ using Cadenza.Utilities;
 
 namespace Cadenza.API.Database.Services;
 
-public class LibraryOrganiser : ILibraryOrganiser
+internal class LibraryOrganiser : ILibraryOrganiser
 {
     private readonly IListComparer _listComparer;
     private readonly IJsonMerger _merger;

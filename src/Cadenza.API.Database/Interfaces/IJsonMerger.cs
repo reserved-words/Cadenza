@@ -3,7 +3,7 @@ using Cadenza.Domain;
 
 namespace Cadenza.API.Common.Interfaces;
 
-public interface IJsonMerger
+internal interface IJsonMerger
 {
     JsonTrack Merge(JsonTrack existing, JsonTrack update, List<JsonArtist> artists);
     JsonArtist Merge(JsonArtist existing, JsonArtist update);

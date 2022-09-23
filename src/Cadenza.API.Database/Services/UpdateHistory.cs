@@ -4,7 +4,7 @@ using Cadenza.Domain;
 
 namespace Cadenza.API.Database.Services;
 
-public class UpdateHistory : IUpdateHistory
+internal class UpdateHistory : IUpdateHistory
 {
     private readonly IDataAccess _dataAccess;
 

@@ -3,7 +3,7 @@ using Cadenza.Domain;
 
 namespace Cadenza.API.Common.Interfaces;
 
-public interface IDataAccess
+internal interface IDataAccess
 {
     Task<List<JsonArtist>> GetArtists();
     Task<List<JsonAlbum>> GetAlbums(LibrarySource source);

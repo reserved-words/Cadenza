@@ -2,7 +2,7 @@
 
 namespace Cadenza.API.Database.Services;
 
-public class FileAccess : IFileAccess
+internal class FileAccess : IFileAccess
 {
     public async Task<string> GetText(string path)
     {

@@ -2,7 +2,7 @@
 
 namespace Cadenza.API.Common.Interfaces;
 
-public interface ILibraryOrganiser
+internal interface ILibraryOrganiser
 {
     void MergeAlbum(List<JsonAlbum> jsonAlbums, List<JsonArtist> jsonArtists, JsonAlbum newAlbum);
     void MergeAlbumTrackLink(List<JsonAlbumTrackLink> jsonAlbumTrackLinks, JsonAlbumTrackLink newAlbumTrackLink);

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Database.Config;
+﻿namespace Cadenza.API.Database;
 
 public class LibraryPaths
 {

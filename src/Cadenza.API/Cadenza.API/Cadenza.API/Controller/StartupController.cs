@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
 [Route("api/[controller]")]

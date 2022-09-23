@@ -1,12 +1,12 @@
 ﻿using Cadenza.API.Common.Interfaces;
-using Cadenza.API.Common.Interfaces.Converters;
 using Cadenza.API.Common.Model.Json;
+using Cadenza.API.Database.Interfaces;
 using Cadenza.Domain;
 using Cadenza.Utilities;
 
 namespace Cadenza.API.Database.Services;
 
-public class JsonMerger : IJsonMerger
+internal class JsonMerger : IJsonMerger
 {
     private readonly IAlbumConverter _albumConverter;
     private readonly IArtistConverter _artistConverter;

@@ -1,13 +1,12 @@
 ﻿using Cadenza.API.Common.Interfaces;
 using Cadenza.API.Common.Model;
-using Cadenza.API.Database.Config;
 using Cadenza.Domain;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.API.Database.Services;
 
-public class FileUpdateService : IFileUpdateService
+internal class FileUpdateService : IFileUpdateService
 {
     private readonly IFileAccess _fileAccess;
     private readonly IJsonConverter _jsonConverter;

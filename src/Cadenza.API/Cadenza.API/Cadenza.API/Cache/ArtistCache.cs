@@ -2,7 +2,7 @@
 using Cadenza.Domain;
 using Newtonsoft.Json;
 
-namespace Cadenza.API.Database.Services.Cache;
+namespace Cadenza.API.Cache;
 
 public class ArtistCache : IArtistCache
 {

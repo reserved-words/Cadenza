@@ -1,5 +1,4 @@
-﻿using Cadenza.API.Database.Config;
-using Cadenza.API.Common.Interfaces;
+﻿using Cadenza.API.Common.Interfaces;
 using Cadenza.API.Common.Model.Json;
 using Microsoft.Extensions.Options;
 using Cadenza.Domain;
@@ -7,7 +6,7 @@ using Cadenza.Utilities;
 
 namespace Cadenza.API.Database.Services;
 
-public class DataAccess : IDataAccess
+internal class DataAccess : IDataAccess
 {
     private readonly IFileAccess _fileAccess;
     private readonly IJsonConverter _jsonConverter;
