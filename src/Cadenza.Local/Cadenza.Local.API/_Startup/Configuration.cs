@@ -11,7 +11,6 @@ public static class Configuration
 
         builder.Services
             .ConfigureLogger(builder.Configuration, "Logging")
-            .ConfigureLibraryLocation(builder.Configuration, "LibraryPaths")
             .ConfigurePlayLocation(builder.Configuration, "CurrentlyPlaying");
 
         return builder;

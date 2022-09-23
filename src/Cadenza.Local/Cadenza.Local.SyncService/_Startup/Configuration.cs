@@ -21,7 +21,6 @@ namespace Cadenza.Local.SyncService._Startup
 
             services
                 .ConfigureLogger(configuration, "Logging")
-                .ConfigureLibraryLocation(configuration, "LibraryPaths")
                 .ConfigurePlayLocation(configuration, "CurrentlyPlaying")
                 .ConfigureMusicLocation(configuration, "MusicLibrary");
 

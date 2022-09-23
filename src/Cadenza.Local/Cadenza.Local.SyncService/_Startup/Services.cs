@@ -1,8 +1,6 @@
 ﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces.Converters;
 using Cadenza.Local.MusicFiles;
 using Cadenza.Local.Services;
-using Cadenza.Local.Services.Converters;
 using Cadenza.Local.SyncService.Updaters;
 using FileAccess = Cadenza.Local.Services.FileAccess;
 
@@ -17,20 +15,11 @@ public static class Services
            .AddLogger()
            .AddMusicFileLibrary()
            .AddUpdaters()
-           .AddTransient<IArtistConverter, ArtistConverter>()
-           .AddTransient<IAlbumConverter, AlbumConverter>()
-           .AddTransient<IAlbumTrackLinkConverter, AlbumTrackLinkConverter>()
-           .AddTransient<ITrackConverter, TrackConverter>()
-           .AddTransient<IDataAccess, DataAccess>()
            .AddTransient<IFileAccess, FileAccess>()
-           .AddTransient<IFileUpdateService, FileUpdateService>()
-           .AddTransient<ILocalFilesUpdater, LocalFileUpdater>()
+           //.AddTransient<ILocalFilesUpdater, LocalFileUpdater>()
            .AddTransient<IJsonConverter, JsonConverter>()
-           .AddTransient<IJsonMerger, JsonMerger>()
-           .AddTransient<ILibraryOrganiser, LibraryOrganiser>()
            .AddTransient<IMusicDirectory, MusicDirectoryAccess>()
            .AddTransient<IUpdatedFilesFetcher, UpdatedFilesFetcher>()
-           .AddTransient<IUpdateHistory, UpdateHistory>()
            .AddTransient<IMerger, Merger>();
 
         return services;

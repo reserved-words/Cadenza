@@ -1,30 +1,30 @@
 ﻿using Cadenza.Domain;
-using Cadenza.Local.Common.Model.Json;
+using Cadenza.Local.Common.Model;
 using Cadenza.Local.MusicFiles.Interfaces;
 using Cadenza.Local.MusicFiles.Model;
 using Cadenza.Utilities;
 
 namespace Cadenza.Local.MusicFiles.Services;
 
-internal class Id3ToJsonConverter : IId3ToJsonConverter
+internal class Id3ToLocalConverter : IId3ToLocalConverter
 {
     private readonly IBase64Converter _base64Converter;
     private readonly IIdGenerator _idGenerator;
     private readonly ICommentProcessor _commentProcessor;
 
-    public Id3ToJsonConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor, IBase64Converter base64Converter)
+    public Id3ToLocalConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor, IBase64Converter base64Converter)
     {
         _idGenerator = idGenerator;
         _commentProcessor = commentProcessor;
         _base64Converter = base64Converter;
     }
 
-    public JsonAlbum ConvertAlbum(Id3Data data)
+    public LocalAlbum ConvertAlbum(Id3Data data)
     {
         var albumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title);
         var artistId = _idGenerator.GenerateId(data.Album.ArtistName);
 
-        var jsonAlbum = new JsonAlbum
+        var LocalAlbum = new LocalAlbum
         {
             Id = albumId,
             ArtistId = artistId,
@@ -36,31 +36,31 @@ internal class Id3ToJsonConverter : IId3ToJsonConverter
 
         var discNo = data.Disc.DiscNo == 0 ? 1 : data.Disc.DiscNo;
 
-        while (jsonAlbum.TrackCounts.Count < discNo)
+        while (LocalAlbum.TrackCounts.Count < discNo)
         {
-            jsonAlbum.TrackCounts.Add(0);
+            LocalAlbum.TrackCounts.Add(0);
         }
 
-        jsonAlbum.TrackCounts[discNo - 1] = data.Disc.TrackCount;
+        LocalAlbum.TrackCounts[discNo - 1] = data.Disc.TrackCount;
 
-        return jsonAlbum;
+        return LocalAlbum;
 
     }
 
-    public JsonArtist ConvertAlbumArtist(Id3Data data)
+    public LocalArtist ConvertAlbumArtist(Id3Data data)
     {
-        return new JsonArtist
+        return new LocalArtist
         {
             Id = _idGenerator.GenerateId(data.Album.ArtistName),
             Name = data.Album.ArtistName
         };
     }
 
-    public JsonAlbumTrackLink ConvertAlbumTrackLink(string id, Id3Data id3Data)
+    public LocalAlbumTrackLink ConvertAlbumTrackLink(string id, Id3Data id3Data)
     {
         var albumId = _idGenerator.GenerateId(id3Data.Album.ArtistName, id3Data.Album.Title);
 
-        return new JsonAlbumTrackLink
+        return new LocalAlbumTrackLink
         {
             TrackId = id,
             AlbumId = albumId,
@@ -69,11 +69,11 @@ internal class Id3ToJsonConverter : IId3ToJsonConverter
         };
     }
 
-    public JsonTrack ConvertTrack(Id3Data data)
+    public LocalTrack ConvertTrack(Id3Data data)
     {
         var commentData = _commentProcessor.GetData(data.Track.Comment);
 
-        return new JsonTrack
+        return new LocalTrack
         {
             Id = _base64Converter.ToBase64(data.Track.Filepath),
             ArtistId = _idGenerator.GenerateId(data.Artist.Name),
@@ -88,11 +88,11 @@ internal class Id3ToJsonConverter : IId3ToJsonConverter
         };
     }
 
-    public JsonArtist ConvertTrackArtist(Id3Data data)
+    public LocalArtist ConvertTrackArtist(Id3Data data)
     {
         var commentData = _commentProcessor.GetData(data.Track.Comment);
 
-        return new JsonArtist
+        return new LocalArtist
         {
             Id = _idGenerator.GenerateId(data.Artist.Name),
             Name = data.Artist.Name,
