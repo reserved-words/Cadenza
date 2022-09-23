@@ -14,8 +14,10 @@ public class UpdateQueueHandler : IUpdateService
     //    _updater = udpater;
     //}
 
-    public async Task Run()
+    public Task Run()
     {
+        throw new NotImplementedException();
+
         //var queue = await _service.Get();
 
         //var updates = new Dictionary<LibraryItemType, Dictionary<string, List<ItemPropertyUpdate>>>();

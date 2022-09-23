@@ -14,8 +14,10 @@ public class ModifiedFilesHandler : IUpdateService
         _musicFileLibrary = musicFileLibrary;
     }
 
-    public async Task Run()
+    public Task Run()
     {
+        throw new NotImplementedException();
+
         //var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
         //var updatesFetched = DateTime.Now;

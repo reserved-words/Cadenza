@@ -12,7 +12,7 @@ public class DeletedFilesHandler : IUpdateService
         _fileFetcher = fileFetcher;
     }
 
-    public async Task Run()
+    public Task Run()
     {
         throw new NotImplementedException();
 

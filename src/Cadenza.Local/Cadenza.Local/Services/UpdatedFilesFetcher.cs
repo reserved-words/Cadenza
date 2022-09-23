@@ -13,7 +13,7 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         _listComparer = listComparer;
     }
 
-    public async Task<List<string>> GetAddedFiles()
+    public Task<List<string>> GetAddedFiles()
     {
         throw new NotImplementedException();
 
@@ -23,7 +23,7 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         //return _listComparer.GetMissingItems(filesInDirectory, pathsInJson);
     }
 
-    public async Task<List<string>> GetModifiedFiles()
+    public Task<List<string>> GetModifiedFiles()
     {
         throw new NotImplementedException();
 
@@ -31,7 +31,7 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         //return await _musicDirectory.GetModifiedFiles(lastUpdate);
     }
 
-    public async Task<List<string>> GetRemovedFiles()
+    public Task<List<string>> GetRemovedFiles()
     {
         throw new NotImplementedException();
 
@@ -41,7 +41,7 @@ public class UpdatedFilesFetcher : IUpdatedFilesFetcher
         //return _listComparer.GetMissingItems(pathsInJson, filesInDirectory);
     }
 
-    public async Task UpdateTimeModifiedFilesUpdated(DateTime updateTime)
+    public Task UpdateTimeModifiedFilesUpdated(DateTime updateTime)
     {
         throw new NotImplementedException();
 
