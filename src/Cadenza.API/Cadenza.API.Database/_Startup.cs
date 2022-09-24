@@ -9,10 +9,9 @@ namespace Cadenza.API.Database;
 
 public static class _Startup
 {
-    public static IServiceCollection AddJsonLibrary(this IServiceCollection services, IConfigurationSection libraryPathsConfig)
+    public static IServiceCollection AddJsonLibrary(this IServiceCollection services)
     {
         return services
-            .Configure<LibraryPaths>(libraryPathsConfig)
             .AddInternalServices()
             .AddTransient<IMusicRepository, MusicRepository>();
     }
@@ -27,5 +26,11 @@ public static class _Startup
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
             .AddTransient<ITrackConverter, TrackConverter>();
+    }
+
+    public static IServiceCollection ConfigureJsonLibrary(this IServiceCollection services, IConfiguration config, string sectionPath)
+    {
+        var section = config.GetSection(sectionPath);
+        return services.Configure<LibraryPaths>(section);
     }
 }

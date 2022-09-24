@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.Core;
+using Cadenza.API.Database;
 using Cadenza.API.LastFM;
 using Cadenza.Utilities;
 
@@ -9,9 +10,9 @@ public static class Dependencies
     public static WebApplicationBuilder RegisterDependencies(this WebApplicationBuilder builder)
     {
         builder.Services
-            .AddLastFM()
             .AddCoreServices()
-            .AddLogger();
+            .AddJsonLibrary()
+            .AddLastFM();
 
         return builder;
     }
