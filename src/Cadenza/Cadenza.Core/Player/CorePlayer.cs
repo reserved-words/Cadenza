@@ -1,6 +1,9 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Model;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Track;
 using Cadenza.Library;
 
 namespace Cadenza.Core.Player;

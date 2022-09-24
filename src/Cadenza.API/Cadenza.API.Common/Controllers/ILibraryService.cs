@@ -1,4 +1,7 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.API.Common.Controllers;
 

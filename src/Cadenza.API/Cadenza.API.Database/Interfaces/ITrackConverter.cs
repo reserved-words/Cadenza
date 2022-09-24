@@ -1,5 +1,5 @@
 ﻿using Cadenza.API.Database.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.API.Database.Interfaces;
 

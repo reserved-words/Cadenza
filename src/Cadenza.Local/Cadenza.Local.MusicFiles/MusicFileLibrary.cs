@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 using Cadenza.Local.Common.Interfaces;
 using Cadenza.Local.Common.Model;
 using Cadenza.Local.MusicFiles.Interfaces;

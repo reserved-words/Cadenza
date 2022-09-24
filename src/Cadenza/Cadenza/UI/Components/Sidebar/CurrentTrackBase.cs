@@ -1,5 +1,7 @@
 ﻿using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Player;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.UI.Components.Sidebar;
 

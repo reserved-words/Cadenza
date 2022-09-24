@@ -3,6 +3,7 @@ using Cadenza.Core.App;
 using Cadenza.Core.CurrentlyPlaying;
 using Cadenza.Core.Interfaces;
 using Cadenza.LastFM;
+using Cadenza.Domain.Models.History;
 
 namespace Cadenza.UI.Components.History;
 

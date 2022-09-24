@@ -1,4 +1,10 @@
-﻿namespace Cadenza.Utilities;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
+
+namespace Cadenza.Utilities;
 
 public class Merger : IMerger
 {

@@ -1,6 +1,7 @@
 ﻿using Cadenza.Core;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Model;
+using Cadenza.Domain.Enums;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Source.Local;

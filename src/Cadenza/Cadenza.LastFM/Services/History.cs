@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core;
-using Cadenza.Domain;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;

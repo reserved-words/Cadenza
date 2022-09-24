@@ -1,4 +1,11 @@
-﻿namespace Cadenza.Library.Repositories
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Update;
+
+namespace Cadenza.Library.Repositories
 {
     internal class ApiRepository : ApiRepositoryBase, 
         ITrackRepository, 

@@ -1,5 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Model;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.Core;
 

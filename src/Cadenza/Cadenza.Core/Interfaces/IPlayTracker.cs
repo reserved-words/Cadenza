@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Interfaces;
+﻿using Cadenza.Domain.Models.Track;
+
+namespace Cadenza.Core.Interfaces;
 
 public interface IPlayTracker
 {

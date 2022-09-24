@@ -1,4 +1,6 @@
-﻿using Cadenza.Library;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Track;
+using Cadenza.Library;
 using Cadenza.UI.Shared.Dialogs;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 

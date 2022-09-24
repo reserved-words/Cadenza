@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
 
 namespace Cadenza.Local.Common.Model;
 

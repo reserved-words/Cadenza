@@ -2,6 +2,7 @@
 global using Cadenza.Utilities;
 
 using System.Runtime.CompilerServices;
+using Cadenza.Domain.Enums;
 using Cadenza.Library.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 

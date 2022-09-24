@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Domain.Models.Artist;
 using Cadenza.Library;
 using Cadenza.UI.Shared.Dialogs;
 using IDialogService = Cadenza.Interfaces.IDialogService;

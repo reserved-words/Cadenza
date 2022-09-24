@@ -1,7 +1,8 @@
 ﻿using Cadenza.API.LastFM;
 using Cadenza.API.LastFM.Interfaces;
 using Cadenza.API.LastFM.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.API.LastFM.Services

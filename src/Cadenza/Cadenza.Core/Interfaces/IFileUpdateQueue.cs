@@ -1,5 +1,5 @@
 ﻿using Cadenza.Core.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.Core.Interfaces;
 

@@ -1,6 +1,9 @@
 ﻿using Cadenza.API.Common.Controllers;
 using Cadenza.API.LastFM;
 using Cadenza.API.LastFM.Interfaces;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
+using Cadenza.Domain.Models.LastFm;
 
 namespace Cadenza.API.Core;
 
@@ -44,12 +47,12 @@ internal class LastFmService : ILastFmService
         return await _favourites.IsFavourite(artist, title);
     }
 
-    public async Task Favourite(LastFM.Track track)
+    public async Task Favourite(Track track)
     {
         await _favourites.Favourite(track);
     }
 
-    public async Task Unfavourite(LastFM.Track track)
+    public async Task Unfavourite(Track track)
     {
         await _favourites.Unfavourite(track);
     }

@@ -1,5 +1,5 @@
 ﻿using Cadenza.API.Database.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Models.Album;
 
 namespace Cadenza.API.Database.Interfaces;
 

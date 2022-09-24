@@ -1,4 +1,6 @@
 ﻿using Cadenza.Core;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
 
 namespace Cadenza.LastFM;
 

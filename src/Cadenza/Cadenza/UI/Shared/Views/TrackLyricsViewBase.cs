@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.Updates;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.UI.Shared.Views;
 

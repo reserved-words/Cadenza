@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Updates;
+﻿using Cadenza.Domain.Models.Update;
+
+namespace Cadenza.Core.Updates;
 
 public delegate Task ArtistUpdatedEventHandler(object sender, ArtistUpdatedEventArgs e);
 

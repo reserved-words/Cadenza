@@ -1,5 +1,7 @@
 ﻿using Cadenza.Core.App;
 using Cadenza.Core.Interop;
+using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Update;
 using Cadenza.Interfaces;
 using Cadenza.Library;
 

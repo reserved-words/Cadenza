@@ -1,5 +1,5 @@
-﻿using Cadenza.API.LastFM;
-using Cadenza.API.LastFM.Interfaces;
+﻿using Cadenza.API.LastFM.Interfaces;
+using Cadenza.Domain.Models.LastFm;
 
 namespace Cadenza.API.LastFM.Services;
 

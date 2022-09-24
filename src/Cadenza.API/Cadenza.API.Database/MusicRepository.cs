@@ -1,7 +1,11 @@
-﻿using Cadenza.API.Common.Repositories;
+﻿using Cadenza.API.Common.Model;
+using Cadenza.API.Common.Repositories;
 using Cadenza.API.Database.Interfaces;
 using Cadenza.API.Database.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
 using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.API.Database;

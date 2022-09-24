@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Playlists;
+﻿using Cadenza.Domain.Models;
+
+namespace Cadenza.Core.Playlists;
 
 public class Playlist : IPlaylist
 {

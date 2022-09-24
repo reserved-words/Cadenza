@@ -1,5 +1,11 @@
-﻿using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain;
+﻿using Cadenza.API.Common.Model;
+using Cadenza.API.Core.Interfaces.Cache;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Update;
 using Newtonsoft.Json;
 
 namespace Cadenza.API.Core.Services.Cache;

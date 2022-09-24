@@ -1,4 +1,7 @@
 ﻿using Cadenza.Core.Updates;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models.Artist;
 using Cadenza.Library;
 
 namespace Cadenza.UI.Tabs.Items

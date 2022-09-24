@@ -1,4 +1,8 @@
-﻿namespace Cadenza.Core.Playlists;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models;
+
+namespace Cadenza.Core.Playlists;
 
 public class PlaylistCreator : IPlaylistCreator
 {

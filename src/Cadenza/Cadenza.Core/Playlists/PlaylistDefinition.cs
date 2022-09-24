@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Core.Playlists;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
+
+namespace Cadenza.Core.Playlists;
 
 public struct PlaylistId
 {

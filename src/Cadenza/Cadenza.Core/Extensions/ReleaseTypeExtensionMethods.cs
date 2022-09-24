@@ -1,4 +1,8 @@
-﻿namespace Cadenza.Core.Extensions;
+﻿using Cadenza.Domain.Attributes;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+
+namespace Cadenza.Core.Extensions;
 
 public static class ReleaseTypeExtensionMethods
 {

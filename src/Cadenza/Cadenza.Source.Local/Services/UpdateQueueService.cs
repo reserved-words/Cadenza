@@ -1,6 +1,7 @@
 ﻿using Cadenza.Core;
 using Cadenza.Core.Interfaces;
 using Cadenza.Core.Model;
+using Cadenza.Domain.Models;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 

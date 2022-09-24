@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.Updates;
+using Cadenza.Domain.Models.Update;
 
 namespace Cadenza.Core.App;
 

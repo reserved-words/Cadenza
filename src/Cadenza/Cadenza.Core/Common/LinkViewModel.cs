@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Common;
+﻿using Cadenza.Domain.Enums;
+
+namespace Cadenza.Core.Common;
 
 public class LinkViewModel
 {

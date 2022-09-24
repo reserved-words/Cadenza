@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.Model;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.Core.Player;
 

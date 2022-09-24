@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.LastFM;
+﻿using Cadenza.Domain.Models.LastFm;
+
+namespace Cadenza.API.LastFM;
 
 public interface IFavourites
 {

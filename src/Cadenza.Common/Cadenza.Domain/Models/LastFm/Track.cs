@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.LastFM;
+﻿namespace Cadenza.Domain.Models.LastFm;
 
 public class Track
 {

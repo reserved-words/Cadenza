@@ -1,5 +1,8 @@
 ﻿using Cadenza.API.Common.Controllers;
 using Cadenza.API.LastFM;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
+using Cadenza.Domain.Models.LastFm;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
@@ -46,13 +49,13 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("Favourite")]
-    public async Task Favourite(LastFM.Track track)
+    public async Task Favourite(Track track)
     {
         await _service.Favourite(track);
     }
 
     [HttpPost("Unfavourite")]
-    public async Task Unfavourite(LastFM.Track track)
+    public async Task Unfavourite(Track track)
     {
         await _service.Unfavourite(track);
     }

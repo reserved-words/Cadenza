@@ -1,6 +1,8 @@
 ﻿using Cadenza.API.Database.Interfaces;
 using Cadenza.API.Database.Model;
-using Cadenza.Domain;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models.Album;
 
 namespace Cadenza.API.Database.Services;
 

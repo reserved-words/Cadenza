@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.Model;
+﻿using Cadenza.Domain.Models.Track;
+
+namespace Cadenza.Core.Model;
 
 public class Disc
 {

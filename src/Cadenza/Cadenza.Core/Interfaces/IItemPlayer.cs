@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.App;
+﻿using Cadenza.Domain.Enums;
+
+namespace Cadenza.Core.App;
 
 public interface IItemPlayer
 {

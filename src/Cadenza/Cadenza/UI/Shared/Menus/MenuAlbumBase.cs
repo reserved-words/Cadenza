@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Domain.Enums;
 using Cadenza.Interfaces;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 

@@ -7,6 +7,7 @@ using Cadenza.Core.Interfaces;
 using Cadenza.Core;
 using Microsoft.Extensions.Configuration;
 using Cadenza.Source.Local.Services;
+using Cadenza.Domain.Enums;
 
 namespace Cadenza.Source.Local;
 

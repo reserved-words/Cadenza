@@ -1,4 +1,7 @@
-﻿namespace Cadenza.UI.Components.History;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.History;
+
+namespace Cadenza.UI.Components.History;
 
 public class HistoryTracksBase : HistoryDisplayBase<PlayedTrack>
 {

@@ -1,6 +1,8 @@
-﻿using Cadenza.Domain;
-using Cadenza.API.Database.Interfaces;
+﻿using Cadenza.API.Database.Interfaces;
 using Cadenza.API.Database.Model;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.API.Database.Services;
 

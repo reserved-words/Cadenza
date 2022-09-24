@@ -1,6 +1,7 @@
 ﻿using Cadenza.Core;
 using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
+using Cadenza.Domain.Models.LastFm;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;

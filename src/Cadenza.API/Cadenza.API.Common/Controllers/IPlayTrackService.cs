@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.API.Common.Controllers;
 

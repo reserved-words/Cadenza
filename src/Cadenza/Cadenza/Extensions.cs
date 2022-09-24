@@ -1,4 +1,6 @@
 ﻿using Cadenza.Core.Common;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza;
 

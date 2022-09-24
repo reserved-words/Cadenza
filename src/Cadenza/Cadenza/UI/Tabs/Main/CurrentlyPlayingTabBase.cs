@@ -1,4 +1,5 @@
 ﻿using Cadenza.Core.CurrentlyPlaying;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.UI.Tabs.Main;
 

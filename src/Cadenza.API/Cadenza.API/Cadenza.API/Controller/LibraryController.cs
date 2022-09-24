@@ -1,4 +1,8 @@
 ﻿using Cadenza.API.Common.Controllers;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;

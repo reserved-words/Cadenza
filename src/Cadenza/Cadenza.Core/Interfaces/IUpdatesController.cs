@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Core.App;
+﻿using Cadenza.Domain.Models.Update;
+
+namespace Cadenza.Core.App;
 
 public interface IUpdatesController
 {

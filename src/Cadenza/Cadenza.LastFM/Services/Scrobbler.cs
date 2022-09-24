@@ -1,7 +1,8 @@
 ﻿using Cadenza.Core;
 using Cadenza.Core.App;
 using Cadenza.Core.Interfaces;
-using Cadenza.Domain;
+using Cadenza.Domain.Models.LastFm;
+using Cadenza.Domain.Models.Track;
 using Cadenza.Utilities;
 using Microsoft.Extensions.Options;
 

@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.Common.Controllers;
+using Cadenza.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;

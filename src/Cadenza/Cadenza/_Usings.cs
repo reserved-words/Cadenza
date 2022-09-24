@@ -1,7 +1,10 @@
-﻿
-global using Microsoft.AspNetCore.Components;
+﻿global using Microsoft.AspNetCore.Components;
 global using System.Web;
 global using MudBlazor;
 global using Cadenza.Core;
-global using Cadenza.Domain;
 global using Cadenza.Core.App;
+global using Cadenza.Domain.Enums;
+global using Cadenza.Domain.Models;
+global using Cadenza.Domain.Models.Artist;
+global using Cadenza.Domain.Models.Album;
+global using Cadenza.Domain.Models.Track;

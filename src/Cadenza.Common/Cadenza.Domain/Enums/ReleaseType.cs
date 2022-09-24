@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Domain;
+namespace Cadenza.Domain.Enums;
 
 [DefaultValue(Album)]
 public enum ReleaseType

@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core.Interfaces;
 using Cadenza.Core.Tasks;
+using Cadenza.Domain.Extensions;
 
 namespace Cadenza.Core.Utilities;
 

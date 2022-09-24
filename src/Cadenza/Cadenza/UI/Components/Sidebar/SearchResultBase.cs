@@ -1,4 +1,7 @@
 ﻿using Cadenza.Core.App;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.UI.Components.Sidebar;
 

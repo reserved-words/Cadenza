@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core.Common;
 using Cadenza.Core.Interfaces;
+using Cadenza.Domain.Enums;
 using Cadenza.LastFM;
 
 namespace Cadenza.UI.Components.History;

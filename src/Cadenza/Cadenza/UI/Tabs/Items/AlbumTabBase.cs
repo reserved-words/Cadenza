@@ -1,5 +1,6 @@
 ﻿using Cadenza.Core.Extensions;
 using Cadenza.Core.Model;
+using Cadenza.Domain.Models.Album;
 using Cadenza.Library;
 
 namespace Cadenza.UI.Tabs.Items
