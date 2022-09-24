@@ -12,7 +12,9 @@ public static class Dependencies
         builder.Services
             .AddCoreServices()
             .AddJsonLibrary()
-            .AddLastFM();
+            .AddLastFM()
+            .AddUtilities()
+            .AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient());
 
         return builder;
     }
