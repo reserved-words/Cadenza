@@ -1,40 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Update;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
 [Route("api/[controller]")]
 [ApiController]
 public class UpdateController : ControllerBase
 {
-    //private readonly IUpdateService _service;
+    [HttpGet("Get")]
+    public Task<List<ItemPropertyUpdate>> Get()
+    {
+        return Task.FromResult(new List<ItemPropertyUpdate>());
+    }
 
-    //public UpdateController(IUpdateService service)
-    //{
-    //    _service = service;
-    //}
+    [HttpPost("Album")]
+    public void Album(AlbumUpdate update)
+    {
+    }
 
-    //[HttpGet("")]
-    //public async Task<object> Get()
-    //{
-    //    return await _service.GetAllUpdates();
-    //}
+    [HttpPost("Artist")]
+    public void Artist(ArtistUpdate update)
+    {
+    }
 
-    //[HttpPost("")]
-    //public async Task Album(AlbumUpdate update)
-    //{
-    //    await _service.AddAlbumUpdate(update);
-    //}
-
-    //[HttpPost("")]
-    //public async Task Artist(ArtistUpdate update)
-    //{
-    //    await _service.AddArtistUpdate(update);
-    //}
-
-    //[HttpPost("")]
-    //public async Task Track(TrackUpdate update)
-    //{
-    //    await _service.AddTrackUpdate(update);
-    //}
+    [HttpPost("Track")]
+    public void Track(TrackUpdate update)
+    {
+    }
 }
 
 

@@ -23,7 +23,7 @@ internal class SearchService : ISearchService
     public async Task<List<PlayerItem>> GetSearchArtists()
     {
         await PopulateCache();
-        return await _cache.SearchCache.GetSearchTracks();
+        return await _cache.SearchCache.GetSearchArtists();
     }
 
     public async Task<List<PlayerItem>> GetSearchGroupings()

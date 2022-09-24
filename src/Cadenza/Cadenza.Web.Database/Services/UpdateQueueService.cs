@@ -19,12 +19,12 @@ internal class UpdateQueueService : IFileUpdateQueue
         _apiSettings = apiSettings;
     }
 
-    public async Task<FileUpdateQueue> GetQueuedUpdates()
+    public async Task<List<ItemPropertyUpdate>> GetQueuedUpdates()
     {
         var apiBaseUrl = _apiSettings.Value.BaseUrl;
         var endpoint = _apiSettings.Value.Endpoints.GetUpdates;
         var url = $"{apiBaseUrl}{endpoint}";
-        return await _httpHelper.Get<FileUpdateQueue>(url);
+        return await _httpHelper.Get<List<ItemPropertyUpdate>>(url);
     }
 
     public Task<bool> RemoveQueuedUpdate(ItemPropertyUpdate update)

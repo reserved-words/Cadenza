@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Core.SystemInfo;
 
 namespace Cadenza.UI.Components.SystemInfo;
 
@@ -8,35 +7,35 @@ public class SystemUpdateQueueBase : ComponentBase
     [Inject]
     public IFileUpdateQueue UpdateQueue { get; set; }
 
-    public List<FileUpdateViewModel> Items { get; set; } = new();
+    public List<ItemPropertyUpdate> Items { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         var queue = await UpdateQueue.GetQueuedUpdates();
-        if (queue.Updates == null)
+        if (queue == null)
             return;
 
-        foreach (var update in queue.Updates)
+        foreach (var update in queue)
         {
-            Items.Add(new FileUpdateViewModel(update));
+            Items.Add(update);
         }
     }
 
-    protected async Task Remove(FileUpdateViewModel update)
+    protected async Task Remove(ItemPropertyUpdate update)
     {
-        var success = await UpdateQueue.RemoveQueuedUpdate(update.Update);
+        var success = await UpdateQueue.RemoveQueuedUpdate(update);
         if (success)
         {
             Items.Remove(update);
         }
     }
 
-    protected bool FilterFunc(FileUpdateViewModel item, string searchString)
+    protected bool FilterFunc(ItemPropertyUpdate update, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
 
-        if (item.Update.Item.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (update.Item.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
