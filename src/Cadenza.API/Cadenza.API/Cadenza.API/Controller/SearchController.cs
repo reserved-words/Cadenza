@@ -1,52 +1,46 @@
-﻿using Cadenza.API.Common.Interfaces.Cache;
+﻿using Cadenza.API.Common.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class SearchController : ControllerBase
 {
-    private readonly ISearchCache _searchItems;
+    private readonly ISearchService _service;
 
-    public SearchController(ISearchCache searchItems)
+    public SearchController(ISearchService service)
     {
-        _searchItems = searchItems;
+        _service = service;
     }
 
     [HttpGet]
     public async Task<List<PlayerItem>> Albums()
     {
-        return await _searchItems.GetSearchAlbums();
+        return await _service.GetSearchAlbums();
     }
 
     [HttpGet]
     public async Task<List<PlayerItem>> Artists()
     {
-        return await _searchItems.GetSearchTracks();
+        return await _service.GetSearchArtists();
     }
 
     [HttpGet]
     public async Task<List<PlayerItem>> Groupings()
     {
-        return await _searchItems.GetSearchGroupings();
+        return await _service.GetSearchGroupings();
     }
 
     [HttpGet]
     public async Task<List<PlayerItem>> Genres()
     {
-        return await _searchItems.GetSearchGenres();
-    }
-
-    [HttpGet]
-    public async Task<List<PlayerItem>> Playlists()
-    {
-        return await _searchItems.GetSearchPlaylists();
+        return await _service.GetSearchGenres();
     }
 
     [HttpGet]
     public async Task<List<PlayerItem>> Tracks()
     {
-        return await _searchItems.GetSearchTracks();
+        return await _service.GetSearchTracks();
     }
 }

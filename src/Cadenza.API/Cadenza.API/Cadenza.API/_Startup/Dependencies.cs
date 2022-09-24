@@ -1,4 +1,6 @@
-﻿using Cadenza.API.LastFM;
+﻿using Cadenza.API.Core;
+using Cadenza.API.LastFM;
+using Cadenza.Utilities;
 
 namespace Cadenza.API._Startup;
 
@@ -8,7 +10,7 @@ public static class Dependencies
     {
         builder.Services
             .AddLastFM()
-            .AddUtilities()
+            .AddCoreServices()
             .AddLogger();
 
         return builder;

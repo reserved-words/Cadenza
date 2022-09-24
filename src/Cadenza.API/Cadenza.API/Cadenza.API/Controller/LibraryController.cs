@@ -1,81 +1,76 @@
-﻿using Cadenza.API.Interfaces;
+﻿using Cadenza.API.Common.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
-[Route("api/[controller]")]
+
+[Route("[controller]")]
 [ApiController]
 public class LibraryController : ControllerBase
 {
-    private readonly ILibraryService _library;
+    private readonly ILibraryService _service;
 
-    public LibraryController(ILibraryService library)
+    public LibraryController(ILibraryService service)
     {
-        _library = library;
-    }
-
-    [HttpPost]
-    public async Task Populate()
-    {
-        await _library.Populate();
+        _service = service;
     }
 
     [HttpGet("/Artists")]
     public async Task<List<Artist>> Artists()
     {
-        return await _library.GetAllArtists();
+        return await _service.Artists();
     }
 
     [HttpGet("/Artists/Album")]
     public async Task<List<Artist>> AlbumArtists()
     {
-        return await _library.GetAlbumArtists();
+        return await _service.AlbumArtists();
     }
 
     [HttpGet("/Artists/Track")]
     public async Task<List<Artist>> TrackArtists()
     {
-        return await _library.GetTrackArtists();
+        return await _service.TrackArtists();
     }
 
     [HttpGet("/Artists/Grouping")]
     public async Task<List<Artist>> GroupingArtists(Grouping id)
     {
-        return await _library.GetArtistsByGrouping(id);
+        return await _service.GroupingArtists(id);
     }
 
     [HttpGet("/Artists/Genre")]
     public async Task<List<Artist>> GenreArtists(string id)
     {
-        return await _library.GetArtistsByGenre(id);
+        return await _service.GenreArtists(id);
     }
 
     [HttpGet("/Artist")]
     public async Task<ArtistInfo> Artist(string id)
     {
-        return await _library.GetArtist(id);
+        return await _service.Artist(id);
     }
 
     [HttpGet("/Artist/Albums")]
     public async Task<List<Album>> ArtistAlbums(string id)
     {
-        return await _library.GetAlbums(id);
+        return await _service.ArtistAlbums(id);
     }
 
     [HttpGet("/Track")]
     public async Task<TrackFull> Track(string id)
     {
-        return await _library.GetTrack(id);
+        return await _service.Track(id);
     }
 
     [HttpGet("/Album")]
     public async Task<AlbumInfo> Album(string id)
     {
-        return await _library.GetAlbum(id);
+        return await _service.Album(id);
     }
 
     [HttpGet("/Album/Tracks")]
     public async Task<List<AlbumTrack>> AlbumTracks(string id)
     {
-        return await _library.GetTracks(id);
+        return await _service.AlbumTracks(id);
     }
 }

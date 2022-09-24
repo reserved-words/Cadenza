@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class SyncController : ControllerBase
 {
