@@ -19,6 +19,7 @@ public static class Startup
                 sp.GetRequiredService<TAudioPlayer>(),
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
                 sp.GetRequiredService<IUrl>()))
-            .AddTransient<IConnectionTaskBuilder, LocalConnectionTaskBuilder>();
+            .AddTransient<IConnectionTaskBuilder, LocalConnectionTaskBuilder>()
+            .AddTransient<ISourceArtworkFetcher, LocalArtworkFetcher>();
     }
 }

@@ -116,7 +116,8 @@ public static class Dependencies
     private static IServiceCollection AddSources(this IServiceCollection services, IConfiguration config)
     {
         return services
-            .AddLocalSource<HtmlPlayer>(config, "LocalApi");
+            .AddLocalSource<HtmlPlayer>(config, "LocalApi")
+            .AddTransient<IArtworkFetcher, CoreArtworkFetcher>();
     }
 
     public static IServiceCollection AddAPIWrapper(this IServiceCollection services)

@@ -1,4 +1,7 @@
 ﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Track;
+using Cadenza.Library;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Source.Local.Settings;
 using Microsoft.Extensions.Options;
@@ -7,24 +10,32 @@ namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalArtworkFetcher : ISourceArtworkFetcher
 {
+    private readonly IAlbumRepository _repository;
     private readonly LocalApiSettings _settings;
-    private readonly IUrl _url;
 
-    public LocalArtworkFetcher(IOptions<LocalApiSettings> settings, IUrl url)
+    public LocalArtworkFetcher(IOptions<LocalApiSettings> settings, IAlbumRepository repository)
     {
         _settings = settings.Value;
-        _url = url;
+        _repository = repository;
     }
 
     public LibrarySource Source => LibrarySource.Local;
 
-    public Task<string> GetAlbumArtwork(string id)
+    public async Task<string> GetArtworkUrl(Album album, string trackId)
     {
-        throw new NotImplementedException();
+        if (trackId != null)
+            return GetArtworkUrl(trackId);
+
+        var tracks = await _repository.GetTracks(album.Id);
+        if (!tracks.Any())
+            return null;
+
+        return GetArtworkUrl(tracks.First().TrackId);
     }
 
-    public Task<string> GetTrackArtwork(string id)
+    private string GetArtworkUrl(string trackId)
     {
-        throw new NotImplementedException();
+        var urlFormat = $"{_settings.BaseUrl}{_settings.Endpoints.ArtworkUrl}";
+        return string.Format(urlFormat, trackId);
     }
 }

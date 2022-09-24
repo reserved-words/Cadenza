@@ -1,7 +1,8 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿using Cadenza.Domain.Models.Album;
+
+namespace Cadenza.Web.Common.Interfaces;
 
 public interface IArtworkFetcher
 {
-    Task<string> GetAlbumArtwork(string id);
-    Task<string> GetTrackArtwork(string id);
+    Task<string> GetArtworkUrl(Album album, string trackId = null);
 }

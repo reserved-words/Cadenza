@@ -8,5 +8,4 @@ public class LocalAlbum
     public string ReleaseType { get; set; }
     public string Year { get; set; }
     public List<int> TrackCounts { get; set; } = new List<int>();
-    public string ArtworkUrl { get; set; }
 }
