@@ -1,7 +1,9 @@
-﻿namespace Cadenza.Local.Common.Interfaces;
+﻿using Cadenza.Local.Common.Model;
+
+namespace Cadenza.Local.Common.Interfaces;
 
 public interface IMusicDirectory
 {
-    Task<List<string>> GetAllFiles();
-    Task<List<string>> GetModifiedFiles(DateTime sinceDate);
+    Task<List<LocalFile>> GetAllFiles();
+    Task<List<LocalFile>> GetModifiedFiles(DateTime sinceDate);
 }

@@ -1,25 +1,34 @@
-﻿using Cadenza.Domain;
-using Cadenza.Local.Common.Interfaces;
+﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Local.SyncService.Updaters;
 
 public class DeletedFilesHandler : IUpdateService
 {
-    private readonly IUpdatedFilesFetcher _fileFetcher;
+    private readonly IBase64Converter _base64Converter;
+    private readonly IDatabaseRepository _repository;
+    private readonly IMusicDirectory _musicDirectory;
 
-    public DeletedFilesHandler(IUpdatedFilesFetcher fileFetcher)
+    public DeletedFilesHandler(IMusicDirectory musicDirectory, IDatabaseRepository repository, IBase64Converter base64Converter)
     {
-        _fileFetcher = fileFetcher;
+        _musicDirectory = musicDirectory;
+        _repository = repository;
+        _base64Converter = base64Converter;
     }
 
-    public Task Run()
+    public async Task Run()
     {
-        throw new NotImplementedException();
+        var remoteFileIds = await _repository.GetAllTracks();
 
-        //var filepaths = await _fileFetcher.GetRemovedFiles();
+        var localFiles = await _musicDirectory.GetAllFiles();
+        var localTrackIds = localFiles.Select(f => _base64Converter.ToBase64(f.Path));
 
-        //if (!filepaths.Any())
-        //    return;
+        var removedTrackIds = remoteFileIds.Except(localTrackIds);
+
+        foreach (var trackId in removedTrackIds)
+        {
+            await _repository.RemoveTrack(trackId);
+        }
 
         //var jsonData = await _dataAccess.GetAll(LibrarySource.Local);
 

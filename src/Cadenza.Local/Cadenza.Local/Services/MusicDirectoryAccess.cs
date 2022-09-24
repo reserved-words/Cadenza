@@ -16,20 +16,16 @@ public class MusicDirectoryAccess : IMusicDirectory
         _fileAccess = fileAccess;
     }
 
-    public async Task<List<string>> GetAllFiles()
+    public async Task<List<LocalFile>> GetAllFiles()
     {
-        var files = await GetFiles();
-        return files
-            .Select(f => f.Path)
-            .ToList();
+        return (await GetFiles()).ToList();
     }
 
-    public async Task<List<string>> GetModifiedFiles(DateTime sinceDate)
+    public async Task<List<LocalFile>> GetModifiedFiles(DateTime sinceDate)
     {
         var files = await GetFiles();
         return files
             .Where(f => f.DateModified > sinceDate)
-            .Select(f => f.Path)
             .ToList();
     }
 

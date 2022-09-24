@@ -1,10 +1,10 @@
 ﻿using Cadenza.Domain.Models;
-using Cadenza.Local.Common.Model;
+using Cadenza.Domain.Models.Track;
 
 namespace Cadenza.Local.Common.Interfaces;
 
 public interface IMusicFileLibrary
 {
-    LocalFileData GetFileData(string filepath);
+    TrackFull GetFileData(string filepath);
     void UpdateFileData(string filepath, List<ItemPropertyUpdate> updates);
 }

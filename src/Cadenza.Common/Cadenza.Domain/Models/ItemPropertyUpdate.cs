@@ -10,6 +10,7 @@ public class ItemPropertyUpdate
     public ItemProperty Property { get; set; }
     public string OriginalValue { get; set; }
     public string UpdatedValue { get; set; }
+    public DateTime TimeUpdated { get; set; }
 
     public override bool Equals(object obj)
     {

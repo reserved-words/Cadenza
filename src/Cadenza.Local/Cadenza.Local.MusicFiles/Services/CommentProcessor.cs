@@ -20,8 +20,6 @@ internal class CommentProcessor : ICommentProcessor
     private const string State = "state";
     private const string City = "city";
     private const string Tags = "tags";
-    private const string Website = "website";
-    private const string Twitter = "twitter";
     private const string Instrumental = "instrumental";
     private const string True = "true";
 
@@ -51,8 +49,6 @@ internal class CommentProcessor : ICommentProcessor
 
             data.Instrumental = xml.Root.GetValue(Instrumental) == True;
             data.TrackYear = xml.Root.GetValue(TrackYear);
-            data.Website = xml.Root.GetValue(Website);
-            data.Twitter = xml.Root.GetValue(Twitter);
         }
 
         return data;

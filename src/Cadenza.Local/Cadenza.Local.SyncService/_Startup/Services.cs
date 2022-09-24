@@ -18,10 +18,8 @@ public static class Services
            .AddMusicFileLibrary()
            .AddUpdaters()
            .AddTransient<IFileAccess, FileAccess>()
-           //.AddTransient<ILocalFilesUpdater, LocalFileUpdater>()
            .AddTransient<IJsonConverter, JsonConverter>()
            .AddTransient<IMusicDirectory, MusicDirectoryAccess>()
-           .AddTransient<IUpdatedFilesFetcher, UpdatedFilesFetcher>()
            .AddTransient<IMerger, Merger>();
 
         return services;
@@ -30,10 +28,8 @@ public static class Services
     private static IServiceCollection AddUpdaters(this IServiceCollection services)
     {
         return services
-            .AddTransient<IUpdateService, AddedFilesHandler>()
             .AddTransient<IUpdateService, DeletedFilesHandler>()
-            .AddTransient<IUpdateService, ModifiedFilesHandler>()
-            .AddTransient<IUpdateService, PlayedFilesHandler>()
-            .AddTransient<IUpdateService, UpdateQueueHandler>();
+            .AddTransient<IUpdateService, UpdatedFilesHandler>()
+            .AddTransient<IUpdateService, PlayedFilesHandler>();
     }
 }

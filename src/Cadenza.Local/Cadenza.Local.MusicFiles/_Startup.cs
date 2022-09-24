@@ -11,7 +11,7 @@ public static class _Startup
         return services
             .AddTransient<ICommentProcessor, CommentProcessor>()
             .AddTransient<IId3TagsService, Id3TagsService>()
-            .AddTransient<IId3ToLocalConverter, Id3ToLocalConverter>()
+            .AddTransient<IId3ToModelConverter, Id3ToModelConverter>()
             .AddTransient<IMusicFileLibrary, MusicFileLibrary>();
     }
 
