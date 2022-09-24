@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
-[Route("[controller]")]
+
+[Route("api/[controller]")]
 [ApiController]
 public class StartupController : ControllerBase
 {
@@ -13,13 +14,13 @@ public class StartupController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
+    [HttpGet("Connect")]
     public IActionResult Connect()
     {
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("Populate")]
     public async Task Populate()
     {
         await _service.Populate();

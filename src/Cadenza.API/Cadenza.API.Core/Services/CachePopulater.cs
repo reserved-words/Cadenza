@@ -15,7 +15,7 @@ internal class CachePopulater : ICachePopulater
 
     public async Task Populate(bool onlyIfEmpty)
     {
-        if (_cache.IsPopulated && onlyIfEmpty)
+        if (onlyIfEmpty && _cache.IsPopulated)
             return;
 
         var library = await _repository.Get();

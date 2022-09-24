@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class SearchController : ControllerBase
 {
@@ -14,31 +14,31 @@ public class SearchController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
+    [HttpGet("Albums")]
     public async Task<List<PlayerItem>> Albums()
     {
         return await _service.GetSearchAlbums();
     }
 
-    [HttpGet]
+    [HttpGet("Artists")]
     public async Task<List<PlayerItem>> Artists()
     {
         return await _service.GetSearchArtists();
     }
 
-    [HttpGet]
+    [HttpGet("Groupings")]
     public async Task<List<PlayerItem>> Groupings()
     {
         return await _service.GetSearchGroupings();
     }
 
-    [HttpGet]
+    [HttpGet("Genres")]
     public async Task<List<PlayerItem>> Genres()
     {
         return await _service.GetSearchGenres();
     }
 
-    [HttpGet]
+    [HttpGet("Tracks")]
     public async Task<List<PlayerItem>> Tracks()
     {
         return await _service.GetSearchTracks();

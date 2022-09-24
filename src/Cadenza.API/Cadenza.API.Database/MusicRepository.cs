@@ -2,7 +2,6 @@
 using Cadenza.API.Database.Interfaces;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain;
-using Cadenza.Utilities;
 using Microsoft.Extensions.Configuration;
 
 namespace Cadenza.API.Database;
@@ -11,14 +10,15 @@ internal class MusicRepository : IMusicRepository
 {
     private readonly IAlbumConverter _albumConverter;
     private readonly IArtistConverter _artistConverter;
-    private readonly IBase64Converter _base64Converter;
     private readonly ITrackConverter _trackConverter;
     private readonly IConfiguration _config;
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
+    // Note this is only set up for local source, need to change this to allow fetching from all sources
+
     public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter converter, IConfiguration config, IArtistConverter artistConverter,
-        IAlbumConverter albumConverter, ITrackConverter trackConverter, IBase64Converter base64Converter)
+        IAlbumConverter albumConverter, ITrackConverter trackConverter)
     {
         _dataAccess = dataAccess;
         _converter = converter;
@@ -26,13 +26,10 @@ internal class MusicRepository : IMusicRepository
         _artistConverter = artistConverter;
         _albumConverter = albumConverter;
         _trackConverter = trackConverter;
-        _base64Converter = base64Converter;
     }
 
     public async Task<FullLibrary> Get()
     {
-        var artworkUrlFormat = _config.GetValue<string>("ArtworkUrl");
-
         var jsonArtists = await _dataAccess.GetArtists();
         var jsonAlbums = await _dataAccess.GetAlbums(LibrarySource.Local);
         var jsonTracks = await _dataAccess.GetTracks(LibrarySource.Local);
@@ -66,7 +63,8 @@ internal class MusicRepository : IMusicRepository
         {
             var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
             album.Source = LibrarySource.Local;
-            album.ArtworkUrl = string.Format(artworkUrlFormat, firstTracks[album.Id]);
+            // For some sources can populate this, if not populated the Blazor app should know how to fetch artwork using the ID
+            //album.ArtworkUrl = string.Format(artworkUrlFormat, firstTracks[album.Id]);
             library.Albums.Add(album);
         }
 

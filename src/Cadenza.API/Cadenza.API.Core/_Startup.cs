@@ -34,6 +34,7 @@ public static class _Startup
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
+            .AddTransient<ILastFmService, LastFmService>()
             .AddTransient<ILibraryService, LibraryService>()
             .AddTransient<IPlayTrackService, PlayTrackService>()
             .AddTransient<ISearchService, SearchService>()

@@ -1,16 +1,24 @@
 using Cadenza.API._Startup;
 
-var builder = WebApplication.CreateBuilder(args)
-    .RegisterDependencies()
-    .RegisterConfiguration()
-    .RegisterCorsPolicies()
-    .RegisterDocumentation();
+try
+{
+    var builder = WebApplication.CreateBuilder(args)
+        .RegisterDependencies()
+        .RegisterConfiguration()
+        .RegisterCorsPolicies()
+        .RegisterDocumentation();
 
-// May need to add documentation before mapping routes
+    var app = builder.Build();
 
-var app = builder.Build()
-    .AddCors()
-    .AddDocumentation()
-    .AddDocumentationUI();
+    app.AddCors();
+    app.AddDocumentation();
+    app.MapControllers();
+    app.AddDocumentationUI();
 
-app.Run();
+    app.Run();
+}
+catch (Exception ex)
+{
+
+    throw;
+}

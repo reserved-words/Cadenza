@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.API.Controller;
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class UpdateController : ControllerBase
 {
@@ -12,25 +12,25 @@ public class UpdateController : ControllerBase
     //    _service = service;
     //}
 
-    //[HttpGet]
+    //[HttpGet("")]
     //public async Task<object> Get()
     //{
     //    return await _service.GetAllUpdates();
     //}
 
-    //[HttpPost]
+    //[HttpPost("")]
     //public async Task Album(AlbumUpdate update)
     //{
     //    await _service.AddAlbumUpdate(update);
     //}
 
-    //[HttpPost]
+    //[HttpPost("")]
     //public async Task Artist(ArtistUpdate update)
     //{
     //    await _service.AddArtistUpdate(update);
     //}
 
-    //[HttpPost]
+    //[HttpPost("")]
     //public async Task Track(TrackUpdate update)
     //{
     //    await _service.AddTrackUpdate(update);

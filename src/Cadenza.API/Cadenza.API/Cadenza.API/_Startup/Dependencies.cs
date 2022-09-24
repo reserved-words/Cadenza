@@ -14,7 +14,7 @@ public static class Dependencies
             .AddJsonLibrary()
             .AddLastFM()
             .AddUtilities()
-            .AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient());
+            .AddScoped(sp => new HttpClient());
 
         return builder;
     }
