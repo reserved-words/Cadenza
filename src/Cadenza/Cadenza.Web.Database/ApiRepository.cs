@@ -6,13 +6,13 @@ using Cadenza.Domain.Models.Track;
 using Cadenza.Domain.Models.Update;
 using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.Library.Repositories
+namespace Cadenza.Web.Database
 {
-    internal class ApiRepository : ApiRepositoryBase, 
-        ITrackRepository, 
-        IPlayTrackRepository, 
-        IArtistRepository, 
-        ISearchRepository, 
+    internal class ApiRepository : ApiRepositoryBase,
+        ITrackRepository,
+        IPlayTrackRepository,
+        IArtistRepository,
+        ISearchRepository,
         IAlbumRepository
     {
         private readonly IApiRepositorySettings _settings;

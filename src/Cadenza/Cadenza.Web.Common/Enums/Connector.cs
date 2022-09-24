@@ -2,7 +2,7 @@
 {
     public enum Connector
     {
-        API,
+        Database,
         LastFm,
         Local
     }

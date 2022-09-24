@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Library.Repositories
+﻿namespace Cadenza.Web.Database
 {
     public interface IApiRepositorySettings
     {

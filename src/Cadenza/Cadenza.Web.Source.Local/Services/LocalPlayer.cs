@@ -1,18 +1,18 @@
 ﻿using Cadenza.Domain.Enums;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Common.Model;
-using Cadenza.Web.Database.Settings;
+using Cadenza.Web.Source.Local.Settings;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Web.Database.Services;
+namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalPlayer : ISourcePlayer
 {
-    private readonly DatabaseApiSettings _settings;
+    private readonly LocalApiSettings _settings;
     private readonly IAudioPlayer _audioPlayer;
     private readonly IUrl _url;
 
-    public LocalPlayer(IAudioPlayer audioPlayer, IOptions<DatabaseApiSettings> settings, IUrl url)
+    public LocalPlayer(IAudioPlayer audioPlayer, IOptions<LocalApiSettings> settings, IUrl url)
     {
         _audioPlayer = audioPlayer;
         _settings = settings.Value;

@@ -7,17 +7,17 @@ using Microsoft.Extensions.Options;
 
 namespace Cadenza.Web.Database.Services
 {
-    internal class LocalConnectionTaskBuilder : IConnectionTaskBuilder
+    internal class DatabaseConnectionTaskBuilder : IConnectionTaskBuilder
     {
         private readonly IConnectorController _connectorController;
-        private readonly IOptions<DatabaseApiSettings> _apiSettings;
         private readonly IHttpHelper _http;
+        private readonly IOptions<DatabaseApiSettings> _apiSettings;
         private readonly ISearchSyncService _searchSyncService;
 
-        public LocalConnectionTaskBuilder(IConnectorController connectorController, IOptions<DatabaseApiSettings> apiSettings, IHttpHelper http, ISearchSyncService searchSyncService)
+        public DatabaseConnectionTaskBuilder(IConnectorController connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchSyncService searchSyncService)
         {
-            _connectorController = connectorController;
             _apiSettings = apiSettings;
+            _connectorController = connectorController;
             _http = http;
             _searchSyncService = searchSyncService;
         }
@@ -26,11 +26,11 @@ namespace Cadenza.Web.Database.Services
         {
             var subTask = new SubTask
             {
-                Id = "Local",
-                Title = "Connect to Local Library",
+                Id = "Database",
+                Title = "Connect to Database",
                 Steps = new List<TaskStep>(),
-                OnError = (ex) => _connectorController.SetStatus(Connector.Local, ConnectorStatus.Errored, ex.Message),
-                OnCompleted = () => _connectorController.SetStatus(Connector.Local, ConnectorStatus.Connected)
+                OnError = (ex) => _connectorController.SetStatus(Connector.Database, ConnectorStatus.Errored, ex.Message),
+                OnCompleted = () => _connectorController.SetStatus(Connector.Database, ConnectorStatus.Connected)
             };
 
             subTask.AddStep("Checking connection", Connect);
@@ -53,7 +53,7 @@ namespace Cadenza.Web.Database.Services
             }
             catch (Exception)
             {
-                throw new Exception("Failed to connect to Local API");
+                throw new Exception("Failed to connect to database");
             }
         }
 

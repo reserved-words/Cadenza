@@ -1,7 +1,7 @@
 ﻿using Cadenza.Utilities.Interfaces;
 using System.Net.Http.Json;
 
-namespace Cadenza.Library.Repositories
+namespace Cadenza.Web.Database
 {
     internal abstract class ApiRepositoryBase
     {

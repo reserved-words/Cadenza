@@ -2,15 +2,13 @@
 
 namespace Cadenza.Web.Database.Settings;
 
-internal class DatabaseApiSettings : ApiOptions<LocalApiEndpoints>
+internal class DatabaseApiSettings : ApiOptions<DatabaseApiEndpoints>
 {
 }
 
-internal class LocalApiEndpoints
+internal class DatabaseApiEndpoints
 {
     public string Connect { get; set; }
-    public string PlayTrackUrl { get; set; }
-
     public string Populate { get; set; }
 
     public string GetUpdates { get; set; }
@@ -43,8 +41,6 @@ internal class LocalApiEndpoints
     public string Track { get; set; }
     public string Album { get; set; }
     public string AlbumTracks { get; set; }
-
-    public string AddSource { get; set; }
 }
 
 

@@ -1,5 +1,4 @@
-﻿using Cadenza.Library.Repositories;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.Web.Database.Settings;
 

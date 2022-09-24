@@ -15,6 +15,7 @@ using Cadenza.Web.Core.Playlists;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 using Cadenza.Web.Common.Interop;
 using Cadenza.Web.Core.Player;
+using Cadenza.Web.Source.Local;
 using Cadenza.Web.Database;
 
 namespace Cadenza._Startup;
@@ -44,7 +45,8 @@ public static class Dependencies
             .AddTimers()
             .AddAPIWrapper()
             .AddLastFm(builder.Configuration, "LastFmApi")
-            .AddSources(builder.Configuration);
+            .AddSources(builder.Configuration)
+            .AddDatabase(builder.Configuration, "DatabaseApi");
 
         builder.Services
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
@@ -69,8 +71,7 @@ public static class Dependencies
     private static IServiceCollection AddStartupServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<IStartupConnectService, StartupConnectService>()
-            .AddTransient<IConnectionTaskBuilder, ApiConnectionTaskBuilder>();
+            .AddTransient<IStartupConnectService, StartupConnectService>();
     }
 
     private static IServiceCollection AddAppServices(this IServiceCollection services)
@@ -116,13 +117,6 @@ public static class Dependencies
     {
         return services
             .AddLocalSource<HtmlPlayer>(config, "LocalApi");
-    }
-
-
-    public static IServiceCollection ConfigureCoreAPI(this IServiceCollection services, IConfiguration config, string sectionPath)
-    {
-        var section = config.GetSection(sectionPath);
-        return services.Configure<CoreApiSettings>(section);
     }
 
     public static IServiceCollection AddAPIWrapper(this IServiceCollection services)

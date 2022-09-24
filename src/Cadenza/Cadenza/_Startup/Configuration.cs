@@ -17,7 +17,6 @@ public static class Configuration
         builder.Configuration.AddJsonStream(stream);
 
         builder.Services.ConfigureLogger(builder.Configuration, "Logging");
-        builder.Services.ConfigureCoreAPI(builder.Configuration, "CoreApi");
 
         return builder;
     }
