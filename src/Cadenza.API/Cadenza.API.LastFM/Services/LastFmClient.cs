@@ -1,7 +1,7 @@
 ﻿using Cadenza.API.LastFM;
 using Cadenza.API.LastFM.Interfaces;
 using Cadenza.API.LastFM.Model;
-using Cadenza.Utilities;
+using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Xml.Linq;
 

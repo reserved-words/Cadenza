@@ -1,5 +1,7 @@
-﻿using Cadenza.Core.CurrentlyPlaying;
-using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Common.Interop;
+using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Tabs.Main;
 

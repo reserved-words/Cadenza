@@ -1,4 +1,4 @@
-﻿using Cadenza.Core.App;
+﻿using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.Sidebar;
 

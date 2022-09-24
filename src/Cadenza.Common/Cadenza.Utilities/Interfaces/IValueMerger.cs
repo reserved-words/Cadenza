@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Interfaces;
 
 public interface IValueMerger
 {

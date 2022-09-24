@@ -1,5 +1,4 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.Interop;
+﻿using Cadenza.Web.Common.Interop;
 using Microsoft.JSInterop;
 
 namespace Cadenza.Interop

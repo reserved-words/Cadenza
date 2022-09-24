@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.Interfaces;
-using Cadenza.Core.Tasks;
+﻿using Cadenza.Web.Common.Tasks;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Shared.Dialogs
 {

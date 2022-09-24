@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.CurrentlyPlaying;
+﻿using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.Sidebar;
 

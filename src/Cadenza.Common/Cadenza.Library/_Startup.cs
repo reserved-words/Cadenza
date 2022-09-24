@@ -4,6 +4,7 @@ global using Cadenza.Utilities;
 using System.Runtime.CompilerServices;
 using Cadenza.Domain.Enums;
 using Cadenza.Library.Repositories;
+using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("Cadenza.Library.Tests")]

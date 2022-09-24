@@ -1,7 +1,8 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Interfaces;
+﻿using Cadenza.Interfaces;
 using Cadenza.UI.Shared;
 using Cadenza.UI.Tabs.Main;
+using Cadenza.Web.Core.App;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.Pages;
 

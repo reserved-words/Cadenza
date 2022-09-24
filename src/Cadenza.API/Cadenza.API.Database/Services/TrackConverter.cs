@@ -3,7 +3,7 @@ using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
 using Cadenza.Domain.Extensions;
 using Cadenza.Domain.Models.Track;
-using Cadenza.Utilities;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.API.Database.Services;
 

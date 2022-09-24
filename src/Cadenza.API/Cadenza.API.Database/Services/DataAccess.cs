@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using Cadenza.Utilities;
 using Cadenza.API.Database.Model;
 using Cadenza.API.Database.Interfaces;
 using Cadenza.Domain.Enums;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.API.Database.Services;
 

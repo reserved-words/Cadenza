@@ -3,7 +3,7 @@ using Cadenza.Domain.Extensions;
 using Cadenza.Local.Common.Model;
 using Cadenza.Local.MusicFiles.Interfaces;
 using Cadenza.Local.MusicFiles.Model;
-using Cadenza.Utilities;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Local.MusicFiles.Services;
 

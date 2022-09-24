@@ -1,7 +1,7 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Domain.Models.Artist;
+﻿using Cadenza.Domain.Models.Artist;
 using Cadenza.Library;
 using Cadenza.UI.Shared.Dialogs;
+using Cadenza.Web.Core.Interfaces;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.UI.Shared.Menus;

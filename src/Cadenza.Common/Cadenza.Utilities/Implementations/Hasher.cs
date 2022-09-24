@@ -1,7 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿using Cadenza.Utilities.Interfaces;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class Hasher : IHasher
 {

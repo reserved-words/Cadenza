@@ -1,4 +1,4 @@
-﻿using Cadenza.Core.Tasks;
+﻿using Cadenza.Web.Common.Tasks;
 
 namespace Cadenza.Interfaces;
 

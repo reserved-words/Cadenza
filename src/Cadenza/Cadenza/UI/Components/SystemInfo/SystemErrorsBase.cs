@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.Model.Logging;
-using LogLevel = Cadenza.Core.Model.Logging.LogLevel;
+﻿using Cadenza.Web.Core.Model.Logging;
+using LogLevel = Cadenza.Web.Core.Model.Logging.LogLevel;
 
 namespace Cadenza.UI.Components.SystemInfo;
 

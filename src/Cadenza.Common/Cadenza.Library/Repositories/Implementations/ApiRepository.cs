@@ -4,6 +4,7 @@ using Cadenza.Domain.Models.Album;
 using Cadenza.Domain.Models.Artist;
 using Cadenza.Domain.Models.Track;
 using Cadenza.Domain.Models.Update;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Library.Repositories
 {

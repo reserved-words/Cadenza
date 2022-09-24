@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using Cadenza.Source.Local;
 using Cadenza.Utilities;
-using Cadenza.LastFM;
-using Cadenza.Core.Interfaces;
-using Cadenza.Core.Player;
-using Cadenza.Core.Utilities;
-using Cadenza.Core.Playlists;
-using Cadenza.Core.Interop;
 using Cadenza.Interop;
 using Cadenza.MudServices;
 using Cadenza.Services;
 using Cadenza.Interfaces;
+using Cadenza.Web.Core;
+using Cadenza.Web.Common.Interfaces;
+using Cadenza.Web.Core.App;
+using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Utilities;
+using Cadenza.Web.LastFM;
+using Cadenza.Web.Core.Playlists;
 using IDialogService = Cadenza.Interfaces.IDialogService;
+using Cadenza.Web.Common.Interop;
+using Cadenza.Web.Core.Player;
+using Cadenza.Web.Database;
 
 namespace Cadenza._Startup;
 

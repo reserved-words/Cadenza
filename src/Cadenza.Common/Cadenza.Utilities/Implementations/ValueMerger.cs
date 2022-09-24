@@ -1,6 +1,7 @@
 ﻿using Cadenza.Domain.Enums;
+using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class ValueMerger : IValueMerger
 {
@@ -47,7 +48,7 @@ public class ValueMerger : IValueMerger
                 ? update
                 : original;
         }
-        
+
         var max = Math.Max(originalCount, updateCount);
         var result = new List<int>();
 
@@ -100,7 +101,7 @@ public class ValueMerger : IValueMerger
     private static bool Replace<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
     {
         return mode == MergeMode.Update
-            || (mode == MergeMode.Override && !isEmpty(update))
-            || (mode == MergeMode.Merge && isEmpty(original));
+            || mode == MergeMode.Override && !isEmpty(update)
+            || mode == MergeMode.Merge && isEmpty(original);
     }
 }

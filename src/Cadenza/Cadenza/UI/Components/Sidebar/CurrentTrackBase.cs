@@ -1,7 +1,9 @@
-﻿using Cadenza.Core.CurrentlyPlaying;
-using Cadenza.Core.Player;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Domain.Extensions;
+using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Common.Interop;
+using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Player;
 
 namespace Cadenza.UI.Components.Sidebar;
 

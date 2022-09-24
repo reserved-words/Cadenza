@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using Cadenza.Utilities.Interfaces;
+using System.Text;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class Base64Converter : IBase64Converter
 {

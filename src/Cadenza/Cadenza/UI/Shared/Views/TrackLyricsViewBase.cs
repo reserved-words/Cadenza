@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.Updates;
-using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.UI.Shared.Views;
 

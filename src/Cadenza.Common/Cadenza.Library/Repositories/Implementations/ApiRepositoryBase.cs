@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Cadenza.Utilities.Interfaces;
+using System.Net.Http.Json;
 
 namespace Cadenza.Library.Repositories
 {

@@ -1,8 +1,8 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Domain.Models.Artist;
+﻿using Cadenza.Domain.Models.Artist;
 using Cadenza.Domain.Models.Update;
 using Cadenza.Interfaces;
 using Cadenza.Library;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Shared.Dialogs;
 

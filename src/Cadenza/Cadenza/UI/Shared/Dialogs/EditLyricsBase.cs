@@ -1,9 +1,8 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.Interop;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Update;
+﻿using Cadenza.Domain.Models.Update;
 using Cadenza.Interfaces;
 using Cadenza.Library;
+using Cadenza.Web.Common.Interop;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Shared.Dialogs;
 

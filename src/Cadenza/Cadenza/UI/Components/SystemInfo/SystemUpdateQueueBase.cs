@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.Interfaces;
-using Cadenza.Core.SystemInfo;
+﻿using Cadenza.Web.Common.Interfaces;
+using Cadenza.Web.Core.SystemInfo;
 
 namespace Cadenza.UI.Components.SystemInfo;
 
