@@ -1,6 +1,6 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Core.CurrentlyPlaying;
-using Cadenza.Core.Playlists;
+﻿using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Playlists;
 
 namespace Cadenza.UI.Components.Sidebar;
 

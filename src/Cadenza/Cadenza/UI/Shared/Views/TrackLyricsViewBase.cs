@@ -1,4 +1,5 @@
-﻿using Cadenza.Core.Updates;
+﻿using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.UI.Shared.Views;
 

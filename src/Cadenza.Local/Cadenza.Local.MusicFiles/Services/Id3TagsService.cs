@@ -1,6 +1,6 @@
 ﻿using Cadenza.Local.MusicFiles.Interfaces;
 using Cadenza.Local.MusicFiles.Model;
-using Cadenza.Utilities;
+using Cadenza.Utilities.Interfaces;
 using TagLib;
 
 namespace Cadenza.Local.MusicFiles.Services;

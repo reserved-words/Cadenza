@@ -5,28 +5,26 @@ namespace Cadenza.Local.SyncService.Updaters;
 
 public class DeletedFilesHandler : IUpdateService
 {
-    private readonly IDataAccess _dataAccess;
     private readonly IUpdatedFilesFetcher _fileFetcher;
-    private readonly ILibraryOrganiser _organiser;
 
-    public DeletedFilesHandler(IUpdatedFilesFetcher fileFetcher, ILibraryOrganiser organiser, IDataAccess dataAccess)
+    public DeletedFilesHandler(IUpdatedFilesFetcher fileFetcher)
     {
         _fileFetcher = fileFetcher;
-        _organiser = organiser;
-        _dataAccess = dataAccess;
     }
 
-    public async Task Run()
+    public Task Run()
     {
-        var filepaths = await _fileFetcher.GetRemovedFiles();
+        throw new NotImplementedException();
 
-        if (!filepaths.Any())
-            return;
+        //var filepaths = await _fileFetcher.GetRemovedFiles();
 
-        var jsonData = await _dataAccess.GetAll(LibrarySource.Local);
+        //if (!filepaths.Any())
+        //    return;
 
-        _organiser.RemoveTracks(jsonData, filepaths);
+        //var jsonData = await _dataAccess.GetAll(LibrarySource.Local);
 
-        await _dataAccess.SaveAll(jsonData, LibrarySource.Local);
+        //_organiser.RemoveTracks(jsonData, filepaths);
+
+        //await _dataAccess.SaveAll(jsonData, LibrarySource.Local);
     }
 }

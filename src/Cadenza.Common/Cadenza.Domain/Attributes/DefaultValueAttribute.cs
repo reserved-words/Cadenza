@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain.Attributes;
 
 [AttributeUsage(AttributeTargets.Enum)]
 public class DefaultValueAttribute : Attribute

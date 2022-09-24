@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Domain.Models;
+
+namespace Cadenza.Library;
 
 public interface ISearchRepository
 {

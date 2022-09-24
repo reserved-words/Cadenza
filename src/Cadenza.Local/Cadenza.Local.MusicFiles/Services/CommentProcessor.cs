@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.MusicFiles.Extensions;
 using Cadenza.Local.MusicFiles.Interfaces;
 using Cadenza.Local.MusicFiles.Model;
-using Cadenza.Utilities;
+using Cadenza.Utilities.Interfaces;
 using System.Xml.Linq;
 
 namespace Cadenza.Local.MusicFiles.Services;

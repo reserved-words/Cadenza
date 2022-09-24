@@ -1,5 +1,5 @@
-﻿using Cadenza.Core.App;
-using Cadenza.Interfaces;
+﻿using Cadenza.Interfaces;
+using Cadenza.Web.Core.Interfaces;
 using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza.UI.Shared.Menus;

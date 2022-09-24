@@ -1,4 +1,9 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Update;
+
+namespace Cadenza.Library;
 
 public interface IArtistRepository
 {

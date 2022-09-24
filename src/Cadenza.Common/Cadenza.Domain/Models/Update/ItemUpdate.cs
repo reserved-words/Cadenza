@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Domain;
+﻿using Cadenza.Domain.Attributes;
+using Cadenza.Domain.Enums;
+
+namespace Cadenza.Domain.Models.Update;
 
 public class ItemUpdate<TInterface> where TInterface : new()
 {

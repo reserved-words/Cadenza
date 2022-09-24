@@ -1,4 +1,9 @@
-﻿namespace Cadenza.Utilities;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Models.Artist;
+using Cadenza.Domain.Models.Track;
+
+namespace Cadenza.Utilities.Interfaces;
 
 public interface IMerger
 {

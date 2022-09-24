@@ -1,12 +1,15 @@
-﻿using Cadenza.Core.CurrentlyPlaying;
-using Cadenza.Core.Player;
+﻿using Cadenza.Domain.Extensions;
+using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Common.Interfaces;
+using Cadenza.Web.Common.Interop;
+using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Player;
 
 namespace Cadenza.UI.Components.Sidebar;
 
 public class CurrentTrackBase : ComponentBase
 {
-    private const string ArtworkPlaceholderUrl = "images/artwork-placeholder.png";
-
     [Inject]
     public ITrackProgressedConsumer TrackProgressConsumer { get; set; }
 
@@ -15,6 +18,9 @@ public class CurrentTrackBase : ComponentBase
 
     [Inject]
     public IStoreGetter Store { get; set; }
+
+    [Inject]
+    public IArtworkFetcher ArtworkFetcher { get; set; }
 
     public bool Loading { get; set; } = false;
 
@@ -33,8 +39,6 @@ public class CurrentTrackBase : ComponentBase
 
     public string Artist => _model?.Artist.Name ?? "Artist Name";
 
-    public string ArtworkUrl => _model?.Album.ArtworkUrl ?? ArtworkPlaceholderUrl;
-
     public string ReleaseType => _model?.Album.ReleaseType.GetDisplayName() ?? "Release Type";
 
     public string SourceIcon => _model?.Track.Source.GetIcon();
@@ -42,6 +46,8 @@ public class CurrentTrackBase : ComponentBase
     public string Title => _model?.Track.Title ?? "Track Title";
 
     public string Year => _model?.Album.Year ?? "Year";
+
+    public string ArtworkUrl { get; private set; }
 
     private TrackFull _model;
 
@@ -56,40 +62,43 @@ public class CurrentTrackBase : ComponentBase
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
     }
 
-    private Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
+    private async Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
     {
         Loading = false;
-        _model = null;
+        await UpdateModel(null);
         Progress = 0;
         StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task OnPlaylistLoading(object sender, PlaylistEventArgs e)
+    private async Task OnPlaylistLoading(object sender, PlaylistEventArgs e)
     {
-        _model = null;
+        await UpdateModel(null);
         Loading = true;
         Progress = 0;
         StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task OnTrackFinished(object sender, TrackEventArgs e)
+    private async Task OnTrackFinished(object sender, TrackEventArgs e)
     {
         if (e.IsLastTrack)
         {
-            _model = null;
+            await UpdateModel(null);
             Progress = 0;
             StateHasChanged();
         }
-        return Task.CompletedTask;
+    }
+
+    private async Task UpdateModel(TrackFull track)
+    {
+        _model = track;
+        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(_model?.Album, _model?.Track.Id);
     }
 
     private async Task OnTrackStarted(object sender, TrackEventArgs e)
     {
         Loading = false;
         Progress = 0;
-        _model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
+        await UpdateModel((await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value);
         StateHasChanged();
     }
 

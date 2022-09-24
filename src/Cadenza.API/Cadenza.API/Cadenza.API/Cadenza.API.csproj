@@ -7,11 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.LastFM\Cadenza.LastFM.csproj" />
+    <ProjectReference Include="..\..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.Common\Cadenza.API.Common.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.Database\Cadenza.API.Database.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.LastFM\Cadenza.API.LastFM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

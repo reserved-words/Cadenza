@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Artist;
+
+namespace Cadenza.Domain.Models.Update;
 
 public class ArtistUpdate : ItemUpdate<ArtistInfo>
 {

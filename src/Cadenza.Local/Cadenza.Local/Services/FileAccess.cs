@@ -5,20 +5,6 @@ namespace Cadenza.Local.Services;
 
 public class FileAccess : IFileAccess
 {
-    public async Task<string> GetText(string path)
-    {
-        return File.Exists(path)
-            ? await File.ReadAllTextAsync(path)
-            : null;
-    }
-
-    public async Task SaveText(string path, string text)
-    {
-        var directory = Path.GetDirectoryName(path);
-        Directory.CreateDirectory(directory);
-        await File.WriteAllTextAsync(path, text);
-    }
-
     public Task<List<LocalFile>> GetFiles(string directoryPath, List<string> extensions)
     {
         var files = new List<LocalFile>();

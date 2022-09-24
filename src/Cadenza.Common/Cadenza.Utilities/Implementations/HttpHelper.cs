@@ -1,6 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using Cadenza.Utilities.Interfaces;
+using System.Net.Http.Json;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class HttpHelper : IHttpHelper
 {

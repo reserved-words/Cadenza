@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Utilities;
+﻿namespace Cadenza.Utilities.Interfaces;
 
 public interface IShuffler
 {

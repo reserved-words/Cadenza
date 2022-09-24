@@ -1,15 +1,26 @@
-﻿@using Cadenza.Core.App
+﻿@using Cadenza.Web.Core.App
+
 @if (Model != null)
 {
-    <img class="artwork" src="@Model.ArtworkUrl" @ondblclick="@Play" />
+    <img class="artwork" src="@ArtworkUrl" @ondblclick="@Play" />
 }
 
 @code {
     [Inject]
     public IItemPlayer Player { get; set; }
 
+    [Inject]
+    public IArtworkFetcher ArtworkFetcher { get; set; }
+
     [Parameter]
     public Album Model { get; set; }
+
+    public string ArtworkUrl { get; private set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model);
+    }
 
     public async Task Play()
     {

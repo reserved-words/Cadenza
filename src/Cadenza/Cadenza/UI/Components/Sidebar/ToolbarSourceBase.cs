@@ -1,6 +1,6 @@
-﻿using Cadenza.Core.Common;
-using Cadenza.Core.Interfaces;
-using Cadenza.Interfaces;
+﻿using Cadenza.Interfaces;
+using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.Sidebar;
 

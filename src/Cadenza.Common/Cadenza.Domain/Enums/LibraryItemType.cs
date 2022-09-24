@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain.Enums;
 
 public enum LibraryItemType
 {

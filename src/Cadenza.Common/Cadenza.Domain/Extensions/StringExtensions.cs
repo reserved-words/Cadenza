@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain.Extensions;
 
 public static class StringExtensions
 {
@@ -8,7 +8,7 @@ public static class StringExtensions
             ? match
             : defaultValue.HasValue
             ? defaultValue.Value
-            : default(TEnum);
+            : default;
     }
 
     private static bool HasMatch<TEnum>(this string str, out TEnum match) where TEnum : struct, Enum
@@ -37,7 +37,7 @@ public static class StringExtensions
             {
                 match = value;
                 return true;
-            }   
+            }
         }
 
         return false;

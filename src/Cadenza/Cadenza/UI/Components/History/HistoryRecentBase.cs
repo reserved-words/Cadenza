@@ -1,8 +1,8 @@
-﻿using Cadenza.Core.Common;
-using Cadenza.Core.App;
-using Cadenza.Core.CurrentlyPlaying;
-using Cadenza.Core.Interfaces;
-using Cadenza.LastFM;
+﻿using Cadenza.Domain.Models.History;
+using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Common.Interfaces;
+using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.History;
 

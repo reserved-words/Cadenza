@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Models;
 
 namespace Cadenza.Local.Common.Interfaces;
 

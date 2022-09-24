@@ -6,43 +6,42 @@ namespace Cadenza.Local.SyncService.Updaters;
 public class AddedFilesHandler : IUpdateService
 {
     private readonly IUpdatedFilesFetcher _fileFetcher;
-    private readonly IDataAccess _dataAccess;
-    private readonly ILibraryOrganiser _organiser;
     private readonly IMusicFileLibrary _musicFiles;
 
-    public AddedFilesHandler(ILibraryOrganiser organiser, IDataAccess dataAccess, IUpdatedFilesFetcher fileFetcher, IMusicFileLibrary musicFiles)
+    public AddedFilesHandler(IUpdatedFilesFetcher fileFetcher, IMusicFileLibrary musicFiles)
     {
-        _organiser = organiser;
-        _dataAccess = dataAccess;
         _fileFetcher = fileFetcher;
         _musicFiles = musicFiles;
     }
 
-    public async Task Run()
+    public Task Run()
     {
-        var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
-        var filepaths = await _fileFetcher.GetAddedFiles();
+        throw new NotImplementedException();
 
-        foreach (var filePath in filepaths)
-        {
-            Console.WriteLine($"Adding file {filePath}");
+        //var jsonItems = await _dataAccess.GetAll(LibrarySource.Local);
 
-            var data = _musicFiles.GetFileData(filePath);
+        //var filepaths = await _fileFetcher.GetAddedFiles();
 
-            _organiser.MergeArtist(jsonItems.Artists, data.TrackArtist);
-            if (data.AlbumArtist.Id != data.TrackArtist.Id)
-            {
-                _organiser.MergeArtist(jsonItems.Artists, data.AlbumArtist);
-            }
+        //foreach (var filePath in filepaths)
+        //{
+        //    Console.WriteLine($"Adding file {filePath}");
 
-            _organiser.MergeTrack(jsonItems.Tracks, jsonItems.Artists, data.Track);
-            _organiser.MergeAlbum(jsonItems.Albums, jsonItems.Artists, data.Album);
-            _organiser.MergeAlbumTrackLink(jsonItems.AlbumTrackLinks, data.AlbumTrackLink);
-        }
+        //    var data = _musicFiles.GetFileData(filePath);
 
-        _organiser.RemoveOrphanedItems(jsonItems);
+        //    _organiser.MergeArtist(jsonItems.Artists, data.TrackArtist);
+        //    if (data.AlbumArtist.Id != data.TrackArtist.Id)
+        //    {
+        //        _organiser.MergeArtist(jsonItems.Artists, data.AlbumArtist);
+        //    }
 
-        await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
+        //    _organiser.MergeTrack(jsonItems.Tracks, jsonItems.Artists, data.Track);
+        //    _organiser.MergeAlbum(jsonItems.Albums, jsonItems.Artists, data.Album);
+        //    _organiser.MergeAlbumTrackLink(jsonItems.AlbumTrackLinks, data.AlbumTrackLink);
+        //}
+
+        //_organiser.RemoveOrphanedItems(jsonItems);
+
+        //await _dataAccess.SaveAll(jsonItems, LibrarySource.Local);
     }
 }

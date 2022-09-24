@@ -1,6 +1,7 @@
-﻿using Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Common.Model.Json;
+using Cadenza.Local.Common.Model;
 using Cadenza.Local.MusicFiles.Interfaces;
 using Cadenza.Local.MusicFiles.Model;
 
@@ -9,10 +10,10 @@ namespace Cadenza.Local.MusicFiles;
 internal class MusicFileLibrary : IMusicFileLibrary
 {
     private readonly IId3TagsService _id3Service;
-    private readonly IId3ToJsonConverter _converter;
+    private readonly IId3ToLocalConverter _converter;
     private readonly ICommentProcessor _commentProcessor;
 
-    public MusicFileLibrary(IId3ToJsonConverter converter, IId3TagsService id3Service, ICommentProcessor commentProcessor)
+    public MusicFileLibrary(IId3ToLocalConverter converter, IId3TagsService id3Service, ICommentProcessor commentProcessor)
     {
         _converter = converter;
         _id3Service = id3Service;
@@ -24,7 +25,7 @@ internal class MusicFileLibrary : IMusicFileLibrary
         return _id3Service.GetArtwork(filepath);
     }
 
-    public JsonFileData GetFileData(string filepath)
+    public LocalFileData GetFileData(string filepath)
     {
         var id3Track = _id3Service.GetId3Data(filepath);
         var trackArtist = _converter.ConvertTrackArtist(id3Track);
@@ -33,7 +34,7 @@ internal class MusicFileLibrary : IMusicFileLibrary
         var album = _converter.ConvertAlbum(id3Track);
         var albumTrackLink = _converter.ConvertAlbumTrackLink(track.Id, id3Track);
 
-        return new JsonFileData
+        return new LocalFileData
         {
             Album = album,
             AlbumArtist = albumArtist,

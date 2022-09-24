@@ -1,5 +1,7 @@
-﻿using Cadenza.Core.Updates;
+﻿using Cadenza.Domain.Extensions;
 using Cadenza.Library;
+using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.UI.Tabs.Items
 {

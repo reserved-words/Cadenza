@@ -1,6 +1,4 @@
-﻿using Cadenza.Local.Common.Model.Json;
-
-namespace Cadenza.Local.Common.Interfaces;
+﻿namespace Cadenza.Local.Common.Interfaces;
 
 public interface IMusicFileArtworkService
 {

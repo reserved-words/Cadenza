@@ -1,4 +1,5 @@
-using Cadenza.Domain;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Extensions;
 using NUnit.Framework;
 
 namespace Cadenza.Utilities.Tests

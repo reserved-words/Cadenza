@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.Web.Core.Model
+
 @if (Discs != null)
 {
     <AppCardScrollContainer Elevation="0">
@@ -29,5 +30,5 @@
     public AlbumInfo Album { get; set; } = new();
 
     [Parameter]
-    public List<Core.Model.Disc> Discs { get; set; } = new();
+    public List<Disc> Discs { get; set; } = new();
 }

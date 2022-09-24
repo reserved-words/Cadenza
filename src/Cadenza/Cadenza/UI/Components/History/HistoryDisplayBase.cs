@@ -1,6 +1,6 @@
-﻿using Cadenza.Core.Common;
-using Cadenza.Core.Interfaces;
-using Cadenza.LastFM;
+﻿using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Common.Interfaces;
+using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.History;
 

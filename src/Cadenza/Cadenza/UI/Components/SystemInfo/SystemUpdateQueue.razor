@@ -11,32 +11,22 @@
             <MudTh>Current</MudTh>
             <MudTh>Update</MudTh>
             <MudTh></MudTh>
-            <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd>
-                @context.Update.ItemType
+                @context.ItemType
             </MudTd>
             <MudTd>
-                @context.Update.Item
+                @context.Item
             </MudTd>
             <MudTd>
-                @context.Update.Property
+                @context.Property
             </MudTd>
             <MudTd>
-                @context.Update.OriginalValue
+                @context.OriginalValue
             </MudTd>
             <MudTd>
-                @context.Update.UpdatedValue
-            </MudTd>
-            <MudTd>
-                @if (context.NumberOfFailedAttempts > 0)
-                {
-                    <MudIconButton Variant="Variant.Outlined"
-                                   Color="@Color.Error"
-                                   Icon="@Icons.Material.Filled.Error"
-                                   Size="@Size.Small"></MudIconButton>
-                }
+                @context.UpdatedValue
             </MudTd>
             <MudTd>
                 <MudIconButton OnClick="@(() => Remove(context))"

@@ -1,10 +1,10 @@
-﻿using Cadenza.Domain;
-using Cadenza.Local.Common.Model.Json;
+﻿using Cadenza.Domain.Models;
+using Cadenza.Local.Common.Model;
 
 namespace Cadenza.Local.Common.Interfaces;
 
 public interface IMusicFileLibrary
 {
-    JsonFileData GetFileData(string filepath);
+    LocalFileData GetFileData(string filepath);
     void UpdateFileData(string filepath, List<ItemPropertyUpdate> updates);
 }

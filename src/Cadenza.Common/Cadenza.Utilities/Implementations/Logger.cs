@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Utilities.Interfaces;
+using Microsoft.Extensions.Options;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class Logger : ILogger
 {
@@ -42,16 +43,16 @@ public class Logger : ILogger
         return new
         {
             app = GetAppName(),
-            message = message,
+            message,
             level = info ? 1 : 3,
-            stackTrace = stackTrace
+            stackTrace
         };
     }
 
     private string GetAppName()
     {
-        var env = _options.Value.Environment == "LIVE" 
-            ? "" 
+        var env = _options.Value.Environment == "LIVE"
+            ? ""
             : $" ({_options.Value.Environment})";
 
         return $"{_options.Value.ApplicationName}{env}";

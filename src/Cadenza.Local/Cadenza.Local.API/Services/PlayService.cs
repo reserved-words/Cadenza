@@ -1,4 +1,5 @@
 ﻿using Cadenza.Local.Config;
+using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.API;

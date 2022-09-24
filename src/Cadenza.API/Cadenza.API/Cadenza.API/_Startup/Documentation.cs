@@ -4,6 +4,7 @@ public static class Documentation
 {
     public static WebApplicationBuilder RegisterDocumentation(this WebApplicationBuilder builder)
     {
+        builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         return builder;

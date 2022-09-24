@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain.Models.Album;
 
 public class AlbumTrackPosition
 {

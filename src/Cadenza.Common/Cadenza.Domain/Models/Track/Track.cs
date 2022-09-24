@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Domain;
+﻿using Cadenza.Domain.Enums;
+
+namespace Cadenza.Domain.Models.Track;
 
 public class Track
 {

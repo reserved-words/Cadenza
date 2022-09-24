@@ -1,4 +1,5 @@
-﻿using Cadenza.Core.Common;
+﻿using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Core.Common;
 
 namespace Cadenza;
 
@@ -8,7 +9,7 @@ public static class Extensions
     {
         return connector switch
         {
-            Connector.API => Icons.Material.Filled.Api,
+            Connector.Database => Icons.Material.Filled.Api,
             Connector.Local => LibrarySource.Local.GetIcon(),
             Connector.LastFm => Icon.LastFm,
             _ => throw new NotImplementedException()

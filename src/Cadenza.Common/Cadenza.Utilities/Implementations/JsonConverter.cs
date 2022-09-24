@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Cadenza.Utilities.Interfaces;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Cadenza.Utilities;
+namespace Cadenza.Utilities.Implementations;
 
 public class JsonConverter : IJsonConverter
 {

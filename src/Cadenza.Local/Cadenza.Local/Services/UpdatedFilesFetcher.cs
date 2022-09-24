@@ -1,46 +1,51 @@
 ﻿using Cadenza.Local.Common.Interfaces;
+using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Local.Services;
 
 public class UpdatedFilesFetcher : IUpdatedFilesFetcher
 {
     private readonly IMusicDirectory _musicDirectory;
-    private readonly IDataAccess _jsonData;
     private readonly IListComparer _listComparer;
-    private readonly IUpdateHistory _updateHistory;
 
-    public UpdatedFilesFetcher(IDataAccess jsonData, IMusicDirectory musicDirectory, IListComparer listComparer, IUpdateHistory updateHistory)
+    public UpdatedFilesFetcher(IMusicDirectory musicDirectory, IListComparer listComparer)
     {
-        _jsonData = jsonData;
         _musicDirectory = musicDirectory;
         _listComparer = listComparer;
-        _updateHistory = updateHistory;
     }
 
-    public async Task<List<string>> GetAddedFiles()
+    public Task<List<string>> GetAddedFiles()
     {
-        var filesInDirectory = await _musicDirectory.GetAllFiles();
-        var tracks = await _jsonData.GetTracks(LibrarySource.Local);
-        var pathsInJson = tracks.Select(t => t.Path).ToList();
-        return _listComparer.GetMissingItems(filesInDirectory, pathsInJson);
+        throw new NotImplementedException();
+
+        //var filesInDirectory = await _musicDirectory.GetAllFiles();
+        //var tracks = await _jsonData.GetTracks(LibrarySource.Local);
+        //var pathsInJson = tracks.Select(t => t.Path).ToList();
+        //return _listComparer.GetMissingItems(filesInDirectory, pathsInJson);
     }
 
-    public async Task<List<string>> GetModifiedFiles()
+    public Task<List<string>> GetModifiedFiles()
     {
-        var lastUpdate = await _updateHistory.GetDateLastUpdated(LibrarySource.Local);
-        return await _musicDirectory.GetModifiedFiles(lastUpdate);
+        throw new NotImplementedException();
+
+        //var lastUpdate = await _updateHistory.GetDateLastUpdated(LibrarySource.Local);
+        //return await _musicDirectory.GetModifiedFiles(lastUpdate);
     }
 
-    public async Task<List<string>> GetRemovedFiles()
+    public Task<List<string>> GetRemovedFiles()
     {
-        var filesInDirectory = await _musicDirectory.GetAllFiles();
-        var tracks = await _jsonData.GetTracks(LibrarySource.Local);
-        var pathsInJson = tracks.Select(t => t.Path).ToList();
-        return _listComparer.GetMissingItems(pathsInJson, filesInDirectory);
+        throw new NotImplementedException();
+
+        //var filesInDirectory = await _musicDirectory.GetAllFiles();
+        //var tracks = await _jsonData.GetTracks(LibrarySource.Local);
+        //var pathsInJson = tracks.Select(t => t.Path).ToList();
+        //return _listComparer.GetMissingItems(pathsInJson, filesInDirectory);
     }
 
-    public async Task UpdateTimeModifiedFilesUpdated(DateTime updateTime)
+    public Task UpdateTimeModifiedFilesUpdated(DateTime updateTime)
     {
-        await _updateHistory.UpdateDateLastUpdated(updateTime, LibrarySource.Local);
+        throw new NotImplementedException();
+
+        //await _updateHistory.UpdateDateLastUpdated(updateTime, LibrarySource.Local);
     }
 }

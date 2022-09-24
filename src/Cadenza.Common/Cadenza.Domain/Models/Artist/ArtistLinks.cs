@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Domain;
+﻿namespace Cadenza.Domain.Models.Artist;
 
 public class ArtistLinks
 {

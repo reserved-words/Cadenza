@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Library;
+﻿using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Update;
+
+namespace Cadenza.Library;
 
 public interface ITrackRepository
 {
