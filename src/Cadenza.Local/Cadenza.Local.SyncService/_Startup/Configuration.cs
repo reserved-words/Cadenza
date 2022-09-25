@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cadenza.Local.Common.Config;
 
-namespace Cadenza.Local.SyncService._Startup
+namespace Cadenza.Local.SyncService._Startup;
+
+public static class Configuration
 {
-    public static class Configuration
+    public static IServiceCollection RegisterConfiguration(this IServiceCollection services)
     {
-        public static IServiceCollection RegisterConfiguration(this IServiceCollection services)
-        {
-            var settingsPath = Environment.GetEnvironmentVariable("SETTINGS_PATH")
-                ?? "appsettings.json";
+        var settingsPath = Environment.GetEnvironmentVariable("SETTINGS_PATH")
+            ?? "appsettings.json";
 
-            IConfiguration configuration = new ConfigurationBuilder()
-                .AddJsonFile(settingsPath, false)
-                .Build();
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddJsonFile(settingsPath, false)
+            .Build();
 
-            services.AddSingleton(configuration);
+        services.AddSingleton(configuration);
 
-            services
-                .ConfigureLogger(configuration, "Logging")
-                .ConfigurePlayLocation(configuration, "CurrentlyPlaying")
-                .ConfigureMusicLocation(configuration, "MusicLibrary");
+        services
+            .ConfigurePlayLocation(configuration, "CurrentlyPlaying");
 
-            return services;
-        }
+        return services;
+    }
+
+    private static IServiceCollection ConfigurePlayLocation(this IServiceCollection services, IConfiguration config, string sectionPath)
+    {
+        var section = config.GetSection(sectionPath);
+        return services.Configure<CurrentlyPlayingSettings>(section);
     }
 }

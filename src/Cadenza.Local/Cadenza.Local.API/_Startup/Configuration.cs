@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Local.Common.Config;
+
+namespace Cadenza.Local.API;
 
 public static class Configuration
 {
@@ -10,9 +12,14 @@ public static class Configuration
         builder.Configuration.AddJsonFile(settingsPath);
 
         builder.Services
-            .ConfigureLogger(builder.Configuration, "Logging")
             .ConfigurePlayLocation(builder.Configuration, "CurrentlyPlaying");
 
         return builder;
+    }
+
+    private static IServiceCollection ConfigurePlayLocation(this IServiceCollection services, IConfiguration config, string sectionPath)
+    {
+        var section = config.GetSection(sectionPath);
+        return services.Configure<CurrentlyPlayingSettings>(section);
     }
 }

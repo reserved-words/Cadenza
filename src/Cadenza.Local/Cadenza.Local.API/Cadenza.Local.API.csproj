@@ -24,9 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Local.API.Core\Cadenza.Local.API.Core.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.API.Files\Cadenza.Local.API.Files.csproj" />
     <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj" />
     <ProjectReference Include="..\Cadenza.Local\Cadenza.Local.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

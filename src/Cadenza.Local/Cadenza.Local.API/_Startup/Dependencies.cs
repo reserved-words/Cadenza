@@ -1,9 +1,8 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.MusicFiles;
-using Cadenza.Local.Services;
+﻿using Cadenza.Local.API.Common.Controllers;
+using Cadenza.Local.API.Core;
+using Cadenza.Local.API.Files;
 using Cadenza.Utilities.Implementations;
 using Cadenza.Utilities.Interfaces;
-using FileAccess = Cadenza.Local.Services.FileAccess;
 
 namespace Cadenza.Local.API;
 
@@ -23,13 +22,9 @@ public static class Dependencies
 
         services
             .AddUtilities()
-            .AddLogger()
             .AddMusicFileArtwork()
-            .AddTransient<IFileAccess, FileAccess>()
-            .AddTransient<IJsonConverter, JsonConverter>()
-            .AddTransient<IImageSrcGenerator, ImageSrcGenerator>()
-            .AddTransient<IArtworkService, ArtworkService>()
-            .AddTransient<IPlayService, PlayService>();
+            .AddFileAccess()
+            .AddCoreServices();
 
         return services;
     }

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Cadenza.Utilities.Implementations;
 
-public class JsonConverter : IJsonConverter
+internal class JsonConverter : IJsonConverter
 {
     private static JsonSerializerSettings _settings = new JsonSerializerSettings
     {

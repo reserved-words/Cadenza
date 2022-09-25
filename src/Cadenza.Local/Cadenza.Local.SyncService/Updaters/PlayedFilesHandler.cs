@@ -1,44 +1,42 @@
-﻿using Cadenza.Local.Common.Interfaces;
-using Cadenza.Local.Config;
+﻿using Cadenza.Local.Common.Config;
+using Cadenza.Local.Common.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.SyncService.Updaters;
 
-public class PlayedFilesHandler : IUpdateService
+internal class PlayedFilesHandler : IUpdateService
 {
     private readonly IFileAccess _fileAccess;
-    private readonly IOptions<CurrentlyPlaying> _currentlyPlaying;
-    private readonly IOptions<MusicLibrary> _musicLibrary;
+    private readonly IOptions<CurrentlyPlayingSettings> _config;
 
-    public PlayedFilesHandler(IFileAccess fileAccess, IOptions<CurrentlyPlaying> currentlyPlaying, IOptions<MusicLibrary> musicLibrary)
+    public PlayedFilesHandler(IFileAccess fileAccess, IOptions<CurrentlyPlayingSettings> config)
     {
         _fileAccess = fileAccess;
-        _currentlyPlaying = currentlyPlaying;
-        _musicLibrary = musicLibrary;
+        _config = config;
     }
 
     public async Task Run()
     {
-        var directory = Path.Combine(_currentlyPlaying.Value.BaseDirectory, _currentlyPlaying.Value.DirectoryName);
+        var directory = Path.Combine(_config.Value.BaseDirectory, _config.Value.DirectoryName);
 
-        var files = await _fileAccess.GetFiles(directory, _musicLibrary.Value.FileExtensions);
+        var files = await _fileAccess.GetFiles(directory);
 
-        var allButMostRecentFiles = files
-            .Where(f => Path.GetFileName(f.Path).StartsWith(_currentlyPlaying.Value.FilePrefix))
+        var allButLatestFile = files
+            .Where(f => Path.GetFileName(f.Path).StartsWith(_config.Value.FilePrefix))
             .OrderByDescending(f => f.DateCreated)
-            .Skip(2);
+            .Skip(1);
 
-        foreach (var file in allButMostRecentFiles)
+        foreach (var file in allButLatestFile)
         {
-            TryDeleteFile(file.Path);
+            await TryDeleteFile(file.Path);
         }
     }
 
-    private void TryDeleteFile(string path)
+    private async Task TryDeleteFile(string path)
     {
         try
         {
-            _fileAccess.DeleteFile(path);
+            await _fileAccess.DeleteFile(path);
         }
         catch (IOException)
         {

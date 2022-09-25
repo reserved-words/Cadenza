@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API;
+﻿using Cadenza.Local.API.Common.Controllers;
+
+namespace Cadenza.Local.API;
 
 public static class Routing
 {

@@ -3,9 +3,9 @@ using Cadenza.Local.Common.Model;
 
 namespace Cadenza.Local.Services;
 
-public class FileAccess : IFileAccess
+internal class FileAccess : IFileAccess
 {
-    public Task<List<LocalFile>> GetFiles(string directoryPath, List<string> extensions)
+    public Task<List<LocalFile>> GetFiles(string directoryPath, List<string> extensions = null)
     {
         var files = new List<LocalFile>();
 
@@ -15,7 +15,7 @@ public class FileAccess : IFileAccess
         foreach (var filepath in Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories))
         {
             var fileInfo = new FileInfo(filepath);
-            if (extensions.Contains(fileInfo.Extension))
+            if (extensions == null || extensions.Contains(fileInfo.Extension))
             {
                 files.Add(new LocalFile
                 {

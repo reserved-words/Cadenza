@@ -2,6 +2,21 @@
 
 namespace Cadenza.Domain.Models;
 
+public class ItemUpdates
+{
+    public LibraryItemType ItemType { get; set; }
+    public string Id { get; set; }
+    public List<PropertyUpdate> Updates { get; set; }
+}
+
+public class PropertyUpdate
+{
+    public ItemProperty Property { get; set; }
+    public string OriginalValue { get; set; }
+    public string UpdatedValue { get; set; }
+    public DateTime TimeUpdated { get; set; }
+}
+
 public class ItemPropertyUpdate
 {
     public LibraryItemType ItemType { get; set; }
