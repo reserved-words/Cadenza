@@ -24,16 +24,12 @@ public static class Startup
     public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services) where T : class, IApiRepositorySettings
     {
         return services
-            .AddTransient<T>()
-            .AddTransient<IArtistRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<IAlbumRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<IPlayTrackRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<ISearchRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<ITrackRepository>(sp => GetApiRepository<T>(sp));
-    }
-
-    private static ApiRepository GetApiRepository<T>(IServiceProvider sp) where T : class, IApiRepositorySettings
-    {
-        return new ApiRepository(sp.GetService<IHttpHelper>(), sp.GetService<T>());
+            .AddTransient<IApiRepositorySettings, DatabaseApiRepositorySettings>()
+            .AddTransient<IArtistRepository, ApiRepository>()
+            .AddTransient<IAlbumRepository, ApiRepository>()
+            .AddTransient<IPlayTrackRepository, ApiRepository>()
+            .AddTransient<ISearchRepository, ApiRepository>()
+            .AddTransient<ITrackRepository, ApiRepository>()
+            .AddTransient<IUpdateService, UpdateService>();
     }
 }

@@ -12,9 +12,9 @@ internal class UpdateService : IUpdateService
         _repository = repository;
     }
 
-    public async Task<List<ItemUpdates>> GetQueuedUpdates()
+    public Task<List<ItemUpdates>> GetQueuedUpdates()
     {
-        return new List<ItemUpdates>();
+        return Task.FromResult(new List<ItemUpdates>());
     }
 
     public async Task Update(ItemUpdates update)

@@ -18,9 +18,9 @@ internal class UpdateQueueService : IUpdateQueue
         _apiSettings = apiSettings;
     }
 
-    public async Task<List<ItemUpdates>> GetQueuedUpdates()
+    public Task<List<ItemUpdates>> GetQueuedUpdates()
     {
-        return new List<ItemUpdates>();
+        return Task.FromResult(new List<ItemUpdates>());
         //var apiBaseUrl = _apiSettings.Value.BaseUrl;
         //var endpoint = _apiSettings.Value.Endpoints.GetUpdates;
         //var url = $"{apiBaseUrl}{endpoint}";
