@@ -2,25 +2,44 @@
 using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
 using Cadenza.SyncService.Interfaces;
+using Cadenza.SyncService.Settings;
+using Cadenza.Utilities.Interfaces;
+using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Repositories;
 
 internal class LocalRepository : ISourceRepository
 {
+    private readonly IHttpHelper _http;
+    private readonly LocalApiSettings _apiSettings;
+
+    public LocalRepository(IHttpHelper http, IOptions<LocalApiSettings> apiSettings)
+    {
+        _http = http;
+        _apiSettings = apiSettings.Value;
+    }
+
     public LibrarySource Source => LibrarySource.Local;
 
-    public Task<List<string>> GetAllTracks()
+    public async Task<List<string>> GetAllTracks()
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracks}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
-    public Task<TrackFull> GetTrack(string id)
+    public async Task<TrackFull> GetTrack(string id)
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{id}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<TrackFull>();
     }
 
-    public Task UpdateTrack(string id, List<PropertyUpdate> updates)
+    public async Task UpdateTrack(string id, List<PropertyUpdate> updates)
     {
-        throw new NotImplementedException();
+        var data = new { id, updates };
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTrack}";
+        await _http.Post(url, null, data);
     }
 }

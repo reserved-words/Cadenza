@@ -1,9 +1,4 @@
-﻿using Cadenza.Local;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cadenza.SyncService.Settings;
 
 namespace Cadenza.SyncService._Startup
 {
@@ -21,8 +16,24 @@ namespace Cadenza.SyncService._Startup
             services.AddSingleton(configuration);
 
             services
+                .ConfigureDatabaseApi(configuration, "DatabaseApi")
+                .ConfigureLocalApi(configuration, "LocalApi")
                 .ConfigureLogger(configuration, "Logging");
 
+            return services;
+        }
+
+        private static IServiceCollection ConfigureDatabaseApi(this IServiceCollection services, IConfiguration config, string path)
+        {
+            var configSection = config.GetSection(path);
+            services.Configure<DatabaseApiSettings>(configSection);
+            return services;
+        }
+
+        private static IServiceCollection ConfigureLocalApi(this IServiceCollection services, IConfiguration config, string path)
+        {
+            var configSection = config.GetSection(path);
+            services.Configure<LocalApiSettings>(configSection);
             return services;
         }
     }

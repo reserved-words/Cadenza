@@ -38,6 +38,7 @@ public static class _Startup
             .AddTransient<ILibraryService, LibraryService>()
             .AddTransient<IPlayTrackService, PlayTrackService>()
             .AddTransient<ISearchService, SearchService>()
-            .AddTransient<IStartupService, StartupService>();
+            .AddTransient<IStartupService, StartupService>()
+            .AddTransient<ISyncService, SyncService>();
     }
 }

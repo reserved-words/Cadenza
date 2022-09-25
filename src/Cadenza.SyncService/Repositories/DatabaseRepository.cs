@@ -2,43 +2,70 @@
 using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
 using Cadenza.SyncService.Interfaces;
+using Cadenza.SyncService.Settings;
+using Cadenza.Utilities.Interfaces;
+using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Repositories;
 
 internal class DatabaseRepository : IDatabaseRepository
 {
-    public Task AddTrack(LibrarySource source, TrackFull track)
+    private readonly IHttpHelper _http;
+    private readonly DatabaseApiSettings _apiSettings;
+
+    public DatabaseRepository(IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
     {
-        throw new NotImplementedException();
+        _http = http;
+        _apiSettings = apiSettings.Value;
     }
 
-    public Task<List<string>> GetAllTracks(LibrarySource source)
+    public async Task AddTrack(LibrarySource source, TrackFull track)
     {
-        throw new NotImplementedException();
+        var data = new { source, track };
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}";
+        await _http.Post(url, null, data);
     }
 
-    public Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
+    public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetAllTracks}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
-    public Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
-    public Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
-    public Task MarkUpdated(LibrarySource source, LibraryItemType itemType, string id)
+    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}";
+        var response = await _http.Get(url);
+        return await response.Content.ReadFromJsonAsync<List<ItemUpdates>>();
     }
 
-    public Task RemoveTrack(LibrarySource source, string id)
+    public async Task MarkUpdated(LibrarySource source, LibraryItemType itemType, string id)
     {
-        throw new NotImplementedException();
+        var data = new { source, itemType, id };
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}";
+        await _http.Post(url, null, data);
+    }
+
+    public async Task RemoveTrack(LibrarySource source, string id)
+    {
+        var data = new { source, id };
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTrack}";
+        await _http.Post(url, null, data);
     }
 }
