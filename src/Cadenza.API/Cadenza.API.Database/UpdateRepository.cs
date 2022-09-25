@@ -31,20 +31,30 @@ internal class UpdateRepository : IUpdateRepository
         return await _dataAccess.GetUpdates(source);
     }
 
-    public async Task Remove(ItemUpdates update, LibrarySource source)
+    public async Task Remove(LibrarySource source, ItemUpdates updateToRemove)
     {
         var queuedUpdates = await _dataAccess.GetUpdates(source);
 
-        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == update.Id 
-            && u.Type == update.Type);
+        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == updateToRemove.Id 
+            && u.Type == updateToRemove.Type);
+
+        if (queuedUpdate == null)
+            return;
+
+        var propertyUpdatesToRemove = new List<PropertyUpdate>();
 
         foreach (var queuedPropertyUpdate in queuedUpdate.Updates)
         {
-            if (update.Updates.Any(u => u.Property == queuedPropertyUpdate.Property 
+            if (updateToRemove.Updates.Any(u => u.Property == queuedPropertyUpdate.Property 
                 && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
             {
-                queuedUpdate.Updates.Remove(queuedPropertyUpdate);
+                propertyUpdatesToRemove.Add(queuedPropertyUpdate);
             }
+        }
+
+        foreach (var propertyUpdate in propertyUpdatesToRemove)
+        {
+            queuedUpdate.Updates.Remove(propertyUpdate);
         }
 
         if (!queuedUpdate.Updates.Any())

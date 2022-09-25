@@ -17,8 +17,8 @@ public class SyncController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("AddTrack")]
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    [HttpPost("AddTrack/{source}")]
+    public async Task AddTrack(LibrarySource source, [FromBody] TrackFull track)
     {
         await _service.AddTrack(source, track);
     }
@@ -47,14 +47,14 @@ public class SyncController : ControllerBase
         return await _service.GetUpdates(source);
     }
 
-    [HttpGet("MarkUpdated")]
-    public async Task MarkUpdated(LibrarySource source, LibraryItemType itemType, string id)
+    [HttpPost("MarkUpdated/{source}")]
+    public async Task MarkUpdated(LibrarySource source, [FromBody] ItemUpdates update)
     {
-        await MarkUpdated(source, itemType, id);
+        await _service.MarkUpdated(source, update);
     }
 
-    [HttpGet("RemoveTrack")]
-    public async Task RemoveTrack(LibrarySource source, string id)
+    [HttpPost("RemoveTrack/{source}/{id}")]
+    public async Task RemoveTrack(LibrarySource source, [FromBody] string id)
     {
         await _service.RemoveTrack(source, id);
     }

@@ -9,9 +9,10 @@ public static class Dependencies
     public static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
         services
-           .AddRepositories()
-           .AddUtilities()
-           .AddUpdaters();
+            .AddTransient(sp => new HttpClient())
+            .AddRepositories()
+            .AddUtilities()
+            .AddUpdaters();
 
         return services;
     }
@@ -26,8 +27,8 @@ public static class Dependencies
     private static IServiceCollection AddUpdaters(this IServiceCollection services)
     {
         return services
-            .AddTransient<IUpdateService, AddedTracksHandler>();
+            //.AddTransient<IUpdateService, AddedTracksHandler>()
             //.AddTransient<IUpdateService, RemovedTracksHandler>()
-            //.AddTransient<IUpdateService, UpdatesHandler>();
+            .AddTransient<IUpdateService, UpdatesHandler>();
     }
 }

@@ -40,7 +40,7 @@ internal class UpdatesHandler : IUpdateService
 
             foreach (var trackId in tracks)
             {
-                await repository.UpdateTrack(trackId, update.Updates);
+                await repository.UpdateTrack(trackId, update);
             }
 
             await MarkUpdated(source, update);
@@ -55,7 +55,7 @@ internal class UpdatesHandler : IUpdateService
 
             foreach (var trackId in tracks)
             {
-                await repository.UpdateTrack(trackId, update.Updates);
+                await repository.UpdateTrack(trackId, update);
             }
 
             await MarkUpdated(source, update);
@@ -66,13 +66,13 @@ internal class UpdatesHandler : IUpdateService
     {
         foreach (var update in updates)
         {
-            await repository.UpdateTrack(update.Id, update.Updates);
+            await repository.UpdateTrack(update.Id, update);
             await MarkUpdated(source, update);
         }
     }
 
     private async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await _database.MarkUpdated(source, update.Type, update.Id);
+        await _database.MarkUpdated(source, update);
     }
 }

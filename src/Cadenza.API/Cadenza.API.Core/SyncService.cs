@@ -8,10 +8,12 @@ namespace Cadenza.API.Core;
 internal class SyncService : ISyncService
 {
     private readonly IMusicRepository _repository;
+    private readonly IUpdateRepository _updateRepository;
 
-    public SyncService(IMusicRepository repository)
+    public SyncService(IMusicRepository repository, IUpdateRepository updateRepository)
     {
         _repository = repository;
+        _updateRepository = updateRepository;
     }
 
     public Task AddTrack(LibrarySource source, TrackFull track)
@@ -43,14 +45,14 @@ internal class SyncService : ISyncService
         throw new NotImplementedException();
     }
 
-    public Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        return await _updateRepository.GetUpdates(source);
     }
 
-    public Task MarkUpdated(LibrarySource source, LibraryItemType itemType, string id)
+    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        throw new NotImplementedException();
+        await _updateRepository.Remove(source, update);
     }
 
     public Task RemoveTrack(LibrarySource source, string id)

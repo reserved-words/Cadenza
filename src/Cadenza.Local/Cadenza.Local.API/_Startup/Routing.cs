@@ -39,7 +39,7 @@ public static class Routing
         var service = app.Services.GetService<ISyncService>();
         app.MapGet("/Sync/GetAllTracks", async (string id) => await service.GetAllTracks());
         app.MapGet("/Sync/GetTrack/{id}", async (string id) => await service.GetTrack(id));
-        app.MapPost("/Sync/UpdateTrack/{id}", async (string id, List<PropertyUpdate> updates) => await service.UpdateTrack(id, updates));
+        app.MapPost("/Sync/UpdateTrack", async (ItemUpdates updates) => await service.UpdateTrack(updates.Id, updates.Updates));
         return app;
     }
 }

@@ -36,10 +36,17 @@ internal class LocalRepository : ISourceRepository
         return await response.Content.ReadFromJsonAsync<TrackFull>();
     }
 
-    public async Task UpdateTrack(string id, List<PropertyUpdate> updates)
+    public async Task UpdateTrack(string trackId, ItemUpdates updates)
     {
-        var data = new { id, updates };
+        var trackUpdate = new ItemUpdates
+        {
+            Type = LibraryItemType.Track,
+            Id = trackId,
+            Updates = updates.Updates
+        };
+
+        var data = new { updates = trackUpdate };
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTrack}";
-        await _http.Post(url, null, data);
+        await _http.Post(url, null, trackUpdate);
     }
 }

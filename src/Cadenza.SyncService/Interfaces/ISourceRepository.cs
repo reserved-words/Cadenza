@@ -10,5 +10,5 @@ internal interface ISourceRepository
 
     Task<List<string>> GetAllTracks();
     Task<TrackFull> GetTrack(string id);
-    Task UpdateTrack(string id, List<PropertyUpdate> updates);
+    Task UpdateTrack(string trackId, ItemUpdates updates);
 }

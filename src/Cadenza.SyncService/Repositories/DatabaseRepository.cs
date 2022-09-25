@@ -55,11 +55,10 @@ internal class DatabaseRepository : IDatabaseRepository
         return await response.Content.ReadFromJsonAsync<List<ItemUpdates>>();
     }
 
-    public async Task MarkUpdated(LibrarySource source, LibraryItemType itemType, string id)
+    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        var data = new { source, itemType, id };
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}";
-        await _http.Post(url, null, data);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}/{source}";
+        await _http.Post(url, null, update);
     }
 
     public async Task RemoveTrack(LibrarySource source, string id)
