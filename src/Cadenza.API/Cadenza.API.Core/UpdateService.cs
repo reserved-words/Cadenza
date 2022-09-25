@@ -1,15 +1,20 @@
 ﻿using Cadenza.API.Common.Controllers;
 using Cadenza.API.Common.Repositories;
+using Cadenza.Domain.Enums;
 using Cadenza.Domain.Models;
 
 namespace Cadenza.API.Core;
 internal class UpdateService : IUpdateService
 {
-    private readonly IUpdateRepository _repository;
+    private readonly IMusicRepository _musicRepository;
+    private readonly IUpdateRepository _updateRepository;
+    private readonly ICachePopulater _cachePopulater;
 
-    public UpdateService(IUpdateRepository repository)
+    public UpdateService(IUpdateRepository updateRepository, IMusicRepository musicRepository, ICachePopulater cachePopulater)
     {
-        _repository = repository;
+        _updateRepository = updateRepository;
+        _musicRepository = musicRepository;
+        _cachePopulater = cachePopulater;
     }
 
     public Task<List<ItemUpdates>> GetQueuedUpdates()
@@ -17,100 +22,21 @@ internal class UpdateService : IUpdateService
         return Task.FromResult(new List<ItemUpdates>());
     }
 
-    public async Task Update(ItemUpdates update)
+    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
     {
-        await _repository.Add(update);
+        await _musicRepository.UpdateTrack(source, updates);
+        await _cachePopulater.Populate(false);
+    }
 
+    public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
+    {
+        await _musicRepository.UpdateAlbum(source, updates);
+        await _cachePopulater.Populate(false);
+    }
 
-        // Apply this update to JSON library
-        // Reorganise JSON library as appropriate
-
-        // Repopulate cache
+    public async Task UpdateArtist(ItemUpdates updates)
+    {
+        await _musicRepository.UpdateArtist(updates);
+        await _cachePopulater.Populate(false);
     }
 }
-
-
-
-//using Cadenza.API.Interfaces;
-//using Cadenza.API.Common.Interfaces;
-//using Cadenza.API.Common.Interfaces.Cache;
-//using Cadenza.API.Common.Model;
-
-//namespace Cadenza.API.Services;
-
-//public class UpdateService : IUpdateService
-//{
-//    private readonly IUpdateRepository _fileUpdateService;
-//    private readonly IMusicRepository _library;
-//    private readonly IAlbumCache _albumCache;
-//    private readonly IArtistCache _artistCache;
-//    private readonly ITrackCache _trackCache;
-
-//    public UpdateService(IUpdateRepository updateService, IMusicRepository library, IArtistCache artistCache, IAlbumCache albumCache, ITrackCache trackCache)
-//    {
-//        _fileUpdateService = updateService;
-//        _library = library;
-//        _artistCache = artistCache;
-//        _albumCache = albumCache;
-//        _trackCache = trackCache;
-//    }
-
-//    public async Task<FileUpdateQueue> GetAllUpdates()
-//    {
-//        return await _fileUpdateService.Get();
-//    }
-
-//    public async Task AddAlbumUpdate(AlbumUpdate update)
-//    {
-//        var album = await _albumCache.GetAlbum(update.Id);
-
-//        if (album == null)
-//            return;
-
-//        await _albumCache.UpdateAlbum(update);
-//        await _library.UpdateAlbum(update);
-
-//        if (update.UpdatedItem.Source != LibrarySource.Local)
-//            return;
-
-//        foreach (var updatedItem in update.Updates)
-//        {
-//            await _fileUpdateService.Add(updatedItem);
-//        }
-//    }
-
-//    public async Task AddArtistUpdate(ArtistUpdate update)
-//    {
-//        var artist = await _artistCache.GetArtist(update.Id);
-
-//        if (artist == null)
-//            return;
-
-//        await _artistCache.UpdateArtist(update);
-//        await _library.UpdateArtist(update);
-//        foreach (var updatedItem in update.Updates)
-//        {
-//            await _fileUpdateService.Add(updatedItem);
-//        }
-//    }
-
-//    public async Task AddTrackUpdate(TrackUpdate update)
-//    {
-//        var track = await _trackCache.GetTrack(update.Id);
-
-//        if (track == null)
-//            return;
-
-//        await _trackCache.UpdateTrack(update);
-//        await _library.UpdateTrack(update);
-
-//        if (update.UpdatedItem.Source != LibrarySource.Local)
-//            return;
-
-//        foreach (var updatedItem in update.Updates)
-//        {
-//            await _fileUpdateService.Add(updatedItem);
-//        }
-//    }
-//}
-

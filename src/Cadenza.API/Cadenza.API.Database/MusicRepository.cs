@@ -1,31 +1,21 @@
 ﻿using Cadenza.API.Common.Model;
 using Cadenza.API.Common.Repositories;
 using Cadenza.API.Database.Interfaces;
-using Cadenza.API.Database.Interfaces.Converters;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.API.Database;
 
 internal class MusicRepository : IMusicRepository
 {
-    private readonly IAlbumConverter _albumConverter;
-    private readonly IArtistConverter _artistConverter;
-    private readonly ITrackConverter _trackConverter;
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
-    public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter converter, IArtistConverter artistConverter,
-        IAlbumConverter albumConverter, ITrackConverter trackConverter)
+    public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter converter)
     {
         _dataAccess = dataAccess;
         _converter = converter;
-        _artistConverter = artistConverter;
-        _albumConverter = albumConverter;
-        _trackConverter = trackConverter;
     }
 
     public async Task<FullLibrary> Get()
@@ -59,47 +49,46 @@ internal class MusicRepository : IMusicRepository
         return library;
     }
 
-    public async Task UpdateAlbum(AlbumInfo album)
+    public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
     {
-        var albums = await _dataAccess.GetAlbums(album.Source);
+        var albums = await _dataAccess.GetAlbums(source);
 
-        var jsonAlbum = albums.SingleOrDefault(a => a.Id == album.Id);
-        if (jsonAlbum == null)
+        var album = albums.SingleOrDefault(a => a.Id == updates.Id);
+
+        if (album == null)
             return;
 
-        albums.Remove(jsonAlbum);
-        var artists = await _dataAccess.GetArtists();
-        jsonAlbum = _albumConverter.ToJson(album);
-        albums.Add(jsonAlbum);
-        await _dataAccess.SaveAlbums(albums, album.Source);
+        UpdateAlbum(album, updates.Updates);
+
+        await _dataAccess.SaveAlbums(albums, source);
     }
 
-    public async Task UpdateArtist(ArtistInfo artist)
+    public async Task UpdateArtist(ItemUpdates updates)
     {
         var artists = await _dataAccess.GetArtists();
-        var jsonArtist = artists.SingleOrDefault(a => a.Id == artist.Id);
-        if (jsonArtist == null)
+
+        var artist = artists.SingleOrDefault(a => a.Id == updates.Id);
+
+        if (artist == null)
             return;
 
-        artists.Remove(jsonArtist);
-        jsonArtist = _artistConverter.ToJson(artist);
-        artists.Add(jsonArtist);
+        UpdateArtist(artist, updates.Updates);
+
         await _dataAccess.SaveArtists(artists);
     }
 
-    public async Task UpdateTrack(TrackInfo track)
+    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
     {
-        var tracks = await _dataAccess.GetTracks(track.Source);
+        var tracks = await _dataAccess.GetTracks(source);
 
-        var jsonTrack = tracks.SingleOrDefault(a => a.Id == track.Id);
-        if (jsonTrack == null)
+        var track = tracks.SingleOrDefault(a => a.Id == updates.Id);
+
+        if (track == null)
             return;
 
-        tracks.Remove(jsonTrack);
-        var artists = await _dataAccess.GetArtists();
-        jsonTrack = _trackConverter.ToJson(track);
-        tracks.Add(jsonTrack);
-        await _dataAccess.SaveTracks(tracks, track.Source);
+        UpdateTrack(track, updates.Updates);
+
+        await _dataAccess.SaveTracks(tracks, source);
     }
 
     private void AddArtists(FullLibrary library, List<JsonArtist> jsonArtists)
@@ -137,6 +126,72 @@ internal class MusicRepository : IMusicRepository
             var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
             album.Source = source;
             library.Albums.Add(album);
+        }
+    }
+
+    private static void UpdateAlbum(JsonAlbum album, List<PropertyUpdate> updates)
+    {
+        foreach (var update in updates)
+        {
+            switch (update.Property)
+            {
+                case ItemProperty.AlbumTitle:
+                    album.Title = update.UpdatedValue;
+                    break;
+                case ItemProperty.ReleaseType:
+                    album.ReleaseType = update.UpdatedValue;
+                    break;
+                case ItemProperty.ReleaseYear:
+                    album.Year = update.UpdatedValue;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            } 
+        }
+    }
+
+    private static void UpdateTrack(JsonTrack track, List<PropertyUpdate> updates)
+    {
+        foreach (var update in updates)
+        {
+            switch (update.Property)
+            {
+                case ItemProperty.Lyrics:
+                    track.Lyrics = update.UpdatedValue;
+                    break;
+                case ItemProperty.TrackTitle:
+                    track.Title = update.UpdatedValue;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            } 
+        }
+    }
+
+    private static void UpdateArtist(JsonArtist artist, List<PropertyUpdate> updates)
+    {
+        foreach (var update in updates)
+        {
+            switch (update.Property)
+            {
+                case ItemProperty.City:
+                    artist.City = update.UpdatedValue;
+                    break;
+                case ItemProperty.Country:
+                    artist.Country = update.UpdatedValue;
+                    break;
+                case ItemProperty.Genre:
+                    artist.Genre = update.UpdatedValue;
+                    break;
+                case ItemProperty.Grouping:
+                    artist.Grouping = update.UpdatedValue;
+                    break;
+                case ItemProperty.State:
+                    artist.State = update.UpdatedValue;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            } 
         }
     }
 }

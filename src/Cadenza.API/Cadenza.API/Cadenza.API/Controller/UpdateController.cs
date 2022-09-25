@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.Common.Controllers;
+using Cadenza.Domain.Enums;
 using Cadenza.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,9 +28,21 @@ public class UpdateController : ControllerBase
     //    await _service.Update(update);
     //}
 
-    [HttpPost("UpdateItem")]
-    public async Task UpdateItem(ItemUpdates update)
+    [HttpPost("UpdateTrack/{source}")]
+    public async Task UpdateTrack(LibrarySource source, [FromBody]ItemUpdates update)
     {
-        await _service.Update(update);
+        await _service.UpdateTrack(source, update);
+    }
+
+    [HttpPost("UpdateArtist/{source}")]
+    public async Task UpdateArtist([FromBody] ItemUpdates update)
+    {
+        await _service.UpdateArtist(update);
+    }
+
+    [HttpPost("UpdateAlbum/{source}")]
+    public async Task UpdateAlbum(LibrarySource source, [FromBody] ItemUpdates update)
+    {
+        await _service.UpdateAlbum(source, update);
     }
 }

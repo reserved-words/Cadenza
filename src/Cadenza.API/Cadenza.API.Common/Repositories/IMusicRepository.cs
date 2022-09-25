@@ -1,16 +1,13 @@
 ﻿using Cadenza.API.Common.Model;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
-
+using Cadenza.Domain.Models;
 namespace Cadenza.API.Common.Repositories;
 
 public interface IMusicRepository
 {
     Task<FullLibrary> Get();
     Task<FullLibrary> Get(LibrarySource source);
-    Task UpdateArtist(ArtistInfo artist);
-    Task UpdateAlbum(AlbumInfo album);
-    Task UpdateTrack(TrackInfo track);
+    Task UpdateArtist(ItemUpdates updates);
+    Task UpdateAlbum(LibrarySource source, ItemUpdates updates);
+    Task UpdateTrack(LibrarySource source, ItemUpdates updates);
 }

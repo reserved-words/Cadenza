@@ -29,6 +29,8 @@
         string Album { get; }
         string AlbumTracks { get; }
 
-        string UpdateItem { get; }
+        string UpdateAlbum { get; }
+        string UpdateArtist { get; }
+        string UpdateTrack { get; }
     }
 }
