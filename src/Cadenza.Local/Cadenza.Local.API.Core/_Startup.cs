@@ -13,7 +13,8 @@ namespace Cadenza.Local.API.Core
         {
             return services.AddInternalServices()
                 .AddTransient<IArtworkService, ArtworkService>()
-                .AddTransient<IPlayService, PlayService>();
+                .AddTransient<IPlayService, PlayService>()
+                .AddTransient<ISyncService, SyncService>();
         }
 
         public static IServiceCollection ConfigureMusicLocation(this IServiceCollection services, IConfiguration config, string sectionPath)

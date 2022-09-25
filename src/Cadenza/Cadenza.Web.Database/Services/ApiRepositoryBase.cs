@@ -1,8 +1,10 @@
 ﻿using Cadenza.Utilities.Interfaces;
 using System.Net.Http.Json;
 
-namespace Cadenza.Web.Database
+namespace Cadenza.Web.Database.Services
 {
+    // TODO: All this stuff was done in an awkward way previously to allow different repository types, can  be simplified now
+
     internal abstract class ApiRepositoryBase
     {
         private readonly IApiRepositorySettings _settings;

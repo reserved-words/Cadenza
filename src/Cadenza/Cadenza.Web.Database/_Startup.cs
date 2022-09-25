@@ -18,7 +18,7 @@ public static class Startup
         return services
             .AddApiRepositories<DatabaseApiRepositorySettings>()
             .AddTransient<IConnectionTaskBuilder, DatabaseConnectionTaskBuilder>()
-            .AddTransient<IFileUpdateQueue, UpdateQueueService>();
+            .AddTransient<IUpdateQueue, UpdateQueueService>();
     }
 
     public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services) where T : class, IApiRepositorySettings

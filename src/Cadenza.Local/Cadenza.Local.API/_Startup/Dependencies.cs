@@ -23,7 +23,6 @@ public static class Dependencies
         services
             .AddUtilities()
             .AddMusicFileArtwork()
-            .AddFileAccess()
             .AddCoreServices();
 
         return services;

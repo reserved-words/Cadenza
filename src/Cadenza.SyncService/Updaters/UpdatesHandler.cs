@@ -27,9 +27,9 @@ internal class UpdatesHandler : IUpdateService
     {
         var updates = await _database.GetUpdates(source);
 
-        await ProcessTrackUpdates(repository, source, updates.Where(u => u.ItemType == LibraryItemType.Track));
-        await ProcessAlbumUpdates(repository, source, updates.Where(u => u.ItemType == LibraryItemType.Album));
-        await ProcessArtistUpdates(repository, source, updates.Where(u => u.ItemType == LibraryItemType.Artist));
+        await ProcessTrackUpdates(repository, source, updates.Where(u => u.Type == LibraryItemType.Track));
+        await ProcessAlbumUpdates(repository, source, updates.Where(u => u.Type == LibraryItemType.Album));
+        await ProcessArtistUpdates(repository, source, updates.Where(u => u.Type == LibraryItemType.Artist));
     }
 
     private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, IEnumerable<ItemUpdates> updates)
@@ -73,6 +73,6 @@ internal class UpdatesHandler : IUpdateService
 
     private async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await _database.MarkUpdated(source, update.ItemType, update.Id);
+        await _database.MarkUpdated(source, update.Type, update.Id);
     }
 }

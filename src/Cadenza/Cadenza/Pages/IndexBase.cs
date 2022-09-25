@@ -31,7 +31,7 @@ public class IndexBase : ComponentBase
         {
             new DynamicTabsItem("Home", null, "fas fa-history", typeof(HistoryTab)),
             new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
-            new DynamicTabsItem("System", null, "fas fa-cog", typeof(SystemInfoTab))
+            //new DynamicTabsItem("System", null, "fas fa-cog", typeof(SystemInfoTab))
         };
 
         App.ItemRequested += App_ItemRequested;

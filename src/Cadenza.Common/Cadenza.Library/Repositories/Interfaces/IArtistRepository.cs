@@ -14,5 +14,5 @@ public interface IArtistRepository
     Task<List<Album>> GetAlbums(string artistId);
     Task<List<Artist>> GetArtistsByGenre(string id);
     Task<List<Artist>> GetArtistsByGrouping(Grouping id);
-    Task UpdateArtist(ArtistUpdate update);
+    //Task UpdateArtist(ArtistUpdate update);
 }

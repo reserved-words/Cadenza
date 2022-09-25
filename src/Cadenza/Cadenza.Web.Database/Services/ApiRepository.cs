@@ -6,7 +6,7 @@ using Cadenza.Domain.Models.Track;
 using Cadenza.Domain.Models.Update;
 using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.Web.Database
+namespace Cadenza.Web.Database.Services
 {
     internal class ApiRepository : ApiRepositoryBase,
         ITrackRepository,
@@ -126,16 +126,6 @@ namespace Cadenza.Web.Database
         public async Task<List<AlbumTrack>> GetTracks(string id)
         {
             return await Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
-        }
-
-        public async Task UpdateArtist(ArtistUpdate update)
-        {
-            await Post(_settings.UpdateArtist, update);
-        }
-
-        public async Task UpdateTrack(TrackUpdate update)
-        {
-            await Post(_settings.UpdateTrack, update);
         }
     }
 }

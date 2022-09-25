@@ -4,7 +4,7 @@ using Cadenza.SyncService.Updaters;
 
 namespace Cadenza.SyncService._Startup;
 
-public static class Services
+public static class Dependencies
 {
     public static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
@@ -26,8 +26,8 @@ public static class Services
     private static IServiceCollection AddUpdaters(this IServiceCollection services)
     {
         return services
-            .AddTransient<IUpdateService, AddedTracksHandler>()
-            .AddTransient<IUpdateService, RemovedTracksHandler>()
-            .AddTransient<IUpdateService, UpdatesHandler>();
+            .AddTransient<IUpdateService, AddedTracksHandler>();
+            //.AddTransient<IUpdateService, RemovedTracksHandler>()
+            //.AddTransient<IUpdateService, UpdatesHandler>();
     }
 }

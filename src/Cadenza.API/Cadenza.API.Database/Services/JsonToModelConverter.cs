@@ -3,6 +3,7 @@ using Cadenza.API.Database.Model;
 using Cadenza.Domain.Models.Artist;
 using Cadenza.Domain.Models.Album;
 using Cadenza.Domain.Models.Track;
+using Cadenza.API.Database.Interfaces.Converters;
 
 namespace Cadenza.API.Database.Services;
 
@@ -23,21 +24,21 @@ internal class JsonToModelConverter : IJsonToModelConverter
 
     public AlbumInfo ConvertAlbum(JsonAlbum album, ICollection<JsonArtist> artists)
     {
-        return _albumConverter.ToAppModel(album, artists);
+        return _albumConverter.ToModel(album, artists);
     }
 
     public AlbumTrackLink ConvertAlbumTrackLink(JsonAlbumTrackLink albumTrackLink)
     {
-        return _albumTrackLinkConverter.ToAppModel(albumTrackLink);
+        return _albumTrackLinkConverter.ToModel(albumTrackLink);
     }
 
     public ArtistInfo ConvertArtist(JsonArtist artist)
     {
-        return _artistConverter.ToAppModel(artist);
+        return _artistConverter.ToModel(artist);
     }
 
     public TrackInfo ConvertTrack(JsonTrack track, ICollection<JsonArtist> artists)
     {
-        return _trackConverter.ToAppModel(track, artists);
+        return _trackConverter.ToModel(track, artists);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain.Attributes;
-using Cadenza.Domain.Enums;
+﻿using Cadenza.Domain.Enums;
 
 namespace Cadenza.Domain.Models.Update;
 
@@ -31,7 +30,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
     public TInterface UpdatedItem { get; set; }
 
-    public List<ItemPropertyUpdate> Updates { get; set; } = new();
+    public List<PropertyUpdate> Updates { get; set; } = new();
 
     public void ApplyUpdates(TInterface item)
     {
@@ -48,7 +47,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         return Updates.Any(p => p.Property == property);
     }
 
-    public bool IsUpdated(ItemProperty property, out ItemPropertyUpdate update)
+    public bool IsUpdated(ItemProperty property, out PropertyUpdate update)
     {
         update = Updates.SingleOrDefault(p => p.Property == property);
         return update != null;
@@ -64,9 +63,9 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    private List<ItemPropertyUpdate> GetUpdates()
+    private List<PropertyUpdate> GetUpdates()
     {
-        var updates = new List<ItemPropertyUpdate>();
+        var updates = new List<PropertyUpdate>();
 
         var properties = typeof(TInterface).GetProperties();
 
@@ -81,12 +80,9 @@ public class ItemUpdate<TInterface> where TInterface : new()
                     .Single()
                     .Property;
 
-                updates.Add(new ItemPropertyUpdate
+                updates.Add(new PropertyUpdate
                 {
-                    ItemType = Type,
-                    Id = Id,
                     Property = itemProperty,
-                    Item = Name,
                     OriginalValue = originalValue,
                     UpdatedValue = updatedValue
                 });

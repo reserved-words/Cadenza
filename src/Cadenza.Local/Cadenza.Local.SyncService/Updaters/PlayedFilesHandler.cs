@@ -1,5 +1,5 @@
 ﻿using Cadenza.Local.Common.Config;
-using Cadenza.Local.Common.Interfaces;
+using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.SyncService.Updaters;

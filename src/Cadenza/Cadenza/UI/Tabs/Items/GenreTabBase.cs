@@ -25,7 +25,7 @@ namespace Cadenza.UI.Tabs.Items
 
         private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
         {
-            if (!e.Update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+            if (!e.Update.IsUpdated(ItemProperty.Genre, out PropertyUpdate genreUpdate))
                 return Task.CompletedTask;
 
             if (genreUpdate.OriginalValue == Id)

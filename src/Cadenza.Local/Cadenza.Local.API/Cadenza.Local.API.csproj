@@ -29,7 +29,6 @@
     <ProjectReference Include="..\Cadenza.Local.API.Core\Cadenza.Local.API.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Local.API.Files\Cadenza.Local.API.Files.csproj" />
     <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Local\Cadenza.Local.csproj" />
   </ItemGroup>
 
   <ItemGroup>

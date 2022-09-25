@@ -7,5 +7,5 @@ namespace Cadenza.API.Core.Interfaces.Cache;
 internal interface IAlbumCache : IAlbumRepository
 {
     Task Populate(FullLibrary library);
-    Task UpdateAlbum(AlbumUpdate update);
+    //Task UpdateAlbum(AlbumUpdate update);
 }

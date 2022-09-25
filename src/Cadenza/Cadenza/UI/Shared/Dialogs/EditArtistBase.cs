@@ -1,7 +1,6 @@
-﻿using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Update;
+﻿using Cadenza.Domain.Models.Update;
 using Cadenza.Interfaces;
-using Cadenza.Library;
+using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Shared.Dialogs;
@@ -9,7 +8,7 @@ namespace Cadenza.UI.Shared.Dialogs;
 public class EditArtistBase : FormBase<ArtistInfo>
 {
     [Inject]
-    public IArtistRepository Repository { get; set; }
+    public IUpdateService Repository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }

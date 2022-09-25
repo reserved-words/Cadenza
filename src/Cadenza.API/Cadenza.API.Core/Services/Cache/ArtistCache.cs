@@ -129,7 +129,7 @@ internal class ArtistCache : IArtistCache
 
         update.ApplyUpdates(artist);
 
-        if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+        if (update.IsUpdated(ItemProperty.Genre, out PropertyUpdate genreUpdate))
         {
             var originalGenreArtists = _genres.GetOrAdd(genreUpdate.OriginalValue);
             var updatedGenreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
@@ -139,7 +139,7 @@ internal class ArtistCache : IArtistCache
             updatedGenreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
         }
 
-        if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
+        if (update.IsUpdated(ItemProperty.Grouping, out PropertyUpdate groupingUpdate))
         {
             var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
             var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();

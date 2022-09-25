@@ -1,14 +1,14 @@
-﻿using Cadenza.API.Database.Interfaces;
+﻿using Cadenza.API.Database.Interfaces.Converters;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
 using Cadenza.Domain.Extensions;
 using Cadenza.Domain.Models.Artist;
 
-namespace Cadenza.API.Database.Services;
+namespace Cadenza.API.Database.Converters;
 
 internal class ArtistConverter : IArtistConverter
 {
-    public ArtistInfo ToAppModel(JsonArtist artist)
+    public ArtistInfo ToModel(JsonArtist artist)
     {
         return new ArtistInfo
         {
@@ -22,7 +22,7 @@ internal class ArtistConverter : IArtistConverter
         };
     }
 
-    public JsonArtist ToJsonModel(ArtistInfo artist)
+    public JsonArtist ToJson(ArtistInfo artist)
     {
         return new JsonArtist
         {

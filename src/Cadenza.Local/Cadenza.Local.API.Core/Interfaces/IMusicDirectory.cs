@@ -1,9 +1,9 @@
-﻿using Cadenza.Local.Common.Model;
+﻿using Cadenza.Domain.Models;
 
 namespace Cadenza.Local.API.Core.Interfaces;
 
 internal interface IMusicDirectory
 {
-    Task<List<LocalFile>> GetAllFiles();
-    Task<List<LocalFile>> GetModifiedFiles(DateTime sinceDate);
+    Task<List<FileDetails>> GetAllFiles();
+    Task<List<FileDetails>> GetModifiedFiles(DateTime sinceDate);
 }

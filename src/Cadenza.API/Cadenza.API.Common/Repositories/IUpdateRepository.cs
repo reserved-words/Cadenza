@@ -1,10 +1,11 @@
-﻿using Cadenza.Domain.Models;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 
 namespace Cadenza.API.Common.Repositories;
 
 public interface IUpdateRepository
 {
-    Task Add(ItemPropertyUpdate update);
-    Task<List<ItemPropertyUpdate>> Get();
-    Task Remove(ItemPropertyUpdate update);
+    Task Add(ItemUpdates update);
+    Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
+    Task Remove(ItemUpdates update, LibrarySource source);
 }

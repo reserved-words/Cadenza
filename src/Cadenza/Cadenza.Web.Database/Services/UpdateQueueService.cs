@@ -2,13 +2,12 @@
 using Cadenza.Utilities.Extensions;
 using Cadenza.Utilities.Interfaces;
 using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Model;
 using Cadenza.Web.Database.Settings;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.Web.Database.Services;
 
-internal class UpdateQueueService : IFileUpdateQueue
+internal class UpdateQueueService : IUpdateQueue
 {
     private readonly IHttpHelper _httpHelper;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
@@ -19,15 +18,16 @@ internal class UpdateQueueService : IFileUpdateQueue
         _apiSettings = apiSettings;
     }
 
-    public async Task<List<ItemPropertyUpdate>> GetQueuedUpdates()
+    public async Task<List<ItemUpdates>> GetQueuedUpdates()
     {
-        var apiBaseUrl = _apiSettings.Value.BaseUrl;
-        var endpoint = _apiSettings.Value.Endpoints.GetUpdates;
-        var url = $"{apiBaseUrl}{endpoint}";
-        return await _httpHelper.Get<List<ItemPropertyUpdate>>(url);
+        return new List<ItemUpdates>();
+        //var apiBaseUrl = _apiSettings.Value.BaseUrl;
+        //var endpoint = _apiSettings.Value.Endpoints.GetUpdates;
+        //var url = $"{apiBaseUrl}{endpoint}";
+        //return await _httpHelper.Get<List<ItemUpdates>>(url);
     }
 
-    public Task<bool> RemoveQueuedUpdate(ItemPropertyUpdate update)
+    public Task<bool> RemoveQueuedUpdate(ItemUpdates update)
     {
         throw new NotImplementedException();
     }

@@ -1,87 +1,79 @@
-﻿//using Cadenza.API.Common.Interfaces;
-//using Cadenza.API.Database.Interfaces;
-//using Cadenza.Domain;
-//using Cadenza.Utilities;
-//using Microsoft.Extensions.Options;
+﻿using Cadenza.API.Common.Repositories;
+using Cadenza.API.Database.Interfaces;
+using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models;
 
-//namespace Cadenza.API.Database.Services;
+namespace Cadenza.API.Database.Services;
 
-//internal class UpdateRepository : IUpdateRepository
-//{
-//    private readonly IFileAccess _fileAccess;
-//    private readonly IJsonConverter _jsonConverter;
-//    private readonly IOptions<LibraryPaths> _config;
+internal class UpdateRepository : IUpdateRepository
+{
+    private readonly IDataAccess _dataAccess;
 
-//    public UpdateRepository(IFileAccess fileAccess, IJsonConverter jsonConverter, IOptions<LibraryPaths> config)
-//    {
-//        _config = config;
-//        _fileAccess = fileAccess;
-//        _jsonConverter = jsonConverter;
-//    }
+    public UpdateRepository(IDataAccess dataAccess)
+    {
+        _dataAccess = dataAccess;
+    }
 
-//    public async Task Add(ItemPropertyUpdate update)
-//    {
-//        var queue = await Get();
-//        AddOrUpdate(queue, update);
-//        Save(queue);
-//    }
+    public async Task Add(ItemUpdates update)
+    {
+        foreach (var source in Enum.GetValues<LibrarySource>())
+        {
+            var updates = await _dataAccess.GetUpdates(source);
 
-//    private void AddOrUpdate(List<ItemPropertyUpdate> queue, ItemPropertyUpdate update)
-//    {
-//        var entry = queue.SingleOrDefault(e => e.Equals(update));
-//        if (entry != null)
-//        {
-//            queue.Remove(entry);
-//        }
-//        queue.Add(update);
-//    }
+            AddOrUpdate(updates, update);
 
-//    public async Task Remove(ItemPropertyUpdate update)
-//    {
-//        var queue = await Get();
+            await _dataAccess.SaveUpdates(updates, source);
+        }
+    }
 
-//        var existing = queue.SingleOrDefault(e => e.Equals(update));
+    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    {
+        return await _dataAccess.GetUpdates(source);
+    }
 
-//        if (existing == null)
-//            return;
+    public async Task Remove(ItemUpdates update, LibrarySource source)
+    {
+        var queuedUpdates = await _dataAccess.GetUpdates(source);
 
-//        queue.Remove(existing);
-//        Save(queue);
-//    }
+        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == update.Id 
+            && u.Type == update.Type);
 
-//    //public async Task LogError(ItemPropertyUpdate update, Exception ex)
-//    //{
-//    //    var queue = await Get();
+        foreach (var queuedPropertyUpdate in queuedUpdate.Updates)
+        {
+            if (update.Updates.Any(u => u.Property == queuedPropertyUpdate.Property 
+                && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
+            {
+                queuedUpdate.Updates.Remove(queuedPropertyUpdate);
+            }
+        }
 
-//    //    var savedUpdate = queue.Updates.SingleOrDefault(e => e.Update.Equals(update));
+        if (!queuedUpdate.Updates.Any())
+        {
+            queuedUpdates.Remove(queuedUpdate);
+        }
 
-//    //    savedUpdate.FailedAttempts.Add(new FileUpdateFailedAttempt
-//    //    {
-//    //        Date = DateTime.Now,
-//    //        Error = ex.Message
-//    //    });
+        await _dataAccess.SaveUpdates(queuedUpdates, source);
+    }
 
-//    //    Save(queue);
-//    //}
+    private static void AddOrUpdate(List<ItemUpdates> queue, ItemUpdates newUpdate)
+    {
+        var existingUpdate = queue.SingleOrDefault(e => e.Type == newUpdate.Type && e.Id == newUpdate.Id);
 
-//    public async Task<List<ItemPropertyUpdate>> Get()
-//    {
-//        var path = GetUpdateQueuePath();
-//        var json = await _fileAccess.GetText(path);
-//        var queue = _jsonConverter.Deserialize<List<ItemPropertyUpdate>>(json);
-//        return queue ?? new List<ItemPropertyUpdate>();
-//    }
-
-//    private void Save(List<ItemPropertyUpdate> queue)
-//    {
-//        var path = GetUpdateQueuePath();
-//        var json = _jsonConverter.Serialize(queue);
-//        _fileAccess.SaveText(path, json);
-//    }
-
-//    private string GetUpdateQueuePath()
-//    {
-//        var directory = _config.Value.BaseDirectory;
-//        return Path.Combine(directory, _config.Value.UpdateQueue);
-//    }
-//}
+        if (existingUpdate == null)
+        {
+            queue.Add(newUpdate);
+        }
+        else
+        {
+            foreach (var newPropertyUpdate in newUpdate.Updates)
+            {
+                var existingPropertyUpdate = existingUpdate.Updates.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
+                if (existingPropertyUpdate != null)
+                {
+                    existingUpdate.Updates.Remove(existingPropertyUpdate);
+                }
+                existingUpdate.Updates.Add(newPropertyUpdate);
+            }
+        }
+    }
+}

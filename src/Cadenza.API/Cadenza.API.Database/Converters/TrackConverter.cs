@@ -1,11 +1,11 @@
-﻿using Cadenza.API.Database.Interfaces;
+﻿using Cadenza.API.Database.Interfaces.Converters;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
 using Cadenza.Domain.Extensions;
 using Cadenza.Domain.Models.Track;
 using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.API.Database.Services;
+namespace Cadenza.API.Database.Converters;
 
 internal class TrackConverter : ITrackConverter
 {
@@ -16,7 +16,7 @@ internal class TrackConverter : ITrackConverter
         _base64Converter = base64Converter;
     }
 
-    public TrackInfo ToAppModel(JsonTrack track, ICollection<JsonArtist> artists)
+    public TrackInfo ToModel(JsonTrack track, ICollection<JsonArtist> artists)
     {
         var artist = artists.Single(a => a.Id == track.ArtistId);
 
@@ -36,7 +36,7 @@ internal class TrackConverter : ITrackConverter
         };
     }
 
-    public JsonTrack ToJsonModel(TrackInfo track)
+    public JsonTrack ToJson(TrackInfo track)
     {
         return new JsonTrack
         {

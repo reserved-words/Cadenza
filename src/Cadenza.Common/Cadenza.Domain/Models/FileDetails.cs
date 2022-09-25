@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Local.Common.Model;
+﻿namespace Cadenza.Domain.Models;
 
-public class LocalFile
+public class FileDetails
 {
     public string Path { get; set; }
     public DateTime DateCreated { get; set; }

@@ -1,14 +1,14 @@
-﻿using Cadenza.API.Database.Interfaces;
+﻿using Cadenza.API.Database.Interfaces.Converters;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
 using Cadenza.Domain.Extensions;
 using Cadenza.Domain.Models.Album;
 
-namespace Cadenza.API.Database.Services;
+namespace Cadenza.API.Database.Converters;
 
 internal class AlbumConverter : IAlbumConverter
 {
-    public AlbumInfo ToAppModel(JsonAlbum album, ICollection<JsonArtist> artists)
+    public AlbumInfo ToModel(JsonAlbum album, ICollection<JsonArtist> artists)
     {
         return new AlbumInfo
         {
@@ -24,7 +24,7 @@ internal class AlbumConverter : IAlbumConverter
         };
     }
 
-    public JsonAlbum ToJsonModel(AlbumInfo album)
+    public JsonAlbum ToJson(AlbumInfo album)
     {
         var jsonAlbum = new JsonAlbum
         {

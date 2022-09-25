@@ -11,4 +11,9 @@
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Library\Cadenza.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+
 </Project>

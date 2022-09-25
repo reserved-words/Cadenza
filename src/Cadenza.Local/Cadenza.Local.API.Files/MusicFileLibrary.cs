@@ -44,7 +44,7 @@ internal class MusicFileLibrary : IMusicFileLibrary
         };
     }
 
-    public void UpdateFileData(string filepath, List<ItemPropertyUpdate> updates)
+    public void UpdateFileData(string filepath, List<PropertyUpdate> updates)
     {
         var data = _id3Service.GetId3Data(filepath);
         var commentData = _commentProcessor.GetData(data.Track.Comment);
