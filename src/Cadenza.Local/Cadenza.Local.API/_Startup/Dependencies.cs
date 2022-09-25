@@ -17,12 +17,14 @@ public static class Dependencies
 
     private static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
-        services.AddTransient<IValueMerger, ValueMerger>();
-        services.AddTransient<IMerger, Merger>();
+        services.AddScoped((sp) => new HttpClient());
+        //services.AddTransient<IValueMerger, ValueMerger>();
+        //services.AddTransient<IMerger, Merger>();
 
         services
             .AddUtilities()
             .AddMusicFileArtwork()
+            .AddMusicFileLibrary()
             .AddCoreServices();
 
         return services;

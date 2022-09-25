@@ -1,107 +1,107 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Utilities.Interfaces;
+﻿//using Cadenza.Domain.Enums;
+//using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.Utilities.Implementations;
+//namespace Cadenza.Utilities.Implementations;
 
-public class ValueMerger : IValueMerger
-{
-    public string Merge(string original, string update, MergeMode mode)
-    {
-        return Merged(original, update, mode, v => string.IsNullOrEmpty(v));
-    }
+//public class ValueMerger : IValueMerger
+//{
+//    public string Merge(string original, string update, MergeMode mode)
+//    {
+//        return Merged(original, update, mode, v => string.IsNullOrEmpty(v));
+//    }
 
-    public int Merge(int original, int update, MergeMode mode)
-    {
-        return Merged(original, update, mode, v => v == 0);
-    }
+//    public int Merge(int original, int update, MergeMode mode)
+//    {
+//        return Merged(original, update, mode, v => v == 0);
+//    }
 
-    public int? Merge(int? original, int? update, MergeMode mode)
-    {
-        return Merged(original, update, mode, v => !v.HasValue);
-    }
+//    public int? Merge(int? original, int? update, MergeMode mode)
+//    {
+//        return Merged(original, update, mode, v => !v.HasValue);
+//    }
 
-    public T Merge<T>(T original, T update, MergeMode mode) where T : struct, Enum
-    {
-        return Merged(original, update, mode, v => v.Equals(default(T)));
-    }
+//    public T Merge<T>(T original, T update, MergeMode mode) where T : struct, Enum
+//    {
+//        return Merged(original, update, mode, v => v.Equals(default(T)));
+//    }
 
-    public List<int> MergeTrackCounts(List<int> original, List<int> update, MergeMode mode)
-    {
-        original ??= new List<int>();
-        update ??= new List<int>();
+//    public List<int> MergeTrackCounts(List<int> original, List<int> update, MergeMode mode)
+//    {
+//        original ??= new List<int>();
+//        update ??= new List<int>();
 
-        if (mode == MergeMode.Update)
-            return update;
+//        if (mode == MergeMode.Update)
+//            return update;
 
-        var originalCount = original.Count;
-        var updateCount = update.Count;
+//        var originalCount = original.Count;
+//        var updateCount = update.Count;
 
-        if (originalCount == 0)
-            return update;
+//        if (originalCount == 0)
+//            return update;
 
-        if (updateCount == 0)
-            return original;
+//        if (updateCount == 0)
+//            return original;
 
-        if (originalCount == 1 && updateCount == 1)
-        {
-            return mode == MergeMode.Override
-                ? update
-                : original;
-        }
+//        if (originalCount == 1 && updateCount == 1)
+//        {
+//            return mode == MergeMode.Override
+//                ? update
+//                : original;
+//        }
 
-        var max = Math.Max(originalCount, updateCount);
-        var result = new List<int>();
+//        var max = Math.Max(originalCount, updateCount);
+//        var result = new List<int>();
 
-        for (var i = 0; i < max; i++)
-        {
-            var originalValue = originalCount < i + 1 ? (int?)null : original[i];
-            var updateValue = updateCount < i + 1 ? (int?)null : update[i];
+//        for (var i = 0; i < max; i++)
+//        {
+//            var originalValue = originalCount < i + 1 ? (int?)null : original[i];
+//            var updateValue = updateCount < i + 1 ? (int?)null : update[i];
 
-            result.Add(Merged(originalValue, updateValue, mode, v => !v.HasValue).Value);
-        }
+//            result.Add(Merged(originalValue, updateValue, mode, v => !v.HasValue).Value);
+//        }
 
-        return result;
-    }
+//        return result;
+//    }
 
-    public ICollection<T> MergeList<T>(ICollection<T> original, ICollection<T> update, MergeMode mode) where T : class
-    {
-        original ??= new List<T>();
-        update ??= new List<T>();
+//    public ICollection<T> MergeList<T>(ICollection<T> original, ICollection<T> update, MergeMode mode) where T : class
+//    {
+//        original ??= new List<T>();
+//        update ??= new List<T>();
 
-        if (mode == MergeMode.Update)
-            return update;
+//        if (mode == MergeMode.Update)
+//            return update;
 
-        var result = new List<T>();
+//        var result = new List<T>();
 
-        foreach (var originalItem in original)
-        {
-            var updateItem = update.SingleOrDefault(i => i.Equals(originalItem));
-            result.Add(Merged(originalItem, updateItem, mode, v => v == null));
-        }
+//        foreach (var originalItem in original)
+//        {
+//            var updateItem = update.SingleOrDefault(i => i.Equals(originalItem));
+//            result.Add(Merged(originalItem, updateItem, mode, v => v == null));
+//        }
 
-        foreach (var updateItem in update)
-        {
-            var resultItem = result.SingleOrDefault(i => i.Equals(updateItem));
-            if (resultItem == null)
-            {
-                result.Add(updateItem);
-            }
-        }
+//        foreach (var updateItem in update)
+//        {
+//            var resultItem = result.SingleOrDefault(i => i.Equals(updateItem));
+//            if (resultItem == null)
+//            {
+//                result.Add(updateItem);
+//            }
+//        }
 
-        return original;
-    }
+//        return original;
+//    }
 
-    private static T Merged<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
-    {
-        return Replace(original, update, mode, isEmpty)
-            ? update
-            : original;
-    }
+//    private static T Merged<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
+//    {
+//        return Replace(original, update, mode, isEmpty)
+//            ? update
+//            : original;
+//    }
 
-    private static bool Replace<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
-    {
-        return mode == MergeMode.Update
-            || mode == MergeMode.Override && !isEmpty(update)
-            || mode == MergeMode.Merge && isEmpty(original);
-    }
-}
+//    private static bool Replace<T>(T original, T update, MergeMode mode, Predicate<T> isEmpty)
+//    {
+//        return mode == MergeMode.Update
+//            || mode == MergeMode.Override && !isEmpty(update)
+//            || mode == MergeMode.Merge && isEmpty(original);
+//    }
+//}

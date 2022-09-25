@@ -14,7 +14,8 @@ public static class _Startup
     {
         return services
             .AddInternalServices()
-            .AddTransient<IMusicRepository, MusicRepository>();
+            .AddTransient<IMusicRepository, MusicRepository>()
+            .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 
     private static IServiceCollection AddInternalServices(this IServiceCollection services)

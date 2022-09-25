@@ -1,5 +1,6 @@
 ﻿using Cadenza.Local.API.Common.Controllers;
 using Cadenza.Local.API.Core.Config;
+using Cadenza.Local.API.Core.Interfaces;
 using Cadenza.Local.API.Core.Services;
 using Cadenza.Local.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,9 @@ namespace Cadenza.Local.API.Core
         }
         private static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
-            return services.AddTransient<IImageSrcGenerator, ImageSrcGenerator>();
+            return services
+                .AddTransient<IImageSrcGenerator, ImageSrcGenerator>()
+                .AddTransient<IMusicDirectory, MusicDirectory>();
         }
     }
 }

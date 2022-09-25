@@ -27,7 +27,7 @@ public class UpdateController : ControllerBase
     //    await _service.Update(update);
     //}
 
-    [HttpPost("Update")]
+    [HttpPost("UpdateItem")]
     public async Task UpdateItem(ItemUpdates update)
     {
         await _service.Update(update);
