@@ -40,9 +40,14 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
     {
-        throw new NotImplementedException();
+        var library = await _repository.Get(source);
+
+        return library.Tracks
+            .Where(t => t.ArtistId == artistId)
+            .Select(t => t.Id)
+            .ToList();
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
