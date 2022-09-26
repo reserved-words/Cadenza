@@ -1,7 +1,7 @@
 ﻿using Cadenza.API.Common.Repositories;
 using Cadenza.API.Database.Interfaces;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.API.Database.Services;
 

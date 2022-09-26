@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Updates;
 using Cadenza.SyncService.Interfaces;
 
 namespace Cadenza.SyncService.Updaters;
@@ -37,12 +37,7 @@ internal class UpdatesHandler : IUpdateService
         foreach (var update in updates)
         {
             var tracks = await _database.GetTracksByArtist(source, update.Id);
-
-            foreach (var trackId in tracks)
-            {
-                await repository.UpdateTrack(trackId, update);
-            }
-
+            await repository.UpdateTracks(tracks, update.Updates);
             await MarkUpdated(source, update);
         }
     }
@@ -52,12 +47,7 @@ internal class UpdatesHandler : IUpdateService
         foreach (var update in updates)
         {
             var tracks = await _database.GetTracksByAlbum(source, update.Id);
-
-            foreach (var trackId in tracks)
-            {
-                await repository.UpdateTrack(trackId, update);
-            }
-
+            await repository.UpdateTracks(tracks, update.Updates);
             await MarkUpdated(source, update);
         }
     }
@@ -66,7 +56,7 @@ internal class UpdatesHandler : IUpdateService
     {
         foreach (var update in updates)
         {
-            await repository.UpdateTrack(update.Id, update);
+            await repository.UpdateTracks(new List<string> { update.Id }, update.Updates);
             await MarkUpdated(source, update);
         }
     }

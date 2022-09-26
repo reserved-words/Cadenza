@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Updates;
 using Cadenza.Local.API.Common.Interfaces;
 using Cadenza.Local.API.Files.Interfaces;
 using Cadenza.Local.API.Files.Model;

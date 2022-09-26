@@ -1,4 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.Domain.Models.Update;
 

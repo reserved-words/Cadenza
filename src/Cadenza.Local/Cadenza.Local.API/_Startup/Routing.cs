@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models;
+﻿using Cadenza.Domain.Models.Updates;
 using Cadenza.Local.API.Common.Controllers;
 
 namespace Cadenza.Local.API;
@@ -39,7 +39,7 @@ public static class Routing
         var service = app.Services.GetService<ISyncService>();
         app.MapGet("/Sync/GetAllTracks", async () => await service.GetAllTracks());
         app.MapGet("/Sync/GetTrack/{id}", async (string id) => await service.GetTrack(id));
-        app.MapPost("/Sync/UpdateTrack", async (ItemUpdates updates) => await service.UpdateTrack(updates.Id, updates.Updates));
+        app.MapPost("/Sync/UpdateTracks", async (MultiTrackUpdates updates) => await service.UpdateTracks(updates));
         return app;
     }
 }

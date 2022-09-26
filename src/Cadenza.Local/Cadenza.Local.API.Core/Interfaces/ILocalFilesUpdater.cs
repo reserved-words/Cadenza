@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models;
+﻿using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.Local.API.Core.Interfaces;
 

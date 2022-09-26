@@ -1,6 +1,6 @@
 ﻿using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.API.Database.Interfaces;
 

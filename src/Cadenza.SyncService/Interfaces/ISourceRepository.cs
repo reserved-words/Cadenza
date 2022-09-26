@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.SyncService.Interfaces;
 
@@ -10,5 +10,5 @@ internal interface ISourceRepository
 
     Task<List<string>> GetAllTracks();
     Task<TrackFull> GetTrack(string id);
-    Task UpdateTrack(string trackId, ItemUpdates updates);
+    Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates);
 }

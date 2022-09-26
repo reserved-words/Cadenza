@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Updates;
 using Cadenza.SyncService.Interfaces;
 using Cadenza.SyncService.Settings;
 using Cadenza.Utilities.Interfaces;
@@ -36,17 +36,14 @@ internal class LocalRepository : ISourceRepository
         return await response.Content.ReadFromJsonAsync<TrackFull>();
     }
 
-    public async Task UpdateTrack(string trackId, ItemUpdates updates)
+    public async Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates)
     {
-        var trackUpdate = new ItemUpdates
+        var data = new MultiTrackUpdates
         {
-            Type = LibraryItemType.Track,
-            Id = trackId,
-            Updates = updates.Updates
+            TrackIds = trackIds,
+            Updates = updates
         };
-
-        var data = new { updates = trackUpdate };
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTrack}";
-        await _http.Post(url, null, trackUpdate);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTracks}";
+        await _http.Post(url, null, data);
     }
 }

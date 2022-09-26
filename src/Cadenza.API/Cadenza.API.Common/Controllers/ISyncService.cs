@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
 using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.API.Common.Controllers;
 

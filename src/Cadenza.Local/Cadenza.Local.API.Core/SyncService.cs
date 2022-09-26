@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Models;
-using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Domain.Models.Track;
+using Cadenza.Domain.Models.Updates;
 using Cadenza.Local.API.Common.Controllers;
 using Cadenza.Local.API.Common.Interfaces;
 using Cadenza.Local.API.Core.Interfaces;
@@ -36,10 +36,14 @@ internal class SyncService : ISyncService
         return Task.FromResult(track);
     }
 
-    public Task UpdateTrack(string id, List<PropertyUpdate> updates)
+    public Task UpdateTracks(MultiTrackUpdates updates)
     {
-        var path = _base64Converter.FromBase64(id);
-        _musicLibrary.UpdateFileData(path, updates);
+        foreach (var trackId in updates.TrackIds)
+        {
+            var path = _base64Converter.FromBase64(trackId);
+            _musicLibrary.UpdateFileData(path, updates.Updates);
+        }
+
         return Task.CompletedTask;
     }
 }

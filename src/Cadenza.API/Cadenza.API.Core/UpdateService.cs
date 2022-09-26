@@ -1,7 +1,7 @@
 ﻿using Cadenza.API.Common.Controllers;
 using Cadenza.API.Common.Repositories;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.API.Core;
 internal class UpdateService : IUpdateService

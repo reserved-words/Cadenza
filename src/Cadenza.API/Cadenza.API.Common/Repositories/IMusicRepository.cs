@@ -1,6 +1,7 @@
 ﻿using Cadenza.API.Common.Model;
 using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Models.Updates;
+
 namespace Cadenza.API.Common.Repositories;
 
 public interface IMusicRepository
