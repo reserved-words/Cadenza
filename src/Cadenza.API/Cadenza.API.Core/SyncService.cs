@@ -52,7 +52,7 @@ internal class SyncService : ISyncService
 
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await _updateRepository.Remove(source, update);
+        await _updateRepository.Remove(update, source);
     }
 
     public Task RemoveTrack(LibrarySource source, string id)

@@ -34,7 +34,7 @@ public class UpdateController : ControllerBase
         await _service.UpdateTrack(source, update);
     }
 
-    [HttpPost("UpdateArtist/{source}")]
+    [HttpPost("UpdateArtist")]
     public async Task UpdateArtist([FromBody] ItemUpdates update)
     {
         await _service.UpdateArtist(update);

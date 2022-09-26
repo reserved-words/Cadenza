@@ -14,15 +14,18 @@ internal class UpdateRepository : IUpdateRepository
         _dataAccess = dataAccess;
     }
 
-    public async Task Add(ItemUpdates update)
+    public async Task Add(ItemUpdates update, LibrarySource? itemSource)
     {
-        foreach (var source in Enum.GetValues<LibrarySource>())
+        if (itemSource.HasValue)
         {
-            var updates = await _dataAccess.GetUpdates(source);
-
-            AddOrUpdate(updates, update);
-
-            await _dataAccess.SaveUpdates(updates, source);
+            await AddToSource(update, itemSource.Value);
+        }
+        else
+        {
+            foreach (var source in Enum.GetValues<LibrarySource>())
+            {
+                await AddToSource(update, source);
+            }
         }
     }
 
@@ -31,12 +34,12 @@ internal class UpdateRepository : IUpdateRepository
         return await _dataAccess.GetUpdates(source);
     }
 
-    public async Task Remove(LibrarySource source, ItemUpdates updateToRemove)
+    public async Task Remove(ItemUpdates update, LibrarySource itemSource)
     {
-        var queuedUpdates = await _dataAccess.GetUpdates(source);
+        var queuedUpdates = await _dataAccess.GetUpdates(itemSource);
 
-        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == updateToRemove.Id 
-            && u.Type == updateToRemove.Type);
+        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == update.Id
+            && u.Type == update.Type);
 
         if (queuedUpdate == null)
             return;
@@ -45,7 +48,7 @@ internal class UpdateRepository : IUpdateRepository
 
         foreach (var queuedPropertyUpdate in queuedUpdate.Updates)
         {
-            if (updateToRemove.Updates.Any(u => u.Property == queuedPropertyUpdate.Property 
+            if (update.Updates.Any(u => u.Property == queuedPropertyUpdate.Property
                 && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
             {
                 propertyUpdatesToRemove.Add(queuedPropertyUpdate);
@@ -62,7 +65,18 @@ internal class UpdateRepository : IUpdateRepository
             queuedUpdates.Remove(queuedUpdate);
         }
 
-        await _dataAccess.SaveUpdates(queuedUpdates, source);
+        await _dataAccess.SaveUpdates(queuedUpdates, itemSource);
+
+    }
+
+    private async Task AddToSource(ItemUpdates update, LibrarySource source)
+    {
+        var updates = await _dataAccess.GetUpdates(source);
+
+        AddOrUpdate(updates, update);
+
+        await _dataAccess.SaveUpdates(updates, source);
+
     }
 
     private static void AddOrUpdate(List<ItemUpdates> queue, ItemUpdates newUpdate)

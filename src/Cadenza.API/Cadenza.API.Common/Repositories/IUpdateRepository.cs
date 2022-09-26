@@ -5,7 +5,7 @@ namespace Cadenza.API.Common.Repositories;
 
 public interface IUpdateRepository
 {
-    Task Add(ItemUpdates update);
+    Task Add(ItemUpdates update, LibrarySource? itemSource);
     Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
-    Task Remove(LibrarySource source, ItemUpdates update);
+    Task Remove(ItemUpdates update, LibrarySource source);
 }
