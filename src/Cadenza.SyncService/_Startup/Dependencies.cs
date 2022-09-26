@@ -27,7 +27,7 @@ public static class Dependencies
     private static IServiceCollection AddUpdaters(this IServiceCollection services)
     {
         return services
-            //.AddTransient<IUpdateService, AddedTracksHandler>()
+            .AddTransient<IUpdateService, AddedTracksHandler>()
             .AddTransient<IUpdateService, RemovedTracksHandler>()
             .AddTransient<IUpdateService, UpdatesHandler>();
     }

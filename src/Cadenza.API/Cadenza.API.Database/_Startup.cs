@@ -26,6 +26,7 @@ public static class _Startup
             .AddTransient<IArtistConverter, ArtistConverter>()
             .AddTransient<IDataAccess, DataAccess>()
             .AddTransient<IJsonToModelConverter, JsonToModelConverter>()
+            .AddTransient<IModelToJsonConverter, ModelToJsonConverter>()
             .AddTransient<ITrackConverter, TrackConverter>();
     }
 

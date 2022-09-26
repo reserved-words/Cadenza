@@ -3,6 +3,7 @@ using Cadenza.API.Common.Repositories;
 using Cadenza.API.Database.Interfaces;
 using Cadenza.API.Database.Model;
 using Cadenza.Domain.Enums;
+using Cadenza.Domain.Models.Track;
 using Cadenza.Domain.Models.Updates;
 
 namespace Cadenza.API.Database;
@@ -12,12 +13,14 @@ internal class MusicRepository : IMusicRepository
     // TODO: Way too much going on here, need to split into smaller services
 
     private readonly IDataAccess _dataAccess;
-    private readonly IJsonToModelConverter _converter;
+    private readonly IJsonToModelConverter _jsonToModelConverter;
+    private readonly IModelToJsonConverter _modelToJsonConverter;
 
-    public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter converter)
+    public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter jsonToModelConverter, IModelToJsonConverter modelToJsonConverter)
     {
         _dataAccess = dataAccess;
-        _converter = converter;
+        _jsonToModelConverter = jsonToModelConverter;
+        _modelToJsonConverter = modelToJsonConverter;
     }
 
     public async Task<FullLibrary> Get()
@@ -97,7 +100,7 @@ internal class MusicRepository : IMusicRepository
     {
         foreach (var jsonArtist in jsonArtists)
         {
-            var artist = _converter.ConvertArtist(jsonArtist);
+            var artist = _jsonToModelConverter.ConvertArtist(jsonArtist);
             library.Artists.Add(artist);
         }
     }
@@ -108,7 +111,7 @@ internal class MusicRepository : IMusicRepository
 
         foreach (var jsonAlbumTrackLink in jsonAlbumTrackLinks)
         {
-            var albumTrack = _converter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
+            var albumTrack = _jsonToModelConverter.ConvertAlbumTrackLink(jsonAlbumTrackLink);
             library.AlbumTrackLinks.Add(albumTrack);
         }
 
@@ -116,7 +119,7 @@ internal class MusicRepository : IMusicRepository
 
         foreach (var jsonTrack in jsonTracks)
         {
-            var track = _converter.ConvertTrack(jsonTrack, jsonArtists);
+            var track = _jsonToModelConverter.ConvertTrack(jsonTrack, jsonArtists);
             track.Source = source;
             library.Tracks.Add(track);
         }
@@ -125,7 +128,7 @@ internal class MusicRepository : IMusicRepository
 
         foreach (var jsonAlbum in jsonAlbums)
         {
-            var album = _converter.ConvertAlbum(jsonAlbum, jsonArtists);
+            var album = _jsonToModelConverter.ConvertAlbum(jsonAlbum, jsonArtists);
             album.Source = source;
             library.Albums.Add(album);
         }
@@ -280,5 +283,50 @@ internal class MusicRepository : IMusicRepository
 
         library.Artists.Remove(artist);
         return artist;
+    }
+
+    public async Task AddTrack(LibrarySource source, TrackFull track)
+    {
+        var library = await _dataAccess.GetAll(source);
+        
+        var existingTrack = library.Tracks.SingleOrDefault(a => a.Id == track.Track.Id);
+        if (existingTrack == null)
+        {
+            var jsonTrack = _modelToJsonConverter.ConvertTrack(track.Track);
+            library.Tracks.Add(jsonTrack);
+        }
+
+        var existingAlbum = library.Albums.SingleOrDefault(a => a.Id == track.Album.Id);
+        if (existingAlbum == null)
+        {
+            var jsonAlbum = _modelToJsonConverter.ConvertAlbum(track.Album);
+            library.Albums.Add(jsonAlbum);
+        }
+
+        var existingAlbumTrackLink = library.AlbumTrackLinks.SingleOrDefault(t => t.TrackId == track.Track.Id);
+        if (existingAlbumTrackLink == null)
+        {
+            var jsonAlbumTrackLink = _modelToJsonConverter.ConvertAlbumTrackLink(track.AlbumTrack);
+            library.AlbumTrackLinks.Add(jsonAlbumTrackLink);
+        }
+
+        var existingArtist = library.Artists.SingleOrDefault(a => a.Id == track.Artist.Id); 
+        if (existingArtist == null)
+        {
+            var jsonArtist = _modelToJsonConverter.ConvertArtist(track.Artist);
+            library.Artists.Add(jsonArtist);
+        }
+
+        if (track.Artist.Id != track.AlbumArtist.Id)
+        {
+            var existingAlbumArtist = library.Artists.SingleOrDefault(a => a.Id == track.AlbumArtist.Id);
+            if (existingAlbumArtist == null)
+            {
+                var jsonAlbumArtist = _modelToJsonConverter.ConvertArtist(track.AlbumArtist);
+                library.Artists.Add(jsonAlbumArtist);
+            }
+        }
+
+        await _dataAccess.SaveAll(library, source);
     }
 }

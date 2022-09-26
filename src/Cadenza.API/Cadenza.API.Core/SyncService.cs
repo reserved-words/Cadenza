@@ -16,9 +16,9 @@ internal class SyncService : ISyncService
         _updateRepository = updateRepository;
     }
 
-    public Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, TrackFull track)
     {
-        throw new NotImplementedException();
+        await _repository.AddTrack(source, track);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)

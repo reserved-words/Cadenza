@@ -34,6 +34,10 @@ internal class MusicFileLibrary : IMusicFileLibrary
         var album = _converter.ConvertAlbum(id3Track);
         var albumTrackLink = _converter.ConvertAlbumTrackLink(track.Id, id3Track);
 
+        track.ArtistName = trackArtist.Name;
+        album.ArtistName = albumArtist.Name;
+        album.DiscCount = album.TrackCounts.Count;
+
         return new TrackFull
         {
             Album = album,

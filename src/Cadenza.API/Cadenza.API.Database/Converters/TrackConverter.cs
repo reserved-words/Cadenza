@@ -41,7 +41,6 @@ internal class TrackConverter : ITrackConverter
         return new JsonTrack
         {
             Id = track.Id,
-            Path = track.Source == LibrarySource.Local ? _base64Converter.FromBase64(track.Id) : null,
             Source = track.Source,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,
