@@ -55,8 +55,8 @@ internal class SyncService : ISyncService
         await _updateRepository.Remove(update, source);
     }
 
-    public Task RemoveTrack(LibrarySource source, string id)
+    public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
-        throw new NotImplementedException();
+        await _repository.RemoveTracks(source, ids);
     }
 }

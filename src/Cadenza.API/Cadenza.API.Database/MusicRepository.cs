@@ -9,6 +9,8 @@ namespace Cadenza.API.Database;
 
 internal class MusicRepository : IMusicRepository
 {
+    // TODO: Way too much going on here, need to split into smaller services
+
     private readonly IDataAccess _dataAccess;
     private readonly IJsonToModelConverter _converter;
 
@@ -146,7 +148,7 @@ internal class MusicRepository : IMusicRepository
                     break;
                 default:
                     throw new NotImplementedException();
-            } 
+            }
         }
     }
 
@@ -164,7 +166,7 @@ internal class MusicRepository : IMusicRepository
                     break;
                 default:
                     throw new NotImplementedException();
-            } 
+            }
         }
     }
 
@@ -191,7 +193,92 @@ internal class MusicRepository : IMusicRepository
                     break;
                 default:
                     throw new NotImplementedException();
-            } 
+            }
         }
+    }
+
+    public async Task RemoveTracks(LibrarySource source, List<string> trackIds)
+    {
+        var library = await _dataAccess.GetAll(source);
+
+        foreach (var id in trackIds)
+        {
+            RemoveTrack(library, id);
+        }
+
+        await _dataAccess.SaveAll(library, source);
+    }
+
+    private static void RemoveTrack(JsonItems library, string trackId)
+    {
+        var track = library.Tracks.SingleOrDefault(a => a.Id == trackId);
+
+        if (track == null)
+            return;
+
+        library.Tracks.Remove(track);
+
+        var albumTrack = RemoveAlbumTrack(library, trackId);
+
+        if (albumTrack != null)
+        {
+            library.AlbumTrackLinks.Remove(albumTrack);
+
+            var removedAlbum = RemoveAlbumIfEmpty(library, albumTrack.AlbumId);
+
+            if (removedAlbum != null)
+            {
+                RemoveArtistIfEmpty(library, removedAlbum.ArtistId);
+            }
+        }
+
+        RemoveArtistIfEmpty(library, track.ArtistId);
+    }
+
+    private static JsonAlbumTrackLink RemoveAlbumTrack(JsonItems library, string trackId)
+    {
+        var albumTrack = library.AlbumTrackLinks.SingleOrDefault(t => t.TrackId == trackId);
+
+        if (albumTrack == null)
+            return null;
+
+        library.AlbumTrackLinks.Remove(albumTrack);
+        return albumTrack;
+    }
+
+    private static JsonAlbum RemoveAlbumIfEmpty(JsonItems library, string albumId)
+    {
+        var albumTracks = library.AlbumTrackLinks.Where(a => a.AlbumId == albumId);
+
+        if (albumTracks.Any())
+            return null;
+
+        var album = library.Albums.SingleOrDefault(a => a.Id == albumId);
+        if (album == null)
+            return null;
+
+        library.Albums.Remove(album);
+        return album;
+    }
+
+    private static JsonArtist RemoveArtistIfEmpty(JsonItems library, string artistId)
+    {
+        var albums = library.Albums.Where(a => a.ArtistId == artistId);
+
+        if (albums.Any())
+            return null;
+
+        var tracks = library.Tracks.Where(a => a.ArtistId == artistId);
+
+        if (tracks.Any())
+            return null;
+
+        var artist = library.Artists.SingleOrDefault(a => a.Id == artistId);
+
+        if (artist == null)
+            return null;
+
+        library.Artists.Remove(artist);
+        return artist;
     }
 }

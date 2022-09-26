@@ -12,6 +12,6 @@ internal interface IDatabaseRepository
     Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId);
     Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
     Task MarkUpdated(LibrarySource source, ItemUpdates update);
-    Task RemoveTrack(LibrarySource source, string id);
+    Task RemoveTracks(LibrarySource source, List<string> ids);
 
 }

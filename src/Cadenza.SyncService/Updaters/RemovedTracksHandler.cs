@@ -26,12 +26,11 @@ internal class RemovedTracksHandler : IUpdateService
     {
         var dbTracks = await _database.GetAllTracks(source);
         var sourceTracks = await repository.GetAllTracks();
+        var removedTracks = dbTracks.Except(sourceTracks).ToList();
 
-        var removedTracks = dbTracks.Except(sourceTracks);
-
-        foreach (var trackId in removedTracks)
+        if (removedTracks.Any())
         {
-            await _database.RemoveTrack(source, trackId);
+            await _database.RemoveTracks(source, removedTracks);
         }
     }
 }

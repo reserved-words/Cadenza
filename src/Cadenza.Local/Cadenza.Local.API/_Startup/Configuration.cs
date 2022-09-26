@@ -1,4 +1,5 @@
-﻿using Cadenza.Local.Common.Config;
+﻿using Cadenza.Local.API.Core;
+using Cadenza.Local.Common.Config;
 
 namespace Cadenza.Local.API;
 
@@ -12,6 +13,7 @@ public static class Configuration
         builder.Configuration.AddJsonFile(settingsPath);
 
         builder.Services
+            .ConfigureMusicLocation(builder.Configuration, "MusicLibrary")
             .ConfigurePlayLocation(builder.Configuration, "CurrentlyPlaying");
 
         return builder;

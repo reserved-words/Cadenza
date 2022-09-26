@@ -23,25 +23,25 @@ public class SyncController : ControllerBase
         await _service.AddTrack(source, track);
     }
 
-    [HttpGet("GetAllTracks")]
+    [HttpGet("GetAllTracks/{source}")]
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _service.GetAllTracks(source);
     }
 
-    [HttpGet("GetTracksByAlbum")]
+    [HttpGet("GetTracksByAlbum/{source}/{albumId}")]
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
         return await _service.GetTracksByAlbum(source, albumId);
     }
 
-    [HttpGet("GetTracksByArtist")]
+    [HttpGet("GetTracksByArtist/{source}/{artistId}")]
     public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
     {
         return await _service.GetTracksByArtist(source, artistId);
     }
 
-    [HttpGet("GetUpdates")]
+    [HttpGet("GetUpdates/{source}")]
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
         return await _service.GetUpdates(source);
@@ -53,9 +53,9 @@ public class SyncController : ControllerBase
         await _service.MarkUpdated(source, update);
     }
 
-    [HttpPost("RemoveTrack/{source}/{id}")]
-    public async Task RemoveTrack(LibrarySource source, [FromBody] string id)
+    [HttpPost("RemoveTracks/{source}")]
+    public async Task RemoveTrack(LibrarySource source, [FromBody] List<string> ids)
     {
-        await _service.RemoveTrack(source, id);
+        await _service.RemoveTracks(source, ids);
     }
 }

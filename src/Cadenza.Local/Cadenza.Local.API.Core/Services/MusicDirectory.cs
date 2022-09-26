@@ -19,7 +19,8 @@ internal class MusicDirectory : IMusicDirectory
 
     public async Task<List<FileDetails>> GetAllFiles()
     {
-        return (await GetFiles()).ToList();
+        var files = await GetFiles();
+        return files.ToList();
     }
 
     public async Task<List<FileDetails>> GetModifiedFiles(DateTime sinceDate)

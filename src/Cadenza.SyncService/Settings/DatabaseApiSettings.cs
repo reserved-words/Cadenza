@@ -14,5 +14,5 @@ public class DatabaseApiEndpoints
     public string GetTracksByAlbum { get; set; }
     public string GetUpdates { get; set; }
     public string MarkUpdated { get; set; }
-    public string RemoveTrack { get; set; }
+    public string RemoveTracks { get; set; }
 }

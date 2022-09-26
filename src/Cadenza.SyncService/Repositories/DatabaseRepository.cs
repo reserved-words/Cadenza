@@ -22,35 +22,34 @@ internal class DatabaseRepository : IDatabaseRepository
 
     public async Task AddTrack(LibrarySource source, TrackFull track)
     {
-        var data = new { source, track };
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}";
-        await _http.Post(url, null, data);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}/{source}";
+        await _http.Post(url, null, track);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetAllTracks}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetAllTracks}/{source}";
         var response = await _http.Get(url);
         return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}/{source}/{albumId}";
         var response = await _http.Get(url);
         return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
     public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}/{source}/{artistId}";
         var response = await _http.Get(url);
         return await response.Content.ReadFromJsonAsync<List<string>>();
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}/{source}";
         var response = await _http.Get(url);
         return await response.Content.ReadFromJsonAsync<List<ItemUpdates>>();
     }
@@ -61,10 +60,9 @@ internal class DatabaseRepository : IDatabaseRepository
         await _http.Post(url, null, update);
     }
 
-    public async Task RemoveTrack(LibrarySource source, string id)
+    public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
-        var data = new { source, id };
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTrack}";
-        await _http.Post(url, null, data);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTracks}/{source}";
+        var response = await _http.Post(url, null, ids);
     }
 }
