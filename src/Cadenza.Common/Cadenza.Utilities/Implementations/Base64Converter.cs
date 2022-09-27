@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Cadenza.Utilities.Implementations;
 
-public class Base64Converter : IBase64Converter
+internal class Base64Converter : IBase64Converter
 {
     public string FromBase64(string base64)
     {

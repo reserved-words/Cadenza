@@ -2,7 +2,7 @@
 
 namespace Cadenza.Utilities.Implementations;
 
-public class IdGenerator : IIdGenerator
+internal class IdGenerator : IIdGenerator
 {
     private readonly INameComparer _nameComparer;
 

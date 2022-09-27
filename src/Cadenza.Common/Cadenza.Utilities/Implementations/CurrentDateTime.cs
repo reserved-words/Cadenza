@@ -2,7 +2,7 @@
 
 namespace Cadenza.Utilities.Implementations;
 
-public class CurrentDateTime : IDateTime
+internal class CurrentDateTime : IDateTime
 {
     public DateTime Now => DateTime.Now;
 }

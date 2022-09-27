@@ -17,8 +17,7 @@ namespace Cadenza.SyncService._Startup
 
             services
                 .ConfigureDatabaseApi(configuration, "DatabaseApi")
-                .ConfigureLocalApi(configuration, "LocalApi")
-                .ConfigureLogger(configuration, "Logging");
+                .ConfigureLocalApi(configuration, "LocalApi");
 
             return services;
         }

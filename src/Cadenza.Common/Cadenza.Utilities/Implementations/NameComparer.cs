@@ -2,7 +2,7 @@
 
 namespace Cadenza.Utilities.Implementations;
 
-public class NameComparer : INameComparer
+internal class NameComparer : INameComparer
 {
     public bool IsMatch(string artist1, string artist2)
     {

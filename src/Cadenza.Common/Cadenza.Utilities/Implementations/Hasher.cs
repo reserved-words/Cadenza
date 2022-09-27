@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cadenza.Utilities.Implementations;
 
-public class Hasher : IHasher
+internal class Hasher : IHasher
 {
     public string MD5Hash(string input)
     {

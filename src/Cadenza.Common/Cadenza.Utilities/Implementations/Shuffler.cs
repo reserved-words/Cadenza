@@ -2,7 +2,7 @@
 
 namespace Cadenza.Utilities.Implementations;
 
-public class Shuffler : IShuffler
+internal class Shuffler : IShuffler
 {
     public List<T> Shuffle<T>(List<T> items, T first = null) where T : class
     {

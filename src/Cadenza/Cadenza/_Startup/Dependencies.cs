@@ -39,7 +39,6 @@ public static class Dependencies
             .AddInteropServices()
             .AddUtilities()
             .AddHttpClient(http)
-            .AddLogger(http)
             .AddAppServices()
             .AddUIHelpers()
             .AddTimers()

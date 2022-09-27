@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace Cadenza.Utilities.Implementations;
 
-public class HttpHelper : IHttpHelper
+internal class HttpHelper : IHttpHelper
 {
     private readonly HttpClient _client;
 
