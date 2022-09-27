@@ -6,7 +6,7 @@ namespace Cadenza.API.LastFM;
 public static class XmlExtensions
 {
     private static readonly string[] ImageSizes = new string[] { "extralarge", "large", "medium", "small" };
-    private static readonly IFormatProvider Format = CultureInfo.CurrentCulture.DateTimeFormat;
+    private static readonly IFormatProvider Format = CultureInfo.InvariantCulture.DateTimeFormat;
 
     public static string Get(this XElement xml, string parent, string name, bool isAttribute = false)
     {
@@ -36,7 +36,8 @@ public static class XmlExtensions
     public static DateTime GetDateTime(this XElement xml, string name, bool isAttribute = false)
     {
         var value = xml.Get(name);
-        return DateTime.TryParseExact(value, "dd MMM yyyy, HH:mm", Format, DateTimeStyles.None, out DateTime result)
+
+        return DateTime.TryParseExact(value, "dd MMM yyyy, HH:mm", Format, DateTimeStyles.AssumeUniversal, out DateTime result)
             ? result
             : DateTime.MinValue;
     }
