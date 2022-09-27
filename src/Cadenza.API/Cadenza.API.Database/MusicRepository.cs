@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Database.Interfaces.Updaters;
-
-namespace Cadenza.API.Database;
+﻿namespace Cadenza.API.Database;
 
 internal class MusicRepository : IMusicRepository
 {
