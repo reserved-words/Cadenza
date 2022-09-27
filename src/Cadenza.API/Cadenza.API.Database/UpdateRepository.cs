@@ -1,17 +1,16 @@
-﻿using Cadenza.API.Common.Repositories;
-using Cadenza.API.Database.Interfaces;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Updates;
+﻿using Cadenza.API.Database.Interfaces.Updaters;
 
-namespace Cadenza.API.Database.Services;
+namespace Cadenza.API.Database;
 
 internal class UpdateRepository : IUpdateRepository
 {
     private readonly IDataAccess _dataAccess;
+    private readonly IQueueUpdater _updater;
 
-    public UpdateRepository(IDataAccess dataAccess)
+    public UpdateRepository(IDataAccess dataAccess, IQueueUpdater updater)
     {
         _dataAccess = dataAccess;
+        _updater = updater;
     }
 
     public async Task Add(ItemUpdates update, LibrarySource? itemSource)
@@ -34,70 +33,19 @@ internal class UpdateRepository : IUpdateRepository
         return await _dataAccess.GetUpdates(source);
     }
 
-    public async Task Remove(ItemUpdates update, LibrarySource itemSource)
+    public async Task Remove(ItemUpdates update, LibrarySource source)
     {
-        var queuedUpdates = await _dataAccess.GetUpdates(itemSource);
-
-        var queuedUpdate = queuedUpdates.SingleOrDefault(u => u.Id == update.Id
-            && u.Type == update.Type);
-
-        if (queuedUpdate == null)
-            return;
-
-        var propertyUpdatesToRemove = new List<PropertyUpdate>();
-
-        foreach (var queuedPropertyUpdate in queuedUpdate.Updates)
+        await _dataAccess.UpdateUpdates(source, updates =>
         {
-            if (update.Updates.Any(u => u.Property == queuedPropertyUpdate.Property
-                && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
-            {
-                propertyUpdatesToRemove.Add(queuedPropertyUpdate);
-            }
-        }
-
-        foreach (var propertyUpdate in propertyUpdatesToRemove)
-        {
-            queuedUpdate.Updates.Remove(propertyUpdate);
-        }
-
-        if (!queuedUpdate.Updates.Any())
-        {
-            queuedUpdates.Remove(queuedUpdate);
-        }
-
-        await _dataAccess.SaveUpdates(queuedUpdates, itemSource);
-
+            _updater.Remove(updates, update);
+        });
     }
 
     private async Task AddToSource(ItemUpdates update, LibrarySource source)
     {
-        var updates = await _dataAccess.GetUpdates(source);
-
-        AddOrUpdate(updates, update);
-
-        await _dataAccess.SaveUpdates(updates, source);
-
-    }
-
-    private static void AddOrUpdate(List<ItemUpdates> queue, ItemUpdates newUpdate)
-    {
-        var existingUpdate = queue.SingleOrDefault(e => e.Type == newUpdate.Type && e.Id == newUpdate.Id);
-
-        if (existingUpdate == null)
+        await _dataAccess.UpdateUpdates(source, updates =>
         {
-            queue.Add(newUpdate);
-        }
-        else
-        {
-            foreach (var newPropertyUpdate in newUpdate.Updates)
-            {
-                var existingPropertyUpdate = existingUpdate.Updates.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
-                if (existingPropertyUpdate != null)
-                {
-                    existingUpdate.Updates.Remove(existingPropertyUpdate);
-                }
-                existingUpdate.Updates.Add(newPropertyUpdate);
-            }
-        }
+            _updater.AddOrUpdate(updates, update);
+        });
     }
 }

@@ -32,7 +32,7 @@ internal class AlbumCache : IAlbumCache
     {
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
 
-        var albums = library.AlbumTrackLinks
+        var albums = library.AlbumTracks
             .GroupBy(a => a.AlbumId);
 
         _albumTracks = albums.ToDictionary(a => a.Key, a => new List<AlbumTrack>());

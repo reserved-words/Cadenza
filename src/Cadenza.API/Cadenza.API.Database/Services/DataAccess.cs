@@ -1,120 +1,165 @@
-﻿using Microsoft.Extensions.Options;
-using Cadenza.API.Database.Model;
-using Cadenza.API.Database.Interfaces;
-using Cadenza.Domain.Enums;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Domain.Models.Updates;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class DataAccess : IDataAccess
 {
-    private readonly IFileAccess _fileAccess;
-    private readonly IJsonConverter _jsonConverter;
-    private readonly IOptions<LibraryPathSettings> _config;
+    private readonly IFilePathService _paths;
+    private readonly IFileDataService _service;
 
-    public DataAccess(IFileAccess fileAccess, IJsonConverter jsonConverter, IOptions<LibraryPathSettings> config)
+    public DataAccess(IFileDataService service, IFilePathService paths)
     {
-        _config = config;
-        _fileAccess = fileAccess;
-        _jsonConverter = jsonConverter;
+        _service = service;
+        _paths = paths;
+    }
+
+    public async Task<JsonItems> GetAll(LibrarySource? source)
+    {
+        var library = new JsonItems
+        {
+            Artists = await GetArtists(),
+            Albums = new List<JsonAlbum>(),
+            Tracks = new List<JsonTrack>(),
+            AlbumTracks = new List<JsonAlbumTrack>()
+        };
+
+        if (source.HasValue)
+        {
+            await AddSource(library, source.Value);
+        }
+        else
+        {
+            foreach (var src in Enum.GetValues<LibrarySource>())
+            {
+                await AddSource(library, src);
+            }
+        }
+        
+        return library;
+    }
+
+    private async Task AddSource(JsonItems library, LibrarySource source)
+    {
+        library.Albums.AddRange(await GetAlbums(source));
+        library.Tracks.AddRange(await GetTracks(source));
+        library.AlbumTracks.AddRange(await GetAlbumTracks(source));
+
+        // Needed for now because Source property was added later - as soon as done a save in each environment can remove this
+        foreach (var album in library.Albums)
+        {
+            album.Source = source;
+        }
     }
 
     public async Task<List<JsonArtist>> GetArtists()
     {
-        var path = GetPath(opt => opt.Artists, null);
-        var json = await _fileAccess.GetText(path);
-        return _jsonConverter.Deserialize<List<JsonArtist>>(json);
+        return await _service.Get<List<JsonArtist>>(_paths.Artists());
     }
 
     public async Task<List<JsonAlbum>> GetAlbums(LibrarySource source)
     {
-        var path = GetPath(opt => opt.Albums, source);
-        var json = await _fileAccess.GetText(path);
-        return _jsonConverter.Deserialize<List<JsonAlbum>>(json);
+        return await _service.Get<List<JsonAlbum>>(_paths.Albums(source));
     }
 
     public async Task<List<JsonTrack>> GetTracks(LibrarySource source)
     {
-        var path = GetPath(opt => opt.Tracks, source);
-        var json = await _fileAccess.GetText(path);
-        return _jsonConverter.Deserialize<List<JsonTrack>>(json);
+        return await _service.Get<List<JsonTrack>>(_paths.Tracks(source));
     }
 
-    public async Task<List<JsonAlbumTrackLink>> GetAlbumTrackLinks(LibrarySource source)
+    public async Task<List<JsonAlbumTrack>> GetAlbumTracks(LibrarySource source)
     {
-        var path = GetPath(opt => opt.AlbumTrackLinks, source);
-        var json = await _fileAccess.GetText(path);
-        return _jsonConverter.Deserialize<List<JsonAlbumTrackLink>>(json);
+        return await _service.Get<List<JsonAlbumTrack>>(_paths.AlbumTracks(source));
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
-        var path = GetPath(opt => opt.UpdateQueue, source);
-        var json = await _fileAccess.GetText(path);
-        return _jsonConverter.Deserialize<List<ItemUpdates>>(json);
+        return await _service.Get<List<ItemUpdates>>(_paths.Updates(source));
     }
 
-    public async Task SaveArtists(List<JsonArtist> artists)
+    public async Task UpdateLibrary(LibrarySource source, Action<JsonItems> action)
     {
-        var path = GetPath(opt => opt.Artists, null);
-        var json = _jsonConverter.Serialize(artists);
-        await _fileAccess.SaveText(path, json);
+        var library = await GetAll(source);
+        action(library);
+        await SaveAll(library, source);
     }
 
-    public async Task SaveAlbums(List<JsonAlbum> albums, LibrarySource source)
+    public async Task UpdateUpdates(LibrarySource source, Action<List<ItemUpdates>> action)
     {
-        var path = GetPath(opt => opt.Albums, source);
-        var json = _jsonConverter.Serialize(albums);
-        await _fileAccess.SaveText(path, json);
+        var updates = await GetUpdates(source);
+        action(updates);
+        await SaveUpdates(updates, source);
     }
 
-    public async Task SaveTracks(List<JsonTrack> tracks, LibrarySource source)
+    private async Task SaveAlbums(LibrarySource source, List<JsonAlbum> albums)
     {
-        var path = GetPath(opt => opt.Tracks, source);
-        var json = _jsonConverter.Serialize(tracks);
-        await _fileAccess.SaveText(path, json);
+        await _service.Save(_paths.Albums(source), albums);
     }
 
-    public async Task SaveAlbumTrackLinks(List<JsonAlbumTrackLink> albumTrackLinks, LibrarySource source)
+    private async Task SaveAlbumTracks(LibrarySource source, List<JsonAlbumTrack> albumTracks)
     {
-        var path = GetPath(opt => opt.AlbumTrackLinks, source);
-        var json = _jsonConverter.Serialize(albumTrackLinks);
-        await _fileAccess.SaveText(path, json);
+        await _service.Save(_paths.AlbumTracks(source), albumTracks);
     }
 
-    public async Task SaveUpdates(List<ItemUpdates> updates, LibrarySource source)
+    private async Task SaveArtists(List<JsonArtist> artists)
     {
-        var path = GetPath(opt => opt.UpdateQueue, source);
-        var json = _jsonConverter.Serialize(updates);
-        await _fileAccess.SaveText(path, json);
+        await _service.Save(_paths.Artists(), artists);
     }
 
-    public async Task<JsonItems> GetAll(LibrarySource source)
+    private async Task SaveTracks(LibrarySource source, List<JsonTrack> tracks)
     {
-        return new JsonItems
-        {
-            Tracks = await GetTracks(source),
-            Artists = await GetArtists(),
-            Albums = await GetAlbums(source),
-            AlbumTrackLinks = await GetAlbumTrackLinks(source)
-        };
+        await _service.Save(_paths.Tracks(source), tracks);
     }
 
-    public async Task SaveAll(JsonItems items, LibrarySource source)
+    private async Task SaveAll(JsonItems library, LibrarySource source)
     {
-        // should be transaction
-        await SaveTracks(items.Tracks, source);
-        await SaveArtists(items.Artists);
-        await SaveAlbums(items.Albums, source);
-        await SaveAlbumTrackLinks(items.AlbumTrackLinks, source);
+        await SaveTracks(source, library.Tracks);
+        await SaveArtists(library.Artists);
+        await SaveAlbums(source, library.Albums);
+        await SaveAlbumTracks(source, library.AlbumTracks);
     }
 
-    private string GetPath(Func<LibraryPathSettings, string> getFileName, LibrarySource? source)
+    private async Task SaveUpdates(List<ItemUpdates> updates, LibrarySource source)
     {
-        var directory = _config.Value.BaseDirectory;
-        return source.HasValue
-            ? Path.Combine(directory, source.Value.ToString(), getFileName(_config.Value))
-            : Path.Combine(directory, getFileName(_config.Value));
+        await _service.Save(_paths.Updates(source), updates);
+    }
+
+    public async Task UpdateAlbum(LibrarySource source, string id, Action<JsonAlbum> update)
+    {
+        var albums = await GetAlbums(source);
+
+        var album = albums.SingleOrDefault(a => a.Id == id);
+
+        if (album == null)
+            return;
+
+        update(album);
+
+        await SaveAlbums(source, albums);
+    }
+
+    public async Task UpdateArtist(string id, Action<JsonArtist> update)
+    {
+        var artists = await GetArtists();
+
+        var artist = artists.SingleOrDefault(a => a.Id == id);
+
+        if (artist == null)
+            return;
+
+        update(artist);
+
+        await SaveArtists(artists);
+    }
+
+    public async Task UpdateTrack(LibrarySource source, string id, Action<JsonTrack> update)
+    {
+        var tracks = await GetTracks(source);
+
+        var track = tracks.SingleOrDefault(a => a.Id == id);
+
+        if (track == null)
+            return;
+
+        update(track);
+
+        await SaveTracks(source, tracks);
     }
 }

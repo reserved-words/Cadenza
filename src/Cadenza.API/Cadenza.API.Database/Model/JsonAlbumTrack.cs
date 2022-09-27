@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.API.Database.Model;
 
-internal class JsonAlbumTrackLink
+internal class JsonAlbumTrack
 {
     public string TrackId { get; set; }
     public string AlbumId { get; set; }

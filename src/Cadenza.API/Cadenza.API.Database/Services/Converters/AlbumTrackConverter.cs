@@ -1,12 +1,8 @@
-﻿using Cadenza.API.Database.Interfaces.Converters;
-using Cadenza.API.Database.Model;
-using Cadenza.Domain.Models.Album;
+﻿namespace Cadenza.API.Database.Services.Converters;
 
-namespace Cadenza.API.Database.Converters;
-
-internal class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
+internal class AlbumTrackConverter : IAlbumTrackConverter
 {
-    public AlbumTrackLink ToModel(JsonAlbumTrackLink link)
+    public AlbumTrackLink ToModel(JsonAlbumTrack link)
     {
         return new AlbumTrackLink
         {
@@ -16,9 +12,9 @@ internal class AlbumTrackLinkConverter : IAlbumTrackLinkConverter
         };
     }
 
-    public JsonAlbumTrackLink ToJson(AlbumTrackLink link)
+    public JsonAlbumTrack ToJson(AlbumTrackLink link)
     {
-        return new JsonAlbumTrackLink
+        return new JsonAlbumTrack
         {
             TrackId = link.TrackId,
             AlbumId = link.AlbumId,

@@ -15,28 +15,30 @@ internal class PlayedFilesHandler : IUpdateService
         _config = config;
     }
 
-    public async Task Run()
+    public Task Run()
     {
         var directory = Path.Combine(_config.Value.BaseDirectory, _config.Value.DirectoryName);
 
-        var files = await _fileAccess.GetFiles(directory);
+        var allFiles = _fileAccess.GetFiles(directory);
 
-        var allButLatestFile = files
+        var allButLatestFile = allFiles
             .Where(f => Path.GetFileName(f.Path).StartsWith(_config.Value.FilePrefix))
             .OrderByDescending(f => f.DateCreated)
             .Skip(1);
 
         foreach (var file in allButLatestFile)
         {
-            await TryDeleteFile(file.Path);
+            TryDeleteFile(file.Path);
         }
+
+        return Task.CompletedTask;
     }
 
-    private async Task TryDeleteFile(string path)
+    private void TryDeleteFile(string path)
     {
         try
         {
-            await _fileAccess.DeleteFile(path);
+            _fileAccess.DeleteFile(path);
         }
         catch (IOException)
         {

@@ -17,25 +17,26 @@ internal class MusicDirectory : IMusicDirectory
         _fileAccess = fileAccess;
     }
 
-    public async Task<List<FileDetails>> GetAllFiles()
+    public Task<List<FileDetails>> GetAllFiles()
     {
-        var files = await GetFiles();
-        return files.ToList();
+        var allFiles = GetFiles().ToList();
+        return Task.FromResult(allFiles);
     }
 
-    public async Task<List<FileDetails>> GetModifiedFiles(DateTime sinceDate)
+    public Task<List<FileDetails>> GetModifiedFiles(DateTime sinceDate)
     {
-        var files = await GetFiles();
-        return files
+        var allFiles = GetFiles();
+        var modifiedFiles = allFiles
             .Where(f => f.DateModified > sinceDate)
             .ToList();
+        return Task.FromResult(modifiedFiles);
     }
 
-    private async Task<IEnumerable<FileDetails>> GetFiles()
+    private IEnumerable<FileDetails> GetFiles()
     {
         var directoryPath = _config.Value.Directory;
         var extensions = _config.Value.FileExtensions;
 
-        return await _fileAccess.GetFiles(directoryPath, extensions);
+        return _fileAccess.GetFiles(directoryPath, extensions);
     }
 }

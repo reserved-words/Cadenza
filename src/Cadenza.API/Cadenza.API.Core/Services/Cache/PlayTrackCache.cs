@@ -95,7 +95,7 @@ internal class PlayTrackCache : IPlayTrackCache
             _artistTracks[track.ArtistId].Add(track);
         }
 
-        var albums = library.AlbumTrackLinks
+        var albums = library.AlbumTracks
             .GroupBy(a => a.AlbumId);
 
         foreach (var album in albums)

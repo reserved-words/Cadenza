@@ -12,5 +12,5 @@ public class FullLibrary
 
     public List<AlbumInfo> Albums { get; set; } = new();
 
-    public List<AlbumTrackLink> AlbumTrackLinks { get; set; } = new();
+    public List<AlbumTrackLink> AlbumTracks { get; set; } = new();
 }

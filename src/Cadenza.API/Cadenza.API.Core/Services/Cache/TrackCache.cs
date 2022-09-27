@@ -42,7 +42,7 @@ internal class TrackCache : ITrackCache
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
-        _albumTracks = library.AlbumTrackLinks.ToDictionary(a => a.TrackId, a => a);
+        _albumTracks = library.AlbumTracks.ToDictionary(a => a.TrackId, a => a);
         return Task.CompletedTask;
     }
 

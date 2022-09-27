@@ -1,20 +1,13 @@
-﻿using Cadenza.API.Database.Interfaces;
-using Cadenza.API.Database.Model;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Track;
-using Cadenza.API.Database.Interfaces.Converters;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class ModelToJsonConverter : IModelToJsonConverter
 {
     private readonly IArtistConverter _artistConverter;
     private readonly IAlbumConverter _albumConverter;
     private readonly ITrackConverter _trackConverter;
-    private readonly IAlbumTrackLinkConverter _albumTrackLinkConverter;
+    private readonly IAlbumTrackConverter _albumTrackLinkConverter;
 
-    public ModelToJsonConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackLinkConverter albumTrackLinkConverter)
+    public ModelToJsonConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackConverter albumTrackLinkConverter)
     {
         _artistConverter = artistConverter;
         _albumConverter = albumConverter;
@@ -27,7 +20,7 @@ internal class ModelToJsonConverter : IModelToJsonConverter
         return _albumConverter.ToJson(album);
     }
 
-    public JsonAlbumTrackLink ConvertAlbumTrackLink(AlbumTrackLink albumTrackLink)
+    public JsonAlbumTrack ConvertAlbumTrackLink(AlbumTrackLink albumTrackLink)
     {
         return _albumTrackLinkConverter.ToJson(albumTrackLink);
     }

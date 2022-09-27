@@ -1,11 +1,4 @@
-﻿using Cadenza.API.Database.Interfaces.Converters;
-using Cadenza.API.Database.Model;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Utilities.Interfaces;
-
-namespace Cadenza.API.Database.Converters;
+﻿namespace Cadenza.API.Database.Services.Converters;
 
 internal class TrackConverter : ITrackConverter
 {
@@ -22,8 +15,8 @@ internal class TrackConverter : ITrackConverter
 
         return new TrackInfo
         {
-            Id = track.Id,
             Source = track.Source,
+            Id = track.Id,
             ArtistId = track.ArtistId,
             ArtistName = artist.Name,
             AlbumId = track.AlbumId,
@@ -40,8 +33,8 @@ internal class TrackConverter : ITrackConverter
     {
         return new JsonTrack
         {
-            Id = track.Id,
             Source = track.Source,
+            Id = track.Id,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,
             Title = track.Title,

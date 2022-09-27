@@ -1,20 +1,13 @@
-﻿using Cadenza.API.Database.Interfaces;
-using Cadenza.API.Database.Model;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Track;
-using Cadenza.API.Database.Interfaces.Converters;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class JsonToModelConverter : IJsonToModelConverter
 {
     private readonly IArtistConverter _artistConverter;
     private readonly IAlbumConverter _albumConverter;
     private readonly ITrackConverter _trackConverter;
-    private readonly IAlbumTrackLinkConverter _albumTrackLinkConverter;
+    private readonly IAlbumTrackConverter _albumTrackLinkConverter;
 
-    public JsonToModelConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackLinkConverter albumTrackLinkConverter)
+    public JsonToModelConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackConverter albumTrackLinkConverter)
     {
         _artistConverter = artistConverter;
         _albumConverter = albumConverter;
@@ -22,12 +15,23 @@ internal class JsonToModelConverter : IJsonToModelConverter
         _albumTrackLinkConverter = albumTrackLinkConverter;
     }
 
+    public FullLibrary Convert(JsonItems items)
+    {
+        return new FullLibrary
+        {
+            Artists = items.Artists.Select(a => ConvertArtist(a)).ToList(),
+            Albums = items.Albums.Select(a => ConvertAlbum(a, items.Artists)).ToList(),
+            Tracks = items.Tracks.Select(a => ConvertTrack(a, items.Artists)).ToList(),
+            AlbumTracks = items.AlbumTracks.Select(a => ConvertAlbumTrack(a)).ToList(),
+        };
+    }
+
     public AlbumInfo ConvertAlbum(JsonAlbum album, ICollection<JsonArtist> artists)
     {
         return _albumConverter.ToModel(album, artists);
     }
 
-    public AlbumTrackLink ConvertAlbumTrackLink(JsonAlbumTrackLink albumTrackLink)
+    public AlbumTrackLink ConvertAlbumTrack(JsonAlbumTrack albumTrackLink)
     {
         return _albumTrackLinkConverter.ToModel(albumTrackLink);
     }

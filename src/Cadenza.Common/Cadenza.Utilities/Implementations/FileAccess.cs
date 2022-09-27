@@ -5,22 +5,20 @@ namespace Cadenza.Utilities.Implementations;
 
 internal class FileAccess : IFileAccess
 {
-    public Task DeleteFile(string path)
+    public void DeleteFile(string path)
     {
         if (File.Exists(path))
         {
             File.Delete(path);
         }
-
-        return Task.CompletedTask;
     }
 
-    public Task<List<FileDetails>> GetFiles(string directoryPath, List<string> extensions = null)
+    public List<FileDetails> GetFiles(string directoryPath, List<string> extensions = null)
     {
         var files = new List<FileDetails>();
 
         if (!Directory.Exists(directoryPath))
-            return Task.FromResult(files);
+            return files;
 
         foreach (var filepath in Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories))
         {
@@ -36,20 +34,20 @@ internal class FileAccess : IFileAccess
             }
         }
 
-        return Task.FromResult(files);
+        return files;
     }
 
-    public async Task<string> GetText(string path)
+    public string GetText(string path)
     {
         return File.Exists(path)
-            ? await File.ReadAllTextAsync(path)
+            ? File.ReadAllText(path)
             : null;
     }
 
-    public async Task SaveText(string path, string text)
+    public void SaveText(string path, string text)
     {
         var directory = Path.GetDirectoryName(path);
         Directory.CreateDirectory(directory);
-        await File.WriteAllTextAsync(path, text);
+        File.WriteAllText(path, text);
     }
 }
