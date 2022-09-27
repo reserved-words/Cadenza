@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models;
+﻿using Cadenza.Domain.Model;
 using Cadenza.Web.Common.Model;
 
 namespace Cadenza.Web.Core.Player;

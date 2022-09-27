@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Updates;
+using Cadenza.Domain.Model.Updates;
 using Cadenza.SyncService.Interfaces;
 
 namespace Cadenza.SyncService.Updaters;

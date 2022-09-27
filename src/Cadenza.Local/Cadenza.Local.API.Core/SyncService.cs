@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Updates;
+﻿using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Updates;
 using Cadenza.Local.API.Common.Controllers;
 using Cadenza.Local.API.Common.Interfaces;
 using Cadenza.Local.API.Core.Interfaces;

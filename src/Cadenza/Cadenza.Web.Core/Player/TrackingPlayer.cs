@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Domain.Model.Track;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Common.Interop;

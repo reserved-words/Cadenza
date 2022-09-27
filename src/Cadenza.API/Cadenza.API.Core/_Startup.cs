@@ -5,19 +5,17 @@ global using Cadenza.API.Core.Services.Cache;
 
 global using Cadenza.API.Interfaces.Controllers;
 global using Cadenza.API.Interfaces.Repositories;
-global using Cadenza.API.LastFM;
-global using Cadenza.API.LastFM.Interfaces;
 
-global using Cadenza.Domain.Models;
-global using Cadenza.Domain.Models.Album;
-global using Cadenza.Domain.Models.History;
-global using Cadenza.Domain.Models.Track;
-global using Cadenza.Domain.Models.Update;
+global using Cadenza.Domain.Model;
+global using Cadenza.Domain.Model.Album;
+global using Cadenza.Domain.Model.Artist;
+global using Cadenza.Domain.Model.History;
+global using Cadenza.Domain.Model.Track;
+global using Cadenza.Domain.Model.Update;
+global using Cadenza.Domain.Model.Updates;
 
 global using Cadenza.Domain.Enums;
 global using Cadenza.Domain.Extensions;
-global using Cadenza.Domain.Models.Artist;
-global using Cadenza.Domain.Models.Updates;
 
 global using Cadenza.Library;
 

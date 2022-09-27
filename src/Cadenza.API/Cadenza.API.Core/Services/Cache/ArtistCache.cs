@@ -1,4 +1,10 @@
-﻿namespace Cadenza.API.Core.Services.Cache;
+﻿using Cadenza.Domain.Model;
+using Cadenza.Domain.Model.Album;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Update;
+using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Core.Services.Cache;
 
 internal class ArtistCache : IArtistCache
 {

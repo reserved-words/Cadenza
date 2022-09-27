@@ -1,4 +1,4 @@
-﻿using Cadenza.Local.Common.Config;
+﻿using Cadenza.Local.SyncService.Settings;
 
 namespace Cadenza.Local.SyncService._Startup;
 

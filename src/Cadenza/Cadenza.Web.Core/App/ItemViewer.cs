@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
 using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Model;
 using Cadenza.Utilities.Interfaces;
 using Cadenza.Web.Common.Model;
 using Cadenza.Web.Core.Interfaces;

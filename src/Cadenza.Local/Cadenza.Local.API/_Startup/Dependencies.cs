@@ -4,7 +4,7 @@ using Cadenza.Local.API.Files;
 using Cadenza.Utilities.Implementations;
 using Cadenza.Utilities.Interfaces;
 
-namespace Cadenza.Local.API;
+namespace Cadenza.Local.API._Startup;
 
 public static class Dependencies
 {

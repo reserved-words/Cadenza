@@ -1,4 +1,7 @@
-﻿namespace Cadenza.API.Core;
+﻿using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Core;
 internal class SyncService : ISyncService
 {
     private readonly IMusicRepository _repository;

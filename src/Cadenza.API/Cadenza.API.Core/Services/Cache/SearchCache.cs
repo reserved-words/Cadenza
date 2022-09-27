@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core.Services.Cache;
+﻿using Cadenza.Domain.Model;
+
+namespace Cadenza.API.Core.Services.Cache;
 
 internal class SearchCache : ISearchCache
 {

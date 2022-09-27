@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.Album;
+﻿using Cadenza.Domain.Model.Album;
 using Cadenza.Web.Common.Interfaces;
 
 namespace Cadenza.Web.Core.Player;

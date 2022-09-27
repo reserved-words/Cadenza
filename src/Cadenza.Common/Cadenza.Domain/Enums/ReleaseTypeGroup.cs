@@ -2,7 +2,6 @@
 
 namespace Cadenza.Domain.Enums;
 
-[DefaultValue(Albums)]
 public enum ReleaseTypeGroup
 {
     [Display(Name = "Studio Albums")]

@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
+using Cadenza.Domain.Model;
 using Cadenza.Web.Core.Interfaces;
 using Cadenza.Web.Core.Updates;
 

@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.LastFm;
+﻿using Cadenza.Domain.Model.LastFm;
 using Cadenza.Utilities.Interfaces;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Common.Interfaces;

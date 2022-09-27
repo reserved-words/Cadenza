@@ -1,7 +1,8 @@
-﻿using Cadenza.Domain.Models.Updates;
+﻿using Cadenza.Domain.Model.Updates;
 using Cadenza.Local.API.Common.Controllers;
+using Cadenza.Local.API.Extensions;
 
-namespace Cadenza.Local.API;
+namespace Cadenza.Local.API._Startup;
 
 public static class Routing
 {
@@ -18,7 +19,7 @@ public static class Routing
     private static WebApplication AddArtworkRoute(this WebApplication app)
     {
         var service = app.Services.GetRequiredService<IArtworkService>();
-        app.MapGet("/Library/Artwork", async (HttpContext context) =>
+        app.MapGet("/Library/Artwork", async (context) =>
         {
             var id = context.Request.Query["id"].Single();
             var artwork = await service.GetArtwork(id);

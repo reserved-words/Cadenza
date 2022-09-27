@@ -3,8 +3,8 @@ global using Cadenza.API.LastFM.Interfaces;
 global using Cadenza.API.LastFM.Settings;
 global using Cadenza.API.LastFM.Services;
 global using Cadenza.Domain.Enums;
-global using Cadenza.Domain.Models.History;
-global using Cadenza.Domain.Models.LastFm;
+global using Cadenza.Domain.Model.History;
+global using Cadenza.Domain.Model.LastFm;
 global using Cadenza.Utilities.Interfaces;
 
 using Microsoft.Extensions.Configuration;

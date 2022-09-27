@@ -2,7 +2,6 @@
 
 namespace Cadenza.Domain.Enums;
 
-[DefaultValue(Album)]
 public enum ReleaseType
 {
     [Display(Name = "Album")]

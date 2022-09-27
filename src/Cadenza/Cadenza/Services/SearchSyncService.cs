@@ -1,4 +1,4 @@
-﻿using Cadenza.Library;
+﻿using Cadenza.Library.Repositories;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Core;
 

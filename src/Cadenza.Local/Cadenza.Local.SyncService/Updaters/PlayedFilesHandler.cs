@@ -1,4 +1,4 @@
-﻿using Cadenza.Local.Common.Config;
+﻿using Cadenza.Local.SyncService.Settings;
 using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 

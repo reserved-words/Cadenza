@@ -5,5 +5,5 @@ public enum LibraryItemType
     Artist,
     Album,
     Track,
-    AlbumTrackLink
+    AlbumTrack
 }

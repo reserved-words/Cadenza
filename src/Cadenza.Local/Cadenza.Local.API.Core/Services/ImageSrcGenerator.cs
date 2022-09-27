@@ -1,5 +1,5 @@
 ﻿using Cadenza.Local.API.Common.Interfaces;
-using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.API.Core.Interfaces;
 using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Local.API.Core.Services;

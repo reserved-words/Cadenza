@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Models.Album;
-using Cadenza.Library;
+﻿using Cadenza.Domain.Model.Album;
+using Cadenza.Library.Repositories;
 using Cadenza.Web.Core.Extensions;
 using Cadenza.Web.Core.Model;
 

@@ -1,4 +1,4 @@
-﻿using Track = Cadenza.Domain.Models.LastFm.Track;
+﻿using Track = Cadenza.Domain.Model.LastFm.Track;
 
 namespace Cadenza.API.Interfaces.LastFm;
 

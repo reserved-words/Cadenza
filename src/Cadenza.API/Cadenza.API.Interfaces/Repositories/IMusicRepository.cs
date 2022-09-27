@@ -1,4 +1,8 @@
-﻿namespace Cadenza.API.Interfaces.Repositories;
+﻿using Cadenza.Domain.Model;
+using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Interfaces.Repositories;
 
 public interface IMusicRepository
 {

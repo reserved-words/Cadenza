@@ -1,4 +1,8 @@
-﻿namespace Cadenza.API.Controller;
+﻿using Cadenza.Domain.Model.Album;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Track;
+
+namespace Cadenza.API.Controller;
 
 [Route("api/[controller]")]
 [ApiController]

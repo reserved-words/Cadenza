@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.Update;
+﻿using Cadenza.Domain.Model.Update;
 using Cadenza.Web.Core.Interfaces;
 using Cadenza.Web.Core.Updates;
 

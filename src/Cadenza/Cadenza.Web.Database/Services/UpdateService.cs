@@ -1,7 +1,6 @@
-﻿
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Update;
-using Cadenza.Domain.Models.Updates;
+﻿using Cadenza.Domain.Enums;
+using Cadenza.Domain.Model.Update;
+using Cadenza.Domain.Model.Updates;
 using Cadenza.Utilities.Interfaces;
 using Cadenza.Web.Common.Interfaces;
 

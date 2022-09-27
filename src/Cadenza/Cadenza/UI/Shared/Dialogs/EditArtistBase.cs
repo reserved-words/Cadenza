@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain.Models.Update;
+﻿using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Update;
 using Cadenza.Interfaces;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Core.Interfaces;

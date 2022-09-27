@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database;
+﻿using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Database;
 
 internal class UpdateRepository : IUpdateRepository
 {

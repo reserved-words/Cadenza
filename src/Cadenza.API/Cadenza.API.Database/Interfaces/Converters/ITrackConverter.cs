@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Interfaces.Converters;
+﻿using Cadenza.Domain.Model.Track;
+
+namespace Cadenza.API.Database.Interfaces.Converters;
 
 internal interface ITrackConverter
 {

@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Updates;
+using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Updates;
 
 namespace Cadenza.SyncService.Interfaces;
 

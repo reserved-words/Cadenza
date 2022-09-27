@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.History;
+using Cadenza.Domain.Model.History;
 using Cadenza.Utilities.Interfaces;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.LastFM.Settings;

@@ -1,9 +1,9 @@
 ﻿using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.Common.Config;
+using Cadenza.Local.API.Core.Settings;
 using Cadenza.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.Local.API;
+namespace Cadenza.Local.API.Core;
 
 internal class PlayService : IPlayService
 {

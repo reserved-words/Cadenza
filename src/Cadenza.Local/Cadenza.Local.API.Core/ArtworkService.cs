@@ -1,7 +1,7 @@
 ﻿using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.API.Core.Interfaces;
 
-namespace Cadenza.Local.API;
+namespace Cadenza.Local.API.Core;
 
 internal class ArtworkService : IArtworkService
 {
@@ -11,7 +11,7 @@ internal class ArtworkService : IArtworkService
     {
         _imageSrcGenerator = imageSrcGenerator;
     }
-    
+
     public Task<(byte[] Bytes, string Type)> GetArtwork(string id)
     {
         var result = _imageSrcGenerator.GetArtwork(id);

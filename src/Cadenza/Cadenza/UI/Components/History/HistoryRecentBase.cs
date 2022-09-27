@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.History;
+﻿using Cadenza.Domain.Model.History;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Core.CurrentlyPlaying;

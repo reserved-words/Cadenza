@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local.API
+﻿namespace Cadenza.Local.API._Startup
 {
     public static class Documentation
     {
@@ -15,8 +15,8 @@
             return app;
         }
 
-        public static WebApplication AddDocumentationUI(this WebApplication app) 
-        { 
+        public static WebApplication AddDocumentationUI(this WebApplication app)
+        {
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("swagger/v1/swagger.json", "v1");

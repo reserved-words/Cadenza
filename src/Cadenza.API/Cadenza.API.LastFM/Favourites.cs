@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Domain.Model.LastFm;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.API.LastFM;
 

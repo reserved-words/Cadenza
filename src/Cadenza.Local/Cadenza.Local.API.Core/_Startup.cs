@@ -1,8 +1,7 @@
 ﻿using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.API.Core.Config;
 using Cadenza.Local.API.Core.Interfaces;
 using Cadenza.Local.API.Core.Services;
-using Cadenza.Local.Common.Interfaces;
+using Cadenza.Local.API.Core.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Services.Converters;
+﻿using Cadenza.Domain.Model.Artist;
+
+namespace Cadenza.API.Database.Services.Converters;
 
 internal class ArtistConverter : IArtistConverter
 {

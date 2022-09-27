@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.LastFm;
+﻿using Cadenza.Domain.Model.LastFm;
 
 namespace Cadenza.API.Interfaces.LastFm;
 

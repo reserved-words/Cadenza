@@ -1,6 +1,6 @@
-﻿using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Domain.Model.Album;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Track;
 using Cadenza.Local.API.Files.Model;
 
 namespace Cadenza.Local.API.Files.Interfaces;

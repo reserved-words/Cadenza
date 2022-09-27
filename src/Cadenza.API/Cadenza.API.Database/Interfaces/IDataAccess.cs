@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Interfaces;
+﻿using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Database.Interfaces;
 
 internal interface IDataAccess
 {

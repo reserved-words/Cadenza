@@ -1,4 +1,5 @@
 ﻿using Cadenza.Domain.Extensions;
+using Cadenza.Domain.Model;
 using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.Sidebar;

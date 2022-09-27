@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Album;
+using Cadenza.Domain.Model.Album;
 
 namespace Cadenza.Web.Core.Model;
 

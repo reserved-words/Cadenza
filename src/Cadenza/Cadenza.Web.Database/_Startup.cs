@@ -6,6 +6,7 @@ using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Database.Settings;
 using Cadenza.Web.Database.Services;
 using Cadenza.Utilities.Interfaces;
+using Cadenza.Library.Repositories;
 
 namespace Cadenza.Web.Database;
 

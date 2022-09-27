@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Models.Track;
+﻿using Cadenza.Domain.Model.Track;
 
 namespace Cadenza.Web.Common.Interfaces;
 

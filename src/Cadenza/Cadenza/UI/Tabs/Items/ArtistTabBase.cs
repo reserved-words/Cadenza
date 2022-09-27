@@ -1,4 +1,5 @@
-﻿using Cadenza.Library;
+﻿using Cadenza.Domain.Model.Artist;
+using Cadenza.Library.Repositories;
 using Cadenza.Web.Core.Model;
 
 namespace Cadenza.UI.Tabs.Items

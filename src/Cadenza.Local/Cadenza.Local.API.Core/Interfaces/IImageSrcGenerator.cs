@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local.Common.Interfaces;
+﻿namespace Cadenza.Local.API.Core.Interfaces;
 
 internal interface IImageSrcGenerator
 {

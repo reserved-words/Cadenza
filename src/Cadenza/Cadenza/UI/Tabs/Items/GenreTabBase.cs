@@ -1,6 +1,7 @@
 ﻿using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models.Updates;
-using Cadenza.Library;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Updates;
+using Cadenza.Library.Repositories;
 using Cadenza.Web.Core.Interfaces;
 using Cadenza.Web.Core.Updates;
 

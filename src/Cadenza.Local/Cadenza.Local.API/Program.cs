@@ -1,4 +1,4 @@
-using Cadenza.Local.API;
+using Cadenza.Local.API._Startup;
 
 var builder = WebApplication.CreateBuilder(args)
     .RegisterDependencies()

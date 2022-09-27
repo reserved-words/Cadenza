@@ -1,5 +1,5 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.History;
+using Cadenza.Domain.Model.History;
 
 namespace Cadenza.UI.Components.History;
 

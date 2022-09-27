@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Models.Artist;
-using Cadenza.Library;
+﻿using Cadenza.Domain.Model.Artist;
+using Cadenza.Library.Repositories;
 using Cadenza.UI.Shared.Dialogs;
 using Cadenza.Web.Core.Interfaces;
 using IDialogService = Cadenza.Interfaces.IDialogService;

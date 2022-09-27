@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local.API;
+﻿namespace Cadenza.Local.API.Extensions;
 
 public static class ApiResults
 {

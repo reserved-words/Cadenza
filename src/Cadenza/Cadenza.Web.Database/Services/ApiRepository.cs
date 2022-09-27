@@ -1,9 +1,10 @@
 ﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Update;
+using Cadenza.Domain.Model;
+using Cadenza.Domain.Model.Album;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Update;
+using Cadenza.Library.Repositories;
 using Cadenza.Utilities.Interfaces;
 
 namespace Cadenza.Web.Database.Services

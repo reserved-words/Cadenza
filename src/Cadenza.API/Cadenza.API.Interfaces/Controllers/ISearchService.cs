@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Interfaces.Controllers;
+﻿using Cadenza.Domain.Model;
+
+namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ISearchService
 {

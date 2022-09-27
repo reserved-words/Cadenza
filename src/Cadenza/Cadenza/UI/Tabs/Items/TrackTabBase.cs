@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Models.Track;
-using Cadenza.Library;
+﻿using Cadenza.Domain.Model.Track;
+using Cadenza.Library.Repositories;
 
 namespace Cadenza.UI.Tabs.Items
 {

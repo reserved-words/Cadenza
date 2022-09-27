@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Interfaces.Updaters;
+﻿using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Database.Interfaces.Updaters;
 
 internal interface IItemUpdater
 {

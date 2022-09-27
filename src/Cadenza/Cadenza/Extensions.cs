@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Core.Common;
 
 namespace Cadenza;
 
@@ -21,22 +20,6 @@ public static class Extensions
         return source switch
         {
             LibrarySource.Local => Icons.Material.Filled.Home,
-            _ => throw new NotImplementedException()
-        };
-    }
-
-    public static string GetIcon(this LinkViewModel link)
-    {
-        return link.Type switch
-        {
-            LinkType.LastFm => Icon.LastFm,
-            LinkType.BandsInTown => Icons.Filled.Event,
-            LinkType.BandCamp => Icon.BandCamp,
-            LinkType.YouTube => Icons.Custom.Brands.YouTube,
-            LinkType.Twitter => Icons.Custom.Brands.Twitter,
-            LinkType.Facebook => Icons.Custom.Brands.Facebook,
-            LinkType.Wikipedia => Icon.Wikipedia,
-            LinkType.Search => Icons.Custom.Brands.Google,
             _ => throw new NotImplementedException()
         };
     }

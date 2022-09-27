@@ -1,4 +1,7 @@
-﻿namespace Cadenza.API.Interfaces.Controllers;
+﻿using Cadenza.Domain.Model.Track;
+using Cadenza.Domain.Model.Updates;
+
+namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ISyncService
 {

@@ -1,4 +1,8 @@
-﻿namespace Cadenza.API.Database.Services;
+﻿using Cadenza.Domain.Model.Album;
+using Cadenza.Domain.Model.Artist;
+using Cadenza.Domain.Model.Track;
+
+namespace Cadenza.API.Database.Services;
 
 internal class ModelToJsonConverter : IModelToJsonConverter
 {

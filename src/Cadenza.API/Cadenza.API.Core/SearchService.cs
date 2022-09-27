@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core;
+﻿using Cadenza.Domain.Model;
+
+namespace Cadenza.API.Core;
 
 internal class SearchService : ISearchService
 {

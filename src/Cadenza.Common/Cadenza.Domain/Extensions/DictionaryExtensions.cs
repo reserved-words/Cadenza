@@ -12,11 +12,4 @@ public static class DictionaryExtensions
         }
         return value;
     }
-
-    public static TValue ValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
-    {
-        return dictionary.TryGetValue(key, out TValue value)
-            ? value
-            : default;
-    }
 }
