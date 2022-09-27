@@ -1,13 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Update;
-using Cadenza.Domain.Models.Updates;
-using Newtonsoft.Json;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class ArtistCache : IArtistCache
 {
@@ -97,9 +88,7 @@ internal class ArtistCache : IArtistCache
         {
             if (album.ArtistId == null)
             {
-                var json = JsonConvert.SerializeObject(album);
                 var ex = new Exception($"Artist ID is null for {album.Id} ({album.Title})");
-                ex.Data.Add("Album", json);
                 throw ex;
             }
 

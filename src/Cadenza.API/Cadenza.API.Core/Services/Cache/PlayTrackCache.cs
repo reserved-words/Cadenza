@@ -1,9 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class PlayTrackCache : IPlayTrackCache
 {

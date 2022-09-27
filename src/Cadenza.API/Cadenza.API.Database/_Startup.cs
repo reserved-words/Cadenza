@@ -1,5 +1,4 @@
-﻿global using Cadenza.API.Common.Model;
-global using Cadenza.API.Common.Repositories;
+﻿global using Cadenza.API.Interfaces.Repositories;
 global using Cadenza.API.Database.Interfaces;
 global using Cadenza.API.Database.Interfaces.Converters;
 global using Cadenza.API.Database.Interfaces.Updaters;
@@ -10,6 +9,7 @@ global using Cadenza.API.Database.Services.Updaters;
 
 global using Cadenza.Domain.Enums;
 global using Cadenza.Domain.Extensions;
+global using Cadenza.Domain.Models;
 global using Cadenza.Domain.Models.Album;
 global using Cadenza.Domain.Models.Artist;
 global using Cadenza.Domain.Models.Track;

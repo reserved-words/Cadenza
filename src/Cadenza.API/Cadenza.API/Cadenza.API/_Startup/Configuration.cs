@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Database;
-using Cadenza.API.LastFM;
-
-namespace Cadenza.API._Startup;
+﻿namespace Cadenza.API._Startup;
 
 public static class Configuration
 {

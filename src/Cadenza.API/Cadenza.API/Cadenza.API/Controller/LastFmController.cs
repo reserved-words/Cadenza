@@ -1,9 +1,4 @@
-﻿using Cadenza.API.Common.Controllers;
-using Cadenza.API.LastFM;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.History;
-using Cadenza.Domain.Models.LastFm;
-using Microsoft.AspNetCore.Mvc;
+﻿using Track = Cadenza.Domain.Models.LastFm.Track;
 
 namespace Cadenza.API.Controller;
 

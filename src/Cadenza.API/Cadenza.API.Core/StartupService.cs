@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Common.Controllers;
-
-namespace Cadenza.API.Core;
+﻿namespace Cadenza.API.Core;
 
 internal class StartupService : IStartupService
 {

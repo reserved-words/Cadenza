@@ -1,9 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Update;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class AlbumCache : IAlbumCache
 {

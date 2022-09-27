@@ -1,10 +1,4 @@
-﻿using Cadenza.API.Common.Controllers;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
-
-namespace Cadenza.API.Core;
+﻿namespace Cadenza.API.Core;
 
 internal class LibraryService : ILibraryService
 {

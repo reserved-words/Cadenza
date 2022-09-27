@@ -1,6 +1,12 @@
-﻿using Cadenza.API.LastFM.Interfaces;
-using Cadenza.API.LastFM.Model;
-using Cadenza.API.LastFM.Services;
+﻿global using Cadenza.API.Interfaces.LastFm;
+global using Cadenza.API.LastFM.Interfaces;
+global using Cadenza.API.LastFM.Settings;
+global using Cadenza.API.LastFM.Services;
+global using Cadenza.Domain.Enums;
+global using Cadenza.Domain.Models.History;
+global using Cadenza.Domain.Models.LastFm;
+global using Cadenza.Utilities.Interfaces;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,18 +17,27 @@ public static class Startup
     public static IServiceCollection AddLastFM(this IServiceCollection services)
     {
         return services
-            .AddTransient<ILastFmSigner, LastFmSigner>()
-            .AddTransient<ILastFmClient, LastFmClient>()
-            .AddTransient<ILastFmAuthorisedClient, LastFmAuthorisedClient>()
-            .AddTransient<IAuthoriser, LastFmAuth>()
+            .AddInternals()
+            .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IFavourites, Favourites>()
             .AddTransient<IHistory, History>()
             .AddTransient<IScrobbler, Scrobbler>();
     }
 
+    private static IServiceCollection AddInternals(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<ISigner, Signer>()
+            .AddTransient<IApiClient, ApiClient>()
+            .AddTransient<IAuthorisedApiClient, AuthorisedApiClient>()
+            .AddTransient<IParser, Parser>()
+            .AddTransient<IResponseReader, ResponseReader>()
+            .AddTransient<IUrlService, UrlService>();
+    }
+
     public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, string sectionPath)
     {
         var section = config.GetSection(sectionPath);
-        return services.Configure<LastFmSettings>(section);
+        return services.Configure<ApiSettings>(section);
     }
 }

@@ -1,12 +1,27 @@
 ﻿global using Cadenza.API.Core.Interfaces;
 global using Cadenza.API.Core.Interfaces.Cache;
-global using Cadenza.Domain;
+global using Cadenza.API.Core.Services;
+global using Cadenza.API.Core.Services.Cache;
+
+global using Cadenza.API.Interfaces.Controllers;
+global using Cadenza.API.Interfaces.Repositories;
+global using Cadenza.API.LastFM;
+global using Cadenza.API.LastFM.Interfaces;
+
+global using Cadenza.Domain.Models;
+global using Cadenza.Domain.Models.Album;
+global using Cadenza.Domain.Models.History;
+global using Cadenza.Domain.Models.Track;
+global using Cadenza.Domain.Models.Update;
+
+global using Cadenza.Domain.Enums;
+global using Cadenza.Domain.Extensions;
+global using Cadenza.Domain.Models.Artist;
+global using Cadenza.Domain.Models.Updates;
+
 global using Cadenza.Library;
 
-using Cadenza.API.Common.Controllers;
-using Cadenza.API.Core.Services;
-using Cadenza.API.Core.Services.Cache;
-using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.Core;
 
