@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Core.CurrentlyPlaying;
+﻿using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.Sidebar;

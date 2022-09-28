@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Model;
 
-namespace Cadenza.Web.Core.CurrentlyPlaying;
+namespace Cadenza.Web.Core.Events;
 
 public delegate Task TrackEventHandler(object sender, TrackEventArgs e);
 

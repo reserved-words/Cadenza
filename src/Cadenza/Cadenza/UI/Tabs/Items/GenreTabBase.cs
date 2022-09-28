@@ -2,8 +2,8 @@
 using Cadenza.Domain.Model.Artist;
 using Cadenza.Domain.Model.Updates;
 using Cadenza.Library.Repositories;
+using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
-using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.UI.Tabs.Items
 {

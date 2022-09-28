@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
-
 </Project>

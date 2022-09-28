@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Core.Player;
+﻿namespace Cadenza.Web.Core.Events;
 
 public delegate void TrackProgressedEventHandler(object sender, TrackProgressedEventArgs e);
 

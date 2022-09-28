@@ -1,5 +1,5 @@
 ﻿using Cadenza.Web.Common.Model;
-using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
 using Cadenza.Web.Core.Player;
 using Cadenza.Web.Core.Playlists;

@@ -1,4 +1,6 @@
 ﻿using Cadenza.Utilities.Interfaces;
+using Cadenza.Web.Database.Settings;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.Web.Database.Services
@@ -7,10 +9,10 @@ namespace Cadenza.Web.Database.Services
 
     internal abstract class ApiRepositoryBase
     {
-        private readonly IApiRepositorySettings _settings;
+        private readonly IOptions<DatabaseApiSettings> _settings;
         private readonly IHttpHelper _http;
 
-        public ApiRepositoryBase(IHttpHelper http, IApiRepositorySettings settings)
+        public ApiRepositoryBase(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
         {
             _http = http;
             _settings = settings;
@@ -33,13 +35,12 @@ namespace Cadenza.Web.Database.Services
         public async Task Post<T>(string endpoint, T data)
         {
             var url = GetApiEndpoint(endpoint);
-            var response = await _http.Post(url, null, data);
-            return;
+            await _http.Post(url, null, data);
         }
 
         private string GetApiEndpoint(string endpoint)
         {
-            return $"{_settings.BaseUrl}{endpoint}";
+            return $"{_settings.Value.BaseUrl}{endpoint}";
         }
 
         private string GetApiEndpoint(string endpoint, string id)

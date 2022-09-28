@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Updates;
+﻿using Cadenza.Web.Core.Events;
+
+namespace Cadenza.Web.Core.Updates;
 
 public interface ILibraryConsumer
 {

@@ -1,7 +1,7 @@
 ﻿using Cadenza.Domain.Model.History;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Core.CurrentlyPlaying;
+using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
 
 namespace Cadenza.UI.Components.History;

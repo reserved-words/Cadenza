@@ -1,6 +1,6 @@
 ﻿using Cadenza.Web.Common.Model;
 
-namespace Cadenza.Web.Core.App;
+namespace Cadenza.Web.Core.Events;
 
 public delegate Task LibraryEventHandler(object sender, LibraryEventArgs e);
 

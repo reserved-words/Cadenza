@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Model.Track;
+using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
-using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.UI.Shared.Views;
 

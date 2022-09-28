@@ -1,11 +1,8 @@
-﻿global using Cadenza.Library;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Cadenza.Web.Common.Interfaces;
 using Cadenza.Web.Database.Settings;
 using Cadenza.Web.Database.Services;
-using Cadenza.Utilities.Interfaces;
 using Cadenza.Library.Repositories;
 
 namespace Cadenza.Web.Database;
@@ -17,15 +14,14 @@ public static class Startup
         services.Configure<DatabaseApiSettings>(config.GetSection(apiSectionName));
 
         return services
-            .AddApiRepositories<DatabaseApiRepositorySettings>()
+            .AddApiRepositories()
             .AddTransient<IConnectionTaskBuilder, DatabaseConnectionTaskBuilder>()
             .AddTransient<IUpdateQueue, UpdateQueueService>();
     }
 
-    public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services) where T : class, IApiRepositorySettings
+    public static IServiceCollection AddApiRepositories(this IServiceCollection services) 
     {
         return services
-            .AddTransient<IApiRepositorySettings, DatabaseApiRepositorySettings>()
             .AddTransient<IArtistRepository, ApiRepository>()
             .AddTransient<IAlbumRepository, ApiRepository>()
             .AddTransient<IPlayTrackRepository, ApiRepository>()

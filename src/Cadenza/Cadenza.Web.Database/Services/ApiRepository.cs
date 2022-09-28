@@ -3,9 +3,10 @@ using Cadenza.Domain.Model;
 using Cadenza.Domain.Model.Album;
 using Cadenza.Domain.Model.Artist;
 using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Update;
 using Cadenza.Library.Repositories;
 using Cadenza.Utilities.Interfaces;
+using Cadenza.Web.Database.Settings;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Web.Database.Services
 {
@@ -16,12 +17,12 @@ namespace Cadenza.Web.Database.Services
         ISearchRepository,
         IAlbumRepository
     {
-        private readonly IApiRepositorySettings _settings;
+        private readonly DatabaseApiEndpoints _settings;
 
-        public ApiRepository(IHttpHelper http, IApiRepositorySettings settings)
+        public ApiRepository(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
             : base(http, settings)
         {
-            _settings = settings;
+            _settings = settings.Value.Endpoints;
         }
 
         public async Task<TrackFull> GetTrack(string id)
@@ -71,12 +72,12 @@ namespace Cadenza.Web.Database.Services
 
         public async Task<List<Artist>> GetArtistsByGrouping(Grouping id)
         {
-            return await Get<List<Artist>>(_settings.ArtistsByGrouping, id.ToString());
+            return await Get<List<Artist>>(_settings.GroupingArtists, id.ToString());
         }
 
         public async Task<List<Artist>> GetArtistsByGenre(string id)
         {
-            return await Get<List<Artist>>(_settings.ArtistsByGenre, id);
+            return await Get<List<Artist>>(_settings.GenreArtists, id);
         }
 
         public async Task<ArtistInfo> GetArtist(string id)

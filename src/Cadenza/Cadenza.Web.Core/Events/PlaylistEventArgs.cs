@@ -1,6 +1,6 @@
 ﻿using Cadenza.Web.Core.Playlists;
 
-namespace Cadenza.Web.Core.CurrentlyPlaying;
+namespace Cadenza.Web.Core.Events;
 
 public delegate Task PlaylistEventHandler(object sender, PlaylistEventArgs e);
 

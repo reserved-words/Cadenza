@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Core.App;
-using Cadenza.Web.Core.CurrentlyPlaying;
+﻿using Cadenza.Web.Core.Events;
 
 namespace Cadenza.Web.Core.Interfaces;
 

@@ -77,9 +77,7 @@ public class CorePlayer : IPlayer
 
     private async Task<ISourcePlayer> GetCurrentSourcePlayer(LibrarySource? source = null)
     {
-        var currentSource = source.HasValue
-            ? source.Value
-            : await GetCurrentSource();
+        var currentSource = source ?? await GetCurrentSource();
 
         if (!currentSource.HasValue)
             return null;

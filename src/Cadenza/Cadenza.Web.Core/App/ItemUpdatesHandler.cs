@@ -1,6 +1,6 @@
 ﻿using Cadenza.Domain.Model.Update;
+using Cadenza.Web.Core.Events;
 using Cadenza.Web.Core.Interfaces;
-using Cadenza.Web.Core.Updates;
 
 namespace Cadenza.Web.Core.App;
 
