@@ -21,7 +21,7 @@ global using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.Core;
 
-public static class _Startup
+public static class Startup
 {
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
