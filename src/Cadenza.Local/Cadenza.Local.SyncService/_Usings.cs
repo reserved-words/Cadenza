@@ -10,7 +10,6 @@ global using Cadenza.Apps.WindowsService.Settings;
 
 global using Cadenza.Domain.Model;
 
-global using Cadenza.Local.SyncService._Startup;
 global using Cadenza.Local.SyncService.Services;
 global using Cadenza.Local.SyncService.Settings;
 

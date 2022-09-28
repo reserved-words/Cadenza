@@ -11,7 +11,6 @@ global using Cadenza.Domain.Enums;
 global using Cadenza.Domain.Model.Track;
 global using Cadenza.Domain.Model.Updates;
 
-global using Cadenza.SyncService._Startup;
 global using Cadenza.SyncService.Interfaces;
 global using Cadenza.SyncService.Repositories;
 global using Cadenza.SyncService.Settings;
