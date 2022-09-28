@@ -1,13 +1,8 @@
 ﻿
-using Cadenza.SyncService._Startup;
-
-var builder = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext, services) =>
-    {
-        services.RegisterConfiguration();
-        services.RegisterDependencies();
-        services.AddHostedService<Worker>();
-    })
-    .UseWindowsService();
+var builder = Service.CreateBuilder(args, services =>
+{
+    services.RegisterConfiguration();
+    services.RegisterDependencies();
+});
 
 builder.Build().Run();

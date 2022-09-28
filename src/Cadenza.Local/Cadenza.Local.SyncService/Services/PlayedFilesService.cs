@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.WindowsService.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.SyncService.Services;
 
-internal class PlayedFilesCleanupService : IUpdateService
+internal class PlayedFilesService : IService
 {
     private readonly IFileAccess _fileAccess;
     private readonly IOptions<CurrentlyPlayingSettings> _settings;
 
-    public PlayedFilesCleanupService(IFileAccess fileAccess, IOptions<CurrentlyPlayingSettings> settings)
+    public PlayedFilesService(IFileAccess fileAccess, IOptions<CurrentlyPlayingSettings> settings)
     {
         _fileAccess = fileAccess;
         _settings = settings;

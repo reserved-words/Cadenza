@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.SyncService.Updaters;
 
-internal class AddedTracksHandler : IUpdateService
+internal class AddedTracksHandler : IService
 {
     private readonly IDatabaseRepository _database;
     private readonly IEnumerable<ISourceRepository> _sources;

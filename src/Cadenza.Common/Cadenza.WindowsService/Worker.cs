@@ -1,14 +1,20 @@
-﻿namespace Cadenza.Local.SyncService;
+﻿using Cadenza.WindowsService.Interfaces;
+using Cadenza.WindowsService.Settings;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
-internal class Worker : BackgroundService
+namespace Cadenza.WindowsService;
+
+public class Worker : BackgroundService
 {
-    private readonly IConfiguration _config;
-    private readonly IEnumerable<IUpdateService> _updaters;
+    private readonly IEnumerable<IService> _services;
+    private readonly IOptions<ServiceSettings> _settings;
 
-    public Worker(IEnumerable<IUpdateService> updaters, IConfiguration config)
+    public Worker(IEnumerable<IService> services, IOptions<ServiceSettings> settings)
     {
-        _config = config;
-        _updaters = updaters;
+        _services = services;
+        _settings = settings;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,7 +25,7 @@ internal class Worker : BackgroundService
         {
             try
             {
-                foreach (var updater in _updaters)
+                foreach (var updater in _services)
                 {
                     await updater.Run();
 
@@ -38,7 +44,7 @@ internal class Worker : BackgroundService
 
     private int GetRunFrequency()
     {
-        var runFrequencyInMinutes = _config.GetValue<int>("RunFrequencyMinutes");
+        var runFrequencyInMinutes = _settings.Value.RunFrequencyMinutes;
         var runFrequencyInSeconds = runFrequencyInMinutes * 60;
         var runFrequencyInMilliseconds = runFrequencyInSeconds * 1000;
         return runFrequencyInMilliseconds;

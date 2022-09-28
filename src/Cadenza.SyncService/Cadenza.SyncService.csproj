@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Utilities\Cadenza.Utilities.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.WindowsService\Cadenza.WindowsService.csproj" />
   </ItemGroup>
 
 </Project>

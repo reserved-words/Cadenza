@@ -14,6 +14,6 @@ public static class Dependencies
     private static IServiceCollection AddUpdaters(this IServiceCollection services)
     {
         return services
-            .AddTransient<IUpdateService, PlayedFilesCleanupService>();
+            .AddTransient<IService, PlayedFilesService>();
     }
 }
