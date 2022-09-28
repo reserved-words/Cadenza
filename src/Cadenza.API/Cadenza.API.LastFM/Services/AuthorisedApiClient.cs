@@ -5,10 +5,10 @@ namespace Cadenza.API.LastFM.Services;
 internal class AuthorisedApiClient : IAuthorisedApiClient
 {
     private readonly IHttpHelper _httpClient;
-    private readonly IOptions<ApiSettings> _config;
+    private readonly IOptions<LastFmApiSettings> _config;
     private readonly ISigner _signer;
 
-    public AuthorisedApiClient(IHttpHelper httpClient, IOptions<ApiSettings> config, ISigner signer)
+    public AuthorisedApiClient(IHttpHelper httpClient, IOptions<LastFmApiSettings> config, ISigner signer)
     {
         _httpClient = httpClient;
         _config = config;

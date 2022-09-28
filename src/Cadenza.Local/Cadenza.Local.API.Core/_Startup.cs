@@ -10,7 +10,6 @@ global using Cadenza.Local.API.Core.Settings;
 
 global using Cadenza.Utilities.Interfaces;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Local.API.Core
@@ -24,11 +23,6 @@ namespace Cadenza.Local.API.Core
                 .AddTransient<ISyncService, SyncService>();
         }
 
-        public static IServiceCollection ConfigureMusicLocation(this IServiceCollection services, IConfiguration config, string sectionPath)
-        {
-            var section = config.GetSection(sectionPath);
-            return services.Configure<MusicLibrarySettings>(section);
-        }
         private static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
             return services

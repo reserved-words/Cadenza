@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Controller;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -12,7 +12,7 @@ public class UpdateController : ControllerBase
     }
 
     [HttpPost("UpdateTrack/{source}")]
-    public async Task UpdateTrack(LibrarySource source, [FromBody]ItemUpdates update)
+    public async Task UpdateTrack(LibrarySource source, [FromBody] ItemUpdates update)
     {
         await _service.UpdateTrack(source, update);
     }

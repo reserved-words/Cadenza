@@ -7,7 +7,6 @@ global using Cadenza.Domain.Model.History;
 global using Cadenza.Domain.Model.LastFm;
 global using Cadenza.Utilities.Interfaces;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.LastFM;
@@ -33,11 +32,5 @@ public static class Startup
             .AddTransient<IParser, Parser>()
             .AddTransient<IResponseReader, ResponseReader>()
             .AddTransient<IUrlService, UrlService>();
-    }
-
-    public static IServiceCollection ConfigureLastFM(this IServiceCollection services, IConfiguration config, string sectionPath)
-    {
-        var section = config.GetSection(sectionPath);
-        return services.Configure<ApiSettings>(section);
     }
 }

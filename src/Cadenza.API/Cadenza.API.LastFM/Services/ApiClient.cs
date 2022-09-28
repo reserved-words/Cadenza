@@ -6,11 +6,11 @@ namespace Cadenza.API.LastFM.Services;
 internal class ApiClient : IApiClient
 {
     private readonly IHttpHelper _httpClient;
-    private readonly IOptions<ApiSettings> _config;
+    private readonly IOptions<LastFmApiSettings> _config;
     private readonly IResponseReader _responseReader;
     private readonly IUrlService _urlService;
 
-    public ApiClient(IHttpHelper httpClient, IOptions<ApiSettings> config, IUrlService urlService, IResponseReader responseReader)
+    public ApiClient(IHttpHelper httpClient, IOptions<LastFmApiSettings> config, IUrlService urlService, IResponseReader responseReader)
     {
         _httpClient = httpClient;
         _config = config;

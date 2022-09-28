@@ -1,6 +1,5 @@
 ﻿using Cadenza.Utilities.Implementations;
 using Cadenza.Utilities.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FileAccess = Cadenza.Utilities.Implementations.FileAccess;
 
@@ -15,16 +14,14 @@ public static class _Startup
             .AddTransient<IDateTime, CurrentDateTime>()
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IHasher, Hasher>()
-            .AddTransient<IHttpHelper, HttpHelper>()
             .AddTransient<IIdGenerator, IdGenerator>()
             .AddTransient<IJsonConverter, JsonConverter>()
             .AddTransient<INameComparer, NameComparer>()
             .AddTransient<IShuffler, Shuffler>();
     }
 
-    public static IServiceCollection AddHttpClient(this IServiceCollection services, HttpClient client)
+    public static IServiceCollection AddHttpHelper(this IServiceCollection services, Func<IServiceProvider, HttpClient> resolveClient)
     {
-        return services.AddTransient(sp => client)
-            .AddTransient<IHttpHelper, HttpHelper>();
+        return services.AddTransient<IHttpHelper>(sp => new HttpHelper(resolveClient(sp)));
     }
 }

@@ -17,7 +17,6 @@ global using Cadenza.Domain.Model.Updates;
 
 global using Cadenza.Utilities.Interfaces;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.Database;
@@ -66,11 +65,5 @@ public static class _Startup
         return services
             .AddTransient<DataAccess>()
             .AddTransient<IDataAccess>(sp => new ThreadSafeDataAccess(sp.GetRequiredService<DataAccess>()));
-    }
-
-    public static IServiceCollection ConfigureJsonLibrary(this IServiceCollection services, IConfiguration config, string sectionPath)
-    {
-        var section = config.GetSection(sectionPath);
-        return services.Configure<LibraryPathSettings>(section);
     }
 }

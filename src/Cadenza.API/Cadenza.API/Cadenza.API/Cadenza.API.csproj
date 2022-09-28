@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj" />
+    <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Domain.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Database\Cadenza.API.Database.csproj" />

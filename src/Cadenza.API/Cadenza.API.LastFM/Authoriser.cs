@@ -5,13 +5,13 @@ namespace Cadenza.API.LastFM;
 internal class Authoriser : IAuthoriser
 {
     private readonly IHttpHelper _http;
-    private readonly IOptions<ApiSettings> _config;
+    private readonly IOptions<LastFmApiSettings> _config;
     private readonly ISigner _signer;
     private readonly IParser _parser;
     private readonly IResponseReader _responseReader;
     private readonly IUrlService _urlService;
 
-    public Authoriser(IOptions<ApiSettings> config, ISigner signer, IHttpHelper http, IParser parser, IUrlService urlService, IResponseReader responseReader)
+    public Authoriser(IOptions<LastFmApiSettings> config, ISigner signer, IHttpHelper http, IParser parser, IUrlService urlService, IResponseReader responseReader)
     {
         _config = config;
         _signer = signer;

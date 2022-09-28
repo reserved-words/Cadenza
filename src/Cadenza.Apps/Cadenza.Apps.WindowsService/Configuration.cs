@@ -5,7 +5,7 @@ namespace Cadenza.Apps.WindowsService;
 
 public static class Configuration
 {
-    public static IConfiguration RegisterJson(this IServiceCollection services)
+    public static IConfiguration RegisterConfiguration(this IServiceCollection services)
     {
         var settingsPath = GetPath();
 

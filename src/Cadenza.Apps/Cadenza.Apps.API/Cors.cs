@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Cadenza.Apps.API;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Cadenza.Local.API._Startup;
+namespace Cadenza.Apps.API;
 
 public static class Cors
 {
@@ -25,7 +26,8 @@ public static class Cors
             name: cli.Name,
             builder =>
             {
-                builder.WithOrigins(cli.Origin)
+                builder
+                    .WithOrigins(cli.Origin)
                     .WithMethods("GET", "POST", "OPTIONS")
                     .WithHeaders("content-type");
             }));

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Controller;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

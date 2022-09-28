@@ -1,11 +1,11 @@
 ﻿
 var builder = Service.CreateBuilder(args, services =>
 {
-    var configuration = services.RegisterJson();
+    var configuration = services.RegisterConfiguration();
 
     services
-        .AddTransient(sp => new HttpClient())
         .AddUtilities()
+        .AddHttpHelper(sp => new HttpClient())
         .AddTransient<IDatabaseRepository, DatabaseRepository>()
         .AddTransient<ISourceRepository, LocalRepository>()
         .AddTransient<IService, AddedTracksHandler>()

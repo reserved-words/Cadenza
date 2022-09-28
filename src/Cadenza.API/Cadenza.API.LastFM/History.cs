@@ -6,11 +6,11 @@ namespace Cadenza.API.LastFM
     internal class History : IHistory
     {
         private readonly IApiClient _client;
-        private readonly IOptions<ApiSettings> _config;
+        private readonly IOptions<LastFmApiSettings> _config;
         private readonly IParser _parser;
         private readonly IUrlService _urlService;
 
-        public History(IApiClient client, IOptions<ApiSettings> config, IParser parser, IUrlService urlService)
+        public History(IApiClient client, IOptions<LastFmApiSettings> config, IParser parser, IUrlService urlService)
         {
             _client = client;
             _config = config;

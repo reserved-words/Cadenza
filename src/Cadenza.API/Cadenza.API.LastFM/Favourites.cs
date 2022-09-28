@@ -7,10 +7,10 @@ internal class Favourites : IFavourites
 {
     private readonly IAuthorisedApiClient _authorisedClient;
     private readonly IApiClient _client;
-    private readonly IOptions<ApiSettings> _config;
+    private readonly IOptions<LastFmApiSettings> _config;
     private readonly IUrlService _urlService;
 
-    public Favourites(IAuthorisedApiClient authorisedClient, IApiClient client, IOptions<ApiSettings> config, IUrlService urlService)
+    public Favourites(IAuthorisedApiClient authorisedClient, IApiClient client, IOptions<LastFmApiSettings> config, IUrlService urlService)
     {
         _authorisedClient = authorisedClient;
         _client = client;

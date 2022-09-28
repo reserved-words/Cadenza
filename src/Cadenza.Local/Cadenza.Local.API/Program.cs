@@ -1,15 +1,30 @@
+global using Microsoft.AspNetCore.Mvc;
 
-var builder = WebApplication.CreateBuilder(args)
-    .RegisterDependencies()
-    .RegisterConfiguration()
-    .RegisterCorsPolicies()
-    .RegisterDocumentation();
+global using Cadenza.Domain.Model.Track;
+global using Cadenza.Domain.Model.Updates;
 
-var app = builder.Build();
+global using Cadenza.Local.API.Common.Controllers;
+global using Cadenza.Local.API.Core;
+global using Cadenza.Local.API.Core.Settings;
+global using Cadenza.Local.API.Files;
+global using Cadenza.Utilities;
 
-app.AddCors();
-app.AddDocumentation();
-app.MapControllers();
-app.AddDocumentationUI();
+using Cadenza.Apps;
+using Cadenza.Apps.API;
+
+var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
+{
+    services
+        .AddUtilities()
+        .AddArtworkService()
+        .AddMusicService()
+        .AddCoreServices();
+
+    services
+        .ConfigureSettings<MusicLibrarySettings>(configuration, "MusicLibrary")
+        .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
+});
+
+var app = API.CreateApp(builder);
 
 app.Run();

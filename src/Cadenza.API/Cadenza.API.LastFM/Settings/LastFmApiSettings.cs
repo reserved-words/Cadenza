@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.API.LastFM.Settings;
 
-public class ApiSettings
+public class LastFmApiSettings
 {
     public string ApiKey { get; set; }
     public string Username { get; set; }

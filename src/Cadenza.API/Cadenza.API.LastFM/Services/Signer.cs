@@ -5,9 +5,9 @@ namespace Cadenza.API.LastFM.Services;
 internal class Signer : ISigner
 {
     private readonly IHasher _hasher;
-    private readonly IOptions<ApiSettings> _config;
+    private readonly IOptions<LastFmApiSettings> _config;
 
-    public Signer(IOptions<ApiSettings> config, IHasher hasher)
+    public Signer(IOptions<LastFmApiSettings> config, IHasher hasher)
     {
         _config = config;
         _hasher = hasher;

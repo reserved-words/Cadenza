@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local.API._Startup;
+﻿namespace Cadenza.Apps.API;
 
 public static class Documentation
 {
@@ -9,7 +9,6 @@ public static class Documentation
         builder.Services.AddSwaggerGen();
         return builder;
     }
-
 
     public static WebApplication AddDocumentation(this WebApplication app)
     {
@@ -24,7 +23,6 @@ public static class Documentation
             options.SwaggerEndpoint("swagger/v1/swagger.json", "v1");
             options.RoutePrefix = string.Empty;
         });
-
         return app;
     }
 }

@@ -12,11 +12,11 @@ using Cadenza.Web.Core.Interfaces;
 using Cadenza.Web.Core.Utilities;
 using Cadenza.Web.LastFM;
 using Cadenza.Web.Core.Playlists;
-using IDialogService = Cadenza.Interfaces.IDialogService;
 using Cadenza.Web.Common.Interop;
 using Cadenza.Web.Core.Player;
 using Cadenza.Web.Source.Local;
 using Cadenza.Web.Database;
+using IDialogService = Cadenza.Interfaces.IDialogService;
 
 namespace Cadenza._Startup;
 
@@ -38,7 +38,7 @@ public static class Dependencies
             .AddStartupServices()
             .AddInteropServices()
             .AddUtilities()
-            .AddHttpClient(http)
+            .AddHttpHelper(sp => http)
             .AddAppServices()
             .AddUIHelpers()
             .AddTimers()
