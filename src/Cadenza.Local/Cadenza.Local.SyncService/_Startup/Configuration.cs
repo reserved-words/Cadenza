@@ -1,7 +1,4 @@
-﻿using Cadenza.WindowsService;
-using Cadenza.WindowsService.Settings;
-
-namespace Cadenza.Local.SyncService._Startup;
+﻿namespace Cadenza.Local.SyncService._Startup;
 
 public static class Configuration
 {

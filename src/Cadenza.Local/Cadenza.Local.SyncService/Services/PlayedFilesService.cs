@@ -1,7 +1,4 @@
-﻿using Cadenza.WindowsService.Interfaces;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Local.SyncService.Services;
+﻿namespace Cadenza.Local.SyncService.Services;
 
 internal class PlayedFilesService : IService
 {

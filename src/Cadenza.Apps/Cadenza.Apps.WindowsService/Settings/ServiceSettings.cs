@@ -1,4 +1,4 @@
-﻿namespace Cadenza.WindowsService.Settings;
+﻿namespace Cadenza.Apps.WindowsService.Settings;
 
 public class ServiceSettings
 {

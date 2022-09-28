@@ -1,4 +1,4 @@
-﻿using Cadenza.WindowsService;
+﻿using Cadenza.Apps.WindowsService;
 
 var builder = Service.CreateBuilder(args, services =>
 {

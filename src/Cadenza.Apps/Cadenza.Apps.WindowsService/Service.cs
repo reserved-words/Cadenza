@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Cadenza.WindowsService;
+namespace Cadenza.Apps.WindowsService;
 
 public static class Service
 {

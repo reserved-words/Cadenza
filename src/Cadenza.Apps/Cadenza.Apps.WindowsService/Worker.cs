@@ -1,10 +1,10 @@
-﻿using Cadenza.WindowsService.Interfaces;
-using Cadenza.WindowsService.Settings;
+﻿using Cadenza.Apps.WindowsService.Interfaces;
+using Cadenza.Apps.WindowsService.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace Cadenza.WindowsService;
+namespace Cadenza.Apps.WindowsService;
 
 public class Worker : BackgroundService
 {
@@ -44,9 +44,9 @@ public class Worker : BackgroundService
 
     private int GetRunFrequency()
     {
-        var runFrequencyInMinutes = _settings.Value.RunFrequencyMinutes;
-        var runFrequencyInSeconds = runFrequencyInMinutes * 60;
-        var runFrequencyInMilliseconds = runFrequencyInSeconds * 1000;
-        return runFrequencyInMilliseconds;
+        var minutes = _settings.Value.RunFrequencyMinutes;
+        var seconds = minutes * 60;
+        var milliseconds = seconds * 1000;
+        return milliseconds;
     }
 }

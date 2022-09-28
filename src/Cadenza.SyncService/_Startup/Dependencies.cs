@@ -6,21 +6,21 @@ public static class Dependencies
     {
         services
             .AddTransient(sp => new HttpClient())
-            .AddRepositories()
             .AddUtilities()
-            .AddUpdaters();
+            .AddInternals()
+            .AddServices();
 
         return services;
     }
 
-    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    private static IServiceCollection AddInternals(this IServiceCollection services)
     {
         return services
             .AddTransient<IDatabaseRepository, DatabaseRepository>()
             .AddTransient<ISourceRepository, LocalRepository>();
     }
 
-    private static IServiceCollection AddUpdaters(this IServiceCollection services)
+    private static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
             .AddTransient<IService, AddedTracksHandler>()

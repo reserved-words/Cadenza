@@ -6,12 +6,12 @@ public static class Dependencies
     {
         services
             .AddUtilities()
-            .AddUpdaters();
+            .AddServices();
 
         return services;
     }
 
-    private static IServiceCollection AddUpdaters(this IServiceCollection services)
+    private static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
             .AddTransient<IService, PlayedFilesService>();
