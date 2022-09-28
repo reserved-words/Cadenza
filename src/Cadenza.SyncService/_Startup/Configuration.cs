@@ -1,6 +1,4 @@
-﻿using Cadenza.SyncService.Settings;
-
-namespace Cadenza.SyncService._Startup
+﻿namespace Cadenza.SyncService._Startup
 {
     public static class Configuration
     {

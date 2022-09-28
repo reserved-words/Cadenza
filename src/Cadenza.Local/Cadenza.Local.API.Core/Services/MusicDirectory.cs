@@ -1,8 +1,4 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Local.API.Core.Interfaces;
-using Cadenza.Local.API.Core.Settings;
-using Cadenza.Utilities.Interfaces;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.API.Core.Services;
 

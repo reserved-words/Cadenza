@@ -1,4 +1,3 @@
-using Cadenza.Local.API._Startup;
 
 var builder = WebApplication.CreateBuilder(args)
     .RegisterDependencies()
@@ -6,10 +5,11 @@ var builder = WebApplication.CreateBuilder(args)
     .RegisterCorsPolicies()
     .RegisterDocumentation();
 
-var app = builder.Build()
-    .AddCors()
-    .AddDocumentation()
-    .AddRoutes()
-    .AddDocumentationUI();
+var app = builder.Build();
+
+app.AddCors();
+app.AddDocumentation();
+app.MapControllers();
+app.AddDocumentationUI();
 
 app.Run();

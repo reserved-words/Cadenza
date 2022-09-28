@@ -1,7 +1,15 @@
-﻿using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.API.Core.Interfaces;
-using Cadenza.Local.API.Core.Services;
-using Cadenza.Local.API.Core.Settings;
+﻿global using Cadenza.Domain.Model;
+global using Cadenza.Domain.Model.Track;
+global using Cadenza.Domain.Model.Updates;
+
+global using Cadenza.Local.API.Common.Interfaces;
+global using Cadenza.Local.API.Common.Controllers;
+global using Cadenza.Local.API.Core.Interfaces;
+global using Cadenza.Local.API.Core.Services;
+global using Cadenza.Local.API.Core.Settings;
+
+global using Cadenza.Utilities.Interfaces;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,8 +20,7 @@ namespace Cadenza.Local.API.Core
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             return services.AddInternalServices()
-                .AddTransient<IArtworkService, ArtworkService>()
-                .AddTransient<IPlayService, PlayService>()
+                .AddTransient<ILibraryService, LibraryService>()
                 .AddTransient<ISyncService, SyncService>();
         }
 

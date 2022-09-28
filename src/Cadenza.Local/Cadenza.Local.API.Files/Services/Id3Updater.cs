@@ -1,54 +1,17 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
-using Cadenza.Local.API.Common.Interfaces;
-using Cadenza.Local.API.Files.Interfaces;
-using Cadenza.Local.API.Files.Model;
+﻿namespace Cadenza.Local.API.Files.Services;
 
-namespace Cadenza.Local.API.Files;
-
-internal class MusicFileLibrary : IMusicFileLibrary
+internal class Id3Updater : IId3Updater
 {
     private readonly IId3TagsService _id3Service;
-    private readonly IId3ToModelConverter _converter;
     private readonly ICommentProcessor _commentProcessor;
 
-    public MusicFileLibrary(IId3ToModelConverter converter, IId3TagsService id3Service, ICommentProcessor commentProcessor)
+    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor)
     {
-        _converter = converter;
         _id3Service = id3Service;
         _commentProcessor = commentProcessor;
     }
 
-    public (byte[] Bytes, string Type) GetArtwork(string filepath)
-    {
-        return _id3Service.GetArtwork(filepath);
-    }
-
-    public TrackFull GetFileData(string filepath)
-    {
-        var id3Track = _id3Service.GetId3Data(filepath);
-        var trackArtist = _converter.ConvertTrackArtist(id3Track);
-        var albumArtist = _converter.ConvertAlbumArtist(id3Track);
-        var track = _converter.ConvertTrack(id3Track);
-        var album = _converter.ConvertAlbum(id3Track);
-        var albumTrackLink = _converter.ConvertAlbumTrackLink(track.Id, id3Track);
-
-        track.ArtistName = trackArtist.Name;
-        album.ArtistName = albumArtist.Name;
-        album.DiscCount = album.TrackCounts.Count;
-
-        return new TrackFull
-        {
-            Album = album,
-            AlbumArtist = albumArtist,
-            AlbumTrack = albumTrackLink,
-            Artist = trackArtist,
-            Track = track
-        };
-    }
-
-    public void UpdateFileData(string filepath, List<PropertyUpdate> updates)
+    public void UpdateTags(string filepath, List<PropertyUpdate> updates)
     {
         var data = _id3Service.GetId3Data(filepath);
         var commentData = _commentProcessor.GetData(data.Track.Comment);

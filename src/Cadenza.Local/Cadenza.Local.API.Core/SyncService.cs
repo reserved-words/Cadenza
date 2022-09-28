@@ -1,19 +1,12 @@
-﻿using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
-using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.API.Common.Interfaces;
-using Cadenza.Local.API.Core.Interfaces;
-using Cadenza.Utilities.Interfaces;
-
-namespace Cadenza.Local.API.Core;
+﻿namespace Cadenza.Local.API.Core;
 
 internal class SyncService : ISyncService
 {
     private readonly IMusicDirectory _musicDirectory;
     private readonly IBase64Converter _base64Converter;
-    private readonly IMusicFileLibrary _musicLibrary;
+    private readonly IMusicFilesService _musicLibrary;
 
-    public SyncService(IMusicDirectory musicDirectory, IBase64Converter base64Converter, IMusicFileLibrary musicLibrary)
+    public SyncService(IMusicDirectory musicDirectory, IBase64Converter base64Converter, IMusicFilesService musicLibrary)
     {
         _musicDirectory = musicDirectory;
         _base64Converter = base64Converter;

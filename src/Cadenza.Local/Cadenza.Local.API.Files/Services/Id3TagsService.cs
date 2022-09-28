@@ -1,7 +1,4 @@
-﻿using Cadenza.Local.API.Files.Interfaces;
-using Cadenza.Local.API.Files.Model;
-using Cadenza.Utilities.Interfaces;
-using TagLib;
+﻿using TagLib;
 
 namespace Cadenza.Local.API.Files.Services;
 

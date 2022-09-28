@@ -1,8 +1,4 @@
-﻿using Cadenza.SyncService.Interfaces;
-using Cadenza.SyncService.Repositories;
-using Cadenza.SyncService.Updaters;
-
-namespace Cadenza.SyncService._Startup;
+﻿namespace Cadenza.SyncService._Startup;
 
 public static class Dependencies
 {

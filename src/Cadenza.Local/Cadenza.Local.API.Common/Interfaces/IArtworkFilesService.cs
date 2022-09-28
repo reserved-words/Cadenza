@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Local.API.Common.Interfaces;
 
-public interface IMusicFileArtworkService
+public interface IArtworkFilesService
 {
     (byte[] Bytes, string Type) GetArtwork(string filepath);
 }

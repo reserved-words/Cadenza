@@ -1,10 +1,4 @@
-﻿using Cadenza.Local.API.Common.Controllers;
-using Cadenza.Local.API.Core;
-using Cadenza.Local.API.Files;
-using Cadenza.Utilities.Implementations;
-using Cadenza.Utilities.Interfaces;
-
-namespace Cadenza.Local.API._Startup;
+﻿namespace Cadenza.Local.API._Startup;
 
 public static class Dependencies
 {
@@ -18,13 +12,11 @@ public static class Dependencies
     private static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
         services.AddScoped((sp) => new HttpClient());
-        //services.AddTransient<IValueMerger, ValueMerger>();
-        //services.AddTransient<IMerger, Merger>();
 
         services
             .AddUtilities()
-            .AddMusicFileArtwork()
-            .AddMusicFileLibrary()
+            .AddArtworkService()
+            .AddMusicService()
             .AddCoreServices();
 
         return services;

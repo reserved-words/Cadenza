@@ -1,5 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
 
+global using Cadenza.API._Startup;
+
 global using Cadenza.API.Interfaces.Controllers;
 global using Cadenza.API.Core;
 global using Cadenza.API.Database;

@@ -1,13 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Artist;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Local.API.Files.Interfaces;
-using Cadenza.Local.API.Files.Model;
-using Cadenza.Utilities.Interfaces;
-
-namespace Cadenza.Local.API.Files.Services;
+﻿namespace Cadenza.Local.API.Files.Services;
 
 internal class Id3ToModelConverter : IId3ToModelConverter
 {

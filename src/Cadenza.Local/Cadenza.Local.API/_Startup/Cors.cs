@@ -1,5 +1,4 @@
-﻿using Cadenza.Local.API._Startup;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Cadenza.Local.API._Startup;
 

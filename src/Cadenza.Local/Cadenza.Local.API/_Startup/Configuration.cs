@@ -1,7 +1,4 @@
-﻿using Cadenza.Local.API.Core;
-using Cadenza.Local.API.Core.Settings;
-
-namespace Cadenza.Local.API._Startup;
+﻿namespace Cadenza.Local.API._Startup;
 
 public static class Configuration
 {

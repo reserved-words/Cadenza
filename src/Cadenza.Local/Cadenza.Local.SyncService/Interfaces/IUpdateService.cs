@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Local.SyncService;
+﻿namespace Cadenza.Local.SyncService.Interfaces;
 
 internal interface IUpdateService
 {

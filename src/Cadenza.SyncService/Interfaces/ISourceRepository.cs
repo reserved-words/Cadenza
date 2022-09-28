@@ -1,8 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.SyncService.Interfaces;
+﻿namespace Cadenza.SyncService.Interfaces;
 
 internal interface ISourceRepository
 {

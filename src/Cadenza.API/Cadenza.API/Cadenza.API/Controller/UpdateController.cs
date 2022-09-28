@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.API.Controller;
+﻿namespace Cadenza.API.Controller;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -12,18 +10,6 @@ public class UpdateController : ControllerBase
     {
         _service = service;
     }
-
-    //[HttpGet("Get")]
-    //public async Task<List<ItemUpdates>> Get()
-    //{
-    //    return await _service.GetQueuedUpdates();
-    //}
-
-    //[HttpPost("Remove")]
-    //public async Task Update(ItemUpdates update)
-    //{
-    //    await _service.Update(update);
-    //}
 
     [HttpPost("UpdateTrack/{source}")]
     public async Task UpdateTrack(LibrarySource source, [FromBody]ItemUpdates update)

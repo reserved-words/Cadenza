@@ -13,9 +13,7 @@ internal class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var runFrequencyInMinutes = _config.GetValue<int>("RunFrequencyMinutes");
-        var runFrequencyInSeconds = runFrequencyInMinutes * 60;
-        var runFrequencyInMilliseconds = runFrequencyInSeconds * 1000;
+        var runFrequency = GetRunFrequency();
 
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -34,7 +32,15 @@ internal class Worker : BackgroundService
                 Console.WriteLine(ex);
             }
 
-            await Task.Delay(runFrequencyInMilliseconds, stoppingToken);
+            await Task.Delay(runFrequency, stoppingToken);
         }
+    }
+
+    private int GetRunFrequency()
+    {
+        var runFrequencyInMinutes = _config.GetValue<int>("RunFrequencyMinutes");
+        var runFrequencyInSeconds = runFrequencyInMinutes * 60;
+        var runFrequencyInMilliseconds = runFrequencyInSeconds * 1000;
+        return runFrequencyInMilliseconds;
     }
 }

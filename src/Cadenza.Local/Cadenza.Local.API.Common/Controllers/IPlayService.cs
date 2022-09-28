@@ -1,6 +1,7 @@
 ﻿namespace Cadenza.Local.API.Common.Controllers;
 
-public interface IPlayService
+public interface ILibraryService
 {
-    Task<string> GetTrackPlayPath(string id);
+    Task<(byte[] Bytes, string Type)> GetArtwork(string id);
+    Task<string> GetPlayPath(string id);
 }

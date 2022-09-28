@@ -1,15 +1,11 @@
-﻿using Cadenza.Local.API.Common.Interfaces;
-using Cadenza.Local.API.Core.Interfaces;
-using Cadenza.Utilities.Interfaces;
-
-namespace Cadenza.Local.API.Core.Services;
+﻿namespace Cadenza.Local.API.Core.Services;
 
 internal class ImageSrcGenerator : IImageSrcGenerator
 {
     private readonly IBase64Converter _base64Converter;
-    private readonly IMusicFileArtworkService _musicFileLibrary;
+    private readonly IArtworkFilesService _musicFileLibrary;
 
-    public ImageSrcGenerator(IBase64Converter base64Converter, IMusicFileArtworkService musicFileLibrary)
+    public ImageSrcGenerator(IBase64Converter base64Converter, Common.Interfaces.IArtworkFilesService musicFileLibrary)
     {
         _base64Converter = base64Converter;
         _musicFileLibrary = musicFileLibrary;
