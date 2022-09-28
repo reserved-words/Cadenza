@@ -23,6 +23,15 @@ internal class JsonConverter : IJsonConverter
         if (string.IsNullOrWhiteSpace(json))
             return new T();
 
-        return JsonConvert.DeserializeObject<T>(json, _settings);
+        json = json.Trim();
+
+        try
+        {
+            return JsonConvert.DeserializeObject<T>(json, _settings);
+        }
+        catch (Exception)
+        {
+            return new T();
+        }
     }
 }
