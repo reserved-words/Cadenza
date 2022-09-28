@@ -17,8 +17,6 @@ global using Cadenza.Domain.Model.Updates;
 global using Cadenza.Domain.Enums;
 global using Cadenza.Domain.Extensions;
 
-global using Cadenza.Library;
-
 global using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.API.Core;
