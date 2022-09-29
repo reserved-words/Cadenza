@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Core.Interfaces;
+﻿namespace Cadenza.Web.Core.Interfaces;
 
 internal interface IPlayer
 {

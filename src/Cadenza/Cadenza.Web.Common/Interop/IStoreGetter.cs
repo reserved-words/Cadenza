@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Common.Interop;
+﻿namespace Cadenza.Web.Common.Interop;
 
 public interface IStoreGetter
 {

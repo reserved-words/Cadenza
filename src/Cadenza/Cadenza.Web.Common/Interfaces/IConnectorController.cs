@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-
-namespace Cadenza.Web.Common.Interfaces
+﻿namespace Cadenza.Web.Common.Interfaces
 {
     public interface IConnectorController
     {

@@ -1,13 +1,4 @@
-﻿using Cadenza.Domain.Model.LastFm;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Interop;
-using Cadenza.Web.LastFM.Settings;
-using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
-
-namespace Cadenza.Web.LastFM.Services;
+﻿namespace Cadenza.Web.LastFM.Services;
 
 internal class Favourites : IFavouritesConsumer, IFavouritesController
 {
@@ -15,7 +6,6 @@ internal class Favourites : IFavouritesConsumer, IFavouritesController
     private readonly IHttpHelper _http;
     private readonly IStoreGetter _store;
     private readonly LastFmApiSettings _apiSettings;
-
 
     public Favourites(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings, IStoreGetter store)
     {

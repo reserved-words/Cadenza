@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-
-namespace Cadenza.Web.Common.Interop;
+﻿namespace Cadenza.Web.Common.Interop;
 
 public interface IStoreSetter
 {

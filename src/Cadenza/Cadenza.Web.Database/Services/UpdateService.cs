@@ -1,12 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model.Update;
-using Cadenza.Domain.Model.Updates;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Database.Settings;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Services;
 
 internal class UpdateService : IUpdateService
 {

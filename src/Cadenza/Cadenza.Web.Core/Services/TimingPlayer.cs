@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Model;
-using Cadenza.Web.Core.Interfaces;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class TimingPlayer : IUtilityPlayer
 {

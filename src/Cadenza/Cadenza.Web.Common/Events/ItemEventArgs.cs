@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Common.Events;
+﻿namespace Cadenza.Web.Common.Events;
 
 public delegate Task ItemEventHandler(object sender, ItemEventArgs e);
 

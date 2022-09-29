@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-
-namespace Cadenza.Web.Common.Events;
+﻿namespace Cadenza.Web.Common.Events;
 
 public delegate Task ConnectorEventHandler(object sender, ConnectorEventArgs e);
 

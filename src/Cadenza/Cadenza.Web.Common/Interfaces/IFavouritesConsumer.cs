@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain;
-
+﻿
 namespace Cadenza.Web.Common.Interfaces;
 
 public interface IFavouritesConsumer

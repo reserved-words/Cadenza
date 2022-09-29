@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain.Model;
-
+﻿
 namespace Cadenza.Web.Common.Interfaces;
 
 public interface ISearchRepositoryCache

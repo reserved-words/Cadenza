@@ -1,11 +1,4 @@
-﻿using Cadenza.Domain.Model.Track;
-using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Interop;
-using Cadenza.Web.Common.Model;
-using Cadenza.Web.Core.Interfaces;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class TrackingPlayer : IUtilityPlayer
 {

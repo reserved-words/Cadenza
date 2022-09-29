@@ -1,11 +1,4 @@
-﻿using Cadenza.Utilities.Extensions;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.LastFM.Interfaces;
-using Cadenza.Web.LastFM.Settings;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.LastFM.Services;
+﻿namespace Cadenza.Web.LastFM.Services;
 
 internal class Authoriser : IAuthoriser
 {

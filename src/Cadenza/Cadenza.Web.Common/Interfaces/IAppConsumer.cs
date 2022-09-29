@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IAppConsumer
 {

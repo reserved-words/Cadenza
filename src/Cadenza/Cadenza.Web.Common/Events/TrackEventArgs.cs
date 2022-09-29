@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain.Model;
-
+﻿
 namespace Cadenza.Web.Common.Events;
 
 public delegate Task TrackEventHandler(object sender, TrackEventArgs e);

@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class ConnectorService : IConnectorConsumer, IConnectorController
 {

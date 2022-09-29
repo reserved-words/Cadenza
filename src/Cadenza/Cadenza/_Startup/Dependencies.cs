@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces;
-
-namespace Cadenza._Startup;
+﻿namespace Cadenza._Startup;
 
 public static class Dependencies
 {
@@ -14,9 +12,9 @@ public static class Dependencies
             .AddUtilities()
             .AddHttpHelper(sp => http)
             .AddComponents()
-            .AddLocalSource<HtmlPlayer>(builder.Configuration, "LocalApi")
-            .AddLastFm(builder.Configuration, "LastFmApi")
-            .AddDatabase(builder.Configuration, "DatabaseApi");
+            .AddLocalSource<HtmlPlayer>()
+            .AddLastFm()
+            .AddDatabase();
 
         return builder;
     }

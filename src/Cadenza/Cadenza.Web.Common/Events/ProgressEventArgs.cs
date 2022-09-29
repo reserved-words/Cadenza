@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Tasks;
+﻿namespace Cadenza.Web.Common.Events;
 
 public delegate Task TaskGroupProgressEventHandler(object sender, TaskGroupProgressEventArgs e);
 public delegate Task SubTaskProgressEventHandler(object sender, SubTaskProgressEventArgs e);

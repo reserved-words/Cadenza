@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Model.Update;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class ItemUpdatesHandler : IUpdatesController, IUpdatesConsumer
 {

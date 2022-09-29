@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model;
-using Cadenza.Web.Common.Model;
-
+﻿
 namespace Cadenza.Web.Common.Interfaces;
 
 public interface IItemViewer

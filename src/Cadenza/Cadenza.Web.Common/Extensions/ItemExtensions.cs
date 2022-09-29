@@ -1,11 +1,4 @@
-﻿using Cadenza.Domain.Attributes;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Artist;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Common.Extensions;
+﻿namespace Cadenza.Web.Common.Extensions;
 
 public static class ItemExtensions
 {

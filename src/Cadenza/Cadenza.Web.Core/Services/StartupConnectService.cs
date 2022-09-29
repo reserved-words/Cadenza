@@ -3,12 +3,12 @@
     internal class StartupConnectService : IStartupConnectService
     {
         private readonly IStoreSetter _storeSetter;
-        private readonly IEnumerable<IConnectionTaskBuilder> _taskBuilders;
+        private readonly IEnumerable<IConnector> _connectors;
 
-        public StartupConnectService(IStoreSetter storeSetter, IEnumerable<IConnectionTaskBuilder> taskBuilders)
+        public StartupConnectService(IStoreSetter storeSetter, IEnumerable<IConnector> connectors)
         {
             _storeSetter = storeSetter;
-            _taskBuilders = taskBuilders;
+            _connectors = connectors;
         }
 
         public TaskGroup GetStartupTasks()
@@ -18,7 +18,7 @@
                 PreTask = ClearSessionData
             };
 
-            foreach (var builder in _taskBuilders)
+            foreach (var builder in _connectors)
             {
                 taskGroup.Tasks.Add(builder.GetConnectionTask());
             }

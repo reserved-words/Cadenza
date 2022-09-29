@@ -1,12 +1,10 @@
-﻿using Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Source.Local.Settings;
 
-namespace Cadenza.Web.Source.Local.Settings;
-
-internal class LocalApiSettings : ApiOptions<LocalApiEndpoints>
+public class LocalApiSettings : ApiOptions<LocalApiEndpoints>
 {
 }
 
-internal class LocalApiEndpoints
+public class LocalApiEndpoints
 {
     public string Connect { get; set; }
     public string ArtworkUrl { get; set; }

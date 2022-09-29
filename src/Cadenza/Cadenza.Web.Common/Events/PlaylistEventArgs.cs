@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Model;
-
+﻿
 namespace Cadenza.Web.Common.Events;
 
 public delegate Task PlaylistEventHandler(object sender, PlaylistEventArgs e);

@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Core.Interfaces;
+﻿namespace Cadenza.Web.Core.Interfaces;
 
 internal interface ITrackFinishedConsumer
 {

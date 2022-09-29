@@ -1,8 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class SearchRepositoryCache : ISearchRepositoryCache
 {

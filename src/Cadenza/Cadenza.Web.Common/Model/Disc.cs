@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Track;
-
-namespace Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Common.Model;
 
 public class Disc
 {

@@ -1,11 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Model;
-using Cadenza.Library.Repositories;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Core.Interfaces;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class PlaylistCreator : IPlaylistCreator
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-using Cadenza.Web.Core.Interfaces;
-using System.Timers;
+﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Cadenza.Web.Core.Services;
