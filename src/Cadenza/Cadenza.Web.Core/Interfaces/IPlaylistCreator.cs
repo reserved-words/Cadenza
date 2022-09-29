@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Interfaces;
+﻿using Cadenza.Common.Domain.Enums;
+
+namespace Cadenza.Web.Core.Interfaces;
 
 internal interface IPlaylistCreator
 {

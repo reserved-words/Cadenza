@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Model.Track;
+﻿using Cadenza.Common.Interfaces.Utilities;
 
 namespace Cadenza.API.Database.Services.Converters;
 

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.SyncService.Updaters;
+﻿using Cadenza.Common.Domain.Enums;
+
+namespace Cadenza.SyncService.Updaters;
 
 internal class AddedTracksHandler : IService
 {

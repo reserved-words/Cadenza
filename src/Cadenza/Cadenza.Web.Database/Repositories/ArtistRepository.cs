@@ -1,4 +1,9 @@
-﻿namespace Cadenza.Web.Database.Repositories;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.Album;
+using Cadenza.Common.Domain.Model.Artist;
+using Cadenza.Common.Interfaces.Repositories;
+
+namespace Cadenza.Web.Database.Repositories;
 
 internal class ArtistRepository : IArtistRepository
 {

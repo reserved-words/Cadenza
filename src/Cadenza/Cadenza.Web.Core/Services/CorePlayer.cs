@@ -1,4 +1,9 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Common.Interfaces.Repositories;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class CorePlayer : IPlayer
 {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Album;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class CoreArtworkFetcher : IArtworkFetcher
 {

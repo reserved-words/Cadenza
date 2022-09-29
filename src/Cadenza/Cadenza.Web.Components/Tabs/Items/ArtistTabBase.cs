@@ -1,4 +1,5 @@
 ﻿
+using Cadenza.Common.Domain.Model.Artist;
 using Cadenza.Web.Common.Extensions;
 using Cadenza.Web.Common.Model;
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Common.Domain.Enums;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.API.Database.Services;
 

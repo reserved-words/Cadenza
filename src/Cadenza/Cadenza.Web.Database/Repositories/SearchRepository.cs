@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Database.Repositories;
+﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Interfaces.Repositories;
+
+namespace Cadenza.Web.Database.Repositories;
 
 internal class SearchRepository : ISearchRepository
 {

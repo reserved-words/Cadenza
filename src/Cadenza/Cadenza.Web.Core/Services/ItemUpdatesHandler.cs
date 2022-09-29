@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Update;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class ItemUpdatesHandler : IUpdatesController, IUpdatesConsumer
 {

@@ -1,4 +1,6 @@
 ﻿
+using Cadenza.Common.Domain.Model.Track;
+
 namespace Cadenza.Web.Components.Tabs.Items
 {
     public class TrackTabBase : ComponentBase

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Source.Local.Services;
+﻿using Cadenza.Common.Domain.Enums;
+
+namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalPlayer : ISourcePlayer
 {

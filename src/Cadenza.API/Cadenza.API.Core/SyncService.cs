@@ -1,5 +1,6 @@
-﻿using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.Core;
 internal class SyncService : ISyncService

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Model;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class Playlist : IPlaylist
 {

@@ -1,5 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model.History;
+﻿using Cadenza.Common.Domain.Model.History;
 
 namespace Cadenza.Web.Components.Components.History;
 

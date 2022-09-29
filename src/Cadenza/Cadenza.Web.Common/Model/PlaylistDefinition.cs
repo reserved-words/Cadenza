@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Common.Model;
+﻿using Cadenza.Common.Domain.Model;
+
+namespace Cadenza.Web.Common.Model;
 
 public class PlaylistDefinition
 {

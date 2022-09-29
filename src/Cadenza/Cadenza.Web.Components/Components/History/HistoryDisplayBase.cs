@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Events;
+﻿using Cadenza.Web.Common.Events;
 
 namespace Cadenza.Web.Components.Components.History;
 

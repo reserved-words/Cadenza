@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.Track;
+
+namespace Cadenza.Web.Components;
 
 public static class Extensions
 {

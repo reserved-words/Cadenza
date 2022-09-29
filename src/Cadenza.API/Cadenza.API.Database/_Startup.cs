@@ -7,15 +7,16 @@ global using Cadenza.API.Database.Services;
 global using Cadenza.API.Database.Services.Converters;
 global using Cadenza.API.Database.Services.Updaters;
 
-global using Cadenza.Domain.Enums;
-global using Cadenza.Domain.Extensions;
-global using Cadenza.Domain.Model;
-global using Cadenza.Domain.Model.Album;
-global using Cadenza.Domain.Model.Artist;
-global using Cadenza.Domain.Model.Track;
-global using Cadenza.Domain.Model.Updates;
+global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Extensions;
+global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Model.Album;
+global using Cadenza.Common.Domain.Model.Artist;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Updates;
 
-global using Cadenza.Utilities.Interfaces;
+global using Cadenza.Common.Interfaces.Utilities;
+
 
 using Microsoft.Extensions.DependencyInjection;
 

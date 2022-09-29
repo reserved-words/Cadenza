@@ -1,4 +1,4 @@
-﻿using Cadenza.Domain.Model.Artist;
+﻿using Cadenza.Common.Domain.Model.Artist;
 
 namespace Cadenza.API.Database.Interfaces.Converters;
 

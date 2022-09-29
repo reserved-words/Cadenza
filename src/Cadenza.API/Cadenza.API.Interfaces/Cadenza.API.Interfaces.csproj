@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Common.Domain.csproj" />
   </ItemGroup>
 
 </Project>

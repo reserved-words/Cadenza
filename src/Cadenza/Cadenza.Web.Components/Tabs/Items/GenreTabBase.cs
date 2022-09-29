@@ -1,4 +1,9 @@
 ﻿
+using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Extensions;
+using Cadenza.Common.Domain.Model.Artist;
+using Cadenza.Common.Domain.Model.Updates;
+using Cadenza.Common.Interfaces.Repositories;
 using Cadenza.Web.Common.Events;
 
 namespace Cadenza.Web.Components.Tabs.Items

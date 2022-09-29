@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local.API.Controllers;
+﻿using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Common.Domain.Model.Updates;
+
+namespace Cadenza.Local.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

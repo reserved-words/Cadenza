@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Common.Domain.Model;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Local.API.Core.Services;
 

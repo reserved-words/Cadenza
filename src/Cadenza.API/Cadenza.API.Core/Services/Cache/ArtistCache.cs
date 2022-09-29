@@ -1,8 +1,10 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Artist;
-using Cadenza.Domain.Model.Update;
-using Cadenza.Domain.Model.Updates;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Extensions;
+using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Domain.Model.Album;
+using Cadenza.Common.Domain.Model.Artist;
+using Cadenza.Common.Domain.Model.Update;
+using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.Core.Services.Cache;
 

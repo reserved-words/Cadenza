@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain.Model.History;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.History;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.API.LastFM

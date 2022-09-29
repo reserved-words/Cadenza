@@ -1,5 +1,5 @@
 ﻿using Cadenza.API.Database.Interfaces.Updaters;
-using Cadenza.Domain.Model.Updates;
+using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.Database.Services.Updaters;
 

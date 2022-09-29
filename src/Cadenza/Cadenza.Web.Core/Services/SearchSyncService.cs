@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Interfaces.Repositories;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class SearchSyncService : ISearchSyncService
 {

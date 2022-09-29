@@ -1,5 +1,4 @@
-﻿
-using Cadenza.Web.Common.Events;
+﻿using Cadenza.Web.Common.Events;
 
 namespace Cadenza.Web.Components.Tabs.Items
 {

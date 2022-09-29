@@ -1,5 +1,5 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Library.Repositories;
+﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Interfaces.Repositories;
 
 namespace Cadenza.API.Core.Services.Cache;
 

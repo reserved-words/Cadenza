@@ -1,4 +1,5 @@
-﻿using Cadenza.Domain.Model.Updates;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.Database;
 

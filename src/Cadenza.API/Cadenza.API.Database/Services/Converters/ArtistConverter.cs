@@ -1,4 +1,6 @@
-﻿using Cadenza.Domain.Model.Artist;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Extensions;
+using Cadenza.Common.Domain.Model.Artist;
 
 namespace Cadenza.API.Database.Services.Converters;
 

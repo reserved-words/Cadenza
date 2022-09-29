@@ -1,6 +1,4 @@
-﻿using Cadenza.Utilities;
-using Cadenza.Web.Core.Interfaces;
-using Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Web.Core;

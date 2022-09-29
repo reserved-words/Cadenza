@@ -1,4 +1,5 @@
-﻿using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿using Cadenza.Common.Domain.Model.Artist;
+using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components.Shared.Menus;
 

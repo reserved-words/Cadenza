@@ -5,16 +5,16 @@ global using System.Web;
 global using MudBlazor;
 global using MudBlazor.Services;
 
-global using Cadenza.Domain.Enums;
-global using Cadenza.Domain.Extensions;
-global using Cadenza.Domain.Model;
-global using Cadenza.Domain.Model.Album;
-global using Cadenza.Domain.Model.Artist;
-global using Cadenza.Domain.Model.Track;
-global using Cadenza.Domain.Model.Update;
-global using Cadenza.Domain.Model.Updates;
+global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Extensions;
+global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Model.Album;
+global using Cadenza.Common.Domain.Model.Artist;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Update;
+global using Cadenza.Common.Domain.Model.Updates;
 
-global using Cadenza.Library.Repositories;
+global using Cadenza.Common.Interfaces.Repositories;
 
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;

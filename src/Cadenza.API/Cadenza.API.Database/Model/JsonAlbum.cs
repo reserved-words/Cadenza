@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Model;
+﻿using Cadenza.Common.Domain.Enums;
+
+namespace Cadenza.API.Database.Model;
 
 internal class JsonAlbum
 {

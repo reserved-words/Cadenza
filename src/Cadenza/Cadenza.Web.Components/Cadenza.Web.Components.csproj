@@ -11,14 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.3" />
     <PackageReference Include="MudBlazor" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Interfaces\Cadenza.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Domain\Cadenza.Common.Domain.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
   </ItemGroup>
 
 </Project>

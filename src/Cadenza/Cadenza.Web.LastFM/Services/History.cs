@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.LastFM.Services;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model.History;
+
+namespace Cadenza.Web.LastFM.Services;
 
 internal class History : IHistory
 {

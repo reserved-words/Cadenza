@@ -1,6 +1,7 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.Interfaces.Repositories;
 

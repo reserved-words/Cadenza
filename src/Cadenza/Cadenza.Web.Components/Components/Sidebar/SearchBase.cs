@@ -1,4 +1,6 @@
 ﻿
+using Cadenza.Common.Domain.Model;
+
 namespace Cadenza.Web.Components.Components.Sidebar;
 
 public class SearchBase : ComponentBase

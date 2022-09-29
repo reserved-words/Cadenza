@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Local.API.Files;
+﻿using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Common.Domain.Model.Updates;
+
+namespace Cadenza.Local.API.Files;
 
 internal class MusicService : IMusicFilesService
 {
