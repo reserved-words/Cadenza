@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components;
+﻿using Cadenza.Web.Common.Events;
+
+namespace Cadenza.Web.Components;
 
 public class MainComponentBase : ComponentBase
 {

@@ -7,5 +7,3 @@ global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Interop;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Common.Tasks;
-
-global using Cadenza.Web.Core.Interfaces;

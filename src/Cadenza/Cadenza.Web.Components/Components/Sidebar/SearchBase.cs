@@ -4,7 +4,7 @@ namespace Cadenza.Web.Components.Components.Sidebar;
 public class SearchBase : ComponentBase
 {
     [Inject]
-    public SearchRepositoryCache Cache { get; set; }
+    public ISearchRepositoryCache Cache { get; set; }
 
     public bool IsLoading { get; set; }
 

@@ -26,11 +26,3 @@ global using Cadenza.Web.Components.MudServices;
 global using Cadenza.Web.Components.Shared;
 global using Cadenza.Web.Components.Shared.Dialogs;
 global using Cadenza.Web.Components.Tabs.Main;
-
-global using Cadenza.Web.Core;
-global using Cadenza.Web.Core.Events;
-global using Cadenza.Web.Core.Extensions;
-global using Cadenza.Web.Core.Interfaces;
-global using Cadenza.Web.Core.Model;
-global using Cadenza.Web.Core.Player;
-global using Cadenza.Web.Core.Playlists;

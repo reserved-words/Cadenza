@@ -1,4 +1,7 @@
 ﻿
+using Cadenza.Web.Common.Extensions;
+using Cadenza.Web.Common.Model;
+
 namespace Cadenza.Web.Components.Tabs.Items
 {
     public class ArtistTabBase : ComponentBase

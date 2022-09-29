@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs.Main;
+﻿using Cadenza.Web.Common.Events;
+
+namespace Cadenza.Web.Components.Tabs.Main;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {

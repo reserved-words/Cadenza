@@ -1,4 +1,6 @@
 ﻿
+using Cadenza.Web.Common.Events;
+
 namespace Cadenza.Web.Components.Components.Sidebar;
 
 public class PlayerControlsBase : ComponentBase

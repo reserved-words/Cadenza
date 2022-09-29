@@ -1,6 +1,5 @@
 ﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Core.Interfaces;
+using Cadenza.Web.Common.Events;
 
 namespace Cadenza.Web.Components.Components.History;
 
