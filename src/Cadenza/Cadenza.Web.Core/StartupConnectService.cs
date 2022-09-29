@@ -1,10 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Interop;
-using Cadenza.Web.Common.Tasks;
-using Cadenza.Web.Core.Interfaces;
-
-namespace Cadenza.Services
+﻿namespace Cadenza.Web.Core
 {
     public class StartupConnectService : IStartupConnectService
     {
@@ -19,9 +13,10 @@ namespace Cadenza.Services
 
         public TaskGroup GetStartupTasks()
         {
-            var taskGroup = new TaskGroup();
-
-            taskGroup.PreTask = ClearSessionData;
+            var taskGroup = new TaskGroup
+            {
+                PreTask = ClearSessionData
+            };
 
             foreach (var builder in _taskBuilders)
             {

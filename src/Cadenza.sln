@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Apps.WindowsService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Apps.API", "Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj", "{AEC922DE-B2A0-47AC-BD19-BEF24B4C2613}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Web.Components", "Cadenza\Cadenza.Web.Components\Cadenza.Web.Components.csproj", "{AE23AC89-AB88-4F9A-A42F-E908826101E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Components", "Cadenza\Cadenza.Web.Components\Cadenza.Web.Components.csproj", "{AE23AC89-AB88-4F9A-A42F-E908826101E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

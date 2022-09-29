@@ -1,10 +1,10 @@
 ﻿namespace Cadenza.Web.Components.MudServices;
 
-public class ProgressDialogService : IProgressDialogService
+internal class MudProgressDialogService : IProgressDialogService
 {
     private readonly MudBlazor.IDialogService _dialogService;
 
-    public ProgressDialogService(MudBlazor.IDialogService dialogService)
+    public MudProgressDialogService(MudBlazor.IDialogService dialogService)
     {
         _dialogService = dialogService;
     }

@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Pages;
+﻿namespace Cadenza.Web.Components;
 
-public class IndexBase : ComponentBase
+public class MainComponentBase : ComponentBase
 {
     [Inject]
     public IStartupConnectService ConnectService { get; set; }

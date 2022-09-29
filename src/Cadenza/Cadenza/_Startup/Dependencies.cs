@@ -1,6 +1,4 @@
-﻿using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
-
-namespace Cadenza._Startup;
+﻿namespace Cadenza._Startup;
 
 public static class Dependencies
 {
@@ -22,12 +20,14 @@ public static class Dependencies
             .AddUtilities()
             .AddHttpHelper(sp => http)
             .AddAppServices()
-            .AddUIHelpers()
+            .AddComponents()
             .AddTimers()
             .AddAPIWrapper()
             .AddLastFm(builder.Configuration, "LastFmApi")
             .AddSources(builder.Configuration)
-            .AddDatabase(builder.Configuration, "DatabaseApi");
+            .AddDatabase(builder.Configuration, "DatabaseApi")
+            .AddTransient<IStoreGetter, Store>()
+            .AddTransient<IStoreSetter, Store>();
 
         builder.Services
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
@@ -45,8 +45,7 @@ public static class Dependencies
     private static IServiceCollection AddInteropServices(this IServiceCollection services)
     {
         return services.AddTransient<INavigation, NavigationInterop>()
-            .AddTransient<IStoreGetter, StoreInterop>()
-            .AddTransient<IStoreSetter, StoreInterop>();
+            .AddTransient<IStore, StoreInterop>();
     }
 
     private static IServiceCollection AddStartupServices(this IServiceCollection services)
@@ -64,25 +63,6 @@ public static class Dependencies
             .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>())
             .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<ItemUpdatesHandler>())
             .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<ItemUpdatesHandler>());
-    }
-
-    private static IServiceCollection AddUIHelpers(this IServiceCollection services)
-    {
-        return services
-            .AddMudServices(config =>
-            {
-                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
-                config.SnackbarConfiguration.PreventDuplicates = false;
-                config.SnackbarConfiguration.NewestOnTop = false;
-                config.SnackbarConfiguration.ShowCloseIcon = true;
-                config.SnackbarConfiguration.VisibleStateDuration = 10000;
-                config.SnackbarConfiguration.HideTransitionDuration = 500;
-                config.SnackbarConfiguration.ShowTransitionDuration = 500;
-                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
-            })
-            .AddTransient<IDialogService, MudDialogService>()
-            .AddTransient<IProgressDialogService, ProgressDialogService>()
-            .AddTransient<INotificationService, MudNotificationService>();
     }
 
     private static IServiceCollection AddTimers(this IServiceCollection services)

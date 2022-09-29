@@ -2,7 +2,7 @@
 
 namespace Cadenza.Web.Components.MudServices;
 
-public class MudNotificationService : INotificationService
+internal class MudNotificationService : INotificationService
 {
     private readonly ISnackbar _snackbar;
 

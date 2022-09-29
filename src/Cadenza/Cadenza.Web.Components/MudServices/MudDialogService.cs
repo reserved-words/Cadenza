@@ -1,11 +1,10 @@
-﻿using Cadenza.Web.Components.Shared.Dialogs;
-using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components.MudServices;
 
-public class MudDialogService : IDialogService
+internal class MudDialogService : IDialogService
 {
-    private MudBlazor.IDialogService _mudService;
+    private readonly MudBlazor.IDialogService _mudService;
 
     public MudDialogService(MudBlazor.IDialogService mudService)
     {
@@ -16,8 +15,10 @@ public class MudDialogService : IDialogService
         where TView : ViewBase<TModel>
         where TModel : class
     {
-        var parameters = new DialogParameters();
-        parameters.Add(nameof(ViewBase<TModel>.Model), model);
+        var parameters = new DialogParameters
+        {
+            { nameof(ViewBase<TModel>.Model), model }
+        };
         _mudService.Show<TView>(title, parameters, new DialogOptions
         {
             DisableBackdropClick = true,
@@ -32,8 +33,10 @@ public class MudDialogService : IDialogService
         where TForm : FormBase<TModel>
         where TModel : class
     {
-        var parameters = new DialogParameters();
-        parameters.Add(nameof(FormBase<TModel>.Model), model);
+        var parameters = new DialogParameters
+        {
+            { nameof(FormBase<TModel>.Model), model }
+        };
         var formReference = _mudService.Show<TForm>(title, parameters, new DialogOptions
         {
             DisableBackdropClick = true,

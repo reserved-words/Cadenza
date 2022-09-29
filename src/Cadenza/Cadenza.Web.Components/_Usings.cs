@@ -1,7 +1,9 @@
 ﻿global using Microsoft.AspNetCore.Components;
+global using Microsoft.Extensions.DependencyInjection;
 global using System.Web;
 
 global using MudBlazor;
+global using MudBlazor.Services;
 
 global using Cadenza.Domain.Enums;
 global using Cadenza.Domain.Extensions;
@@ -20,7 +22,10 @@ global using Cadenza.Web.Common.Interop;
 global using Cadenza.Web.Common.Tasks;
 
 global using Cadenza.Web.Components.Interfaces;
+global using Cadenza.Web.Components.MudServices;
+global using Cadenza.Web.Components.Shared;
 global using Cadenza.Web.Components.Shared.Dialogs;
+global using Cadenza.Web.Components.Tabs.Main;
 
 global using Cadenza.Web.Core;
 global using Cadenza.Web.Core.Events;

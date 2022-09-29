@@ -1,8 +1,4 @@
-﻿using Cadenza.Library.Repositories;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Core;
-
-namespace Cadenza.Services;
+﻿namespace Cadenza.Web.Core;
 
 public class SearchSyncService : ISearchSyncService
 {
