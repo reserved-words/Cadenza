@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Interop;
-using Microsoft.JSInterop;
-
-namespace Cadenza.Interop
+﻿namespace Cadenza.Interop
 {
     public class NavigationInterop : INavigation
     {

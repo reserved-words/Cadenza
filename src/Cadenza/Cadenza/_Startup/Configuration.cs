@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
-namespace Cadenza._Startup;
+﻿namespace Cadenza._Startup;
 
 public static class Configuration
 {

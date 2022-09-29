@@ -1,10 +1,4 @@
-﻿using Cadenza.Interfaces;
-using Cadenza.UI.Shared;
-using Cadenza.UI.Tabs.Main;
-using Cadenza.Web.Core.Events;
-using Cadenza.Web.Core.Interfaces;
-
-namespace Cadenza.Pages;
+﻿namespace Cadenza.Pages;
 
 public class IndexBase : ComponentBase
 {
@@ -30,8 +24,7 @@ public class IndexBase : ComponentBase
         FixedItems = new List<DynamicTabsItem>
         {
             new DynamicTabsItem("Home", null, "fas fa-history", typeof(HistoryTab)),
-            new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab)),
-            //new DynamicTabsItem("System", null, "fas fa-cog", typeof(SystemInfoTab))
+            new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab))
         };
 
         App.ItemRequested += App_ItemRequested;

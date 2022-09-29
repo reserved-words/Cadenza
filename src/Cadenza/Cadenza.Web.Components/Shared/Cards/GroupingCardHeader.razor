@@ -1,0 +1,15 @@
+﻿
+<ItemCardHeader Type="@PlayerItemType.Grouping"
+                Id="@Id.ToString()">
+    <ChildContent>
+        <GroupingLink Typo="@Typo.h6" Grouping="@Id"></GroupingLink>
+    </ChildContent>
+</ItemCardHeader>
+
+
+@code {
+    [Parameter]
+    public Grouping Id { get; set; }
+
+
+}

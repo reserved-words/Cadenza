@@ -1,10 +1,4 @@
-﻿using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interop;
-using Cadenza.Web.Common.Model;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
-
-namespace Cadenza.Interop;
+﻿namespace Cadenza.Interop;
 
 public class StoreInterop : IStoreGetter, IStoreSetter
 {
