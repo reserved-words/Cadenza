@@ -10,7 +10,6 @@ global using Cadenza.Apps;
 global using Cadenza.Utilities;
 
 global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.Web.Common.Interop;
 global using Cadenza.Web.Common.Model;
 
 global using Cadenza.Web.Components;

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Interop;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IStoreGetter
 {

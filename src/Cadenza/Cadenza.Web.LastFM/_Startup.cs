@@ -12,7 +12,6 @@ global using Cadenza.Utilities.Interfaces;
 
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.Web.Common.Interop;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Common.Tasks;
 
