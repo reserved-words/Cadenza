@@ -26,10 +26,16 @@ internal class Favourites : IFavourites
         url = _urlService.AddParameter(url, "track", title);
         url = _urlService.AddParameter(url, "username", _config.Value.Username);
 
-        return await _client.Get(url, xml => xml
-            .Element("track")
-            .Element("userloved")
-            .Value == "1");
+        return await _client.Get(url, xml =>
+        {
+            var trackElement = xml.Element("track");
+
+            var lovedElement = trackElement.Elements().FirstOrDefault(e => e.Name == "userloved");
+
+            return lovedElement != null
+                ? lovedElement.Value == "1"
+                : false;
+        });
     }
 
     public async Task Favourite(Track track)
