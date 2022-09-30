@@ -2,12 +2,12 @@
 
 internal class CorePlayer : IPlayer
 {
-    private readonly IAppStore _store;
+    private readonly ICurrentTrackStore _store;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
     private readonly ITrackRepository _trackRepository;
 
-    public CorePlayer(IAppStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
+    public CorePlayer(ICurrentTrackStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
     {
         _store = store;
         _sourcePlayers = sourcePlayers.ToList();
@@ -55,8 +55,7 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var storedTrack = await _store.GetValue<TrackFull>(StoreKey.CurrentTrack);
-            var track = storedTrack.Value;
+            var track = await _store.GetCurrentTrack();
             progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
         }
 
@@ -76,11 +75,7 @@ internal class CorePlayer : IPlayer
 
     private async Task<LibrarySource?> GetCurrentSource()
     {
-        var storedSource = await _store.GetValue<LibrarySource?>(StoreKey.CurrentTrackSource);
-        if (storedSource == null)
-            return null;
-
-        return storedSource.Value;
+        return await _store.GetCurrentSource();
     }
 
     private async Task RunUtilities(Func<IUtilityPlayer, Task> action)
@@ -93,7 +88,6 @@ internal class CorePlayer : IPlayer
 
     private async Task StoreCurrentTrack(TrackFull track)
     {
-        await _store.SetValue(StoreKey.CurrentTrack, track);
-        await _store.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
+        await _store.StoreCurrentTrack(track);
     }
 }

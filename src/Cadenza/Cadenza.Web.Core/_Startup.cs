@@ -22,7 +22,8 @@ public static class Startup
             .AddAppServices()
             .AddTimers()
             .AddAPIWrapper()
-            .AddTransient<IAppStore, Store>();
+            .AddTransient<IAppStore, Store>()
+            .AddTransient<ICurrentTrackStore, CurrentTrackStore>();
 
         services
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
