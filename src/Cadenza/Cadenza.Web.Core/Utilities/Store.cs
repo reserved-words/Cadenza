@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Utilities;
 
-internal class Store : IStoreGetter, IStoreSetter
+internal class Store : IAppStore
 {
     private readonly IStore _store;
 

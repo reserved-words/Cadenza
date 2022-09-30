@@ -9,7 +9,7 @@ public class CurrentTrackBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IStoreGetter Store { get; set; }
+    public IAppStore Store { get; set; }
 
     [Inject]
     public IArtworkFetcher ArtworkFetcher { get; set; }

@@ -2,10 +2,10 @@
 
 internal class StartupConnectService : IStartupConnectService
 {
-    private readonly IStoreSetter _storeSetter;
+    private readonly IAppStore _storeSetter;
     private readonly IEnumerable<IConnector> _connectors;
 
-    public StartupConnectService(IStoreSetter storeSetter, IEnumerable<IConnector> connectors)
+    public StartupConnectService(IAppStore storeSetter, IEnumerable<IConnector> connectors)
     {
         _storeSetter = storeSetter;
         _connectors = connectors;

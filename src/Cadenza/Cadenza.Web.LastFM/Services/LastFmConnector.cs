@@ -2,18 +2,16 @@
 
 internal class LastFmConnector : IConnector
 {
-    private readonly IStoreGetter _storeGetter;
-    private readonly IStoreSetter _storeSetter;
+    private readonly IAppStore _store;
     private readonly IOptions<LastFmApiSettings> _settings;
     private readonly INavigation _navigation;
     private readonly IConnectorController _connectorController;
     private readonly IAuthoriser _authoriser;
 
-    public LastFmConnector(IStoreGetter storeGetter, IStoreSetter storeSetter, IOptions<LastFmApiSettings> settings,
+    public LastFmConnector(IAppStore store, IOptions<LastFmApiSettings> settings,
         INavigation navigation, IConnectorController connectorController, IAuthoriser lastFmAuthoriser)
     {
-        _storeGetter = storeGetter;
-        _storeSetter = storeSetter;
+        _store = store;
         _settings = settings;
         _navigation = navigation;
         _connectorController = connectorController;
@@ -48,8 +46,8 @@ internal class LastFmConnector : IConnector
     public async Task CreateSession(string token)
     {
         var sessionKey = await _authoriser.CreateSession(token);
-        await _storeSetter.SetValue(StoreKey.LastFmSessionKey, sessionKey);
-        await _storeSetter.Clear(StoreKey.LastFmToken);
+        await _store.SetValue(StoreKey.LastFmSessionKey, sessionKey);
+        await _store.Clear(StoreKey.LastFmToken);
     }
 
     public async Task NavigateToNewTab(string url)
@@ -59,7 +57,7 @@ internal class LastFmConnector : IConnector
 
     private async Task<bool> IsTaskNeeded()
     {
-        var sessionKey = await _storeGetter.GetValue<string>(StoreKey.LastFmSessionKey);
+        var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
         return sessionKey == null;
     }
 
@@ -72,7 +70,7 @@ internal class LastFmConnector : IConnector
     {
         await NavigateToNewTab(authUrl);
 
-        var token = await _storeGetter.AwaitValue<string>(StoreKey.LastFmToken, 60, cancellationToken);
+        var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60, cancellationToken);
 
         if (token == null)
             throw new Exception("No token received - need to authenticate on Last.FM website");

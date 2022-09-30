@@ -4,10 +4,10 @@ internal class Favourites : IFavouritesConsumer, IFavouritesController
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;
-    private readonly IStoreGetter _store;
+    private readonly IAppStore _store;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Favourites(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings, IStoreGetter store)
+    public Favourites(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings, IAppStore store)
     {
         _url = url;
         _http = http;

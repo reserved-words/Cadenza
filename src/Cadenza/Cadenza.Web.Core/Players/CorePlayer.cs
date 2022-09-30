@@ -1,17 +1,15 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Players;
 
 internal class CorePlayer : IPlayer
 {
-    private readonly IStoreGetter _storeGetter;
-    private readonly IStoreSetter _storeSetter;
+    private readonly IAppStore _store;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
     private readonly ITrackRepository _trackRepository;
 
-    public CorePlayer(IStoreGetter store, IEnumerable<ISourcePlayer> sourcePlayers, IStoreSetter storeSetter, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
+    public CorePlayer(IAppStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
     {
-        _storeGetter = store;
-        _storeSetter = storeSetter;
+        _store = store;
         _sourcePlayers = sourcePlayers.ToList();
         _utilityPlayers = utilityPlayers.ToList();
         _trackRepository = trackRepository;
@@ -57,7 +55,7 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var storedTrack = await _storeGetter.GetValue<TrackFull>(StoreKey.CurrentTrack);
+            var storedTrack = await _store.GetValue<TrackFull>(StoreKey.CurrentTrack);
             var track = storedTrack.Value;
             progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
         }
@@ -78,7 +76,7 @@ internal class CorePlayer : IPlayer
 
     private async Task<LibrarySource?> GetCurrentSource()
     {
-        var storedSource = await _storeGetter.GetValue<LibrarySource?>(StoreKey.CurrentTrackSource);
+        var storedSource = await _store.GetValue<LibrarySource?>(StoreKey.CurrentTrackSource);
         if (storedSource == null)
             return null;
 
@@ -95,7 +93,7 @@ internal class CorePlayer : IPlayer
 
     private async Task StoreCurrentTrack(TrackFull track)
     {
-        await _storeSetter.SetValue(StoreKey.CurrentTrack, track);
-        await _storeSetter.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
+        await _store.SetValue(StoreKey.CurrentTrack, track);
+        await _store.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
     }
 }

@@ -6,7 +6,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IStoreGetter Store { get; set; }
+    public IAppStore Store { get; set; }
 
     public TrackFull Model { get; set; } = new();
 

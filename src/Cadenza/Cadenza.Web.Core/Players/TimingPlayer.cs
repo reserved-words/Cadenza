@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Players;
 
 internal class TimingPlayer : IUtilityPlayer
 {

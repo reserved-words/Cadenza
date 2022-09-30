@@ -1,11 +1,11 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Players;
 
 internal class TrackingPlayer : IUtilityPlayer
 {
     private readonly IPlayTracker _tracker;
-    private readonly IStoreGetter _store;
+    private readonly IAppStore _store;
 
-    public TrackingPlayer(IPlayTracker tracker, IStoreGetter store)
+    public TrackingPlayer(IPlayTracker tracker, IAppStore store)
     {
         _tracker = tracker;
         _store = store;

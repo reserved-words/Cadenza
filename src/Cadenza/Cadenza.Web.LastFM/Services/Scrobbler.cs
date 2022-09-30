@@ -4,10 +4,10 @@ internal class Scrobbler : IPlayTracker
 {
     private readonly IHttpHelper _http;
     private readonly IUrl _url;
-    private readonly IStoreGetter _store;
+    private readonly IAppStore _store;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Scrobbler(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> settings, IStoreGetter store)
+    public Scrobbler(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> settings, IAppStore store)
     {
         _url = url;
         _http = http;

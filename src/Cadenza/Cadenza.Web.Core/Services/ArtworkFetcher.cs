@@ -1,12 +1,12 @@
 ﻿namespace Cadenza.Web.Core.Services;
 
-internal class CoreArtworkFetcher : IArtworkFetcher
+internal class ArtworkFetcher : IArtworkFetcher
 {
     private const string ArtworkPlaceholderUrl = "images/artwork-placeholder.png";
 
     private readonly List<ISourceArtworkFetcher> _sourceFetchers;
 
-    public CoreArtworkFetcher(IEnumerable<ISourceArtworkFetcher> sourceFetchers)
+    public ArtworkFetcher(IEnumerable<ISourceArtworkFetcher> sourceFetchers)
     {
         _sourceFetchers = sourceFetchers.ToList();
     }

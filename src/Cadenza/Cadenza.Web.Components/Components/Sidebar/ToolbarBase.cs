@@ -12,7 +12,7 @@ public class ToolbarBase : ComponentBase
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]
-    public IStoreSetter StoreSetter { get; set; }
+    public IAppStore StoreSetter { get; set; }
 
     [Inject]
     public IConnectorController ConnectorService { get; set; }

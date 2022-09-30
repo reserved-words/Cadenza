@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Core;
+﻿using Cadenza.Web.Core.Players;
+using Cadenza.Web.Core.Utilities;
+
+namespace Cadenza.Web.Core;
 
 public static class Startup
 {
@@ -14,13 +17,12 @@ public static class Startup
             .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddStartupServices()
-            .AddTransient<IArtworkFetcher, CoreArtworkFetcher>()
+            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddUtilities()
             .AddAppServices()
             .AddTimers()
             .AddAPIWrapper()
-            .AddTransient<IStoreGetter, Store>()
-            .AddTransient<IStoreSetter, Store>();
+            .AddTransient<IAppStore, Store>();
 
         services
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
