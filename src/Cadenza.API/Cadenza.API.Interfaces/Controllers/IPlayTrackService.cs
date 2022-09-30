@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Controllers;
 
 public interface IPlayTrackService
 {

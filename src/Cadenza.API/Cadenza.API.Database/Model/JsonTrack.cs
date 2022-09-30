@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.API.Database.Model;
+﻿namespace Cadenza.API.Database.Model;
 
 internal class JsonTrack
 {

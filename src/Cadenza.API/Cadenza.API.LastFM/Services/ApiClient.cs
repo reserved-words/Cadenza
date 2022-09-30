@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System.Xml.Linq;
-
-namespace Cadenza.API.LastFM.Services;
+﻿namespace Cadenza.API.LastFM.Services;
 
 internal class ApiClient : IApiClient
 {

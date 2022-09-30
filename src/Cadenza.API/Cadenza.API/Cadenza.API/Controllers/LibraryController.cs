@@ -1,9 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Album;
-using Cadenza.Common.Domain.Model.Artist;
-using Cadenza.Common.Domain.Model.Track;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

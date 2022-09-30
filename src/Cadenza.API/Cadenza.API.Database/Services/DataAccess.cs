@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class DataAccess : IDataAccess
 {

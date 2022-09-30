@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.API.Database.Interfaces;
+﻿namespace Cadenza.API.Database.Interfaces;
 
 internal interface IFilePathService
 {

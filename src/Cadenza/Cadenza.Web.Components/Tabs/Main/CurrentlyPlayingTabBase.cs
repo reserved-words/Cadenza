@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Components.Tabs.Main;
+﻿namespace Cadenza.Web.Components.Tabs.Main;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {

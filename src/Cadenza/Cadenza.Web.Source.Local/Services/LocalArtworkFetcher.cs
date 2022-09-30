@@ -1,8 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Album;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.Source.Local.Services;
+﻿namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalArtworkFetcher : ISourceArtworkFetcher
 {

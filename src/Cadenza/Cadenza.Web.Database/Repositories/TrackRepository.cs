@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Interfaces.Repositories;
-
-namespace Cadenza.Web.Database.Repositories;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class TrackRepository : ITrackRepository
 {

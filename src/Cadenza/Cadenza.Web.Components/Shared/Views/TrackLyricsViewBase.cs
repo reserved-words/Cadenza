@@ -1,8 +1,4 @@
-﻿
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Components.Shared.Views;
+﻿namespace Cadenza.Web.Components.Shared.Views;
 
 public class TrackLyricsViewBase : ComponentBase
 {

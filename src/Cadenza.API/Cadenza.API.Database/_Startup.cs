@@ -1,4 +1,6 @@
-﻿global using Cadenza.API.Interfaces.Repositories;
+﻿global using Microsoft.Extensions.Options;
+
+global using Cadenza.API.Interfaces.Repositories;
 global using Cadenza.API.Database.Interfaces;
 global using Cadenza.API.Database.Interfaces.Converters;
 global using Cadenza.API.Database.Interfaces.Updaters;

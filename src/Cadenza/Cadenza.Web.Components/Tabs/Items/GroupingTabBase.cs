@@ -1,70 +1,67 @@
-﻿using Cadenza.Web.Common.Events;
+﻿namespace Cadenza.Web.Components.Tabs.Items;
 
-namespace Cadenza.Web.Components.Tabs.Items
+public class GroupingTabBase : ComponentBase
 {
-    public class GroupingTabBase : ComponentBase
+    [Inject]
+    public IArtistRepository Repository { get; set; }
+
+    [Inject]
+    public IUpdatesConsumer Updates { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public Grouping Grouping => Id.Parse<Grouping>();
+
+    public List<string> Genres { get; set; } = new();
+
+    public List<Artist> Artists => _artistsByGenre[SelectedGenre];
+
+    public string SelectedGenre { get; set; }
+
+    private Dictionary<string, List<Artist>> _artistsByGenre = new();
+
+    protected override void OnInitialized()
     {
-        [Inject]
-        public IArtistRepository Repository { get; set; }
+        Updates.ArtistUpdated += OnArtistUpdated;
+    }
 
-        [Inject]
-        public IUpdatesConsumer Updates { get; set; }
+    protected override async Task OnParametersSetAsync()
+    {
+        await UpdateGrouping();
+    }
 
-        [Parameter]
-        public string Id { get; set; }
+    private async Task UpdateGrouping()
+    {
+        var currentGenre = SelectedGenre;
 
-        public Grouping Grouping => Id.Parse<Grouping>();
+        var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
+        _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
+        Genres = _artistsByGenre.Keys.ToList();
 
-        public List<string> Genres { get; set; } = new();
-
-        public List<Artist> Artists => _artistsByGenre[SelectedGenre];
-
-        public string SelectedGenre { get; set; }
-
-        private Dictionary<string, List<Artist>> _artistsByGenre = new();
-
-        protected override void OnInitialized()
+        if (currentGenre != null && Genres.Contains(currentGenre))
         {
-            Updates.ArtistUpdated += OnArtistUpdated;
+            SelectedGenre = currentGenre;
         }
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await UpdateGrouping();
-        }
+        StateHasChanged();
+    }
 
-        private async Task UpdateGrouping()
-        {
-            var currentGenre = SelectedGenre;
+    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
+    {
+        var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping);
+        var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre);
 
-            var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
-            _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
-            Genres = _artistsByGenre.Keys.ToList();
+        if (!isGroupingUpdated && !isGenreUpdated)
+            return;
 
-            if (currentGenre != null && Genres.Contains(currentGenre))
-            {
-                SelectedGenre = currentGenre;
-            }
+        await UpdateGrouping();
+    }
 
-            StateHasChanged();
-        }
-
-        private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
-        {
-            var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping);
-            var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre);
-
-            if (!isGroupingUpdated && !isGenreUpdated)
-                return;
-
-            await UpdateGrouping();
-        }
-
-        protected Task OnSelectGenre(string id)
-        {
-            SelectedGenre = id;
-            StateHasChanged();
-            return Task.CompletedTask;
-        }
+    protected Task OnSelectGenre(string id)
+    {
+        SelectedGenre = id;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }

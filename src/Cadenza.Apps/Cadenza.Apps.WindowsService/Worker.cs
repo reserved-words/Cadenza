@@ -1,10 +1,4 @@
-﻿using Cadenza.Apps.WindowsService.Interfaces;
-using Cadenza.Apps.WindowsService.Settings;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Apps.WindowsService;
+﻿namespace Cadenza.Apps.WindowsService;
 
 public class Worker : BackgroundService
 {

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Cadenza.Apps.WindowsService;
+﻿namespace Cadenza.Apps.WindowsService;
 
 public static class Configuration
 {

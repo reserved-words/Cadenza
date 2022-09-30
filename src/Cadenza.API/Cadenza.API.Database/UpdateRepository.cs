@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.API.Database;
+﻿namespace Cadenza.API.Database;
 
 internal class UpdateRepository : IUpdateRepository
 {

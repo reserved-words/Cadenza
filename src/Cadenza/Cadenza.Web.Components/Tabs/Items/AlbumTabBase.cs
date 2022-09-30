@@ -1,36 +1,30 @@
-﻿
-using Cadenza.Web.Common.Extensions;
-using Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Components.Tabs.Items;
 
-namespace Cadenza.Web.Components.Tabs.Items
+public class AlbumTabBase : ComponentBase
 {
+    [Inject]
+    public IAlbumRepository Repository { get; set; }
 
-    public class AlbumTabBase : ComponentBase
+    [Parameter]
+    public string Id { get; set; }
+
+    public AlbumInfo Album { get; set; }
+
+    public List<Disc> Discs { get; set; } = new();
+
+    protected override async Task OnParametersSetAsync()
     {
-        [Inject]
-        public IAlbumRepository Repository { get; set; }
+        await UpdateAlbum();
+    }
 
-        [Parameter]
-        public string Id { get; set; }
+    private async Task UpdateAlbum()
+    {
+        Album = await Repository.GetAlbum(Id);
 
-        public AlbumInfo Album { get; set; }
+        var tracks = await Repository.GetTracks(Id);
 
-        public List<Disc> Discs { get; set; } = new();
+        Discs = tracks.GroupByDisc();
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await UpdateAlbum();
-        }
-
-        private async Task UpdateAlbum()
-        {
-            Album = await Repository.GetAlbum(Id);
-
-            var tracks = await Repository.GetTracks(Id);
-
-            Discs = tracks.GroupByDisc();
-
-            StateHasChanged();
-        }
+        StateHasChanged();
     }
 }

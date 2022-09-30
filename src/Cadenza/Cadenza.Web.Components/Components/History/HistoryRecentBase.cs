@@ -1,8 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.History;
-using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Components.Components.History;
+﻿namespace Cadenza.Web.Components.Components.History;
 
 public class HistoryRecentBase : ComponentBase
 {

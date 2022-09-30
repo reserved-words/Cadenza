@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.History;
-
-namespace Cadenza.Web.Components.Components.History;
+﻿namespace Cadenza.Web.Components.Components.History;
 
 public class HistoryTracksBase : HistoryDisplayBase<PlayedTrack>
 {

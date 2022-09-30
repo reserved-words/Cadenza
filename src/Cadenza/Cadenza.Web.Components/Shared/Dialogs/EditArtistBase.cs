@@ -1,8 +1,4 @@
-﻿
-using Cadenza.Common.Domain.Model.Artist;
-using Cadenza.Common.Domain.Model.Update;
-
-namespace Cadenza.Web.Components.Shared.Dialogs;
+﻿namespace Cadenza.Web.Components.Shared.Dialogs;
 
 public class EditArtistBase : FormBase<ArtistInfo>
 {

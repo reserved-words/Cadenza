@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Album;
-
-namespace Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Common.Model;
 
 public class ArtistReleaseGroup
 {

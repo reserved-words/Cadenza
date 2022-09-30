@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Model.Track;
+﻿namespace Cadenza.Common.Domain.Model.Track;
 
 public class TrackInfo : Track
 {

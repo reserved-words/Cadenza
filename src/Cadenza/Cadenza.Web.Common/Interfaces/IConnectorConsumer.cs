@@ -1,9 +1,7 @@
-﻿
-namespace Cadenza.Web.Common.Interfaces
+﻿namespace Cadenza.Web.Common.Interfaces;
+
+public interface IConnectorConsumer
 {
-    public interface IConnectorConsumer
-    {
-        ConnectorStatus GetStatus(Connector connector);
-        event ConnectorEventHandler ConnectorStatusChanged;
-    }
+    ConnectorStatus GetStatus(Connector connector);
+    event ConnectorEventHandler ConnectorStatusChanged;
 }

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Extensions;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class LongRunningTaskService : ILongRunningTaskService
 {

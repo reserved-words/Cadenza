@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class FilePathService : IFilePathService
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Model.Updates;
+﻿namespace Cadenza.Common.Domain.Model.Updates;
 
 public class ItemUpdates
 {

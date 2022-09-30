@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.History;
-
-namespace Cadenza.Web.Components.Components.History;
+﻿namespace Cadenza.Web.Components.Components.History;
 
 public class HistoryArtistsBase : HistoryDisplayBase<PlayedArtist>
 {

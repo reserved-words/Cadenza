@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Extensions;
-
-namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Common.Domain.Model;
 
 public class PlayerItem
 {

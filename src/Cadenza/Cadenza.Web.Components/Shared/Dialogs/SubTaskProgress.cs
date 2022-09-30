@@ -1,5 +1,4 @@
-﻿
-namespace Cadenza.Web.Components.Shared.Dialogs
+﻿namespace Cadenza.Web.Components.Shared.Dialogs
 {
     public class SubTaskProgress
     {

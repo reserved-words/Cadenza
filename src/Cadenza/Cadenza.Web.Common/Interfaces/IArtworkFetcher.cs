@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Album;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IArtworkFetcher
 {

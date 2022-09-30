@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-
-namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Services;
 
 internal class ApiHelper : IApiHelper
 {

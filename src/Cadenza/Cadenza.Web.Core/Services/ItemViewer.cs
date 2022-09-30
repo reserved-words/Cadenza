@@ -1,9 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Extensions;
-using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Interfaces.Utilities;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class ItemViewer : IItemViewer
 {

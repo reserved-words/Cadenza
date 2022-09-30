@@ -1,9 +1,8 @@
-﻿namespace Cadenza.Web.Common.Enums
+﻿namespace Cadenza.Web.Common.Enums;
+
+public enum Connector
 {
-    public enum Connector
-    {
-        Database,
-        LastFm,
-        Local
-    }
+    Database,
+    LastFm,
+    Local
 }

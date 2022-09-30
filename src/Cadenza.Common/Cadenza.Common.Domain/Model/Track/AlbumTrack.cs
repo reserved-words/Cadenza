@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Album;
-
-namespace Cadenza.Common.Domain.Model.Track;
+﻿namespace Cadenza.Common.Domain.Model.Track;
 
 public class AlbumTrack
 {

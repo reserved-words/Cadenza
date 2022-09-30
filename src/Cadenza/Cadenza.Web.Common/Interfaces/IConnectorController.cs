@@ -1,7 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces
+﻿namespace Cadenza.Web.Common.Interfaces;
+
+public interface IConnectorController
 {
-    public interface IConnectorController
-    {
-        Task SetStatus(Connector connector, ConnectorStatus status, string error = null);
-    }
+    Task SetStatus(Connector connector, ConnectorStatus status, string error = null);
 }

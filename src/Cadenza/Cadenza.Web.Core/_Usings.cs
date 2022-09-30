@@ -1,4 +1,6 @@
-﻿global using System.Text.Json;
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using System.Text.Json;
+global using System.Web;
 
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Extensions;
@@ -19,3 +21,4 @@ global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Common.Tasks;
 
 global using Cadenza.Web.Core.Interfaces;
+global using Cadenza.Web.Core.Services;

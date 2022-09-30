@@ -1,9 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Interfaces.Repositories;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.Database.Repositories;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class PlayTrackRepository : IPlayTrackRepository
 {

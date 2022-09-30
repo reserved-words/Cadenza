@@ -1,7 +1,4 @@
-﻿
-using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Components.Shared.Dialogs
+﻿namespace Cadenza.Web.Components.Shared.Dialogs
 {
 
     public class ProgressDialogBase : DialogBase

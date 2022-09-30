@@ -1,9 +1,7 @@
-﻿namespace Cadenza.Web.Common.Model
-{
+﻿namespace Cadenza.Web.Common.Model;
 
-    public class ApiOptions<TEndpoints>
-    {
-        public string BaseUrl { get; set; }
-        public TEndpoints Endpoints { get; set; }
-    }
+public class ApiOptions<TEndpoints>
+{
+    public string BaseUrl { get; set; }
+    public TEndpoints Endpoints { get; set; }
 }

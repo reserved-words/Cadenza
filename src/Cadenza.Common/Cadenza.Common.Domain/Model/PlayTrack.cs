@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Common.Domain.Model;
 
 public class PlayTrack
 {

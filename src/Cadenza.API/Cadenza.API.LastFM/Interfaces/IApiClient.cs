@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Cadenza.API.LastFM.Interfaces;
+﻿namespace Cadenza.API.LastFM.Interfaces;
 
 internal interface IApiClient
 {

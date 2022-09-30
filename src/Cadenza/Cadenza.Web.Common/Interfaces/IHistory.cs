@@ -1,8 +1,4 @@
-﻿
-using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.History;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IHistory
 {

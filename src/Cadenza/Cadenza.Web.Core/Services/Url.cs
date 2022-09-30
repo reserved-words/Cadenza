@@ -1,6 +1,4 @@
-﻿using System.Web;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class Url : IUrl
 {

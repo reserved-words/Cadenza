@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Core.Services;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Cadenza.Web.Core;
+﻿namespace Cadenza.Web.Core;
 
 public static class Startup
 {

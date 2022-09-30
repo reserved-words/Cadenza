@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Xml.Linq;
-
-namespace Cadenza.API.LastFM.Services;
+﻿namespace Cadenza.API.LastFM.Services;
 
 internal class Parser : IParser
 {

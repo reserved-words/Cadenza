@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components.Shared.Menus;
 

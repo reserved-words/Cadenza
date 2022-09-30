@@ -1,7 +1,4 @@
-﻿
-using Cadenza.Common.Domain.Model.Update;
-
-namespace Cadenza.Web.Common.Events;
+﻿namespace Cadenza.Web.Common.Events;
 
 public delegate Task LyricsUpdatedEventHandler(object sender, LyricsUpdatedEventArgs e);
 

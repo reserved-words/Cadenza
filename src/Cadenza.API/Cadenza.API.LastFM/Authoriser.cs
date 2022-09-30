@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace Cadenza.API.LastFM;
+﻿namespace Cadenza.API.LastFM;
 
 internal class Authoriser : IAuthoriser
 {

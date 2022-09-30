@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Album;
-
-namespace Cadenza.API.Database.Services.Converters;
+﻿namespace Cadenza.API.Database.Services.Converters;
 
 internal class AlbumTrackConverter : IAlbumTrackConverter
 {

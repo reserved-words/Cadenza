@@ -1,28 +1,24 @@
-﻿
-using Cadenza.Common.Domain.Model.Track;
+﻿namespace Cadenza.Web.Components.Tabs.Items;
 
-namespace Cadenza.Web.Components.Tabs.Items
+public class TrackTabBase : ComponentBase
 {
-    public class TrackTabBase : ComponentBase
+    [Inject]
+    public ITrackRepository Repository { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public TrackFull Model { get; set; } = new();
+
+    protected override async Task OnParametersSetAsync()
     {
-        [Inject]
-        public ITrackRepository Repository { get; set; }
+        await UpdateTrack();
+    }
 
-        [Parameter]
-        public string Id { get; set; }
+    private async Task UpdateTrack()
+    {
+        Model = await Repository.GetTrack(Id);
 
-        public TrackFull Model { get; set; } = new();
-
-        protected override async Task OnParametersSetAsync()
-        {
-            await UpdateTrack();
-        }
-
-        private async Task UpdateTrack()
-        {
-            Model = await Repository.GetTrack(Id);
-
-            StateHasChanged();
-        }
+        StateHasChanged();
     }
 }

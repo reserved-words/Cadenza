@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Album;
-
-namespace Cadenza.Common.Domain.Model.Update;
+﻿namespace Cadenza.Common.Domain.Model.Update;
 
 public class AlbumUpdate : ItemUpdate<AlbumInfo>
 {

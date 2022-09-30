@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-
-namespace Cadenza.Web.Components.Components.History;
+﻿namespace Cadenza.Web.Components.Components.History;
 
 public abstract class HistoryDisplayBase<T> : ComponentBase
 {

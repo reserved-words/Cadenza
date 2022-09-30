@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.Web.Components.Interfaces;
+﻿namespace Cadenza.Web.Components.Interfaces;
 
 public interface IProgressDialogService
 {

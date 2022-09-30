@@ -1,9 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.LastFm;
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Interfaces.Utilities;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.LastFM.Services;
+﻿namespace Cadenza.Web.LastFM.Services;
 
 internal class Scrobbler : IPlayTracker
 {

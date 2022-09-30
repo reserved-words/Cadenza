@@ -1,7 +1,4 @@
-﻿
-using Cadenza.Common.Utilities;
-
-var builder = Service.CreateBuilder(args, services =>
+﻿var builder = Service.CreateBuilder(args, services =>
 {
     var configuration = services.RegisterConfiguration();
 

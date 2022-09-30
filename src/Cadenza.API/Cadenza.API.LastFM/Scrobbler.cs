@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.LastFm;
-
-namespace Cadenza.API.LastFM;
+﻿namespace Cadenza.API.LastFM;
 
 internal class Scrobbler : IScrobbler
 {

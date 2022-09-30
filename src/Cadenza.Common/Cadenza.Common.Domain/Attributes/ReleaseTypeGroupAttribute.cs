@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Attributes;
+﻿namespace Cadenza.Common.Domain.Attributes;
 
 [AttributeUsage(AttributeTargets.Field)]
 public class ReleaseTypeGroupAttribute : Attribute

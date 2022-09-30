@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Components.Components.Sidebar;
+﻿namespace Cadenza.Web.Components.Components.Sidebar;
 
 public class CurrentlyPlayingHeaderBase : ComponentBase
 {

@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Album;
-using Cadenza.Common.Domain.Model.Artist;
-
-namespace Cadenza.Common.Domain.Model.Track;
+﻿namespace Cadenza.Common.Domain.Model.Track;
 
 public class TrackFull
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Components.Interfaces;
-
-namespace Cadenza.Web.Components.MudServices;
+﻿namespace Cadenza.Web.Components.MudServices;
 
 internal class MudNotificationService : INotificationService
 {

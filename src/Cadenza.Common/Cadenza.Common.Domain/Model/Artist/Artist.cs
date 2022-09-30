@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Model.Artist;
+﻿namespace Cadenza.Common.Domain.Model.Artist;
 
 public class Artist
 {

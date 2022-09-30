@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.Common.Domain.Model.Album;
+﻿namespace Cadenza.Common.Domain.Model.Album;
 
 public class Album
 {

@@ -1,8 +1,4 @@
-﻿using Cadenza.API.Database.Interfaces.Updaters;
-using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.API.Database.Services.Updaters;
+﻿namespace Cadenza.API.Database.Services.Updaters;
 
 internal class ItemUpdater : IItemUpdater
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.LastFm;
-
-namespace Cadenza.API.Interfaces.LastFm;
+﻿namespace Cadenza.API.Interfaces.LastFm;
 
 public interface IScrobbler
 {

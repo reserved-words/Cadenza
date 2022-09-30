@@ -1,9 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.API.Database;
+﻿namespace Cadenza.API.Database;
 
 internal class MusicRepository : IMusicRepository
 {
