@@ -5,12 +5,12 @@ public static class Configuration
     public static async Task<WebAssemblyHostBuilder> RegisterConfiguration(this WebAssemblyHostBuilder builder)
     {
         await builder.RegisterJsonConfiguration();
-        
+
         builder.Services
             .ConfigureSettings<LastFmApiSettings>(builder.Configuration, "LastFmApi")
             .ConfigureSettings<LocalApiSettings>(builder.Configuration, "LocalApi")
             .ConfigureSettings<DatabaseApiSettings>(builder.Configuration, "DatabaseApi");
-        
+
         return builder;
     }
 

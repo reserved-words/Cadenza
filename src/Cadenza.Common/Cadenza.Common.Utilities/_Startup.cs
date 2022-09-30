@@ -1,10 +1,8 @@
-﻿global using Cadenza.Common.Utilities.Services;
+﻿global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Interfaces.Utilities;
 global using Cadenza.Common.Utilities.Exceptions;
+global using Cadenza.Common.Utilities.Services;
 global using Microsoft.Extensions.DependencyInjection;
-global using Cadenza.Common.Domain.Model;
-
-
 using FileAccess = Cadenza.Common.Utilities.Services.FileAccess;
 
 namespace Cadenza.Common.Utilities;

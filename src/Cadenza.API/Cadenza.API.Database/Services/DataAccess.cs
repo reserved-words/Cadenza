@@ -32,7 +32,7 @@ internal class DataAccess : IDataAccess
                 await AddSource(library, src);
             }
         }
-        
+
         return library;
     }
 

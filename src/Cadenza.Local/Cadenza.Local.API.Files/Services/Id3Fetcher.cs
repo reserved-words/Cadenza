@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
-
-namespace Cadenza.Local.API.Files.Services;
+﻿namespace Cadenza.Local.API.Files.Services;
 
 internal class Id3Fetcher : IId3Fetcher
 {

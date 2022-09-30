@@ -1,19 +1,16 @@
-﻿global using Microsoft.Extensions.DependencyInjection;
+﻿global using Cadenza.API.Interfaces.LastFm;
+global using Cadenza.API.LastFM.Interfaces;
+global using Cadenza.API.LastFM.Services;
+global using Cadenza.API.LastFM.Settings;
+global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Model.History;
+global using Cadenza.Common.Domain.Model.LastFm;
+global using Cadenza.Common.Interfaces.Utilities;
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Globalization;
 global using System.Web;
 global using System.Xml.Linq;
-
-global using Cadenza.API.Interfaces.LastFm;
-global using Cadenza.API.LastFM.Interfaces;
-global using Cadenza.API.LastFM.Settings;
-global using Cadenza.API.LastFM.Services;
-
-global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.LastFm;
-
-global using Cadenza.Common.Interfaces.Utilities;
 
 
 namespace Cadenza.API.LastFM;

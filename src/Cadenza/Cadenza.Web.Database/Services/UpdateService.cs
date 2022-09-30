@@ -6,7 +6,7 @@ internal class UpdateService : IUpdateService
     private readonly DatabaseApiSettings _settings;
     private readonly IHttpHelper _http;
 
-    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings) 
+    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
     {
         _http = http;
         _settings = settings.Value;

@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.SyncService.Updaters;
+﻿namespace Cadenza.SyncService.Updaters;
 
 internal class UpdatesHandler : IService
 {

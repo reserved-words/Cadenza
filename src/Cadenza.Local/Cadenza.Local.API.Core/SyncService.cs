@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.Local.API.Core;
+﻿namespace Cadenza.Local.API.Core;
 
 internal class SyncService : ISyncService
 {

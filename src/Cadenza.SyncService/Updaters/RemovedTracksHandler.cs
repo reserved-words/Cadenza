@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-
-namespace Cadenza.SyncService.Updaters;
+﻿namespace Cadenza.SyncService.Updaters;
 
 internal class RemovedTracksHandler : IService
 {

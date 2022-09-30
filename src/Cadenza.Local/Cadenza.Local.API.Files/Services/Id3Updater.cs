@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.Local.API.Files.Services;
+﻿namespace Cadenza.Local.API.Files.Services;
 
 internal class Id3Updater : IId3Updater
 {

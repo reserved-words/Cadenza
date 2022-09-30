@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.Local.SyncService.Services;
+﻿namespace Cadenza.Local.SyncService.Services;
 
 internal class PlayedFilesService : IService
 {

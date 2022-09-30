@@ -27,7 +27,7 @@ internal class SyncService : ISyncService
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
         var library = await _repository.Get(source);
-        
+
         return library.Tracks
             .Where(t => t.AlbumId == albumId)
             .Select(t => t.Id)

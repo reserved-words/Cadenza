@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.Local.API.Core.Interfaces;
+﻿namespace Cadenza.Local.API.Core.Interfaces;
 
 internal interface IMusicDirectory
 {

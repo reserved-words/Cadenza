@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Utilities;
-
-namespace Cadenza._Startup;
+﻿namespace Cadenza._Startup;
 
 public static class Dependencies
 {
