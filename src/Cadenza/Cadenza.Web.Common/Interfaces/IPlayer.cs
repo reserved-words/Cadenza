@@ -2,8 +2,8 @@
 
 public interface IPlayer
 {
-    Task<TrackProgress> Play(PlayTrack track);
-    Task<TrackProgress> Pause();
-    Task<TrackProgress> Resume();
+    Task Play(PlayTrack track);
+    Task Pause();
+    Task Resume();
     Task Stop();
 }

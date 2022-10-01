@@ -15,7 +15,7 @@ internal class CorePlayer : IPlayer
         _trackRepository = trackRepository;
     }
 
-    public async Task<TrackProgress> Play(PlayTrack track)
+    public async Task Play(PlayTrack track)
     {
         var service = await GetCurrentSourcePlayer(track.Source);
         await service.Play(track.Id);
@@ -25,24 +25,20 @@ internal class CorePlayer : IPlayer
 
         await StoreCurrentTrack(fullTrack);
         await RunUtilities(p => p.OnPlay(progress));
-
-        return progress;
     }
 
-    public async Task<TrackProgress> Pause()
+    public async Task Pause()
     {
         var service = await GetCurrentSourcePlayer();
         var progress = await service.Pause();
         await RunUtilities(p => p.OnPause(progress));
-        return progress;
     }
 
-    public async Task<TrackProgress> Resume()
+    public async Task Resume()
     {
         var service = await GetCurrentSourcePlayer();
         var progress = await service.Resume();
         await RunUtilities(p => p.OnResume(progress));
-        return progress;
     }
 
     public async Task Stop()

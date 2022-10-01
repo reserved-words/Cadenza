@@ -56,7 +56,6 @@ public class PlayerBase : ComponentBase
         else
         {
             Model = null;
-         //   StateHasChanged();
         }
     }
 
