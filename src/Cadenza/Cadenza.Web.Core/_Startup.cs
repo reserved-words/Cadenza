@@ -1,4 +1,6 @@
-﻿using Cadenza.Web.Core.Utilities;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+using Cadenza.Web.Core.Coordinators;
+using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
 
@@ -11,9 +13,9 @@ public static class Startup
             .AddTransient<ISearchSyncService, SearchSyncService>();
 
         services
-            .AddSingleton<ConnectorService>()
-            .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
-            .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
+            .AddSingleton<ConnectionCoordinator>()
+            .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectionCoordinator>())
+            .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectionCoordinator>())
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddStartupServices()
             .AddTransient<IArtworkFetcher, ArtworkFetcher>()
@@ -40,12 +42,12 @@ public static class Startup
     private static IServiceCollection AddAppServices(this IServiceCollection services)
     {
         return services
-            .AddSingleton<AppService>()
-            .AddSingleton<ItemUpdatesHandler>()
-            .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>())
-            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>())
-            .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<ItemUpdatesHandler>())
-            .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<ItemUpdatesHandler>());
+            .AddSingleton<AppCoordinator>()
+            .AddSingleton<UpdatesCoordinator>()
+            .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppCoordinator>())
+            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppCoordinator>())
+            .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<UpdatesCoordinator>())
+            .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<UpdatesCoordinator>());
     }
 
     private static IServiceCollection AddAPIWrapper(this IServiceCollection services)

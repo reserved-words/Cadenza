@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Shared.Views;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Web.Components.Shared.Views;
 
 public class FavouriteTrackBase : ComponentBase
 {

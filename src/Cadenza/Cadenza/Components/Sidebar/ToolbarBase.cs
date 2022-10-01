@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.Sidebar;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Components.Sidebar;
 
 public class ToolbarBase : ComponentBase
 {

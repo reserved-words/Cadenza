@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.History;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Components.History;
 
 public class HistoryRecentBase : ComponentBase
 {

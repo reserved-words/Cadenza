@@ -49,6 +49,11 @@ public class PlayerBase : ComponentBase
 
     protected override async Task OnParametersSetAsync()
     {
+        // Note - this may need to do something to account for situations where a new playlist is started while another track is playing
+        // Currently the already playing track won't get scrobbled as it won't get formally stopped in the player - just replaced by the new track
+
+        // Also need to look into weird flashes on first starting a playlist
+
         if (Track != null)
         {
             Model = await Store.GetCurrentTrack();

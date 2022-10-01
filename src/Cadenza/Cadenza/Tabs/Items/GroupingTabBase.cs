@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs.Items;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Web.Components.Tabs.Items;
 
 public class GroupingTabBase : ComponentBase
 {

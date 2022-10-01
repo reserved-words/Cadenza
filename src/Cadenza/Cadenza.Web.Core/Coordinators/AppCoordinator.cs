@@ -1,11 +1,13 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
 
-internal class AppService : IAppConsumer, IAppController
+namespace Cadenza.Web.Core.Coordinators;
+
+internal class AppCoordinator : IAppConsumer, IAppController
 {
     private readonly IAppStore _store;
     private readonly ITrackRepository _repository;
 
-    public AppService(IAppStore appStore, ITrackRepository repository)
+    public AppCoordinator(IAppStore appStore, ITrackRepository repository)
     {
         _store = appStore;
         _repository = repository;
@@ -80,12 +82,6 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task StopPlaylist()
     {
-        await StartTrack?.Invoke(this, new TrackEventArgs
-        {
-            CurrentTrack = null,
-            IsLastTrack = false
-        });
-
         if (_currentPlaylist != null)
         {
             await PlaylistFinished?.Invoke(this, GetPlaylistArgs());

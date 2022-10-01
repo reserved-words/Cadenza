@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Source.Local.Services;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalSourceConnector : IConnector
 {

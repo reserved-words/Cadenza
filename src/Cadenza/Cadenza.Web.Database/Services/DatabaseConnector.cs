@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+
+namespace Cadenza.Web.Database.Services;
 
 internal class DatabaseConnector : IConnector
 {

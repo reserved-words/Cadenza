@@ -1,10 +1,12 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Coordinators;
 
-internal class ConnectorService : IConnectorConsumer, IConnectorController
+namespace Cadenza.Web.Core.Coordinators;
+
+internal class ConnectionCoordinator : IConnectorConsumer, IConnectorController
 {
     private readonly Dictionary<Connector, ConnectorStatus> _statuses;
 
-    public ConnectorService()
+    public ConnectionCoordinator()
     {
         _statuses = Enum.GetValues<Connector>()
             .ToDictionary(c => c, c => ConnectorStatus.Loading);
