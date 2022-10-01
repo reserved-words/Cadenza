@@ -20,6 +20,9 @@ public class PlayerBase : ComponentBase
     public IPlayer Player { get; set; }
 
     [Inject]
+    internal ITrackFinishedConsumer TrackFinishedConsumer { get; set; }
+
+    [Inject]
     internal ITrackProgressedConsumer TrackProgressConsumer { get; set; }
 
     [Parameter]
@@ -67,21 +70,13 @@ public class PlayerBase : ComponentBase
 
     protected override void OnInitialized()
     {
+        TrackFinishedConsumer.TrackFinished += OnTrackFinished;
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Track == null)
-        {
-            await Player.Stop();
-            Model = null;
-            CanPause = false;
-            CanPlay = true;
-            ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(null);
-            await OnTrackStatusChanged(new TrackStatusEventArgs { Track = null, Status = PlayStatus.Stopped });
-        }
-        else
+        if (Track != null)
         {
             await Player.Play(Track);
             Model = await Repository.GetTrack(Track.Id);
@@ -89,9 +84,8 @@ public class PlayerBase : ComponentBase
             CanPlay = false;
             ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model.Album, Model.Track.Id);
             await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
+            StateHasChanged();
         }
-
-        StateHasChanged();
     }
 
     public bool CanPause { get; set; }
@@ -118,17 +112,35 @@ public class PlayerBase : ComponentBase
 
     public async Task SkipNext()
     {
+        await StopPlaying();
         await OnSkipNext();
     }
 
     public async Task SkipPrevious()
     {
+        await StopPlaying();
         await OnSkipPrevious();
+    }
+
+    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
+    {
+        await StopPlaying();
+        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Stopped });
     }
 
     private void OnTrackProgressed(object sender, TrackProgressedEventArgs e)
     {
         Progress = e.ProgressPercentage;
+        StateHasChanged();
+    }
+
+    private async Task StopPlaying()
+    {
+        await Player.Stop();
+        Model = null;
+        CanPause = false;
+        CanPlay = true;
+        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(null);
         StateHasChanged();
     }
 }
