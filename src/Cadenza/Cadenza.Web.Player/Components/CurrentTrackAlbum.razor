@@ -1,0 +1,28 @@
+﻿@using Cadenza.Common.Domain.Model.Album
+@using Cadenza.Common.Domain.Extensions
+
+<MudText Typo="@Typo.h6">@AlbumTitle</MudText>
+<MudText Typo="@Typo.h6">@AlbumArtist</MudText>
+
+@*        <AlbumLink Typo="@Typo.body1" Id="@Model.Album.Id" Title="@Model.Album.Title" />
+    <ArtistLink Typo="@Typo.body2" Id="@Model.Album.ArtistId" Name="@Model.Album.ArtistName" />
+*@        <MudText Typo="Typo.body1">@ReleaseType</MudText>
+<MudText Typo="Typo.body2">@Year</MudText>
+
+@code {
+    [Parameter]
+    public AlbumInfo Model { get; set; }
+
+    public string AlbumId => Model?.Id;
+    public string AlbumArtistId => Model?.ArtistId;
+    
+
+    public string AlbumArtist => Model?.ArtistName ?? "Album Artist";
+
+    public string AlbumTitle => Model?.Title ?? "Album Title";
+
+    public string ReleaseType => Model?.ReleaseType.GetDisplayName() ?? "Release Type";
+
+    public string Year => Model?.Year ?? "Year";
+
+}

@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common.Interfaces",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common.Utilities", "Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj", "{FD5ACC5E-E646-4476-923C-4A38427EACF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Web.Player", "Cadenza\Cadenza.Web.Player\Cadenza.Web.Player.csproj", "{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Player", "Cadenza\Cadenza.Web.Player\Cadenza.Web.Player.csproj", "{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

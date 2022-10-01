@@ -12,30 +12,17 @@
     </MudOverlay>
     <MudCardHeader Class="pa-2">
         <CardHeaderContent>
-
-            <MudText Typo="@Typo.h6">@Title</MudText>
-            <MudText Typo="@Typo.body1">@Artist</MudText>
-
-            @*            <TrackLink Typo="@Typo.h6" Id="@Model.Track.Id" Title="@Model.Track.Title" />
-                <ArtistLink Typo="@Typo.body1" Id="@Model.Artist.Id" Name="@Model.Artist.Name" />
-            *@
+            <CurrentTrack Model="@Model?.Track" />
         </CardHeaderContent>
         <CardHeaderActions>
             @*            <FavouriteTrack Artist="@Model.Artist.Name" Title="@Model.Track.Title" IsFavourite="@null" />
             *@
         </CardHeaderActions>
     </MudCardHeader>
-    <img src="@ArtworkUrl" class="artwork" />
+    <CurrentTrackArtwork Model="@Model" />
     <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
     <MudCardContent Class="pa-2">
-
-            <MudText Typo="@Typo.h6">@AlbumTitle</MudText>
-            <MudText Typo="@Typo.h6">@AlbumArtist</MudText>
-
-        @*        <AlbumLink Typo="@Typo.body1" Id="@Model.Album.Id" Title="@Model.Album.Title" />
-            <ArtistLink Typo="@Typo.body2" Id="@Model.Album.ArtistId" Name="@Model.Album.ArtistName" />
-        *@        <MudText Typo="Typo.body1">@ReleaseType</MudText>
-        <MudText Typo="Typo.body2">@Year</MudText>
+        <CurrentTrackAlbum Model="@Model?.Album" />
     </MudCardContent>
 
 </MudCard>
