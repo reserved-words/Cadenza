@@ -1,0 +1,70 @@
+﻿@using Cadenza.Web.Common.Events
+@using Cadenza.Web.Player
+
+<Player Loading="@Loading" Track="@Track" CanSkipNext="@CanSkipNext" OnSkipNext="@OnSkipNext" OnSkipPrevious="@OnSkipPrevious" />
+
+@code {
+    [Inject]
+    public IAppConsumer App { get; set; }
+
+    [Inject]
+    public IAppController AppController { get; set; }
+
+    public bool Loading { get; set; }
+    public PlayTrack Track { get; set; }
+    public bool CanSkipNext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        App.PlaylistLoading += OnPlaylistLoading;
+        App.PlaylistFinished += OnPlaylistFinished;
+
+        App.TrackStarted += OnTrackStarted;
+        App.TrackFinished += OnTrackFinished;
+    }
+
+    private async Task OnSkipNext()
+    {
+        await AppController.SkipNext();
+    }
+
+    private async Task OnSkipPrevious()
+    {
+        await AppController.SkipPrevious();
+    }
+
+    private async Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
+    {
+        Loading = false;
+        Track = null;
+        CanSkipNext = false;
+        StateHasChanged();
+    }
+
+    private async Task OnPlaylistLoading(object sender, PlaylistEventArgs e)
+    {
+        Loading = true;
+        Track = null;
+        CanSkipNext = false;
+        StateHasChanged();
+    }
+
+    private async Task OnTrackFinished(object sender, TrackEventArgs e)
+    {
+        if (e.IsLastTrack)
+        {
+            Loading = false;
+            Track = null;
+            CanSkipNext = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnTrackStarted(object sender, TrackEventArgs e)
+    {
+        Loading = false;
+        Track = e.CurrentTrack;
+        CanSkipNext = !e.IsLastTrack;
+        StateHasChanged();
+    }
+}

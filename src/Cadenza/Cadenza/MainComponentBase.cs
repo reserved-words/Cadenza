@@ -1,4 +1,10 @@
-﻿namespace Cadenza.Web.Components;
+﻿using Cadenza.Web.Common.Events;
+using Cadenza.Web.Components.Interfaces;
+using Cadenza.Web.Components.Shared;
+using Cadenza.Web.Components.Tabs.Main;
+using Microsoft.AspNetCore.Components;
+
+namespace Cadenza;
 
 public class MainComponentBase : ComponentBase
 {
