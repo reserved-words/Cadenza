@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Components.Components.History;
+﻿namespace Cadenza.Components.History;
 
 public abstract class HistoryDisplayBase<T> : ComponentBase
 {

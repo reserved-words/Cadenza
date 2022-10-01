@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Components.Components.Sidebar;
+﻿namespace Cadenza.Components.Sidebar;
 
 public class SearchBase : ComponentBase
 {
