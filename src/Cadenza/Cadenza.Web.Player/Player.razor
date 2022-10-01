@@ -15,7 +15,7 @@
             <CurrentTrack Model="@Model?.Track" />
         </CardHeaderContent>
         <CardHeaderActions>
-           <CurrentTrackFavourite Model="@Model?.Track" />
+            <CurrentTrackFavourite Model="@Model?.Track" />
         </CardHeaderActions>
     </MudCardHeader>
     <CurrentTrackArtwork Model="@Model" />
@@ -26,30 +26,11 @@
 
 </MudCard>
 
-<MudButtonGroup Color="Color.Dark" Variant="Variant.Filled" Class="ma-0 pa-0">
-    <MudIconButton Icon="@Icons.Material.Filled.SkipPrevious" OnClick="SkipPrevious" Disabled="@(!CanSkipPrevious)" />
-    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" OnClick="Resume" Disabled="@(!CanPlay)" Class="@PlayButtonClass()" />
-    <MudIconButton Icon="@Icons.Material.Filled.Pause" OnClick="Pause" Disabled="@(!CanPause)" Class="@PauseButtonClass()" />
-    <MudIconButton Icon="@Icons.Material.Filled.SkipNext" OnClick="SkipNext" Disabled="@(!CanSkipNext)" />
-</MudButtonGroup>
-
-@code {
-
-    private string PlayButtonClass()
-    {
-        var show = (!CanPlay && !CanPause)
-            || CanPlay;
-
-        return Display(show);
-    }
-
-    private string PauseButtonClass()
-    {
-        return Display(CanPause);
-    }
-
-    private string Display(bool show)
-    {
-        return show ? "d-flex" : "d-none";
-    }
-}
+<PlayerControls CanPause="@CanPause"
+                CanPlay="@CanPlay"
+                CanSkipNext="@CanSkipNext"
+                CanSkipPrevious="@CanSkipPrevious"
+                OnPause="@Pause"
+                OnResume="@Resume"
+                OnSkipNext="@SkipNext"
+                OnSkipPrevious="@SkipPrevious" />

@@ -1,11 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Interfaces.Repositories;
-using Cadenza.Web.Common.Events;
-using Cadenza.Web.Common.Interfaces;
-using Microsoft.AspNetCore.Components;
-
-namespace Cadenza.Web.Player;
+﻿namespace Cadenza.Web.Player;
 
 public class PlayerBase : ComponentBase
 {
@@ -71,17 +64,21 @@ public class PlayerBase : ComponentBase
 
     public async Task Pause()
     {
-        var progress = await Player.Pause();
         CanPlay = true;
         CanPause = false;
+        StateHasChanged();
+
+        var progress = await Player.Pause();
         await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Paused });
     }
 
     public async Task Resume()
     {
-        var progress = await Player.Resume();
         CanPause = true;
         CanPlay = false;
+        StateHasChanged();
+
+        var progress = await Player.Resume();
         await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
     }
 
@@ -105,9 +102,10 @@ public class PlayerBase : ComponentBase
 
     private async Task StopPlaying()
     {
-        await Player.Stop();
         CanPause = false;
-        CanPlay = true;
+        CanPlay = false;
         StateHasChanged();
+
+        await Player.Stop();
     }
 }
