@@ -15,6 +15,9 @@ public class PlayerBase : ComponentBase
     [Inject]
     public ITrackRepository Repository { get; set; }
 
+    [Inject]
+    public IPlayer Player { get; set; }
+
     [Parameter]
     public PlayTrack Track { get; set; }
 
@@ -61,6 +64,7 @@ public class PlayerBase : ComponentBase
     {
         if (Track == null)
         {
+            await Player.Stop();
             Model = null;
             CanPause = false;
             CanPlay = true;
@@ -68,6 +72,7 @@ public class PlayerBase : ComponentBase
         }
         else
         {
+            await Player.Play(Track);
             Model = await Repository.GetTrack(Track.Id);
             CanPause = true;
             CanPlay = false;
@@ -86,12 +91,14 @@ public class PlayerBase : ComponentBase
 
     public async Task Pause()
     {
+        var progress = await Player.Pause();
         CanPlay = true;
         CanPause = false;
     }
 
     public async Task Resume()
     {
+        var progress = await Player.Resume();
         CanPause = true;
         CanPlay = false;
     }

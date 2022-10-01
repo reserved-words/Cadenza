@@ -2,16 +2,13 @@
 
 internal class AppService : IAppConsumer, IAppController
 {
-    private readonly IPlayer _player;
-
-    public AppService(IPlayer player, ITrackFinishedConsumer trackFinishedConsumer)
+    public AppService(ITrackFinishedConsumer trackFinishedConsumer)
     {
-        _player = player;
-
         trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
     public event TrackEventHandler TrackFinished;
+    public event TrackEventHandler StartTrack;
     public event TrackEventHandler TrackPaused;
     public event TrackEventHandler TrackResumed;
     public event TrackEventHandler TrackStarted;
@@ -38,30 +35,26 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task PlayTrack()
     {
-        await _player.Stop();
+        await StartTrack?.Invoke(this, new TrackEventArgs
+        {
+            CurrentTrack = null,
+            IsLastTrack = false
+        });
 
         if (_currentPlaylist.Current == null)
             return;
 
-        var progress = await _player.Play(_currentPlaylist.Current);
-        await TrackStarted?.Invoke(this, GetProgressArgs(progress));
-    }
-
-    public async Task Pause()
-    {
-        var progress = await _player.Pause();
-        await TrackPaused?.Invoke(this, GetProgressArgs(progress));
-    }
-
-    public async Task Resume()
-    {
-        var progress = await _player.Resume();
-        await TrackResumed?.Invoke(this, GetProgressArgs(progress));
+        //var progress = await _player.Play(_currentPlaylist.Current);
+        await StartTrack?.Invoke(this, new TrackEventArgs
+        {
+            CurrentTrack = _currentPlaylist.Current,
+            IsLastTrack = _currentPlaylist.CurrentIsLast
+        });
     }
 
     public async Task SkipNext()
     {
-        await TrackFinished?.Invoke(this, GetFinishedArgs());
+        //await TrackFinished?.Invoke(this, GetFinishedArgs());
         if (_currentPlaylist.CurrentIsLast)
         {
             await StopPlaylist();
@@ -74,20 +67,20 @@ internal class AppService : IAppConsumer, IAppController
 
     public async Task SkipPrevious()
     {
-        await TrackFinished?.Invoke(this, GetFinishedArgs());
+        //await TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
     }
 
-    private TrackEventArgs GetFinishedArgs()
-    {
-        return new TrackEventArgs
-        {
-            CurrentTrack = _currentPlaylist.Current,
-            IsLastTrack = _currentPlaylist.CurrentIsLast,
-            PercentagePlayed = 100
-        };
-    }
+    //private TrackEventArgs GetFinishedArgs()
+    //{
+    //    return new TrackEventArgs
+    //    {
+    //        CurrentTrack = _currentPlaylist.Current,
+    //        IsLastTrack = _currentPlaylist.CurrentIsLast,
+    //        //PercentagePlayed = 100
+    //    };
+    //}
 
     private PlaylistEventArgs GetPlaylistArgs(string error = null)
     {
@@ -98,17 +91,17 @@ internal class AppService : IAppConsumer, IAppController
         };
     }
 
-    private TrackEventArgs GetProgressArgs(TrackProgress progress)
-    {
-        return new TrackEventArgs
-        {
-            CurrentTrack = _currentPlaylist.Current,
-            IsLastTrack = _currentPlaylist.CurrentIsLast,
-            PercentagePlayed = progress.TotalSeconds == 0
-                ? 0
-                : progress.SecondsPlayed / progress.TotalSeconds
-        };
-    }
+    //private TrackEventArgs GetProgressArgs(TrackProgress progress)
+    //{
+    //    return new TrackEventArgs
+    //    {
+    //        CurrentTrack = _currentPlaylist.Current,
+    //        IsLastTrack = _currentPlaylist.CurrentIsLast,
+    //        PercentagePlayed = progress.TotalSeconds == 0
+    //            ? 0
+    //            : progress.SecondsPlayed / progress.TotalSeconds
+    //    };
+    //}
 
     public async Task LoadingPlaylist()
     {
@@ -118,7 +111,7 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task StopPlaylist()
     {
-        await _player.Stop();
+        //await _player.Stop();
 
         if (_currentPlaylist != null)
         {

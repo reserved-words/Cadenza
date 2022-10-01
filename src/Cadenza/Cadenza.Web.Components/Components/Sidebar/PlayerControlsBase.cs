@@ -16,15 +16,15 @@ public class PlayerControlsBase : ComponentBase
 
     public bool CanSkipPrevious => CanPlay || CanPause;
 
-    public async Task OnPause()
-    {
-        await AppController.Pause();
-    }
+    //public async Task OnPause()
+    //{
+    //    await AppController.Pause();
+    //}
 
-    public async Task OnResume()
-    {
-        await AppController.Resume();
-    }
+    //public async Task OnResume()
+    //{
+    //    await AppController.Resume();
+    //}
 
     public async Task OnSkipNext()
     {
@@ -38,7 +38,7 @@ public class PlayerControlsBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        AppConsumer.TrackStarted += App_TrackStarted;
+        AppConsumer.StartTrack += App_TrackStarted;
         AppConsumer.TrackPaused += App_TrackPaused;
         AppConsumer.TrackResumed += App_TrackResumed;
     }

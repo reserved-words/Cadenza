@@ -2,8 +2,6 @@
 
 public interface IAppController
 {
-    Task Pause();
-    Task Resume();
     Task SkipNext();
     Task SkipPrevious();
 

@@ -19,8 +19,8 @@
         App.PlaylistLoading += OnPlaylistLoading;
         App.PlaylistFinished += OnPlaylistFinished;
 
-        App.TrackStarted += OnTrackStarted;
-        App.TrackFinished += OnTrackFinished;
+        App.StartTrack += OnStartTrack;
+        //App.TrackFinished += OnTrackFinished;
     }
 
     private async Task OnSkipNext()
@@ -49,18 +49,18 @@
         StateHasChanged();
     }
 
-    private async Task OnTrackFinished(object sender, TrackEventArgs e)
-    {
-        if (e.IsLastTrack)
-        {
-            Loading = false;
-            Track = null;
-            CanSkipNext = false;
-            StateHasChanged();
-        }
-    }
+    //private async Task OnTrackFinished(object sender, TrackEventArgs e)
+    //{
+    //    if (e.IsLastTrack)
+    //    {
+    //        Loading = false;
+    //        Track = null;
+    //        CanSkipNext = false;
+    //        StateHasChanged();
+    //    }
+    //}
 
-    private async Task OnTrackStarted(object sender, TrackEventArgs e)
+    private async Task OnStartTrack(object sender, TrackEventArgs e)
     {
         Loading = false;
         Track = e.CurrentTrack;
