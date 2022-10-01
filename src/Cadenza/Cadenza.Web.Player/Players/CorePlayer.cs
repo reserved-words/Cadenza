@@ -1,5 +1,4 @@
 ﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Interfaces.Repositories;
 using Cadenza.Web.Common.Model;
 using Cadenza.Web.Player.Interfaces;
 
@@ -10,14 +9,12 @@ internal class CorePlayer : IPlayer
     private readonly ICurrentTrackStore _store;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
-    private readonly ITrackRepository _trackRepository;
 
-    public CorePlayer(ICurrentTrackStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers, ITrackRepository trackRepository)
+    public CorePlayer(ICurrentTrackStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
     {
         _store = store;
         _sourcePlayers = sourcePlayers.ToList();
         _utilityPlayers = utilityPlayers.ToList();
-        _trackRepository = trackRepository;
     }
 
     public async Task Play(PlayTrack track)
@@ -25,10 +22,9 @@ internal class CorePlayer : IPlayer
         var service = await GetCurrentSourcePlayer(track.Source);
         await service.Play(track.Id);
 
-        var fullTrack = await _trackRepository.GetTrack(track.Id);
+        var fullTrack = await GetCurrentTrack();
         var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
 
-        await StoreCurrentTrack(fullTrack);
         await RunUtilities(p => p.OnPlay(progress));
     }
 
@@ -61,7 +57,6 @@ internal class CorePlayer : IPlayer
         }
 
         await RunUtilities(p => p.OnStop(progress));
-        await StoreCurrentTrack(null);
     }
 
     private async Task<ISourcePlayer> GetCurrentSourcePlayer(LibrarySource? source = null)
@@ -74,11 +69,6 @@ internal class CorePlayer : IPlayer
         return _sourcePlayers.Single(p => p.Source == currentSource.Value);
     }
 
-    private async Task<LibrarySource?> GetCurrentSource()
-    {
-        return await _store.GetCurrentSource();
-    }
-
     private async Task RunUtilities(Func<IUtilityPlayer, Task> action)
     {
         foreach (var player in _utilityPlayers)
@@ -87,8 +77,13 @@ internal class CorePlayer : IPlayer
         }
     }
 
-    private async Task StoreCurrentTrack(TrackFull track)
+    private async Task<LibrarySource?> GetCurrentSource()
     {
-        await _store.StoreCurrentTrack(track);
+        return await _store.GetCurrentSource();
+    }
+
+    private async Task<TrackFull> GetCurrentTrack()
+    {
+        return await _store.GetCurrentTrack();
     }
 }

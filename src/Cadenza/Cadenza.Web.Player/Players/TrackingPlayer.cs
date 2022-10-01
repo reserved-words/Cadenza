@@ -6,9 +6,9 @@ namespace Cadenza.Web.Player.Players;
 internal class TrackingPlayer : IUtilityPlayer
 {
     private readonly IPlayTracker _tracker;
-    private readonly IAppStore _store;
+    private readonly ICurrentTrackStore _store;
 
-    public TrackingPlayer(IPlayTracker tracker, IAppStore store)
+    public TrackingPlayer(IPlayTracker tracker, ICurrentTrackStore store)
     {
         _tracker = tracker;
         _store = store;
@@ -65,7 +65,6 @@ internal class TrackingPlayer : IUtilityPlayer
 
     private async Task<TrackFull> CurrentTrack()
     {
-        var storedValue = await _store.GetValue<TrackFull>(StoreKey.CurrentTrack);
-        return storedValue?.Value;
+        return await _store.GetCurrentTrack();
     }
 }

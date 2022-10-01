@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Player.Events;
+﻿using Cadenza.Common.Interfaces.Repositories;
+using Cadenza.Web.Player.Events;
 using Cadenza.Web.Player.Interfaces;
 
 namespace Cadenza.Web.Player;
@@ -6,7 +7,10 @@ namespace Cadenza.Web.Player;
 public class PlayerBase : ComponentBase
 {
     [Inject]
-    internal ICurrentTrackStore Store { get; set; }
+    public ITrackRepository Repository { get; set; }
+
+    [Inject]
+    public ICurrentTrackStore Store { get; set; }
 
     [Inject]
     internal IPlayer Player { get; set; }
@@ -51,8 +55,9 @@ public class PlayerBase : ComponentBase
     {
         if (Track != null)
         {
+            Model = await Repository.GetTrack(Track.Id);
+            await Store.StoreCurrentTrack(Model);
             await Player.Play(Track);
-            Model = await Store.GetCurrentTrack();
             UpdatePlayState(false, true);
             await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
         }
@@ -103,6 +108,7 @@ public class PlayerBase : ComponentBase
     {
         UpdatePlayState(false, false);
         await Player.Stop();
+        await Store.StoreCurrentTrack(null);
     }
 
     private void UpdatePlayState(bool canPlay, bool canPause)
