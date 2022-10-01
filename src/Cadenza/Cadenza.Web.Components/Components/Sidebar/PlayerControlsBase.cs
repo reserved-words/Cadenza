@@ -39,8 +39,8 @@ public class PlayerControlsBase : ComponentBase
     protected override void OnInitialized()
     {
         AppConsumer.StartTrack += App_TrackStarted;
-        AppConsumer.TrackPaused += App_TrackPaused;
-        AppConsumer.TrackResumed += App_TrackResumed;
+        //AppConsumer.TrackPaused += App_TrackPaused;
+        //AppConsumer.TrackResumed += App_TrackResumed;
     }
 
     private Task App_TrackStarted(object sender, TrackEventArgs e)

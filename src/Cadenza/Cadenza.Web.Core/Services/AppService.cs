@@ -7,11 +7,8 @@ internal class AppService : IAppConsumer, IAppController
         trackFinishedConsumer.TrackFinished += OnTrackFinished;
     }
 
-    public event TrackEventHandler TrackFinished;
+    public event TrackStatusEventHandler TrackStatusChanged;
     public event TrackEventHandler StartTrack;
-    public event TrackEventHandler TrackPaused;
-    public event TrackEventHandler TrackResumed;
-    public event TrackEventHandler TrackStarted;
 
     public event PlaylistEventHandler PlaylistFinished;
     public event PlaylistEventHandler PlaylistLoading;
@@ -44,7 +41,6 @@ internal class AppService : IAppConsumer, IAppController
         if (_currentPlaylist.Current == null)
             return;
 
-        //var progress = await _player.Play(_currentPlaylist.Current);
         await StartTrack?.Invoke(this, new TrackEventArgs
         {
             CurrentTrack = _currentPlaylist.Current,
@@ -54,7 +50,6 @@ internal class AppService : IAppConsumer, IAppController
 
     public async Task SkipNext()
     {
-        //await TrackFinished?.Invoke(this, GetFinishedArgs());
         if (_currentPlaylist.CurrentIsLast)
         {
             await StopPlaylist();
@@ -67,7 +62,6 @@ internal class AppService : IAppConsumer, IAppController
 
     public async Task SkipPrevious()
     {
-        //await TrackFinished?.Invoke(this, GetFinishedArgs());
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
     }
@@ -111,7 +105,11 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task StopPlaylist()
     {
-        //await _player.Stop();
+        await StartTrack(this, new TrackEventArgs
+        {
+            CurrentTrack = null,
+            IsLastTrack = false
+        });
 
         if (_currentPlaylist != null)
         {
@@ -123,5 +121,10 @@ internal class AppService : IAppConsumer, IAppController
     public async Task View(ViewItem item)
     {
         await ItemRequested?.Invoke(this, new ItemEventArgs { Item = item });
+    }
+
+    public async Task OnTrackStatusChanged(TrackStatusEventArgs args)
+    {
+        await TrackStatusChanged?.Invoke(this, args);
     }
 }

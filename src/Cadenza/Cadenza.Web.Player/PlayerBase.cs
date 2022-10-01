@@ -2,6 +2,7 @@
 using Cadenza.Common.Domain.Model;
 using Cadenza.Common.Domain.Model.Track;
 using Cadenza.Common.Interfaces.Repositories;
+using Cadenza.Web.Common.Events;
 using Cadenza.Web.Common.Interfaces;
 using Microsoft.AspNetCore.Components;
 
@@ -32,6 +33,9 @@ public class PlayerBase : ComponentBase
 
     [Parameter]
     public Func<Task> OnSkipPrevious { get; set; }
+
+    [Parameter]
+    public Func<TrackStatusEventArgs, Task> OnTrackStatusChanged { get; set; }
 
     private TrackFull Model { get; set; }
 
@@ -68,7 +72,8 @@ public class PlayerBase : ComponentBase
             Model = null;
             CanPause = false;
             CanPlay = true;
-            ArtworkUrl = null;
+            ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(null);
+            await OnTrackStatusChanged(new TrackStatusEventArgs { Track = null, Status = PlayStatus.Stopped });
         }
         else
         {
@@ -76,9 +81,9 @@ public class PlayerBase : ComponentBase
             Model = await Repository.GetTrack(Track.Id);
             CanPause = true;
             CanPlay = false;
+            ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model.Album, Model.Track.Id);
+            await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
         }
-
-        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model?.Album, Model?.Track.Id);
 
         StateHasChanged();
     }
@@ -94,6 +99,7 @@ public class PlayerBase : ComponentBase
         var progress = await Player.Pause();
         CanPlay = true;
         CanPause = false;
+        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Paused });
     }
 
     public async Task Resume()
@@ -101,6 +107,7 @@ public class PlayerBase : ComponentBase
         var progress = await Player.Resume();
         CanPause = true;
         CanPlay = false;
+        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
     }
 
     public async Task SkipNext()

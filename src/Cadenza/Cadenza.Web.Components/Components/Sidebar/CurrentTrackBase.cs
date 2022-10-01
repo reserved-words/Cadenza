@@ -48,8 +48,8 @@ public class CurrentTrackBase : ComponentBase
         App.PlaylistLoading += OnPlaylistLoading;
         App.PlaylistFinished += OnPlaylistFinished;
 
-        App.StartTrack += OnTrackStarted;
-        App.TrackFinished += OnTrackFinished;
+        //App.StartTrack += OnTrackStarted;
+        //App.TrackFinished += OnTrackFinished;
 
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
     }

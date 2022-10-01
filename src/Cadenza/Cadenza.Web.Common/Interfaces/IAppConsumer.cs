@@ -2,10 +2,7 @@
 
 public interface IAppConsumer
 {
-    event TrackEventHandler TrackFinished;
-    event TrackEventHandler TrackPaused;
-    event TrackEventHandler TrackResumed;
-    event TrackEventHandler TrackStarted;
+    event TrackStatusEventHandler TrackStatusChanged;
     event TrackEventHandler StartTrack;
 
     event PlaylistEventHandler PlaylistFinished;

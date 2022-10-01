@@ -18,12 +18,10 @@ public class HistoryRecentBase : ComponentBase
     protected override void OnInitialized()
     {
         //ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
-        App.TrackPaused += App_TrackProgressed;
-        App.TrackResumed += App_TrackProgressed;
-        App.TrackStarted += App_TrackProgressed;
+        App.TrackStatusChanged += App_TrackProgressed;
     }
 
-    private async Task App_TrackProgressed(object sender, TrackEventArgs e)
+    private async Task App_TrackProgressed(object sender, TrackStatusEventArgs e)
     {
         await Task.Delay(1000).ContinueWith(async t =>
         {

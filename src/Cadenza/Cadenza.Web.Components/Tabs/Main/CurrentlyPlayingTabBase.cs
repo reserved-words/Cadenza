@@ -12,20 +12,23 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        App.TrackStarted += OnTrackStarted;
-        App.TrackFinished += OnTrackFinished;
+        App.TrackStatusChanged += OnTrackStatusChanged;
     }
 
-    private async Task OnTrackStarted(object sender, TrackEventArgs e)
+    private async Task OnTrackStatusChanged(object sender, TrackStatusEventArgs e)
     {
-        Model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
-        StateHasChanged();
-    }
+        if (e.Status == PlayStatus.Stopped)
+        {
+            Model = null;
+        }
+        else
+        {
+            if (Model == null || Model.Track.Id != e.Track.Id)
+            {
+                Model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
+            }
+        }
 
-    private Task OnTrackFinished(object sender, TrackEventArgs e)
-    {
-        Model = null;
         StateHasChanged();
-        return Task.CompletedTask;
     }
 }

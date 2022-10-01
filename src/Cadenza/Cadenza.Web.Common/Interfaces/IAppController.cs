@@ -9,5 +9,7 @@ public interface IAppController
 
     Task Play(PlaylistDefinition playlistDefinition);
 
+    Task OnTrackStatusChanged(TrackStatusEventArgs args);
+
     Task View(ViewItem item);
 }
