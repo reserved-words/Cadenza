@@ -84,8 +84,14 @@ public class PlayerBase : ComponentBase
             CanPlay = false;
             ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model.Album, Model.Track.Id);
             await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
-            StateHasChanged();
         }
+        else
+        {
+            Model = null;
+            ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(null);
+        }
+
+        StateHasChanged();
     }
 
     public bool CanPause { get; set; }
@@ -137,10 +143,8 @@ public class PlayerBase : ComponentBase
     private async Task StopPlaying()
     {
         await Player.Stop();
-        Model = null;
         CanPause = false;
         CanPlay = true;
-        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(null);
         StateHasChanged();
     }
 }

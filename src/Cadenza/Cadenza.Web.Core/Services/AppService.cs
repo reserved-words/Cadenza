@@ -22,12 +22,6 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task PlayTrack()
     {
-        await StartTrack?.Invoke(this, new TrackEventArgs
-        {
-            CurrentTrack = null,
-            IsLastTrack = false
-        });
-
         if (_currentPlaylist.Current == null)
             return;
 
@@ -73,7 +67,7 @@ internal class AppService : IAppConsumer, IAppController
 
     private async Task StopPlaylist()
     {
-        await StartTrack(this, new TrackEventArgs
+        await StartTrack?.Invoke(this, new TrackEventArgs
         {
             CurrentTrack = null,
             IsLastTrack = false
