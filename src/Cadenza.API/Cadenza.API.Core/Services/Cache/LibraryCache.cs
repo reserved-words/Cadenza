@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class LibraryCache : ILibraryCache
 {

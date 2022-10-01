@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Common.Repositories;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class CachePopulater : ICachePopulater
 {
@@ -18,7 +16,7 @@ internal class CachePopulater : ICachePopulater
         if (onlyIfEmpty && _cache.IsPopulated)
             return;
 
-        var library = await _repository.Get();
+        var library = await _repository.Get(null);
         await _cache.Populate(library);
     }
 }

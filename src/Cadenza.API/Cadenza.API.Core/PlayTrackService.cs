@@ -1,8 +1,4 @@
-﻿using Cadenza.API.Common.Controllers;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
-
-namespace Cadenza.API.Core;
+﻿namespace Cadenza.API.Core;
 
 internal class PlayTrackService : IPlayTrackService
 {

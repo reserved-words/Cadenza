@@ -1,0 +1,16 @@
+﻿@inherits MainComponentBase
+
+<MudLayout>
+    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <Sidebar />
+    </MudDrawer>
+    <MudMainContent>
+        @if (IsInitalised)
+        {
+            <DynamicTabs FixedItems="@FixedItems"
+                         DynamicItems="@DynamicItems"
+                         SelectedItem="@SelectedItem" />
+        }
+
+    </MudMainContent>
+</MudLayout>

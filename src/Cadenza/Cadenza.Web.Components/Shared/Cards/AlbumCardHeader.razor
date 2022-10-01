@@ -1,0 +1,26 @@
+﻿
+@if (Model != null)
+{
+    <ItemCardHeader Type="@PlayerItemType.Album"
+                    Id="@Model.Id"
+                    Source="@Model.Source">
+        <ChildContent>
+            <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+            <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
+
+            @if (!TitleOnly)
+            {
+                <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+                <MudText Typo="Typo.body2">@Model.Year</MudText>
+            }
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Parameter]
+    public Album Model { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+}

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-	  <ImplicitUsings>enable</ImplicitUsings>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<Nullable>disable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,21 +12,19 @@
 
   <ItemGroup>
     <Content Include="Images\default.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cadenza.Local.Common\Cadenza.Local.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Local.MusicFiles\Cadenza.Local.MusicFiles.csproj" />
-    <ProjectReference Include="..\Cadenza.Local\Cadenza.Local.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.API.Core\Cadenza.Local.API.Core.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.API.Files\Cadenza.Local.API.Files.csproj" />
   </ItemGroup>
 
 </Project>

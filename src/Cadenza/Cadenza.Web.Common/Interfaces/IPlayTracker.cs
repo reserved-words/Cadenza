@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Models.Track;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IPlayTracker
 {

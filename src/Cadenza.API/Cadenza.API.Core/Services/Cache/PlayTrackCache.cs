@@ -1,9 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class PlayTrackCache : IPlayTrackCache
 {
@@ -95,7 +90,7 @@ internal class PlayTrackCache : IPlayTrackCache
             _artistTracks[track.ArtistId].Add(track);
         }
 
-        var albums = library.AlbumTrackLinks
+        var albums = library.AlbumTracks
             .GroupBy(a => a.AlbumId);
 
         foreach (var album in albums)

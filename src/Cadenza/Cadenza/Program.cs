@@ -1,6 +1,3 @@
-using Cadenza._Startup;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
 namespace Cadenza;
 
 public class Program

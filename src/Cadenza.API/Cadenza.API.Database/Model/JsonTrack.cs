@@ -1,11 +1,8 @@
-﻿using Cadenza.Domain.Enums;
-
-namespace Cadenza.API.Database.Model;
+﻿namespace Cadenza.API.Database.Model;
 
 internal class JsonTrack
 {
     public string Id { get; set; }
-    public string Path { get; set; }
     public LibrarySource Source { get; set; }
     public string AlbumId { get; set; }
     public string ArtistId { get; set; }

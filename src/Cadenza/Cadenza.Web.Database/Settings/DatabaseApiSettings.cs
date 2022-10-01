@@ -1,21 +1,17 @@
-﻿using Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Database.Settings;
 
-namespace Cadenza.Web.Database.Settings;
-
-internal class DatabaseApiSettings : ApiOptions<DatabaseApiEndpoints>
+public class DatabaseApiSettings : ApiOptions<DatabaseApiEndpoints>
 {
 }
 
-internal class DatabaseApiEndpoints
+public class DatabaseApiEndpoints
 {
     public string Connect { get; set; }
     public string Populate { get; set; }
 
-    public string GetUpdates { get; set; }
     public string UpdateAlbum { get; set; }
     public string UpdateArtist { get; set; }
     public string UpdateTrack { get; set; }
-    public string UnqueueUpdate { get; set; }
 
     public string Artist { get; set; }
     public string ArtistAlbums { get; set; }

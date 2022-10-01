@@ -7,24 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="UI\Components\SystemInfo\SystemErrors.razor" />
-    <None Include="UI\Components\SystemInfo\SystemUpdateQueue.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-    <PackageReference Include="MudBlazor" Version="6.0.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Database\Cadenza.Web.Database.csproj" />
     <ProjectReference Include="..\Cadenza.Web.LastFM\Cadenza.Web.LastFM.csproj" />

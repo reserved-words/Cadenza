@@ -1,14 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Extensions;
-using Cadenza.Domain.Models;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Update;
-using Newtonsoft.Json;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class ArtistCache : IArtistCache
 {
@@ -98,9 +88,7 @@ internal class ArtistCache : IArtistCache
         {
             if (album.ArtistId == null)
             {
-                var json = JsonConvert.SerializeObject(album);
                 var ex = new Exception($"Artist ID is null for {album.Id} ({album.Title})");
-                ex.Data.Add("Album", json);
                 throw ex;
             }
 
@@ -129,7 +117,7 @@ internal class ArtistCache : IArtistCache
 
         update.ApplyUpdates(artist);
 
-        if (update.IsUpdated(ItemProperty.Genre, out ItemPropertyUpdate genreUpdate))
+        if (update.IsUpdated(ItemProperty.Genre, out PropertyUpdate genreUpdate))
         {
             var originalGenreArtists = _genres.GetOrAdd(genreUpdate.OriginalValue);
             var updatedGenreArtists = _genres.GetOrAdd(genreUpdate.UpdatedValue);
@@ -139,7 +127,7 @@ internal class ArtistCache : IArtistCache
             updatedGenreArtists.AddThenSort(update.UpdatedItem, a => a.Genre);
         }
 
-        if (update.IsUpdated(ItemProperty.Grouping, out ItemPropertyUpdate groupingUpdate))
+        if (update.IsUpdated(ItemProperty.Grouping, out PropertyUpdate groupingUpdate))
         {
             var originalGrouping = groupingUpdate.OriginalValue.Parse<Grouping>();
             var updatedGrouping = groupingUpdate.UpdatedValue.Parse<Grouping>();

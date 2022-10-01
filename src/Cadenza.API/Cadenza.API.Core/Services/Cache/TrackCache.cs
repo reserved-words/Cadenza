@@ -1,11 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Update;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class TrackCache : ITrackCache
 {
@@ -42,7 +35,7 @@ internal class TrackCache : ITrackCache
         _tracks = library.Tracks.ToDictionary(a => a.Id, a => a);
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
-        _albumTracks = library.AlbumTrackLinks.ToDictionary(a => a.TrackId, a => a);
+        _albumTracks = library.AlbumTracks.ToDictionary(a => a.TrackId, a => a);
         return Task.CompletedTask;
     }
 

@@ -1,10 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Model;
-using Cadenza.Web.Source.Local.Settings;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.Source.Local.Services;
+﻿namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalPlayer : ISourcePlayer
 {

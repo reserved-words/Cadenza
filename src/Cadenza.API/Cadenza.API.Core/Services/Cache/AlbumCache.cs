@@ -1,8 +1,4 @@
-﻿using Cadenza.API.Common.Model;
-using Cadenza.API.Core.Interfaces.Cache;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Domain.Models.Update;
+﻿using Track = Cadenza.Common.Domain.Model.Track.Track;
 
 namespace Cadenza.API.Core.Services.Cache;
 
@@ -33,7 +29,7 @@ internal class AlbumCache : IAlbumCache
     {
         _albums = library.Albums.ToDictionary(a => a.Id, a => a);
 
-        var albums = library.AlbumTrackLinks
+        var albums = library.AlbumTracks
             .GroupBy(a => a.AlbumId);
 
         _albumTracks = albums.ToDictionary(a => a.Key, a => new List<AlbumTrack>());

@@ -1,43 +1,45 @@
-﻿@using System.Net.Http
-@using System.Net.Http.Json
-@using Microsoft.AspNetCore.Components.Forms
+﻿@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.WebUtilities
+
 @using Microsoft.JSInterop
+
+@using System.Net.Http
+@using System.Net.Http.Json
+
 @using MudBlazor
+
 @using Cadenza
+@using Cadenza.Pages
+
+@using Cadenza.Common.Domain
+@using Cadenza.Common.Domain.Enums
+@using Cadenza.Common.Domain.Extensions
+@using Cadenza.Common.Domain.Model
+@using Cadenza.Common.Domain.Model.Album
+@using Cadenza.Common.Domain.Model.Artist
+@using Cadenza.Common.Domain.Model.Track
+
+@using Cadenza.Common.Utilities
+
 @using Cadenza.Web.Common.Enums
 @using Cadenza.Web.Common.Interfaces
-@using Cadenza.Web.Common.Interop
+
+@using Cadenza.Web.Components
+@using Cadenza.Web.Components.Components.History
+@using Cadenza.Web.Components.Components.Items
+@using Cadenza.Web.Components.Components.Sidebar
+@using Cadenza.Web.Components.Shared
+@using Cadenza.Web.Components.Shared.Cards
+@using Cadenza.Web.Components.Shared.Dialogs
+@using Cadenza.Web.Components.Shared.Links
+@using Cadenza.Web.Components.Shared.Menus
+@using Cadenza.Web.Components.Shared.Views
+@using Cadenza.Web.Components.Tabs.Items
+@using Cadenza.Web.Components.Tabs.Main
+
 @using Cadenza.Web.Core
-@using Cadenza.Web.Core.App
 @using Cadenza.Web.Core.Interfaces
-@using Cadenza.Enums
-@using Cadenza.Pages
-@using Cadenza.Shared
-@using Cadenza.Domain
-@using Cadenza.Domain.Enums
-@using Cadenza.Domain.Extensions
-@using Cadenza.Domain.Models
-@using Cadenza.Domain.Models.Album
-@using Cadenza.Domain.Models.Artist
-@using Cadenza.Domain.Models.Track
-@using Cadenza.Utilities
-@using Cadenza.Web.Core.Extensions
-
-@using Cadenza.UI.Components.History
-@using Cadenza.UI.Components.Items
-@using Cadenza.UI.Components.Sidebar
-@using Cadenza.UI.Components.SystemInfo
-
-@using Cadenza.UI.Shared
-@using Cadenza.UI.Shared.Cards
-@using Cadenza.UI.Shared.Dialogs
-@using Cadenza.UI.Shared.Links
-@using Cadenza.UI.Shared.Menus
-@using Cadenza.UI.Shared.Views
-
-@using Cadenza.UI.Tabs.Items
-@using Cadenza.UI.Tabs.Main

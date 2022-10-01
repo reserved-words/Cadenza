@@ -1,39 +1,50 @@
-﻿global using Cadenza.Library;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Database.Settings;
-using Cadenza.Web.Database.Services;
-using Cadenza.Utilities.Interfaces;
+﻿global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Model.Album;
+global using Cadenza.Common.Domain.Model.Artist;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Update;
+global using Cadenza.Common.Domain.Model.Updates;
+global using Cadenza.Common.Interfaces.Repositories;
+global using Cadenza.Common.Interfaces.Utilities;
+global using Cadenza.Web.Common.Enums;
+global using Cadenza.Web.Common.Interfaces;
+global using Cadenza.Web.Common.Model;
+global using Cadenza.Web.Common.Tasks;
+global using Cadenza.Web.Database.Interfaces;
+global using Cadenza.Web.Database.Repositories;
+global using Cadenza.Web.Database.Services;
+global using Cadenza.Web.Database.Settings;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Options;
+global using System.Net.Http.Json;
 
 namespace Cadenza.Web.Database;
 
 public static class Startup
 {
-    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration config, string apiSectionName)
-    {
-        services.Configure<DatabaseApiSettings>(config.GetSection(apiSectionName));
-
-        return services
-            .AddApiRepositories<DatabaseApiRepositorySettings>()
-            .AddTransient<IConnectionTaskBuilder, DatabaseConnectionTaskBuilder>()
-            .AddTransient<IFileUpdateQueue, UpdateQueueService>();
-    }
-
-    public static IServiceCollection AddApiRepositories<T>(this IServiceCollection services) where T : class, IApiRepositorySettings
+    public static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         return services
-            .AddTransient<T>()
-            .AddTransient<IArtistRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<IAlbumRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<IPlayTrackRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<ISearchRepository>(sp => GetApiRepository<T>(sp))
-            .AddTransient<ITrackRepository>(sp => GetApiRepository<T>(sp));
+            .AddInternals()
+            .AddApiRepositories()
+            .AddTransient<IConnector, DatabaseConnector>();
     }
 
-    private static ApiRepository GetApiRepository<T>(IServiceProvider sp) where T : class, IApiRepositorySettings
+    private static IServiceCollection AddApiRepositories(this IServiceCollection services)
     {
-        return new ApiRepository(sp.GetService<IHttpHelper>(), sp.GetService<T>());
+        return services
+            .AddTransient<IArtistRepository, ArtistRepository>()
+            .AddTransient<IAlbumRepository, AlbumRepository>()
+            .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
+            .AddTransient<ISearchRepository, SearchRepository>()
+            .AddTransient<ITrackRepository, TrackRepository>()
+            .AddTransient<IUpdateService, UpdateService>();
+    }
+
+    private static IServiceCollection AddInternals(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IApiHelper, ApiHelper>();
     }
 }

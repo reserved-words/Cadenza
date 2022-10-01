@@ -1,19 +1,13 @@
-﻿using Cadenza.API.Database.Interfaces;
-using Cadenza.API.Database.Model;
-using Cadenza.Domain.Models.Artist;
-using Cadenza.Domain.Models.Album;
-using Cadenza.Domain.Models.Track;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class JsonToModelConverter : IJsonToModelConverter
 {
     private readonly IArtistConverter _artistConverter;
     private readonly IAlbumConverter _albumConverter;
     private readonly ITrackConverter _trackConverter;
-    private readonly IAlbumTrackLinkConverter _albumTrackLinkConverter;
+    private readonly IAlbumTrackConverter _albumTrackLinkConverter;
 
-    public JsonToModelConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackLinkConverter albumTrackLinkConverter)
+    public JsonToModelConverter(IArtistConverter artistConverter, IAlbumConverter albumConverter, ITrackConverter trackConverter, IAlbumTrackConverter albumTrackLinkConverter)
     {
         _artistConverter = artistConverter;
         _albumConverter = albumConverter;
@@ -21,23 +15,34 @@ internal class JsonToModelConverter : IJsonToModelConverter
         _albumTrackLinkConverter = albumTrackLinkConverter;
     }
 
-    public AlbumInfo ConvertAlbum(JsonAlbum album, ICollection<JsonArtist> artists)
+    public FullLibrary Convert(JsonItems items)
     {
-        return _albumConverter.ToAppModel(album, artists);
+        return new FullLibrary
+        {
+            Artists = items.Artists.Select(a => ConvertArtist(a)).ToList(),
+            Albums = items.Albums.Select(a => ConvertAlbum(a, items.Artists)).ToList(),
+            Tracks = items.Tracks.Select(a => ConvertTrack(a, items.Artists)).ToList(),
+            AlbumTracks = items.AlbumTracks.Select(a => ConvertAlbumTrack(a)).ToList(),
+        };
     }
 
-    public AlbumTrackLink ConvertAlbumTrackLink(JsonAlbumTrackLink albumTrackLink)
+    public AlbumInfo ConvertAlbum(JsonAlbum album, ICollection<JsonArtist> artists)
     {
-        return _albumTrackLinkConverter.ToAppModel(albumTrackLink);
+        return _albumConverter.ToModel(album, artists);
+    }
+
+    public AlbumTrackLink ConvertAlbumTrack(JsonAlbumTrack albumTrackLink)
+    {
+        return _albumTrackLinkConverter.ToModel(albumTrackLink);
     }
 
     public ArtistInfo ConvertArtist(JsonArtist artist)
     {
-        return _artistConverter.ToAppModel(artist);
+        return _artistConverter.ToModel(artist);
     }
 
     public TrackInfo ConvertTrack(JsonTrack track, ICollection<JsonArtist> artists)
     {
-        return _trackConverter.ToAppModel(track, artists);
+        return _trackConverter.ToModel(track, artists);
     }
 }

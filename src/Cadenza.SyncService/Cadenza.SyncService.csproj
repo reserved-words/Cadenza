@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps.WindowsService\Cadenza.Apps.WindowsService.csproj" />
+    <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>

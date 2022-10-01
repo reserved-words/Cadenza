@@ -1,22 +1,13 @@
-﻿using Cadenza.Domain.Models.LastFm;
-using Cadenza.Domain.Models.Track;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.Common.Interop;
-using Cadenza.Web.LastFM.Settings;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.LastFM.Services;
+﻿namespace Cadenza.Web.LastFM.Services;
 
 internal class Scrobbler : IPlayTracker
 {
     private readonly IHttpHelper _http;
     private readonly IUrl _url;
-    private readonly IStoreGetter _store;
+    private readonly IAppStore _store;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Scrobbler(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> settings, IStoreGetter store)
+    public Scrobbler(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> settings, IAppStore store)
     {
         _url = url;
         _http = http;

@@ -1,9 +1,4 @@
-﻿using Cadenza.API.Common.Controllers;
-using Cadenza.API.LastFM;
-using Cadenza.API.LastFM.Interfaces;
-using Cadenza.Domain.Enums;
-using Cadenza.Domain.Models.History;
-using Cadenza.Domain.Models.LastFm;
+﻿using Track = Cadenza.Common.Domain.Model.LastFm.Track;
 
 namespace Cadenza.API.Core;
 
