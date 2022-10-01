@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.API.Database.Interfaces.Updaters;
+﻿namespace Cadenza.API.Database.Interfaces.Updaters;
 
 internal interface IQueueUpdater
 {

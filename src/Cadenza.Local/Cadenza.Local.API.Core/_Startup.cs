@@ -1,15 +1,12 @@
-﻿global using Cadenza.Domain.Model;
-global using Cadenza.Domain.Model.Track;
-global using Cadenza.Domain.Model.Updates;
-
-global using Cadenza.Local.API.Common.Interfaces;
+﻿global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Updates;
+global using Cadenza.Common.Interfaces.Utilities;
 global using Cadenza.Local.API.Common.Controllers;
+global using Cadenza.Local.API.Common.Interfaces;
 global using Cadenza.Local.API.Core.Interfaces;
 global using Cadenza.Local.API.Core.Services;
 global using Cadenza.Local.API.Core.Settings;
-
-global using Cadenza.Utilities.Interfaces;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Local.API.Core

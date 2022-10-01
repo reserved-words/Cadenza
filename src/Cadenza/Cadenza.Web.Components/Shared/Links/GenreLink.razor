@@ -1,0 +1,18 @@
+﻿
+<ActionLink Typo="@Typo" Text="@Genre" OnClick="@View"></ActionLink>
+
+@code {
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
+    [Parameter]
+    public string Genre { get; set; }
+
+    [Parameter]
+    public Typo Typo { get; set; } = Typo.body1;
+
+    private async Task View()
+    {
+        await Viewer.ViewGenre(Genre);
+    }
+}

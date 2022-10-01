@@ -1,6 +1,4 @@
-﻿using System.Web;
-
-namespace Cadenza.API.LastFM.Services;
+﻿namespace Cadenza.API.LastFM.Services;
 
 internal class UrlService : IUrlService
 {

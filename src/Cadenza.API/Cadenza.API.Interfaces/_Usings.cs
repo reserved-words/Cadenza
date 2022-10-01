@@ -1,8 +1,8 @@
-﻿global using Cadenza.Domain.Enums;
-global using Cadenza.Domain.Model;
-global using Cadenza.Domain.Model.Album;
-global using Cadenza.Domain.Model.Artist;
-global using Cadenza.Domain.Model.History;
-global using Cadenza.Domain.Model.Track;
-global using Cadenza.Domain.Model.Updates;
-
+﻿global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Model.Album;
+global using Cadenza.Common.Domain.Model.Artist;
+global using Cadenza.Common.Domain.Model.History;
+global using Cadenza.Common.Domain.Model.LastFm;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Updates;

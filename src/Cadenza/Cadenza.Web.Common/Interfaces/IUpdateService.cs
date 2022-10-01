@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Update;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IUpdateService
 {

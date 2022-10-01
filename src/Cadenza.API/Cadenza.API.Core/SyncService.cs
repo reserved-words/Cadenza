@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.API.Core;
+﻿namespace Cadenza.API.Core;
 internal class SyncService : ISyncService
 {
     private readonly IMusicRepository _repository;
@@ -30,7 +27,7 @@ internal class SyncService : ISyncService
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
         var library = await _repository.Get(source);
-        
+
         return library.Tracks
             .Where(t => t.AlbumId == albumId)
             .Select(t => t.Id)

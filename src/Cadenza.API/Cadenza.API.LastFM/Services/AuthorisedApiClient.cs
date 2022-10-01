@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace Cadenza.API.LastFM.Services;
+﻿namespace Cadenza.API.LastFM.Services;
 
 internal class AuthorisedApiClient : IAuthorisedApiClient
 {

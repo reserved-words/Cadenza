@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿global using Cadenza.Apps.WindowsService.Interfaces;
+global using Cadenza.Apps.WindowsService.Settings;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Options;
 
 namespace Cadenza.Apps.WindowsService;
 

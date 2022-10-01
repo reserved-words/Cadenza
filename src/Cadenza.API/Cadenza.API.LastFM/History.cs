@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Model.History;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.API.LastFM
+﻿namespace Cadenza.API.LastFM
 {
     internal class History : IHistory
     {

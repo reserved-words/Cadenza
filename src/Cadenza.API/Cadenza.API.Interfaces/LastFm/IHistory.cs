@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.History;
-
-namespace Cadenza.API.Interfaces.LastFm;
+﻿namespace Cadenza.API.Interfaces.LastFm;
 
 public interface IHistory
 {

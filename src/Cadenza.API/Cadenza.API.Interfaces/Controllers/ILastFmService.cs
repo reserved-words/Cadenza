@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.History;
-using Cadenza.Domain.Model.LastFm;
-using Track = Cadenza.Domain.Model.LastFm.Track;
+﻿using Track = Cadenza.Common.Domain.Model.LastFm.Track;
 
 namespace Cadenza.API.Interfaces.Controllers;
 

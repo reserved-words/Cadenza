@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-
-namespace Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Common.Model;
 
 public struct ViewItem
 {

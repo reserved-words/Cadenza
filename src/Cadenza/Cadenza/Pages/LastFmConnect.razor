@@ -1,8 +1,5 @@
 ﻿@page "/LastFmConnect"
 
-@using Cadenza.Web.Core.App
-@using Microsoft.AspNetCore.WebUtilities
-
 <p>Connecting to Last.FM...</p>
 
 @code 
@@ -11,7 +8,7 @@
     public NavigationManager NavigationManager { get; set; }
 
     [Inject]
-    public IStoreSetter Store { get; set; }
+    public IAppStore Store { get; set; }
 
     [Inject]
     public IJSRuntime JSRuntime { get; set; }

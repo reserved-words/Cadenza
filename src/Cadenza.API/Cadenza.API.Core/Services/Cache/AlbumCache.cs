@@ -1,7 +1,4 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Update;
+﻿using Track = Cadenza.Common.Domain.Model.Track.Track;
 
 namespace Cadenza.API.Core.Services.Cache;
 

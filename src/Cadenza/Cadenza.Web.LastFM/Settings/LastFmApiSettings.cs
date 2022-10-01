@@ -1,13 +1,11 @@
-﻿using Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.LastFM.Settings;
 
-namespace Cadenza.Web.LastFM.Settings;
-
-internal class LastFmApiSettings : ApiOptions<LastFmApiEndpoints>
+public class LastFmApiSettings : ApiOptions<LastFmApiEndpoints>
 {
     public string RedirectUri { get; set; }
 }
 
-internal class LastFmApiEndpoints
+public class LastFmApiEndpoints
 {
     public string AuthUrl { get; set; }
     public string CreateSession { get; set; }

@@ -1,9 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces;
-using System.Web;
+﻿namespace Cadenza.Web.Core.Utilities;
 
-namespace Cadenza.Web.Core.Utilities;
-
-public class Url : IUrl
+internal class Url : IUrl
 {
     public string Build(string baseUrl, string endpoint, params (string, object)[] parameters)
     {

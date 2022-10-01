@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Cadenza.Web.Common.Tasks;
+﻿namespace Cadenza.Web.Common.Tasks;
 
 public enum TaskState
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class DataAccess : IDataAccess
 {
@@ -34,7 +32,7 @@ internal class DataAccess : IDataAccess
                 await AddSource(library, src);
             }
         }
-        
+
         return library;
     }
 

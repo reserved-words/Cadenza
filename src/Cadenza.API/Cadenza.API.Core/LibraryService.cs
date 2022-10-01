@@ -1,8 +1,4 @@
-﻿using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Artist;
-using Cadenza.Domain.Model.Track;
-
-namespace Cadenza.API.Core;
+﻿namespace Cadenza.API.Core;
 
 internal class LibraryService : ILibraryService
 {

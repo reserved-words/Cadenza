@@ -1,10 +1,4 @@
-﻿using Cadenza.Domain.Model;
-using Cadenza.Domain.Model.Album;
-using Cadenza.Domain.Model.Artist;
-using Cadenza.Domain.Model.Track;
-using Cadenza.Domain.Model.Update;
-
-namespace Cadenza.API.Core.Services.Cache;
+﻿namespace Cadenza.API.Core.Services.Cache;
 
 internal class TrackCache : ITrackCache
 {

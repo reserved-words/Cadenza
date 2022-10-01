@@ -1,6 +1,4 @@
-﻿using Cadenza.Domain.Model.Updates;
-
-namespace Cadenza.API.Database.Services;
+﻿namespace Cadenza.API.Database.Services;
 
 internal class ThreadSafeDataAccess : IDataAccess
 {

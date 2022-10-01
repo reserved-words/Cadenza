@@ -1,0 +1,18 @@
+﻿
+<AppCardScrollContainer>
+    <ChildContent>
+        <AppTable T="@Artist"
+                  Items="@Artists">
+            <RowTemplate>
+                <MudTd>
+                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter]
+    public List<Artist> Artists { get; set; } = new();
+}

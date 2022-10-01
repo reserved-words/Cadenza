@@ -1,12 +1,4 @@
-﻿using Cadenza.Domain.Enums;
-using Cadenza.Domain.Model.History;
-using Cadenza.Utilities.Interfaces;
-using Cadenza.Web.Common.Interfaces;
-using Cadenza.Web.LastFM.Settings;
-using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
-
-namespace Cadenza.Web.LastFM.Services;
+﻿namespace Cadenza.Web.LastFM.Services;
 
 internal class History : IHistory
 {

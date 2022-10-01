@@ -1,14 +1,11 @@
-global using Microsoft.AspNetCore.Mvc;
-
-global using Cadenza.Domain.Model.Track;
-global using Cadenza.Domain.Model.Updates;
-
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Updates;
+global using Cadenza.Common.Utilities;
 global using Cadenza.Local.API.Common.Controllers;
 global using Cadenza.Local.API.Core;
 global using Cadenza.Local.API.Core.Settings;
 global using Cadenza.Local.API.Files;
-global using Cadenza.Utilities;
-
+global using Microsoft.AspNetCore.Mvc;
 using Cadenza.Apps;
 using Cadenza.Apps.API;
 
