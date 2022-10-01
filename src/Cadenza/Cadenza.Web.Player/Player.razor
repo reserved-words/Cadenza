@@ -4,7 +4,7 @@
 
 @*Position relative needed to keep overlay inside card*@
 
-<MudCard Elevation="3" Class="pa-0 ma-0" Style="position: relative;">
+<MudCard Elevation="3" Class="pa-0 ma-0 mb-3" Style="position: relative;">
     <MudOverlay Visible="@Loading" LightBackground="true" Absolute="true">
         <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
     </MudOverlay>
@@ -15,12 +15,11 @@
             <CurrentTrack Model="@Model?.Track" />
         </CardHeaderContent>
         <CardHeaderActions>
-            @*            <FavouriteTrack Artist="@Model.Artist.Name" Title="@Model.Track.Title" IsFavourite="@null" />
-            *@
+           <CurrentTrackFavourite Model="@Model?.Track" />
         </CardHeaderActions>
     </MudCardHeader>
     <CurrentTrackArtwork Model="@Model" />
-    <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
+    <CurrentTrackProgress />
     <MudCardContent Class="pa-2">
         <CurrentTrackAlbum Model="@Model?.Album" />
     </MudCardContent>

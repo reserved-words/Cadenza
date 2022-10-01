@@ -9,7 +9,6 @@ namespace Cadenza.Web.Player;
 
 public class PlayerBase : ComponentBase
 {
-
     [Inject]
     public ITrackRepository Repository { get; set; }
 
@@ -18,9 +17,6 @@ public class PlayerBase : ComponentBase
 
     [Inject]
     internal ITrackFinishedConsumer TrackFinishedConsumer { get; set; }
-
-    [Inject]
-    internal ITrackProgressedConsumer TrackProgressConsumer { get; set; }
 
     [Parameter]
     public PlayTrack Track { get; set; }
@@ -44,12 +40,9 @@ public class PlayerBase : ComponentBase
 
     public bool Empty => Model == null && !Loading;
 
-    public double Progress { get; set; }
-
     protected override void OnInitialized()
     {
         TrackFinishedConsumer.TrackFinished += OnTrackFinished;
-        TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
     }
 
     protected override async Task OnParametersSetAsync()
@@ -108,12 +101,6 @@ public class PlayerBase : ComponentBase
     {
         await StopPlaying();
         await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Stopped });
-    }
-
-    private void OnTrackProgressed(object sender, TrackProgressedEventArgs e)
-    {
-        Progress = e.ProgressPercentage;
-        StateHasChanged();
     }
 
     private async Task StopPlaying()

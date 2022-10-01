@@ -1,5 +1,21 @@
-﻿<h3>TrackProgress</h3>
+﻿
+<MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
 
-@code {
+@code 
+{
+    [Inject]
+    internal ITrackProgressedConsumer TrackProgressConsumer { get; set; }
 
+    public double Progress { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
+    }
+
+    private void OnTrackProgressed(object sender, TrackProgressedEventArgs e)
+    {
+        Progress = e.ProgressPercentage;
+        StateHasChanged();
+    }
 }
