@@ -6,7 +6,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     public IAppConsumer App { get; set; }
 
     [Inject]
-    public IAppStore Store { get; set; }
+    public ICurrentTrackStore Store { get; set; }
 
     public TrackFull Model { get; set; } = new();
 
@@ -21,12 +21,9 @@ public class CurrentlyPlayingTabBase : ComponentBase
         {
             Model = null;
         }
-        else
+        else if (Model == null || Model.Track.Id != e.Track.Id)
         {
-            if (Model == null || Model.Track.Id != e.Track.Id)
-            {
-                Model = (await Store.GetValue<TrackFull>(StoreKey.CurrentTrack)).Value;
-            }
+            Model = await Store.GetCurrentTrack();
         }
 
         StateHasChanged();

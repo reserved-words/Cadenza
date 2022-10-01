@@ -26,10 +26,4 @@ public class CurrentTrackStore : ICurrentTrackStore
 
         return track.Value;
     }
-
-    public async Task StoreCurrentTrack(TrackFull track)
-    {
-        await _store.SetValue(StoreKey.CurrentTrack, track);
-        await _store.SetValue(StoreKey.CurrentTrackSource, track?.Track.Source);
-    }
 }

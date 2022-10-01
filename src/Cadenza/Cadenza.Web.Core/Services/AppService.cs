@@ -2,6 +2,15 @@
 
 internal class AppService : IAppConsumer, IAppController
 {
+    private readonly IAppStore _store;
+    private readonly ITrackRepository _repository;
+
+    public AppService(IAppStore appStore, ITrackRepository repository)
+    {
+        _store = appStore;
+        _repository = repository;
+    }
+
     public event TrackStatusEventHandler TrackStatusChanged;
     public event TrackEventHandler StartTrack;
 
@@ -24,6 +33,10 @@ internal class AppService : IAppConsumer, IAppController
     {
         if (_currentPlaylist.Current == null)
             return;
+
+        var currentTrack = await _repository.GetTrack(_currentPlaylist.Current.Id);
+        await _store.SetValue(StoreKey.CurrentTrack, currentTrack);
+        await _store.SetValue(StoreKey.CurrentTrackSource, currentTrack.Track.Source);
 
         await StartTrack?.Invoke(this, new TrackEventArgs
         {
