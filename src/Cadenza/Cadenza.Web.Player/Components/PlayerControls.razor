@@ -11,12 +11,13 @@
     [Parameter] public bool CanPause { get; set; }
     [Parameter] public bool CanPlay { get; set; }
     [Parameter] public bool CanSkipNext { get; set; }
-    [Parameter] public bool CanSkipPrevious { get; set; }
 
     [Parameter] public Func<Task> OnPause { get; set; }
     [Parameter] public Func<Task> OnResume { get; set; }
     [Parameter] public Func<Task> OnSkipNext { get; set; }
     [Parameter] public Func<Task> OnSkipPrevious { get; set; }
+    
+    protected bool CanSkipPrevious => CanPlay || CanPause;
 
     protected async Task Pause()
     {

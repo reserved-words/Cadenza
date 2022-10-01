@@ -3,7 +3,7 @@
 
 <Player Loading="@Loading" 
         Track="@Track" 
-        CanSkipNext="@CanSkipNext" 
+        IsLastTrack="@IsLastTrack" 
         OnSkipNext="@OnSkipNext" 
         OnSkipPrevious="@OnSkipPrevious"
         OnTrackStatusChanged="OnTrackStatusChanged" />
@@ -17,7 +17,7 @@
 
     public bool Loading { get; set; }
     public PlayTrack Track { get; set; }
-    public bool CanSkipNext { get; set; }
+    public bool IsLastTrack { get; set; }
 
     protected override void OnInitialized()
     {
@@ -40,7 +40,6 @@
     {
         Loading = false;
         Track = null;
-        CanSkipNext = false;
         StateHasChanged();
         return Task.CompletedTask;
     }
@@ -49,7 +48,6 @@
     {
         Loading = true;
         Track = null;
-        CanSkipNext = false;
         StateHasChanged();
         return Task.CompletedTask;
     }
@@ -58,7 +56,7 @@
     {
         Loading = false;
         Track = e.CurrentTrack;
-        CanSkipNext = !e.IsLastTrack;
+        IsLastTrack = e.IsLastTrack;
         StateHasChanged();
         return Task.CompletedTask;
     }

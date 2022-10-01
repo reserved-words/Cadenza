@@ -18,7 +18,7 @@ public class PlayerBase : ComponentBase
     public bool Loading { get; set; }
 
     [Parameter]
-    public bool CanSkipNext { get; set; }
+    public bool IsLastTrack { get; set; }
 
     [Parameter]
     public Func<Task> OnSkipNext { get; set; }
@@ -30,6 +30,12 @@ public class PlayerBase : ComponentBase
     public Func<TrackStatusEventArgs, Task> OnTrackStatusChanged { get; set; }
 
     public TrackFull Model { get; set; }
+
+    public bool CanPause { get; set; }
+
+    public bool CanPlay { get; set; }
+
+    public bool CanSkipNext { get; set; }
 
     public bool Empty => Model == null && !Loading;
 
@@ -44,42 +50,28 @@ public class PlayerBase : ComponentBase
         {
             await Player.Play(Track);
             Model = await Store.GetCurrentTrack();
-            CanPause = true;
-            CanPlay = false;
-            StateHasChanged();
+            UpdatePlayState(false, true);
             await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
         }
         else
         {
             Model = null;
-            StateHasChanged();
+         //   StateHasChanged();
         }
     }
 
-    public bool CanPause { get; set; }
-
-    public bool CanPlay { get; set; }
-
-    public bool CanSkipPrevious => CanPlay || CanPause;
-
     public async Task Pause()
     {
-        CanPlay = true;
-        CanPause = false;
-        StateHasChanged();
-
-        var progress = await Player.Pause();
-        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Paused });
+        UpdatePlayState(true, false);
+        await Player.Pause();
+        await OnStatusChanged(PlayStatus.Paused);
     }
 
     public async Task Resume()
     {
-        CanPause = true;
-        CanPlay = false;
-        StateHasChanged();
-
-        var progress = await Player.Resume();
-        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
+        UpdatePlayState(false, true);
+        await Player.Resume();
+        await OnStatusChanged(PlayStatus.Playing);
     }
 
     public async Task SkipNext()
@@ -94,18 +86,28 @@ public class PlayerBase : ComponentBase
         await OnSkipPrevious();
     }
 
+    private async Task OnStatusChanged(PlayStatus status)
+    {
+        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = status });
+    }
+
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
     {
         await StopPlaying();
-        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Stopped });
+        await OnStatusChanged(PlayStatus.Stopped);
     }
 
     private async Task StopPlaying()
     {
-        CanPause = false;
-        CanPlay = false;
-        StateHasChanged();
-
+        UpdatePlayState(false, false);
         await Player.Stop();
+    }
+
+    private void UpdatePlayState(bool canPlay, bool canPause)
+    {
+        CanPlay = canPlay;
+        CanPause = canPause;
+        CanSkipNext = (canPlay || canPause) && !IsLastTrack; 
+        StateHasChanged();
     }
 }
