@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Player.Interfaces;
 
-public interface IPlayer
+internal interface IPlayer
 {
     Task Play(PlayTrack track);
     Task Pause();

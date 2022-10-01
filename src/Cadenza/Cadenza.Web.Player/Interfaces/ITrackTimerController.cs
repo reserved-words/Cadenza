@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Player;
+﻿namespace Cadenza.Web.Player.Interfaces;
 
 internal interface ITrackTimerController
 {

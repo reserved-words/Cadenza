@@ -1,7 +1,9 @@
-﻿using System.Timers;
+﻿using Cadenza.Web.Player.Events;
+using Cadenza.Web.Player.Interfaces;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Cadenza.Web.Player;
+namespace Cadenza.Web.Player.Players;
 
 internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrackFinishedConsumer
 {
@@ -13,6 +15,7 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
     public void OnPlay(int totalSeconds)
     {
         _current = new CurrentTrackTimer(totalSeconds, OnTrackProgressed);
+        TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_current.TotalSeconds, 0));
         _current.Start(0);
     }
 
@@ -45,9 +48,11 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
 
     internal class CurrentTrackTimer : IDisposable
     {
+        private const int TickFrequencySeconds = 1;
+
         private readonly Timer _timer;
         private readonly ElapsedEventHandler _handler;
-
+        
         public int TotalSeconds { get; }
         public int ProgressSeconds { get; private set; }
 
@@ -56,7 +61,7 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
         public CurrentTrackTimer(int totalSeconds, ElapsedEventHandler handler)
         {
             _handler = handler;
-            _timer = new Timer(2000);
+            _timer = new Timer(TickFrequencySeconds * 1000);
             TotalSeconds = totalSeconds;
         }
 
@@ -75,7 +80,7 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
 
         private void OnElapsed(object sender, ElapsedEventArgs e)
         {
-            ProgressSeconds += 2;
+            ProgressSeconds += TickFrequencySeconds;
             _handler(sender, e);
         }
 

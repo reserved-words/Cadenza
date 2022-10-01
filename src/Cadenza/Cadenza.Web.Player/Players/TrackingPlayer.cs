@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Core.Players;
+﻿using Cadenza.Web.Common.Model;
+using Cadenza.Web.Player.Interfaces;
+
+namespace Cadenza.Web.Player.Players;
 
 internal class TrackingPlayer : IUtilityPlayer
 {

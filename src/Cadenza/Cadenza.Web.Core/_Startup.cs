@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Core.Players;
-using Cadenza.Web.Core.Utilities;
+﻿using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
 
@@ -28,10 +27,6 @@ public static class Startup
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IItemPlayer, ItemPlayer>()
             .AddTransient<IItemViewer, ItemViewer>();
-
-        services
-            .AddTransient<IPlayer, CorePlayer>()
-            .AddTransient<IUtilityPlayer, TrackingPlayer>();
 
         return services;
     }

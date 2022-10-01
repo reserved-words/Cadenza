@@ -1,8 +1,13 @@
-﻿
+﻿@using Cadenza.Web.Player.Events
+@using Cadenza.Web.Player.Interfaces
+
 <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
 
 @code 
 {
+    [Inject]
+    internal ITrackFinishedConsumer TrackFinishedConsumer { get; set; }
+
     [Inject]
     internal ITrackProgressedConsumer TrackProgressConsumer { get; set; }
 
@@ -10,7 +15,15 @@
 
     protected override void OnInitialized()
     {
+        TrackFinishedConsumer.TrackFinished += OnTrackFinished;
         TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
+    }
+
+    private Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
+    {
+        Progress = 0;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
     private void OnTrackProgressed(object sender, TrackProgressedEventArgs e)

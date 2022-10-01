@@ -1,12 +1,15 @@
-﻿namespace Cadenza.Web.Player;
+﻿using Cadenza.Web.Player.Events;
+using Cadenza.Web.Player.Interfaces;
+
+namespace Cadenza.Web.Player;
 
 public class PlayerBase : ComponentBase
 {
     [Inject]
-    public ICurrentTrackStore Store { get; set; }
+    internal ICurrentTrackStore Store { get; set; }
 
     [Inject]
-    public IPlayer Player { get; set; }
+    internal IPlayer Player { get; set; }
 
     [Inject]
     internal ITrackFinishedConsumer TrackFinishedConsumer { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Player;
+﻿using Cadenza.Web.Player.Events;
+
+namespace Cadenza.Web.Player.Interfaces;
 
 internal interface ITrackProgressedConsumer
 {
