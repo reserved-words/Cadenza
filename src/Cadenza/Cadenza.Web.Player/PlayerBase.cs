@@ -3,7 +3,7 @@
 public class PlayerBase : ComponentBase
 {
     [Inject]
-    public ITrackRepository Repository { get; set; }
+    public ICurrentTrackStore Store { get; set; }
 
     [Inject]
     public IPlayer Player { get; set; }
@@ -43,17 +43,17 @@ public class PlayerBase : ComponentBase
         if (Track != null)
         {
             await Player.Play(Track);
-            Model = await Repository.GetTrack(Track.Id);
+            Model = await Store.GetCurrentTrack();
             CanPause = true;
             CanPlay = false;
+            StateHasChanged();
             await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
         }
         else
         {
             Model = null;
+            StateHasChanged();
         }
-
-        StateHasChanged();
     }
 
     public bool CanPause { get; set; }
