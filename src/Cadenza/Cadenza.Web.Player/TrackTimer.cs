@@ -1,7 +1,7 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Cadenza.Web.Core.Services;
+namespace Cadenza.Web.Player;
 
 internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrackFinishedConsumer
 {

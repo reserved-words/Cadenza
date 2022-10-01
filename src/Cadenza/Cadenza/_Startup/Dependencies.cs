@@ -1,4 +1,6 @@
-﻿namespace Cadenza._Startup;
+﻿using Cadenza.Web.Player;
+
+namespace Cadenza._Startup;
 
 public static class Dependencies
 {
@@ -7,6 +9,7 @@ public static class Dependencies
         var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 
         builder.Services
+            .AddPlayerComponent()
             .AddCoreServices()
             .AddInteropServices()
             .AddUtilities()

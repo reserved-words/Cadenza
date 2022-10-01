@@ -54,17 +54,6 @@
         return Task.CompletedTask;
     }
 
-    //private async Task OnTrackFinished(object sender, TrackEventArgs e)
-    //{
-    //    if (e.IsLastTrack)
-    //    {
-    //        Loading = false;
-    //        Track = null;
-    //        CanSkipNext = false;
-    //        StateHasChanged();
-    //    }
-    //}
-
     private Task OnStartTrack(object sender, TrackEventArgs e)
     {
         Loading = false;

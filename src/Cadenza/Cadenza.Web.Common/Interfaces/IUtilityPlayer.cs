@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Core.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
-internal interface IUtilityPlayer
+public interface IUtilityPlayer
 {
     Task OnPlay(TrackProgress progress);
     Task OnPause(TrackProgress progress);

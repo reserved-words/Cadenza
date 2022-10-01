@@ -20,7 +20,6 @@ public static class Startup
             .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddUtilities()
             .AddAppServices()
-            .AddTimers()
             .AddAPIWrapper()
             .AddTransient<IAppStore, Store>()
             .AddTransient<ICurrentTrackStore, CurrentTrackStore>();
@@ -32,7 +31,6 @@ public static class Startup
 
         services
             .AddTransient<IPlayer, CorePlayer>()
-            .AddTransient<IUtilityPlayer, TimingPlayer>()
             .AddTransient<IUtilityPlayer, TrackingPlayer>();
 
         return services;
@@ -53,15 +51,6 @@ public static class Startup
             .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>())
             .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<ItemUpdatesHandler>())
             .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<ItemUpdatesHandler>());
-    }
-
-    private static IServiceCollection AddTimers(this IServiceCollection services)
-    {
-        return services
-            .AddSingleton<TrackTimer>()
-            .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackProgressedConsumer>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
     }
 
     private static IServiceCollection AddAPIWrapper(this IServiceCollection services)

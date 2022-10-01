@@ -19,6 +19,9 @@ public class PlayerBase : ComponentBase
     [Inject]
     public IPlayer Player { get; set; }
 
+    [Inject]
+    internal ITrackProgressedConsumer TrackProgressConsumer { get; set; }
+
     [Parameter]
     public PlayTrack Track { get; set; }
 
@@ -62,7 +65,10 @@ public class PlayerBase : ComponentBase
 
     public string ArtworkUrl { get; private set; }
 
-
+    protected override void OnInitialized()
+    {
+        TrackProgressConsumer.TrackProgressed += OnTrackProgressed;
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -118,5 +124,11 @@ public class PlayerBase : ComponentBase
     public async Task SkipPrevious()
     {
         await OnSkipPrevious();
+    }
+
+    private void OnTrackProgressed(object sender, TrackProgressedEventArgs e)
+    {
+        Progress = e.ProgressPercentage;
+        StateHasChanged();
     }
 }

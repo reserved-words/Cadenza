@@ -2,11 +2,6 @@
 
 internal class AppService : IAppConsumer, IAppController
 {
-    public AppService(ITrackFinishedConsumer trackFinishedConsumer)
-    {
-        trackFinishedConsumer.TrackFinished += OnTrackFinished;
-    }
-
     public event TrackStatusEventHandler TrackStatusChanged;
     public event TrackEventHandler StartTrack;
 
@@ -17,11 +12,6 @@ internal class AppService : IAppConsumer, IAppController
     public event ItemEventHandler ItemRequested;
 
     private IPlaylist _currentPlaylist;
-
-    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
-    {
-        await SkipNext();
-    }
 
     public async Task Play(PlaylistDefinition playlistDefinition)
     {
@@ -66,16 +56,6 @@ internal class AppService : IAppConsumer, IAppController
         await PlayTrack();
     }
 
-    //private TrackEventArgs GetFinishedArgs()
-    //{
-    //    return new TrackEventArgs
-    //    {
-    //        CurrentTrack = _currentPlaylist.Current,
-    //        IsLastTrack = _currentPlaylist.CurrentIsLast,
-    //        //PercentagePlayed = 100
-    //    };
-    //}
-
     private PlaylistEventArgs GetPlaylistArgs(string error = null)
     {
         return new PlaylistEventArgs
@@ -84,18 +64,6 @@ internal class AppService : IAppConsumer, IAppController
             Error = error
         };
     }
-
-    //private TrackEventArgs GetProgressArgs(TrackProgress progress)
-    //{
-    //    return new TrackEventArgs
-    //    {
-    //        CurrentTrack = _currentPlaylist.Current,
-    //        IsLastTrack = _currentPlaylist.CurrentIsLast,
-    //        PercentagePlayed = progress.TotalSeconds == 0
-    //            ? 0
-    //            : progress.SecondsPlayed / progress.TotalSeconds
-    //    };
-    //}
 
     public async Task LoadingPlaylist()
     {
@@ -125,6 +93,14 @@ internal class AppService : IAppConsumer, IAppController
 
     public async Task OnTrackStatusChanged(TrackStatusEventArgs args)
     {
-        await TrackStatusChanged?.Invoke(this, args);
+        if (TrackStatusChanged != null)
+        {
+            await TrackStatusChanged.Invoke(this, args);
+        }
+
+        if (args.Status == PlayStatus.Stopped && args.Track != null)
+        {
+            await SkipNext();
+        }
     }
 }
