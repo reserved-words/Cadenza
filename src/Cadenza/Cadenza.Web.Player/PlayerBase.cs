@@ -16,19 +16,13 @@ public class PlayerBase : ComponentBase
 
     public bool Loading { get; set; }
 
-    public PlayTrack Track { get; set; }
+    protected PlayTrack Track { get; set; }
 
-    public bool IsLastTrack { get; set; }
+    protected bool IsLastTrack { get; set; }
 
-    public TrackFull Model { get; set; }
+    protected TrackFull Model { get; set; }
 
-    public bool CanPause { get; set; }
-
-    public bool CanPlay { get; set; }
-
-    public bool CanSkipNext { get; set; }
-
-    public bool Empty => Model == null && !Loading;
+    protected bool Empty => Model == null && !Loading;
 
     protected override void OnInitialized()
     {
@@ -36,16 +30,14 @@ public class PlayerBase : ComponentBase
         Messenger.Subscribe<StopTrackEventArgs>(OnStopTrack);
     }
 
-    public async Task Pause()
+    protected async Task Pause()
     {
-        UpdatePlayState(true, false);
         await Player.Pause();
         await OnStatusChanged(PlayStatus.Paused);
     }
 
-    public async Task Resume()
+    protected async Task Resume()
     {
-        UpdatePlayState(false, true);
         await Player.Resume();
         await OnStatusChanged(PlayStatus.Playing);
     }
@@ -55,14 +47,6 @@ public class PlayerBase : ComponentBase
         await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
     }
 
-    private void UpdatePlayState(bool canPlay, bool canPause)
-    {
-        CanPlay = canPlay;
-        CanPause = canPause;
-        CanSkipNext = (canPlay || canPause) && !IsLastTrack; 
-        StateHasChanged();
-    }
-
     private async Task OnStartTrack(object sender, StartTrackEventArgs e)
     {
         Track = e.CurrentTrack;
@@ -70,7 +54,6 @@ public class PlayerBase : ComponentBase
         IsLastTrack = e.IsLastTrack;
         await Player.Play(Track);
         Model = await Store.GetCurrentTrack();
-        UpdatePlayState(false, true);
         StateHasChanged();
         await OnStatusChanged(PlayStatus.Playing);
     }
@@ -82,7 +65,6 @@ public class PlayerBase : ComponentBase
 
         Track = null;
         Model = null;
-        UpdatePlayState(false, false);
         StateHasChanged();
         await Player.Stop();
         await OnStatusChanged(PlayStatus.Stopped);

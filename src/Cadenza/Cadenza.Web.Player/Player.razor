@@ -26,8 +26,7 @@
 
 </MudCard>
 
-<PlayerControls CanPause="@CanPause"
-                CanPlay="@CanPlay"
-                CanSkipNext="@CanSkipNext"
+<PlayerControls IsLastTrack="@IsLastTrack"
+                IsTrackPopulated="@(Track != null)"
                 OnPause="@Pause"
                 OnResume="@Resume" />

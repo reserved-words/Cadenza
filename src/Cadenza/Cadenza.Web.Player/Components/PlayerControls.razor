@@ -9,22 +9,35 @@
 @code {
     [Inject] public IMessenger Messenger { get; set; }
 
-    [Parameter] public bool CanPause { get; set; }
-    [Parameter] public bool CanPlay { get; set; }
-    [Parameter] public bool CanSkipNext { get; set; }
+    [Parameter] public bool IsTrackPopulated { get; set; }
+    [Parameter] public bool IsLastTrack { get; set; }
 
     [Parameter] public Func<Task> OnPause { get; set; }
     [Parameter] public Func<Task> OnResume { get; set; }
-    
-    protected bool CanSkipPrevious => CanPlay || CanPause;
+
+    private bool CanSkipNext => IsTrackPopulated && !IsLastTrack;
+    private bool CanSkipPrevious => IsTrackPopulated;
+
+    private bool CanPause { get; set; }
+    private bool CanPlay { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        CanPlay = false;
+        CanPause = IsTrackPopulated;
+    }
 
     protected async Task Pause()
     {
+        CanPlay = true;
+        CanPause = false;
         await OnPause();
     }
 
     protected async Task Resume()
     {
+        CanPlay = false;
+        CanPause = true;
         await OnResume();
     }
 
