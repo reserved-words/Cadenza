@@ -27,6 +27,14 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
     {
         Messenger.Subscribe<PlaylistLoadingEventArgs>(OnPlaylistLoading);
         Messenger.Subscribe<PlaylistStartedEventArgs>(OnPlaylistStarted);
+        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
+    }
+
+    private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
+    {
+        _playlist = null;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
     private Task OnPlaylistLoading(object sender, PlaylistLoadingEventArgs e)

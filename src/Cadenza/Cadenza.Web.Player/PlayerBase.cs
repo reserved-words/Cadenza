@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Player.Events;
 using Cadenza.Web.Player.Interfaces;
 
 namespace Cadenza.Web.Player;
@@ -15,16 +14,10 @@ public class PlayerBase : ComponentBase
     [Inject]
     internal IPlayer Player { get; set; }
 
-    [Inject]
-    internal ITrackFinishedConsumer TrackFinishedConsumer { get; set; }
-
-    [Parameter]
-    public PlayTrack Track { get; set; }
-
-    [Parameter]
     public bool Loading { get; set; }
 
-    [Parameter]
+    public PlayTrack Track { get; set; }
+
     public bool IsLastTrack { get; set; }
 
     public TrackFull Model { get; set; }
@@ -39,27 +32,8 @@ public class PlayerBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        TrackFinishedConsumer.TrackFinished += OnTrackFinished;
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        // Note - this may need to do something to account for situations where a new playlist is started while another track is playing
-        // Currently the already playing track won't get scrobbled as it won't get formally stopped in the player - just replaced by the new track
-
-        // Also need to look into weird flashes on first starting a playlist
-
-        if (Track != null)
-        {
-            Model = await Store.GetCurrentTrack();
-            await Player.Play(Track);
-            UpdatePlayState(false, true);
-            await Messenger.Send(this, new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
-        }
-        else
-        {
-            Model = null;
-        }
+        Messenger.Subscribe<StartTrackEventArgs>(OnStartTrack);
+        Messenger.Subscribe<StopTrackEventArgs>(OnStopTrack);
     }
 
     public async Task Pause()
@@ -76,33 +50,9 @@ public class PlayerBase : ComponentBase
         await OnStatusChanged(PlayStatus.Playing);
     }
 
-    public async Task SkipNext()
-    {
-        await StopPlaying();
-        await Messenger.Send(this, new SkipNextTrackEventArgs());
-    }
-
-    public async Task SkipPrevious()
-    {
-        await StopPlaying();
-        await Messenger.Send(this, new SkipPreviousTrackEventArgs());
-    }
-
     private async Task OnStatusChanged(PlayStatus status)
     {
-        await Messenger.Send(this, new TrackStatusEventArgs { Track = Track, Status = status });
-    }
-
-    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
-    {
-        await StopPlaying();
-        await OnStatusChanged(PlayStatus.Stopped);
-    }
-
-    private async Task StopPlaying()
-    {
-        UpdatePlayState(false, false);
-        await Player.Stop();
+        await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
     }
 
     private void UpdatePlayState(bool canPlay, bool canPause)
@@ -111,5 +61,29 @@ public class PlayerBase : ComponentBase
         CanPause = canPause;
         CanSkipNext = (canPlay || canPause) && !IsLastTrack; 
         StateHasChanged();
+    }
+
+    private async Task OnStartTrack(object sender, StartTrackEventArgs e)
+    {
+        Track = e.CurrentTrack;
+        Loading = false;
+        IsLastTrack = e.IsLastTrack;
+        Model = await Store.GetCurrentTrack();
+        await Player.Play(Track);
+        UpdatePlayState(false, true);
+        StateHasChanged();
+        await OnStatusChanged(PlayStatus.Playing);
+    }
+
+    private async Task OnStopTrack(object sender, StopTrackEventArgs e)
+    {
+        if (Track == null)
+            return;
+
+        Track = null;
+        UpdatePlayState(false, false);
+        StateHasChanged();
+        await Player.Stop();
+        await OnStatusChanged(PlayStatus.Stopped);
     }
 }

@@ -2,6 +2,6 @@
 
 public interface IPlayCoordinator
 {
-    Task LoadingPlaylist();
+    Task StopCurrentPlaylist();
     Task Play(PlaylistDefinition playlistDefinition);
 }

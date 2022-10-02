@@ -14,10 +14,10 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackStatusEventArgs>(OnTrackStatusChanged);
+        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusUpdated);
     }
 
-    private async Task OnTrackStatusChanged(object sender, TrackStatusEventArgs e)
+    private async Task OnPlayStatusUpdated(object sender, PlayStatusEventArgs e)
     {
         if (e.Status == PlayStatus.Stopped)
         {

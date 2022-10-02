@@ -1,8 +1,6 @@
-﻿namespace Cadenza.Web.Player.Events;
+﻿namespace Cadenza.Web.Common.Events;
 
-internal delegate void TrackProgressedEventHandler(object sender, TrackProgressedEventArgs e);
-
-internal class TrackProgressedEventArgs : EventArgs
+public class TrackProgressedEventArgs : EventArgs
 {
     public TrackProgressedEventArgs(int totalSeconds, int secondsPlayed)
     {

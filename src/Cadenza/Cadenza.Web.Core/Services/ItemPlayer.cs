@@ -15,42 +15,42 @@ internal class ItemPlayer : IItemPlayer
 
     public async Task PlayAlbum(string id)
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
     public async Task PlayArtist(string id)
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateArtistPlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
     public async Task PlayGrouping(Grouping id)
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateGroupingPlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
     public async Task PlayGenre(string id)
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateGenrePlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
     public async Task PlayTrack(string id)
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateTrackPlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
     public async Task PlayAll()
     {
-        await _playCoordinator.LoadingPlaylist();
+        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateLibraryPlaylist();
         await _playCoordinator.Play(playlist);
     }

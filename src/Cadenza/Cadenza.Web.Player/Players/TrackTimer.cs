@@ -1,21 +1,24 @@
-﻿using Cadenza.Web.Player.Events;
-using Cadenza.Web.Player.Interfaces;
+﻿using Cadenza.Web.Player.Interfaces;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Cadenza.Web.Player.Players;
 
-internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITrackFinishedConsumer
+internal class TrackTimer : ITrackTimerController
 {
-    public event TrackFinishedEventHandler TrackFinished;
-    public event TrackProgressedEventHandler TrackProgressed;
+    private readonly IMessenger _messenger;
+
+    public TrackTimer(IMessenger messenger)
+    {
+        _messenger = messenger;
+    }
 
     private CurrentTrackTimer _current;
 
     public void OnPlay(int totalSeconds)
     {
         _current = new CurrentTrackTimer(totalSeconds, OnTrackProgressed);
-        TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_current.TotalSeconds, 0));
+        UpdateProgress(_current.TotalSeconds, 0);
         _current.Start(0);
     }
 
@@ -36,13 +39,20 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
 
     private void OnTrackProgressed(object sender, ElapsedEventArgs e)
     {
-        if (_current.IsTrackFinished)
+        UpdateProgress(_current.TotalSeconds, _current.ProgressSeconds);
+    }
+
+    private void UpdateProgress(int totalSeconds, int progressSeconds)
+    {
+        // TODO async timer?
+
+        if (progressSeconds > totalSeconds)
         {
-            TrackFinished?.Invoke(this, new TrackFinishedEventArgs());
+            _messenger.Send(this, new TrackFinishedEventArgs()).GetAwaiter().GetResult();
         }
         else
         {
-            TrackProgressed?.Invoke(this, new TrackProgressedEventArgs(_current.TotalSeconds, _current.ProgressSeconds));
+            _messenger.Send(this, new TrackProgressedEventArgs(totalSeconds, progressSeconds)).GetAwaiter().GetResult();
         }
     }
 
@@ -55,8 +65,6 @@ internal class TrackTimer : ITrackTimerController, ITrackProgressedConsumer, ITr
         
         public int TotalSeconds { get; }
         public int ProgressSeconds { get; private set; }
-
-        public bool IsTrackFinished => ProgressSeconds > TotalSeconds;
 
         public CurrentTrackTimer(int totalSeconds, ElapsedEventHandler handler)
         {

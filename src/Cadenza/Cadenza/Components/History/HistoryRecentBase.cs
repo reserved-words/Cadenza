@@ -19,10 +19,10 @@ public class HistoryRecentBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackStatusEventArgs>(App_TrackProgressed);
+        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusUpdated);
     }
 
-    private async Task App_TrackProgressed(object sender, TrackStatusEventArgs e)
+    private async Task OnPlayStatusUpdated(object sender, PlayStatusEventArgs e)
     {
         await Task.Delay(1000).ContinueWith(async t =>
         {

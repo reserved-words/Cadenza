@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
+
 </Project>

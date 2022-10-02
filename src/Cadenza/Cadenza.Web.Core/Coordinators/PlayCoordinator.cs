@@ -17,7 +17,7 @@ internal class PlayCoordinator : IPlayCoordinator
 
         _messenger.Subscribe<SkipNextTrackEventArgs>(OnSkipNext);
         _messenger.Subscribe<SkipPreviousTrackEventArgs>(OnSkipPrevious);
-        _messenger.Subscribe<TrackStatusEventArgs>(OnTrackStatusChanged);
+        _messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
     }
 
     private IPlaylist _currentPlaylist;
@@ -25,24 +25,20 @@ internal class PlayCoordinator : IPlayCoordinator
     public async Task Play(PlaylistDefinition playlistDefinition)
     {
         _currentPlaylist = new Playlist(playlistDefinition);
-        await PlayTrack();
         await _messenger.Send(this, new PlaylistStartedEventArgs { Playlist = _currentPlaylist.Id });
+        await PlayTrack();
     }
 
-    public async Task LoadingPlaylist()
+    public async Task StopCurrentPlaylist()
     {
+        await StopTrack();
         await StopPlaylist();
         await _messenger.Send(this, new PlaylistLoadingEventArgs());
     }
 
     private async Task PlayTrack()
     {
-        if (_currentPlaylist.Current == null)
-            return;
-
-        var currentTrack = await _repository.GetTrack(_currentPlaylist.Current.Id);
-        await _store.SetValue(StoreKey.CurrentTrack, currentTrack);
-        await _store.SetValue(StoreKey.CurrentTrackSource, currentTrack.Track.Source);
+        await StoreCurrentTrack();
 
         await _messenger.Send(this, new StartTrackEventArgs
         {
@@ -51,10 +47,25 @@ internal class PlayCoordinator : IPlayCoordinator
         });
     }
 
+    private async Task StopTrack()
+    {
+        await _messenger.Send(this, new StopTrackEventArgs());
+    }
+
+    private async Task StoreCurrentTrack()
+    {
+        var currentTrack = await _repository.GetTrack(_currentPlaylist.Current.Id);
+        await _store.SetValue(StoreKey.CurrentTrack, currentTrack);
+        await _store.SetValue(StoreKey.CurrentTrackSource, currentTrack.Track.Source);
+    }
+
     private async Task OnSkipNext (object sender, SkipNextTrackEventArgs args)
     {
+        await StopTrack();
+
         if (_currentPlaylist.CurrentIsLast)
         {
+            _currentPlaylist = null;
             await StopPlaylist();
             return;
         }
@@ -63,26 +74,24 @@ internal class PlayCoordinator : IPlayCoordinator
         await PlayTrack();
     }
 
+    private async Task OnTrackFinished(object arg1, TrackFinishedEventArgs arg2)
+    {
+        await OnSkipNext(this, null);
+    }
+
     private async Task OnSkipPrevious(object sender, SkipPreviousTrackEventArgs args)
     {
+        await StopTrack();
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
     }
 
     private async Task StopPlaylist()
     {
-        if (_currentPlaylist != null)
-        {
-            await _messenger.Send(this, new PlaylistFinishedEventArgs { Playlist = _currentPlaylist.Id });
-            _currentPlaylist = null;
-        }
-    }
+        if (_currentPlaylist == null)
+            return;
 
-    private async Task OnTrackStatusChanged(object sender, TrackStatusEventArgs args)
-    {
-        if (args.Status == PlayStatus.Stopped && args.Track != null)
-        {
-            await OnSkipNext(this, null);
-        }
+        await _messenger.Send(this, new PlaylistFinishedEventArgs { Playlist = _currentPlaylist.Id });
+        _currentPlaylist = null;
     }
 }

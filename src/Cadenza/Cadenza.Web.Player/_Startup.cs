@@ -18,8 +18,6 @@ public static class _Startup
             .AddTransient<IUtilityPlayer, TimingPlayer>()
             .AddSingleton<TrackTimer>()
             .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackProgressedConsumer>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>())
             .AddTransient<IPlayer, CorePlayer>()
             .AddTransient<IUtilityPlayer, TrackingPlayer>();
     }
