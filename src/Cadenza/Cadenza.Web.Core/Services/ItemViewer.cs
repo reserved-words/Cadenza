@@ -4,10 +4,10 @@ namespace Cadenza.Web.Core.Services;
 
 internal class ItemViewer : IItemViewer
 {
-    private readonly IViewController _controller;
+    private readonly IViewCoordinator _controller;
     private readonly IIdGenerator _idGenerator;
 
-    public ItemViewer(IViewController controller, IIdGenerator idGenerator)
+    public ItemViewer(IViewCoordinator controller, IIdGenerator idGenerator)
     {
         _controller = controller;
         _idGenerator = idGenerator;

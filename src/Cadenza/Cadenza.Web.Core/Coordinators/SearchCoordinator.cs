@@ -1,32 +1,27 @@
 ﻿using Cadenza.Web.Common.Interfaces.Searchbar;
-using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class SearchCoordinator : ISearchController, ISearchMessenger, ISearchCache
+internal class SearchCoordinator : ISearchCoordinator, ISearchCache
 {
-    private readonly IUpdatesMessenger _updates;
+    private readonly IMessenger _messenger;
 
-    public SearchCoordinator(IUpdatesMessenger updates)
+    public SearchCoordinator(IMessenger messenger)
     {
-        _updates = updates;
+        _messenger = messenger;
     }
-
-    public event EventHandler UpdateStarted;
-    public event EventHandler UpdateCompleted;
 
     public List<PlayerItem> Items { get; set; } = new();
 
-    public void StartUpdate()
+    public async Task StartUpdate()
     {
-        UpdateStarted?.Invoke(this, EventArgs.Empty);
+        await _messenger.Send(this, new SearchUpdateStartedEventArgs());
     }
 
-    public void FinishUpdate()
+    public async Task FinishUpdate()
     {
-        UpdateCompleted?.Invoke(this, EventArgs.Empty);
-
-        _updates.ArtistUpdated += OnArtistUpdated;
+        await _messenger.Send(this, new SearchUpdateCompletedEventArgs());
+        _messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
     }
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)

@@ -8,7 +8,7 @@ public abstract class HistoryDisplayBase<T> : ComponentBase
     public IConnectionService ConnectorService { get; set; }
 
     [Inject]
-    public IConnectionMessenger ConnectorMessenger { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Inject]
     public IHistory History { get; set; }
@@ -19,7 +19,7 @@ public abstract class HistoryDisplayBase<T> : ComponentBase
 
     protected override void OnInitialized()
     {
-        ConnectorMessenger.ConnectorStatusChanged += OnConnectorStatusChanged;
+        Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
     }
 
     private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)

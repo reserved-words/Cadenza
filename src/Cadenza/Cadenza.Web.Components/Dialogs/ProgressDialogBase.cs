@@ -8,6 +8,9 @@ namespace Cadenza.Web.Components.Dialogs
         [Inject]
         public ILongRunningTaskService Service { get; set; }
 
+        [Inject]
+        public IMessenger Messenger { get; set; }
+
         [Parameter]
         public Func<TaskGroup> TaskGroupFactory { get; set; }
 
@@ -25,6 +28,10 @@ namespace Cadenza.Web.Components.Dialogs
 
         public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
+
+        private Guid _taskGroupProgressSubscriptionId = Guid.Empty;
+        private Guid _subTaskProgressSubscriptionId = Guid.Empty;
+
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -32,8 +39,8 @@ namespace Cadenza.Web.Components.Dialogs
 
         protected override void OnInitialized()
         {
-            Service.TaskGroupProgressChanged += OnTaskGroupProgressChanged;
-            Service.SubTaskProgressChanged += OnSubTaskProgressChanged;
+            Messenger.Subscribe<TaskGroupProgressEventArgs>(OnTaskGroupProgressChanged, out _taskGroupProgressSubscriptionId);
+            Messenger.Subscribe<SubTaskProgressEventArgs>(OnSubTaskProgressChanged, out _subTaskProgressSubscriptionId);
         }
 
         protected override async Task OnParametersSetAsync()
@@ -90,6 +97,8 @@ namespace Cadenza.Web.Components.Dialogs
 
         protected void OnClose()
         {
+            Messenger.Unsubscribe<TaskGroupProgressEventArgs>(_taskGroupProgressSubscriptionId);
+            Messenger.Unsubscribe<SubTaskProgressEventArgs>(_subTaskProgressSubscriptionId);
             Submit();
         }
     }

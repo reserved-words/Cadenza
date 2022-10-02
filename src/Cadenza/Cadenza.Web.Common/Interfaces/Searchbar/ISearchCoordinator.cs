@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Common.Interfaces.Searchbar;
 
-public interface ISearchController
+public interface ISearchCoordinator
 {
     void AddAlbums(List<PlayerItem> items);
     void AddArtists(List<PlayerItem> items);
@@ -9,6 +9,6 @@ public interface ISearchController
     void AddPlaylists(List<PlayerItem> items);
     void AddTracks(List<PlayerItem> items);
     void Clear();
-    void FinishUpdate();
-    void StartUpdate();
+    Task FinishUpdate();
+    Task StartUpdate();
 }

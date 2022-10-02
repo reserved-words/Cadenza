@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Common.Interfaces.Play;
 
-public interface IPlayController
+public interface IPlayCoordinator
 {
     Task SkipNext();
     Task SkipPrevious();

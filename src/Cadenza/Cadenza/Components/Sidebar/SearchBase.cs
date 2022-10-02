@@ -8,7 +8,7 @@ public class SearchBase : ComponentBase
     public ISearchCache Cache { get; set; }
 
     [Inject]
-    public ISearchMessenger Messenger { get; set; }
+    public IMessenger Messenger { get; set; }
 
     public bool IsLoading { get; set; }
 
@@ -16,20 +16,22 @@ public class SearchBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Messenger.UpdateStarted += Cache_UpdateStarted;
-        Messenger.UpdateCompleted += Cache_UpdateCompleted;
+        Messenger.Subscribe<SearchUpdateStartedEventArgs>(Cache_UpdateStarted);
+        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(Cache_UpdateCompleted);
     }
 
-    private void Cache_UpdateCompleted(object sender, EventArgs e)
+    private Task Cache_UpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
     {
         IsLoading = false;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
-    private void Cache_UpdateStarted(object sender, EventArgs e)
+    private Task Cache_UpdateStarted(object sender, SearchUpdateStartedEventArgs e)
     {
         IsLoading = true;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
     protected Task<IEnumerable<PlayerItem>> Search(string value)

@@ -3,23 +3,18 @@ using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class PlayCoordinator : IPlayMessenger, IPlayController
+internal class PlayCoordinator : IPlayCoordinator
 {
     private readonly IAppStore _store;
     private readonly ITrackRepository _repository;
+    private readonly IMessenger _messenger;
 
-    public PlayCoordinator(IAppStore appStore, ITrackRepository repository)
+    public PlayCoordinator(IAppStore appStore, ITrackRepository repository, IMessenger messenger)
     {
         _store = appStore;
         _repository = repository;
+        _messenger = messenger;
     }
-
-    public event TrackStatusEventHandler TrackStatusChanged;
-    public event TrackEventHandler StartTrack;
-
-    public event PlaylistEventHandler PlaylistFinished;
-    public event PlaylistEventHandler PlaylistLoading;
-    public event PlaylistEventHandler PlaylistStarted;
 
     private IPlaylist _currentPlaylist;
 
@@ -27,7 +22,7 @@ internal class PlayCoordinator : IPlayMessenger, IPlayController
     {
         _currentPlaylist = new Playlist(playlistDefinition);
         await PlayTrack();
-        await PlaylistStarted?.Invoke(this, GetPlaylistArgs());
+        await _messenger.Send(this, new PlaylistStartedEventArgs { Playlist = _currentPlaylist.Id });
     }
 
     private async Task PlayTrack()
@@ -39,7 +34,7 @@ internal class PlayCoordinator : IPlayMessenger, IPlayController
         await _store.SetValue(StoreKey.CurrentTrack, currentTrack);
         await _store.SetValue(StoreKey.CurrentTrackSource, currentTrack.Track.Source);
 
-        await StartTrack?.Invoke(this, new TrackEventArgs
+        await _messenger.Send(this, new StartTrackEventArgs
         {
             CurrentTrack = _currentPlaylist.Current,
             IsLastTrack = _currentPlaylist.CurrentIsLast
@@ -64,36 +59,24 @@ internal class PlayCoordinator : IPlayMessenger, IPlayController
         await PlayTrack();
     }
 
-    private PlaylistEventArgs GetPlaylistArgs(string error = null)
-    {
-        return new PlaylistEventArgs
-        {
-            Playlist = _currentPlaylist.Id,
-            Error = error
-        };
-    }
-
     public async Task LoadingPlaylist()
     {
         await StopPlaylist();
-        await PlaylistLoading?.Invoke(this, new PlaylistEventArgs());
+        await _messenger.Send(this, new PlaylistLoadingEventArgs());
     }
 
     private async Task StopPlaylist()
     {
         if (_currentPlaylist != null)
         {
-            await PlaylistFinished?.Invoke(this, GetPlaylistArgs());
+            await _messenger.Send(this, new PlaylistFinishedEventArgs { Playlist = _currentPlaylist.Id });
             _currentPlaylist = null;
         }
     }
 
     public async Task OnTrackStatusChanged(TrackStatusEventArgs args)
     {
-        if (TrackStatusChanged != null)
-        {
-            await TrackStatusChanged.Invoke(this, args);
-        }
+        await _messenger.Send(this, args);
 
         if (args.Status == PlayStatus.Stopped && args.Track != null)
         {

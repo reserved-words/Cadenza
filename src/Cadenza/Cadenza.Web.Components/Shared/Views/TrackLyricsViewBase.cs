@@ -5,7 +5,7 @@ namespace Cadenza.Web.Components.Shared.Views;
 public class TrackLyricsViewBase : ComponentBase
 {
     [Inject]
-    public IUpdatesMessenger Updates { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Parameter]
     public TrackInfo Model { get; set; }
@@ -14,7 +14,7 @@ public class TrackLyricsViewBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Updates.LyricsUpdated += OnLyricsUpdated;
+        Messenger.Subscribe<LyricsUpdatedEventArgs>(OnLyricsUpdated);
     }
 
     private Task OnLyricsUpdated(object sender, LyricsUpdatedEventArgs e)

@@ -3,21 +3,19 @@ using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class ViewCoordinator : IViewMessenger, IViewController
+internal class ViewCoordinator : IViewCoordinator
 {
-    private readonly IAppStore _store;
-    private readonly ITrackRepository _repository;
+    private readonly IMessenger _messageSender;
 
-    public ViewCoordinator(IAppStore appStore, ITrackRepository repository)
+    public ViewCoordinator(IMessenger messageSender)
     {
-        _store = appStore;
-        _repository = repository;
+        _messageSender = messageSender;
     }
 
-    public event ItemEventHandler ItemRequested;
+    //public event ItemEventHandler ItemRequested;
 
     public async Task RequestItem(ViewItem item)
     {
-        await ItemRequested?.Invoke(this, new ItemEventArgs { Item = item });
+        await _messageSender.Send(this, new ViewItemEventArgs { Item = item });
     }
 }

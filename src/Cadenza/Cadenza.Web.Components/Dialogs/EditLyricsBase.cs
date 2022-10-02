@@ -13,7 +13,7 @@ public class EditLyricsBase : FormBase<TrackInfo>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdatesController UpdatesService { get; set; }
+    public IUpdatesCoordinator UpdatesService { get; set; }
 
     [Inject]
     public INavigation Navigation { get; set; }

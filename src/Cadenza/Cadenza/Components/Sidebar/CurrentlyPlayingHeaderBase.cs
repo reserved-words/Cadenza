@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -13,7 +12,7 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
     };
 
     [Inject]
-    public IPlayMessenger App { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Inject]
     public IItemViewer Viewer { get; set; }
@@ -26,10 +25,18 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        App.PlaylistStarted += OnPlaylistUpdated;
+        Messenger.Subscribe<PlaylistLoadingEventArgs>(OnPlaylistLoading);
+        Messenger.Subscribe<PlaylistStartedEventArgs>(OnPlaylistStarted);
     }
 
-    private Task OnPlaylistUpdated(object sender, PlaylistEventArgs e)
+    private Task OnPlaylistLoading(object sender, PlaylistLoadingEventArgs e)
+    {
+        _playlist = null;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnPlaylistStarted(object sender, PlaylistStartedEventArgs e)
     {
         _playlist = e.Playlist;
         StateHasChanged();

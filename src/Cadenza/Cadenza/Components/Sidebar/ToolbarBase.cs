@@ -11,7 +11,7 @@ public class ToolbarBase : ComponentBase
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
-    public IPlayController AppController { get; set; }
+    public IPlayCoordinator AppController { get; set; }
 
     [Inject]
     public IStartupConnectService ConnectService { get; set; }
@@ -20,7 +20,7 @@ public class ToolbarBase : ComponentBase
     public IAppStore StoreSetter { get; set; }
 
     [Inject]
-    public IConnectionController ConnectorService { get; set; }
+    public IConnectionCoordinator ConnectorService { get; set; }
 
     public List<ConnectorStatusViewModel> ConnectorStatuses { get; set; }
 

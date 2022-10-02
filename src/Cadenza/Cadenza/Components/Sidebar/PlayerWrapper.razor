@@ -9,10 +9,10 @@
 
 @code {
     [Inject]
-    public IPlayMessenger App { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Inject]
-    public IPlayController AppController { get; set; }
+    public IPlayCoordinator AppController { get; set; }
 
     public bool Loading { get; set; }
     public PlayTrack Track { get; set; }
@@ -20,9 +20,9 @@
 
     protected override void OnInitialized()
     {
-        App.PlaylistLoading += OnPlaylistLoading;
-        App.PlaylistFinished += OnPlaylistFinished;
-        App.StartTrack += OnStartTrack;
+        Messenger.Subscribe<PlaylistLoadingEventArgs>(OnPlaylistLoading);
+        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
+        Messenger.Subscribe<StartTrackEventArgs>(OnStartTrack);
     }
 
     private async Task OnSkipNext()
@@ -35,7 +35,7 @@
         await AppController.SkipPrevious();
     }
 
-    private Task OnPlaylistFinished(object sender, PlaylistEventArgs e)
+    private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
     {
        // Loading = false;
         //Track = null;
@@ -43,7 +43,7 @@
         return Task.CompletedTask;
     }
 
-    private Task OnPlaylistLoading(object sender, PlaylistEventArgs e)
+    private Task OnPlaylistLoading(object sender, PlaylistLoadingEventArgs e)
     {
         Loading = true;
         Track = null;
@@ -51,7 +51,7 @@
         return Task.CompletedTask;
     }
 
-    private Task OnStartTrack(object sender, TrackEventArgs e)
+    private Task OnStartTrack(object sender, StartTrackEventArgs e)
     {
         Loading = false;
         Track = e.CurrentTrack;

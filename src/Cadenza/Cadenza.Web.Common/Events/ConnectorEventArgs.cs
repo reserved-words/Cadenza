@@ -1,7 +1,5 @@
 ﻿namespace Cadenza.Web.Common.Events;
 
-public delegate Task ConnectorEventHandler(object sender, ConnectorEventArgs e);
-
 public class ConnectorEventArgs : EventArgs
 {
     public ConnectorEventArgs(Connector connector, ConnectorStatus status, string error = null)

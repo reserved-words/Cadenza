@@ -11,7 +11,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdatesController UpdatesService { get; set; }
+    public IUpdatesCoordinator UpdatesService { get; set; }
 
     public ArtistUpdate Update { get; set; }
 

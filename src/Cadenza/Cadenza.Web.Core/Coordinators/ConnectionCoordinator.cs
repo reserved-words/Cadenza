@@ -2,17 +2,17 @@
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class ConnectionCoordinator : IConnectionMessenger, IConnectionController, IConnectionService
+internal class ConnectionCoordinator : IConnectionCoordinator, IConnectionService
 {
     private readonly Dictionary<Connector, ConnectorStatus> _statuses;
+    private readonly IMessenger _messenger;
 
-    public ConnectionCoordinator()
+    public ConnectionCoordinator(IMessenger messenger)
     {
         _statuses = Enum.GetValues<Connector>()
             .ToDictionary(c => c, c => ConnectorStatus.Loading);
+        _messenger = messenger;
     }
-
-    public event ConnectorEventHandler ConnectorStatusChanged;
 
     public ConnectorStatus GetStatus(Connector connector)
     {
@@ -22,6 +22,6 @@ internal class ConnectionCoordinator : IConnectionMessenger, IConnectionControll
     public async Task SetStatus(Connector connector, ConnectorStatus status, string error = null)
     {
         _statuses[connector] = status;
-        await ConnectorStatusChanged?.Invoke(this, new ConnectorEventArgs(connector, status, error));
+        await _messenger.Send(this, new ConnectorEventArgs(connector, status, error));
     }
 }

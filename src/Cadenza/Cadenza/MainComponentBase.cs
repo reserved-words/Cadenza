@@ -13,7 +13,7 @@ public class MainComponentBase : ComponentBase
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
-    public IViewMessenger ViewConsumer { get; set; }
+    public IMessenger Messenger { get; set; }
 
     protected bool IsInitalised { get; private set; }
 
@@ -31,12 +31,12 @@ public class MainComponentBase : ComponentBase
             new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab))
         };
 
-        ViewConsumer.ItemRequested += App_ItemRequested;
+        Messenger.Subscribe<ViewItemEventArgs>(App_ItemRequested);
 
         await OnStartup();
     }
 
-    private Task App_ItemRequested(object sender, ItemEventArgs e)
+    private Task App_ItemRequested(object sender, ViewItemEventArgs e)
     {
         if (!DynamicItems.Any(t => t.Id == e.Item.Id))
         {
@@ -48,7 +48,7 @@ public class MainComponentBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private static DynamicTabsItem GetItemTab(ItemEventArgs e)
+    private static DynamicTabsItem GetItemTab(ViewItemEventArgs e)
     {
         return new DynamicTabsItem(e.Item.Id, e.Item.Name, e.Item.Type.GetIcon(), typeof(ItemTab), new Dictionary<string, object>
         {

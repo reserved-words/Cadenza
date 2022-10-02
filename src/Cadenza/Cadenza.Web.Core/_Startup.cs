@@ -42,22 +42,19 @@ public static class Startup
     private static IServiceCollection AddCoordinators(this IServiceCollection services)
     {
         return services
-            .AddCoordinator<ConnectionCoordinator, IConnectionController, IConnectionMessenger>()
-            .AddCoordinator<PlayCoordinator, IPlayController, IPlayMessenger>()
-            .AddCoordinator<SearchCoordinator, ISearchController, ISearchMessenger>()
-            .AddCoordinator<UpdatesCoordinator, IUpdatesController, IUpdatesMessenger>()
-            .AddCoordinator<ViewCoordinator, IViewController, IViewMessenger>()
+            .AddSingleton<Messenger>()
+            .AddSingleton<ConnectionCoordinator>()
+            .AddSingleton<PlayCoordinator>()
+            .AddSingleton<SearchCoordinator>()
+            .AddSingleton<UpdatesCoordinator>()
+            .AddSingleton<ViewCoordinator>()
+            .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>())
+            .AddTransient<IConnectionCoordinator>(sp => sp.GetRequiredService<ConnectionCoordinator>())
+            .AddTransient<IPlayCoordinator>(sp => sp.GetRequiredService<PlayCoordinator>())
+            .AddTransient<ISearchCoordinator>(sp => sp.GetRequiredService<SearchCoordinator>())
+            .AddTransient<IUpdatesCoordinator>(sp => sp.GetRequiredService<UpdatesCoordinator>())
+            .AddTransient<IViewCoordinator>(sp => sp.GetRequiredService<ViewCoordinator>())
             .AddTransient<IConnectionService>(sp => sp.GetRequiredService<ConnectionCoordinator>())
             .AddTransient<ISearchCache>(sp => sp.GetRequiredService<SearchCoordinator>());
-    }
-
-    private static IServiceCollection AddCoordinator<TCoordinator, IController, IMessenger>(this IServiceCollection services) 
-        where TCoordinator : class, IController, IMessenger
-        where IController : class
-        where IMessenger : class
-    {
-        return services.AddSingleton<TCoordinator>()
-            .AddTransient<IController>(sp => sp.GetRequiredService<TCoordinator>())
-            .AddTransient<IMessenger>(sp => sp.GetRequiredService<TCoordinator>());
     }
 }

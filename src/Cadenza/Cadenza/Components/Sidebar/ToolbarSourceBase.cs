@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
-
-namespace Cadenza.Components.Sidebar;
+﻿namespace Cadenza.Components.Sidebar;
 
 public class ToolbarSourceBase : ComponentBase
 {
@@ -8,14 +6,14 @@ public class ToolbarSourceBase : ComponentBase
     public INotificationService Notification { get; set; }
 
     [Inject]
-    public IConnectionMessenger ConnectorService { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Parameter]
     public ConnectorStatusViewModel Model { get; set; }
 
     protected override void OnInitialized()
     {
-        ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
+        Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
     }
 
     private Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)

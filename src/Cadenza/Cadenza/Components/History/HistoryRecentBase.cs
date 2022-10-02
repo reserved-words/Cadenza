@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Interfaces.Connections;
-using Cadenza.Web.Common.Interfaces.Play;
 
 namespace Cadenza.Components.History;
 
@@ -9,7 +8,7 @@ public class HistoryRecentBase : ComponentBase
     public IConnectionService ConnectorService { get; set; }
 
     [Inject]
-    public IPlayMessenger App { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Inject]
     public IHistory History { get; set; }
@@ -20,7 +19,7 @@ public class HistoryRecentBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        App.TrackStatusChanged += App_TrackProgressed;
+        Messenger.Subscribe<TrackStatusEventArgs>(App_TrackProgressed);
     }
 
     private async Task App_TrackProgressed(object sender, TrackStatusEventArgs e)

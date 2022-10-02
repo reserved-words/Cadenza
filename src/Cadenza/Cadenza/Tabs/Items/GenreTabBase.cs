@@ -8,7 +8,7 @@ public class GenreTabBase : ComponentBase
     public IArtistRepository Repository { get; set; }
 
     [Inject]
-    public IUpdatesMessenger Updates { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Parameter]
     public string Id { get; set; }
@@ -17,7 +17,7 @@ public class GenreTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Updates.ArtistUpdated += OnArtistUpdated;
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
     }
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)

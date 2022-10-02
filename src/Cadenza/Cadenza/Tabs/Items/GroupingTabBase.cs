@@ -8,7 +8,7 @@ public class GroupingTabBase : ComponentBase
     public IArtistRepository Repository { get; set; }
 
     [Inject]
-    public IUpdatesMessenger Updates { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Parameter]
     public string Id { get; set; }
@@ -25,7 +25,7 @@ public class GroupingTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Updates.ArtistUpdated += OnArtistUpdated;
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
     }
 
     protected override async Task OnParametersSetAsync()

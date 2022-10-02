@@ -1,12 +1,11 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
-using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Components.Tabs.Main;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {
     [Inject]
-    public IPlayMessenger App { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Inject]
     public ICurrentTrackStore Store { get; set; }
@@ -15,7 +14,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        App.TrackStatusChanged += OnTrackStatusChanged;
+        Messenger.Subscribe<TrackStatusEventArgs>(OnTrackStatusChanged);
     }
 
     private async Task OnTrackStatusChanged(object sender, TrackStatusEventArgs e)

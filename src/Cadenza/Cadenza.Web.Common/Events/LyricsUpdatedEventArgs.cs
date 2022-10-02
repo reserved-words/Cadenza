@@ -1,7 +1,5 @@
 ﻿namespace Cadenza.Web.Common.Events;
 
-public delegate Task LyricsUpdatedEventHandler(object sender, LyricsUpdatedEventArgs e);
-
 public class LyricsUpdatedEventArgs : EventArgs
 {
     public LyricsUpdatedEventArgs(TrackUpdate update)

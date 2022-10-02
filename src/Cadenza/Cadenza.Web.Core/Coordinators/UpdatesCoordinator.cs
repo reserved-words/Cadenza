@@ -2,18 +2,22 @@
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class UpdatesCoordinator : IUpdatesController, IUpdatesMessenger
+internal class UpdatesCoordinator : IUpdatesCoordinator
 {
-    public event ArtistUpdatedEventHandler ArtistUpdated;
-    public event LyricsUpdatedEventHandler LyricsUpdated;
+    private readonly IMessenger _messenger;
+
+    public UpdatesCoordinator(IMessenger messenger)
+    {
+        _messenger = messenger;
+    }
 
     public async Task UpdateArtist(ArtistUpdate update)
     {
-        await ArtistUpdated?.Invoke(this, new ArtistUpdatedEventArgs(update));
+        await _messenger.Send(this, new ArtistUpdatedEventArgs(update));
     }
 
     public async Task UpdateLyrics(TrackUpdate update)
     {
-        await LyricsUpdated?.Invoke(this, new LyricsUpdatedEventArgs(update));
+        await _messenger.Send(this, new LyricsUpdatedEventArgs(update));
     }
 }
