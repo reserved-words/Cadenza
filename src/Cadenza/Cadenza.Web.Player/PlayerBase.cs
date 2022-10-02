@@ -7,6 +7,9 @@ namespace Cadenza.Web.Player;
 public class PlayerBase : ComponentBase
 {
     [Inject]
+    public IMessenger Messenger { get; set; }
+
+    [Inject]
     public ICurrentTrackStore Store { get; set; }
 
     [Inject]
@@ -23,15 +26,6 @@ public class PlayerBase : ComponentBase
 
     [Parameter]
     public bool IsLastTrack { get; set; }
-
-    [Parameter]
-    public Func<Task> OnSkipNext { get; set; }
-
-    [Parameter]
-    public Func<Task> OnSkipPrevious { get; set; }
-
-    [Parameter]
-    public Func<TrackStatusEventArgs, Task> OnTrackStatusChanged { get; set; }
 
     public TrackFull Model { get; set; }
 
@@ -60,7 +54,7 @@ public class PlayerBase : ComponentBase
             Model = await Store.GetCurrentTrack();
             await Player.Play(Track);
             UpdatePlayState(false, true);
-            await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
+            await Messenger.Send(this, new TrackStatusEventArgs { Track = Track, Status = PlayStatus.Playing });
         }
         else
         {
@@ -85,18 +79,18 @@ public class PlayerBase : ComponentBase
     public async Task SkipNext()
     {
         await StopPlaying();
-        await OnSkipNext();
+        await Messenger.Send(this, new SkipNextTrackEventArgs());
     }
 
     public async Task SkipPrevious()
     {
         await StopPlaying();
-        await OnSkipPrevious();
+        await Messenger.Send(this, new SkipPreviousTrackEventArgs());
     }
 
     private async Task OnStatusChanged(PlayStatus status)
     {
-        await OnTrackStatusChanged(new TrackStatusEventArgs { Track = Track, Status = status });
+        await Messenger.Send(this, new TrackStatusEventArgs { Track = Track, Status = status });
     }
 
     private async Task OnTrackFinished(object sender, TrackFinishedEventArgs e)

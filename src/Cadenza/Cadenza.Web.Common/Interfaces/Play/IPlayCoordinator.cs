@@ -2,9 +2,6 @@
 
 public interface IPlayCoordinator
 {
-    Task SkipNext();
-    Task SkipPrevious();
     Task LoadingPlaylist();
     Task Play(PlaylistDefinition playlistDefinition);
-    Task OnTrackStatusChanged(TrackStatusEventArgs args);
 }

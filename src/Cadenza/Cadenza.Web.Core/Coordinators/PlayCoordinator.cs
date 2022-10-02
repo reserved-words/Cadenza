@@ -14,6 +14,10 @@ internal class PlayCoordinator : IPlayCoordinator
         _store = appStore;
         _repository = repository;
         _messenger = messenger;
+
+        _messenger.Subscribe<SkipNextTrackEventArgs>(OnSkipNext);
+        _messenger.Subscribe<SkipPreviousTrackEventArgs>(OnSkipPrevious);
+        _messenger.Subscribe<TrackStatusEventArgs>(OnTrackStatusChanged);
     }
 
     private IPlaylist _currentPlaylist;
@@ -23,6 +27,12 @@ internal class PlayCoordinator : IPlayCoordinator
         _currentPlaylist = new Playlist(playlistDefinition);
         await PlayTrack();
         await _messenger.Send(this, new PlaylistStartedEventArgs { Playlist = _currentPlaylist.Id });
+    }
+
+    public async Task LoadingPlaylist()
+    {
+        await StopPlaylist();
+        await _messenger.Send(this, new PlaylistLoadingEventArgs());
     }
 
     private async Task PlayTrack()
@@ -41,7 +51,7 @@ internal class PlayCoordinator : IPlayCoordinator
         });
     }
 
-    public async Task SkipNext()
+    private async Task OnSkipNext (object sender, SkipNextTrackEventArgs args)
     {
         if (_currentPlaylist.CurrentIsLast)
         {
@@ -53,16 +63,10 @@ internal class PlayCoordinator : IPlayCoordinator
         await PlayTrack();
     }
 
-    public async Task SkipPrevious()
+    private async Task OnSkipPrevious(object sender, SkipPreviousTrackEventArgs args)
     {
         await _currentPlaylist.MovePrevious();
         await PlayTrack();
-    }
-
-    public async Task LoadingPlaylist()
-    {
-        await StopPlaylist();
-        await _messenger.Send(this, new PlaylistLoadingEventArgs());
     }
 
     private async Task StopPlaylist()
@@ -74,13 +78,11 @@ internal class PlayCoordinator : IPlayCoordinator
         }
     }
 
-    public async Task OnTrackStatusChanged(TrackStatusEventArgs args)
+    private async Task OnTrackStatusChanged(object sender, TrackStatusEventArgs args)
     {
-        await _messenger.Send(this, args);
-
         if (args.Status == PlayStatus.Stopped && args.Track != null)
         {
-            await SkipNext();
+            await OnSkipNext(this, null);
         }
     }
 }

@@ -2,17 +2,11 @@
 
 <Player Loading="@Loading" 
         Track="@Track" 
-        IsLastTrack="@IsLastTrack" 
-        OnSkipNext="@OnSkipNext" 
-        OnSkipPrevious="@OnSkipPrevious"
-        OnTrackStatusChanged="OnTrackStatusChanged" />
+        IsLastTrack="@IsLastTrack" />
 
 @code {
     [Inject]
     public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IPlayCoordinator AppController { get; set; }
 
     public bool Loading { get; set; }
     public PlayTrack Track { get; set; }
@@ -23,16 +17,6 @@
         Messenger.Subscribe<PlaylistLoadingEventArgs>(OnPlaylistLoading);
         Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
         Messenger.Subscribe<StartTrackEventArgs>(OnStartTrack);
-    }
-
-    private async Task OnSkipNext()
-    {
-        await AppController.SkipNext();
-    }
-
-    private async Task OnSkipPrevious()
-    {
-        await AppController.SkipPrevious();
     }
 
     private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
@@ -58,10 +42,5 @@
         IsLastTrack = e.IsLastTrack;
         StateHasChanged();
         return Task.CompletedTask;
-    }
-
-    private async Task OnTrackStatusChanged(TrackStatusEventArgs args)
-    {
-        await AppController.OnTrackStatusChanged(args);
     }
 }
