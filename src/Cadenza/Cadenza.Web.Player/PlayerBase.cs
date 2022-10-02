@@ -28,6 +28,7 @@ public class PlayerBase : ComponentBase
     {
         Messenger.Subscribe<StartTrackEventArgs>(OnStartTrack);
         Messenger.Subscribe<StopTrackEventArgs>(OnStopTrack);
+        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
     }
 
     protected async Task Pause()
@@ -42,19 +43,14 @@ public class PlayerBase : ComponentBase
         await OnStatusChanged(PlayStatus.Playing);
     }
 
-    private async Task OnStatusChanged(PlayStatus status)
-    {
-        await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
-    }
-
     private async Task OnStartTrack(object sender, StartTrackEventArgs e)
     {
+        Model = await Store.GetCurrentTrack();
         Track = e.CurrentTrack;
         Loading = false;
         IsLastTrack = e.IsLastTrack;
-        await Player.Play(Track);
-        Model = await Store.GetCurrentTrack();
         StateHasChanged();
+        await Player.Play(Track);
         await OnStatusChanged(PlayStatus.Playing);
     }
 
@@ -64,9 +60,20 @@ public class PlayerBase : ComponentBase
             return;
 
         Track = null;
-        Model = null;
-        StateHasChanged();
         await Player.Stop();
         await OnStatusChanged(PlayStatus.Stopped);
+        StateHasChanged();
+    }
+
+    private async Task OnStatusChanged(PlayStatus status)
+    {
+        await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
+    }
+
+    private Task OnPlaylistFinished(object arg1, PlaylistFinishedEventArgs arg2)
+    {
+        Model = null;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }
