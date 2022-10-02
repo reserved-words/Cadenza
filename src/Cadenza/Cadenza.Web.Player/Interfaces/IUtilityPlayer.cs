@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Model;
-
-namespace Cadenza.Web.Player.Interfaces;
+﻿namespace Cadenza.Web.Player.Interfaces;
 
 internal interface IUtilityPlayer
 {

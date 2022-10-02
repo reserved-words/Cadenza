@@ -1,32 +1,3 @@
-﻿@using Cadenza.Web.Common.Events
-@using Cadenza.Web.Player.Interfaces
+﻿@inherits CurrentTrackProgressBase
 
 <MudProgressLinear @bind-Value="@Progress" Color="Color.Primary" Class="ma-0" />
-
-@code 
-{
-    [Inject]
-    internal IMessenger Messenger { get; set; }
-
-    public double Progress { get; set; }
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
-        Messenger.Subscribe<TrackProgressedEventArgs>(OnTrackProgressed);
-    }
-
-    private Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
-    {
-        Progress = 0;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnTrackProgressed(object sender, TrackProgressedEventArgs e)
-    {
-        Progress = e.ProgressPercentage;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-}

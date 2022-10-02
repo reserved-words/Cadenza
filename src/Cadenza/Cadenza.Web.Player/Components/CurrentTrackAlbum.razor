@@ -1,7 +1,4 @@
-﻿@using Cadenza.Common.Domain.Model.Album
-@using Cadenza.Common.Domain.Extensions
-
-
+﻿
 <AlbumLink Typo="@Typo.body1" Id="@Id" Title="@Title" />
 <ArtistLink Typo="@Typo.body2" Id="@ArtistId" Name="@ArtistName" />
 <MudText Typo="Typo.body1">@ReleaseType</MudText>
@@ -17,5 +14,4 @@
     public string ReleaseType => Model?.ReleaseType.GetDisplayName() ?? "Release Type";
     public string Title => Model?.Title ?? "Album Title";
     public string Year => Model?.Year ?? "Year";
-
 }

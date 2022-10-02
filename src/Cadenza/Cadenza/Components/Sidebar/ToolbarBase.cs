@@ -11,9 +11,6 @@ public class ToolbarBase : ComponentBase
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
-    public IPlayCoordinator AppController { get; set; }
-
-    [Inject]
     public IStartupConnectService ConnectService { get; set; }
 
     [Inject]

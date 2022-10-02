@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Player.Interfaces;
-using System.Timers;
+﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Cadenza.Web.Player.Players;
@@ -42,17 +41,15 @@ internal class TrackTimer : ITrackTimerController
         UpdateProgress(_current.TotalSeconds, _current.ProgressSeconds);
     }
 
-    private void UpdateProgress(int totalSeconds, int progressSeconds)
+    private async void UpdateProgress(int totalSeconds, int progressSeconds)
     {
-        // TODO async timer?
-
         if (progressSeconds > totalSeconds)
         {
-            _messenger.Send(this, new TrackFinishedEventArgs()).GetAwaiter().GetResult();
+            await _messenger.Send(this, new TrackFinishedEventArgs());
         }
         else
         {
-            _messenger.Send(this, new TrackProgressedEventArgs(totalSeconds, progressSeconds)).GetAwaiter().GetResult();
+            await _messenger.Send(this, new TrackProgressedEventArgs(totalSeconds, progressSeconds));
         }
     }
 

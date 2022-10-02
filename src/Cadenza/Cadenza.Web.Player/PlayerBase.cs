@@ -60,9 +60,10 @@ public class PlayerBase : ComponentBase
             return;
 
         Track = null;
+        Loading = true;
+        StateHasChanged();
         await Player.Stop();
         await OnStatusChanged(PlayStatus.Stopped);
-        StateHasChanged();
     }
 
     private async Task OnStatusChanged(PlayStatus status)
@@ -73,6 +74,7 @@ public class PlayerBase : ComponentBase
     private Task OnPlaylistFinished(object arg1, PlaylistFinishedEventArgs arg2)
     {
         Model = null;
+        Loading = false;
         StateHasChanged();
         return Task.CompletedTask;
     }
