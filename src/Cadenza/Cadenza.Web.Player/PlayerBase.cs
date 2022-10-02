@@ -68,8 +68,8 @@ public class PlayerBase : ComponentBase
         Track = e.CurrentTrack;
         Loading = false;
         IsLastTrack = e.IsLastTrack;
-        Model = await Store.GetCurrentTrack();
         await Player.Play(Track);
+        Model = await Store.GetCurrentTrack();
         UpdatePlayState(false, true);
         StateHasChanged();
         await OnStatusChanged(PlayStatus.Playing);
@@ -81,6 +81,7 @@ public class PlayerBase : ComponentBase
             return;
 
         Track = null;
+        Model = null;
         UpdatePlayState(false, false);
         StateHasChanged();
         await Player.Stop();

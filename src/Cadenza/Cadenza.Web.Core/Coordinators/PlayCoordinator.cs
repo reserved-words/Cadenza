@@ -65,7 +65,6 @@ internal class PlayCoordinator : IPlayCoordinator
 
         if (_currentPlaylist.CurrentIsLast)
         {
-            _currentPlaylist = null;
             await StopPlaylist();
             return;
         }
