@@ -34,6 +34,9 @@ public class FavouriteTrackBase : ComponentBase
         if (status != ConnectorStatus.Connected)
             return;
 
+        if (Artist == null || Title == null)
+            return;
+
         IsEnabled = true;
 
         if (!IsFavourite.HasValue)
