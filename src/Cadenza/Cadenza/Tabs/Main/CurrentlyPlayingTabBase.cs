@@ -15,19 +15,25 @@ public class CurrentlyPlayingTabBase : ComponentBase
     protected override void OnInitialized()
     {
         Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusUpdated);
+        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
     }
 
     private async Task OnPlayStatusUpdated(object sender, PlayStatusEventArgs e)
     {
-        if (e.Status == PlayStatus.Stopped)
-        {
-            Model = null;
-        }
-        else if (Model == null || Model.Track.Id != e.Track.Id)
-        {
-            Model = await Store.GetCurrentTrack();
-        }
+        if (e.Track == null)
+            return;
 
+        if (Model?.Track.Id == e.Track.Id)
+            return;
+
+        Model = await Store.GetCurrentTrack();
         StateHasChanged();
+    }
+
+    private Task OnPlaylistFinished(object arg1, PlaylistFinishedEventArgs arg2)
+    {
+        Model = null;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }

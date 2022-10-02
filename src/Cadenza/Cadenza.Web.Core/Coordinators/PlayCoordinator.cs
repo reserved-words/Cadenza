@@ -5,14 +5,12 @@ namespace Cadenza.Web.Core.Coordinators;
 
 internal class PlayCoordinator : IPlayCoordinator
 {
-    private readonly IAppStore _store;
-    private readonly ITrackRepository _repository;
+    private readonly ICurrentTrackStore _store;
     private readonly IMessenger _messenger;
 
-    public PlayCoordinator(IAppStore appStore, ITrackRepository repository, IMessenger messenger)
+    public PlayCoordinator(ICurrentTrackStore store, IMessenger messenger)
     {
-        _store = appStore;
-        _repository = repository;
+        _store = store;
         _messenger = messenger;
 
         _messenger.Subscribe<SkipNextTrackEventArgs>(OnSkipNext);
@@ -38,7 +36,7 @@ internal class PlayCoordinator : IPlayCoordinator
 
     private async Task PlayTrack()
     {
-        await StoreCurrentTrack();
+        await _store.SetCurrentTrack(_currentPlaylist.Current.Id);
 
         await _messenger.Send(this, new StartTrackEventArgs
         {
@@ -50,13 +48,6 @@ internal class PlayCoordinator : IPlayCoordinator
     private async Task StopTrack()
     {
         await _messenger.Send(this, new StopTrackEventArgs());
-    }
-
-    private async Task StoreCurrentTrack()
-    {
-        var currentTrack = await _repository.GetTrack(_currentPlaylist.Current.Id);
-        await _store.SetValue(StoreKey.CurrentTrack, currentTrack);
-        await _store.SetValue(StoreKey.CurrentTrackSource, currentTrack.Track.Source);
     }
 
     private async Task OnSkipNext (object sender, SkipNextTrackEventArgs args)

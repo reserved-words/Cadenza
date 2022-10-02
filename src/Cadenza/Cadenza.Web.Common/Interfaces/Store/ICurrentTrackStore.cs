@@ -4,4 +4,5 @@ public interface ICurrentTrackStore
 {
     Task<LibrarySource?> GetCurrentSource();
     Task<TrackFull> GetCurrentTrack();
+    Task SetCurrentTrack(string id);
 }
