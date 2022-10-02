@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Coordinators;
+﻿namespace Cadenza.Web.Common.Interfaces.Updates;
 
 public interface IUpdatesController
 {

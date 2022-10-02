@@ -1,9 +1,14 @@
-﻿namespace Cadenza.Components.Sidebar;
+﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+
+namespace Cadenza.Components.Sidebar;
 
 public class SearchBase : ComponentBase
 {
     [Inject]
-    public ISearchRepositoryCache Cache { get; set; }
+    public ISearchCache Cache { get; set; }
+
+    [Inject]
+    public ISearchMessenger Messenger { get; set; }
 
     public bool IsLoading { get; set; }
 
@@ -11,8 +16,8 @@ public class SearchBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        Cache.UpdateStarted += Cache_UpdateStarted;
-        Cache.UpdateCompleted += Cache_UpdateCompleted;
+        Messenger.UpdateStarted += Cache_UpdateStarted;
+        Messenger.UpdateCompleted += Cache_UpdateCompleted;
     }
 
     private void Cache_UpdateCompleted(object sender, EventArgs e)

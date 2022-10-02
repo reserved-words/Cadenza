@@ -1,11 +1,13 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class SearchSyncService : ISearchSyncService
 {
     private readonly ISearchRepository _repository;
-    private readonly ISearchRepositoryCache _cache;
+    private readonly ISearchController _cache;
 
-    public SearchSyncService(ISearchRepository repository, ISearchRepositoryCache cache)
+    public SearchSyncService(ISearchRepository repository, ISearchController cache)
     {
         _repository = repository;
         _cache = cache;

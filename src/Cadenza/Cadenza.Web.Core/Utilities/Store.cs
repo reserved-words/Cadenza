@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Utilities;
+﻿using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.Core.Utilities;
 
 internal class Store : IAppStore
 {

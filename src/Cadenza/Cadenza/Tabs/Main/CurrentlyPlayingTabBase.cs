@@ -1,11 +1,12 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Components.Tabs.Main;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {
     [Inject]
-    public IAppConsumer App { get; set; }
+    public IPlayMessenger App { get; set; }
 
     [Inject]
     public ICurrentTrackStore Store { get; set; }

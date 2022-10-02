@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Components.Sidebar;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.View;
+
+namespace Cadenza.Components.Sidebar;
 
 public class SearchResultBase : ComponentBase
 {

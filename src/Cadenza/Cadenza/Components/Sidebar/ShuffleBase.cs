@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.Sidebar;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+
+namespace Cadenza.Components.Sidebar;
 
 public class ShuffleBase : ComponentBase
 {

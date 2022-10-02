@@ -1,15 +1,16 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Startup;
 
 namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalSourceConnector : IConnector
 {
-    private readonly IConnectorController _connectorController;
+    private readonly IConnectionController _connectorController;
     private readonly IHttpHelper _http;
     private readonly IOptions<LocalApiSettings> _apiSettings;
     private readonly IUrl _url;
 
-    public LocalSourceConnector(IConnectorController connectorController, IOptions<LocalApiSettings> apiSettings, IHttpHelper http, IUrl url)
+    public LocalSourceConnector(IConnectionController connectorController, IOptions<LocalApiSettings> apiSettings, IHttpHelper http, IUrl url)
     {
         _apiSettings = apiSettings;
         _connectorController = connectorController;

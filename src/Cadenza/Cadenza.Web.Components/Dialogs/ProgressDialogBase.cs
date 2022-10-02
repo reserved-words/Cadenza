@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Dialogs
+﻿using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.Components.Dialogs
 {
 
     public class ProgressDialogBase : DialogBase

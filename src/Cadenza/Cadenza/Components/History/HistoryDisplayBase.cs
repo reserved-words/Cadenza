@@ -1,11 +1,14 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
 
 namespace Cadenza.Components.History;
 
 public abstract class HistoryDisplayBase<T> : ComponentBase
 {
     [Inject]
-    public IConnectorConsumer ConnectorService { get; set; }
+    public IConnectionService ConnectorService { get; set; }
+
+    [Inject]
+    public IConnectionMessenger ConnectorMessenger { get; set; }
 
     [Inject]
     public IHistory History { get; set; }
@@ -16,7 +19,7 @@ public abstract class HistoryDisplayBase<T> : ComponentBase
 
     protected override void OnInitialized()
     {
-        ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
+        ConnectorMessenger.ConnectorStatusChanged += OnConnectorStatusChanged;
     }
 
     private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)

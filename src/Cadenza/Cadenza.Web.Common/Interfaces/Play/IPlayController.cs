@@ -1,15 +1,10 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Coordinators;
+﻿namespace Cadenza.Web.Common.Interfaces.Play;
 
-public interface IAppController
+public interface IPlayController
 {
     Task SkipNext();
     Task SkipPrevious();
-
     Task LoadingPlaylist();
-
     Task Play(PlaylistDefinition playlistDefinition);
-
     Task OnTrackStatusChanged(TrackStatusEventArgs args);
-
-    Task View(ViewItem item);
 }

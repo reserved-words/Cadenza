@@ -1,28 +1,28 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Web.Core.Services;
 
 internal class ItemViewer : IItemViewer
 {
-    private readonly IAppController _app;
+    private readonly IViewController _controller;
     private readonly IIdGenerator _idGenerator;
 
-    public ItemViewer(IAppController app, IIdGenerator idGenerator)
+    public ItemViewer(IViewController controller, IIdGenerator idGenerator)
     {
-        _app = app;
+        _controller = controller;
         _idGenerator = idGenerator;
     }
 
     public async Task ViewAlbum(string id, string title)
     {
         var playerItem = new ViewItem(PlayerItemType.Album, id, title);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewArtist(string id, string name)
     {
         var playerItem = new ViewItem(PlayerItemType.Artist, id, name);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewArtist(string name)
@@ -34,13 +34,13 @@ internal class ItemViewer : IItemViewer
     public async Task ViewGenre(string id)
     {
         var playerItem = new ViewItem(PlayerItemType.Genre, id, id);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewGrouping(Grouping id)
     {
         var playerItem = new ViewItem(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName());
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewPlaying(PlaylistId playlist)
@@ -59,18 +59,18 @@ internal class ItemViewer : IItemViewer
             return;
 
         var playerItem = new ViewItem(type.Value, playlist.Id, playlist.Name);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewSearchResult(PlayerItem item)
     {
         var playerItem = new ViewItem(item.Type, item.Id, item.Name);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 
     public async Task ViewTrack(string id, string title)
     {
         var playerItem = new ViewItem(PlayerItemType.Track, id, title);
-        await _app.View(playerItem);
+        await _controller.RequestItem(playerItem);
     }
 }

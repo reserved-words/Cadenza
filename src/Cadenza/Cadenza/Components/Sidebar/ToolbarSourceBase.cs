@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -8,7 +8,7 @@ public class ToolbarSourceBase : ComponentBase
     public INotificationService Notification { get; set; }
 
     [Inject]
-    public IConnectorConsumer ConnectorService { get; set; }
+    public IConnectionMessenger ConnectorService { get; set; }
 
     [Parameter]
     public ConnectorStatusViewModel Model { get; set; }

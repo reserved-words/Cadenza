@@ -1,13 +1,13 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Play;
 
 namespace Cadenza.Web.Core.Services;
 
 internal class ItemPlayer : IItemPlayer
 {
     private readonly IPlaylistCreator _playlistCreator;
-    private readonly IAppController _app;
+    private readonly IPlayController _app;
 
-    public ItemPlayer(IAppController app, IPlaylistCreator playlistCreator)
+    public ItemPlayer(IPlayController app, IPlaylistCreator playlistCreator)
     {
         _app = app;
         _playlistCreator = playlistCreator;

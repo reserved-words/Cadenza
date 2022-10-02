@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Coordinators;
+﻿namespace Cadenza.Web.Common.Interfaces.Play;
 
-public interface IAppConsumer
+public interface IPlayMessenger
 {
     event TrackStatusEventHandler TrackStatusChanged;
     event TrackEventHandler StartTrack;
@@ -8,6 +8,4 @@ public interface IAppConsumer
     event PlaylistEventHandler PlaylistFinished;
     event PlaylistEventHandler PlaylistLoading;
     event PlaylistEventHandler PlaylistStarted;
-
-    event ItemEventHandler ItemRequested;
 }

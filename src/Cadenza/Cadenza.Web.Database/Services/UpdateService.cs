@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using Cadenza.Web.Common.Interfaces.Updates;
+
+namespace Cadenza.Web.Database.Services;
 
 internal class UpdateService : IUpdateService
 {

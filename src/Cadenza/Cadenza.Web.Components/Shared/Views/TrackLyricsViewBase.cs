@@ -1,11 +1,11 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Components.Shared.Views;
 
 public class TrackLyricsViewBase : ComponentBase
 {
     [Inject]
-    public IUpdatesConsumer Updates { get; set; }
+    public IUpdatesMessenger Updates { get; set; }
 
     [Parameter]
     public TrackInfo Model { get; set; }

@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Components.Dialogs;
 

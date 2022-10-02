@@ -1,12 +1,7 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces.Searchbar;
 
-public interface ISearchRepositoryCache
+public interface ISearchController
 {
-    List<PlayerItem> Items { get; set; }
-
-    event EventHandler UpdateCompleted;
-    event EventHandler UpdateStarted;
-
     void AddAlbums(List<PlayerItem> items);
     void AddArtists(List<PlayerItem> items);
     void AddGenres(List<PlayerItem> items);

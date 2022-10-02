@@ -1,4 +1,4 @@
-﻿@using Cadenza.Web.Common.Interfaces.Coordinators
+﻿@using Cadenza.Web.Common.Interfaces.Play
 
 <Player Loading="@Loading" 
         Track="@Track" 
@@ -9,10 +9,10 @@
 
 @code {
     [Inject]
-    public IAppConsumer App { get; set; }
+    public IPlayMessenger App { get; set; }
 
     [Inject]
-    public IAppController AppController { get; set; }
+    public IPlayController AppController { get; set; }
 
     public bool Loading { get; set; }
     public PlayTrack Track { get; set; }

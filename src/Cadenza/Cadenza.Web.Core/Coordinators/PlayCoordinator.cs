@@ -1,13 +1,14 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class AppCoordinator : IAppConsumer, IAppController
+internal class PlayCoordinator : IPlayMessenger, IPlayController
 {
     private readonly IAppStore _store;
     private readonly ITrackRepository _repository;
 
-    public AppCoordinator(IAppStore appStore, ITrackRepository repository)
+    public PlayCoordinator(IAppStore appStore, ITrackRepository repository)
     {
         _store = appStore;
         _repository = repository;
@@ -19,8 +20,6 @@ internal class AppCoordinator : IAppConsumer, IAppController
     public event PlaylistEventHandler PlaylistFinished;
     public event PlaylistEventHandler PlaylistLoading;
     public event PlaylistEventHandler PlaylistStarted;
-
-    public event ItemEventHandler ItemRequested;
 
     private IPlaylist _currentPlaylist;
 
@@ -87,11 +86,6 @@ internal class AppCoordinator : IAppConsumer, IAppController
             await PlaylistFinished?.Invoke(this, GetPlaylistArgs());
             _currentPlaylist = null;
         }
-    }
-
-    public async Task View(ViewItem item)
-    {
-        await ItemRequested?.Invoke(this, new ItemEventArgs { Item = item });
     }
 
     public async Task OnTrackStatusChanged(TrackStatusEventArgs args)

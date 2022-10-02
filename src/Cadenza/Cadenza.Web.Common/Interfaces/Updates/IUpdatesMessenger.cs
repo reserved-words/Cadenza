@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Coordinators;
+﻿namespace Cadenza.Web.Common.Interfaces.Updates;
 
-public interface IUpdatesConsumer
+public interface IUpdatesMessenger
 {
     event ArtistUpdatedEventHandler ArtistUpdated;
     event LyricsUpdatedEventHandler LyricsUpdated;

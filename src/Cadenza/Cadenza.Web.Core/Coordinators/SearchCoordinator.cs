@@ -1,12 +1,13 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+using Cadenza.Web.Common.Interfaces.Updates;
 
-namespace Cadenza.Web.Core.Services;
+namespace Cadenza.Web.Core.Coordinators;
 
-internal class SearchRepositoryCache : ISearchRepositoryCache
+internal class SearchCoordinator : ISearchController, ISearchMessenger, ISearchCache
 {
-    private readonly IUpdatesConsumer _updates;
+    private readonly IUpdatesMessenger _updates;
 
-    public SearchRepositoryCache(IUpdatesConsumer updates)
+    public SearchCoordinator(IUpdatesMessenger updates)
     {
         _updates = updates;
     }

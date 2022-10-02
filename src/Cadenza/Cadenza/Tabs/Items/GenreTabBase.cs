@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Components.Tabs.Items;
 
@@ -8,7 +8,7 @@ public class GenreTabBase : ComponentBase
     public IArtistRepository Repository { get; set; }
 
     [Inject]
-    public IUpdatesConsumer Updates { get; set; }
+    public IUpdatesMessenger Updates { get; set; }
 
     [Parameter]
     public string Id { get; set; }

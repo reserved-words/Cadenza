@@ -1,4 +1,7 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -8,7 +11,7 @@ public class ToolbarBase : ComponentBase
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
-    public IAppController AppController { get; set; }
+    public IPlayController AppController { get; set; }
 
     [Inject]
     public IStartupConnectService ConnectService { get; set; }
@@ -17,7 +20,7 @@ public class ToolbarBase : ComponentBase
     public IAppStore StoreSetter { get; set; }
 
     [Inject]
-    public IConnectorController ConnectorService { get; set; }
+    public IConnectionController ConnectorService { get; set; }
 
     public List<ConnectorStatusViewModel> ConnectorStatuses { get; set; }
 

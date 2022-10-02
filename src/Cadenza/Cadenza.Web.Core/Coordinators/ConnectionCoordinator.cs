@@ -1,8 +1,8 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class ConnectionCoordinator : IConnectorConsumer, IConnectorController
+internal class ConnectionCoordinator : IConnectionMessenger, IConnectionController, IConnectionService
 {
     private readonly Dictionary<Connector, ConnectorStatus> _statuses;
 

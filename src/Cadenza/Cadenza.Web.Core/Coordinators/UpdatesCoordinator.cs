@@ -1,8 +1,8 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Core.Coordinators;
 
-internal class UpdatesCoordinator : IUpdatesController, IUpdatesConsumer
+internal class UpdatesCoordinator : IUpdatesController, IUpdatesMessenger
 {
     public event ArtistUpdatedEventHandler ArtistUpdated;
     public event LyricsUpdatedEventHandler LyricsUpdated;

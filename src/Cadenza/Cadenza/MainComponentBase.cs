@@ -1,9 +1,6 @@
-﻿using Cadenza.Web.Common.Events;
-using Cadenza.Web.Common.Interfaces.Coordinators;
-using Cadenza.Web.Components.Interfaces;
+﻿using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.View;
 using Cadenza.Web.Components.Shared;
-using Cadenza.Web.Components.Tabs.Main;
-using Microsoft.AspNetCore.Components;
 
 namespace Cadenza;
 
@@ -16,7 +13,7 @@ public class MainComponentBase : ComponentBase
     public IProgressDialogService DialogService { get; set; }
 
     [Inject]
-    public IAppConsumer App { get; set; }
+    public IViewMessenger ViewConsumer { get; set; }
 
     protected bool IsInitalised { get; private set; }
 
@@ -34,7 +31,7 @@ public class MainComponentBase : ComponentBase
             new DynamicTabsItem("Playing", null, "fas fa-volume-up", typeof(CurrentlyPlayingTab))
         };
 
-        App.ItemRequested += App_ItemRequested;
+        ViewConsumer.ItemRequested += App_ItemRequested;
 
         await OnStartup();
     }

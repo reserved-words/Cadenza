@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces.Player;
 
 public interface ISourcePlayer : IAudioPlayer
 {

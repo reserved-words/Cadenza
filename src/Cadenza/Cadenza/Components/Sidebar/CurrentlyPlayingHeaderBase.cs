@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -12,7 +13,7 @@ public class CurrentlyPlayingHeaderBase : ComponentBase
     };
 
     [Inject]
-    public IAppConsumer App { get; set; }
+    public IPlayMessenger App { get; set; }
 
     [Inject]
     public IItemViewer Viewer { get; set; }

@@ -1,15 +1,17 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Searchbar;
+using Cadenza.Web.Common.Interfaces.Startup;
 
 namespace Cadenza.Web.Database.Services;
 
 internal class DatabaseConnector : IConnector
 {
-    private readonly IConnectorController _connectorController;
+    private readonly IConnectionController _connectorController;
     private readonly IHttpHelper _http;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
     private readonly ISearchSyncService _searchSyncService;
 
-    public DatabaseConnector(IConnectorController connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchSyncService searchSyncService)
+    public DatabaseConnector(IConnectionController connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchSyncService searchSyncService)
     {
         _apiSettings = apiSettings;
         _connectorController = connectorController;

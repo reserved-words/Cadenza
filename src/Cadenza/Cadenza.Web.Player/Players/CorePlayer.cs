@@ -1,4 +1,6 @@
 ﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Web.Common.Interfaces.Player;
+using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.Common.Model;
 using Cadenza.Web.Player.Interfaces;
 

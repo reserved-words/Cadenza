@@ -1,14 +1,15 @@
-﻿using Cadenza.Web.Common.Interfaces.Coordinators;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Play;
 
 namespace Cadenza.Components.History;
 
 public class HistoryRecentBase : ComponentBase
 {
     [Inject]
-    public IConnectorConsumer ConnectorService { get; set; }
+    public IConnectionService ConnectorService { get; set; }
 
     [Inject]
-    public IAppConsumer App { get; set; }
+    public IPlayMessenger App { get; set; }
 
     [Inject]
     public IHistory History { get; set; }
@@ -19,7 +20,6 @@ public class HistoryRecentBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        //ConnectorService.ConnectorStatusChanged += OnConnectorStatusChanged;
         App.TrackStatusChanged += App_TrackProgressed;
     }
 
