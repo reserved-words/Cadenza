@@ -63,7 +63,7 @@ stages:
          **/*Cadenza.API.csproj
          **/*Cadenza.Local.API.csproj
          **/*Cadenza.Local.Service.csproj
-         **/*Cadenza.Local.SyncService.csproj
+         **/*Cadenza.SyncService.csproj
          **/Cadenza.csproj
         arguments: '--no-build --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
         zipAfterPublish: false
