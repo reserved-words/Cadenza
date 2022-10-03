@@ -60,8 +60,10 @@ stages:
         command: publish
         publishWebProjects: false
         projects: |
-         **/*.API.csproj
-         **/*Service.csproj
+         **/*Cadenza.API.csproj
+         **/*Cadenza.Local.API.csproj
+         **/*Cadenza.Local.Service.csproj
+         **/*Cadenza.Local.SyncService.csproj
          **/Cadenza.csproj
         arguments: '--no-build --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
         zipAfterPublish: false
