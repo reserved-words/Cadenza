@@ -1,11 +1,13 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class SearchSyncService : ISearchSyncService
 {
     private readonly ISearchRepository _repository;
-    private readonly ISearchRepositoryCache _cache;
+    private readonly ISearchCoordinator _cache;
 
-    public SearchSyncService(ISearchRepository repository, ISearchRepositoryCache cache)
+    public SearchSyncService(ISearchRepository repository, ISearchCoordinator cache)
     {
         _repository = repository;
         _cache = cache;
@@ -13,7 +15,7 @@ internal class SearchSyncService : ISearchSyncService
 
     public async Task PopulateSearchItems()
     {
-        _cache.StartUpdate();
+        await _cache.StartUpdate();
 
         _cache.Clear();
 
@@ -23,7 +25,7 @@ internal class SearchSyncService : ISearchSyncService
         await FetchGenres();
         await FetchGroupings();
 
-        _cache.FinishUpdate();
+        await _cache.FinishUpdate();
     }
 
     private async Task FetchTracks()

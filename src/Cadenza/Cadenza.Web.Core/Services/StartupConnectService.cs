@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class StartupConnectService : IStartupConnectService
 {

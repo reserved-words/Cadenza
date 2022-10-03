@@ -1,15 +1,19 @@
-﻿namespace Cadenza.Web.LastFM.Services;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.LastFM.Services;
 
 internal class LastFmConnector : IConnector
 {
     private readonly IAppStore _store;
     private readonly IOptions<LastFmApiSettings> _settings;
     private readonly INavigation _navigation;
-    private readonly IConnectorController _connectorController;
+    private readonly IConnectionCoordinator _connectorController;
     private readonly IAuthoriser _authoriser;
 
     public LastFmConnector(IAppStore store, IOptions<LastFmApiSettings> settings,
-        INavigation navigation, IConnectorController connectorController, IAuthoriser lastFmAuthoriser)
+        INavigation navigation, IConnectionCoordinator connectorController, IAuthoriser lastFmAuthoriser)
     {
         _store = store;
         _settings = settings;

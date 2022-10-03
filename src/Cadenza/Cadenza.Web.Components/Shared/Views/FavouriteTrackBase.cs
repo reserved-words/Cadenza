@@ -1,15 +1,18 @@
-﻿namespace Cadenza.Web.Components.Shared.Views;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Favourites;
+
+namespace Cadenza.Web.Components.Shared.Views;
 
 public class FavouriteTrackBase : ComponentBase
 {
     [Inject]
-    public IFavouritesConsumer Favourites { get; set; }
+    public IFavouritesMessenger Favourites { get; set; }
 
     [Inject]
     public IFavouritesController FavouritesController { get; set; }
 
     [Inject]
-    public IConnectorConsumer ConnectorService { get; set; }
+    public IConnectionService ConnectorService { get; set; }
 
     [Parameter]
     public string Artist { get; set; }
@@ -29,6 +32,9 @@ public class FavouriteTrackBase : ComponentBase
         var status = ConnectorService.GetStatus(Connector.LastFm);
 
         if (status != ConnectorStatus.Connected)
+            return;
+
+        if (Artist == null || Title == null)
             return;
 
         IsEnabled = true;

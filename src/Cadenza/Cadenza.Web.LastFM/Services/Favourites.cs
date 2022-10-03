@@ -1,6 +1,9 @@
-﻿namespace Cadenza.Web.LastFM.Services;
+﻿using Cadenza.Web.Common.Interfaces.Favourites;
+using Cadenza.Web.Common.Interfaces.Store;
 
-internal class Favourites : IFavouritesConsumer, IFavouritesController
+namespace Cadenza.Web.LastFM.Services;
+
+internal class Favourites : IFavouritesMessenger, IFavouritesController
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;

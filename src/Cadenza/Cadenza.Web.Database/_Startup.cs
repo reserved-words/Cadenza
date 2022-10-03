@@ -18,6 +18,8 @@ global using Cadenza.Web.Database.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Net.Http.Json;
+using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Database;
 

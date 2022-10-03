@@ -1,4 +1,11 @@
-﻿using Cadenza.Web.Core.Players;
+﻿using Cadenza.Web.Common.Interfaces.Connections;
+using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.Searchbar;
+using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Common.Interfaces.Store;
+using Cadenza.Web.Common.Interfaces.Updates;
+using Cadenza.Web.Common.Interfaces.View;
+using Cadenza.Web.Core.Coordinators;
 using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
@@ -8,32 +15,20 @@ public static class Startup
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services
-            .AddSingleton<ISearchRepositoryCache, SearchRepositoryCache>()
-            .AddTransient<ISearchSyncService, SearchSyncService>();
-
-        services
-            .AddSingleton<ConnectorService>()
-            .AddTransient<IConnectorConsumer>(sp => sp.GetRequiredService<ConnectorService>())
-            .AddTransient<IConnectorController>(sp => sp.GetRequiredService<ConnectorService>())
-            .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddStartupServices()
-            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddUtilities()
-            .AddAppServices()
-            .AddTimers()
-            .AddAPIWrapper()
-            .AddTransient<IAppStore, Store>()
-            .AddTransient<ICurrentTrackStore, CurrentTrackStore>();
+            .AddCoordinators();
 
         services
+            .AddTransient<ISearchSyncService, SearchSyncService>()
+            .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
+            .AddTransient<IAppStore, Store>()
+            .AddTransient<ICurrentTrackStore, CurrentTrackStore>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IItemPlayer, ItemPlayer>()
-            .AddTransient<IItemViewer, ItemViewer>();
-
-        services
-            .AddTransient<IPlayer, CorePlayer>()
-            .AddTransient<IUtilityPlayer, TimingPlayer>()
-            .AddTransient<IUtilityPlayer, TrackingPlayer>();
+            .AddTransient<IItemViewer, ItemViewer>()
+            .AddTransient<IUrl, Url>();
 
         return services;
     }
@@ -44,29 +39,22 @@ public static class Startup
             .AddTransient<IStartupConnectService, StartupConnectService>();
     }
 
-    private static IServiceCollection AddAppServices(this IServiceCollection services)
+    private static IServiceCollection AddCoordinators(this IServiceCollection services)
     {
         return services
-            .AddSingleton<AppService>()
-            .AddSingleton<ItemUpdatesHandler>()
-            .AddTransient<IAppConsumer>(sp => sp.GetRequiredService<AppService>())
-            .AddTransient<IAppController>(sp => sp.GetRequiredService<AppService>())
-            .AddTransient<IUpdatesConsumer>(sp => sp.GetRequiredService<ItemUpdatesHandler>())
-            .AddTransient<IUpdatesController>(sp => sp.GetRequiredService<ItemUpdatesHandler>());
-    }
-
-    private static IServiceCollection AddTimers(this IServiceCollection services)
-    {
-        return services
-            .AddSingleton<TrackTimer>()
-            .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackProgressedConsumer>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<ITrackFinishedConsumer>(sp => sp.GetRequiredService<TrackTimer>());
-    }
-
-    private static IServiceCollection AddAPIWrapper(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IUrl, Url>();
+            .AddSingleton<Messenger>()
+            .AddSingleton<ConnectionCoordinator>()
+            .AddSingleton<PlayCoordinator>()
+            .AddSingleton<SearchCoordinator>()
+            .AddSingleton<UpdatesCoordinator>()
+            .AddSingleton<ViewCoordinator>()
+            .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>())
+            .AddTransient<IConnectionCoordinator>(sp => sp.GetRequiredService<ConnectionCoordinator>())
+            .AddTransient<IPlayCoordinator>(sp => sp.GetRequiredService<PlayCoordinator>())
+            .AddTransient<ISearchCoordinator>(sp => sp.GetRequiredService<SearchCoordinator>())
+            .AddTransient<IUpdatesCoordinator>(sp => sp.GetRequiredService<UpdatesCoordinator>())
+            .AddTransient<IViewCoordinator>(sp => sp.GetRequiredService<ViewCoordinator>())
+            .AddTransient<IConnectionService>(sp => sp.GetRequiredService<ConnectionCoordinator>())
+            .AddTransient<ISearchCache>(sp => sp.GetRequiredService<SearchCoordinator>());
     }
 }

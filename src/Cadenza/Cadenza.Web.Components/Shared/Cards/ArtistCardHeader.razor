@@ -1,5 +1,6 @@
 ﻿@using Cadenza.Web.Common.Events
 @using Cadenza.Web.Common.Extensions
+@using Cadenza.Web.Common.Interfaces.Updates
 
 @if (Model != null)
 {
@@ -21,7 +22,7 @@
 
 @code {
     [Inject]
-    public IUpdatesConsumer UpdatesConsumer { get; set; }
+    public IMessenger Messenger { get; set; }
 
     [Parameter]
     public ArtistInfo Model { get; set; }
@@ -31,7 +32,7 @@
 
     protected override void OnInitialized()
     {
-        UpdatesConsumer.ArtistUpdated += OnArtistUpdated;
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
     }
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)

@@ -1,9 +1,15 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class LongRunningTaskService : ILongRunningTaskService
 {
-    public event TaskGroupProgressEventHandler TaskGroupProgressChanged;
-    public event SubTaskProgressEventHandler SubTaskProgressChanged;
+    private readonly IMessenger _messenger;
+
+    public LongRunningTaskService(IMessenger messenger)
+    {
+        _messenger = messenger;
+    }
 
     public async Task RunTasks(TaskGroup taskGroup, CancellationToken cancellationToken)
     {
@@ -116,25 +122,29 @@ internal class LongRunningTaskService : ILongRunningTaskService
         }
     }
 
-    private void Update(string message, TaskState state)
+    private async Task Update(string message, TaskState state)
     {
-        TaskGroupProgressChanged?.Invoke(this, new TaskGroupProgressEventArgs { Message = message, State = state });
+        await _messenger.Send(this, new TaskGroupProgressEventArgs { Message = message, State = state });
     }
 
-    private void Update(string id, string message, TaskState state)
+    private async Task Update(string id, string message, TaskState state)
     {
-        SubTaskProgressChanged?.Invoke(this, new SubTaskProgressEventArgs { Id = id, Message = message, State = state });
+        await _messenger.Send(this, new SubTaskProgressEventArgs { Id = id, Message = message, State = state });
     }
 
     private void Update(TaskState state, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         Update(state.GetDisplayName(), state);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 
     private void Update(string id, string message, TaskState state, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         Update(id, message, state);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }

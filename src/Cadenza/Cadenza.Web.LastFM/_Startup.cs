@@ -15,6 +15,8 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Net.Http.Json;
 global using Track = Cadenza.Common.Domain.Model.LastFm.Track;
+using Cadenza.Web.Common.Interfaces.Favourites;
+using Cadenza.Web.Common.Interfaces.Startup;
 
 namespace Cadenza.Web.LastFM;
 
@@ -24,7 +26,7 @@ public static class _Startup
     {
         return services
             .AddTransient<IPlayTracker, Scrobbler>()
-            .AddTransient<IFavouritesConsumer, Favourites>()
+            .AddTransient<IFavouritesMessenger, Favourites>()
             .AddTransient<IFavouritesController, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IHistory, History>()

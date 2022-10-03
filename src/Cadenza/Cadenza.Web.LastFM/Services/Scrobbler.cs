@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.LastFM.Services;
+﻿using Cadenza.Web.Common.Interfaces.Store;
+
+namespace Cadenza.Web.LastFM.Services;
 
 internal class Scrobbler : IPlayTracker
 {
