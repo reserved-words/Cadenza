@@ -9,6 +9,16 @@ resources:
   repositories:
   - repository: self
 
+variables:
+- name: 'RestoreBuildProjects'
+  value: '**/*.csproj'
+- name: 'TestProjects'
+  value: '**/*[Tt]ests/*.csproj'
+- name: 'BuildConfiguration'
+  value: 'Release'
+- name: 'SettingsFiles'
+  value: '**/*appsettings.json'
+
 stages:
 - stage: build
   displayName: 'Build'
