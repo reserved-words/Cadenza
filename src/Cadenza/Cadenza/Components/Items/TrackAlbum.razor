@@ -1,0 +1,26 @@
+﻿@using Cadenza.Web.Common.Extensions
+@using Cadenza.Common.Domain.Extensions
+
+<AppCard>
+    <HeaderContent>
+        <AlbumCardHeader Model="@Album"
+                         TitleOnly="true" />
+    </HeaderContent>
+    <ChildContent>
+        <AlbumArtworkView Model="@Album" />
+        <AppCaptions>
+            <MudText Typo="@Typo.body1">@Album.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="@Typo.body1">@Album.Year</MudText>
+            <MudText Typo="@Typo.body1">@Album.DiscPosition(AlbumTrack.Position)</MudText>
+            <MudText Typo="@Typo.body1">@Album.TrackPosition(AlbumTrack.Position)</MudText>
+        </AppCaptions>
+    </ChildContent>
+</AppCard>
+
+@code {
+    [Parameter]
+    public AlbumInfo Album { get; set; } = new();
+
+    [Parameter]
+    public AlbumTrackLink AlbumTrack { get; set; } = new();
+}

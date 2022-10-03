@@ -1,13 +1,14 @@
-﻿
-using Cadenza.Local.SyncService._Startup;
+﻿var builder = Service.CreateBuilder(args, services =>
+{
+    var configuration = services.RegisterConfiguration();
 
-var builder = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostContext, services) =>
-    {
-        services.RegisterConfiguration();
-        services.RegisterDependencies();
-        services.AddHostedService<Worker>();
-    })
-    .UseWindowsService();
+    services
+        .AddUtilities()
+        .AddTransient<IService, PlayedFilesService>();
+
+    services
+        .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
+        .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
+});
 
 builder.Build().Run();

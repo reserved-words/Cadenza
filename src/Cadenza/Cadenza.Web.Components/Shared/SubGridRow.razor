@@ -1,0 +1,22 @@
+﻿
+<div class="@RowClass" style="@RowStyle">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RowHeight RowHeight { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public string RowStyle => RowHeight == RowHeight.Fixed
+        ? "flex-grow: 0;"
+        : RowHeight == RowHeight.Stretch
+        ? "flex-grow: 1;"
+        : "";
+
+    public string RowClass => "sub-grid-row " + (RowHeight == RowHeight.Fixed
+        ? ""
+        : "fixed-height");
+}

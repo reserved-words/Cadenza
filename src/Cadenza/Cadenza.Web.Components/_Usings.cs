@@ -1,0 +1,19 @@
+﻿global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Domain.Extensions;
+global using Cadenza.Common.Domain.Model.Artist;
+global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Update;
+global using Cadenza.Common.Interfaces.Repositories;
+global using Cadenza.Web.Common.Enums;
+global using Cadenza.Web.Common.Events;
+global using Cadenza.Web.Common.Interfaces;
+global using Cadenza.Web.Common.Tasks;
+global using Cadenza.Web.Components.Interfaces;
+global using Cadenza.Web.Components.MudServices;
+global using Cadenza.Web.Components.Dialogs;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.Extensions.DependencyInjection;
+global using MudBlazor;
+global using MudBlazor.Services;
+global using System.Web;
+

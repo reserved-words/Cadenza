@@ -1,0 +1,14 @@
+﻿
+<TrackLink Typo="@Typo.h6" Id="@Id" Title="@Title" />
+<ArtistLink Typo="@Typo.body1" Id="@ArtistId" Name="@ArtistName" />
+
+@code
+{
+    [Parameter]
+    public TrackInfo Model { get; set; }
+
+    public string ArtistId => Model?.ArtistId;
+    public string ArtistName => Model?.ArtistName ?? "Artist Name";
+    public string Id => Model?.Id;
+    public string Title => Model?.Title ?? "Track Title";
+}

@@ -1,0 +1,23 @@
+﻿
+@if (Model != null)
+{
+    <MudTabPanel Text="@Model.Group.GetDisplayName()">
+        <AppScrollContainer Elevation="0">
+            <ChildContent>
+                <AppGrid Items="@Model.Albums">
+                    <ImageTemplate>
+                         <AlbumArtworkView Model="@context" />
+                    </ImageTemplate>
+                    <CaptionTemplate>
+                        <AlbumSummaryView Model="@context" />
+                    </CaptionTemplate>
+                </AppGrid>
+            </ChildContent>
+        </AppScrollContainer>
+    </MudTabPanel>
+}
+
+@code {
+    [Parameter]
+    public ArtistReleaseGroup Model { get; set; } = new();
+}

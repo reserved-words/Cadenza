@@ -1,0 +1,7 @@
+﻿
+<FavouriteTrack Artist="@Model?.ArtistName" Title="@Model?.Title" IsFavourite="@null" />
+
+@code {
+    [Parameter]
+    public Track Model { get; set; }
+}

@@ -1,0 +1,48 @@
+﻿@using Cadenza.Web.Common.Events
+@using Cadenza.Web.Common.Extensions
+@using Cadenza.Web.Common.Interfaces.Updates
+
+@if (Model != null)
+{
+    <ItemCardHeader Type="@PlayerItemType.Artist"
+                Id="@Model.Id">
+        <ChildContent>
+            <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+
+            @if (!TitleOnly)
+            {
+                <MudText Typo="Typo.body1">@Model.Location()</MudText>
+                <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
+                <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
+            }
+
+        </ChildContent>
+    </ItemCardHeader>
+}
+
+@code {
+    [Inject]
+    public IMessenger Messenger { get; set; }
+
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+
+    [Parameter]
+    public bool TitleOnly { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
+    }
+
+    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
+    {
+        if (args.Update.Id == Model.Id)
+        {
+            args.Update.ApplyUpdates(Model);
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
+    }
+}
