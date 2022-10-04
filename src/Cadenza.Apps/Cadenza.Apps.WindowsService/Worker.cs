@@ -1,14 +1,18 @@
-﻿namespace Cadenza.Apps.WindowsService;
+﻿using Microsoft.Extensions.Logging;
+
+namespace Cadenza.Apps.WindowsService;
 
 public class Worker : BackgroundService
 {
     private readonly IEnumerable<IService> _services;
     private readonly IOptions<ServiceSettings> _settings;
+    private readonly ILogger<Worker> _logger;
 
-    public Worker(IEnumerable<IService> services, IOptions<ServiceSettings> settings)
+    public Worker(IEnumerable<IService> services, IOptions<ServiceSettings> settings, ILogger<Worker> logger)
     {
         _services = services;
         _settings = settings;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -17,6 +21,8 @@ public class Worker : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
+            _logger.LogInformation("Starting processing");
+
             try
             {
                 foreach (var updater in _services)
@@ -24,13 +30,18 @@ public class Worker : BackgroundService
                     await updater.Run();
 
                     if (stoppingToken.IsCancellationRequested)
+                    {
+                        _logger.LogInformation("Processing cancelled");
                         return;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError(ex, "Processing errored");
             }
+
+            _logger.LogInformation("Finished processing");
 
             await Task.Delay(runFrequency, stoppingToken);
         }
