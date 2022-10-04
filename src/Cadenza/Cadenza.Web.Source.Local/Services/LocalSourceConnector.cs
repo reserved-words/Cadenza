@@ -37,6 +37,9 @@ internal class LocalSourceConnector : IConnector
     public async Task Connect()
     {
         var url = _url.Build(_apiSettings.Value.BaseUrl, _apiSettings.Value.Endpoints.Connect);
-        await _http.GetString(url);
+        var response = await _http.Get(url);
+
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Failed to connect to local source");
     }
 }

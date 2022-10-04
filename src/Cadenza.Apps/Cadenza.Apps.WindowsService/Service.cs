@@ -21,6 +21,7 @@ public static class Service
             })
             .UseWindowsService()
             .UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)
+                .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.File(ctx.Configuration.LogFilePath(), rollingInterval: RollingInterval.Day));
     }
