@@ -21,7 +21,7 @@ public class Worker : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            _logger.LogInformation("Starting processing");
+            _logger.LogInformation("Started processing");
 
             try
             {

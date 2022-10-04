@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-var builder = Service.CreateBuilder(args, services =>
+﻿var builder = Service.CreateBuilder(args, services =>
 {
     var configuration = services.RegisterConfiguration();
 
@@ -12,9 +10,5 @@ var builder = Service.CreateBuilder(args, services =>
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
         .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
 });
-
-builder.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console()
-    .ReadFrom.Configuration(ctx.Configuration));
 
 builder.Build().Run();
