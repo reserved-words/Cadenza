@@ -6,15 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Cadenza</title>
 
-    <base href="/Cadenza/" />
-    <!--<base href="/" />-->
+    <script id="updateBaseScript">
+
+        // Hacky workaround for issue when deployed to IIS
+
+        var deployedBasePath = "/Cadenza/";
+        var localBasePath = "/";
+
+        var baseElement = document.createElement("base");
+        baseElement.setAttribute("href", deployedBasePath);
+
+        if (window.location.href.indexOf("localhost:") >= 0) {
+            baseElement.setAttribute("href", localBasePath);
+        }
+
+        var thisElement = document.getElementById("updateBaseScript");
+        thisElement.parentElement.insertBefore(baseElement, thisElement.nextSibling);
+
+    </script>
 
     <link href="images/favicon.ico" rel="icon" />
-    
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
-    
+
     <link href="lib/fontawesome/css/svg-with-js.min.css" rel="stylesheet">
     <link href="lib/fontawesome/css/all.min.css" rel="stylesheet">
 

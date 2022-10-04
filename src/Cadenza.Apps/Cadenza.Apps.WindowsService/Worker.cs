@@ -42,6 +42,7 @@ public class Worker : BackgroundService
             }
 
             _logger.LogInformation("Finished processing");
+            _logger.LogInformation("---------------------------------------------");
 
             await Task.Delay(runFrequency, stoppingToken);
         }
