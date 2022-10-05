@@ -1,7 +1,58 @@
-﻿@inherits LayoutComponentBase
+﻿@using Cadenza.Web.Common.Interfaces.Startup
+@inherits LayoutComponentBase
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@Body
+<MudLayout>
+    <MudAppBar Elevation="1" Color="@Color.Dark">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.History" Color="Color.Inherit" Edge="Edge.Start" OnClick="@History" />
+        <MudIconButton Icon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" Edge="Edge.Start" OnClick="@CurrentTrack" />
+        <MudIconButton Icon="@Icons.Material.Filled.LibraryBooks" Color="Color.Inherit" Edge="Edge.Start" OnClick="@Library" />
+        <MudSpacer />
+        <Search />
+        <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Color="Color.Inherit" Edge="Edge.End" />
+        <MudIconButton Icon="@Icons.Material.Filled.Clear" Color="Color.Inherit" Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer Open="@true" Elevation="2" Class="pa-2">
+        <MudContainer Class="ma-0 pa-0 mb-2">
+            <CurrentlyPlayingHeader />
+        </MudContainer>
+        <MudContainer Class="ma-0 pa-0 mb-2">
+            <Player />
+        </MudContainer>
+        <MudContainer Class="ma-0 pa-0 mb-2">
+            <Shuffle />
+        </MudContainer>
+    </MudDrawer>
+    <MudMainContent>
+
+        @Body
+
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+
+    [Inject]
+    public IMessenger Messenger { get; set; }
+
+    private async Task History()
+    {
+        await Messenger.Send(this, new ViewTabEventArgs(Tab.History));
+    }
+
+    private async Task CurrentTrack()
+    {
+        await Messenger.Send(this, new ViewTabEventArgs(Tab.CurrentTrack));
+    }
+
+    private async Task Library()
+    {
+        await Messenger.Send(this, new ViewTabEventArgs(Tab.Library));
+    }
+}

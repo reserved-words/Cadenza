@@ -1,4 +1,66 @@
 ﻿@page "/"
 @page "/player"
+@using Cadenza.Web.Common.Interfaces.Startup
 
-<MainComponent />
+@if (IsInitialised)
+{
+    <MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
+        <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
+            <HistoryTab />
+        </MudTabPanel>
+        <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
+            <CurrentlyPlayingTab />
+        </MudTabPanel>
+        <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
+            <LibraryTab />
+        </MudTabPanel>
+    </MudTabs>
+}
+
+@code {
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Inject]
+    public IStartupConnectService ConnectService { get; set; }
+
+    [Inject]
+    public IProgressDialogService DialogService { get; set; }
+
+    [Inject]
+    public IMessenger Messenger { get; set; }
+
+    MudTabs tabs;
+
+    protected bool IsInitialised { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Messenger.Subscribe<ViewTabEventArgs>(OnViewTab);
+        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
+
+        await OnStartup();
+    }
+
+    protected async Task OnStartup()
+    {
+        var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
+        IsInitialised = success;
+    }
+
+    private Task OnViewItem(object sender, ViewItemEventArgs args)
+    {
+        if (Tab.Library.Equals(tabs.ActivePanel.ID))
+            return Task.CompletedTask;
+
+        tabs.ActivatePanel(Tab.Library);
+        return Task.CompletedTask;
+    }
+
+    private Task OnViewTab(object sender, ViewTabEventArgs args)
+    {
+        tabs.ActivatePanel(args.Tab);
+        return Task.CompletedTask;
+    }
+}

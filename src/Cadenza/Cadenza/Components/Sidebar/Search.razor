@@ -9,7 +9,7 @@
     {
         <MudAutocomplete T="PlayerItem"
                          Class="mt-0 pt-0 pb-2"
-                         Label="Search library"
+                         Label="Search"
                          @bind-Value="Result"
                          SearchFunc="@Search"
                          ToStringFunc="@(e => e == null ? null : e.Name)"
@@ -43,9 +43,9 @@
             </ItemTemplate>
         </MudAutocomplete>
 
-        @if (Result != null)
+@*        @if (Result != null)
         {
             <SearchResult Result="@Result" OnClear="@OnClear" />
-        }
+        }*@
     }
 </MudContainer>
