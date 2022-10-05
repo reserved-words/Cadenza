@@ -6,13 +6,13 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" Color="@Color.Dark" DisableGutters="@true">
-        <MudButton StartIcon="@Icons.Material.Filled.History" Color="Color.Inherit" OnClick="@History" Class="mx-3">History</MudButton>
-        <MudButton Color="Color.Inherit" OnClick="@CurrentTrack" Class="mx-3">
+    <MudAppBar Elevation="1" DisableGutters="@true">
+        <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="mx-3">History</MudButton>
+        <MudButton OnClick="@CurrentTrack" Class="mx-3">
             <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
             Playing
         </MudButton>
-        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" Color="Color.Inherit" OnClick="@Library" Class="mx-3">Library</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="mx-3">Library</MudButton>
         <MudSpacer />
         <Search />
     </MudAppBar>

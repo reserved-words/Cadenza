@@ -5,10 +5,10 @@
 @*Position relative needed to keep overlay inside card*@
 
 <MudCard Elevation="3" Class="pa-0 ma-0 mb-3" Style="position: relative;">
-    <MudOverlay Visible="@Loading" LightBackground="true" Absolute="true">
+    <MudOverlay Visible="@Loading" Absolute="true">
         <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
     </MudOverlay>
-    <MudOverlay Visible="@Empty" LightBackground="true" Absolute="true">
+    <MudOverlay Visible="@Empty" Absolute="true">
     </MudOverlay>
     <MudCardHeader Class="pa-2">
         <CardHeaderContent>
