@@ -10,7 +10,7 @@ public class CurrentlyPlayingTabBase : ComponentBase
     [Inject]
     public ICurrentTrackStore Store { get; set; }
 
-    public TrackFull Model { get; set; } = new();
+    public TrackFull Model { get; set; }
 
     protected override void OnInitialized()
     {

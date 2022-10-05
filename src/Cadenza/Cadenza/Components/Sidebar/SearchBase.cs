@@ -84,6 +84,9 @@ public class SearchBase : ComponentBase
 
     protected async Task OnPlay()
     {
+        if (Result == null)
+            return;
+
         switch (Result.Type)
         {
             case PlayerItemType.Grouping:

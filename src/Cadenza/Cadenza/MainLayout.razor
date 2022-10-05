@@ -6,27 +6,27 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" Color="@Color.Dark">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.History" Color="Color.Inherit" Edge="Edge.Start" OnClick="@History" />
-        <MudIconButton Icon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" Edge="Edge.Start" OnClick="@CurrentTrack" />
-        <MudIconButton Icon="@Icons.Material.Filled.LibraryBooks" Color="Color.Inherit" Edge="Edge.Start" OnClick="@Library" />
+    <MudAppBar Elevation="1" Color="@Color.Dark" DisableGutters="@true">
+        <MudButton StartIcon="@Icons.Material.Filled.History" Color="Color.Inherit" OnClick="@History" Class="mx-3">History</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" OnClick="@CurrentTrack" Class="mx-3">Playing</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" Color="Color.Inherit" OnClick="@Library" Class="mx-3">Library</MudButton>
         <MudSpacer />
         <Search />
-        <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Color="Color.Inherit" Edge="Edge.End" />
-        <MudIconButton Icon="@Icons.Material.Filled.Clear" Color="Color.Inherit" Edge="Edge.End" />
     </MudAppBar>
-    <MudDrawer Open="@true" Elevation="2" Class="pa-2">
-        <MudContainer Class="ma-0 pa-0 mb-2">
+    <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
+        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-0">
             <CurrentlyPlayingHeader />
         </MudContainer>
-        <MudContainer Class="ma-0 pa-0 mb-2">
+        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-0">
             <Player />
         </MudContainer>
-        <MudContainer Class="ma-0 pa-0 mb-2">
+        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-1">
             <Shuffle />
         </MudContainer>
+        <MudContainer Class="ma-0 pa-0 flex-grow-0">
+            <Toolbar />
+        </MudContainer>
+
     </MudDrawer>
     <MudMainContent>
 
