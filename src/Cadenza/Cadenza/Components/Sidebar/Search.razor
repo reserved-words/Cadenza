@@ -22,22 +22,22 @@
             <ItemTemplate Context="e">
                 <MudContainer Class="d-flex flex-row pa-0 ma-0">
                     <MudIcon Icon="@e.Type.GetIcon()"
-                         Class="mb-n1 mr-2"
-                         Color="@Color.Dark" />
+                             Class="mb-n1 mr-2"
+                             Color="@Color.Surface" />
                     <MudContainer Class="pa-0 ma-0">
                         <MudText Color=Color.Dark
                              Typo="@Typo.body1"
                              Class="pa-0 ma-0">
                             @e.Name
                         </MudText>
-                        <MudText Color=Color.Dark
-                             Typo="@Typo.body2"
-                             Class="pa-0 ma-0">
+                        <MudText Color=Color.Surface
+                                 Typo="@Typo.body2"
+                                 Class="pa-0 ma-0">
                             @e.Artist
                         </MudText>
-                        <MudText Color=Color.Dark
-                             Typo="@Typo.body2"
-                             Class="pa-0 ma-0">
+                        <MudText Color=Color.Surface
+                                 Typo="@Typo.body2"
+                                 Class="pa-0 ma-0">
                             @e.AlbumDisplay
                         </MudText>
                     </MudContainer>

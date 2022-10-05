@@ -1,20 +1,23 @@
 ﻿@using Cadenza.Web.Common.Interfaces.Startup
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider IsDarkMode="@true" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
     <MudAppBar Elevation="1" Color="@Color.Dark" DisableGutters="@true">
         <MudButton StartIcon="@Icons.Material.Filled.History" Color="Color.Inherit" OnClick="@History" Class="mx-3">History</MudButton>
-        <MudButton StartIcon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" OnClick="@CurrentTrack" Class="mx-3">Playing</MudButton>
+        <MudButton Color="Color.Inherit" OnClick="@CurrentTrack" Class="mx-3">
+            <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
+            Playing
+        </MudButton>
         <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" Color="Color.Inherit" OnClick="@Library" Class="mx-3">Library</MudButton>
         <MudSpacer />
         <Search />
     </MudAppBar>
     <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
-        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-0">
+        <MudContainer Class="ma-0 pa-0 px-2 my-2 flex-grow-0">
             <CurrentlyPlayingHeader />
         </MudContainer>
         <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-0">
@@ -36,10 +39,15 @@
 </MudLayout>
 
 @code {
-
+    protected override void OnInitialized()
+    {
+        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
+    }
 
     [Inject]
     public IMessenger Messenger { get; set; }
+
+    protected bool IsCurrentlyPlaying { get; set; }
 
     private async Task History()
     {
@@ -54,5 +62,12 @@
     private async Task Library()
     {
         await Messenger.Send(this, new ViewTabEventArgs(Tab.Library));
+    }
+
+    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
+    {
+        IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }

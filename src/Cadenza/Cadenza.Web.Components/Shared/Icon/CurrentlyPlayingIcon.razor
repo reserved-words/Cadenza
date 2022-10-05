@@ -1,0 +1,17 @@
+﻿
+@if (Playing)
+{
+    <img src="images/playing.gif" class="@Class" />
+}
+else
+{
+    <MudIcon Icon="@Icons.Material.Filled.BarChart" Style="margin-right: 0.5rem;" />
+}
+
+@code {
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public bool Playing { get; set; }
+}
