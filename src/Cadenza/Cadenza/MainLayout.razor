@@ -1,5 +1,5 @@
-﻿@using Cadenza.Web.Common.Interfaces.Play
-@using Cadenza.Web.Common.Interfaces.Startup
+﻿@using Cadenza.Layout
+
 @inherits LayoutComponentBase
 
 <MudThemeProvider IsDarkMode="@true" />
@@ -8,37 +8,10 @@
 
 <MudLayout>
     <MudAppBar Elevation="1" DisableGutters="@true">
-        <MudMenu Icon="@Icons.Material.Filled.Menu" Variant="Variant.Filled" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.TopLeft" Size="Size.Large" Class="cdz-menu">
-            <MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="PlayLibrary">Library</MudMenuItem>
-            <MudDivider Class="my-2" />
-            @foreach (var grouping in Groupings)
-            {
-                <MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="@(() => PlayGrouping(grouping))">@grouping</MudMenuItem>    
-            }
-        </MudMenu>
-        <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
-        <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
-            <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
-            Playing
-        </MudButton>
-        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
-        <MudSpacer />
-        <Search />
+        <MainMenu />
     </MudAppBar>
     <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
-        <MudContainer Class="ma-0 pa-0 px-2 my-2 flex-grow-0">
-            <CurrentlyPlayingHeader />
-        </MudContainer>
-        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-0">
-            <Player />
-        </MudContainer>
-        <MudContainer Class="ma-0 pa-0 px-2 mb-2 flex-grow-1">
-            <Shuffle />
-        </MudContainer>
-        <MudContainer Class="ma-0 pa-0 flex-grow-0">
-            <Toolbar />
-        </MudContainer>
-
+        <Sidebar />
     </MudDrawer>
     <MudMainContent>
 
@@ -47,70 +20,3 @@
     </MudMainContent>
 </MudLayout>
 
-@code {
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
-
-        Groupings = Enum.GetValues<Grouping>()
-            .Where(g => g != Grouping.None)
-            .OrderBy(g => g.ToString())
-            .ToList();
-    }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IItemPlayer Player { get; set; }
-
-    private bool IsCurrentlyPlaying { get; set; }
-
-    private List<Grouping> Groupings { get; set; }
-
-    private Tab ActiveTab = Tab.History;
-
-    private async Task History()
-    {
-        await UpdateActiveTab(Tab.History);
-    }
-
-    private async Task CurrentTrack()
-    {
-        await UpdateActiveTab(Tab.CurrentTrack);
-    }
-
-    private async Task Library()
-    {
-        await UpdateActiveTab(Tab.Library);
-    }
-
-    private string MenuItemClass(Tab tab)
-    {
-        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
-    }
-
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private async Task PlayLibrary()
-    {
-        await Player.PlayAll();
-    }
-
-    private async Task PlayGrouping(Grouping grouping)
-    {
-        await Player.PlayGrouping(grouping);
-    }
-
-    private async Task UpdateActiveTab(Tab tab)
-    {
-        await Messenger.Send(this, new ViewTabEventArgs(tab));
-        ActiveTab = tab;
-        StateHasChanged();
-    }
-}

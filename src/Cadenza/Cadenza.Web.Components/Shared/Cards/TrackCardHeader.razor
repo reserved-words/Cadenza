@@ -4,7 +4,7 @@
                 Source="@Model.Source">
     <ChildContent>
         <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
-        <MudText Typo="Typo.body1">@Model.ArtistName</MudText>
+        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
 
         @if (!TitleOnly)
         {

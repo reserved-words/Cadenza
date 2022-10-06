@@ -1,0 +1,35 @@
+﻿@using Cadenza.Web.Common.Interfaces.Play
+
+<MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="PlayLibrary">Library</MudMenuItem>
+<MudDivider Class="my-2" />
+@foreach (var grouping in Groupings)
+{
+    <MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="@(() => PlayGrouping(grouping))">@grouping</MudMenuItem>    
+}
+
+@code {
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Groupings = Enum.GetValues<Grouping>()
+            .Where(g => g != Grouping.None)
+            .OrderBy(g => g.ToString())
+            .ToList();
+    }
+
+    private List<Grouping> Groupings { get; set; }
+
+    private async Task PlayLibrary()
+    {
+        await Player.PlayAll();
+    }
+
+    private async Task PlayGrouping(Grouping grouping)
+    {
+        await Player.PlayGrouping(grouping);
+    }
+
+}
