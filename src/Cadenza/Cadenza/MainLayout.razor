@@ -1,4 +1,5 @@
-﻿@using Cadenza.Web.Common.Interfaces.Startup
+﻿@using Cadenza.Web.Common.Interfaces.Play
+@using Cadenza.Web.Common.Interfaces.Startup
 @inherits LayoutComponentBase
 
 <MudThemeProvider IsDarkMode="@true" />
@@ -7,12 +8,20 @@
 
 <MudLayout>
     <MudAppBar Elevation="1" DisableGutters="@true">
-        <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="mx-3">History</MudButton>
-        <MudButton OnClick="@CurrentTrack" Class="mx-3">
+        <MudMenu Icon="@Icons.Material.Filled.Menu" Variant="Variant.Filled" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.TopLeft" Size="Size.Large" Class="cdz-menu">
+            <MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="PlayLibrary">Library</MudMenuItem>
+            <MudDivider Class="my-2" />
+            @foreach (var grouping in Groupings)
+            {
+                <MudMenuItem Icon="@Icons.Material.Filled.Shuffle" OnClick="@(() => PlayGrouping(grouping))">@grouping</MudMenuItem>    
+            }
+        </MudMenu>
+        <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
+        <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
             <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
             Playing
         </MudButton>
-        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="mx-3">Library</MudButton>
+        <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
         <MudSpacer />
         <Search />
     </MudAppBar>
@@ -42,26 +51,43 @@
     protected override void OnInitialized()
     {
         Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
+
+        Groupings = Enum.GetValues<Grouping>()
+            .Where(g => g != Grouping.None)
+            .OrderBy(g => g.ToString())
+            .ToList();
     }
 
     [Inject]
     public IMessenger Messenger { get; set; }
 
-    protected bool IsCurrentlyPlaying { get; set; }
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    private bool IsCurrentlyPlaying { get; set; }
+
+    private List<Grouping> Groupings { get; set; }
+
+    private Tab ActiveTab = Tab.History;
 
     private async Task History()
     {
-        await Messenger.Send(this, new ViewTabEventArgs(Tab.History));
+        await UpdateActiveTab(Tab.History);
     }
 
     private async Task CurrentTrack()
     {
-        await Messenger.Send(this, new ViewTabEventArgs(Tab.CurrentTrack));
+        await UpdateActiveTab(Tab.CurrentTrack);
     }
 
     private async Task Library()
     {
-        await Messenger.Send(this, new ViewTabEventArgs(Tab.Library));
+        await UpdateActiveTab(Tab.Library);
+    }
+
+    private string MenuItemClass(Tab tab)
+    {
+        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
     }
 
     private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
@@ -69,5 +95,22 @@
         IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
         StateHasChanged();
         return Task.CompletedTask;
+    }
+
+    private async Task PlayLibrary()
+    {
+        await Player.PlayAll();
+    }
+
+    private async Task PlayGrouping(Grouping grouping)
+    {
+        await Player.PlayGrouping(grouping);
+    }
+
+    private async Task UpdateActiveTab(Tab tab)
+    {
+        await Messenger.Send(this, new ViewTabEventArgs(tab));
+        ActiveTab = tab;
+        StateHasChanged();
     }
 }

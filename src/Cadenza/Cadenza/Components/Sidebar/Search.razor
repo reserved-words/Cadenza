@@ -1,6 +1,6 @@
 ﻿@inherits SearchBase
 
-<MudToolBar>
+<MudToolBar DisableGutters="true" Class="mr-2 flex-grow-1">
 
     @if (IsLoading)
     {
@@ -46,7 +46,7 @@
         </MudAutocomplete>
     }
 
-    <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" Color="Color.Inherit" Class="mx-2" OnClick="@(() => OnPlay())">Play</MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.Clear" Color="Color.Inherit" Class="mx-2" OnClick="@(() => OnClear())">Clear</MudButton>
+    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Class="mx-0" OnClick="@(() => OnPlay())" />
+    <MudIconButton Icon="@Icons.Material.Filled.Clear" Class="mx-0" OnClick="@(() => OnClear())" />
 
 </MudToolBar>
