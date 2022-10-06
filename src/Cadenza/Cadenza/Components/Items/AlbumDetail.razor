@@ -4,10 +4,13 @@
     <AppCard>
         <HeaderContent>
             <AlbumCardHeader Model="@Album"
-                             TitleOnly="false" />
+                             TitleOnly="false"
+                             TabHeading="true" />
         </HeaderContent>
         <ChildContent>
             <AlbumArtworkView Model="@Album" />
+            <MudDivider Class="my-2" />
+            <TagsView Model="@null" />
         </ChildContent>
     </AppCard>
 }

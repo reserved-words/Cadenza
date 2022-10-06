@@ -5,9 +5,16 @@
 @if (Model != null)
 {
     <ItemCardHeader Type="@PlayerItemType.Artist"
-                Id="@Model.Id">
+                    Id="@Model.Id">
         <ChildContent>
-            <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+            @if (TabHeading)
+            {
+                <MudText Typo="@Typo.h5">@Model.Name</MudText>
+            }
+            else
+            {
+                <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+            }
 
             @if (!TitleOnly)
             {
@@ -29,6 +36,9 @@
 
     [Parameter]
     public bool TitleOnly { get; set; }
+
+    [Parameter]
+    public bool TabHeading { get; set; }
 
     protected override void OnInitialized()
     {
