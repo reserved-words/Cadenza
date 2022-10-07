@@ -1,8 +1,5 @@
 ﻿@using Cadenza.Web.Common.Interfaces.Startup
 
-<MudMenu Icon="@Icons.Material.Filled.Menu" Variant="Variant.Filled" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.TopLeft" Size="Size.Large" Class="cdz-menu">
-    <PlayMenu />
-</MudMenu>
 <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
 <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
     <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
@@ -11,11 +8,15 @@
 <MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
 <MudSpacer />
 <Search />
+<MudMenu Icon="@Icons.Material.Filled.Menu" Variant="Variant.Filled" AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.TopLeft" Size="Size.Large" Class="cdz-menu">
+    <PlayMenu />
+</MudMenu>
 
 @code {
     protected override void OnInitialized()
     {
         Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
+        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
     }
 
     [Inject]
@@ -50,6 +51,14 @@
         IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
         StateHasChanged();
         return Task.CompletedTask;
+    }
+
+    private async Task OnViewItem(object sender, ViewItemEventArgs args)
+    {
+        if (ActiveTab != Tab.Library)
+        {
+            await UpdateActiveTab(Tab.Library);
+        }
     }
 
     private async Task UpdateActiveTab(Tab tab)

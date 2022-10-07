@@ -2,7 +2,7 @@
     <HeaderContent>
         <TrackCardHeader Model="@Model"
                          TitleOnly="false"
-                         TabHeading="true" />
+                         TabHeading="@TabHeading" />
     </HeaderContent>
     <ChildContent>
         <TagsView Model="@Model.Tags" />
@@ -12,4 +12,7 @@
 @code {
     [Parameter]
     public TrackInfo Model { get; set; } = new();
+
+    [Parameter]
+    public bool TabHeading { get; set; }
 }

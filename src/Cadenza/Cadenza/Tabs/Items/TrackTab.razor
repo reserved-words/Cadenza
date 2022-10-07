@@ -5,7 +5,7 @@
 
     <TabGridColumn md="4">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackDetail Model="@Model.Track" />
+            <TrackDetail Model="@Model.Track" TabHeading="true" />
         </TabGridRow>
         <TabGridRow RowHeight="@RowHeight.Fixed">
            <TrackArtist Model="@Model.Artist" />
@@ -17,10 +17,10 @@
 
         <MudPaper Elevation="25" Class="ma-0 px-3">
             <MudToolBar Dense="true" DisableGutters="true">
-                <MudButton StartIcon="@Icons.Material.Filled.PlayArrow">Play</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.PlayArrow">Play Track</MudButton>
                 <MudSpacer />
-                <MudButton StartIcon="@Icons.Material.Filled.Edit">Lyrics</MudButton>
-                <MudButton StartIcon="@Icons.Material.Filled.Edit">Edit</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Edit">Edit Track</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Edit">Edit Lyrics</MudButton>
             </MudToolBar>
         </MudPaper>
 
