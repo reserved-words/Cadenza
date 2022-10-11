@@ -1,7 +1,7 @@
 ﻿
-<ItemCard Type="@PlayerItemType.Track" Heading="Track" Tags="@Model.Tags">
+<ItemCard Type="@PlayerItemType.Track" Heading="Current Track" Tags="@Model.Tags">
     <ChildContent>
-        <TrackLink Typo="Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+        <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body1">@Model.Year</MudText>
     </ChildContent>

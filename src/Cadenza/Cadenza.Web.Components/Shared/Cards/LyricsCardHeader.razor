@@ -6,19 +6,11 @@
                  Size="@Size.Large"
                  Class="ma-1" />
     </MudPaper>
-    
+
     <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0">
-        <MudText Typo="@Typo.h6">Lyrics</MudText>
+        <MudText Typo="@Typo.h5">Lyrics</MudText>
     </MudPaper>
-    
+
 </MudContainer>
 
-@code {
-
-    [Parameter]
-    public LibrarySource Source { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
-}
+<MudDivider Class="mt-2 mb-1" />

@@ -1,17 +1,9 @@
 ﻿
 @if (Id != null)
 {
-    <ItemCardHeader Type="@PlayerItemType.Genre"
-                    Id="@Id">
+    <ItemCardHeader Type="@PlayerItemType.Genre" Heading="@Heading">
         <ChildContent>
-            @if (TabHeading)
-            {
-                <MudText Typo="@Typo.h5">@Id</MudText>
-            }
-            else
-            {
-                <ActionLink Typo="@Typo.h6" Text="@Id" OnClick="@View" />
-            }
+            <GenreLink Typo="@Typo.body2" Genre="@Id" />
         </ChildContent>
     </ItemCardHeader>
 }
@@ -24,7 +16,7 @@
     public string Id { get; set; }
 
     [Parameter]
-    public bool TabHeading { get; set; }
+    public string Heading { get; set; }
 
     public async Task View()
     {

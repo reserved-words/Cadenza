@@ -1,18 +1,12 @@
-﻿
-@if (Album != null)
+﻿@if (Album != null)
 {
-    <AppCard>
-        <HeaderContent>
-            <AlbumCardHeader Model="@Album"
-                             TitleOnly="false"
-                             TabHeading="true" />
-        </HeaderContent>
+    <ItemCard Type="@PlayerItemType.Album" Heading="@Album.Title" Tags="@null">
         <ChildContent>
-            <AlbumArtworkView Model="@Album" />
-            <MudDivider Class="my-2" />
-            <TagsView Model="@null" />
+            <ArtistLink Typo="Typo.body1" Id="@Album.ArtistId" Name="@Album.ArtistName" />
+            <MudText Typo="Typo.body2">@Album.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="Typo.body2">@Album.Year</MudText>
         </ChildContent>
-    </AppCard>
+    </ItemCard>
 }
 
 @code {

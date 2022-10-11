@@ -1,23 +1,26 @@
 ﻿@using Cadenza.Web.Common.Extensions
 @using Cadenza.Common.Domain.Extensions
 
-<AppCard>
-    <HeaderContent>
-        <AlbumCardHeader Model="@Album"
-                         TitleOnly="true" />
-    </HeaderContent>
+
+<ItemCard Type="@PlayerItemType.Album" Heading="Album" Tags="@null">
     <ChildContent>
-        <AlbumArtworkView Model="@Album" />
-        <AppCaptions>
-            <MudText Typo="@Typo.body1">@Album.ReleaseType.GetDisplayName()</MudText>
-            <MudText Typo="@Typo.body1">@Album.Year</MudText>
-            <MudText Typo="@Typo.body1">@Album.DiscPosition(AlbumTrack.Position)</MudText>
-            <MudText Typo="@Typo.body1">@Album.TrackPosition(AlbumTrack.Position)</MudText>
-        </AppCaptions>
-        <MudDivider Class="my-2" />
-        <TagsView Model="@null" />
+        <MudGrid>
+            <MudItem sm="6">
+                <AlbumArtworkView Model="@Album" />
+            </MudItem>
+            <MudItem sm="6">
+                <MudStack Spacing="0">
+                    <AlbumLink Typo="@Typo.h6" Id="@Album.Id" Title="@Album.Title" />
+                    <ArtistLink Typo="Typo.body1" Id="@Album.ArtistId" Name="@Album.ArtistName" />
+                    <MudText Typo="@Typo.body1">@Album.ReleaseType.GetDisplayName()</MudText>
+                    <MudText Typo="@Typo.body1">@Album.Year</MudText>
+                    <MudText Typo="@Typo.body1">@Album.DiscPosition(AlbumTrack.Position)</MudText>
+                    <MudText Typo="@Typo.body1">@Album.TrackPosition(AlbumTrack.Position)</MudText>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
     </ChildContent>
-</AppCard>
+</ItemCard>
 
 @code {
     [Parameter]

@@ -2,9 +2,10 @@
 <AppCardHeader Icon="@Type.GetIcon()">
 
     <MainContent>
+        <MudText Typo="@Typo.h5">@Heading</MudText>
         @ChildContent
     </MainContent>
-    
+
 </AppCardHeader>
 
 @code {
@@ -12,12 +13,8 @@
     public PlayerItemType Type { get; set; }
 
     [Parameter]
+    public string Heading { get; set; }
+
+    [Parameter]
     public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public LibrarySource? Source { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
 }

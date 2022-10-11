@@ -1,16 +1,7 @@
 ﻿
-<ItemCardHeader Type="@PlayerItemType.Grouping"
-                Id="@Id.ToString()">
+<ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Heading">
     <ChildContent>
-        @if (TabHeading)
-        {
-            <MudText Typo="@Typo.h5">@Id</MudText>
-        }
-        else
-        {
-            <GroupingLink Typo="@Typo.h6" Grouping="@Id" />
-        }
-
+        <GroupingLink Typo="@Typo.body2" Grouping="@Id" />
     </ChildContent>
 </ItemCardHeader>
 
@@ -20,5 +11,5 @@
     public Grouping Id { get; set; }
 
     [Parameter]
-    public bool TabHeading { get; set; }
+    public string Heading { get; set; }
 }

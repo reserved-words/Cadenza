@@ -1,15 +1,12 @@
 ﻿@if (Artist != null)
 {
-    <AppCardDivided>
-        <HeaderContent>
-            <ArtistCardHeader Model="@Artist"
-                              TitleOnly="false"
-                              TabHeading="true" />
-        </HeaderContent>
+    <ItemCard Type="@PlayerItemType.Artist" Heading="@Artist.Name" Tags="@null">
         <ChildContent>
-            <TagsView Model="@null" />
+            <MudText Typo="Typo.body1">@Artist.Location()</MudText>
+            <GroupingLink Typo="@Typo.body2" Grouping="@Artist.Grouping" />
+            <GenreLink Typo="@Typo.body2" Genre="@Artist.Genre" />
         </ChildContent>
-    </AppCardDivided>
+    </ItemCard>
 }
 
 @code {
