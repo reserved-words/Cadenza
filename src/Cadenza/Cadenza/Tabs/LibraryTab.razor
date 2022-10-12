@@ -1,5 +1,6 @@
 ﻿@inherits LibraryTabBase
 
-<DynamicTabs FixedItems="@FixedItems" 
-             DynamicItems="@DynamicItems"
-             SelectedItem="@SelectedItem" />
+@if (CurrentItem != null)
+{
+    <ItemTab Item="@CurrentItem.Value" />
+}

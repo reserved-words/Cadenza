@@ -54,4 +54,29 @@ internal class ItemPlayer : IItemPlayer
         var playlist = await _playlistCreator.CreateLibraryPlaylist();
         await _playCoordinator.Play(playlist);
     }
+
+    public async Task PlayItem(PlayerItemType type, string id)
+    {
+        switch (type)
+        {
+            case PlayerItemType.Grouping:
+                await PlayGrouping(id.Parse<Grouping>());
+                break;
+            case PlayerItemType.Genre:
+                await PlayGenre(id);
+                break;
+            case PlayerItemType.Artist:
+                await PlayArtist(id);
+                break;
+            case PlayerItemType.Album:
+                await PlayAlbum(id);
+                break;
+            case PlayerItemType.Track:
+                await PlayTrack(id);
+                break;
+            case PlayerItemType.Playlist:
+                break;
+        }
+
+    }
 }

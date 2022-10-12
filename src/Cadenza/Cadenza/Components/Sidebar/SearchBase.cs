@@ -18,11 +18,11 @@ public class SearchBase : ComponentBase
     [Inject]
     public IItemViewer Viewer { get; set; }
 
-    public bool IsLoading { get; set; }
+    protected bool IsLoading { get; set; }
 
     private PlayerItem _result;
 
-    protected PlayerItem Result 
+    protected PlayerItem Result
     {
         get { return _result; }
         set
@@ -33,23 +33,25 @@ public class SearchBase : ComponentBase
             {
                 Viewer.ViewSearchResult(Result);
             }
+
+            _result = null;
         }
     }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<SearchUpdateStartedEventArgs>(Cache_UpdateStarted);
-        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(Cache_UpdateCompleted);
+        Messenger.Subscribe<SearchUpdateStartedEventArgs>(OnCacheUpdateStarted);
+        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(OnCacheUpdateCompleted);
     }
 
-    private Task Cache_UpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
+    private Task OnCacheUpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
     {
         IsLoading = false;
         StateHasChanged();
         return Task.CompletedTask;
     }
 
-    private Task Cache_UpdateStarted(object sender, SearchUpdateStartedEventArgs e)
+    private Task OnCacheUpdateStarted(object sender, SearchUpdateStartedEventArgs e)
     {
         IsLoading = true;
         StateHasChanged();
@@ -58,7 +60,7 @@ public class SearchBase : ComponentBase
 
     protected Task<IEnumerable<PlayerItem>> Search(string value)
     {
-        if (IsCommon(value))
+        if (value.IsCommon())
             return null;
 
         var results = Cache.Items
@@ -68,12 +70,6 @@ public class SearchBase : ComponentBase
             .AsEnumerable();
 
         return Task.FromResult(results);
-    }
-
-    private static bool IsCommon(string value)
-    {
-        return value.Equals("the", StringComparison.InvariantCultureIgnoreCase)
-            || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
     }
 
     protected Task OnClear()
@@ -87,31 +83,7 @@ public class SearchBase : ComponentBase
         if (Result == null)
             return;
 
-        switch (Result.Type)
-        {
-            case PlayerItemType.Grouping:
-                await Player.PlayGrouping(Result.Id.Parse<Grouping>());
-                break;
-            case PlayerItemType.Genre:
-                await Player.PlayGenre(Result.Id);
-                break;
-            case PlayerItemType.Artist:
-                await Player.PlayArtist(Result.Id);
-                break;
-            case PlayerItemType.Album:
-                await Player.PlayAlbum(Result.Id);
-                break;
-            case PlayerItemType.Track:
-                await Player.PlayTrack(Result.Id);
-                break;
-            case PlayerItemType.Playlist:
-                break;
-        }
+        await Player.PlayItem(Result.Type, Result.Id);
     }
-
-    //protected async Task OnViewItem()
-    //{
-    //    await Viewer.ViewSearchResult(Result);
-    //}
 }
 
