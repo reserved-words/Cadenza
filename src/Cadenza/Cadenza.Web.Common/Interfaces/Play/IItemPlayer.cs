@@ -8,4 +8,5 @@ public interface IItemPlayer
     Task PlayArtist(string id);
     Task PlayAlbum(string id);
     Task PlayTrack(string id);
+    Task PlayItem(PlayerItemType type, string id);
 }

@@ -9,16 +9,16 @@
     else
     {
         <MudAutocomplete T="PlayerItem"
-                     Class="ma-0 pa-0"
-                     Label="Search"
-                     @bind-Value="Result"
-                     SearchFunc="@Search"
-                     ToStringFunc="@(e => e == null ? null : e.Name)"
-                     CoerceText=true
-                     CoerceValue=false
-                     Variant="@Variant.Text"
-                     MinCharacters=3
-                     ResetValueOnEmptyText=true>
+                         Class="ma-0 pa-0"
+                         Label="Search"
+                         @bind-Value="Result"
+                         SearchFunc="@Search"
+                         ToStringFunc="@(e => e == null ? null : e.Name)"
+                         CoerceText=true
+                         CoerceValue=false
+                         Variant="@Variant.Text"
+                         MinCharacters=3
+                         ResetValueOnEmptyText=true>
             <ItemTemplate Context="e">
                 <MudContainer Class="d-flex flex-row pa-0 ma-0">
                     <MudIcon Icon="@e.Type.GetIcon()"
@@ -46,7 +46,8 @@
         </MudAutocomplete>
     }
 
-    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Class="mx-0" OnClick="@(() => OnPlay())" />
-    <MudIconButton Icon="@Icons.Material.Filled.Clear" Class="mx-0" OnClick="@(() => OnClear())" />
+    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Class="mx-0" Disabled="@(Result == null)" OnClick="@(() => OnPlay())" />
+
+    <MudIconButton Icon="@Icons.Material.Filled.Clear" Class="mx-0" Disabled="@(Result == null)" OnClick="@(() => OnClear())" />
 
 </MudToolBar>
