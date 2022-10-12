@@ -7,23 +7,15 @@
             <GenreDetail Id="@Id" />
         </TabGridRow>
 
-        <MudSpacer />
-
         <MudDivider />
 
-        <MudPaper Elevation="25" Class="ma-0 px-3">
-            <MudToolBar Dense="true" DisableGutters="true">
-                <MudButton StartIcon="@Icons.Material.Filled.PlayArrow">Play</MudButton>
-                <MudSpacer />
-                <MudButton StartIcon="@Icons.Material.Filled.Edit">Edit</MudButton>
-            </MudToolBar>
-        </MudPaper>
+        <GenreToolbar Genre="@Id" />
 
     </TabGridColumn>
 
     <TabGridColumn md="9">
         <TabGridRow>
-            <GenreBands Artists="@Artists" />
+            <GenreArtists Artists="@Artists" />
         </TabGridRow>
     </TabGridColumn>
 

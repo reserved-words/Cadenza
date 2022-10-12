@@ -1,0 +1,19 @@
+﻿
+<BaseToolbar>
+    <Content>
+        <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Grouping</MudButton>
+    </Content>
+</BaseToolbar>
+
+@code {
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    [Parameter]
+    public Grouping Grouping { get; set; }
+
+    protected async Task OnPlay()
+    {
+        await Player.PlayGrouping(Grouping);
+    }
+}

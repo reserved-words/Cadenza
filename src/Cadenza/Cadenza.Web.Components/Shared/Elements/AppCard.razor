@@ -7,9 +7,12 @@
         </MudCardHeader>
     }
 
-    <MudCardContent Class="ma-0 pa-2">
-        @ChildContent
-    </MudCardContent>
+    @if (ChildContent != null)
+    {
+        <MudCardContent Class="ma-0 pa-2">
+            @ChildContent
+        </MudCardContent>
+    }
 
     @if (Actions != null)
     {

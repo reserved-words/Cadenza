@@ -1,28 +1,14 @@
 ﻿
-<AppCardScrollContainer>
+<AppCard>
     <HeaderContent>
-        <GroupingCardHeader Id="@Grouping" />
+        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Id.GetDisplayName()">
+            <ChildContent>
+            </ChildContent>
+        </ItemCardHeader>
     </HeaderContent>
-    <ChildContent>
-        <AppTable T="@string"
-                   Items="@Genres">
-            <RowTemplate>
-                <MudTd>
-                    <ActionLink Typo="@Typo.body1" Text="@context" OnClick="@(() => OnSelectGenre(context))" />
-                </MudTd>
-            </RowTemplate>
-        </AppTable>
-    </ChildContent>
-</AppCardScrollContainer>
+</AppCard>
 
 @code {
-
     [Parameter]
-    public List<string> Genres { get; set; } = new();
-
-    [Parameter]
-    public Grouping Grouping { get; set; }
-
-    [Parameter]
-    public Func<string, Task> OnSelectGenre { get; set; }
+    public Grouping Id { get; set; }
 }

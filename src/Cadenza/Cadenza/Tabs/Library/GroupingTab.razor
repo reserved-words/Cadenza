@@ -5,29 +5,18 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GroupingDetail Genres="@Genres"
-                            Grouping="@Grouping"
-                            OnSelectGenre="@OnSelectGenre" />
+            <GroupingDetail Id="@Grouping" />
         </TabGridRow>
-
-        <MudSpacer />
 
         <MudDivider />
 
-        <MudPaper Elevation="25" Class="ma-0 px-3">
-            <MudToolBar Dense="true" DisableGutters="true">
-                <MudButton StartIcon="@Icons.Material.Filled.PlayArrow">Play</MudButton>
-                <MudSpacer />
-                <MudButton StartIcon="@Icons.Material.Filled.Edit">Edit</MudButton>
-            </MudToolBar>
-        </MudPaper>
+        <GroupingToolbar Grouping="@Grouping" />
 
     </TabGridColumn>
 
     <TabGridColumn md="9">
         <TabGridRow RowHeight="@RowHeight.Full">
-            <GroupingArtists Artists="@Artists"
-                             Genre="@SelectedGenre" />
+            <GroupingGenres Genres="@Genres" />
         </TabGridRow>
     </TabGridColumn>
 

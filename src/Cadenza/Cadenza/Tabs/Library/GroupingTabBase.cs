@@ -15,10 +15,6 @@ public class GroupingTabBase : ComponentBase, IDisposable
 
     public List<string> Genres { get; set; } = new();
 
-    public List<Artist> Artists => _artistsByGenre[SelectedGenre];
-
-    public string SelectedGenre { get; set; }
-
     private Dictionary<string, List<Artist>> _artistsByGenre = new();
 
     private Guid _updateSubscriptionId = Guid.Empty;
@@ -35,17 +31,9 @@ public class GroupingTabBase : ComponentBase, IDisposable
 
     private async Task UpdateGrouping()
     {
-        var currentGenre = SelectedGenre;
-
         var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
         _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
         Genres = _artistsByGenre.Keys.ToList();
-
-        if (currentGenre != null && Genres.Contains(currentGenre))
-        {
-            SelectedGenre = currentGenre;
-        }
-
         StateHasChanged();
     }
 
@@ -58,13 +46,6 @@ public class GroupingTabBase : ComponentBase, IDisposable
             return;
 
         await UpdateGrouping();
-    }
-
-    protected Task OnSelectGenre(string id)
-    {
-        SelectedGenre = id;
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
     public void Dispose()
