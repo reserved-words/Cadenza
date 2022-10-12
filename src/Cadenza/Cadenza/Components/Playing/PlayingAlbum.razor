@@ -1,21 +1,20 @@
 ﻿@using Cadenza.Web.Common.Extensions
 @using Cadenza.Common.Domain.Extensions
 
+@inherits AlbumViewBase
+
 <ItemCard Type="@PlayerItemType.Album" Heading="Current Album" Tags="@null">
     <ChildContent>
-        <AlbumLink Typo="@Typo.h6" Id="@Album.Id" Title="@Album.Title" />
-        <ArtistLink Typo="Typo.body1" Id="@Album.ArtistId" Name="@Album.ArtistName" />
-        <MudText Typo="@Typo.body1">@Album.ReleaseType.GetDisplayName()</MudText>
-        <MudText Typo="@Typo.body1">@Album.Year</MudText>
-        <MudText Typo="@Typo.body1">@Album.DiscPosition(AlbumTrack.Position)</MudText>
-        <MudText Typo="@Typo.body1">@Album.TrackPosition(AlbumTrack.Position)</MudText>
+        <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+        <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
+        <MudText Typo="@Typo.body1">@Model.Year</MudText>
+        <MudText Typo="@Typo.body1">@Model.DiscPosition(AlbumTrack.Position)</MudText>
+        <MudText Typo="@Typo.body1">@Model.TrackPosition(AlbumTrack.Position)</MudText>
     </ChildContent>
 </ItemCard>
 
 @code {
-    [Parameter]
-    public AlbumInfo Album { get; set; } = new();
-
     [Parameter]
     public AlbumTrackLink AlbumTrack { get; set; } = new();
 }

@@ -1,0 +1,29 @@
+﻿@using Cadenza.Web.Common.Extensions
+@using Cadenza.Common.Domain.Extensions
+
+@inherits AlbumViewBase
+
+<ItemCard Type="@PlayerItemType.Album" Heading="Album" Tags="@null">
+    <ChildContent>
+        <MudGrid>
+            <MudItem sm="6">
+                <AlbumArtworkView Model="@Model" />
+            </MudItem>
+            <MudItem sm="6">
+                <MudStack Spacing="0">
+                    <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+                    <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+                    <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
+                    <MudText Typo="@Typo.body1">@Model.Year</MudText>
+                    <MudText Typo="@Typo.body1">@Model.DiscPosition(AlbumTrack.Position)</MudText>
+                    <MudText Typo="@Typo.body1">@Model.TrackPosition(AlbumTrack.Position)</MudText>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </ChildContent>
+</ItemCard>
+
+@code {
+    [Parameter]
+    public AlbumTrackLink AlbumTrack { get; set; } = new();
+}

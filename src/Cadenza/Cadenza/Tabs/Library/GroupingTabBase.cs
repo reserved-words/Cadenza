@@ -1,8 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces.Updates;
+﻿namespace Cadenza.Web.Components.Tabs.Items;
 
-namespace Cadenza.Web.Components.Tabs.Items;
-
-public class GroupingTabBase : ComponentBase
+public class GroupingTabBase : ComponentBase, IDisposable
 {
     [Inject]
     public IArtistRepository Repository { get; set; }
@@ -23,9 +21,11 @@ public class GroupingTabBase : ComponentBase
 
     private Dictionary<string, List<Artist>> _artistsByGenre = new();
 
+    private Guid _updateSubscriptionId = Guid.Empty;
+
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated, out _updateSubscriptionId);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -65,5 +65,13 @@ public class GroupingTabBase : ComponentBase
         SelectedGenre = id;
         StateHasChanged();
         return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        if (_updateSubscriptionId == Guid.Empty)
+            return;
+
+        Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
     }
 }

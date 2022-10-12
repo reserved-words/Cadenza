@@ -1,25 +1,14 @@
 ﻿
 @if (Id != null)
 {
-    <ItemCardHeader Type="@PlayerItemType.Genre" Heading="@Heading">
+    <ItemCardHeader Type="@PlayerItemType.Genre" Heading="@Id">
         <ChildContent>
-            <GenreLink Typo="@Typo.body2" Genre="@Id" />
+
         </ChildContent>
     </ItemCardHeader>
 }
 
 @code {
-    [Inject]
-    public IItemViewer Viewer { get; set; }
-
     [Parameter]
     public string Id { get; set; }
-
-    [Parameter]
-    public string Heading { get; set; }
-
-    public async Task View()
-    {
-        await Viewer.ViewGenre(Id);
-    }
 }

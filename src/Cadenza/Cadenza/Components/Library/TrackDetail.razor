@@ -1,4 +1,5 @@
-﻿
+﻿@inherits TrackViewBase
+
 <ItemCard Type="@PlayerItemType.Track" Heading="Track" Tags="@Model.Tags">
     <ChildContent>
         <TrackLink Typo="Typo.h6" Id="@Model.Id" Title="@Model.Title" />
@@ -6,8 +7,3 @@
         <MudText Typo="Typo.body1">@Model.Year</MudText>
     </ChildContent>
 </ItemCard>
-
-@code {
-    [Parameter]
-    public TrackInfo Model { get; set; } = new();
-}

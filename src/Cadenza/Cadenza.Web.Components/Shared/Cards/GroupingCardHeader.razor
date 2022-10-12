@@ -1,5 +1,5 @@
 ﻿
-<ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Heading">
+<ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Id.GetDisplayName()">
     <ChildContent>
         <GroupingLink Typo="@Typo.body2" Grouping="@Id" />
     </ChildContent>
@@ -9,7 +9,4 @@
 @code {
     [Parameter]
     public Grouping Id { get; set; }
-
-    [Parameter]
-    public string Heading { get; set; }
 }

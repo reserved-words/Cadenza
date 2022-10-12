@@ -1,4 +1,5 @@
-﻿
+﻿@inherits ArtistViewBase
+
 <ItemCard Type="@PlayerItemType.Artist" Heading="Artist" Tags="@null">
     <ChildContent>
         <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
@@ -7,8 +8,3 @@
         <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
     </ChildContent>
 </ItemCard>
-
-@code {
-    [Parameter]
-    public ArtistInfo Model { get; set; } = new();
-}

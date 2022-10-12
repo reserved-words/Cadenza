@@ -1,0 +1,12 @@
+﻿@inherits ArtistViewBase
+
+@if (Model != null)
+{
+    <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@null">
+        <ChildContent>
+            <MudText Typo="Typo.body1">@Model.Location()</MudText>
+            <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
+            <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
+        </ChildContent>
+    </ItemCard>
+}

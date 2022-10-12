@@ -1,0 +1,13 @@
+﻿@inherits AlbumViewBase
+
+@if (Model != null)
+{
+    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@null">
+        <ChildContent>
+             <AlbumArtworkView Model="@Model" />
+            <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+            <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="Typo.body2">@Model.Year</MudText>
+        </ChildContent>
+    </ItemCard>
+}
