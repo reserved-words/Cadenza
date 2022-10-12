@@ -1,0 +1,22 @@
+﻿@inherits GenreTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <GenreDetail Id="@Id" />
+        </TabGridRow>
+
+        <MudDivider />
+
+        <GenreToolbar Genre="@Id" />
+
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow>
+            <GenreArtists Artists="@Artists" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

@@ -1,4 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+﻿using Cadenza.Web.Common.Interfaces.Play;
+using Cadenza.Web.Common.Interfaces.Searchbar;
+using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -10,24 +12,46 @@ public class SearchBase : ComponentBase
     [Inject]
     public IMessenger Messenger { get; set; }
 
-    public bool IsLoading { get; set; }
+    [Inject]
+    public IItemPlayer Player { get; set; }
 
-    protected PlayerItem Result { get; set; }
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
+    protected bool IsLoading { get; set; }
+
+    private PlayerItem _result;
+
+    protected PlayerItem Result
+    {
+        get { return _result; }
+        set
+        {
+            _result = value;
+
+            if (_result != null)
+            {
+                Viewer.ViewSearchResult(Result);
+            }
+
+            _result = null;
+        }
+    }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<SearchUpdateStartedEventArgs>(Cache_UpdateStarted);
-        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(Cache_UpdateCompleted);
+        Messenger.Subscribe<SearchUpdateStartedEventArgs>(OnCacheUpdateStarted);
+        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(OnCacheUpdateCompleted);
     }
 
-    private Task Cache_UpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
+    private Task OnCacheUpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
     {
         IsLoading = false;
         StateHasChanged();
         return Task.CompletedTask;
     }
 
-    private Task Cache_UpdateStarted(object sender, SearchUpdateStartedEventArgs e)
+    private Task OnCacheUpdateStarted(object sender, SearchUpdateStartedEventArgs e)
     {
         IsLoading = true;
         StateHasChanged();
@@ -36,7 +60,7 @@ public class SearchBase : ComponentBase
 
     protected Task<IEnumerable<PlayerItem>> Search(string value)
     {
-        if (IsCommon(value))
+        if (value.IsCommon())
             return null;
 
         var results = Cache.Items
@@ -48,16 +72,18 @@ public class SearchBase : ComponentBase
         return Task.FromResult(results);
     }
 
-    private static bool IsCommon(string value)
-    {
-        return value.Equals("the", StringComparison.InvariantCultureIgnoreCase)
-            || value.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
-    }
-
     protected Task OnClear()
     {
         Result = null;
         return Task.CompletedTask;
+    }
+
+    protected async Task OnPlay()
+    {
+        if (Result == null)
+            return;
+
+        await Player.PlayItem(Result.Type, Result.Id);
     }
 }
 

@@ -12,15 +12,9 @@ body {
     padding: 0;
 }
 
-#app,
-div.mud-main-content,
-div.mud-tabs,
-div.mud-tabs-panels {
+.mud-drawer.mud-drawer-fixed.mud-drawer-responsive {
+    top: 0;
     height: 100%;
-    max-height: 100%;
-    overflow-y: hidden;
-    padding: 0;
-    margin: 0;
 }
 
 .fixed-height {
@@ -37,10 +31,23 @@ div.mud-tabs-panels {
     overflow-y: auto;
 }
 
-.mud-drawer.mud-drawer-fixed.mud-drawer-responsive {
-    top: 0;
+#app,
+div.mud-main-content,
+div.mud-tabs,
+div.mud-tabs-panels {
+    height: 100%;
+    max-height: 100%;
+}
+
+
+.main-tabs {
+    width: 100%;
     height: 100%;
 }
+
+    .main-tabs > .mud-tabs-toolbar {
+        display: none;
+    }
 
 div.tab-grid {
     margin: 0;

@@ -1,6 +1,7 @@
 ﻿@inherits SearchBase
 
-<MudContainer Class="ma-0 pa-0">
+<MudToolBar DisableGutters="true" Class="flex-grow-1">
+
     @if (IsLoading)
     {
         <MudText>Loading items...</MudText>
@@ -8,44 +9,45 @@
     else
     {
         <MudAutocomplete T="PlayerItem"
-                         Class="mt-0 pt-0 pb-2"
-                         Label="Search library"
+                         Class="ma-0 pa-0"
+                         Label="Search"
                          @bind-Value="Result"
                          SearchFunc="@Search"
                          ToStringFunc="@(e => e == null ? null : e.Name)"
                          CoerceText=true
                          CoerceValue=false
+                         Variant="@Variant.Text"
                          MinCharacters=3
                          ResetValueOnEmptyText=true>
             <ItemTemplate Context="e">
                 <MudContainer Class="d-flex flex-row pa-0 ma-0">
                     <MudIcon Icon="@e.Type.GetIcon()"
                              Class="mb-n1 mr-2"
-                             Color="@Color.Dark" />
+                             Color="@Color.Surface" />
                     <MudContainer Class="pa-0 ma-0">
-                        <MudText Color=Color.Dark
-                             Typo="@Typo.body1"
-                             Class="pa-0 ma-0">
+                        <MudText Color=Color.Surface
+                                 Typo="@Typo.body1"
+                                 Class="pa-0 ma-0">
                             @e.Name
                         </MudText>
-                        <MudText Color=Color.Dark
-                             Typo="@Typo.body2"
-                             Class="pa-0 ma-0">
+                        <MudText Color=Color.Surface
+                                 Typo="@Typo.body2"
+                                 Class="pa-0 ma-0">
                             @e.Artist
                         </MudText>
-                        <MudText Color=Color.Dark
-                             Typo="@Typo.body2"
-                             Class="pa-0 ma-0">
+                        <MudText Color=Color.Surface
+                                 Typo="@Typo.body2"
+                                 Class="pa-0 ma-0">
                             @e.AlbumDisplay
                         </MudText>
                     </MudContainer>
                 </MudContainer>
             </ItemTemplate>
         </MudAutocomplete>
-
-        @if (Result != null)
-        {
-            <SearchResult Result="@Result" OnClear="@OnClear" />
-        }
     }
-</MudContainer>
+
+    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Class="mx-0" Disabled="@(Result == null)" OnClick="@(() => OnPlay())" />
+
+    <MudIconButton Icon="@Icons.Material.Filled.Clear" Class="mx-0" Disabled="@(Result == null)" OnClick="@(() => OnClear())" />
+
+</MudToolBar>

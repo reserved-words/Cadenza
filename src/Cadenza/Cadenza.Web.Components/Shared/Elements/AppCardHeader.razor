@@ -1,0 +1,34 @@
+﻿<MudContainer Class="d-flex flex-row pa-0 ma-0">
+
+    @if (Icon != null)
+    {
+        <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 mr-2">
+            <MudIcon Icon="@Icon"
+                     Size="@Size.Large"
+                     Class="ma-1" />
+        </MudPaper>
+    }
+
+    <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0 d-flex flex-column">
+        @MainContent
+    </MudPaper>
+
+    @if (MenuContent != null)
+    {
+        <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
+            @MenuContent
+        </MudPaper>
+    }
+
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public RenderFragment MainContent { get; set; }
+
+    [Parameter]
+    public RenderFragment MenuContent { get; set; }
+}

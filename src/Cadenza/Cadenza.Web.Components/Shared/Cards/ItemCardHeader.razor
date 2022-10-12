@@ -2,45 +2,9 @@
 <AppCardHeader Icon="@Type.GetIcon()">
 
     <MainContent>
+        <MudText Typo="@Typo.h5">@Heading</MudText>
         @ChildContent
     </MainContent>
-    
-    <MenuContent>
-
-        @if (Type == PlayerItemType.Artist)
-        {
-            <MenuArtist Class="mt-auto"
-                        Id="@Id"
-                        Size="@Size.Large" />        
-        }
-        else if (Type == PlayerItemType.Album)
-        {
-            <MenuAlbum Class="mt-auto"
-                       Source="@Source.Value"
-                       Id="@Id"
-                       Size="@Size.Large" />
-        }
-        else if (Type == PlayerItemType.Track)
-        {
-            <MenuTrack Class="mt-auto"
-                       Source="@Source.Value"
-                       Id="@Id"
-                       Size="@Size.Large" />        
-        }
-        else if (Type == PlayerItemType.Grouping)
-        {
-            <MenuGrouping Class="mt-auto"
-                          Id="@Id"
-                          Size="@Size.Large" />        
-        }
-        else if (Type == PlayerItemType.Genre)
-        {
-            <MenuGenre Class="mt-auto"
-                       Id="@Id"
-                       Size="@Size.Large" />        
-        }
-
-    </MenuContent>
 
 </AppCardHeader>
 
@@ -49,12 +13,8 @@
     public PlayerItemType Type { get; set; }
 
     [Parameter]
+    public string Heading { get; set; }
+
+    [Parameter]
     public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public LibrarySource? Source { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
 }

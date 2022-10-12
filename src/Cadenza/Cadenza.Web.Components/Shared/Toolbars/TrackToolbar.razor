@@ -1,0 +1,41 @@
+﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+
+<BaseToolbar>
+    <Content>
+        <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Track</MudButton>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.Edit" OnClick="OnEditTrack">Edit Track</MudButton>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.EditNote" OnClick="OnEditLyrics">Edit Lyrics</MudButton>
+    </Content>
+</BaseToolbar>
+
+@code {
+    [Inject]
+    public ITrackRepository Repository { get; set; }
+
+    [Inject]
+    public IDialogService DialogService { get; set; }
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    [Parameter]
+    public TrackInfo Track { get; set; }
+
+    protected async Task OnPlay()
+    {
+        await Player.PlayTrack(Track.Id);
+    }
+
+    protected async Task OnEditTrack()
+    {
+
+    }
+
+    protected async Task OnEditLyrics()
+    {
+        var track = await Repository.GetTrack(Track.Id);
+        await DialogService.DisplayForm<EditLyrics, TrackInfo>(track.Track, "Edit Lyrics", false);
+    }
+}

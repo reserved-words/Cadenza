@@ -1,11 +1,15 @@
 ﻿@inherits ToolbarBase
 
-<MudPaper Elevation="3" Outlined="true" Class="d-flex flex-row ma-0 pa-0">
-    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnClearSession" Style="flex: unset;" Class="mr-auto" />
+<MudDivider Class="my-0" />
+
+<MudToolBar DisableGutters="true" Dense="true">
+    <MudIconButton Icon="@Icons.Material.Filled.Refresh" OnClick="@OnClearSession" Edge="Edge.Start" Class="ml-1" />
+
+    <MudSpacer />
 
     @foreach (var sourceStatus in ConnectorStatuses)
     {
         <ToolbarSource Model="@sourceStatus" />
     }
 
-</MudPaper>
+</MudToolBar>

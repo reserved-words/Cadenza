@@ -1,7 +1,22 @@
-﻿@inherits LayoutComponentBase
+﻿@using Cadenza.Layout
 
-<MudThemeProvider />
+@inherits LayoutComponentBase
+
+<MudThemeProvider IsDarkMode="@true" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@Body
+<MudLayout>
+    <MudAppBar Elevation="1" DisableGutters="@true">
+        <MainMenu />
+    </MudAppBar>
+    <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
+        <Sidebar />
+    </MudDrawer>
+    <MudMainContent>
+
+        @Body
+
+    </MudMainContent>
+</MudLayout>
+

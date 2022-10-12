@@ -1,0 +1,27 @@
+﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+
+<BaseToolbar>
+    <Content>
+        <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Album</MudButton>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.Edit" OnClick="OnEdit">Edit Album</MudButton>
+    </Content>
+</BaseToolbar>
+
+@code {
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    [Parameter]
+    public AlbumInfo Album { get; set; }
+
+    protected async Task OnPlay()
+    {
+        await Player.PlayAlbum(Album.Id);
+    }
+
+    protected async Task OnEdit()
+    {
+        
+    }
+}

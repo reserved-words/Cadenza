@@ -35,5 +35,5 @@ global using Cadenza.Common.Interfaces.Repositories;
 global using Cadenza.Web.Components.Interfaces;
 global using MudBlazor;
 
-global using Cadenza.Tabs.Main;
-global using Cadenza.Tabs.Items;
+global using Cadenza.Tabs;
+global using Cadenza.Tabs.Library;

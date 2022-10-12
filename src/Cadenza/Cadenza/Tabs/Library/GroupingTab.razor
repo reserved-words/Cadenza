@@ -1,0 +1,23 @@
+﻿
+@inherits GroupingTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <GroupingDetail Id="@Grouping" />
+        </TabGridRow>
+
+        <MudDivider />
+
+        <GroupingToolbar Grouping="@Grouping" />
+
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <GroupingGenres Genres="@Genres" />
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

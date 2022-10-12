@@ -20,14 +20,14 @@ public static class Startup
             .AddCoordinators();
 
         services
-            .AddTransient<ISearchSyncService, SearchSyncService>()
-            .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddTransient<IAppStore, Store>()
+            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddTransient<ICurrentTrackStore, CurrentTrackStore>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IItemPlayer, ItemPlayer>()
             .AddTransient<IItemViewer, ItemViewer>()
+            .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
+            .AddTransient<IPlaylistCreator, PlaylistCreator>()
+            .AddTransient<ISearchSyncService, SearchSyncService>()
             .AddTransient<IUrl, Url>();
 
         return services;

@@ -1,0 +1,18 @@
+﻿
+@if (Model != null && Model.Any())
+{
+    foreach (var tag in Model)
+    {
+        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag</MudChip>
+    }
+}
+else
+{
+    <MudChip Class="my-0" Color="@Color.Default" Size="@Size.Small">no tags</MudChip>
+}
+
+
+@code {
+    [Parameter]
+    public ICollection<string> Model { get; set; }
+}

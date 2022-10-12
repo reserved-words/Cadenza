@@ -48,7 +48,7 @@ public class ToolbarSourceBase : ComponentBase
         : Model.Status == ConnectorStatus.Disabled
         ? Color.Default
         : Model.Status == ConnectorStatus.Connected
-        ? Color.Success
+        ? Color.Surface
         : Color.Warning;
 
 

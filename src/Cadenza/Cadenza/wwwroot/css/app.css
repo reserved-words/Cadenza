@@ -9,16 +9,6 @@ html, body {
     font-size: 12px;
 }
 
-a, .btn-link {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
@@ -31,12 +21,12 @@ a, .btn-link {
     color: red;
 }
 
-.mud-icon-button {
-    flex: auto;
-}
-
 .mud-button-group-root.mud-button-group-override-styles.mud-button-group-filled.mud-button-group-filled-size-medium.mud-button-group-horizontal {
     width: 100%;
+}
+
+.mud-icon-button.player-control {
+    flex: auto;
 }
 
 img.artwork {
@@ -55,7 +45,7 @@ img.artist {
 }
 
 table tbody tr td .show-on-hover {
-    display:none;
+    display: none;
 }
 
 .mud-list-item {
@@ -68,10 +58,6 @@ table tbody tr td .show-on-hover {
     padding-bottom: 8px;
 }
 
-.mud-dynamic-tabs .mud-tabs-toolbar .mud-tab.mud-tab-fixed .mud-icon-button {
-    display: none;
-}
-
 .mud-tab {
     min-width: 40px;
 }
@@ -82,7 +68,7 @@ table tbody tr td .show-on-hover {
 }
 
 .mud-dialog .mud-dialog-content {
-    padding-top:0;
+    padding-top: 0;
     padding-bottom: 0;
 }
 
@@ -99,14 +85,32 @@ table tbody tr td {
     padding: 1rem;
 }
 
-table tbody tr td.td-int,
-table tbody tr td.td-icon,
-table tbody tr td.td-datetime {
-    text-align: right;
-    width: 1px;
+    table tbody tr td.td-int,
+    table tbody tr td.td-icon,
+    table tbody tr td.td-datetime {
+        text-align: right;
+        width: 1px;
+    }
+
+    table tbody tr td.td-img {
+        width: 1px;
+        padding: 1rem 1rem 0 1rem;
+    }
+
+.mud-list-item-icon {
+    min-width: 3rem;
 }
 
-table tbody tr td.td-img {
-    width: 1px;
-    padding: 1rem 1rem 0 1rem;
+.mud-list-item-text {
+    padding-right: 2rem;
+}
+
+.cdz-menu {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 0;
+}
+
+.cdz-menu.cdz-menu-active {
+    border-bottom: solid white 1px;
 }
