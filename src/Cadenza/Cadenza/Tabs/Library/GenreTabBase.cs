@@ -47,7 +47,7 @@ public class GenreTabBase : ComponentBase, IDisposable
 
     private async Task UpdateGenre()
     {
-        Artists = await Repository.GetArtistsByGenre(Id);
+        Artists = (await Repository.GetArtistsByGenre(Id)).OrderBy(a => a.Name).ToList();
 
         StateHasChanged();
     }
