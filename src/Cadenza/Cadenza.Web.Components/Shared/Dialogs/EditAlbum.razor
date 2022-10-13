@@ -1,41 +1,39 @@
-﻿@*@inherits EditAlbumBase
+﻿@inherits EditAlbumBase
 
-<WhipDialog Cancel="Cancel"
-            CancelCaption="Cancel"
-            Submit="Submit"
-            SubmitCaption="OK">
+<AppDialog Cancel="OnCancel"
+           CancelCaption="Cancel"
+           Submit="OnSubmit"
+           SubmitCaption="OK">
 
     <ChildContent>
-        <EditForm Model="@Model">
+        <EditForm Model="@EditableItem">
             <DataAnnotationsValidator />
-            <MudCard>
-                <MudCardContent>
+            <MudCard Class="pa-0">
+                <MudCardContent Class="pa-1">
+                    <MudTextField Label="Title"
+                                  ReadOnly="true"
+                                  Disabled="true"
+                                  @bind-Value="EditableItem.Title" />
                     <MudTextField Label="Artist"
                                   ReadOnly="true"
                                   Disabled="true"
-                                  Value="Model.Item.ArtistName" />
-                    <MudTextField Label="Title"
-                                  @bind-Value="Model.Title"
-                                  For="@(() => Model.Title)" />
+                                  @bind-Value="EditableItem.ArtistName" />
                     <MudSelect Label="Release Type"
-                               @bind-Value="Model.ReleaseType"
-                               For="@(() => Model.ReleaseType)">
+                               @bind-Value="EditableItem.ReleaseType"
+                               For="@(() => EditableItem.ReleaseType)">
                         @foreach (var type in Enum.GetValues<ReleaseType>())
                         {
                             <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
                         }
                     </MudSelect>
-                    <MudTextField T="@string"
-                                  MaxLength="4"
-                                  Label="Year"
-                                  InputMode="InputMode.numeric"
-                                  @bind-Value="Model.Year"
-                                  For="@(() => Model.Year)"
-                                  InputType="InputType.Number" />
+                    <MudTextField MaxLength="4"
+                                  Label="Release Year"
+                                  @bind-Value="EditableItem.Year"
+                                  For="@(() => EditableItem.Year)"
+                                  Mask="@(new PatternMask("0000"))" />
                 </MudCardContent>
             </MudCard>
         </EditForm>
     </ChildContent>
 
-</WhipDialog>
-*@
+</AppDialog>

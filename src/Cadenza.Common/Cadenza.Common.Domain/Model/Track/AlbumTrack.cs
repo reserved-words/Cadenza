@@ -4,7 +4,7 @@ public class AlbumTrack
 {
     public string TrackId { get; set; }
 
-    [ItemProperty(ItemProperty.TrackTitle)]
+    //[ItemProperty(ItemProperty.TrackTitle)]
     public string Title { get; set; }
     public string ArtistId { get; set; }
     public string ArtistName { get; set; }

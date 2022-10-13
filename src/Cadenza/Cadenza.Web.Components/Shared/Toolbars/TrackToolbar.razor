@@ -12,9 +12,6 @@
 
 @code {
     [Inject]
-    public ITrackRepository Repository { get; set; }
-
-    [Inject]
     public IDialogService DialogService { get; set; }
 
     [Inject]
@@ -35,7 +32,6 @@
 
     protected async Task OnEditLyrics()
     {
-        var track = await Repository.GetTrack(Track.Id);
-        await DialogService.DisplayForm<EditLyrics, TrackInfo>(track.Track, "Edit Lyrics", false);
+        await DialogService.DisplayForm<EditLyrics, TrackInfo>(Track, "Edit Lyrics", false);
     }
 }

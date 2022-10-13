@@ -30,9 +30,9 @@ internal class Id3Updater : IId3Updater
     {
         switch (ItemProperty)
         {
-            case ItemProperty.AlbumTitle:
-                trackData.Album.Title = value;
-                break;
+            //case ItemProperty.AlbumTitle:
+            //    trackData.Album.Title = value;
+            //    break;
             case ItemProperty.City:
                 commentData.City = value;
                 break;
@@ -57,9 +57,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.State:
                 commentData.State = value;
                 break;
-            case ItemProperty.TrackTitle:
-                trackData.Track.Title = value;
-                break;
+            //case ItemProperty.TrackTitle:
+            //    trackData.Track.Title = value;
+            //    break;
             default:
                 throw new NotImplementedException();
         }

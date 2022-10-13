@@ -2,7 +2,7 @@
 
 public class TrackInfo : Track
 {
-    [ItemProperty(ItemProperty.TrackYear)]
+    //[ItemProperty(ItemProperty.TrackYear)]
     public string Year { get; set; }
 
     [ItemProperty(ItemProperty.Lyrics)]

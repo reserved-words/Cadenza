@@ -10,6 +10,9 @@
 
 @code {
     [Inject]
+    public IDialogService DialogService { get; set; }
+
+    [Inject]
     public IItemPlayer Player { get; set; }
 
     [Parameter]
@@ -22,6 +25,6 @@
 
     protected async Task OnEdit()
     {
-        
+        await DialogService.DisplayForm<EditAlbum, AlbumInfo>(Album, "Edit Album");
     }
 }

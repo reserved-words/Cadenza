@@ -2,6 +2,7 @@
 
 public interface IUpdatesCoordinator
 {
-    Task UpdateArtist(ArtistUpdate artist);
-    Task UpdateLyrics(TrackUpdate artist);
+    Task UpdateAlbum(AlbumUpdate update);
+    Task UpdateArtist(ArtistUpdate update);
+    Task UpdateLyrics(TrackUpdate update);
 }
