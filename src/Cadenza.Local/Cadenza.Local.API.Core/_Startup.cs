@@ -24,7 +24,8 @@ namespace Cadenza.Local.API.Core
         {
             return services
                 .AddTransient<IImageSrcGenerator, ImageSrcGenerator>()
-                .AddTransient<IMusicDirectory, MusicDirectory>();
+                .AddTransient<IMusicDirectory, MusicDirectory>()
+                .AddTransient<IWebImageService, WebImageService>();
         }
     }
 }

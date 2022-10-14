@@ -5,6 +5,6 @@ namespace Cadenza.Local.API.Common.Interfaces;
 
 public interface IMusicFilesService
 {
-    TrackFull GetFileData(string filepath);
-    void UpdateFileData(string filepath, List<PropertyUpdate> updates);
+    Task<TrackFull> GetFileData(string filepath);
+    Task UpdateFileData(string filepath, List<PropertyUpdate> updates);
 }

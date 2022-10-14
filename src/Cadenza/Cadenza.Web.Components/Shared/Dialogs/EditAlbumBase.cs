@@ -78,6 +78,9 @@ public class EditAlbumBase : FormBase<AlbumInfo>
 
     protected Task OnUpdateUrl()
     {
+        // TODO
+        // Check it's actually an image file
+
         if (string.IsNullOrWhiteSpace(ArtworkUrl))
         {
             Alert.Error("No URL entered");

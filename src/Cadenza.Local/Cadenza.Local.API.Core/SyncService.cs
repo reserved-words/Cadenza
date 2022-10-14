@@ -22,21 +22,18 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public Task<TrackFull> GetTrack(string id)
+    public async Task<TrackFull> GetTrack(string id)
     {
         var path = _base64Converter.FromBase64(id);
-        var track = _musicLibrary.GetFileData(path);
-        return Task.FromResult(track);
+        return await _musicLibrary.GetFileData(path);
     }
 
-    public Task UpdateTracks(MultiTrackUpdates updates)
+    public async Task UpdateTracks(MultiTrackUpdates updates)
     {
         foreach (var trackId in updates.TrackIds)
         {
             var path = _base64Converter.FromBase64(trackId);
-            _musicLibrary.UpdateFileData(path, updates.Updates);
+            await _musicLibrary.UpdateFileData(path, updates.Updates);
         }
-
-        return Task.CompletedTask;
     }
 }

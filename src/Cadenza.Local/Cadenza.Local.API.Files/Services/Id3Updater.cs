@@ -4,21 +4,23 @@ internal class Id3Updater : IId3Updater
 {
     private readonly IId3TagsService _id3Service;
     private readonly ICommentProcessor _commentProcessor;
+    private readonly IWebImageService _webImageService;
 
-    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor)
+    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor, IWebImageService webImageService)
     {
         _id3Service = id3Service;
         _commentProcessor = commentProcessor;
+        _webImageService = webImageService;
     }
 
-    public void UpdateTags(string filepath, List<PropertyUpdate> updates)
+    public async Task UpdateTags(string filepath, List<PropertyUpdate> updates)
     {
         var data = _id3Service.GetId3Data(filepath);
         var commentData = _commentProcessor.GetData(data.Track.Comment);
 
         foreach (var update in updates)
         {
-            Update(data, commentData, update.Property, update.UpdatedValue);
+            await Update(data, commentData, update.Property, update.UpdatedValue);
         }
 
         data.Track.Comment = _commentProcessor.CreateComment(commentData);
@@ -26,7 +28,7 @@ internal class Id3Updater : IId3Updater
         _id3Service.SaveId3Data(filepath, data);
     }
 
-    private void Update(Id3Data trackData, CommentData commentData, ItemProperty ItemProperty, string value)
+    private async Task Update(Id3Data trackData, CommentData commentData, ItemProperty ItemProperty, string value)
     {
         switch (ItemProperty)
         {
@@ -34,7 +36,7 @@ internal class Id3Updater : IId3Updater
             //    trackData.Album.Title = value;
             //    break;
             case ItemProperty.Artwork:
-                var artworkBytes = GetArtworkFromUrl(value);
+                var artworkBytes = await _webImageService.GetBytes(value);
                 trackData.Album.Artwork = artworkBytes;
                 break;
             case ItemProperty.City:
@@ -67,10 +69,5 @@ internal class Id3Updater : IId3Updater
             default:
                 throw new NotImplementedException();
         }
-    }
-
-    private byte[] GetArtworkFromUrl(string value)
-    {
-        throw new NotImplementedException();
     }
 }
