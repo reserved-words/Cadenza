@@ -2,6 +2,7 @@
 
 public enum ItemProperty
 {
+    Artwork,
     //AlbumArtist,
     //AlbumTitle,
     //AlbumTrackCount,

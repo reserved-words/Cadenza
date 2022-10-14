@@ -5,6 +5,8 @@
         <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Album</MudButton>
         <MudSpacer />
         <MudButton StartIcon="@Icons.Material.Filled.Edit" OnClick="OnEdit">Edit Album</MudButton>
+        <MudSpacer />
+        <MudButton StartIcon="@Icons.Material.Filled.Image" OnClick="OnEditArtwork">Edit Art</MudButton>
     </Content>
 </BaseToolbar>
 
@@ -26,5 +28,10 @@
     protected async Task OnEdit()
     {
         await DialogService.DisplayForm<EditAlbum, AlbumInfo>(Album, "Edit Album");
+    }
+
+    protected async Task OnEditArtwork()
+    {
+        await DialogService.DisplayForm<EditArtwork, AlbumInfo>(Album, "Edit Artwork", true);
     }
 }

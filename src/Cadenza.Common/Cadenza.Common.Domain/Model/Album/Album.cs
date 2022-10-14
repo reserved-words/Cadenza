@@ -18,5 +18,6 @@ public class Album
     [ItemProperty(ItemProperty.ReleaseYear)]
     public string Year { get; set; }
 
+    [ItemProperty(ItemProperty.Artwork)]
     public string ArtworkUrl { get; set; }
 }

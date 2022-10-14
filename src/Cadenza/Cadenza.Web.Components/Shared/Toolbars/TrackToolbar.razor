@@ -25,9 +25,9 @@
         await Player.PlayTrack(Track.Id);
     }
 
-    protected async Task OnEditTrack()
+    protected Task OnEditTrack()
     {
-
+        return Task.CompletedTask;
     }
 
     protected async Task OnEditLyrics()
