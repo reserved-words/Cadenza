@@ -3,7 +3,7 @@
 public enum ItemProperty
 {
     Artwork,
-    //AlbumArtist,
+    //AlbumArtist, 
     //AlbumTitle,
     //AlbumTrackCount,
     //Artist,

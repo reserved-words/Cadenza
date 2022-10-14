@@ -4,14 +4,21 @@ namespace Cadenza.Web.Components.Shared.Dialogs;
 
 public class EditAlbumBase : FormBase<AlbumInfo>
 {
+    private const string ArtworkSearchUrl = "https://www.google.com/search?tbm=isch&q=%22{0}%22+%22{1}%22";
+
     [Inject]
-    public IUpdateService Repository { get; set; }
+    public INavigation Navigation { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdatesCoordinator UpdatesService { get; set; }
+    public IUpdateService UpdateService { get; set; }
+
+    [Inject]
+    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
+
+    public string ArtworkUrl { get; set; }
 
     public AlbumUpdate Update { get; set; }
 
@@ -20,6 +27,17 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     protected override void OnParametersSet()
     {
         Update = new AlbumUpdate(Model);
+    }
+
+    protected Task OnLoad()
+    {
+        return Task.CompletedTask;
+    }
+
+    protected async Task OnSearch()
+    {
+        var searchUrl = GetSearchUrl();
+        await Navigation.OpenNewTab(searchUrl);
     }
 
     protected async Task OnSubmit()
@@ -34,9 +52,9 @@ public class EditAlbumBase : FormBase<AlbumInfo>
                 return;
             }
 
-            await Repository.UpdateAlbum(Update);
+            await UpdateService.UpdateAlbum(Update);
             Alert.Success("Album updated");
-            await UpdatesService.UpdateAlbum(Update);
+            await UpdatesCoordinator.UpdateAlbum(Update);
             Submit();
         }
         catch (Exception ex)
@@ -49,5 +67,30 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     protected void OnCancel()
     {
         Cancel();
+    }
+
+    private string GetSearchUrl()
+    {
+        var artist = HttpUtility.UrlEncode(Model.ArtistName);
+        var title = HttpUtility.UrlEncode(Model.Title);
+        return string.Format(ArtworkSearchUrl, artist, title);
+    }
+
+    protected Task OnUpdateUrl()
+    {
+        if (string.IsNullOrWhiteSpace(ArtworkUrl))
+        {
+            Alert.Error("No URL entered");
+            return Task.CompletedTask;
+        }
+
+        if (!Uri.TryCreate(ArtworkUrl, UriKind.Absolute, out Uri uri))
+        {
+            Alert.Error("URL is invalid");
+            return Task.CompletedTask;
+        }
+
+        EditableItem.ArtworkUrl = ArtworkUrl;
+        return Task.CompletedTask;
     }
 }

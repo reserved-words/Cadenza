@@ -33,6 +33,10 @@ internal class Id3Updater : IId3Updater
             //case ItemProperty.AlbumTitle:
             //    trackData.Album.Title = value;
             //    break;
+            case ItemProperty.Artwork:
+                var artworkBytes = GetArtworkFromUrl(value);
+                trackData.Album.Artwork = artworkBytes;
+                break;
             case ItemProperty.City:
                 commentData.City = value;
                 break;
@@ -63,5 +67,10 @@ internal class Id3Updater : IId3Updater
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    private byte[] GetArtworkFromUrl(string value)
+    {
+        throw new NotImplementedException();
     }
 }

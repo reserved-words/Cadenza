@@ -17,6 +17,9 @@ internal class ItemUpdater : IItemUpdater
                 case ItemProperty.ReleaseYear:
                     album.Year = update.UpdatedValue;
                     break;
+                case ItemProperty.Artwork:
+                    // Ignore - not stored in this database, fetched from source
+                    break;
                 default:
                     throw new NotImplementedException();
             }
