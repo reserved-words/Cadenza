@@ -1,14 +1,23 @@
-﻿
-<TrackLink Typo="@Typo.h6" Id="@Id" Title="@Title" />
-<ArtistLink Typo="@Typo.body1" Id="@ArtistId" Name="@ArtistName" />
+﻿@inherits CurrentTrackBase
 
-@code
-{
-    [Parameter]
-    public TrackInfo Model { get; set; }
+<MudCard Elevation="3" Class="pa-0 ma-0 mb-3" Style="position: relative;">
+    <MudOverlay Visible="@Loading" Absolute="true">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </MudOverlay>
+    <MudOverlay Visible="@Empty" Absolute="true">
+    </MudOverlay>
+    <MudCardHeader Class="pa-2">
+        <CardHeaderContent>
+            <CurrentTrackDetails Model="@Model?.Track" />
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <CurrentTrackFavourite Model="@Model?.Track" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <CurrentTrackArtwork Model="@Model" />
+    <CurrentTrackProgress />
+    <MudCardContent Class="pa-2">
+        <CurrentTrackAlbum Model="@Model?.Album" />
+    </MudCardContent>
 
-    public string ArtistId => Model?.ArtistId;
-    public string ArtistName => Model?.ArtistName ?? "Artist Name";
-    public string Id => Model?.Id;
-    public string Title => Model?.Title ?? "Track Title";
-}
+</MudCard>

@@ -4,27 +4,9 @@
 
 @*Position relative needed to keep overlay inside card*@
 
-<MudCard Elevation="3" Class="pa-0 ma-0 mb-3" Style="position: relative;">
-    <MudOverlay Visible="@Loading" Absolute="true">
-        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
-    </MudOverlay>
-    <MudOverlay Visible="@Empty" Absolute="true">
-    </MudOverlay>
-    <MudCardHeader Class="pa-2">
-        <CardHeaderContent>
-            <CurrentTrack Model="@Model?.Track" />
-        </CardHeaderContent>
-        <CardHeaderActions>
-            <CurrentTrackFavourite Model="@Model?.Track" />
-        </CardHeaderActions>
-    </MudCardHeader>
-    <CurrentTrackArtwork Model="@Model" />
-    <CurrentTrackProgress />
-    <MudCardContent Class="pa-2">
-        <CurrentTrackAlbum Model="@Model?.Album" />
-    </MudCardContent>
-
-</MudCard>
+<CurrentTrack Empty="@Empty"
+              Loading="@Loading"
+              Model="@Model" />
 
 <PlayerControls IsLastTrack="@IsLastTrack"
                 IsTrackPopulated="@(Track != null)"

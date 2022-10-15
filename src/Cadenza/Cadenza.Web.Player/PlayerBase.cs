@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Player.Interfaces;
-
-namespace Cadenza.Web.Player;
+﻿namespace Cadenza.Web.Player;
 
 public class PlayerBase : ComponentBase
 {
