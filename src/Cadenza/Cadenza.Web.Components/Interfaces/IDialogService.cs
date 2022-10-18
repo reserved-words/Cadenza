@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Components.Shared.Dialogs;
+﻿using Cadenza.Web.Components.Forms;
 
 namespace Cadenza.Web.Components.Interfaces;
 
