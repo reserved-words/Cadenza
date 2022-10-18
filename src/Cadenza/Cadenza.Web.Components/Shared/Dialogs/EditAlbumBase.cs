@@ -26,6 +26,9 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     [Inject]
     public IUpdatesCoordinator UpdatesCoordinator { get; set; }
 
+    [Inject]
+    public IWebInfoService WebInfoService { get; set; }
+
     public string ArtworkUrl { get; set; }
 
     public AlbumUpdate Update { get; set; }
@@ -37,9 +40,28 @@ public class EditAlbumBase : FormBase<AlbumInfo>
         Update = new AlbumUpdate(Model);
     }
 
-    protected Task OnLoad()
+    protected async Task OnLoad()
     {
-        return Task.CompletedTask;
+        try
+        {
+            var artworkUrl = await WebInfoService.GetAlbumArtworkUrl(EditableItem);
+
+            if (string.IsNullOrWhiteSpace(artworkUrl))
+            {
+                Alert.Error("No artwork found");
+                return;
+            }
+
+            ArtworkUrl = artworkUrl;
+
+            await OnUpdateUrl();
+        }
+        catch (Exception ex)
+        {
+            // Log error
+            Alert.Error("Error loading artwork: " + ex.Message);
+            Alert.Error("Error loading artwork: " + ex.StackTrace);
+        }
     }
 
     protected async Task OnSearch()
@@ -93,15 +115,9 @@ public class EditAlbumBase : FormBase<AlbumInfo>
             return;
         }
 
-        if (!Uri.TryCreate(ArtworkUrl, UriKind.Absolute, out Uri uri))
-        {
-            Alert.Error("URL is invalid");
-            return;
-        }
-
         try
         {
-            var image = await GetArtwork(uri);
+            var image = await GetArtwork(ArtworkUrl);
             EditableItem.ArtworkUrl = ImageConverter.GetBase64UrlFromImage(image);
         }
         catch (Exception ex)
@@ -111,8 +127,13 @@ public class EditAlbumBase : FormBase<AlbumInfo>
         }    
     }
 
-    private async Task<ArtworkImage> GetArtwork(Uri uri)
+    private async Task<ArtworkImage> GetArtwork(string url)
     {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
+        {
+            throw new Exception("URL is invalid");
+        }
+
         try
         {
             var response = await HttpHelper.Get(uri.ToString());

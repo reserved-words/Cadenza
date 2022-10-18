@@ -50,6 +50,7 @@ public static class Startup
             .AddTransient<ISearchService, SearchService>()
             .AddTransient<IStartupService, StartupService>()
             .AddTransient<ISyncService, SyncService>()
-            .AddTransient<IUpdateService, UpdateService>();
+            .AddTransient<IUpdateService, UpdateService>()
+            .AddTransient<IWebInfoService, WebInfoService>();
     }
 }
