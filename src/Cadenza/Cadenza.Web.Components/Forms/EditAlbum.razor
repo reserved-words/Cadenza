@@ -1,0 +1,79 @@
+﻿@inherits EditAlbumBase
+
+<AppDialog Cancel="OnCancel"
+           CancelCaption="Cancel"
+           Submit="OnSubmit"
+           SubmitCaption="OK">
+
+    <ChildContent>
+        <EditForm Model="@EditableItem">
+            <DataAnnotationsValidator />
+
+            <MudGrid Spacing="1" Class="tab-grid fixed-height ma-0 pa-0">
+
+                <MudItem sm="6">
+                    <MudCard Elevation="3" Class="pa-3">
+                        <MudCardHeader Class="pa-0">
+                            <MudText Typo="Typo.h6">Artwork</MudText>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+
+                            <MudContainer Class="mt-3 d-flex flex-column align-center">
+                                <img class="artwork" src="@EditableItem.ArtworkUrl" style="max-width: 300px; border-style: solid; border-width: 1px;" />
+
+                                <MudStack Row="true" Class="my-2">
+                                    <MudButton OnClick="@OnLoad">Load</MudButton>
+                                    <MudButton OnClick="@OnSearch">Search</MudButton>
+                                </MudStack>
+                            </MudContainer>
+
+                            <MudStack Row="true" Class="my-1">
+                                <MudTextField MaxLength="255"
+                                              Label="Artwork URL"
+                                              @bind-Value="ArtworkUrl"
+                                              For="@(() => ArtworkUrl)" />
+
+                                <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
+                            </MudStack>
+
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem sm="6">
+                    <MudCard Elevation="3" Class="pa-3">
+                        <MudCardHeader Class="pa-0">
+                            <MudText Typo="Typo.h6">Details</MudText>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTextField Label="Title"
+                                          ReadOnly="true"
+                                          Disabled="true"
+                                          @bind-Value="EditableItem.Title" />
+                            <MudTextField Label="Artist"
+                                          ReadOnly="true"
+                                          Disabled="true"
+                                          @bind-Value="EditableItem.ArtistName" />
+                            <MudSelect Label="Release Type"
+                                       @bind-Value="EditableItem.ReleaseType"
+                                       For="@(() => EditableItem.ReleaseType)">
+                                @foreach (var type in Enum.GetValues<ReleaseType>())
+                                {
+                                    <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudTextField MaxLength="4"
+                                          Label="Release Year"
+                                          @bind-Value="EditableItem.Year"
+                                          For="@(() => EditableItem.Year)"
+                                          Mask="@(new PatternMask("0000"))" />
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+            </MudGrid>
+
+        </EditForm>
+    </ChildContent>
+
+</AppDialog>

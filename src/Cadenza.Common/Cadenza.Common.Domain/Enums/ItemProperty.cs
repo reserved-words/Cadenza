@@ -2,27 +2,22 @@
 
 public enum ItemProperty
 {
-    AlbumArtist,
-    AlbumTitle,
-    AlbumTrackCount,
-    Artist,
+    Artwork,
+    //AlbumArtist, 
+    //AlbumTitle,
+    //Artist,
     City,
     Country,
-    DateAdded,
-    DateModified,
-    DiscCount,
-    DiscNo,
-    DiscTrackCount,
-    Duration,
+    //DiscNo,
     Genre,
     Grouping,
-    Instrumental,
+    //Instrumental,
     Lyrics,
     ReleaseType,
     ReleaseYear,
     State,
-    Tags,
-    TrackNo,
-    TrackTitle,
-    TrackYear
+    //Tags,
+    //TrackNo,
+    //TrackTitle,
+    //TrackYear
 }

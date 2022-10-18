@@ -11,13 +11,15 @@ internal class MusicService : IMusicFilesService
         _fetcher = fetcher;
     }
 
-    public TrackFull GetFileData(string filepath)
+    public Task<TrackFull> GetFileData(string filepath)
     {
-        return _fetcher.GetFileData(filepath);
+        var result = _fetcher.GetFileData(filepath);
+        return Task.FromResult(result);
     }
 
-    public void UpdateFileData(string filepath, List<PropertyUpdate> updates)
+    public Task UpdateFileData(string filepath, List<PropertyUpdate> updates)
     {
         _updater.UpdateTags(filepath, updates);
+        return Task.CompletedTask;
     }
 }

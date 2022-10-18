@@ -1,13 +1,10 @@
 ﻿@using Cadenza.Web.Common.Extensions
 @using Cadenza.Common.Domain.Extensions
 
+@inherits AlbumViewBase
+
 <AppCard>
     <ChildContent>
-        <AlbumArtworkView Model="@Album" />
+        <AlbumArtworkView Model="@Model" />
     </ChildContent>
 </AppCard>
-
-@code {
-    [Parameter]
-    public AlbumInfo Album { get; set; } = new();
-}

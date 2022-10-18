@@ -4,11 +4,13 @@ internal class Id3Updater : IId3Updater
 {
     private readonly IId3TagsService _id3Service;
     private readonly ICommentProcessor _commentProcessor;
+    private readonly IImageConverter _imageConverter;
 
-    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor)
+    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor, IImageConverter imageConverter)
     {
         _id3Service = id3Service;
         _commentProcessor = commentProcessor;
+        _imageConverter = imageConverter;
     }
 
     public void UpdateTags(string filepath, List<PropertyUpdate> updates)
@@ -30,8 +32,8 @@ internal class Id3Updater : IId3Updater
     {
         switch (ItemProperty)
         {
-            case ItemProperty.AlbumTitle:
-                trackData.Album.Title = value;
+            case ItemProperty.Artwork:
+                trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
                 break;
             case ItemProperty.City:
                 commentData.City = value;
@@ -56,9 +58,6 @@ internal class Id3Updater : IId3Updater
                 break;
             case ItemProperty.State:
                 commentData.State = value;
-                break;
-            case ItemProperty.TrackTitle:
-                trackData.Track.Title = value;
                 break;
             default:
                 throw new NotImplementedException();

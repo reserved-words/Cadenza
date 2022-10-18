@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Files.Model;
+﻿using Cadenza.Common.Domain.Model;
+
+namespace Cadenza.Local.API.Files.Model;
 
 internal class AlbumId3Data
 {
@@ -9,5 +11,5 @@ internal class AlbumId3Data
     public int DiscCount { get; set; }
     public string Year { get; set; }
     public string ReleaseType { get; set; }
-    public byte[] Artwork { get; set; }
+    public ArtworkImage Artwork { get; set; }
 }

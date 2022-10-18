@@ -13,6 +13,7 @@ var builder = API.CreateBuilder(args, (IServiceCollection services, IConfigurati
 {
     services
         .AddUtilities()
+        .AddHttpHelper(sp => new HttpClient())
         .AddArtworkService()
         .AddMusicService()
         .AddCoreServices();

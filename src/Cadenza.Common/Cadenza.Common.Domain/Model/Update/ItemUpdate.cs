@@ -71,6 +71,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         {
             var originalValue = property.GetValue(OriginalItem)?.ToString();
             var updatedValue = property.GetValue(UpdatedItem)?.ToString();
+
             if (!AreEqual(originalValue, updatedValue))
             {
                 var itemProperty = property.GetCustomAttributes(false)

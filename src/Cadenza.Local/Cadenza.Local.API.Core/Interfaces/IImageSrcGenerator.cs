@@ -2,5 +2,5 @@
 
 internal interface IImageSrcGenerator
 {
-    (byte[] Bytes, string Type) GetArtwork(string id);
+    ArtworkImage GetArtwork(string id);
 }

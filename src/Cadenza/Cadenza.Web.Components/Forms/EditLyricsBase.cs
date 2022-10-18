@@ -1,6 +1,6 @@
 ﻿using Cadenza.Web.Common.Interfaces.Updates;
 
-namespace Cadenza.Web.Components.Shared.Dialogs;
+namespace Cadenza.Web.Components.Forms;
 
 public class EditLyricsBase : FormBase<TrackInfo>
 {

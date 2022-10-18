@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Files;
+﻿using Cadenza.Common.Domain.Model;
+
+namespace Cadenza.Local.API.Files;
 
 internal class ArtworkService : IArtworkFilesService
 {
@@ -9,7 +11,7 @@ internal class ArtworkService : IArtworkFilesService
         _id3Service = id3Service;
     }
 
-    public (byte[] Bytes, string Type) GetArtwork(string filepath)
+    public ArtworkImage GetArtwork(string filepath)
     {
         return _id3Service.GetArtwork(filepath);
     }

@@ -38,7 +38,6 @@
     protected override async Task OnInitializedAsync()
     {
         Messenger.Subscribe<ViewTabEventArgs>(OnViewTab);
-        //Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
 
         await OnStartup();
     }
@@ -48,15 +47,6 @@
         var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
         IsInitialised = success;
     }
-
-    //private Task OnViewItem(object sender, ViewItemEventArgs args)
-    //{
-    //    if (Tab.Library.Equals(tabs.ActivePanel.ID))
-    //        return Task.CompletedTask;
-
-    //    tabs.ActivatePanel(Tab.Library);
-    //    return Task.CompletedTask;
-    //}
 
     private Task OnViewTab(object sender, ViewTabEventArgs args)
     {

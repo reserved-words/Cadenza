@@ -1,9 +1,9 @@
 ﻿namespace Cadenza.Components.ViewBases;
 
-public class AlbumViewBase : ComponentBase, IDisposable
+public class ArtistViewBase : ComponentBase, IDisposable
 {
     [Parameter]
-    public AlbumInfo Model { get; set; } = new();
+    public ArtistInfo Model { get; set; } = new();
 
     [Inject]
     public IMessenger Messenger { get; set; }
@@ -14,17 +14,17 @@ public class AlbumViewBase : ComponentBase, IDisposable
     {
         if (_updateSubscriptionId != Guid.Empty)
         {
-            Messenger.Unsubscribe<AlbumUpdatedEventArgs>(_updateSubscriptionId);
+            Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
             _updateSubscriptionId = Guid.Empty;
         }
     }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<AlbumUpdatedEventArgs>(OnAlbumUpdated, out _updateSubscriptionId);
+        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated, out _updateSubscriptionId);
     }
 
-    private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
+    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
     {
         if (args.Update.Id == Model.Id)
         {
