@@ -1,6 +1,8 @@
-﻿namespace Cadenza.Local.API.Common.Interfaces;
+﻿using Cadenza.Common.Domain.Model;
+
+namespace Cadenza.Local.API.Common.Interfaces;
 
 public interface IArtworkFilesService
 {
-    (byte[] Bytes, string Type) GetArtwork(string filepath);
+    ArtworkImage GetArtwork(string filepath);
 }

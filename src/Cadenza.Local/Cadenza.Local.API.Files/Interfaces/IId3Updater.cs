@@ -2,5 +2,5 @@
 
 internal interface IId3Updater
 {
-    Task UpdateTags(string filepath, List<PropertyUpdate> updates);
+    void UpdateTags(string filepath, List<PropertyUpdate> updates);
 }

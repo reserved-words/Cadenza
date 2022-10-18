@@ -51,11 +51,38 @@ internal class SyncService : ISyncService
 
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
+        await ClearArtwork(source, update);
+
         await _updateRepository.Remove(update, source);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
         await _repository.RemoveTracks(source, ids);
+    }
+
+    private async Task ClearArtwork(LibrarySource source, ItemUpdates update)
+    {
+        var artworkUpdate = update.Updates.SingleOrDefault(u => u.Property == ItemProperty.Artwork);
+
+        if (artworkUpdate != null)
+        {
+            var clearArtworkUpdate = new PropertyUpdate
+            {
+                Property = ItemProperty.Artwork,
+                OriginalValue = artworkUpdate.OriginalValue,
+                UpdatedValue = null
+            };
+
+            var clearArtworkUpdates = new ItemUpdates
+            {
+                Id = update.Id,
+                Type = update.Type,
+                Name = update.Name,
+                Updates = new List<PropertyUpdate> { clearArtworkUpdate }
+            };
+
+            await _repository.UpdateAlbum(source, clearArtworkUpdates);
+        }
     }
 }

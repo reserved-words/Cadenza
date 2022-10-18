@@ -15,7 +15,7 @@ public class LibraryController : ControllerBase
     public async Task Artwork(string id)
     {
         var artwork = await _service.GetArtwork(id);
-        Response.ContentType = artwork.Type;
+        Response.ContentType = artwork.MimeType;
         Response.ContentLength = artwork.Bytes.Length;
         var readOnlyMemory = new ReadOnlyMemory<byte>(artwork.Bytes);
         await Response.BodyWriter.WriteAsync(readOnlyMemory);

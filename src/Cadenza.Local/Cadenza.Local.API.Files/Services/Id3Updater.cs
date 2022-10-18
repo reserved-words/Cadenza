@@ -4,23 +4,23 @@ internal class Id3Updater : IId3Updater
 {
     private readonly IId3TagsService _id3Service;
     private readonly ICommentProcessor _commentProcessor;
-    private readonly IWebImageService _webImageService;
+    private readonly IImageConverter _imageConverter;
 
-    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor, IWebImageService webImageService)
+    public Id3Updater(IId3TagsService id3Service, ICommentProcessor commentProcessor, IImageConverter imageConverter)
     {
         _id3Service = id3Service;
         _commentProcessor = commentProcessor;
-        _webImageService = webImageService;
+        _imageConverter = imageConverter;
     }
 
-    public async Task UpdateTags(string filepath, List<PropertyUpdate> updates)
+    public void UpdateTags(string filepath, List<PropertyUpdate> updates)
     {
         var data = _id3Service.GetId3Data(filepath);
         var commentData = _commentProcessor.GetData(data.Track.Comment);
 
         foreach (var update in updates)
         {
-            await Update(data, commentData, update.Property, update.UpdatedValue);
+            Update(data, commentData, update.Property, update.UpdatedValue);
         }
 
         data.Track.Comment = _commentProcessor.CreateComment(commentData);
@@ -28,16 +28,12 @@ internal class Id3Updater : IId3Updater
         _id3Service.SaveId3Data(filepath, data);
     }
 
-    private async Task Update(Id3Data trackData, CommentData commentData, ItemProperty ItemProperty, string value)
+    private void Update(Id3Data trackData, CommentData commentData, ItemProperty ItemProperty, string value)
     {
         switch (ItemProperty)
         {
-            //case ItemProperty.AlbumTitle:
-            //    trackData.Album.Title = value;
-            //    break;
             case ItemProperty.Artwork:
-                var artworkBytes = await _webImageService.GetBytes(value);
-                trackData.Album.Artwork = artworkBytes;
+                trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
                 break;
             case ItemProperty.City:
                 commentData.City = value;
@@ -63,9 +59,6 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.State:
                 commentData.State = value;
                 break;
-            //case ItemProperty.TrackTitle:
-            //    trackData.Track.Title = value;
-            //    break;
             default:
                 throw new NotImplementedException();
         }

@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common.Utilities", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Player", "Cadenza\Cadenza.Web.Player\Cadenza.Web.Player.csproj", "{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129DDEA0-6BE2-4FDF-B4E3-91FB81D27886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

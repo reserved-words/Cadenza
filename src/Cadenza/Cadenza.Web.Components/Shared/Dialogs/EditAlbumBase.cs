@@ -1,10 +1,18 @@
-﻿using Cadenza.Web.Common.Interfaces.Updates;
+﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Interfaces.Utilities;
+using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Components.Shared.Dialogs;
 
 public class EditAlbumBase : FormBase<AlbumInfo>
 {
     private const string ArtworkSearchUrl = "https://www.google.com/search?tbm=isch&q=%22{0}%22+%22{1}%22";
+
+    [Inject]
+    public IImageConverter ImageConverter { get; set; }
+
+    [Inject]
+    public IHttpHelper HttpHelper { get; set; } 
 
     [Inject]
     public INavigation Navigation { get; set; }
@@ -61,6 +69,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
         {
             // Log error
             Alert.Error("Error updating album: " + ex.Message);
+            Alert.Error("Error updating album: " + ex.StackTrace);
         }
     }
 
@@ -76,24 +85,59 @@ public class EditAlbumBase : FormBase<AlbumInfo>
         return string.Format(ArtworkSearchUrl, artist, title);
     }
 
-    protected Task OnUpdateUrl()
+    protected async Task OnUpdateUrl()
     {
-        // TODO
-        // Check it's actually an image file
-
         if (string.IsNullOrWhiteSpace(ArtworkUrl))
         {
             Alert.Error("No URL entered");
-            return Task.CompletedTask;
+            return;
         }
 
         if (!Uri.TryCreate(ArtworkUrl, UriKind.Absolute, out Uri uri))
         {
             Alert.Error("URL is invalid");
-            return Task.CompletedTask;
+            return;
         }
 
-        EditableItem.ArtworkUrl = ArtworkUrl;
-        return Task.CompletedTask;
+        try
+        {
+            var image = await GetArtwork(uri);
+            EditableItem.ArtworkUrl = ImageConverter.GetBase64UrlFromImage(image);
+        }
+        catch (Exception ex)
+        {
+            Alert.Error(ex.Message);
+            return;
+        }    
+    }
+
+    private async Task<ArtworkImage> GetArtwork(Uri uri)
+    {
+        try
+        {
+            var response = await HttpHelper.Get(uri.ToString());
+
+            if (!response.IsSuccessStatusCode)
+            {
+                // Log exact error
+                throw new Exception("Access was not allowed");
+            }
+
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+            var mimeType = response.Content.Headers.ContentType.MediaType;
+
+            if (!mimeType.StartsWith("image/"))
+            {
+                throw new Exception("Not an image URL");
+            }
+
+            return new ArtworkImage(bytes, mimeType);
+
+        }
+        catch (Exception ex)
+        {
+            // Log exact error
+            throw new Exception("Fetching image failed");
+        }
     }
 }

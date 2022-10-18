@@ -8,9 +8,6 @@ internal class ItemUpdater : IItemUpdater
         {
             switch (update.Property)
             {
-                //case ItemProperty.AlbumTitle:
-                //    album.Title = update.UpdatedValue;
-                //    break;
                 case ItemProperty.ReleaseType:
                     album.ReleaseType = update.UpdatedValue;
                     break;
@@ -18,7 +15,7 @@ internal class ItemUpdater : IItemUpdater
                     album.Year = update.UpdatedValue;
                     break;
                 case ItemProperty.Artwork:
-                    // Ignore - not stored in this database, fetched from source
+                    album.ArtworkUrl = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -35,9 +32,6 @@ internal class ItemUpdater : IItemUpdater
                 case ItemProperty.Lyrics:
                     track.Lyrics = update.UpdatedValue;
                     break;
-                //case ItemProperty.TrackTitle:
-                //    track.Title = update.UpdatedValue;
-                //    break;
                 default:
                     throw new NotImplementedException();
             }

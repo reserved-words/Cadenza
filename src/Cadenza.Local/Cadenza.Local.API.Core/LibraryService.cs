@@ -15,14 +15,14 @@ internal class LibraryService : ILibraryService
         _imageSrcGenerator = imageSrcGenerator;
     }
 
-    public Task<(byte[] Bytes, string Type)> GetArtwork(string id)
+    public Task<ArtworkImage> GetArtwork(string id)
     {
         var result = _imageSrcGenerator.GetArtwork(id);
 
-        if (result.Bytes == null || result.Bytes.Length == 0)
+        if (result == null || result.Bytes == null || result.Bytes.Length == 0)
         {
             var bytes = File.ReadAllBytes("Images/default.png");
-            result = new(bytes, "image/png");
+            result = new ArtworkImage(bytes, "image/png");
         }
 
         return Task.FromResult(result);

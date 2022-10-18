@@ -21,12 +21,11 @@ public class CurrentTrackBase : ComponentBase
 
     private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
     {
-        if (args.Update.Id == Model.Album.Id)
-        {
-            args.Update.ApplyUpdates(Model.Album);
-            StateHasChanged();
-        }
+        if (Model == null || args.Update.Id != Model.Album.Id)
+            return Task.CompletedTask;
 
+        args.Update.ApplyUpdates(Model.Album);
+        StateHasChanged();
         return Task.CompletedTask;
     }
 }
