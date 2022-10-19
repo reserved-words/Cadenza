@@ -2,13 +2,19 @@
 
 public class ArtistViewBase : ComponentBase, IDisposable
 {
-    [Parameter]
-    public ArtistInfo Model { get; set; } = new();
 
     [Inject]
     public IMessenger Messenger { get; set; }
 
+    [Inject]
+    public IWebInfoService WebInfoService { get; set; }
+
+    [Parameter]
+    public ArtistInfo Model { get; set; } = new();
+
     private Guid _updateSubscriptionId = Guid.Empty;
+
+    protected string ImageUrl { get; set; }
 
     public void Dispose()
     {
@@ -22,6 +28,12 @@ public class ArtistViewBase : ComponentBase, IDisposable
     protected override void OnInitialized()
     {
         Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated, out _updateSubscriptionId);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // TODO: Error handling
+        ImageUrl = await WebInfoService.GetArtistImageUrl(Model);
     }
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)

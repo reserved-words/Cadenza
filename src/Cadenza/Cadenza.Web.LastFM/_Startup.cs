@@ -30,7 +30,6 @@ public static class _Startup
             .AddTransient<IFavouritesController, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IHistory, History>()
-            .AddTransient<IConnector, LastFmConnector>()
-            .AddTransient<IWebInfoService, WebInfoService>();
+            .AddTransient<IConnector, LastFmConnector>();
     }
 }

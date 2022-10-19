@@ -17,9 +17,9 @@ internal class WebInfoService : IWebInfoService
         return new AlbumArtworkResult { Url = url };
     }
 
-    public async Task<ArtistImageResult> ArtistImageUrl(string name)
+    public Task<ArtistImageResult> ArtistImageUrl(string name)
     {
-        var url = await _service.ArtistImageUrl(name);
-        return new ArtistImageResult { Url = url };
+        var result = new ArtistImageResult { Url = null };
+        return Task.FromResult(result);
     }
 }

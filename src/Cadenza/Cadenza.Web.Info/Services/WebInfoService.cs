@@ -1,16 +1,19 @@
 ﻿using Cadenza.Common.Domain.Model.Album;
 using Cadenza.Common.Domain.Model.Artist;
 using Cadenza.Common.Domain.Model.Results;
+using Cadenza.Common.Interfaces.Utilities;
+using Cadenza.Web.Info.Settings;
+using Microsoft.Extensions.Options;
 
-namespace Cadenza.Web.LastFM.Services;
+namespace Cadenza.Web.Info.Services;
 
 internal class WebInfoService : IWebInfoService
 {
     private readonly IUrl _url;
     private readonly IHttpHelper _http;
-    private readonly LastFmApiSettings _apiSettings;
+    private readonly InfoApiSettings _apiSettings;
 
-    public WebInfoService(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings)
+    public WebInfoService(IUrl url, IHttpHelper http, IOptions<InfoApiSettings> apiSettings)
     {
         _url = url;
         _http = http;
