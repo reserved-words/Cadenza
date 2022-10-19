@@ -91,8 +91,7 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             Genre = data.Artist.Genre.Nullify(),
             City = commentData.City.Nullify(),
             State = commentData.State.Nullify(),
-            Country = commentData.Country.Nullify(),
-            ImageUrl = commentData.ArtistImageUrl.Nullify()
+            Country = commentData.Country.Nullify()
         };
     }
 }

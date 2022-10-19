@@ -1,10 +1,10 @@
-﻿using Track = Cadenza.Common.Domain.Model.LastFm.Track;
+﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
 
 namespace Cadenza.API.Interfaces.LastFm;
 
 public interface IFavourites
 {
-    Task Favourite(Track track);
+    Task Favourite(LFM_Track track);
     Task<bool> IsFavourite(string artist, string title);
-    Task Unfavourite(Track track);
+    Task Unfavourite(LFM_Track track);
 }

@@ -14,7 +14,7 @@ global using Cadenza.Web.LastFM.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Net.Http.Json;
-global using Track = Cadenza.Common.Domain.Model.LastFm.Track;
+
 using Cadenza.Web.Common.Interfaces.Favourites;
 using Cadenza.Web.Common.Interfaces.Startup;
 

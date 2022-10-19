@@ -13,11 +13,11 @@ public class ArtistViewBase : ComponentBase, IDisposable
 
     public void Dispose()
     {
-        if (_updateSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
-            _updateSubscriptionId = Guid.Empty;
-        }
+        if (_updateSubscriptionId == Guid.Empty)
+            return;
+
+        Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
+        _updateSubscriptionId = Guid.Empty;
     }
 
     protected override void OnInitialized()
@@ -27,7 +27,7 @@ public class ArtistViewBase : ComponentBase, IDisposable
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
     {
-        if (args.Update.Id == Model.Id)
+        if (Model != null && Model.Id == args.Update.Id)
         {
             args.Update.ApplyUpdates(Model);
             StateHasChanged();

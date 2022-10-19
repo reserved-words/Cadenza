@@ -51,7 +51,7 @@ internal class SyncService : ISyncService
 
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await ClearArtwork(source, update);
+        await ClearImages(source, update);
 
         await _updateRepository.Remove(update, source);
     }
@@ -61,28 +61,41 @@ internal class SyncService : ISyncService
         await _repository.RemoveTracks(source, ids);
     }
 
-    private async Task ClearArtwork(LibrarySource source, ItemUpdates update)
+    private async Task ClearImages(LibrarySource source, ItemUpdates update)
     {
-        var artworkUpdate = update.Updates.SingleOrDefault(u => u.Property == ItemProperty.Artwork);
-
-        if (artworkUpdate != null)
+        var clearArtworkUpdates = GetClearImageUpdates(update, ItemProperty.Artwork);
+        if (clearArtworkUpdates != null)
         {
-            var clearArtworkUpdate = new PropertyUpdate
-            {
-                Property = ItemProperty.Artwork,
-                OriginalValue = artworkUpdate.OriginalValue,
-                UpdatedValue = null
-            };
-
-            var clearArtworkUpdates = new ItemUpdates
-            {
-                Id = update.Id,
-                Type = update.Type,
-                Name = update.Name,
-                Updates = new List<PropertyUpdate> { clearArtworkUpdate }
-            };
-
             await _repository.UpdateAlbum(source, clearArtworkUpdates);
         }
+
+        var clearArtistImageUpdates = GetClearImageUpdates(update, ItemProperty.ArtistImage);
+        if (clearArtistImageUpdates != null)
+        {
+            await _repository.UpdateArtist(clearArtistImageUpdates);
+        }
+    }
+
+    private ItemUpdates GetClearImageUpdates(ItemUpdates update, ItemProperty property)
+    {
+        var propertyUpdate = update.Updates.SingleOrDefault(u => u.Property == property);
+
+        if (propertyUpdate == null)
+            return null;
+
+        var clearImageUpdate = new PropertyUpdate
+        {
+            Property = property,
+            OriginalValue = propertyUpdate.OriginalValue,
+            UpdatedValue = null
+        };
+
+        return new ItemUpdates
+        {
+            Id = update.Id,
+            Type = update.Type,
+            Name = update.Name,
+            Updates = new List<PropertyUpdate> { clearImageUpdate }
+        };
     }
 }

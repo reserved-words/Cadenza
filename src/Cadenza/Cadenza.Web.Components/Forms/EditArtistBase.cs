@@ -63,7 +63,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
         Cancel();
     }
 
-    protected void OnUpdateUrl()
+    protected async Task OnUpdateUrl()
     {
         try
         {
@@ -72,7 +72,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
                 throw new Exception("No URL entered");
             }
 
-            EditableItem.ImageUrl = ImageUrl;
+            EditableItem.ImageUrl = await ImageFinder.GetBase64ArtworkSource(ImageUrl);
         }
         catch (Exception ex)
         {

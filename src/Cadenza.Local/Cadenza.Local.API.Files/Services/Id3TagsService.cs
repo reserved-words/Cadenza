@@ -5,10 +5,11 @@ namespace Cadenza.Local.API.Files.Services;
 
 internal class Id3TagsService : IId3TagsService
 {
-    private static Dictionary<string, string> _artistNameExceptions = new Dictionary<string, string> {
-            { "", "No Artist" },
-            { "AC; DC", "AC/DC" }
-        };
+    private static Dictionary<string, string> _artistNameExceptions = new Dictionary<string, string>
+    {
+        { "", "No Artist" },
+        { "AC; DC", "AC/DC" }
+    };
 
     private readonly INameComparer _nameComparer;
 
@@ -19,10 +20,7 @@ internal class Id3TagsService : IId3TagsService
 
     public Id3Data GetId3Data(string filepath)
     {
-        using TagLib.File f = TagLib.File.Create(filepath);
-
-        TagLib.Id3v2.Tag.DefaultVersion = 3;
-        TagLib.Id3v2.Tag.ForceDefaultVersion = true;
+        using TagLib.File f = GetFile(filepath);
 
         var track = new TrackId3Data
         {
@@ -38,7 +36,8 @@ internal class Id3TagsService : IId3TagsService
         {
             Name = GetArtistName(f.Tag.JoinedPerformers, f.Tag.FirstPerformer),
             Genre = GetValue(f.Tag.Genres.FirstOrDefault()),
-            Grouping = GetValue(f.Tag.Grouping)
+            Grouping = GetValue(f.Tag.Grouping),
+            Image = GetArtwork(f, PictureType.Artist, false)
         };
 
         var album = new AlbumId3Data
@@ -48,7 +47,7 @@ internal class Id3TagsService : IId3TagsService
             Year = f.Tag.Year.ToString(),
             DiscCount = (int)f.Tag.DiscCount,
             ReleaseType = GetValue(f.Tag.MusicBrainzReleaseType),
-            Artwork = GetArtwork(f)
+            Artwork = GetArtwork(f, PictureType.FrontCover, true)
         };
 
         var disc = new DiscId3Data
@@ -67,36 +66,21 @@ internal class Id3TagsService : IId3TagsService
 
     }
 
-    private static string GetValue(string str)
+    public ArtworkImage GetAlbumArtwork(string filepath)
     {
-        return str ?? string.Empty;
+        using TagLib.File f = GetFile(filepath);
+        return GetArtwork(f, PictureType.FrontCover, true);
     }
 
-    private static string GetArtistName(string joinedArtists, string firstArtist)
+    public ArtworkImage GetArtistImage(string filepath)
     {
-        joinedArtists ??= "";
-
-        return _artistNameExceptions.Keys.Contains(joinedArtists)
-            ? _artistNameExceptions[joinedArtists]
-            : GetValue(firstArtist);
-    }
-
-    public ArtworkImage GetArtwork(string filepath)
-    {
-        using TagLib.File file = TagLib.File.Create(filepath);
-
-        TagLib.Id3v2.Tag.DefaultVersion = 3;
-        TagLib.Id3v2.Tag.ForceDefaultVersion = true;
-
-        return GetArtwork(file);
+        using TagLib.File f = GetFile(filepath);
+        return GetArtwork(f, PictureType.Artist, false);
     }
 
     public void SaveId3Data(string filepath, Id3Data data)
     {
-        using TagLib.File f = TagLib.File.Create(filepath);
-
-        TagLib.Id3v2.Tag.DefaultVersion = 3;
-        TagLib.Id3v2.Tag.ForceDefaultVersion = true;
+        using TagLib.File f = GetFile(filepath);
 
         if (data.Track != null)
         {
@@ -133,10 +117,16 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.DiscCount = Convert.ToUInt16(data.Album.DiscCount);
 
             f.Tag.Pictures = null;
+            var pictures = new List<IPicture>();
             if (data.Album.Artwork != null)
             {
-                f.Tag.Pictures = new IPicture[] { CreatePicture(data.Album.Artwork) };
+                pictures.Add(CreatePicture(data.Album.Artwork, PictureType.FrontCover));
             }
+            if (data.Artist.Image != null)
+            {
+                pictures.Add(CreatePicture(data.Artist.Image, PictureType.Artist));
+            }
+            f.Tag.Pictures = pictures.ToArray();
         }
 
         if (data.Disc != null)
@@ -153,26 +143,55 @@ internal class Id3TagsService : IId3TagsService
         f.Save();
     }
 
-    private Picture CreatePicture(ArtworkImage artwork)
+    private TagLib.File GetFile(string filepath)
+    {
+        var file = TagLib.File.Create(filepath);
+
+        TagLib.Id3v2.Tag.DefaultVersion = 3;
+        TagLib.Id3v2.Tag.ForceDefaultVersion = true;
+
+        return file;
+    }
+
+    private Picture CreatePicture(ArtworkImage artwork, PictureType pictureType)
     {
         using var ms = new MemoryStream(artwork.Bytes);
 
         return new Picture()
         {
             Data = ByteVector.FromStream(ms),
-            Type = PictureType.FrontCover,
+            Type = pictureType,
             MimeType = artwork.MimeType,
-            Description = "Cover",
+            Description = ""
         };
     }
 
-    public ArtworkImage GetArtwork(TagLib.File f)
+    public ArtworkImage GetArtwork(TagLib.File f, PictureType pictureType, bool orFirstImage)
     {
-        var image = f.Tag.Pictures.FirstOrDefault();
+        var image = f.Tag.Pictures.FirstOrDefault(im => im.Type == pictureType);
+
+        if (image == null && orFirstImage)
+        {
+            image = f.Tag.Pictures.FirstOrDefault();
+        }
 
         if (image == null)
             return null;
 
         return new ArtworkImage(image.Data.Data, image.MimeType);
+    }
+
+    private static string GetValue(string str)
+    {
+        return str ?? string.Empty;
+    }
+
+    private static string GetArtistName(string joinedArtists, string firstArtist)
+    {
+        joinedArtists ??= "";
+
+        return _artistNameExceptions.Keys.Contains(joinedArtists)
+            ? _artistNameExceptions[joinedArtists]
+            : GetValue(firstArtist);
     }
 }

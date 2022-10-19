@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Model.LastFm;
 
-public class Track
+public class LFM_Track
 {
     public string SessionKey { get; set; }
     public string Artist { get; set; }
