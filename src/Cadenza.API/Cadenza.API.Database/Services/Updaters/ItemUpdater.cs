@@ -44,6 +44,9 @@ internal class ItemUpdater : IItemUpdater
         {
             switch (update.Property)
             {
+                case ItemProperty.ArtistImage:
+                    artist.ImageUrl = update.UpdatedValue;
+                    break;
                 case ItemProperty.City:
                     artist.City = update.UpdatedValue;
                     break;

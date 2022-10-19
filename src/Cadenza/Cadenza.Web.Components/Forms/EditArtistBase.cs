@@ -1,9 +1,13 @@
-﻿using Cadenza.Web.Common.Interfaces.Updates;
-
-namespace Cadenza.Web.Components.Forms;
+﻿namespace Cadenza.Web.Components.Forms;
 
 public class EditArtistBase : FormBase<ArtistInfo>
 {
+    [Inject]
+    public IImageFinder ImageFinder { get; set; }
+
+    [Inject]
+    public INavigation Navigation { get; set; }
+
     [Inject]
     public IUpdateService Repository { get; set; }
 
@@ -11,7 +15,9 @@ public class EditArtistBase : FormBase<ArtistInfo>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdatesCoordinator UpdatesService { get; set; }
+    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
+
+    public string ImageUrl { get; set; }
 
     public ArtistUpdate Update { get; set; }
 
@@ -20,6 +26,12 @@ public class EditArtistBase : FormBase<ArtistInfo>
     protected override void OnParametersSet()
     {
         Update = new ArtistUpdate(Model);
+    }
+
+    protected async Task OnSearch()
+    {
+        var searchUrl = ImageFinder.GetSearchUrl(Model);
+        await Navigation.OpenNewTab(searchUrl);
     }
 
     protected async Task OnSubmit()
@@ -36,7 +48,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
 
             await Repository.UpdateArtist(Update);
             Alert.Success("Artist updated");
-            await UpdatesService.UpdateArtist(Update);
+            await UpdatesCoordinator.UpdateArtist(Update);
             Submit();
         }
         catch (Exception ex)
@@ -49,5 +61,23 @@ public class EditArtistBase : FormBase<ArtistInfo>
     protected void OnCancel()
     {
         Cancel();
+    }
+
+    protected void OnUpdateUrl()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(ImageUrl))
+            {
+                throw new Exception("No URL entered");
+            }
+
+            EditableItem.ImageUrl = ImageUrl;
+        }
+        catch (Exception ex)
+        {
+            Alert.Error(ex.Message);
+            return;
+        }
     }
 }

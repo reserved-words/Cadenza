@@ -24,8 +24,6 @@ internal class Id3TagsService : IId3TagsService
         TagLib.Id3v2.Tag.DefaultVersion = 3;
         TagLib.Id3v2.Tag.ForceDefaultVersion = true;
 
-        var comment = f.Tag.Comment;
-
         var track = new TrackId3Data
         {
             Filepath = filepath,
@@ -33,15 +31,14 @@ internal class Id3TagsService : IId3TagsService
             TrackNo = (int)f.Tag.Track,
             Duration = f.Properties.Duration,
             Lyrics = GetValue(f.Tag.Lyrics),
-            Comment = comment
+            Comment = f.Tag.Comment
         };
 
         var artist = new ArtistId3Data
         {
             Name = GetArtistName(f.Tag.JoinedPerformers, f.Tag.FirstPerformer),
             Genre = GetValue(f.Tag.Genres.FirstOrDefault()),
-            Grouping = GetValue(f.Tag.Grouping),
-            Comment = comment
+            Grouping = GetValue(f.Tag.Grouping)
         };
 
         var album = new AlbumId3Data

@@ -4,9 +4,9 @@
 {
     <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@null">
         <ChildContent>
-            @if (ImageUrl != null)
+            @if (Model.ImageUrl != null)
             {
-                <img class="artist-image" src="@ImageUrl" />
+                <img class="artist-image" src="@Model.ImageUrl" />
             }
             <MudText Typo="Typo.body1">@Model.Location()</MudText>
             <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />

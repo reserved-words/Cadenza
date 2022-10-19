@@ -3,7 +3,7 @@
 public class EditAlbumBase : FormBase<AlbumInfo>
 {
     [Inject]
-    public IArtworkFinder ArtworkFinder { get; set; }
+    public IImageFinder ImageFinder { get; set; }
 
     [Inject]
     public INavigation Navigation { get; set; }
@@ -32,7 +32,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     {
         try
         {
-            var artworkUrl = await ArtworkFinder.GetUrl(EditableItem);
+            var artworkUrl = await ImageFinder.GetUrl(EditableItem);
 
             if (string.IsNullOrWhiteSpace(artworkUrl))
             {
@@ -53,7 +53,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
 
     protected async Task OnSearch()
     {
-        var searchUrl = ArtworkFinder.GetSearchUrl(Model);
+        var searchUrl = ImageFinder.GetSearchUrl(Model);
         await Navigation.OpenNewTab(searchUrl);
     }
 
@@ -96,7 +96,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
                 throw new Exception("No URL entered");
             }
 
-            EditableItem.ArtworkUrl = await ArtworkFinder.GetBase64ArtworkSource(ArtworkUrl);
+            EditableItem.ArtworkUrl = await ImageFinder.GetBase64ArtworkSource(ArtworkUrl);
         }
         catch (Exception ex)
         {

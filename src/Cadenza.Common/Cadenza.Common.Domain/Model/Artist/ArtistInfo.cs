@@ -10,4 +10,7 @@ public class ArtistInfo : Artist
 
     [ItemProperty(ItemProperty.Country)]
     public string Country { get; set; }
+
+    [ItemProperty(ItemProperty.ArtistImage)]
+    public string ImageUrl { get; set; }
 }

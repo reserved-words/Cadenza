@@ -32,6 +32,9 @@ internal class Id3Updater : IId3Updater
     {
         switch (ItemProperty)
         {
+            case ItemProperty.ArtistImage:
+                commentData.ArtistImageUrl = value;
+                break;
             case ItemProperty.Artwork:
                 trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
                 break;
