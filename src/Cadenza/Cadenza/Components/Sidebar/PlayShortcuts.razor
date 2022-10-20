@@ -1,0 +1,49 @@
+﻿@using Cadenza.Web.Common.Interfaces.Play
+
+<MudButton Class="mt-2" 
+           OnClick="@PlayLibrary" 
+           FullWidth="true" 
+           Variant="@Variant.Filled">
+    Play All
+</MudButton>
+
+<MudMenu FullWidth="true" 
+         EndIcon="@Icons.Filled.KeyboardArrowRight" 
+         Label="Play Grouping" 
+         Variant="Variant.Filled" 
+         ActivationEvent="@MouseEvent.MouseOver"
+         Size="@Size.Large"
+         AnchorOrigin="@Origin.BottomRight"
+         TransformOrigin="@Origin.BottomLeft">
+    @foreach (var grouping in Groupings)
+    {
+        <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping</MudMenuItem>
+    }
+</MudMenu>
+
+
+@code {
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Groupings = Enum.GetValues<Grouping>()
+            .Where(g => g != Grouping.None)
+            .OrderBy(g => g.ToString())
+            .ToList();
+    }
+
+    private List<Grouping> Groupings { get; set; }
+
+    private async Task PlayLibrary()
+    {
+        await Player.PlayAll();
+    }
+
+    private async Task PlayGrouping(Grouping grouping)
+    {
+        await Player.PlayGrouping(grouping);
+    }
+}

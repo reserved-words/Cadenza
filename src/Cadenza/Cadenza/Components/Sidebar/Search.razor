@@ -1,6 +1,6 @@
 ﻿@inherits SearchBase
 
-<MudToolBar DisableGutters="true" Class="flex-grow-1">
+<MudToolBar DisableGutters="true" Class="flex-grow-1 mr-3">
 
     @if (IsLoading)
     {
@@ -45,7 +45,5 @@
             </ItemTemplate>
         </MudAutocomplete>
     }
-
-    <MudIconButton Icon="@Icons.Material.Filled.Clear" Class="mx-0" Disabled="@(Result == null)" OnClick="@(() => OnClear())" />
 
 </MudToolBar>
