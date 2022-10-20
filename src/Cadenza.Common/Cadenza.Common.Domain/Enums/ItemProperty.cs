@@ -19,6 +19,6 @@ public enum ItemProperty
     State,
     //Tags,
     //TrackNo,
-    //TrackTitle,
-    //TrackYear
+    TrackTitle,
+    TrackYear
 }

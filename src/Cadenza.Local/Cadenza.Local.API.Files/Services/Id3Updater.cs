@@ -62,6 +62,12 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.State:
                 commentData.State = value;
                 break;
+            case ItemProperty.TrackTitle:
+                trackData.Track.Title = value;
+                break;
+            case ItemProperty.TrackYear:
+                commentData.TrackYear = value;
+                break;
             default:
                 throw new NotImplementedException();
         }

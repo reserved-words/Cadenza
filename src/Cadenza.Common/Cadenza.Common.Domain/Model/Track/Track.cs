@@ -6,7 +6,7 @@ public class Track
     public string Id { get; set; }
     public string ArtistId { get; set; }
 
-    //[ItemProperty(ItemProperty.TrackTitle)]
+    [ItemProperty(ItemProperty.TrackTitle)]
     public string Title { get; set; }
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }

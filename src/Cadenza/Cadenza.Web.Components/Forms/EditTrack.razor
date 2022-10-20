@@ -1,46 +1,62 @@
-﻿@*@inherits EditTrackBase
+﻿@inherits EditTrackBase
 
-<WhipDialog Cancel="Cancel"
-            CancelCaption="Cancel"
-            Submit="Submit"
-            SubmitCaption="OK">
+<AppDialog Cancel="OnCancel"
+           CancelCaption="Cancel"
+           Submit="OnSubmit"
+           SubmitCaption="OK">
 
     <ChildContent>
-        <EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+        <EditForm Model="@EditableItem">
             <DataAnnotationsValidator />
-            <MudCard>
-                <MudCardContent>
-                    <MudTextField MaxLength="256"
-                                  Label="Title"
-                                  @bind-Value="Model.Title"
-                                  For="@(() => Model.Title)" />
-                    <MudTextField MaxLength="2000"
-                                  Label="Lyrics"
-                                  Variant="Variant.Outlined"
-                                  Lines="15"
-                                  @bind-Value="Model.Lyrics"
-                                  For="@(() => Model.Lyrics)" />
-                    <MudButton Link="@LyricsSearchUrl"
-                               Target="_blank"
-                               Size="@Size.Small"
-                               Class="mt-2"
-                               Variant="Variant.Filled"
-                               Color="Color.Default">
-                        Search Lyrics
-                    </MudButton>
-                </MudCardContent>
-            </MudCard>
+
+            <MudGrid Spacing="1" Class="tab-grid fixed-height ma-0 pa-0">
+
+                <MudItem sm="6">
+                    <MudCard Elevation="3" Class="pa-3">
+                        <MudCardHeader Class="pa-0">
+                            <MudText Typo="Typo.h6">Details</MudText>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTextField MaxLength="100"
+                                          Label="Title"
+                                          @bind-Value="EditableItem.Title"
+                                          For="@(() => EditableItem.Title)" />
+                            <MudTextField MaxLength="4"
+                                          Label="Year"
+                                          @bind-Value="EditableItem.Year"
+                                          For="@(() => EditableItem.Year)"
+                                          Mask="@(new PatternMask("0000"))" />
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem sm="6">
+                    <MudCard Elevation="3" Class="pa-3">
+                        <MudCardHeader Class="pa-0">
+                            <MudText Typo="Typo.h6">Lyrics</MudText>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+
+                            <MudContainer Class="ma-0 pa-0 d-flex align-stretch">
+                                <MudTextField Class="textarea"
+                                              @bind-Value="EditableItem.Lyrics"
+                                              For="@(() => EditableItem.Lyrics)"
+                                              Lines="30" />
+                            </MudContainer>
+
+                            <MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
+                                <MudStack Row="true" Class="mt-2">
+                                    <MudButton OnClick="@OnLoad" Disabled="false">Load</MudButton>
+                                    <MudButton OnClick="@OnSearch">Search</MudButton>
+                                </MudStack>
+                            </MudContainer>
+
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+            </MudGrid>
         </EditForm>
     </ChildContent>
 
-</WhipDialog>
-
-@code {
-    bool success;
-
-    private void OnValidSubmit(EditContext context)
-    {
-        success = true;
-        StateHasChanged();
-    }
-}*@
+</AppDialog>

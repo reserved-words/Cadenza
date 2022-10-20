@@ -21,13 +21,8 @@ internal class UpdatesCoordinator : IUpdatesCoordinator
         await _messenger.Send(this, new ArtistUpdatedEventArgs(update));
     }
 
-    public async Task UpdateArtwork(AlbumUpdate update)
+    public async Task UpdateTrack(TrackUpdate update)
     {
-        await _messenger.Send(this, new ArtworkUpdatedEventArgs(update));
-    }
-
-    public async Task UpdateLyrics(TrackUpdate update)
-    {
-        await _messenger.Send(this, new LyricsUpdatedEventArgs(update));
+        await _messenger.Send(this, new TrackUpdatedEventArgs(update));
     }
 }

@@ -32,6 +32,12 @@ internal class ItemUpdater : IItemUpdater
                 case ItemProperty.Lyrics:
                     track.Lyrics = update.UpdatedValue;
                     break;
+                case ItemProperty.TrackTitle:
+                    track.Title = update.UpdatedValue;
+                    break;
+                case ItemProperty.TrackYear:
+                    track.Year = update.UpdatedValue;
+                    break;
                 default:
                     throw new NotImplementedException();
             }
