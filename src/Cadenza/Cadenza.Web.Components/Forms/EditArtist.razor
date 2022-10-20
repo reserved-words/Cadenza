@@ -29,7 +29,8 @@
                                 }
 
                                 <MudStack Row="true" Class="my-2">
-                                    <MudButton OnClick="@OnSearch">Search</MudButton>
+                                    <MudButton OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
+                                    <MudButton OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
                                 </MudStack>
                             </MudContainer>
 

@@ -28,9 +28,9 @@ public class EditArtistBase : FormBase<ArtistInfo>
         Update = new ArtistUpdate(Model);
     }
 
-    protected async Task OnSearch()
+    protected async Task OnSearch(SearchSource source)
     {
-        var searchUrl = ImageFinder.GetSearchUrl(Model);
+        var searchUrl = ImageFinder.GetSearchUrl(Model, source);
         await Navigation.OpenNewTab(searchUrl);
     }
 
