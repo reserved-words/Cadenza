@@ -114,3 +114,8 @@ table tbody tr td {
 .cdz-menu.cdz-menu-active {
     border-bottom: solid white 1px;
 }
+
+div.mud-menu,
+div.mud-menu button {
+    width: 100%;
+}
