@@ -2,5 +2,6 @@
 
 internal interface IImageSrcGenerator
 {
+    ArtworkImage GetArtistImage(string id);
     ArtworkImage GetArtwork(string id);
 }

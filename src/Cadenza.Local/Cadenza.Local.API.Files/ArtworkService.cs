@@ -11,8 +11,13 @@ internal class ArtworkService : IArtworkFilesService
         _id3Service = id3Service;
     }
 
+    public ArtworkImage GetArtistImage(string filepath)
+    {
+        return _id3Service.GetArtistImage(filepath);
+    }
+
     public ArtworkImage GetArtwork(string filepath)
     {
-        return _id3Service.GetArtwork(filepath);
+        return _id3Service.GetAlbumArtwork(filepath);
     }
 }

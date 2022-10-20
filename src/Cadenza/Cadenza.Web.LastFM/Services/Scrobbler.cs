@@ -31,11 +31,11 @@ internal class Scrobbler : IPlayTracker
         await _http.Post(url, null, scrobble);
     }
 
-    private async Task<Scrobble> GetScrobble(TrackFull track, int? duration, DateTime? timestamp)
+    private async Task<LFM_Scrobble> GetScrobble(TrackFull track, int? duration, DateTime? timestamp)
     {
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
-        return new Scrobble
+        return new LFM_Scrobble
         {
             SessionKey = sessionKey.Value,
             Timestamp = timestamp ?? DateTime.Now,

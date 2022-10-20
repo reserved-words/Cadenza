@@ -1,4 +1,6 @@
-﻿namespace Cadenza._Startup;
+﻿using Cadenza.Web.Info.Settings;
+
+namespace Cadenza._Startup;
 
 public static class Configuration
 {
@@ -7,6 +9,7 @@ public static class Configuration
         await builder.RegisterJsonConfiguration();
 
         builder.Services
+            .ConfigureSettings<InfoApiSettings>(builder.Configuration, "InfoApi")
             .ConfigureSettings<LastFmApiSettings>(builder.Configuration, "LastFmApi")
             .ConfigureSettings<LocalApiSettings>(builder.Configuration, "LocalApi")
             .ConfigureSettings<DatabaseApiSettings>(builder.Configuration, "DatabaseApi");

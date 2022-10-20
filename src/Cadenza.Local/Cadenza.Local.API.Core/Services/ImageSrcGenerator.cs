@@ -11,6 +11,12 @@ internal class ImageSrcGenerator : IImageSrcGenerator
         _musicFileLibrary = musicFileLibrary;
     }
 
+    public ArtworkImage GetArtistImage(string id)
+    {
+        var filepath = _base64Converter.FromBase64(id);
+        return _musicFileLibrary.GetArtistImage(filepath);
+    }
+
     public ArtworkImage GetArtwork(string id)
     {
         var filepath = _base64Converter.FromBase64(id);

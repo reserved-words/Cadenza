@@ -12,7 +12,8 @@ internal class ArtistConverter : IArtistConverter
             Genre = artist.Genre,
             City = artist.City,
             State = artist.State,
-            Country = artist.Country
+            Country = artist.Country,
+            ImageUrl = artist.ImageUrl
         };
     }
 
@@ -26,7 +27,8 @@ internal class ArtistConverter : IArtistConverter
             Genre = artist.Genre.Nullify(),
             City = artist.City.Nullify(),
             State = artist.State.Nullify(),
-            Country = artist.Country.Nullify()
+            Country = artist.Country.Nullify(),
+            ImageUrl = artist.ImageUrl.Nullify()
         };
     }
 }

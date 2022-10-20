@@ -8,6 +8,7 @@ internal class ArtistCache : IArtistCache
     private List<string> _trackArtists;
     private Dictionary<Grouping, List<ArtistInfo>> _groupings;
     private Dictionary<string, List<ArtistInfo>> _genres;
+    private Dictionary<string, List<TrackInfo>> _tracks;
 
     public Task<List<Artist>> GetAlbumArtists()
     {
@@ -74,37 +75,45 @@ internal class ArtistCache : IArtistCache
         return Task.FromResult(result);
     }
 
+    public Task<List<Track>> GetTracks(string artistId)
+    {
+        var result = _tracks.TryGetValue(artistId, out List<TrackInfo> tracks)
+            ? tracks.OfType<Track>().ToList()
+            : new List<Track>();
+
+        return Task.FromResult(result);
+    }
+
     public Task Populate(FullLibrary library)
     {
         _artists = library.Artists.ToDictionary(a => a.Id, a => a);
         _groupings = library.Artists.GroupBy(a => a.Grouping).ToDictionary(g => g.Key, g => g.ToList());
         _genres = library.Artists.GroupBy(a => a.Genre ?? "None").ToDictionary(g => g.Key, g => g.ToList());
-        _albums = library.Artists.ToDictionary(a => a.Id, a => new List<AlbumInfo>());
 
         _albumArtists = library.Albums.Select(a => a.ArtistId).Distinct().ToList();
         _trackArtists = library.Tracks.Select(a => a.ArtistId).Distinct().ToList();
+
+        _albums = _albumArtists.ToDictionary(a => a, a => new List<AlbumInfo>());
+        _tracks = _trackArtists.ToDictionary(a => a, a => new List<TrackInfo>());
 
         foreach (var album in library.Albums)
         {
             if (album.ArtistId == null)
             {
-                var ex = new Exception($"Artist ID is null for {album.Id} ({album.Title})");
-                throw ex;
-            }
-
-            if (!_albums.ContainsKey(album.ArtistId))
-            {
-                var exception = new Exception($"Artist {album.ArtistId} was not found in the albums dictionary");
-                exception.Data.Add("AlbumsKeys", string.Join(",", _albums.Keys));
-                throw exception;
-            }
-
-            if (_albums[album.ArtistId] == null)
-            {
-                throw new Exception($"Album list is null for {album.ArtistId}");
+                throw new Exception($"Artist ID is null for album {album.Id} ({album.Title})");
             }
 
             _albums[album.ArtistId].Add(album);
+        }
+
+        foreach (var track in library.Tracks)
+        {
+            if (track.ArtistId == null)
+            {
+                throw new Exception($"Artist ID is null for track {track.Id} ({track.Title})");
+            }
+
+            _tracks[track.ArtistId].Add(track);
         }
 
         return Task.CompletedTask;

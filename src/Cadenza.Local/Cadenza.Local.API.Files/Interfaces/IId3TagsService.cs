@@ -8,5 +8,6 @@ internal interface IId3TagsService
 
     void SaveId3Data(string filepath, Id3Data data);
 
-    ArtworkImage GetArtwork(string filepath);
+    ArtworkImage GetAlbumArtwork(string filepath);
+    ArtworkImage GetArtistImage(string filepath);
 }

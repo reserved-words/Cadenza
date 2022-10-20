@@ -1,4 +1,4 @@
-﻿using Track = Cadenza.Common.Domain.Model.LastFm.Track;
+﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
 
 namespace Cadenza.API.Core;
 
@@ -27,12 +27,12 @@ internal class LastFmService : ILastFmService
         return await _authoriser.CreateSession(token);
     }
 
-    public async Task RecordPlay(Scrobble scrobble)
+    public async Task RecordPlay(LFM_Scrobble scrobble)
     {
         await _scrobbler.RecordPlay(scrobble);
     }
 
-    public async Task UpdateNowPlaying(Scrobble scrobble)
+    public async Task UpdateNowPlaying(LFM_Scrobble scrobble)
     {
         await _scrobbler.UpdateNowPlaying(scrobble);
     }
@@ -42,12 +42,12 @@ internal class LastFmService : ILastFmService
         return await _favourites.IsFavourite(artist, title);
     }
 
-    public async Task Favourite(Track track)
+    public async Task Favourite(LFM_Track track)
     {
         await _favourites.Favourite(track);
     }
 
-    public async Task Unfavourite(Track track)
+    public async Task Unfavourite(LFM_Track track)
     {
         await _favourites.Unfavourite(track);
     }

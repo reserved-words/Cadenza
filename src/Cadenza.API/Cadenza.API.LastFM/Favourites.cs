@@ -35,7 +35,7 @@ internal class Favourites : IFavourites
         });
     }
 
-    public async Task Favourite(Track track)
+    public async Task Favourite(LFM_Track track)
     {
         await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {
@@ -45,7 +45,7 @@ internal class Favourites : IFavourites
         });
     }
 
-    public async Task Unfavourite(Track track)
+    public async Task Unfavourite(LFM_Track track)
     {
         await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {

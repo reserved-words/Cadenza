@@ -1,4 +1,4 @@
-﻿using Track = Cadenza.Common.Domain.Model.LastFm.Track;
+﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
 
 namespace Cadenza.API.Controllers;
 
@@ -26,13 +26,13 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("RecordPlay")]
-    public async Task RecordPlay(Scrobble scrobble)
+    public async Task RecordPlay(LFM_Scrobble scrobble)
     {
         await _service.RecordPlay(scrobble);
     }
 
     [HttpPost("UpdateNowPlaying")]
-    public async Task UpdateNowPlaying(Scrobble scrobble)
+    public async Task UpdateNowPlaying(LFM_Scrobble scrobble)
     {
         await _service.UpdateNowPlaying(scrobble);
     }
@@ -44,13 +44,13 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("Favourite")]
-    public async Task Favourite(Track track)
+    public async Task Favourite(LFM_Track track)
     {
         await _service.Favourite(track);
     }
 
     [HttpPost("Unfavourite")]
-    public async Task Unfavourite(Track track)
+    public async Task Unfavourite(LFM_Track track)
     {
         await _service.Unfavourite(track);
     }

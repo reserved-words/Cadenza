@@ -11,6 +11,16 @@ public class LibraryController : ControllerBase
         _service = service;
     }
 
+    [HttpGet("ArtistImage/{id}")]
+    public async Task ArtistImage(string id)
+    {
+        var artwork = await _service.GetArtistImage(id);
+        Response.ContentType = artwork.MimeType;
+        Response.ContentLength = artwork.Bytes.Length;
+        var readOnlyMemory = new ReadOnlyMemory<byte>(artwork.Bytes);
+        await Response.BodyWriter.WriteAsync(readOnlyMemory);
+    }
+
     [HttpGet("Artwork/{id}")]
     public async Task Artwork(string id)
     {

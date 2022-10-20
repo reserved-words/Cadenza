@@ -1,4 +1,5 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
+using Cadenza.Web.Info;
 using Cadenza.Web.Player;
 
 namespace Cadenza._Startup;
@@ -18,6 +19,7 @@ public static class Dependencies
             .AddComponents()
             .AddLocalSource<HtmlPlayer>()
             .AddLastFm()
+            .AddWebInfo()
             .AddDatabase();
 
         return builder;

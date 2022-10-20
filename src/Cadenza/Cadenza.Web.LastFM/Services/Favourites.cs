@@ -39,11 +39,11 @@ internal class Favourites : IFavouritesMessenger, IFavouritesController
         await _http.Post(url, null, track);
     }
 
-    private async Task<Track> GetTrack(string artist, string title)
+    private async Task<LFM_Track> GetTrack(string artist, string title)
     {
         var storedSessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
 
-        return new Track
+        return new LFM_Track
         {
             SessionKey = storedSessionKey.Value,
             Artist = artist,

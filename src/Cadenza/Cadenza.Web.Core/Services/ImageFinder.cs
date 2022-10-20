@@ -1,14 +1,17 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Artist;
 
-internal class ArtworkFinder : IArtworkFinder
+namespace Cadenza.Web.Core.Services;
+
+internal class ImageFinder : IImageFinder
 {
-    private const string ArtworkSearchUrl = "https://www.google.com/search?tbm=isch&q=%22{0}%22+%22{1}%22";
+    private const string AlbumSearchUrl = "https://www.google.com/search?tbm=isch&q=%22{0}%22+%22{1}%22";
+    private const string ArtistSearchUrl = "https://www.google.com/search?tbm=isch&q=%22{0}%22+%22{1}%22";
 
     private readonly IHttpHelper _httpHelper;
     private readonly IImageConverter _imageConverter;
     private readonly IWebInfoService _webInfoService;
 
-    public ArtworkFinder(IHttpHelper httpHelper, IImageConverter imageConverter, IWebInfoService webInfoService)
+    public ImageFinder(IHttpHelper httpHelper, IImageConverter imageConverter, IWebInfoService webInfoService)
     {
         _httpHelper = httpHelper;
         _imageConverter = imageConverter;
@@ -55,7 +58,13 @@ internal class ArtworkFinder : IArtworkFinder
     {
         var artist = HttpUtility.UrlEncode(model.ArtistName);
         var title = HttpUtility.UrlEncode(model.Title);
-        return string.Format(ArtworkSearchUrl, artist, title);
+        return string.Format(AlbumSearchUrl, artist, title);
+    }
+
+    public string GetSearchUrl(ArtistInfo model, SearchSource source)
+    {
+        var name = HttpUtility.UrlEncode(model.Name);
+        return string.Format(ArtistSearchUrl, name, source.GetDisplayName());
     }
 
     public async Task<string> GetUrl(AlbumInfo model)

@@ -30,7 +30,7 @@ internal class AlbumConverter : IAlbumConverter
             ReleaseType = album.ReleaseType.ToString(),
             TrackCounts = album.TrackCounts,
             Year = album.Year.Nullify(),
-            ArtworkUrl = album.ArtworkUrl
+            ArtworkUrl = album.ArtworkUrl.Nullify()
         };
 
         return jsonAlbum;

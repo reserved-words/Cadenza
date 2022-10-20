@@ -7,8 +7,6 @@ public class LastFmApiSettings : ApiOptions<LastFmApiEndpoints>
 
 public class LastFmApiEndpoints
 {
-    public string AlbumArtworkUrl { get; set; }
-    public string ArtistImageUrl { get; set; }
     public string AuthUrl { get; set; }
     public string CreateSession { get; set; }
     public string Unfavourite { get; set; }

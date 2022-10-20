@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
-using Cadenza.Web.Common.Interfaces.Searchbar;
+﻿using Cadenza.Web.Common.Interfaces.Searchbar;
 using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Components.Sidebar;
@@ -11,9 +10,6 @@ public class SearchBase : ComponentBase
 
     [Inject]
     public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IItemPlayer Player { get; set; }
 
     [Inject]
     public IItemViewer Viewer { get; set; }
@@ -76,14 +72,6 @@ public class SearchBase : ComponentBase
     {
         Result = null;
         return Task.CompletedTask;
-    }
-
-    protected async Task OnPlay()
-    {
-        if (Result == null)
-            return;
-
-        await Player.PlayItem(Result.Type, Result.Id);
     }
 }
 

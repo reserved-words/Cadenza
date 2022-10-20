@@ -29,18 +29,4 @@ internal class InfoService : IInfoService
             return _parser.GetImage(albumElement);
         });
     }
-
-    public async Task<string> ArtistImageUrl(string name)
-    {
-        var url = _config.Value.ApiBaseUrl;
-        url = _urlService.SetMethod(url, "artist.getInfo");
-        url = _urlService.AddParameter(url, "artist", name);
-        url = _urlService.AddParameter(url, "autocorrect", 1);
-
-        return await _client.Get(url, xml =>
-        {
-            var albumElement = xml.Element("artist");
-            return _parser.GetImage(albumElement);
-        });
-    }
 }

@@ -2,6 +2,6 @@
 
 public interface IScrobbler
 {
-    Task RecordPlay(Scrobble scrobble);
-    Task UpdateNowPlaying(Scrobble scrobble);
+    Task RecordPlay(LFM_Scrobble scrobble);
+    Task UpdateNowPlaying(LFM_Scrobble scrobble);
 }

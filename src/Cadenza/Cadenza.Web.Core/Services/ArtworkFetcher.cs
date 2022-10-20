@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Artist;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class ArtworkFetcher : IArtworkFetcher
 {
@@ -9,6 +11,25 @@ internal class ArtworkFetcher : IArtworkFetcher
     public ArtworkFetcher(IEnumerable<ISourceArtworkFetcher> sourceFetchers)
     {
         _sourceFetchers = sourceFetchers.ToList();
+    }
+
+    public async Task<string> GetArtistImageUrl(ArtistInfo artist, string trackId = null)
+    {
+        if (artist != null && artist.Id != null && artist.ImageUrl == null)
+        {
+            foreach (var sourceFetcher in _sourceFetchers)
+            {
+                var imageUrl = await sourceFetcher.GetArtistImageUrl(artist, trackId);
+
+                if (imageUrl != null)
+                {
+                    artist.ImageUrl = imageUrl;
+                    break;
+                }
+            }
+        }
+
+        return artist?.ImageUrl ?? ArtworkPlaceholderUrl;
     }
 
     public async Task<string> GetArtworkUrl(Album album, string trackId = null)

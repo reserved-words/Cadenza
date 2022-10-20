@@ -53,6 +53,12 @@ public class LibraryController : ControllerBase
         return await _service.ArtistAlbums(id);
     }
 
+    [HttpGet("Artist/Tracks")]
+    public async Task<List<Track>> ArtistTracks(string id)
+    {
+        return await _service.ArtistTracks(id);
+    }
+
     [HttpGet("Track")]
     public async Task<TrackFull> Track(string id)
     {
