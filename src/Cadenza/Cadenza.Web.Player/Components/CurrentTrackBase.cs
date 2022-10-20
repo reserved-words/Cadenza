@@ -17,6 +17,7 @@ public class CurrentTrackBase : ComponentBase
     protected override void OnInitialized()
     {
         Messenger.Subscribe<AlbumUpdatedEventArgs>(OnAlbumUpdated);
+        Messenger.Subscribe<TrackUpdatedEventArgs>(OnTrackUpdated);
     }
 
     private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
@@ -25,6 +26,16 @@ public class CurrentTrackBase : ComponentBase
             return Task.CompletedTask;
 
         args.Update.ApplyUpdates(Model.Album);
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnTrackUpdated(object sender, TrackUpdatedEventArgs args)
+    {
+        if (Model == null || args.Update.Id != Model.Track.Id)
+            return Task.CompletedTask;
+
+        args.Update.ApplyUpdates(Model.Track);
         StateHasChanged();
         return Task.CompletedTask;
     }
