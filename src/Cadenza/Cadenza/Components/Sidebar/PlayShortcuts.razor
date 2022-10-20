@@ -1,0 +1,15 @@
+﻿@using Cadenza.Web.Common.Interfaces.Play
+
+<MudButton OnClick="@PlayLibrary" FullWidth="true" Variant="@Variant.Filled">Shuffle All</MudButton>
+
+
+@code {
+
+    [Inject]
+    public IItemPlayer Player { get; set; }
+
+    private async Task PlayLibrary()
+    {
+        await Player.PlayAll();
+    }
+}

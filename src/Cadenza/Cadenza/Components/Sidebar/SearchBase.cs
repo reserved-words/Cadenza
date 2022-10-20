@@ -67,11 +67,5 @@ public class SearchBase : ComponentBase
 
         return Task.FromResult(results);
     }
-
-    protected Task OnClear()
-    {
-        Result = null;
-        return Task.CompletedTask;
-    }
 }
 

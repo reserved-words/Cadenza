@@ -67,7 +67,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Player", "Caden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{1E45A13F-C4FB-44C6-8315-D5DA3C7A9B16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Web.Info", "Cadenza\Cadenza.Web.Info\Cadenza.Web.Info.csproj", "{39F999B9-DF7B-486D-B4EF-ABD6BE3DC7D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Info", "Cadenza\Cadenza.Web.Info\Cadenza.Web.Info.csproj", "{39F999B9-DF7B-486D-B4EF-ABD6BE3DC7D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
