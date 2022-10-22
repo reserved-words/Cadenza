@@ -32,6 +32,9 @@ internal class ItemUpdater : IItemUpdater
                 case ItemProperty.Lyrics:
                     track.Lyrics = update.UpdatedValue;
                     break;
+                case ItemProperty.TrackTags:
+                    track.Tags = update.UpdatedValue;
+                    break;
                 case ItemProperty.TrackTitle:
                     track.Title = update.UpdatedValue;
                     break;

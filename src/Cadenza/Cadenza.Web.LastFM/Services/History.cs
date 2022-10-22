@@ -16,28 +16,24 @@ internal class History : IHistory
     public async Task<List<PlayedAlbum>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopAlbums, ("period", period), ("limit", limit), ("page", page));
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<PlayedAlbum>>();
+        return await _http.Get<List<PlayedAlbum>>(url);
     }
 
     public async Task<List<PlayedArtist>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopArtists, ("period", period), ("limit", limit), ("page", page));
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<PlayedArtist>>();
+        return await _http.Get<List<PlayedArtist>>(url);
     }
 
     public async Task<List<PlayedTrack>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopTracks, ("period", period), ("limit", limit), ("page", page));
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<PlayedTrack>>();
+        return await _http.Get<List<PlayedTrack>>(url);
     }
 
     public async Task<List<RecentTrack>> GetRecentTracks(int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.RecentTracks, ("limit", limit), ("page", page));
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<RecentTrack>>();
+        return await _http.Get<List<RecentTrack>>(url);
     }
 }

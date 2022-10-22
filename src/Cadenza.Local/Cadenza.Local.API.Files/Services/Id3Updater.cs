@@ -62,6 +62,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.State:
                 commentData.State = value;
                 break;
+            case ItemProperty.TrackTags:
+                commentData.Tags = new TagList(value);
+                break;
             case ItemProperty.TrackTitle:
                 trackData.Track.Title = value;
                 break;

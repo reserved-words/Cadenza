@@ -1,6 +1,5 @@
 ﻿using Cadenza.Common.Interfaces.Utilities;
 using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Repositories;
 
@@ -20,15 +19,13 @@ internal class LocalRepository : ISourceRepository
     public async Task<List<string>> GetAllTracks()
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracks}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<string>>();
+        return await _http.Get<List<string>>(url);
     }
 
     public async Task<TrackFull> GetTrack(string id)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{id}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<TrackFull>();
+        return await _http.Get<TrackFull>(url);
     }
 
     public async Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates)

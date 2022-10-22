@@ -14,15 +14,13 @@ internal class ApiHelper : IApiHelper
     public async Task<T> Get<T>(string endpoint)
     {
         var url = GetApiEndpoint(endpoint);
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<T>();
+        return await _http.Get<T>(url);
     }
 
     public async Task<T> Get<T>(string endpoint, string id)
     {
         var url = GetApiEndpoint(endpoint, id);
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<T>();
+        return await _http.Get<T>(url);
     }
 
     public async Task Post<T>(string endpoint, T data)

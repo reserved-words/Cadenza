@@ -17,8 +17,8 @@ public enum ItemProperty
     ReleaseType,
     ReleaseYear,
     State,
-    //Tags,
     //TrackNo,
+    TrackTags,
     TrackTitle,
     TrackYear
 }

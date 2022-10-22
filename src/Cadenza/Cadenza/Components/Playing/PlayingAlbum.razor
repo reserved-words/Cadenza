@@ -3,7 +3,7 @@
 
 @inherits AlbumViewBase
 
-<ItemCard Type="@PlayerItemType.Album" Heading="Current Album" Tags="@null">
+<ItemCard Type="@PlayerItemType.Album" Heading="Current Album" Tags="@Model.Tags">
     <ChildContent>
         <AlbumArtworkView Model="@Model" />
         <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />

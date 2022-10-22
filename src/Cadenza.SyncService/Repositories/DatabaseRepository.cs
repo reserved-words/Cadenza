@@ -1,6 +1,5 @@
 ﻿using Cadenza.Common.Interfaces.Utilities;
 using Microsoft.Extensions.Options;
-using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Repositories;
 
@@ -24,29 +23,25 @@ internal class DatabaseRepository : IDatabaseRepository
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetAllTracks}/{source}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<string>>();
+        return await _http.Get<List<string>>(url);
     }
 
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}/{source}/{albumId}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<string>>();
+        return await _http.Get<List<string>>(url);
     }
 
     public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}/{source}/{artistId}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<string>>();
+        return await _http.Get<List<string>>(url);
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}/{source}";
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<List<ItemUpdates>>();
+        return await _http.Get<List<ItemUpdates>>(url);
     }
 
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
@@ -58,6 +53,6 @@ internal class DatabaseRepository : IDatabaseRepository
     public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTracks}/{source}";
-        var response = await _http.Post(url, null, ids);
+        await _http.Post(url, null, ids);
     }
 }

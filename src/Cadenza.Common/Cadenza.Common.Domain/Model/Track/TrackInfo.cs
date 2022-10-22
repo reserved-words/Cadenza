@@ -8,5 +8,6 @@ public class TrackInfo : Track
     [ItemProperty(ItemProperty.Lyrics)]
     public string Lyrics { get; set; }
 
-    public ICollection<string> Tags { get; set; } = new List<string>();
+    [ItemProperty(ItemProperty.TrackTags)]
+    public TagList Tags { get; set; } = new TagList();
 }

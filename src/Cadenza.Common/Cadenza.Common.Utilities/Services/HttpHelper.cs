@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Cadenza.Common.Domain.JsonConverters;
+using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Services;
 
@@ -22,7 +23,7 @@ internal class HttpHelper : IHttpHelper
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         return await _client.SendAsync(httpRequest);
@@ -56,7 +57,7 @@ internal class HttpHelper : IHttpHelper
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         return await _client.SendAsync(httpRequest);
@@ -89,5 +90,11 @@ internal class HttpHelper : IHttpHelper
         }
 
         return await _client.SendAsync(httpRequest);
+    }
+
+    public async Task<T> Get<T>(string url, string authHeader = null)
+    {
+        var response = await Get(url, authHeader);
+        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
     }
 }
