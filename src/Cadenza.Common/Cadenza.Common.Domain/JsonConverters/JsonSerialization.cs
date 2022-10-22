@@ -21,6 +21,8 @@ public static class JsonSerialization
 
     public static void SetOptions(JsonSerializerOptions options)
     {
+        options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.WriteIndented = true;
         foreach (var converter in _converters)
         {
             options.Converters.Add(converter);

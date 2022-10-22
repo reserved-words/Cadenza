@@ -57,7 +57,13 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
         foreach (var property in properties)
         {
-            property.SetValue(targetItem, property.GetValue(sourceItem));
+            var originalValue = property.GetValue(sourceItem);
+
+            var updateValue = originalValue is TagList tagList
+                ? new TagList(tagList)
+                : originalValue;
+
+            property.SetValue(targetItem, updateValue);
         }
     }
 
@@ -69,23 +75,25 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
         foreach (var property in properties)
         {
+            var itemProperty = property.GetCustomAttributes(false)
+                .OfType<ItemPropertyAttribute>()
+                .SingleOrDefault();
+
+            if (itemProperty == null)
+                continue;
+
             var originalValue = property.GetValue(OriginalItem)?.ToString();
             var updatedValue = property.GetValue(UpdatedItem)?.ToString();
 
-            if (!AreEqual(originalValue, updatedValue))
-            {
-                var itemProperty = property.GetCustomAttributes(false)
-                    .OfType<ItemPropertyAttribute>()
-                    .Single()
-                    .Property;
+            if (AreEqual(originalValue, updatedValue))
+                continue;
 
-                updates.Add(new PropertyUpdate
-                {
-                    Property = itemProperty,
-                    OriginalValue = originalValue,
-                    UpdatedValue = updatedValue
-                });
-            }
+            updates.Add(new PropertyUpdate
+            {
+                Property = itemProperty.Property,
+                OriginalValue = originalValue,
+                UpdatedValue = updatedValue
+            });
         }
 
         return updates;

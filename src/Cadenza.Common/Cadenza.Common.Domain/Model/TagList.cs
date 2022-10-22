@@ -28,6 +28,14 @@ public class TagList
         }
     }
 
+    public TagList(TagList tagList)
+    {
+        if (tagList != null)
+        {
+            _tags = new List<string>(tagList.Tags);
+        }
+    }
+
     public void Add(string tag)
     {
         if (!Tags.Contains(tag))

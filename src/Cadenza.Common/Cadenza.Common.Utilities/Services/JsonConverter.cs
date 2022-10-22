@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Cadenza.Common.Utilities.Services;
 
+// TODO - replace this with the .NET serializer and use the same options as used everywhere else
 internal class JsonConverter : IJsonConverter
 {
     private static JsonSerializerSettings _settings = new JsonSerializerSettings

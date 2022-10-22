@@ -75,4 +75,15 @@ public class EditTrackBase : FormBase<TrackInfo>
         var title = HttpUtility.UrlEncode(Model.Title);
         return string.Format(SearchUrl, artist, title);
     }
+
+    private static bool AreEqual(string originalValue, string updatedValue)
+    {
+        if (originalValue == null && updatedValue == null)
+            return true;
+
+        if (originalValue == null || updatedValue == null)
+            return false;
+
+        return originalValue == updatedValue;
+    }
 }
