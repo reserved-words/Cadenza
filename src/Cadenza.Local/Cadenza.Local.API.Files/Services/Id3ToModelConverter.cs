@@ -75,7 +75,7 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = commentData.TrackYear.Nullify(),
             Lyrics = data.Track.Lyrics.Nullify(),
-            Tags = commentData.Tags
+            Tags = commentData.TrackTags
         };
     }
 

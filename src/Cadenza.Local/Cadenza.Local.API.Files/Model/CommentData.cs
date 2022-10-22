@@ -6,5 +6,5 @@ internal class CommentData
     public string State { get; set; }
     public string Country { get; set; }
     public string TrackYear { get; set; }
-    public TagList Tags { get; set; } // Track tags - leave name as Tags
+    public TagList TrackTags { get; set; }
 }
