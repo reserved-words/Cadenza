@@ -6,24 +6,15 @@
     }
 </MudChipSet>
 
-<MudStack Row="true">
-@*    <MudTextField MaxLength="100"
-                  Label="Add"
-                  @bind-Value="NewTagText"
-                  For="@(() => NewTagText)"
-                  Immediate="true"/>
-*@
-    <MudFocusTrap DefaultFocus="DefaultFocus">
-        <MudTextField MaxLength="100"
-                      T="string"
-                      Label="Add"
-                      For="@(() => NewTagText)"
-                      Value="@NewTagText"
-                      ValueChanged="@(tag => OnAddTag(tag))" />
-    </MudFocusTrap>
+<MudFocusTrap DefaultFocus="DefaultFocus">
+    <MudTextField MaxLength="100"
+                    T="string"
+                    Label="Add tag"
+                    For="@(() => NewTagText)"
+                    Value="@NewTagText"
+                    ValueChanged="@(tag => OnAddTag(tag))" />
+</MudFocusTrap>
 
-@*    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="OnAddTag" Disabled="IsNewTagTextEmpty"></MudIconButton>*@
-</MudStack>
 
 @code {
     [Parameter]
