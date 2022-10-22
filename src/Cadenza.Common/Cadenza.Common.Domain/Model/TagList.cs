@@ -38,6 +38,11 @@ public class TagList
 
     public void Add(string tag)
     {
+        if (string.IsNullOrWhiteSpace(tag))
+            return;
+
+        tag = tag.Replace(Separator, "");
+
         if (!Tags.Contains(tag))
         {
             _tags.Add(tag);
