@@ -69,6 +69,15 @@
                                           Mask="@(new PatternMask("0000"))" />
                         </MudCardContent>
                     </MudCard>
+
+                    <MudCard Elevation="3" Class="pa-3">
+                        <MudCardHeader Class="pa-0">
+                            <MudText Typo="Typo.h6">Tags</MudText>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <TagsEditor Model="@EditableItem.Tags" />
+                        </MudCardContent>
+                    </MudCard>
                 </MudItem>
 
             </MudGrid>

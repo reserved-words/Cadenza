@@ -2,8 +2,10 @@
 
 public enum ItemProperty
 {
+    AlbumTags,
     Artwork,
     ArtistImage,
+    ArtistTags,
     //AlbumArtist, 
     //AlbumTitle,
     //Artist,

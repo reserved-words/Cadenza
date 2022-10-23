@@ -15,6 +15,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
 
     public AlbumInfo ConvertAlbum(Id3Data data)
     {
+        var commentData = _commentProcessor.GetData(data.Track.Comment);
+
         var albumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title);
         var artistId = _idGenerator.GenerateId(data.Album.ArtistName);
 
@@ -25,7 +27,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             Title = data.Album.Title,
             ReleaseType = Enum.TryParse(data.Album.ReleaseType, out ReleaseType result) ? result : ReleaseType.Album,
             TrackCounts = new List<int>(),
-            Year = data.Album.Year.Nullify()
+            Year = data.Album.Year.Nullify(),
+            Tags = commentData.AlbumTags
         };
 
         var discNo = data.Disc.DiscNo == 0 ? 1 : data.Disc.DiscNo;
@@ -91,7 +94,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             Genre = data.Artist.Genre.Nullify(),
             City = commentData.City.Nullify(),
             State = commentData.State.Nullify(),
-            Country = commentData.Country.Nullify()
+            Country = commentData.Country.Nullify(),
+            Tags = commentData.ArtistTags
         };
     }
 }

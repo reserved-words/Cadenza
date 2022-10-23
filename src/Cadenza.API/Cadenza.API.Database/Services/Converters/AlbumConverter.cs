@@ -15,7 +15,8 @@ internal class AlbumConverter : IAlbumConverter
             Year = album.Year,
             DiscCount = album.TrackCounts.Count,
             TrackCounts = album.TrackCounts,
-            ArtworkUrl = album.ArtworkUrl
+            ArtworkUrl = album.ArtworkUrl,
+            Tags = new TagList(album.Tags)
         };
     }
 
@@ -30,7 +31,8 @@ internal class AlbumConverter : IAlbumConverter
             ReleaseType = album.ReleaseType.ToString(),
             TrackCounts = album.TrackCounts,
             Year = album.Year.Nullify(),
-            ArtworkUrl = album.ArtworkUrl.Nullify()
+            ArtworkUrl = album.ArtworkUrl.Nullify(),
+            Tags = album.Tags.ToString().Nullify()
         };
 
         return jsonAlbum;

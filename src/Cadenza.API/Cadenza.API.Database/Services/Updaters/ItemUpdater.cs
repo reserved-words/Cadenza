@@ -11,6 +11,9 @@ internal class ItemUpdater : IItemUpdater
                 case ItemProperty.ReleaseType:
                     album.ReleaseType = update.UpdatedValue;
                     break;
+                case ItemProperty.AlbumTags:
+                    album.Tags = update.UpdatedValue;
+                    break;
                 case ItemProperty.ReleaseYear:
                     album.Year = update.UpdatedValue;
                     break;
@@ -55,6 +58,9 @@ internal class ItemUpdater : IItemUpdater
             {
                 case ItemProperty.ArtistImage:
                     artist.ImageUrl = update.UpdatedValue;
+                    break;
+                case ItemProperty.ArtistTags:
+                    artist.Tags = update.UpdatedValue;
                     break;
                 case ItemProperty.City:
                     artist.City = update.UpdatedValue;

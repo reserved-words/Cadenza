@@ -6,5 +6,6 @@ public class AlbumInfo : Album
 
     public List<int> TrackCounts { get; set; } = new List<int>();
 
+    [ItemProperty(ItemProperty.AlbumTags)]
     public TagList Tags { get; set; } = new TagList();
 }
