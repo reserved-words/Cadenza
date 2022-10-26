@@ -11,34 +11,16 @@ public class LibraryController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("Artists")]
-    public async Task<List<Artist>> Artists()
+    [HttpGet("Album")]
+    public async Task<AlbumInfo> Album(string id)
     {
-        return await _service.Artists();
+        return await _service.Album(id);
     }
 
-    [HttpGet("Artists/Album")]
-    public async Task<List<Artist>> AlbumArtists()
+    [HttpGet("Album/Tracks")]
+    public async Task<List<AlbumTrack>> AlbumTracks(string id)
     {
-        return await _service.AlbumArtists();
-    }
-
-    [HttpGet("Artists/Track")]
-    public async Task<List<Artist>> TrackArtists()
-    {
-        return await _service.TrackArtists();
-    }
-
-    [HttpGet("Artists/Grouping")]
-    public async Task<List<Artist>> GroupingArtists(Grouping id)
-    {
-        return await _service.GroupingArtists(id);
-    }
-
-    [HttpGet("Artists/Genre")]
-    public async Task<List<Artist>> GenreArtists(string id)
-    {
-        return await _service.GenreArtists(id);
+        return await _service.AlbumTracks(id);
     }
 
     [HttpGet("Artist")]
@@ -59,21 +41,45 @@ public class LibraryController : ControllerBase
         return await _service.ArtistTracks(id);
     }
 
+    [HttpGet("Artists")]
+    public async Task<List<Artist>> Artists()
+    {
+        return await _service.Artists();
+    }
+
+    [HttpGet("Artists/Album")]
+    public async Task<List<Artist>> AlbumArtists()
+    {
+        return await _service.AlbumArtists();
+    }
+
+    [HttpGet("Artists/Genre")]
+    public async Task<List<Artist>> GenreArtists(string id)
+    {
+        return await _service.GenreArtists(id);
+    }
+
+    [HttpGet("Artists/Grouping")]
+    public async Task<List<Artist>> GroupingArtists(Grouping id)
+    {
+        return await _service.GroupingArtists(id);
+    }
+
+    [HttpGet("Artists/Track")]
+    public async Task<List<Artist>> TrackArtists()
+    {
+        return await _service.TrackArtists();
+    }
+
+    [HttpGet("Tag")]
+    public async Task<List<PlayerItem>> Tag(string id)
+    {
+        return await _service.Tag(id);
+    }
+
     [HttpGet("Track")]
     public async Task<TrackFull> Track(string id)
     {
         return await _service.Track(id);
-    }
-
-    [HttpGet("Album")]
-    public async Task<AlbumInfo> Album(string id)
-    {
-        return await _service.Album(id);
-    }
-
-    [HttpGet("Album/Tracks")]
-    public async Task<List<AlbumTrack>> AlbumTracks(string id)
-    {
-        return await _service.AlbumTracks(id);
     }
 }

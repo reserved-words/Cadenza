@@ -11,6 +11,7 @@ public interface ILibraryService
     Task<List<Artist>> Artists();
     Task<List<Artist>> GenreArtists(string id);
     Task<List<Artist>> GroupingArtists(Grouping id);
+    Task<List<PlayerItem>> Tag(string id);
     Task<TrackFull> Track(string id);
     Task<List<Artist>> TrackArtists();
 }

@@ -21,6 +21,7 @@ public class DatabaseApiEndpoints
     public string TrackArtists { get; set; }
     public string GroupingArtists { get; set; }
     public string GenreArtists { get; set; }
+    public string Tag { get; set; }
 
     public string PlayAlbum { get; set; }
     public string PlayArtist { get; set; }

@@ -20,7 +20,8 @@
                     <MudText Typo="Typo.h6">Artists</MudText>
                 </HeaderContent>
                 <ChildContent>
-                    <AppTable T="@Artist">
+                    <AppTable T="@PlayerItem"
+                              Items="@Artists">
                         <RowTemplate>
                             <MudTd>
                                 <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
@@ -39,10 +40,11 @@
                     <MudText Typo="Typo.h6">Albums</MudText>
                 </HeaderContent>
                 <ChildContent>
-                    <AppTable T="@Album">
+                    <AppTable T="@PlayerItem"
+                              Items="@Albums">
                         <RowTemplate>
                             <MudTd>
-                                <AlbumLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                                <AlbumLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Name" />
                             </MudTd>
                         </RowTemplate>
                     </AppTable>
@@ -58,10 +60,11 @@
                     <MudText Typo="Typo.h6">Tracks</MudText>
                 </HeaderContent>
                 <ChildContent>
-                    <AppTable T="@Track">
+                    <AppTable T="@PlayerItem"
+                              Items="@Tracks">
                         <RowTemplate>
                             <MudTd>
-                                <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                                <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Name" />
                             </MudTd>
                         </RowTemplate>
                     </AppTable>
