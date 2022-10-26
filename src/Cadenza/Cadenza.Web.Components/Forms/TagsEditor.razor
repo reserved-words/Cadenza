@@ -1,4 +1,5 @@
-﻿
+﻿@inherits TagsEditorBase
+
 <MudChipSet AllClosable="true" OnClose="OnRemoveTag">
     @foreach (var tag in Model.Tags)
     {
@@ -8,36 +9,11 @@
 
 <MudFocusTrap DefaultFocus="DefaultFocus">
     <MudTextField MaxLength="100"
-                    T="string"
-                    Label="Add tag"
-                    For="@(() => NewTagText)"
-                    Value="@NewTagText"
-                    ValueChanged="@(tag => OnAddTag(tag))" />
+                  T="string"
+                  Label="Add tag"
+                  For="@(() => NewTagText)"
+                  Value="@NewTagText"
+                  ValueChanged="@(tag => OnAddTag(tag))"/>
+    <MudText Color="@Color.Error">@ErrorMessage</MudText>
 </MudFocusTrap>
 
-
-@code {
-    [Parameter]
-    public TagList Model { get; set; } = new TagList();
-
-    DefaultFocus DefaultFocus { get; set; }
-
-    public async Task OnAddTag(string tag)
-    {
-        if (string.IsNullOrWhiteSpace(tag))
-            return;
-
-        Model.Add(tag);
-        NewTagText = "";
-        DefaultFocus = DefaultFocus.FirstChild;
-    }
-
-    public void OnRemoveTag(MudChip chip)
-    {
-        Model.Remove(chip.Text);
-    }
-
-    public bool IsNewTagTextEmpty => string.IsNullOrWhiteSpace(NewTagText);
-
-    public string NewTagText { get; set; }
-}
