@@ -10,4 +10,5 @@ internal class JsonAlbum
     public string Year { get; set; }
     public List<int> TrackCounts { get; set; } = new List<int>();
     public string ArtworkUrl { get; set; }
+    public string Tags { get; set; }
 }

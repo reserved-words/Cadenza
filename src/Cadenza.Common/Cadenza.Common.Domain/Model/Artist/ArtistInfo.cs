@@ -13,4 +13,7 @@ public class ArtistInfo : Artist
 
     [ItemProperty(ItemProperty.ArtistImage)]
     public string ImageUrl { get; set; }
+
+    [ItemProperty(ItemProperty.ArtistTags)]
+    public TagList Tags { get; set; } = new TagList();
 }

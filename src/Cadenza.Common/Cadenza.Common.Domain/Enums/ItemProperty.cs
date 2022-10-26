@@ -2,8 +2,10 @@
 
 public enum ItemProperty
 {
+    AlbumTags,
     Artwork,
     ArtistImage,
+    ArtistTags,
     //AlbumArtist, 
     //AlbumTitle,
     //Artist,
@@ -17,8 +19,8 @@ public enum ItemProperty
     ReleaseType,
     ReleaseYear,
     State,
-    //Tags,
     //TrackNo,
-    //TrackTitle,
-    //TrackYear
+    TrackTags,
+    TrackTitle,
+    TrackYear
 }

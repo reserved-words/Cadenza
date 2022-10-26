@@ -1,4 +1,5 @@
-﻿global using Cadenza.Common.Domain.Enums;
+﻿global using Cadenza.Common.Domain.Model;
+global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Extensions;
 global using Cadenza.Common.Domain.Model.Album;
 global using Cadenza.Common.Domain.Model.Artist;
@@ -9,6 +10,7 @@ global using Cadenza.Local.API.Common.Interfaces;
 global using Cadenza.Local.API.Files.Interfaces;
 global using Cadenza.Local.API.Files.Model;
 global using Cadenza.Local.API.Files.Services;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Local.API.Files;

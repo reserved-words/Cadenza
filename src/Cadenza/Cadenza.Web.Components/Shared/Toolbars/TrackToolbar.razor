@@ -25,6 +25,6 @@
 
     protected async Task OnEditTrack()
     {
-        await DialogService.DisplayForm<EditLyrics, TrackInfo>(Track, "Edit Lyrics", false);
+        await DialogService.DisplayForm<EditTrack, TrackInfo>(Track, "Edit Track", false);
     }
 }

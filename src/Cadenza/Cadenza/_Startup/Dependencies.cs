@@ -28,6 +28,7 @@ public static class Dependencies
     private static IServiceCollection AddInteropServices(this IServiceCollection services)
     {
         return services
+            .AddTransient<IDebugLogger, ConsoleLogger>()
             .AddTransient<INavigation, NavigationInterop>()
             .AddTransient<IStore, StoreInterop>();
     }

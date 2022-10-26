@@ -32,6 +32,12 @@ internal class Id3Updater : IId3Updater
     {
         switch (ItemProperty)
         {
+            case ItemProperty.AlbumTags:
+                commentData.AlbumTags = new TagList(value);
+                break;
+            case ItemProperty.ArtistTags:
+                commentData.ArtistTags = new TagList(value);
+                break;
             case ItemProperty.ArtistImage:
                 trackData.Artist.Image = _imageConverter.GetImageFromBase64Url(value);
                 break;
@@ -61,6 +67,15 @@ internal class Id3Updater : IId3Updater
                 break;
             case ItemProperty.State:
                 commentData.State = value;
+                break;
+            case ItemProperty.TrackTags:
+                commentData.TrackTags = new TagList(value);
+                break;
+            case ItemProperty.TrackTitle:
+                trackData.Track.Title = value;
+                break;
+            case ItemProperty.TrackYear:
+                commentData.TrackYear = value;
                 break;
             default:
                 throw new NotImplementedException();

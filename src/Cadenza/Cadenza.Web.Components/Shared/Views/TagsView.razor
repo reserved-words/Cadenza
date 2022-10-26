@@ -1,7 +1,7 @@
 ﻿
-@if (Model != null && Model.Any())
+@if (Model.Tags.Any())
 {
-    foreach (var tag in Model)
+    foreach (var tag in Model.Tags)
     {
         <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag</MudChip>
     }
@@ -14,5 +14,5 @@ else
 
 @code {
     [Parameter]
-    public ICollection<string> Model { get; set; }
+    public TagList Model { get; set; }
 }

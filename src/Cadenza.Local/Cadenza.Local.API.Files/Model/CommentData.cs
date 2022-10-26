@@ -6,5 +6,7 @@ internal class CommentData
     public string State { get; set; }
     public string Country { get; set; }
     public string TrackYear { get; set; }
-    public List<string> Tags { get; set; } // Track tags - leave name as Tags
+    public TagList AlbumTags { get; set; }
+    public TagList ArtistTags { get; set; }
+    public TagList TrackTags { get; set; }
 }

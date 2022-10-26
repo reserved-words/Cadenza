@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Cadenza.Common.Domain.JsonConverters;
+using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Extensions;
 
@@ -38,7 +39,7 @@ public static class HttpHelperExtensions
             throw new HttpException(response);
         }
 
-        return await response.Content.ReadFromJsonAsync<T>();
+        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
     }
 
     private static void Validate(this HttpResponseMessage response)

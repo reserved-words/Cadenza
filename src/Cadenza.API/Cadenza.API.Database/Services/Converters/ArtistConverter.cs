@@ -13,7 +13,8 @@ internal class ArtistConverter : IArtistConverter
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
-            ImageUrl = artist.ImageUrl
+            ImageUrl = artist.ImageUrl,
+            Tags = new TagList(artist.Tags)
         };
     }
 
@@ -28,7 +29,8 @@ internal class ArtistConverter : IArtistConverter
             City = artist.City.Nullify(),
             State = artist.State.Nullify(),
             Country = artist.Country.Nullify(),
-            ImageUrl = artist.ImageUrl.Nullify()
+            ImageUrl = artist.ImageUrl.Nullify(),
+            Tags = artist.Tags.ToString().Nullify()
         };
     }
 }

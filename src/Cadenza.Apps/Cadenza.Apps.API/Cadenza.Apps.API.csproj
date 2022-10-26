@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps.csproj" />
   </ItemGroup>
 

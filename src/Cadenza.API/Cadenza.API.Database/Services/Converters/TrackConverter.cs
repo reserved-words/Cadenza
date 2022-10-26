@@ -2,13 +2,6 @@
 
 internal class TrackConverter : ITrackConverter
 {
-    private readonly IBase64Converter _base64Converter;
-
-    public TrackConverter(IBase64Converter base64Converter)
-    {
-        _base64Converter = base64Converter;
-    }
-
     public TrackInfo ToModel(JsonTrack track, ICollection<JsonArtist> artists)
     {
         var artist = artists.Single(a => a.Id == track.ArtistId);
@@ -24,8 +17,7 @@ internal class TrackConverter : ITrackConverter
             DurationSeconds = track.DurationSeconds,
             Year = track.Year,
             Lyrics = track.Lyrics,
-            Tags = track.Tags?.Split("|")
-                .ToList()
+            Tags = new TagList(track.Tags)
         };
     }
 
@@ -41,9 +33,7 @@ internal class TrackConverter : ITrackConverter
             DurationSeconds = track.DurationSeconds,
             Year = track.Year.Nullify(),
             Lyrics = track.Lyrics.Nullify(),
-            Tags = track.Tags == null
-                ? null
-                : string.Join("|", track.Tags).Nullify()
+            Tags = track.Tags.ToString().Nullify()
         };
     }
 }

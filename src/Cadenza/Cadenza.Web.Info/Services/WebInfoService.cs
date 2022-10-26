@@ -23,16 +23,14 @@ internal class WebInfoService : IWebInfoService
     public async Task<string> GetAlbumArtworkUrl(Album album)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AlbumArtworkUrl, ("artist", album.ArtistName), ("title", album.Title));
-        var response = await _http.Get(url);
-        var result = await response.Content.ReadFromJsonAsync<AlbumArtworkResult>();
+        var result = await _http.Get<AlbumArtworkResult>(url);
         return result.Url;
     }
 
     public async Task<string> GetArtistImageUrl(Artist artist)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.ArtistImageUrl, ("name", artist.Name));
-        var response = await _http.Get(url);
-        var result = await response.Content.ReadFromJsonAsync<ArtistImageResult>();
+        var result = await _http.Get<ArtistImageResult>(url);
         return result.Url;
     }
 }

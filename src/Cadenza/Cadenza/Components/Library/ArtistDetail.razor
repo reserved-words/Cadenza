@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@null">
+    <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@Model.Tags">
         <ChildContent>
             <ArtistImageView Model="@Model" />
             <MudText Typo="Typo.body1">@Model.Location()</MudText>

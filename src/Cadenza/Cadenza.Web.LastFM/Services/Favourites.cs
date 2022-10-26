@@ -21,8 +21,7 @@ internal class Favourites : IFavouritesMessenger, IFavouritesController
     public async Task<bool> IsFavourite(string artist, string title)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.IsFavourite, ("artist", artist), ("title", title));
-        var response = await _http.Get(url);
-        return await response.Content.ReadFromJsonAsync<bool>();
+        return await _http.Get<bool>(url);
     }
 
     public async Task Favourite(string artist, string title)

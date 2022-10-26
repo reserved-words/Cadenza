@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@null">
+    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@Model.Tags">
         <ChildContent>
             <AlbumArtworkView Model="@Model" />
             <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />

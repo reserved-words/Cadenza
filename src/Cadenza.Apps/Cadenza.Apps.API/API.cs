@@ -1,7 +1,8 @@
 ﻿global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
-
+using Cadenza.Common.Domain.JsonConverters;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace Cadenza.Apps.API;
@@ -24,6 +25,11 @@ public static class API
         builder
             .RegisterCorsPolicies()
             .RegisterDocumentation();
+
+        builder.Services.Configure<JsonOptions>(options =>
+        {
+            JsonSerialization.SetOptions(options.JsonSerializerOptions);
+        });
 
         return builder;
     }

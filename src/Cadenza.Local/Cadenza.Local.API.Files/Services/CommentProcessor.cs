@@ -1,21 +1,17 @@
-﻿namespace Cadenza.Local.API.Files.Services;
+﻿using Cadenza.Common.Domain.JsonConverters;
+using System.Text.Json;
+
+namespace Cadenza.Local.API.Files.Services;
 
 internal class CommentProcessor : ICommentProcessor
 {
-    private readonly IJsonConverter _jsonConverter;
-
-    public CommentProcessor(IJsonConverter jsonConverter)
-    {
-        _jsonConverter = jsonConverter;
-    }
-
     public CommentData GetData(string comment)
     {
-        return _jsonConverter.Deserialize<CommentData>(comment);
+        return JsonSerializer.Deserialize<CommentData>(comment, JsonSerialization.Options);
     }
 
     public string CreateComment(CommentData commentData)
     {
-        return _jsonConverter.Serialize(commentData);
+        return JsonSerializer.Serialize(commentData, JsonSerialization.Options);
     }
 }

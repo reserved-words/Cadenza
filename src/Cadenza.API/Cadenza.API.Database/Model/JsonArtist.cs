@@ -10,4 +10,5 @@ internal class JsonArtist
     public string State { get; set; }
     public string Country { get; set; }
     public string ImageUrl { get; set; }
+    public string Tags { get; set; }
 }
