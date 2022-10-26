@@ -3,7 +3,7 @@
 {
     foreach (var tag in Model.Tags)
     {
-        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small">@tag</MudChip>
+        <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small" OnClick="@(() => OnViewTag(tag))">@tag</MudChip>
     }
 }
 else
@@ -13,6 +13,14 @@ else
 
 
 @code {
+    [Inject]
+    public IItemViewer ItemViewer { get; set; }
+
     [Parameter]
     public TagList Model { get; set; }
+
+    private async Task OnViewTag(string id)
+    {
+        await ItemViewer.ViewTag(id);
+    }
 }
