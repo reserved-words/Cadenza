@@ -1,5 +1,4 @@
-﻿
-using Cadenza.Common.Domain.JsonConverters;
+﻿using Cadenza.Common.Domain.JsonConverters;
 using Cadenza.Common.Domain.Model;
 using Cadenza.Common.Domain.Model.Track;
 using System.Text.Json;
@@ -18,7 +17,7 @@ var track = new TrackInfo
 
 var json = JsonSerializer.Serialize(track, JsonSerialization.Options);
 
-var deserializedTrack = JsonSerializer.Deserialize<TrackInfo>(json);
+var deserializedTrack = JsonSerializer.Deserialize<TrackInfo>(json, JsonSerialization.Options);
 
 var serializedTrack = JsonSerializer.Serialize(track, JsonSerialization.Options);
 

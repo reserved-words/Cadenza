@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.Common.Domain.JsonConverters;
+using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Core.Utilities;
 
@@ -39,13 +40,13 @@ internal class Store : IAppStore
         if (string.IsNullOrWhiteSpace(json))
             return null;
 
-        return JsonSerializer.Deserialize<StoredValue<T>>(json);
+        return JsonSerializer.Deserialize<StoredValue<T>>(json, JsonSerialization.Options);
     }
 
     public async Task SetValue<T>(StoreKey key, T value, int? expiresInSeconds = null)
     {
         var storedValue = new StoredValue<T>(value, expiresInSeconds);
-        var json = JsonSerializer.Serialize(storedValue);
+        var json = JsonSerializer.Serialize(storedValue, JsonSerialization.Options);
         await _store.SetValue(key.ToString(), json);
     }
 }
