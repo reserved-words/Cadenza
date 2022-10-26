@@ -15,22 +15,16 @@ public class TagsEditorBase : ComponentBase
 
     public void OnAddTag(string tag)
     {
-        if (string.IsNullOrWhiteSpace(tag))
+        if (Regex.IsMatch(tag, RegexPattern))
         {
             ErrorMessage = null;
-            return;
+            Model.Add(tag);
         }
-
-        if (!Regex.IsMatch(tag, RegexPattern))
+        else
         {
             ErrorMessage = "Only aphanumerics and hyphens allowed";
-            DefaultFocus = DefaultFocus.FirstChild;
-            return;
         }
 
-        ErrorMessage = null;
-        Model.Add(tag);
-        NewTagText = "";
         DefaultFocus = DefaultFocus.FirstChild;
     }
 
