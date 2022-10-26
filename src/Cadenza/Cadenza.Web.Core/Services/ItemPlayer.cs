@@ -27,6 +27,13 @@ internal class ItemPlayer : IItemPlayer
         await _playCoordinator.Play(playlist);
     }
 
+    public async Task PlayGenre(string id)
+    {
+        await _playCoordinator.StopCurrentPlaylist();
+        var playlist = await _playlistCreator.CreateGenrePlaylist(id);
+        await _playCoordinator.Play(playlist);
+    }
+
     public async Task PlayGrouping(Grouping id)
     {
         await _playCoordinator.StopCurrentPlaylist();
@@ -34,10 +41,10 @@ internal class ItemPlayer : IItemPlayer
         await _playCoordinator.Play(playlist);
     }
 
-    public async Task PlayGenre(string id)
+    public async Task PlayTag(string id)
     {
         await _playCoordinator.StopCurrentPlaylist();
-        var playlist = await _playlistCreator.CreateGenrePlaylist(id);
+        var playlist = await _playlistCreator.CreateTagPlaylist(id);
         await _playCoordinator.Play(playlist);
     }
 
@@ -59,22 +66,23 @@ internal class ItemPlayer : IItemPlayer
     {
         switch (type)
         {
-            case PlayerItemType.Grouping:
-                await PlayGrouping(id.Parse<Grouping>());
-                break;
-            case PlayerItemType.Genre:
-                await PlayGenre(id);
+            case PlayerItemType.Album:
+                await PlayAlbum(id);
                 break;
             case PlayerItemType.Artist:
                 await PlayArtist(id);
                 break;
-            case PlayerItemType.Album:
-                await PlayAlbum(id);
+            case PlayerItemType.Genre:
+                await PlayGenre(id);
+                break;
+            case PlayerItemType.Grouping:
+                await PlayGrouping(id.Parse<Grouping>());
+                break;
+            case PlayerItemType.Tag:
+                await PlayTag(id);
                 break;
             case PlayerItemType.Track:
                 await PlayTrack(id);
-                break;
-            case PlayerItemType.Playlist:
                 break;
         }
 

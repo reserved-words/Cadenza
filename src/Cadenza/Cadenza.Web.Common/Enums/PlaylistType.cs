@@ -10,5 +10,6 @@ public enum PlaylistType
     All,
     Ordered,
     Criteria,
-    Quick
+    Quick,
+    Tag
 }

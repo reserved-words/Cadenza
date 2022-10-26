@@ -3,10 +3,11 @@
 public interface IItemPlayer
 {
     Task PlayAll();
-    Task PlayGrouping(Grouping id);
-    Task PlayGenre(string id);
-    Task PlayArtist(string id);
     Task PlayAlbum(string id);
+    Task PlayArtist(string id);
+    Task PlayGenre(string id);
+    Task PlayGrouping(Grouping id);
+    Task PlayTag(string id);
     Task PlayTrack(string id);
     Task PlayItem(PlayerItemType type, string id);
 }

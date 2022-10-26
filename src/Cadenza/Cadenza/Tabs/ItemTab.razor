@@ -1,23 +1,27 @@
 ﻿
-@if (Item.Type == PlayerItemType.Artist)
-{
-    <ArtistTab Id="@Item.Id" />
-}
-else if (Item.Type == PlayerItemType.Album)
+@if (Item.Type == PlayerItemType.Album)
 {
     <AlbumTab Id="@Item.Id" />
 }
-else if (Item.Type == PlayerItemType.Track)
+else if (Item.Type == PlayerItemType.Artist)
 {
-    <TrackTab Id="@Item.Id" />
+    <ArtistTab Id="@Item.Id" />
+}
+else if (Item.Type == PlayerItemType.Genre)
+{
+    <GenreTab Id="@Item.Id" />
 }
 else if (Item.Type == PlayerItemType.Grouping)
 {
     <GroupingTab Id="@Item.Id" />
 }
-else if (Item.Type == PlayerItemType.Genre)
+else if (Item.Type == PlayerItemType.Tag)
 {
-    <GenreTab Id="@Item.Id" />
+    <TagTab Id="@Item.Id" />
+}
+else if (Item.Type == PlayerItemType.Track)
+{
+    <TrackTab Id="@Item.Id" />
 }
 
 @code {

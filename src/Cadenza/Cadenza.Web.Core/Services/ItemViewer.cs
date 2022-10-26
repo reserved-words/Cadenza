@@ -49,9 +49,10 @@ internal class ItemViewer : IItemViewer
         {
             PlaylistType.Album => PlayerItemType.Album,
             PlaylistType.Artist => PlayerItemType.Artist,
-            PlaylistType.Track => PlayerItemType.Track,
-            PlaylistType.Grouping => PlayerItemType.Grouping,
             PlaylistType.Genre => PlayerItemType.Genre,
+            PlaylistType.Grouping => PlayerItemType.Grouping,
+            PlaylistType.Tag => PlayerItemType.Tag,
+            PlaylistType.Track => PlayerItemType.Track,
             _ => null
         };
 
@@ -65,6 +66,12 @@ internal class ItemViewer : IItemViewer
     public async Task ViewSearchResult(PlayerItem item)
     {
         var playerItem = new ViewItem(item.Type, item.Id, item.Name);
+        await _controller.RequestItem(playerItem);
+    }
+
+    public async Task ViewTag(string id)
+    {
+        var playerItem = new ViewItem(PlayerItemType.Tag, id, id);
         await _controller.RequestItem(playerItem);
     }
 

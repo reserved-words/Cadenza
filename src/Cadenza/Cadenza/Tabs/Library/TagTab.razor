@@ -1,0 +1,74 @@
+﻿@inherits TagTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+            <TagDetail Id="@Id" />
+        </TabGridRow>
+
+        <MudDivider />
+
+        <TagToolbar Tag="@Id" />
+
+    </TabGridColumn>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="Typo.h6">Artists</MudText>
+                </HeaderContent>
+                <ChildContent>
+                    <AppTable T="@Artist">
+                        <RowTemplate>
+                            <MudTd>
+                                <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                            </MudTd>
+                        </RowTemplate>
+                    </AppTable>
+                </ChildContent>
+            </AppCardScrollContainer>
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="Typo.h6">Albums</MudText>
+                </HeaderContent>
+                <ChildContent>
+                    <AppTable T="@Album">
+                        <RowTemplate>
+                            <MudTd>
+                                <AlbumLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                            </MudTd>
+                        </RowTemplate>
+                    </AppTable>
+                </ChildContent>
+            </AppCardScrollContainer>
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="Typo.h6">Tracks</MudText>
+                </HeaderContent>
+                <ChildContent>
+                    <AppTable T="@Track">
+                        <RowTemplate>
+                            <MudTd>
+                                <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                            </MudTd>
+                        </RowTemplate>
+                    </AppTable>
+                </ChildContent>
+            </AppCardScrollContainer>
+
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

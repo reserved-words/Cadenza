@@ -1,0 +1,14 @@
+﻿
+<AppCard>
+    <HeaderContent>
+        <ItemCardHeader Type="@PlayerItemType.Tag" Heading="@Id">
+            <ChildContent>
+            </ChildContent>
+        </ItemCardHeader>
+    </HeaderContent>
+</AppCard>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+}

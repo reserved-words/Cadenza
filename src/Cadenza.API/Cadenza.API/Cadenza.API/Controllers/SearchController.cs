@@ -23,16 +23,22 @@ public class SearchController : ControllerBase
         return await _service.GetSearchArtists();
     }
 
+    [HttpGet("Genres")]
+    public async Task<List<PlayerItem>> Genres()
+    {
+        return await _service.GetSearchGenres();
+    }
+
     [HttpGet("Groupings")]
     public async Task<List<PlayerItem>> Groupings()
     {
         return await _service.GetSearchGroupings();
     }
 
-    [HttpGet("Genres")]
-    public async Task<List<PlayerItem>> Genres()
+    [HttpGet("Tags")]
+    public async Task<List<PlayerItem>> Tags()
     {
-        return await _service.GetSearchGenres();
+        return await _service.GetSearchTags();
     }
 
     [HttpGet("Tracks")]

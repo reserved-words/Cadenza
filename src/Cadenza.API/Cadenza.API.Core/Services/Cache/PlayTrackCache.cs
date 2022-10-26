@@ -58,6 +58,12 @@ internal class PlayTrackCache : IPlayTrackCache
         return Task.FromResult(result);
     }
 
+    public Task<List<PlayTrack>> GetByTag(string id)
+    {
+        var result = new List<PlayTrack>();
+        return Task.FromResult(result);
+    }
+
     public Task Populate(FullLibrary library)
     {
         _groupingArtists = library.Artists

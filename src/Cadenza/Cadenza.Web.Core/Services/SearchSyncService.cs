@@ -24,6 +24,7 @@ internal class SearchSyncService : ISearchSyncService
         await FetchTracks();
         await FetchGenres();
         await FetchGroupings();
+        await FetchTags();
 
         await _cache.FinishUpdate();
     }
@@ -31,30 +32,36 @@ internal class SearchSyncService : ISearchSyncService
     private async Task FetchTracks()
     {
         var response = await _repository.GetSearchTracks();
-        _cache.AddTracks(response);
+        _cache.AddItems(response);
     }
 
     private async Task FetchAlbums()
     {
         var response = await _repository.GetSearchAlbums();
-        _cache.AddAlbums(response);
+        _cache.AddItems(response);
     }
 
     private async Task FetchArtists()
     {
         var response = await _repository.GetSearchArtists();
-        _cache.AddArtists(response);
+        _cache.AddItems(response);
     }
 
     private async Task FetchGenres()
     {
         var response = await _repository.GetSearchGenres();
-        _cache.AddGenres(response);
+        _cache.AddItems(response);
     }
 
     private async Task FetchGroupings()
     {
         var response = await _repository.GetSearchGroupings();
-        _cache.AddGroupings(response);
+        _cache.AddItems(response);
+    }
+
+    private async Task FetchTags()
+    {
+        var response = await _repository.GetSearchTags();
+        _cache.AddItems(response);
     }
 }

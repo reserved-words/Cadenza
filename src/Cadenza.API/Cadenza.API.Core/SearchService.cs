@@ -23,16 +23,22 @@ internal class SearchService : ISearchService
         return await _cache.SearchCache.GetSearchArtists();
     }
 
+    public async Task<List<PlayerItem>> GetSearchGenres()
+    {
+        await PopulateCache();
+        return await _cache.SearchCache.GetSearchGenres();
+    }
+
     public async Task<List<PlayerItem>> GetSearchGroupings()
     {
         await PopulateCache();
         return await _cache.SearchCache.GetSearchGroupings();
     }
 
-    public async Task<List<PlayerItem>> GetSearchGenres()
+    public async Task<List<PlayerItem>> GetSearchTags()
     {
         await PopulateCache();
-        return await _cache.SearchCache.GetSearchGenres();
+        return await _cache.SearchCache.GetSearchTags();
     }
 
     public async Task<List<PlayerItem>> GetSearchTracks()

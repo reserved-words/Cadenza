@@ -7,6 +7,6 @@ public enum PlayerItemType
     Artist = 2,
     Album = 3,
     Track = 4,
-    Playlist = 5
+    Tag = 5
 }
 
