@@ -1,7 +1,6 @@
-﻿using Cadenza.Common.Domain.JsonConverters;
+﻿using Cadenza.Common.Interfaces.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
 
 namespace Cadenza.Apps.API;
 
@@ -30,7 +29,8 @@ public class ErrorHandlingMiddleware
             var response = context.Response;
             response.ContentType = "application/json";
 
-            var result = JsonSerializer.Serialize(new { message = error?.Message }, JsonSerialization.Options);
+            var jsonConverter = context.RequestServices.GetRequiredService<IJsonConverter>();
+            var result = jsonConverter.Serialize(new { message = error?.Message });
             await response.WriteAsync(result);
         }
     }
