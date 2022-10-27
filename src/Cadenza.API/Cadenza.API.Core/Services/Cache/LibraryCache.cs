@@ -25,6 +25,8 @@ internal class LibraryCache : ILibraryCache
 
     public ISearchRepository SearchCache => _searchCache;
 
+    public ITagRepository TagCache => _searchCache;
+
     public ITrackRepository TrackCache => _trackCache;
 
     public bool IsPopulated { get; private set; } = false;

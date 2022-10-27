@@ -74,13 +74,7 @@ internal class LibraryService : ILibraryService
     public async Task<List<PlayerItem>> Tag(string id)
     {
         await PopulateCache();
-
-        // TODO - tracks, albums and artists
-
-        var item1 = new SearchableTrack("trackId", "Example Track", "Example Artist", "Example Album", "Example Album Artist");
-        var item2 = new SearchableArtist("madonna", "Madonna");
-        var item3 = new SearchableAlbum("3coloursred|pure", "Pure", "3 Colours Red");
-        return new List<PlayerItem> { item1, item2, item3 };
+        return await _cache.TagCache.GetTag(id);
     }
 
     public async Task<TrackFull> Track(string id)

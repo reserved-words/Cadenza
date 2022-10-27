@@ -6,8 +6,9 @@ internal class SearchCache : ISearchCache
     private readonly List<SearchableArtist> _artists = new();
     private readonly List<SearchableGenre> _genres = new();
     private readonly List<SearchableGrouping> _groupings = new();
-    private readonly List<SearchableTag> _tags = new();
     private readonly List<SearchableTrack> _tracks = new();
+
+    private readonly Dictionary<string, List<PlayerItem>> _tags = new();
 
     public Task Populate(FullLibrary library)
     {
@@ -34,7 +35,7 @@ internal class SearchCache : ISearchCache
 
     public Task<List<PlayerItem>> GetSearchTags()
     {
-        var result = _tags.OfType<PlayerItem>().ToList();
+        var result = _tags.Keys.Select(t => new SearchableTag(t)).OfType<PlayerItem>().ToList();
         return Task.FromResult(result);
     }
 
@@ -56,12 +57,18 @@ internal class SearchCache : ISearchCache
         return Task.FromResult(result);
     }
 
+    public async Task<List<PlayerItem>> GetTag(string id)
+    {
+        return _tags[id];
+    }
+
     private void PopulateAlbums(FullLibrary library)
     {
         foreach (var a in library.Albums)
         {
-            _albums.Add(new SearchableAlbum(a.Id, a.Title, a.ArtistName));
-            PopulateTags(a.Tags);
+            var item = new SearchableAlbum(a.Id, a.Title, a.ArtistName);
+            _albums.Add(item);
+            PopulateTags(a.Tags, item);
         }
     }
 
@@ -69,10 +76,11 @@ internal class SearchCache : ISearchCache
     {
         foreach (var a in library.Artists)
         {
-            _artists.Add(new SearchableArtist(a.Id, a.Name));
+            var item = new SearchableArtist(a.Id, a.Name);
+            _artists.Add(item);
             AddItem(_groupings, a.Grouping.ToString(), () => new SearchableGrouping(a.Grouping));
             AddItem(_genres, a.Genre, () => new SearchableGenre(a.Genre ?? ""));
-            PopulateTags(a.Tags);
+            PopulateTags(a.Tags, item);
         }
     }
 
@@ -91,22 +99,30 @@ internal class SearchCache : ISearchCache
                 ? new SearchableAlbum("", "No Album Found", artist.Name)
                 : albumsDict[t.AlbumId];
 
-            _tracks.Add(new SearchableTrack(
+            var item = new SearchableTrack(
                 t.Id,
                 t.Title,
                 artist.Name,
                 album.Name,
-                album.Artist));
+                album.Artist);
 
-            PopulateTags(t.Tags);
+            _tracks.Add(item);
+
+            PopulateTags(t.Tags, item);
         }
     }
 
-    private void PopulateTags(TagList tags)
+    private void PopulateTags(TagList tags, PlayerItem item)
     {
         foreach (var tag in tags.Tags)
         {
-            AddItem(_tags, tag, () => new SearchableTag(tag));
+            if (!_tags.TryGetValue(tag, out List<PlayerItem> list))
+            {
+                list = new List<PlayerItem>();
+                _tags.Add(tag, list);
+            }
+
+            list.Add(item);
         }
     }
 
