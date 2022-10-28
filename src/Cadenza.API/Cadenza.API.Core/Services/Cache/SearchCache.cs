@@ -12,6 +12,13 @@ internal class SearchCache : ISearchCache
 
     public Task Populate(FullLibrary library)
     {
+        _albums.Clear();
+        _artists.Clear();
+        _genres.Clear();
+        _groupings.Clear();
+        _tracks.Clear();
+        _tags.Clear();
+
         PopulateAlbums(library);
 
         PopulateArtists(library);
