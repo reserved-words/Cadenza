@@ -5,6 +5,8 @@ namespace Cadenza.Tabs.Library;
 
 public class SearchTabBase : ComponentBase
 {
+    private const string AllTypes = "All";
+
     [Inject]
     public ISearchCache Cache { get; set; }
 
@@ -14,13 +16,43 @@ public class SearchTabBase : ComponentBase
     [Inject]
     public IItemViewer Viewer { get; set; }
 
+    protected readonly Dictionary<string, PlayerItemType?> ItemTypes = new Dictionary<string, PlayerItemType?>();
+
+    public SearchTabBase()
+    {
+        ItemTypes.Add(AllTypes, null);
+
+        Enum.GetValues<PlayerItemType>().ToList().ForEach(i =>
+        {
+            ItemTypes.Add(i.ToString(), i);
+        });
+
+        OnClear();
+    }
+
     protected List<PlayerItem> Results { get; set; } = new List<PlayerItem>();
+
+    protected string SearchText { get; set; }
+    protected string SearchType { get; set; }
+
+    protected void OnClear()
+    {
+        SearchText = "";
+        SearchType = AllTypes;
+        Results.Clear();
+    }
 
     protected async Task OnSearch()
     {
+        var searchType = ItemTypes[SearchType];
+
+        if (string.IsNullOrWhiteSpace(SearchText) && !searchType.HasValue)
+            return; // Add error message
+
         Results = Cache.Items
-            // .Where(x => x.Name != null && x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase))
-            .Where(x => x.Type == PlayerItemType.Tag && !string.IsNullOrWhiteSpace(x.Name))
+            .Where(x => (!searchType.HasValue || x.Type == searchType.Value)
+                && !string.IsNullOrWhiteSpace(x.Name)    
+                && (string.IsNullOrWhiteSpace(SearchText) || x.Name.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)))
             .OrderBy(x => x.Type)
             .ThenBy(x => x.Name)
             .ToList();

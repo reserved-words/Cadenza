@@ -4,10 +4,29 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Full">
-            <p>Search</p>
-            <p>Example - should be able to list all tags</p>
-            <p>Full search functionality to be added</p>
-            <MudButton OnClick="OnSearch">Get all tags</MudButton>
+            <MudCard Elevation="3" Class="pa-3">
+                <MudCardHeader Class="pa-0">
+                    <MudText Typo="Typo.h6">Search Criteria</MudText>
+                </MudCardHeader>
+                <MudCardContent Class="pa-0">
+                    <MudTextField Label="Search"
+                                  @bind-Value="SearchText"
+                                  For="@(() => SearchText)" />
+                    <MudSelect Label="Type"
+                               @bind-Value="SearchType"
+                               For="@(() => SearchType)"
+                               T="@string">
+                        @foreach (var type in ItemTypes.Keys)
+                        {
+                            <MudSelectItem Value="@type">@type</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudStack Row="true" Class="mt-3">
+                        <MudButton OnClick="@OnSearch">Search</MudButton>
+                        <MudButton OnClick="@OnClear">Clear</MudButton>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
         </TabGridRow>
     </TabGridColumn>
 
