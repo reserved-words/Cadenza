@@ -46,6 +46,12 @@
                             <MudTd>
                                 <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
                             </MudTd>
+                            <MudTd>
+                                <MudText Typo="Typo.body1">@context.Artist</MudText>
+                            </MudTd>
+                            <MudTd>
+                                <MudText Typo="Typo.body1">@context.AlbumDisplay</MudText>
+                            </MudTd>
                         </RowTemplate>
                     </AppTable>
                 </ChildContent>
