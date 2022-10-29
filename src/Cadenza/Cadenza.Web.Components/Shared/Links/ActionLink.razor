@@ -1,4 +1,10 @@
 ﻿<MudText Typo="@Typo">
+    
+    @if (Icon != null)
+    {
+        <MudIcon Icon="@Icon" Size="@Size.Small" Class="mr-2" />
+    }
+
     <MudLink Typo="@Typo" Style="cursor: pointer;" onclick="@(() => OnClick())" Color="@Color.Surface">
         @Text
     </MudLink>
@@ -11,6 +17,9 @@
 
     [Parameter]
     public string Text { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
 
     [Parameter]
     public Func<Task> OnClick { get; set; }

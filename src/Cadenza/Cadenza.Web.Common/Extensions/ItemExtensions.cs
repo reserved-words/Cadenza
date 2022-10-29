@@ -40,6 +40,20 @@ public static class ItemExtensions
             .ToList();
     }
 
+    public static PlayerItemType? GetItemType(this PlaylistType playlistType)
+    {
+        return playlistType switch
+        {
+            PlaylistType.Album => PlayerItemType.Album,
+            PlaylistType.Artist => PlayerItemType.Artist,
+            PlaylistType.Genre => PlayerItemType.Genre,
+            PlaylistType.Grouping => PlayerItemType.Grouping,
+            PlaylistType.Tag => PlayerItemType.Tag,
+            PlaylistType.Track => PlayerItemType.Track,
+            _ => null
+        };
+    }
+
     public static string Location(this ArtistInfo artist)
     {
         if (artist == null)
