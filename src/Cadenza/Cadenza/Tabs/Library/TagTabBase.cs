@@ -4,6 +4,8 @@ namespace Cadenza.Tabs.Library;
 
 public class TagTabBase : ComponentBase
 {
+    private const string AllTypes = "All";
+
     [Inject]
     public ITagRepository Repository { get; set; }
 
@@ -13,7 +15,19 @@ public class TagTabBase : ComponentBase
     [Parameter]
     public string Id { get; set; }
 
+    protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
+
+    public TagTabBase()
+    {
+        FilterTypes.Add(AllTypes, null);
+        AddFilterType(PlayerItemType.Artist);
+        AddFilterType(PlayerItemType.Album);
+        AddFilterType(PlayerItemType.Track);
+        FilterType = AllTypes;
+    }
+
     public List<PlayerItem> Items { get; set; } = new();
+    protected string FilterType { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -30,8 +44,19 @@ public class TagTabBase : ComponentBase
         StateHasChanged();
     }
 
+    protected bool OnFilter(PlayerItem item)
+    {
+        var filterType = FilterTypes[FilterType];
+        return !filterType.HasValue || item.Type == filterType;
+    }
+
     protected async Task OnViewItem(PlayerItem item)
     {
         await Viewer.ViewSearchResult(item);
+    }
+
+    private void AddFilterType(PlayerItemType type)
+    {
+        FilterTypes.Add(type.ToString(), type);
     }
 }

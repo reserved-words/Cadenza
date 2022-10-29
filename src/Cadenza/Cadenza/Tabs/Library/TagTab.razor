@@ -4,7 +4,21 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TagDetail Id="@Id" />
+
+            <ItemCard Type="@PlayerItemType.Tag" Heading="@Id" Tags="@null">
+                <ChildContent>
+                    <MudSelect Label="Filter by type"
+                               @bind-Value="FilterType"
+                               For="@(() => FilterType)"
+                               T="@string">
+                        @foreach (var type in FilterTypes.Keys)
+                        {
+                            <MudSelectItem Value="@type">@type</MudSelectItem>
+                        }
+                    </MudSelect>
+                </ChildContent>
+            </ItemCard>
+
         </TabGridRow>
 
         <MudDivider />
@@ -18,7 +32,8 @@
             <AppCardScrollContainer>
                 <ChildContent>
                     <AppTable T="@PlayerItem"
-                              Items="@Items">
+                              Items="@Items"
+                              Filter="@OnFilter">
                         <RowTemplate>
                             <MudTd Class="td-icon">
                                 <MudIcon Icon="@context.Type.GetIcon()" Size="@Size.Small" />
