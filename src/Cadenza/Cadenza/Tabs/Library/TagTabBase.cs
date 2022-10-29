@@ -1,16 +1,19 @@
-﻿namespace Cadenza.Tabs.Library;
+﻿using Cadenza.Web.Common.Interfaces.View;
+
+namespace Cadenza.Tabs.Library;
 
 public class TagTabBase : ComponentBase
 {
     [Inject]
     public ITagRepository Repository { get; set; }
 
+    [Inject]
+    public IItemViewer Viewer { get; set; }
+
     [Parameter]
     public string Id { get; set; }
 
-    public List<PlayerItem> Albums { get; set; } = new();
-    public List<PlayerItem> Artists { get; set; } = new();
-    public List<PlayerItem> Tracks { get; set; } = new();
+    public List<PlayerItem> Items { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -19,12 +22,16 @@ public class TagTabBase : ComponentBase
 
     private async Task UpdateTag()
     {
-        var items = await Repository.GetTag(Id);
-
-        Albums = items.Where(i => i.Type == PlayerItemType.Album).ToList();
-        Artists = items.Where(i => i.Type == PlayerItemType.Artist).ToList();
-        Tracks = items.Where(i => i.Type == PlayerItemType.Track).ToList();
+        Items = (await Repository.GetTag(Id))
+            .OrderBy(i => i.Type)
+            .ThenBy(i => i.Name)
+            .ToList();
 
         StateHasChanged();
+    }
+
+    protected async Task OnViewItem(PlayerItem item)
+    {
+        await Viewer.ViewSearchResult(item);
     }
 }
