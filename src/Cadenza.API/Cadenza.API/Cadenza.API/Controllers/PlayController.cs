@@ -36,7 +36,7 @@ public class PlayController : ControllerBase
     }
 
     [HttpGet("Tag")]
-    public async Task<List<PlayTrack>> Tags(string id)
+    public async Task<List<PlayTrack>> Tag(string id)
     {
         return await _service.GetPlayTracksByTag(id);
     }

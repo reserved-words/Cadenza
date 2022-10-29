@@ -2,11 +2,15 @@
 
 internal class PlayTrackCache : IPlayTrackCache
 {
-    private List<PlayTrack> _tracks;
-    private Dictionary<string, List<PlayTrack>> _albumTracks;
-    private Dictionary<string, List<PlayTrack>> _artistTracks;
-    private Dictionary<Grouping, List<string>> _groupingArtists;
-    private Dictionary<string, List<string>> _genreArtists;
+    private List<PlayTrack> _tracks = new();
+    private Dictionary<string, List<PlayTrack>> _albumTracks = new();
+    private Dictionary<string, List<PlayTrack>> _artistTracks = new();
+    private Dictionary<Grouping, List<string>> _groupingArtists = new();
+    private Dictionary<string, List<string>> _genreArtists = new();
+
+    private Dictionary<string, List<string>> _tagArtists = new();
+    private Dictionary<string, List<string>> _tagAlbums = new();
+    private Dictionary<string, List<PlayTrack>> _tagTracks = new();
 
     public Task<List<PlayTrack>> GetAll()
     {
@@ -60,40 +64,70 @@ internal class PlayTrackCache : IPlayTrackCache
 
     public Task<List<PlayTrack>> GetByTag(string id)
     {
-        var result = new List<PlayTrack>();
+        var result = _tagTracks.TryGetValue(id, out List<PlayTrack> tracks)
+            ? tracks
+            : new List<PlayTrack>();
+
+        if (_tagAlbums.TryGetValue(id, out var albums))
+        {
+            result.AddRange(albums.SelectMany(a => _albumTracks[a]));
+        }
+
+        if (_tagArtists.TryGetValue(id, out var artists))
+        {
+            result.AddRange(artists.SelectMany(a => _artistTracks[a]));
+        }
+
         return Task.FromResult(result);
     }
 
     public Task Populate(FullLibrary library)
     {
-        _groupingArtists = library.Artists
-            .GroupBy(a => a.Grouping)
-            .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
+        foreach (var artist in library.Artists)
+        {
+            _artistTracks.Add(artist.Id, new List<PlayTrack>());
 
-        _genreArtists = library.Artists
-            .GroupBy(a => a.Genre ?? "None")
-            .ToDictionary(g => g.Key, g => g.Select(a => a.Id).ToList());
+            AddArtistToGrouping(artist);
+            AddArtistToGenre(artist);
 
-        _tracks = library.Tracks
-            .Select(t => new PlayTrack
+            foreach (var tag in artist.Tags.Tags)
             {
-                Id = t.Id,
-                Title = t.Title,
-                ArtistId = t.ArtistId,
-                AlbumId = t.AlbumId,
-                Source = t.Source
-            })
-            .ToList();
+                AddArtistToTag(artist, tag);
+            }
+        }
 
-        _artistTracks = library.Artists.ToDictionary(a => a.Id, a => new List<PlayTrack>());
-        _albumTracks = library.Albums.ToDictionary(a => a.Id, a => new List<PlayTrack>());
+        foreach (var album in library.Albums)
+        {
+            _albumTracks.Add(album.Id, new List<PlayTrack>());
+
+            foreach (var tag in album.Tags.Tags)
+            {
+                AddAlbumToTag(album, tag);
+            }
+        }
 
         var trackDictionary = new Dictionary<string, PlayTrack>();
 
-        foreach (var track in _tracks)
+        foreach (var track in library.Tracks)
         {
-            trackDictionary.Add(track.Id, track);
-            _artistTracks[track.ArtistId].Add(track);
+            var playTrack = new PlayTrack
+            {
+                Id = track.Id,
+                Title = track.Title,
+                ArtistId = track.ArtistId,
+                AlbumId = track.AlbumId,
+                Source = track.Source
+            };
+
+            _tracks.Add(playTrack);
+
+            trackDictionary.Add(track.Id, playTrack);
+            _artistTracks[track.ArtistId].Add(playTrack);
+
+            foreach (var tag in track.Tags.Tags)
+            {
+                AddTrackToTag(track, tag, playTrack);
+            }
         }
 
         var albums = library.AlbumTracks
@@ -109,5 +143,71 @@ internal class PlayTrackCache : IPlayTrackCache
         }
 
         return Task.CompletedTask;
+    }
+
+    private void AddArtistToGenre(ArtistInfo artist)
+    {
+        var genre = artist.Genre ?? "None";
+
+        if (!_genreArtists.TryGetValue(genre, out List<string> genreArtists))
+        {
+            genreArtists = new List<string>();
+            _genreArtists.Add(genre, genreArtists);
+        }
+
+        genreArtists.Add(artist.Id);
+    }
+
+    private void AddArtistToGrouping(ArtistInfo artist)
+    {
+        if (!_groupingArtists.TryGetValue(artist.Grouping, out List<string> groupingArtists))
+        {
+            groupingArtists = new List<string>();
+            _groupingArtists.Add(artist.Grouping, groupingArtists);
+        }
+
+        groupingArtists.Add(artist.Id);
+    }
+
+    private void AddArtistToTag(ArtistInfo artist, string tag)
+    {
+        if (!_tagArtists.TryGetValue(tag, out List<string> tagArtists))
+        {
+            tagArtists = new List<string>();
+            _tagArtists.Add(tag, tagArtists);
+        }
+
+        tagArtists.Add(artist.Id);
+    }
+
+    private void AddAlbumToTag(AlbumInfo album, string tag)
+    {
+        if (_tagArtists.TryGetValue(tag, out List<string> tagArtists) && tagArtists.Contains(album.ArtistId))
+            return;
+
+        if (!_tagAlbums.TryGetValue(tag, out List<string> tagAlbums))
+        {
+            tagAlbums = new List<string>();
+            _tagAlbums.Add(tag, tagAlbums);
+        }
+
+        tagAlbums.Add(album.Id);
+    }
+
+    private void AddTrackToTag(TrackInfo track, string tag, PlayTrack playTrack)
+    {
+        if (_tagArtists.TryGetValue(tag, out List<string> tagArtists) && tagArtists.Contains(track.ArtistId))
+            return;
+
+        if (_tagAlbums.TryGetValue(tag, out List<string> tagAlbums) && tagAlbums.Contains(track.AlbumId))
+            return;
+
+        if (!_tagTracks.TryGetValue(tag, out List<PlayTrack> tagTracks))
+        {
+            tagTracks = new List<PlayTrack>();
+            _tagTracks.Add(tag, tagTracks);
+        }
+
+        tagTracks.Add(playTrack);
     }
 }
