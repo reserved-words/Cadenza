@@ -12,8 +12,6 @@ internal class ViewCoordinator : IViewCoordinator
         _messageSender = messageSender;
     }
 
-    //public event ItemEventHandler ItemRequested;
-
     public async Task RequestItem(ViewItem item)
     {
         await _messageSender.Send(this, new ViewItemEventArgs { Item = item });

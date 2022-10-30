@@ -37,10 +37,10 @@ public class SearchableArtist : PlayerItem
         : base(PlayerItemType.Artist, id, name, null, null, null) { }
 }
 
-public class SearchablePlaylist : PlayerItem
+public class SearchableTag : PlayerItem
 {
-    public SearchablePlaylist(string id, string title)
-        : base(PlayerItemType.Playlist, id, title, null, null, null) { }
+    public SearchableTag(string id)
+        : base(PlayerItemType.Tag, id, id, null, null, null) { }
 }
 
 public class SearchableTrack : PlayerItem

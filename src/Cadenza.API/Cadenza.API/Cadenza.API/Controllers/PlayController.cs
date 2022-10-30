@@ -11,22 +11,16 @@ public class PlayController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("Tracks")]
-    public async Task<List<PlayTrack>> Tracks()
+    [HttpGet("Album")]
+    public async Task<List<PlayTrack>> Album(string id)
     {
-        return await _service.GetPlayTracks();
+        return await _service.GetPlayTracksByAlbum(id);
     }
 
     [HttpGet("Artist")]
     public async Task<List<PlayTrack>> Artist(string id)
     {
         return await _service.GetPlayTracksByArtist(id);
-    }
-
-    [HttpGet("Album")]
-    public async Task<List<PlayTrack>> Album(string id)
-    {
-        return await _service.GetPlayTracksByAlbum(id);
     }
 
     [HttpGet("Genre")]
@@ -39,5 +33,17 @@ public class PlayController : ControllerBase
     public async Task<List<PlayTrack>> Grouping(Grouping id)
     {
         return await _service.GetPlayTracksByGrouping(id);
+    }
+
+    [HttpGet("Tag")]
+    public async Task<List<PlayTrack>> Tag(string id)
+    {
+        return await _service.GetPlayTracksByTag(id);
+    }
+
+    [HttpGet("Tracks")]
+    public async Task<List<PlayTrack>> Tracks()
+    {
+        return await _service.GetPlayTracks();
     }
 }

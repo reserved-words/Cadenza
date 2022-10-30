@@ -36,10 +36,11 @@ public static class Startup
     private static IServiceCollection AddApiRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<IArtistRepository, ArtistRepository>()
             .AddTransient<IAlbumRepository, AlbumRepository>()
+            .AddTransient<IArtistRepository, ArtistRepository>()
             .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
             .AddTransient<ISearchRepository, SearchRepository>()
+            .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
             .AddTransient<IUpdateService, UpdateService>();
     }

@@ -7,6 +7,7 @@ internal interface ILibraryCache
     IPlayTrackRepository PlayTrackCache { get; }
     ISearchRepository SearchCache { get; }
     ITrackRepository TrackCache { get; }
+    ITagRepository TagCache { get; }
 
     bool IsPopulated { get; }
 

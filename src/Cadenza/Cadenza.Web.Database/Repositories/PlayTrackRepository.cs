@@ -26,13 +26,18 @@ internal class PlayTrackRepository : IPlayTrackRepository
         return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayArtist, id);
     }
 
+    public async Task<List<PlayTrack>> GetByGenre(string id)
+    {
+        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGenre, id);
+    }
+
     public async Task<List<PlayTrack>> GetByGrouping(Grouping id)
     {
         return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGrouping, id.ToString());
     }
 
-    public async Task<List<PlayTrack>> GetByGenre(string id)
+    public async Task<List<PlayTrack>> GetByTag(string id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGenre, id);
+        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayTag, id);
     }
 }

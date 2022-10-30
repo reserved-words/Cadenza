@@ -11,7 +11,8 @@ public static class JsonSerialization
     {
         _converters = new List<JsonConverter>
         {
-           new TagListConverter()
+           new TagListConverter(),
+           new JsonStringEnumConverter()
         };
         Options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         SetOptions(Options);

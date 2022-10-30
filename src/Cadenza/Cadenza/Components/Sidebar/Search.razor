@@ -10,12 +10,13 @@
     {
         <MudAutocomplete T="PlayerItem"
                          Class="ma-0 pa-0"
-                         Label="Search"
+                         Label="Quick search"
                          @bind-Value="Result"
                          SearchFunc="@Search"
                          ToStringFunc="@(e => e == null ? null : e.Name)"
                          CoerceText=true
                          CoerceValue=false
+                         MaxItems=50
                          Variant="@Variant.Text"
                          MinCharacters=3
                          ResetValueOnEmptyText=true>

@@ -2,7 +2,8 @@
 
 public enum Tab
 {
-    History,
     CurrentTrack,
-    Library
+    History,
+    Library,
+    Search
 }

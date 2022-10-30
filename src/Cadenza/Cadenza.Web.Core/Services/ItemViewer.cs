@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.Web.Common.Extensions;
+using Cadenza.Web.Common.Interfaces.View;
 
 namespace Cadenza.Web.Core.Services;
 
@@ -45,15 +46,7 @@ internal class ItemViewer : IItemViewer
 
     public async Task ViewPlaying(PlaylistId playlist)
     {
-        PlayerItemType? type = playlist.Type switch
-        {
-            PlaylistType.Album => PlayerItemType.Album,
-            PlaylistType.Artist => PlayerItemType.Artist,
-            PlaylistType.Track => PlayerItemType.Track,
-            PlaylistType.Grouping => PlayerItemType.Grouping,
-            PlaylistType.Genre => PlayerItemType.Genre,
-            _ => null
-        };
+        var type = playlist.Type.GetItemType();
 
         if (!type.HasValue)
             return;
@@ -65,6 +58,12 @@ internal class ItemViewer : IItemViewer
     public async Task ViewSearchResult(PlayerItem item)
     {
         var playerItem = new ViewItem(item.Type, item.Id, item.Name);
+        await _controller.RequestItem(playerItem);
+    }
+
+    public async Task ViewTag(string id)
+    {
+        var playerItem = new ViewItem(PlayerItemType.Tag, id, id);
         await _controller.RequestItem(playerItem);
     }
 

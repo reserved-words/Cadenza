@@ -17,16 +17,16 @@ internal class PlayTrackService : IPlayTrackService
         return await _cache.PlayTrackCache.GetAll();
     }
 
-    public async Task<List<PlayTrack>> GetPlayTracksByArtist(string id)
-    {
-        await PopulateCache();
-        return await _cache.PlayTrackCache.GetByArtist(id);
-    }
-
     public async Task<List<PlayTrack>> GetPlayTracksByAlbum(string id)
     {
         await PopulateCache();
         return await _cache.PlayTrackCache.GetByAlbum(id);
+    }
+
+    public async Task<List<PlayTrack>> GetPlayTracksByArtist(string id)
+    {
+        await PopulateCache();
+        return await _cache.PlayTrackCache.GetByArtist(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByGenre(string id)
@@ -39,6 +39,12 @@ internal class PlayTrackService : IPlayTrackService
     {
         await PopulateCache();
         return await _cache.PlayTrackCache.GetByGrouping(id);
+    }
+
+    public async Task<List<PlayTrack>> GetPlayTracksByTag(string id)
+    {
+        await PopulateCache();
+        return await _cache.PlayTrackCache.GetByTag(id);
     }
 
     private async Task PopulateCache()

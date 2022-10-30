@@ -1,0 +1,62 @@
+﻿@inherits SearchTabBase
+
+<TabGrid>
+
+    <TabGridColumn md="3">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <MudCard Elevation="3" Class="pa-3">
+                <MudCardHeader Class="pa-0">
+                    <MudText Typo="Typo.h6">Search Criteria</MudText>
+                </MudCardHeader>
+                <MudCardContent Class="pa-0">
+                    <MudTextField Label="Search"
+                                  @bind-Value="SearchText"
+                                  For="@(() => SearchText)" />
+                    <MudSelect Label="Type"
+                               @bind-Value="SearchType"
+                               For="@(() => SearchType)"
+                               T="@string">
+                        @foreach (var type in ItemTypes.Keys)
+                        {
+                            <MudSelectItem Value="@type">@type</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudStack Row="true" Class="mt-3">
+                        <MudButton OnClick="@OnSearch">Search</MudButton>
+                        <MudButton OnClick="@OnClear">Clear</MudButton>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </TabGridRow>
+    </TabGridColumn>
+
+    <TabGridColumn md="9">
+        <TabGridRow RowHeight="@RowHeight.Full">
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="Typo.h6">Search Results</MudText>
+                </HeaderContent>
+                <ChildContent>
+                    <AppTable T="@PlayerItem"
+                              Items="@Results">
+                        <RowTemplate>
+                            <MudTd Class="td-icon">
+                                <MudIcon Icon="@context.Type.GetIcon()" Size="@Size.Small" />
+                            </MudTd>
+                            <MudTd>
+                                <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
+                            </MudTd>
+                            <MudTd>
+                                <MudText Typo="Typo.body1">@context.Artist</MudText>
+                            </MudTd>
+                            <MudTd>
+                                <MudText Typo="Typo.body1">@context.AlbumDisplay</MudText>
+                            </MudTd>
+                        </RowTemplate>
+                    </AppTable>
+                </ChildContent>
+            </AppCardScrollContainer>
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

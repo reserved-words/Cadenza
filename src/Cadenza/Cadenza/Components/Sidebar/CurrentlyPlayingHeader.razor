@@ -2,13 +2,21 @@
 
 <MudContainer Class="ma-0 pa-0">
     <MudText Typo="Typo.h6">Currently Playing</MudText>
-    @if (ShowViewLink)
-    {
-        <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
-    }
-    else
-    {
-        <MudText Typo="Typo.body1">@PlaylistName</MudText>
-    }
+
+    <MudStack Row="true" Spacing="2">
+        @if (ShowViewLink)
+        {
+            <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" Icon="@Icon" />
+        }
+        else
+        {
+            @if (Icon != null)
+            {
+                <MudIcon Icon="@Icon" Size="@Size.Small" />
+            }
+
+            <MudText Typo="Typo.body1">@PlaylistName</MudText>
+        }
+    </MudStack>
     <MudDivider Class="my-1" />
 </MudContainer>

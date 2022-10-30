@@ -26,12 +26,12 @@ public static class Extensions
     {
         return type switch
         {
-            PlayerItemType.Artist => "fas fa-users",
             PlayerItemType.Album => "fas fa-compact-disc",
-            PlayerItemType.Track => "fas fa-music",
-            PlayerItemType.Playlist => "fas fa-list-ol",
-            PlayerItemType.Grouping => "fas fa-box",
+            PlayerItemType.Artist => "fas fa-users",
             PlayerItemType.Genre => "fas fa-boxes",
+            PlayerItemType.Grouping => "fas fa-box",
+            PlayerItemType.Tag => "fas fa-tag",
+            PlayerItemType.Track => "fas fa-music",
             _ => throw new NotImplementedException(),
         };
     }

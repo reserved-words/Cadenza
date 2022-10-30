@@ -122,4 +122,19 @@ internal class PlaylistCreator : IPlaylistCreator
             Tracks = shuffledTracks.ToList()
         };
     }
+
+    public async Task<PlaylistDefinition> CreateTagPlaylist(string id)
+    {
+        var tracks = await _repository.GetByTag(id);
+
+        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Tag, id);
+
+        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
+
+        return new PlaylistDefinition
+        {
+            Id = playlistId,
+            Tracks = shuffledTracks.ToList()
+        };
+    }
 }

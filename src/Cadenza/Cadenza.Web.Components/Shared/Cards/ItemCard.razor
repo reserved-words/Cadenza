@@ -12,10 +12,15 @@
         <MudContainer Class="ma-0 pa-2 pt-0">
             @ChildContent
         </MudContainer>
-        <MudDivider Class="mt-0 mb-2" />
-        <MudContainer Class="mx-0 mt-3 mb-1 pa-0">
-            <TagsView Model="@Tags" />
-        </MudContainer>
+
+        @if (Tags != null)
+        {
+            <MudDivider Class="mt-0 mb-2" />
+            <MudContainer Class="mx-0 mt-3 mb-1 pa-0">
+                <TagsView Model="@Tags" />
+            </MudContainer>
+        }
+
     </MudCardContent>
 </MudCard>
 
