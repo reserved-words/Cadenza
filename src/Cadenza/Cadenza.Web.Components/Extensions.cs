@@ -41,13 +41,23 @@ public static class Extensions
         return text?.Replace("\n", "<br />", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public static string Duration(this AlbumTrack track)
+    public static string Duration(this int durationSeconds)
     {
-        var duration = TimeSpan.FromSeconds(track.DurationSeconds);
+        var duration = TimeSpan.FromSeconds(durationSeconds);
 
         return duration.TotalHours > 1
             ? duration.ToString(@"hh\:mm\:ss")
             : duration.ToString(@"mm\:ss");
+    }
+
+    public static string Duration(this AlbumTrack track)
+    {
+        return track.DurationSeconds.Duration();
+    }
+
+    public static string Duration(this TrackInfo track)
+    {
+        return track.DurationSeconds.Duration();
     }
 
     public static RenderFragment RenderFragment(this Type type, Dictionary<string, object> parameters = null)
