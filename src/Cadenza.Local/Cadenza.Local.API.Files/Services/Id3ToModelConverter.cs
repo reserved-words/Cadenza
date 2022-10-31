@@ -24,6 +24,7 @@ internal class Id3ToModelConverter : IId3ToModelConverter
         {
             Id = albumId,
             ArtistId = artistId,
+            ArtistName = data.Album.ArtistName,
             Title = data.Album.Title,
             ReleaseType = Enum.TryParse(data.Album.ReleaseType, out ReleaseType result) ? result : ReleaseType.Album,
             TrackCounts = new List<int>(),
@@ -61,7 +62,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
         {
             TrackId = id,
             AlbumId = albumId,
-            Position = new AlbumTrackPosition(id3Data.Disc.DiscNo, id3Data.Track.TrackNo)
+            DiscNo = id3Data.Disc.DiscNo <= 0 ? 1 : id3Data.Disc.DiscNo,
+            TrackNo = id3Data.Track.TrackNo
         };
     }
 
@@ -73,10 +75,11 @@ internal class Id3ToModelConverter : IId3ToModelConverter
         {
             Id = _base64Converter.ToBase64(data.Track.Filepath),
             ArtistId = _idGenerator.GenerateId(data.Artist.Name),
+            ArtistName = data.Artist.Name,
             AlbumId = _idGenerator.GenerateId(data.Album.ArtistName, data.Album.Title),
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
-            Year = commentData.TrackYear.Nullify(),
+            Year = commentData.TrackYear.Nullify() ?? data.Album.Year,
             Lyrics = data.Track.Lyrics.Nullify(),
             Tags = commentData.TrackTags
         };

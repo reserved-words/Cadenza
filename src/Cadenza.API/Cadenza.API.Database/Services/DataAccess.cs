@@ -11,14 +11,14 @@ internal class DataAccess : IDataAccess
         _paths = paths;
     }
 
-    public async Task<JsonItems> GetAll(LibrarySource? source)
+    public async Task<FullLibrary> GetAll(LibrarySource? source)
     {
-        var library = new JsonItems
+        var library = new FullLibrary
         {
             Artists = await GetArtists(),
-            Albums = new List<JsonAlbum>(),
-            Tracks = new List<JsonTrack>(),
-            AlbumTracks = new List<JsonAlbumTrack>()
+            Albums = new List<AlbumInfo>(),
+            Tracks = new List<TrackInfo>(),
+            AlbumTracks = new List<AlbumTrackLink>()
         };
 
         if (source.HasValue)
@@ -36,37 +36,68 @@ internal class DataAccess : IDataAccess
         return library;
     }
 
-    private async Task AddSource(JsonItems library, LibrarySource source)
+    private async Task AddSource(FullLibrary library, LibrarySource source)
     {
         library.Albums.AddRange(await GetAlbums(source));
         library.Tracks.AddRange(await GetTracks(source));
         library.AlbumTracks.AddRange(await GetAlbumTracks(source));
+    }
 
-        // Needed for now because Source property was added later - as soon as done a save in each environment can remove this
-        foreach (var album in library.Albums)
+    public async Task<List<ArtistInfo>> GetArtists()
+    {
+        return await _service.Get<List<ArtistInfo>>(_paths.Artists());
+    }
+
+    public async Task<List<AlbumInfo>> GetAlbums(LibrarySource source)
+    {
+        var albums = await _service.Get<List<AlbumInfo>>(_paths.Albums(source));
+
+        // Temporarily need to populate artist names - once done a few saves can remove this
+        var artistNames = (await GetArtists()).ToDictionary(a => a.Id, a => a.Name);
+        foreach (var album in albums)
         {
-            album.Source = source;
+            album.ArtistName = artistNames[album.ArtistId];
         }
+        // End temporary code
+
+        return albums;
     }
 
-    public async Task<List<JsonArtist>> GetArtists()
+    public async Task<List<TrackInfo>> GetTracks(LibrarySource source)
     {
-        return await _service.Get<List<JsonArtist>>(_paths.Artists());
+        var tracks =  await _service.Get<List<TrackInfo>>(_paths.Tracks(source));
+
+        // Temporarily need to populate artist names and track years - once done a few saves can remove this
+        var artistNames = (await GetArtists()).ToDictionary(a => a.Id, a => a.Name);
+        var albumYears = (await GetAlbums(source)).ToDictionary(a => a.Id, a => a.Year);
+        foreach (var track in tracks)
+        {
+            track.ArtistName = artistNames[track.ArtistId];
+            if (string.IsNullOrWhiteSpace(track.Year))
+            {
+                track.Year = albumYears[track.AlbumId];
+            }
+        }
+        // End temporary code
+
+        return tracks;
     }
 
-    public async Task<List<JsonAlbum>> GetAlbums(LibrarySource source)
+    public async Task<List<AlbumTrackLink>> GetAlbumTracks(LibrarySource source)
     {
-        return await _service.Get<List<JsonAlbum>>(_paths.Albums(source));
-    }
+        var albumTracks = await _service.Get<List<AlbumTrackLink>>(_paths.AlbumTracks(source));
 
-    public async Task<List<JsonTrack>> GetTracks(LibrarySource source)
-    {
-        return await _service.Get<List<JsonTrack>>(_paths.Tracks(source));
-    }
+        // Temporarily need to populate artist names - once done a few saves can remove this
+        foreach (var albumTrack in albumTracks)
+        {
+            if (albumTrack.DiscNo == 0)
+            {
+                albumTrack.DiscNo = 1;
+            }
+        }
+        // End temporary code
 
-    public async Task<List<JsonAlbumTrack>> GetAlbumTracks(LibrarySource source)
-    {
-        return await _service.Get<List<JsonAlbumTrack>>(_paths.AlbumTracks(source));
+        return albumTracks;
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
@@ -74,7 +105,7 @@ internal class DataAccess : IDataAccess
         return await _service.Get<List<ItemUpdates>>(_paths.Updates(source));
     }
 
-    public async Task UpdateLibrary(LibrarySource source, Action<JsonItems> action)
+    public async Task UpdateLibrary(LibrarySource source, Action<FullLibrary> action)
     {
         var library = await GetAll(source);
         action(library);
@@ -88,27 +119,27 @@ internal class DataAccess : IDataAccess
         await SaveUpdates(updates, source);
     }
 
-    private async Task SaveAlbums(LibrarySource source, List<JsonAlbum> albums)
+    private async Task SaveAlbums(LibrarySource source, List<AlbumInfo> albums)
     {
         await _service.Save(_paths.Albums(source), albums);
     }
 
-    private async Task SaveAlbumTracks(LibrarySource source, List<JsonAlbumTrack> albumTracks)
+    private async Task SaveAlbumTracks(LibrarySource source, List<AlbumTrackLink> albumTracks)
     {
         await _service.Save(_paths.AlbumTracks(source), albumTracks);
     }
 
-    private async Task SaveArtists(List<JsonArtist> artists)
+    private async Task SaveArtists(List<ArtistInfo> artists)
     {
         await _service.Save(_paths.Artists(), artists);
     }
 
-    private async Task SaveTracks(LibrarySource source, List<JsonTrack> tracks)
+    private async Task SaveTracks(LibrarySource source, List<TrackInfo> tracks)
     {
         await _service.Save(_paths.Tracks(source), tracks);
     }
 
-    private async Task SaveAll(JsonItems library, LibrarySource source)
+    private async Task SaveAll(FullLibrary library, LibrarySource source)
     {
         await SaveTracks(source, library.Tracks);
         await SaveArtists(library.Artists);
@@ -121,7 +152,7 @@ internal class DataAccess : IDataAccess
         await _service.Save(_paths.Updates(source), updates);
     }
 
-    public async Task UpdateAlbum(LibrarySource source, string id, Action<JsonAlbum> update)
+    public async Task UpdateAlbum(LibrarySource source, string id, Action<AlbumInfo> update)
     {
         var albums = await GetAlbums(source);
 
@@ -135,7 +166,7 @@ internal class DataAccess : IDataAccess
         await SaveAlbums(source, albums);
     }
 
-    public async Task UpdateArtist(string id, Action<JsonArtist> update)
+    public async Task UpdateArtist(string id, Action<ArtistInfo> update)
     {
         var artists = await GetArtists();
 
@@ -149,7 +180,7 @@ internal class DataAccess : IDataAccess
         await SaveArtists(artists);
     }
 
-    public async Task UpdateTrack(LibrarySource source, string id, Action<JsonTrack> update)
+    public async Task UpdateTrack(LibrarySource source, string id, Action<TrackInfo> update)
     {
         var tracks = await GetTracks(source);
 

@@ -2,7 +2,7 @@
 
 internal interface IItemUpdater
 {
-    void UpdateAlbum(JsonAlbum album, List<PropertyUpdate> updates);
-    void UpdateArtist(JsonArtist artist, List<PropertyUpdate> updates);
-    void UpdateTrack(JsonTrack track, List<PropertyUpdate> updates);
+    void UpdateAlbum(AlbumInfo album, List<PropertyUpdate> updates);
+    void UpdateArtist(ArtistInfo artist, List<PropertyUpdate> updates);
+    void UpdateTrack(TrackInfo track, List<PropertyUpdate> updates);
 }

@@ -64,9 +64,10 @@ internal class SearchCache : ISearchCache
         return Task.FromResult(result);
     }
 
-    public async Task<List<PlayerItem>> GetTag(string id)
+    public Task<List<PlayerItem>> GetTag(string id)
     {
-        return _tags[id];
+        var results = _tags[id];
+        return Task.FromResult(results);
     }
 
     private void PopulateAlbums(FullLibrary library)

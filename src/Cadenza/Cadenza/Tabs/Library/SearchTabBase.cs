@@ -45,12 +45,12 @@ public class SearchTabBase : ComponentBase
         Results.Clear();
     }
 
-    protected async Task OnSearch()
+    protected Task OnSearch()
     {
         var searchType = ItemTypes[SearchType];
 
         if (string.IsNullOrWhiteSpace(SearchText) && !searchType.HasValue)
-            return; // Add error message
+            return Task.CompletedTask; // Add error message
 
         Results = Cache.Items
             .Where(x => (!searchType.HasValue || x.Type == searchType.Value)
@@ -59,6 +59,8 @@ public class SearchTabBase : ComponentBase
             .OrderBy(x => x.Type)
             .ThenBy(x => x.Name)
             .ToList();
+
+        return Task.CompletedTask;
     }
 
     protected async Task OnViewItem(PlayerItem item)
