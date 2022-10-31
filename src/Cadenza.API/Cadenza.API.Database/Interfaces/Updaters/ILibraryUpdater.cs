@@ -2,6 +2,6 @@
 
 internal interface ILibraryUpdater
 {
-    void AddTrack(JsonItems library, TrackFull track);
-    void RemoveTracks(JsonItems library, List<string> trackIds);
+    void AddTrack(FullLibrary library, TrackFull track);
+    void RemoveTracks(FullLibrary library, List<string> trackIds);
 }

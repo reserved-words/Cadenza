@@ -2,41 +2,30 @@
 
 internal class LibraryUpdater : ILibraryUpdater
 {
-    private readonly IModelToJsonConverter _modelConverter;
-
-    public LibraryUpdater(IModelToJsonConverter modelToJsonConverter)
-    {
-        _modelConverter = modelToJsonConverter;
-    }
-
-    public void AddTrack(JsonItems library, TrackFull track)
+    public void AddTrack(FullLibrary library, TrackFull track)
     {
         var existingTrack = library.Tracks.SingleOrDefault(a => a.Id == track.Track.Id);
         if (existingTrack == null)
         {
-            var jsonTrack = _modelConverter.ConvertTrack(track.Track);
-            library.Tracks.Add(jsonTrack);
+            library.Tracks.Add(track.Track);
         }
 
         var existingAlbum = library.Albums.SingleOrDefault(a => a.Id == track.Album.Id);
         if (existingAlbum == null)
         {
-            var jsonAlbum = _modelConverter.ConvertAlbum(track.Album);
-            library.Albums.Add(jsonAlbum);
+            library.Albums.Add(track.Album);
         }
 
         var existingAlbumTrackLink = library.AlbumTracks.SingleOrDefault(t => t.TrackId == track.Track.Id);
         if (existingAlbumTrackLink == null)
         {
-            var jsonAlbumTrackLink = _modelConverter.ConvertAlbumTrackLink(track.AlbumTrack);
-            library.AlbumTracks.Add(jsonAlbumTrackLink);
+            library.AlbumTracks.Add(track.AlbumTrack);
         }
 
         var existingArtist = library.Artists.SingleOrDefault(a => a.Id == track.Artist.Id);
         if (existingArtist == null)
         {
-            var jsonArtist = _modelConverter.ConvertArtist(track.Artist);
-            library.Artists.Add(jsonArtist);
+            library.Artists.Add(track.Artist);
         }
 
         if (track.Artist.Id != track.AlbumArtist.Id)
@@ -44,13 +33,12 @@ internal class LibraryUpdater : ILibraryUpdater
             var existingAlbumArtist = library.Artists.SingleOrDefault(a => a.Id == track.AlbumArtist.Id);
             if (existingAlbumArtist == null)
             {
-                var jsonAlbumArtist = _modelConverter.ConvertArtist(track.AlbumArtist);
-                library.Artists.Add(jsonAlbumArtist);
+                library.Artists.Add(track.AlbumArtist);
             }
         }
     }
 
-    public void RemoveTracks(JsonItems library, List<string> trackIds)
+    public void RemoveTracks(FullLibrary library, List<string> trackIds)
     {
         foreach (var id in trackIds)
         {
@@ -58,7 +46,7 @@ internal class LibraryUpdater : ILibraryUpdater
         }
     }
 
-    private void RemoveTrack(JsonItems library, string trackId)
+    private void RemoveTrack(FullLibrary library, string trackId)
     {
         var track = library.Tracks.SingleOrDefault(a => a.Id == trackId);
 
@@ -84,7 +72,7 @@ internal class LibraryUpdater : ILibraryUpdater
         RemoveArtistIfEmpty(library, track.ArtistId);
     }
 
-    private static JsonAlbumTrack RemoveAlbumTrack(JsonItems library, string trackId)
+    private static AlbumTrackLink RemoveAlbumTrack(FullLibrary library, string trackId)
     {
         var albumTrack = library.AlbumTracks.SingleOrDefault(t => t.TrackId == trackId);
 
@@ -95,7 +83,7 @@ internal class LibraryUpdater : ILibraryUpdater
         return albumTrack;
     }
 
-    private static JsonAlbum RemoveAlbumIfEmpty(JsonItems library, string albumId)
+    private static AlbumInfo RemoveAlbumIfEmpty(FullLibrary library, string albumId)
     {
         var albumTracks = library.AlbumTracks.Where(a => a.AlbumId == albumId);
 
@@ -110,7 +98,7 @@ internal class LibraryUpdater : ILibraryUpdater
         return album;
     }
 
-    private static JsonArtist RemoveArtistIfEmpty(JsonItems library, string artistId)
+    private static ArtistInfo RemoveArtistIfEmpty(FullLibrary library, string artistId)
     {
         var albums = library.Albums.Where(a => a.ArtistId == artistId);
 

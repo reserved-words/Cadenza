@@ -136,8 +136,8 @@ internal class PlayTrackCache : IPlayTrackCache
         foreach (var album in albums)
         {
             _albumTracks[album.Key] = album
-                .OrderBy(t => t.Position.DiscNo)
-                .ThenBy(t => t.Position.TrackNo)
+                .OrderBy(t => t.DiscNo)
+                .ThenBy(t => t.TrackNo)
                 .Select(t => trackDictionary[t.TrackId])
                 .ToList();
         }

@@ -37,16 +37,16 @@ internal class AlbumCache : IAlbumCache
         foreach (var album in albums)
         {
             _albumTracks[album.Key] = album
-                .OrderBy(t => t.Position.DiscNo)
-                .ThenBy(t => t.Position.TrackNo)
-                .Select(t => GetAlbumTrack(t.Position, tracks[t.TrackId]))
+                .OrderBy(t => t.DiscNo)
+                .ThenBy(t => t.TrackNo)
+                .Select(t => GetAlbumTrack(t.DiscNo, t.TrackNo, tracks[t.TrackId]))
                 .ToList();
         }
 
         return Task.CompletedTask;
     }
 
-    private static AlbumTrack GetAlbumTrack(AlbumTrackPosition position, Track track)
+    private static AlbumTrack GetAlbumTrack(int discNo, int trackNo, Track track)
     {
         return new AlbumTrack
         {
@@ -55,7 +55,8 @@ internal class AlbumCache : IAlbumCache
             ArtistId = track.ArtistId,
             ArtistName = track.ArtistName,
             DurationSeconds = track.DurationSeconds,
-            Position = position
+            DiscNo = discNo,
+            TrackNo = trackNo
         };
     }
 

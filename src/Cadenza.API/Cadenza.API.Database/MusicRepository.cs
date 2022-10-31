@@ -3,22 +3,19 @@
 internal class MusicRepository : IMusicRepository
 {
     private readonly IDataAccess _dataAccess;
-    private readonly IJsonToModelConverter _jsonConverter;
     private readonly IItemUpdater _itemUpdater;
     private readonly ILibraryUpdater _libraryUpdater;
 
-    public MusicRepository(IDataAccess dataAccess, IJsonToModelConverter jsonConverter, ILibraryUpdater libraryUpdater, IItemUpdater itemUpdater)
+    public MusicRepository(IDataAccess dataAccess, ILibraryUpdater libraryUpdater, IItemUpdater itemUpdater)
     {
         _dataAccess = dataAccess;
-        _jsonConverter = jsonConverter;
         _libraryUpdater = libraryUpdater;
         _itemUpdater = itemUpdater;
     }
 
     public async Task<FullLibrary> Get(LibrarySource? source)
     {
-        var library = await _dataAccess.GetAll(source);
-        return _jsonConverter.Convert(library);
+        return await _dataAccess.GetAll(source);
     }
 
     public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
