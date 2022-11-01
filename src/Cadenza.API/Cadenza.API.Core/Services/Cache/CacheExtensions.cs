@@ -10,6 +10,25 @@ internal static class CacheExtensions
         }
     }
 
+    public static void Cache(this Dictionary<string, List<PlayTrack>> dictionary, TrackInfo track, ArtistInfo artist, AlbumInfo album, PlayTrack playTrack)
+    {
+        var tags = track.Tags.Tags
+            .Concat(artist.Tags.Tags)
+            .Concat(album.Tags.Tags)
+            .Distinct();
+
+        foreach (var tag in tags)
+        {
+            if (!dictionary.TryGetValue(tag, out List<PlayTrack> list))
+            {
+                list = new List<PlayTrack>();
+                dictionary.Add(tag, list);
+            }
+
+            list.Add(playTrack);
+        }
+    }
+
     public static void Cache(this Dictionary<PlayerItemType, Dictionary<string, List<PlayTrack>>> dictionary, PlayerItemType type, string id, PlayTrack playTrack)
     {
         if (!dictionary.TryGetValue(type, out Dictionary<string, List<PlayTrack>> innerDictionary))
