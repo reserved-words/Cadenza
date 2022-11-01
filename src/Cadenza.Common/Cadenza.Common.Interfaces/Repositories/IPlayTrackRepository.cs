@@ -5,10 +5,10 @@ namespace Cadenza.Common.Interfaces.Repositories;
 
 public interface IPlayTrackRepository
 {
-    Task<List<PlayTrack>> GetAll();
-    Task<List<PlayTrack>> GetByAlbum(string id);
-    Task<List<PlayTrack>> GetByArtist(string id);
-    Task<List<PlayTrack>> GetByGenre(string id);
-    Task<List<PlayTrack>> GetByGrouping(Grouping id);
-    Task<List<PlayTrack>> GetByTag(string id);
+    Task<List<PlayTrack>> PlayAll();
+    Task<List<PlayTrack>> PlayAlbum(string id);
+    Task<List<PlayTrack>> PlayArtist(string id);
+    Task<List<PlayTrack>> PlayGenre(string id);
+    Task<List<PlayTrack>> PlayGrouping(Grouping id);
+    Task<List<PlayTrack>> PlayTag(string id);
 }

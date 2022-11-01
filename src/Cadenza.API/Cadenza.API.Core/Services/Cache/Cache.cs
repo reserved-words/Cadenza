@@ -2,6 +2,9 @@
 
 internal class Cache : ICache
 {
+    private List<PlayTrack> _playTracks = new();
+    //private Dictionary<PlayerItemType, Dictionary<string, List<PlayTrack>>> _playTracks = new();
+
     private readonly Dictionary<PlayerItemType, List<PlayerItem>> _items = new();
     private readonly Dictionary<string, List<PlayerItem>> _tags = new();
 
@@ -10,15 +13,12 @@ internal class Cache : ICache
     private Dictionary<string, ArtistInfo> _artists = new();
     private Dictionary<string, AlbumTrackLink> _albumTracks = new();
 
-    private List<string> _albumArtists = new();
-    private List<string> _trackArtists = new();
-
     private Dictionary<Grouping, List<ArtistInfo>> _artistsByGrouping = new();
     private Dictionary<string, List<ArtistInfo>> _artistsByGenre = new();
 
     private Dictionary<string, List<AlbumInfo>> _albumsByArtist = new();
     private Dictionary<string, List<TrackInfo>> _tracksByArtist = new();
-    private Dictionary<string, List<AlbumTrack>> _tracksByAlbum = new();
+    private Dictionary<string, List<TrackInfo>> _tracksByAlbum = new();
 
     public Task Populate(FullLibrary library)
     {
@@ -40,58 +40,57 @@ internal class Cache : ICache
                 _tags.Cache(artist.Tags, item);
                 _items.Cache(PlayerItemType.Grouping, artist.Grouping.ToString(), () => new SearchableGrouping(artist.Grouping));
                 _items.Cache(PlayerItemType.Genre, artist.Genre, () => new SearchableGenre(artist.Genre));
+       
             }
 
             foreach (var album in library.Albums)
             {
                 _albums.Cache(album.Id, album);
                 _albumsByArtist.Cache(album.ArtistId, album);
-                _albumArtists.Cache(album.ArtistId);
 
                 var item = new SearchableAlbum(album);
                 _items.Cache(PlayerItemType.Album, item);
                 _tags.Cache(album.Tags, item);
-                _tracksByAlbum.Add(album.Id, new List<AlbumTrack>());
             }
 
             foreach (var track in library.Tracks)
             {
                 _tracks.Cache(track.Id, track);
                 _tracksByArtist.Cache(track.ArtistId, track);
-                _trackArtists.Cache(track.ArtistId);
 
                 var item = new SearchableTrack(track, _albums[track.AlbumId]);
                 _items.Cache(PlayerItemType.Track, item);
                 _tags.Cache(track.Tags, item);
-            }
 
-            foreach (var albumTrack in library.AlbumTracks)
-            {
-                _albumTracks.Cache(albumTrack.TrackId, albumTrack);
+                var artist = _artists[track.ArtistId];
+                var album = _albums[track.AlbumId];
 
-                var track = _tracks[albumTrack.TrackId];
-
-                _tracksByAlbum[albumTrack.AlbumId].Add(new AlbumTrack
+                var playTrack = new PlayTrack
                 {
-                    TrackId = albumTrack.TrackId,
+                    Id = track.Id,
                     Title = track.Title,
                     ArtistId = track.ArtistId,
-                    ArtistName = track.ArtistName,
-                    DurationSeconds = track.DurationSeconds,
-                    DiscNo = albumTrack.DiscNo,
-                    TrackNo = albumTrack.TrackNo
-                });
+                    AlbumId = track.AlbumId,
+                    Source = track.Source
+                };
+
+                _playTracks.Add(playTrack);
+                //_playTracks.Cache(PlayerItemType.Artist, playTrack.ArtistId, playTrack);
+                //_playTracks.Cache(PlayerItemType.Grouping, artist.Grouping.ToString(), playTrack);
+                //_playTracks.Cache(PlayerItemType.Genre, artist.Genre, playTrack);
+                //_playTracks.Cache(PlayerItemType.Album, playTrack.AlbumId, playTrack);
             }
 
-            var albumTracksByAlbum = library.AlbumTracks
-                .GroupBy(a => a.AlbumId);
+            var albumTracks = library.AlbumTracks
+                .OrderBy(at => at.AlbumId)
+                .ThenBy(at => at.DiscNo)
+                .ThenBy(at => at.TrackNo)
+                .ToList();
 
-            foreach (var albumId in _tracksByAlbum.Keys)
+            foreach (var albumTrack in albumTracks)
             {
-                _tracksByAlbum[albumId] = _tracksByAlbum[albumId]
-                    .OrderBy(t => t.DiscNo)
-                    .ThenBy(t => t.TrackNo)
-                    .ToList();
+                _albumTracks.Cache(albumTrack.TrackId, albumTrack);
+                _tracksByAlbum.Cache(albumTrack.AlbumId, _tracks[albumTrack.TrackId]);
             }
         }
         catch (Exception ex)
@@ -114,21 +113,33 @@ internal class Cache : ICache
 
     public Task<List<AlbumTrack>> GetAlbumTracks(string id)
     {
-        var result = _tracksByAlbum.TryGetValue(id, out List<AlbumTrack> tracks)
-            ? tracks
-            : null;
+        var result = new List<AlbumTrack>();
+
+        foreach (var track in _tracksByAlbum[id])
+        {
+            var albumTrack = _albumTracks[track.Id];
+
+            result.Add(new AlbumTrack
+            {
+                TrackId = track.Id,
+                Title = track.Title,
+                ArtistId = track.ArtistId,
+                ArtistName = track.ArtistName,
+                DurationSeconds = track.DurationSeconds,
+                DiscNo = albumTrack.DiscNo,
+                TrackNo = albumTrack.TrackNo
+            });
+        }
 
         return Task.FromResult(result);
     }
 
-    public Task<List<Artist>> GetAlbumArtists()
+    public async Task<List<Artist>> GetAlbumArtists()
     {
-        var result = _albumArtists
+        return _albumsByArtist.Keys
             .Select(a => _artists[a])
             .OfType<Artist>()
             .ToList();
-
-        return Task.FromResult(result);
     }
 
     public Task<List<Album>> GetAlbums(string artistId)
@@ -178,7 +189,7 @@ internal class Cache : ICache
 
     public Task<List<Artist>> GetTrackArtists()
     {
-        var result = _trackArtists
+        var result = _tracksByArtist.Keys
             .Select(a => _artists[a])
             .OfType<Artist>()
             .ToList();
@@ -248,6 +259,49 @@ internal class Cache : ICache
         };
 
         return Task.FromResult(result);
+    }
+
+    public Task<List<PlayTrack>> PlayAll()
+    {
+        return Task.FromResult(_playTracks);
+    }
+
+    public Task<List<PlayTrack>> PlayAlbum(string id)
+    {
+        //var result = _playTracks[PlayerItemType.Album][id];
+        var result = _playTracks.Where(t => t.AlbumId == id).ToList();
+        return Task.FromResult(result);
+    }
+
+    public Task<List<PlayTrack>> PlayArtist(string id)
+    {
+        //return Task.FromResult(_playTracks[PlayerItemType.Artist][id]);
+        var result = _playTracks.Where(t => t.ArtistId == id).ToList();
+        return Task.FromResult(result);
+
+    }
+
+    public Task<List<PlayTrack>> PlayGenre(string id)
+    {
+        var result = _artistsByGenre[id]
+            .SelectMany(a => _playTracks.Where(t => t.ArtistId == a.Id))
+            .ToList();
+
+        return Task.FromResult(result);
+    }
+
+    public Task<List<PlayTrack>> PlayGrouping(Grouping id)
+    {
+        var result = _artistsByGrouping[id]
+            .SelectMany(a => _playTracks.Where(t => t.ArtistId == a.Id))
+            .ToList();
+
+        return Task.FromResult(result);
+    }
+
+    public Task<List<PlayTrack>> PlayTag(string id)
+    {
+        throw new NotImplementedException();
     }
 
     public Task UpdateTrack(TrackUpdate update)

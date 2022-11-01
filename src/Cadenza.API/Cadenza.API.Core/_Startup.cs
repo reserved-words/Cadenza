@@ -34,7 +34,6 @@ public static class Startup
         return services
             .AddTransient<ICachePopulater, CachePopulater>()
             .AddSingleton<ILibraryCache, LibraryCache>()
-            .AddSingleton<IPlayTrackCache, PlayTrackCache>()
             .AddSingleton<ICache, Cache>();
     }
 

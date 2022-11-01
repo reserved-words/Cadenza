@@ -14,37 +14,37 @@ internal class PlayTrackService : IPlayTrackService
     public async Task<List<PlayTrack>> GetPlayTracks()
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetAll();
+        return await _cache.PlayTrackCache.PlayAll();
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByAlbum(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByAlbum(id);
+        return await _cache.PlayTrackCache.PlayAlbum(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByArtist(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByArtist(id);
+        return await _cache.PlayTrackCache.PlayArtist(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByGenre(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByGenre(id);
+        return await _cache.PlayTrackCache.PlayGenre(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByGrouping(Grouping id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByGrouping(id);
+        return await _cache.PlayTrackCache.PlayGrouping(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByTag(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByTag(id);
+        return await _cache.PlayTrackCache.PlayTag(id);
     }
 
     private async Task PopulateCache()
