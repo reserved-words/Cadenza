@@ -2,42 +2,33 @@
 
 internal class LibraryCache : ILibraryCache
 {
-    private readonly IAlbumCache _albumCache;
-    private readonly IArtistCache _artistCache;
+    private readonly ICache _cache;
     private readonly IPlayTrackCache _playTrackCache;
-    private readonly ISearchCache _searchCache;
-    private readonly ITrackCache _trackCache;
 
-    public LibraryCache(IAlbumCache albumCache, IArtistCache artistCache, IPlayTrackCache playTrackCache, ISearchCache searchCache, ITrackCache trackCache)
+    public LibraryCache(ICache cache, IPlayTrackCache playTrackCache)
     {
-        _albumCache = albumCache;
-        _artistCache = artistCache;
+        _cache = cache;
         _playTrackCache = playTrackCache;
-        _searchCache = searchCache;
-        _trackCache = trackCache;
     }
 
-    public IAlbumRepository AlbumCache => _albumCache;
+    public IAlbumRepository AlbumCache => _cache;
 
-    public IArtistRepository ArtistCache => _artistCache;
+    public IArtistRepository ArtistCache => _cache;
 
     public IPlayTrackRepository PlayTrackCache => _playTrackCache;
 
-    public ISearchRepository SearchCache => _searchCache;
+    public ISearchRepository SearchCache => _cache;
 
-    public ITagRepository TagCache => _searchCache;
+    public ITagRepository TagCache => _cache;
 
-    public ITrackRepository TrackCache => _trackCache;
+    public ITrackRepository TrackCache => _cache;
 
     public bool IsPopulated { get; private set; } = false;
 
     public async Task Populate(FullLibrary library)
     {
-        await _albumCache.Populate(library);
-        await _artistCache.Populate(library);
+        await _cache.Populate(library);
         await _playTrackCache.Populate(library);
-        await _searchCache.Populate(library);
-        await _trackCache.Populate(library);
         IsPopulated = true;
     }
 }

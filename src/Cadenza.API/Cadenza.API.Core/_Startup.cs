@@ -34,11 +34,8 @@ public static class Startup
         return services
             .AddTransient<ICachePopulater, CachePopulater>()
             .AddSingleton<ILibraryCache, LibraryCache>()
-            .AddSingleton<IAlbumCache, AlbumCache>()
-            .AddSingleton<IArtistCache, ArtistCache>()
             .AddSingleton<IPlayTrackCache, PlayTrackCache>()
-            .AddSingleton<ISearchCache, SearchCache>()
-            .AddSingleton<ITrackCache, TrackCache>();
+            .AddSingleton<ICache, Cache>();
     }
 
     private static IServiceCollection AddServices(this IServiceCollection services)

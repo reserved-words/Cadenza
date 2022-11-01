@@ -26,7 +26,7 @@ internal class LibraryService : ILibraryService
     public async Task<List<AlbumTrack>> AlbumTracks(string id)
     {
         await PopulateCache();
-        return await _cache.AlbumCache.GetTracks(id);
+        return await _cache.AlbumCache.GetAlbumTracks(id);
     }
 
     public async Task<ArtistInfo> Artist(string id)
@@ -44,7 +44,7 @@ internal class LibraryService : ILibraryService
     public async Task<List<Track>> ArtistTracks(string id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetTracks(id);
+        return await _cache.ArtistCache.GetArtistTracks(id);
     }
 
     public async Task<List<Artist>> Artists()
