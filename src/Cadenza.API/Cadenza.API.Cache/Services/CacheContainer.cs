@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core.Services.Cache;
+﻿using Cadenza.API.Cache.Services.Cache;
+
+namespace Cadenza.API.Cache.Services.Cache;
 
 internal class CacheContainer
 {

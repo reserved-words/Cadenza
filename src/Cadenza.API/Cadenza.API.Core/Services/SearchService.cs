@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core;
+﻿using Cadenza.API.Interfaces;
+
+namespace Cadenza.API.Core.Services;
 
 internal class SearchService : ISearchService
 {

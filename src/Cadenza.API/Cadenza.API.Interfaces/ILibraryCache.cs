@@ -1,6 +1,8 @@
-﻿namespace Cadenza.API.Core.Interfaces.Cache;
+﻿using Cadenza.Common.Interfaces.Repositories;
 
-internal interface ILibraryCache
+namespace Cadenza.API.Interfaces;
+
+public interface ILibraryCache
 {
     IAlbumRepository AlbumCache { get; }
     IArtistRepository ArtistCache { get; }

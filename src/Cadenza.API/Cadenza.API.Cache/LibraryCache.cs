@@ -1,10 +1,13 @@
-﻿namespace Cadenza.API.Core.Services.Cache;
+﻿using Cadenza.API.Cache.Interfaces;
+using Cadenza.API.Interfaces;
+
+namespace Cadenza.API.Cache.Services.Cache;
 
 internal class LibraryCache : ILibraryCache
 {
-    private readonly ICache _cache;
+    private readonly ICacheService _cache;
 
-    public LibraryCache(ICache cache)
+    public LibraryCache(ICacheService cache)
     {
         _cache = cache;
     }
