@@ -9,17 +9,17 @@ internal class LibraryCache : ILibraryCache
         _cache = cache;
     }
 
-    public IAlbumRepository AlbumCache => _cache;
+    public IAlbumRepository Albums => _cache;
 
-    public IArtistRepository ArtistCache => _cache;
+    public IArtistRepository Artists => _cache;
 
-    public IPlayTrackRepository PlayTrackCache => _cache;
+    public IPlayTrackRepository PlayTracks => _cache;
 
-    public ISearchRepository SearchCache => _cache;
+    public ISearchRepository Search => _cache;
 
-    public ITagRepository TagCache => _cache;
+    public ITagRepository Tags => _cache;
 
-    public ITrackRepository TrackCache => _cache;
+    public ITrackRepository Tracks => _cache;
 
     public bool IsPopulated { get; private set; } = false;
 

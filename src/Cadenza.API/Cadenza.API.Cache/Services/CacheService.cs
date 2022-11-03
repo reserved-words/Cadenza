@@ -117,31 +117,31 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchArtists()
+    public Task<List<PlayerItem>> GetArtists()
     {
         var result = _itemCache.GetItems(PlayerItemType.Artist);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchTags()
+    public Task<List<PlayerItem>> GetTags()
     {
         var result = _itemCache.GetTags();
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchTracks()
+    public Task<List<PlayerItem>> GetTracks()
     {
         var result = _itemCache.GetItems(PlayerItemType.Track);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchGenres()
+    public Task<List<PlayerItem>> GetGenres()
     {
         var result = _itemCache.GetItems(PlayerItemType.Genre);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchGroupings()
+    public Task<List<PlayerItem>> GetGroupings()
     {
         var result = _itemCache.GetItems(PlayerItemType.Grouping);
         return Task.FromResult(result);

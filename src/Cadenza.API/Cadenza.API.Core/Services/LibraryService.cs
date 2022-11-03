@@ -16,67 +16,67 @@ internal class LibraryService : ILibraryService
     public async Task<AlbumInfo> Album(string id)
     {
         await PopulateCache();
-        return await _cache.AlbumCache.GetAlbum(id);
+        return await _cache.Albums.GetAlbum(id);
     }
 
     public async Task<List<AlbumTrack>> AlbumTracks(string id)
     {
         await PopulateCache();
-        return await _cache.AlbumCache.GetAlbumTracks(id);
+        return await _cache.Albums.GetAlbumTracks(id);
     }
 
     public async Task<ArtistInfo> Artist(string id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetArtist(id);
+        return await _cache.Artists.GetArtist(id);
     }
 
     public async Task<List<Album>> ArtistAlbums(string id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetAlbums(id);
+        return await _cache.Artists.GetAlbums(id);
     }
 
     public async Task<List<Track>> ArtistTracks(string id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetArtistTracks(id);
+        return await _cache.Artists.GetArtistTracks(id);
     }
 
     public async Task<List<Artist>> Artists()
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetAllArtists();
+        return await _cache.Artists.GetAllArtists();
     }
 
     public async Task<List<Artist>> GenreArtists(string id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetArtistsByGenre(id);
+        return await _cache.Artists.GetArtistsByGenre(id);
     }
 
     public async Task<List<Artist>> GetAllArtists()
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetAllArtists();
+        return await _cache.Artists.GetAllArtists();
     }
 
     public async Task<List<Artist>> GroupingArtists(Grouping id)
     {
         await PopulateCache();
-        return await _cache.ArtistCache.GetArtistsByGrouping(id);
+        return await _cache.Artists.GetArtistsByGrouping(id);
     }
 
     public async Task<List<PlayerItem>> Tag(string id)
     {
         await PopulateCache();
-        return await _cache.TagCache.GetTag(id);
+        return await _cache.Tags.GetTag(id);
     }
 
     public async Task<TrackFull> Track(string id)
     {
         await PopulateCache();
-        return await _cache.TrackCache.GetTrack(id);
+        return await _cache.Tracks.GetTrack(id);
     }
 
     private async Task PopulateCache()

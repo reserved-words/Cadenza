@@ -4,12 +4,12 @@ namespace Cadenza.API.Interfaces;
 
 public interface ILibraryCache
 {
-    IAlbumRepository AlbumCache { get; }
-    IArtistRepository ArtistCache { get; }
-    IPlayTrackRepository PlayTrackCache { get; }
-    ISearchRepository SearchCache { get; }
-    ITrackRepository TrackCache { get; }
-    ITagRepository TagCache { get; }
+    IAlbumRepository Albums { get; }
+    IArtistRepository Artists { get; }
+    IPlayTrackRepository PlayTracks { get; }
+    ISearchRepository Search { get; }
+    ITrackRepository Tracks { get; }
+    ITagRepository Tags { get; }
 
     bool IsPopulated { get; }
 
