@@ -25,6 +25,10 @@ public static class Startup
     private static IServiceCollection AddInternalServices(this IServiceCollection services)
     {
         return services
-            .AddSingleton<ICacheService, CacheService>();
+            .AddSingleton<ICacheService, CacheService>()
+            .AddSingleton<IHelperCache, HelperCache>()
+            .AddSingleton<IItemCache, ItemCache>()
+            .AddSingleton<IMainCache, MainCache>()
+            .AddSingleton<IPlayCache, PlayCache>();
     }
 }

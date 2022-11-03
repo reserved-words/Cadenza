@@ -2,204 +2,211 @@
 
 internal class CacheService : ICacheService
 {
-    private ICacheContainer _container;
+    private readonly IItemCache _itemCache;
+    private readonly IHelperCache _helperCache;
+    private readonly IMainCache _mainCache;
+    private readonly IPlayCache _playCache;
+
+    public CacheService(IItemCache itemCache, IMainCache mainCache, IPlayCache playCache, IHelperCache helperCache)
+    {
+        _itemCache = itemCache;
+        _mainCache = mainCache;
+        _playCache = playCache;
+        _helperCache = helperCache;
+    }
 
     public Task Populate(FullLibrary library)
     {
-        _container = new CacheContainer();
-        _container.Populate(library);
+        _helperCache.Clear();
+        _itemCache.Clear();
+        _mainCache.Clear();
+        _playCache.Clear();
+
+        foreach (var artist in library.Artists)
+        {
+            artist.Genre ??= "None";
+            _helperCache.CacheArtist(artist);
+            _itemCache.CacheArtist(artist);
+            _mainCache.CacheArtist(artist);
+        }
+
+        foreach (var album in library.Albums)
+        {
+            _helperCache.CacheAlbum(album);
+            _itemCache.CacheAllbum(album);
+            _mainCache.CacheAlbum(album);
+        }
+
+        foreach (var track in library.Tracks)
+        {
+            var album = _mainCache.GetAlbum(track.AlbumId);
+            var artist = _mainCache.GetArtist(track.ArtistId);
+            _helperCache.CacheTrack(track);
+            _itemCache.CacheTrack(track, album);
+            _mainCache.CacheTrack(track);
+            _playCache.CacheTrack(track, artist, album);
+        }
+
+        var albumTracks = library.AlbumTracks
+            .OrderBy(at => at.AlbumId)
+            .ThenBy(at => at.DiscNo)
+            .ThenBy(at => at.TrackNo)
+            .ToList();
+
+        foreach (var albumTrack in albumTracks)
+        {
+            var track = _mainCache.GetTrack(albumTrack.TrackId);
+            _helperCache.CacheAlbumTrack(albumTrack, track);
+            _mainCache.CacheAlbumTrack(albumTrack);
+        }
+
         return Task.CompletedTask;
     }
 
     public Task<AlbumInfo> GetAlbum(string id)
     {
-        var result = _container.Albums.GetValue(id);
+        var result = _mainCache.GetAlbum(id);
         return Task.FromResult(result);
     }
 
     public Task<List<AlbumTrack>> GetAlbumTracks(string id)
     {
-        var result = new List<AlbumTrack>();
-
-        foreach (var track in _container.TracksByAlbum[id])
-        {
-            result.Add(new AlbumTrack(track, _container.AlbumTracks[track.Id]));
-        }
-
-        return Task.FromResult(result);
-    }
-
-    public Task<List<Artist>> GetAlbumArtists()
-    {
-        var result = _container.AlbumsByArtist.Keys
-            .Select(a => _container.Artists[a])
-            .OfType<Artist>()
-            .ToList();
-
+        var result = _helperCache.GetAlbumTracks(id);
         return Task.FromResult(result);
     }
 
     public Task<List<Album>> GetAlbums(string artistId)
     {
-        var result = _container.AlbumsByArtist.GetList<string, AlbumInfo, Album>(artistId);
+        var result = _helperCache.GetAlbumsByArtist(artistId);
         return Task.FromResult(result);
     }
 
     public Task<List<Artist>> GetAllArtists()
     {
-        var result = _container.Artists.GetAllValues<string, ArtistInfo, Artist>();
+        var result = _mainCache.GetAllArtists();
         return Task.FromResult(result);
     }
 
     public Task<ArtistInfo> GetArtist(string id)
     {
-        var result = _container.Artists.GetValue(id);
+        var result = _mainCache.GetArtist(id);
         return Task.FromResult(result);
     }
 
     public Task<List<Artist>> GetArtistsByGenre(string id)
     {
-        var artists = _container.ArtistsByGenre.TryGetValue(id, out List<ArtistInfo> result)
-            ? result.OfType<Artist>().ToList()
-            : new List<Artist>();
-
-        return Task.FromResult(artists);
+        var result = _helperCache.GetArtistsByGenre(id);
+        return Task.FromResult(result);
     }
 
     public Task<List<Artist>> GetArtistsByGrouping(Grouping id)
     {
-        var artists = _container.ArtistsByGrouping.TryGetValue(id, out List<ArtistInfo> result)
-            ? result.OfType<Artist>().ToList()
-            : new List<Artist>();
-
-        return Task.FromResult(artists);
-    }
-
-    public Task<List<Artist>> GetTrackArtists()
-    {
-        var result = _container.TracksByArtist.Keys
-            .Select(a => _container.Artists[a])
-            .OfType<Artist>()
-            .ToList();
-
+        var result = _helperCache.GetArtistsByGrouping(id);
         return Task.FromResult(result);
     }
 
     public Task<List<Track>> GetArtistTracks(string artistId)
     {
-        var result = _container.TracksByArtist.TryGetValue(artistId, out List<TrackInfo> tracks)
-            ? tracks.OfType<Track>().ToList()
-            : new List<Track>();
-
+        var result = _helperCache.GetArtistTracks(artistId);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchAlbums()
     {
-        var result = _container.Items[PlayerItemType.Album];
+        var result = _itemCache.GetItems(PlayerItemType.Album);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchArtists()
     {
-        var result = _container.Items[PlayerItemType.Artist];
+        var result = _itemCache.GetItems(PlayerItemType.Artist);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchTags()
     {
-        var result = _container.Tags.Keys.Select(t => new SearchableTag(t)).OfType<PlayerItem>().ToList();
+        var result = _itemCache.GetTags();
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchTracks()
     {
-        var result = _container.Items[PlayerItemType.Track];
+        var result = _itemCache.GetItems(PlayerItemType.Track);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchGenres()
     {
-        var result = _container.Items[PlayerItemType.Genre];
+        var result = _itemCache.GetItems(PlayerItemType.Genre);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetSearchGroupings()
     {
-        var result = _container.Items[PlayerItemType.Grouping];
+        var result = _itemCache.GetItems(PlayerItemType.Grouping);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayerItem>> GetTag(string id)
     {
-        var result = _container.Tags[id];
+        var result = _itemCache.GetTag(id);
         return Task.FromResult(result);
     }
     public Task<TrackFull> GetTrack(string id)
     {
-        if (!_container.Tracks.ContainsKey(id))
-            return null;
-
-        var track = _container.Tracks[id];
-        var album = _container.Albums[track.AlbumId];
-
-        var result = new TrackFull
-        {
-            Track = track,
-            Album = album,
-            AlbumTrack = _container.AlbumTracks[track.Id],
-            Artist = _container.Artists[track.ArtistId],
-            AlbumArtist = _container.Artists[album.ArtistId]
-        };
-
+        var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);
     }
 
     public Task<List<PlayTrack>> PlayAll()
     {
-        var result = _container.PlayTracks.Values.ToList();
+        var result = _playCache.GetAll();
         return Task.FromResult(result);
     }
 
     public Task<List<PlayTrack>> PlayAlbum(string id)
     {
-        var result = _container.TracksByAlbum[id].Select(t => _container.PlayTracks[t.Id]).ToList();
+        var result = GetAlbumPlayTracks(id).ToList();
         return Task.FromResult(result);
     }
 
     public Task<List<PlayTrack>> PlayArtist(string id)
     {
-        var result = _container.TracksByArtist[id].Select(t => _container.PlayTracks[t.Id]).ToList();
+        var result = GetArtistPlayTracks(id).ToList();
         return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> PlayGenre(string id)
+    public Task<List<PlayTrack>> PlayGenre(string id)
     {
-        var result = new List<PlayTrack>();
+        var result = _helperCache.GetArtistsByGenre(id)
+            .SelectMany(a => GetArtistPlayTracks(a.Id))
+            .ToList();
 
-        foreach (var artist in _container.ArtistsByGenre[id])
-        {
-            result.AddRange(await PlayArtist(artist.Id));
-        }
-
-        return result;
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayTrack>> PlayGrouping(Grouping id)
+    public Task<List<PlayTrack>> PlayGrouping(Grouping id)
     {
-        var result = new List<PlayTrack>();
+        var result = _helperCache.GetArtistsByGrouping(id)
+            .SelectMany(a => GetArtistPlayTracks(a.Id))
+            .ToList();
 
-        foreach (var artist in _container.ArtistsByGrouping[id])
-        {
-            result.AddRange(await PlayArtist(artist.Id));
-        }
-
-        return result;
+        return Task.FromResult(result);
     }
 
     public Task<List<PlayTrack>> PlayTag(string id)
     {
-        var result = _container.TagPlayTracks[id];
+        var result = _playCache.GetTag(id);
         return Task.FromResult(result);
+    }
+
+    private IEnumerable<PlayTrack> GetAlbumPlayTracks(string id)
+    {
+        return _helperCache.GetAlbumTracks(id).Select(t => _playCache.GetTrack(t.TrackId)).ToList();
+    }
+
+    private IEnumerable<PlayTrack> GetArtistPlayTracks(string id)
+    {
+        return _helperCache.GetArtistTracks(id).Select(t => _playCache.GetTrack(t.Id)).ToList();
     }
 }

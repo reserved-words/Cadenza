@@ -47,12 +47,6 @@ public class LibraryController : ControllerBase
         return await _service.Artists();
     }
 
-    [HttpGet("Artists/Album")]
-    public async Task<List<Artist>> AlbumArtists()
-    {
-        return await _service.AlbumArtists();
-    }
-
     [HttpGet("Artists/Genre")]
     public async Task<List<Artist>> GenreArtists(string id)
     {
@@ -63,12 +57,6 @@ public class LibraryController : ControllerBase
     public async Task<List<Artist>> GroupingArtists(Grouping id)
     {
         return await _service.GroupingArtists(id);
-    }
-
-    [HttpGet("Artists/Track")]
-    public async Task<List<Artist>> TrackArtists()
-    {
-        return await _service.TrackArtists();
     }
 
     [HttpGet("Tag")]
