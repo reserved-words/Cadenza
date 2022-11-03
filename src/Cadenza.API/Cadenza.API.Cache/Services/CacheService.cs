@@ -1,8 +1,8 @@
-﻿namespace Cadenza.API.Cache.Services.Cache;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class CacheService : ICacheService
 {
-    private CacheContainer _container;
+    private ICacheContainer _container;
 
     public Task Populate(FullLibrary library)
     {

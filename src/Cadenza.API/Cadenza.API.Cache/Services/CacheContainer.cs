@@ -1,26 +1,24 @@
-﻿using Cadenza.API.Cache.Services.Cache;
+﻿namespace Cadenza.API.Cache.Services;
 
-namespace Cadenza.API.Cache.Services.Cache;
-
-internal class CacheContainer
+internal class CacheContainer : ICacheContainer
 {
-    public readonly Dictionary<string, PlayTrack> PlayTracks = new();
-    public readonly Dictionary<string, List<PlayTrack>> TagPlayTracks = new();
+    public Dictionary<string, PlayTrack> PlayTracks { get; } = new();
+    public Dictionary<string, List<PlayTrack>> TagPlayTracks { get; } = new();
 
-    public readonly Dictionary<PlayerItemType, List<PlayerItem>> Items = new();
-    public readonly Dictionary<string, List<PlayerItem>> Tags = new();
+    public Dictionary<PlayerItemType, List<PlayerItem>> Items { get; } = new();
+    public Dictionary<string, List<PlayerItem>> Tags { get; } = new();
 
-    public readonly Dictionary<string, TrackInfo> Tracks = new();
-    public readonly Dictionary<string, AlbumInfo> Albums = new();
-    public readonly Dictionary<string, ArtistInfo> Artists = new();
-    public readonly Dictionary<string, AlbumTrackLink> AlbumTracks = new();
+    public Dictionary<string, TrackInfo> Tracks { get; } = new();
+    public Dictionary<string, AlbumInfo> Albums { get; } = new();
+    public Dictionary<string, ArtistInfo> Artists { get; } = new();
+    public Dictionary<string, AlbumTrackLink> AlbumTracks { get; } = new();
 
-    public readonly Dictionary<Grouping, List<ArtistInfo>> ArtistsByGrouping = new();
-    public readonly Dictionary<string, List<ArtistInfo>> ArtistsByGenre = new();
+    public Dictionary<Grouping, List<ArtistInfo>> ArtistsByGrouping { get; } = new();
+    public Dictionary<string, List<ArtistInfo>> ArtistsByGenre { get; } = new();
 
-    public readonly Dictionary<string, List<AlbumInfo>> AlbumsByArtist = new();
-    public readonly Dictionary<string, List<TrackInfo>> TracksByArtist = new();
-    public readonly Dictionary<string, List<TrackInfo>> TracksByAlbum = new();
+    public Dictionary<string, List<AlbumInfo>> AlbumsByArtist { get; } = new();
+    public Dictionary<string, List<TrackInfo>> TracksByArtist { get; } = new();
+    public Dictionary<string, List<TrackInfo>> TracksByAlbum { get; } = new();
 
     public void Populate(FullLibrary library)
     {
