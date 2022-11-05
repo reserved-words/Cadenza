@@ -2,17 +2,17 @@
 
 internal class ItemUpdater : IItemUpdater
 {
-    public void UpdateAlbum(JsonAlbum album, List<PropertyUpdate> updates)
+    public void UpdateAlbum(AlbumInfo album, List<PropertyUpdate> updates)
     {
         foreach (var update in updates)
         {
             switch (update.Property)
             {
                 case ItemProperty.ReleaseType:
-                    album.ReleaseType = update.UpdatedValue;
+                    album.ReleaseType = Enum.Parse<ReleaseType>(update.UpdatedValue);
                     break;
                 case ItemProperty.AlbumTags:
-                    album.Tags = update.UpdatedValue;
+                    album.Tags = new TagList(update.UpdatedValue);
                     break;
                 case ItemProperty.ReleaseYear:
                     album.Year = update.UpdatedValue;
@@ -26,7 +26,7 @@ internal class ItemUpdater : IItemUpdater
         }
     }
 
-    public void UpdateTrack(JsonTrack track, List<PropertyUpdate> updates)
+    public void UpdateTrack(TrackInfo track, List<PropertyUpdate> updates)
     {
         foreach (var update in updates)
         {
@@ -36,7 +36,7 @@ internal class ItemUpdater : IItemUpdater
                     track.Lyrics = update.UpdatedValue;
                     break;
                 case ItemProperty.TrackTags:
-                    track.Tags = update.UpdatedValue;
+                    track.Tags = new TagList(update.UpdatedValue);
                     break;
                 case ItemProperty.TrackTitle:
                     track.Title = update.UpdatedValue;
@@ -50,7 +50,7 @@ internal class ItemUpdater : IItemUpdater
         }
     }
 
-    public void UpdateArtist(JsonArtist artist, List<PropertyUpdate> updates)
+    public void UpdateArtist(ArtistInfo artist, List<PropertyUpdate> updates)
     {
         foreach (var update in updates)
         {
@@ -60,7 +60,7 @@ internal class ItemUpdater : IItemUpdater
                     artist.ImageUrl = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistTags:
-                    artist.Tags = update.UpdatedValue;
+                    artist.Tags = new TagList(update.UpdatedValue);
                     break;
                 case ItemProperty.City:
                     artist.City = update.UpdatedValue;
@@ -72,7 +72,7 @@ internal class ItemUpdater : IItemUpdater
                     artist.Genre = update.UpdatedValue;
                     break;
                 case ItemProperty.Grouping:
-                    artist.Grouping = update.UpdatedValue;
+                    artist.Grouping = Enum.Parse<Grouping>(update.UpdatedValue);
                     break;
                 case ItemProperty.State:
                     artist.State = update.UpdatedValue;

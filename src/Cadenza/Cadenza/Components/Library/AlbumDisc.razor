@@ -2,7 +2,7 @@
 <AppTable T="@AlbumTrack"
           Items="@Model.Tracks">
     <RowTemplate>
-        <MudTd Class="td-int">@context.Position.TrackNo</MudTd>
+        <MudTd Class="td-int">@context.TrackNo</MudTd>
         <MudTd>
             <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" />
         </MudTd>

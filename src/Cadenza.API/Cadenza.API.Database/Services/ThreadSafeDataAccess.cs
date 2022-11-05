@@ -12,7 +12,7 @@ internal class ThreadSafeDataAccess : IDataAccess
 
     private static object obj = new object();
 
-    public Task<JsonItems> GetAll(LibrarySource? source)
+    public Task<FullLibrary> GetAll(LibrarySource? source)
     {
         lock (obj)
         {
@@ -20,7 +20,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task<List<JsonArtist>> GetArtists()
+    public Task<List<ArtistInfo>> GetArtists()
     {
         lock (obj)
         {
@@ -28,7 +28,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task<List<JsonAlbum>> GetAlbums(LibrarySource source)
+    public Task<List<AlbumInfo>> GetAlbums(LibrarySource source)
     {
         lock (obj)
         {
@@ -36,7 +36,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task<List<JsonAlbumTrack>> GetAlbumTracks(LibrarySource source)
+    public Task<List<AlbumTrackLink>> GetAlbumTracks(LibrarySource source)
     {
         lock (obj)
         {
@@ -44,7 +44,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task<List<JsonTrack>> GetTracks(LibrarySource source)
+    public Task<List<TrackInfo>> GetTracks(LibrarySource source)
     {
         lock (obj)
         {
@@ -60,7 +60,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task UpdateLibrary(LibrarySource source, Action<JsonItems> library)
+    public Task UpdateLibrary(LibrarySource source, Action<FullLibrary> library)
     {
         lock (obj)
         {
@@ -76,7 +76,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task UpdateAlbum(LibrarySource source, string id, Action<JsonAlbum> update)
+    public Task UpdateAlbum(LibrarySource source, string id, Action<AlbumInfo> update)
     {
         lock (obj)
         {
@@ -85,7 +85,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task UpdateArtist(string id, Action<JsonArtist> update)
+    public Task UpdateArtist(string id, Action<ArtistInfo> update)
     {
         lock (obj)
         {
@@ -94,7 +94,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task UpdateTrack(LibrarySource source, string id, Action<JsonTrack> update)
+    public Task UpdateTrack(LibrarySource source, string id, Action<TrackInfo> update)
     {
         lock (obj)
         {

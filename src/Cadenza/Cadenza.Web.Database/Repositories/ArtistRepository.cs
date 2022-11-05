@@ -31,21 +31,12 @@ internal class ArtistRepository : IArtistRepository
         return await _apiHelper.Get<ArtistInfo>(_settings.Artist, id);
     }
 
-    public async Task<List<Artist>> GetTrackArtists()
-    {
-        return await _apiHelper.Get<List<Artist>>(_settings.TrackArtists);
-    }
-    public async Task<List<Artist>> GetAlbumArtists()
-    {
-        return await _apiHelper.Get<List<Artist>>(_settings.AlbumArtists);
-    }
-
     public async Task<List<Album>> GetAlbums(string id)
     {
         return await _apiHelper.Get<List<Album>>(_settings.ArtistAlbums, id);
     }
 
-    public async Task<List<Track>> GetTracks(string id)
+    public async Task<List<Track>> GetArtistTracks(string id)
     {
         return await _apiHelper.Get<List<Track>>(_settings.ArtistTracks, id);
     }

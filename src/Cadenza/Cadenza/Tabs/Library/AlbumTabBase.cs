@@ -21,7 +21,7 @@ public class AlbumTabBase : ComponentBase
     {
         Album = await Repository.GetAlbum(Id);
 
-        var tracks = await Repository.GetTracks(Id);
+        var tracks = await Repository.GetAlbumTracks(Id);
 
         Discs = tracks.GroupByDisc();
 

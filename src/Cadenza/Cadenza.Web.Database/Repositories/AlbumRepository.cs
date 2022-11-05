@@ -15,7 +15,7 @@ internal class AlbumRepository : IAlbumRepository
     {
         return await _apiHelper.Get<AlbumInfo>(_settings.Album, id);
     }
-    public async Task<List<AlbumTrack>> GetTracks(string id)
+    public async Task<List<AlbumTrack>> GetAlbumTracks(string id)
     {
         return await _apiHelper.Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
     }

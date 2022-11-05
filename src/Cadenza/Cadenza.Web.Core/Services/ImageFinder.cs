@@ -47,7 +47,7 @@ internal class ImageFinder : IImageFinder
             return _imageConverter.GetBase64UrlFromImage(image);
 
         }
-        catch (Exception ex)
+        catch
         {
             // Log exact error
             throw new Exception("Fetching image failed");

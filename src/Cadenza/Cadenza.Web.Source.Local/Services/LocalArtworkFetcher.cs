@@ -22,7 +22,7 @@ internal class LocalArtworkFetcher : ISourceArtworkFetcher
         if (trackId != null)
             return GetArtistImageUrl(trackId);
 
-        var tracks = await _artistRepository.GetTracks(artist.Id);
+        var tracks = await _artistRepository.GetArtistTracks(artist.Id);
         if (!tracks.Any())
             return null;
 
@@ -34,7 +34,7 @@ internal class LocalArtworkFetcher : ISourceArtworkFetcher
         if (trackId != null)
             return GetArtworkUrl(trackId);
 
-        var tracks = await _albumRepository.GetTracks(album.Id);
+        var tracks = await _albumRepository.GetAlbumTracks(album.Id);
         return GetArtworkUrl(tracks.First().TrackId);
     }
 
