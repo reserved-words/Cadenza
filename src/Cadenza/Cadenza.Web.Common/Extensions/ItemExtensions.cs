@@ -70,7 +70,7 @@ public static class ItemExtensions
 
     public static string TrackPosition(this AlbumInfo album, AlbumTrackLink albumTrack)
     {
-        var trackCountIndex = albumTrack.DiscNo - 1;
+        var trackCountIndex = albumTrack.DiscNo <= 0 ? 0 : albumTrack.DiscNo - 1;
 
         return album.TrackCounts.Count > trackCountIndex
                 ? $"Track {albumTrack.TrackNo} of {album.TrackCounts[trackCountIndex]}"

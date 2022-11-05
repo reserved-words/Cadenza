@@ -1,3 +1,4 @@
+global using Cadenza.API.Cache;
 global using Cadenza.API.Core;
 global using Cadenza.API.Database;
 global using Cadenza.API.Interfaces.Controllers;
@@ -19,6 +20,7 @@ global using Microsoft.AspNetCore.Mvc;
 var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
 {
     services
+        .AddCache()
         .AddCoreServices()
         .AddJsonLibrary()
         .AddLastFM()

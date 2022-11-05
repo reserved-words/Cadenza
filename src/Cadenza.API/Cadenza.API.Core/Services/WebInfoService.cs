@@ -1,6 +1,6 @@
 ﻿using Cadenza.Common.Domain.Model.Results;
 
-namespace Cadenza.API.Core;
+namespace Cadenza.API.Core.Services;
 
 internal class WebInfoService : IWebInfoService
 {

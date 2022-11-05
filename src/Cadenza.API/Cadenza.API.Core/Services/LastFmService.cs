@@ -1,6 +1,6 @@
 ﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
 
-namespace Cadenza.API.Core;
+namespace Cadenza.API.Core.Services;
 
 internal class LastFmService : ILastFmService
 {

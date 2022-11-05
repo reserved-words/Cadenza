@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Interfaces\Cadenza.Common.Interfaces.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

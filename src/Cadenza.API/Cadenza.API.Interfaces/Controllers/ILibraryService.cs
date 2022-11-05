@@ -3,7 +3,6 @@
 public interface ILibraryService
 {
     Task<AlbumInfo> Album(string id);
-    Task<List<Artist>> AlbumArtists();
     Task<List<AlbumTrack>> AlbumTracks(string id);
     Task<ArtistInfo> Artist(string id);
     Task<List<Album>> ArtistAlbums(string id);
@@ -13,5 +12,4 @@ public interface ILibraryService
     Task<List<Artist>> GroupingArtists(Grouping id);
     Task<List<PlayerItem>> Tag(string id);
     Task<TrackFull> Track(string id);
-    Task<List<Artist>> TrackArtists();
 }

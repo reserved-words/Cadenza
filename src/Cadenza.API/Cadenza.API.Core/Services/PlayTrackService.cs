@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core;
+﻿using Cadenza.API.Interfaces;
+
+namespace Cadenza.API.Core.Services;
 
 internal class PlayTrackService : IPlayTrackService
 {
@@ -14,37 +16,37 @@ internal class PlayTrackService : IPlayTrackService
     public async Task<List<PlayTrack>> GetPlayTracks()
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetAll();
+        return await _cache.PlayTracks.PlayAll();
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByAlbum(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByAlbum(id);
+        return await _cache.PlayTracks.PlayAlbum(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByArtist(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByArtist(id);
+        return await _cache.PlayTracks.PlayArtist(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByGenre(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByGenre(id);
+        return await _cache.PlayTracks.PlayGenre(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByGrouping(Grouping id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByGrouping(id);
+        return await _cache.PlayTracks.PlayGrouping(id);
     }
 
     public async Task<List<PlayTrack>> GetPlayTracksByTag(string id)
     {
         await PopulateCache();
-        return await _cache.PlayTrackCache.GetByTag(id);
+        return await _cache.PlayTracks.PlayTag(id);
     }
 
     private async Task PopulateCache()

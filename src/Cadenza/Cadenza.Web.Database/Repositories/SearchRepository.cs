@@ -16,17 +16,17 @@ internal class SearchRepository : ISearchRepository
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchAlbums);
     }
 
-    public async Task<List<PlayerItem>> GetSearchArtists()
+    public async Task<List<PlayerItem>> GetArtists()
     {
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchArtists);
     }
 
-    public async Task<List<PlayerItem>> GetSearchGenres()
+    public async Task<List<PlayerItem>> GetGenres()
     {
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchGenres);
     }
 
-    public async Task<List<PlayerItem>> GetSearchGroupings()
+    public async Task<List<PlayerItem>> GetGroupings()
     {
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchGroupings);
     }
@@ -36,12 +36,12 @@ internal class SearchRepository : ISearchRepository
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchPlaylists);
     }
 
-    public async Task<List<PlayerItem>> GetSearchTags()
+    public async Task<List<PlayerItem>> GetTags()
     {
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchTags);
     }
 
-    public async Task<List<PlayerItem>> GetSearchTracks()
+    public async Task<List<PlayerItem>> GetTracks()
     {
         return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchTracks);
     }

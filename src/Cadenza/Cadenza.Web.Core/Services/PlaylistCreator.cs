@@ -21,7 +21,7 @@ internal class PlaylistCreator : IPlaylistCreator
     public async Task<PlaylistDefinition> CreateArtistPlaylist(string id)
     {
         var artist = await _artistRepository.GetArtist(id);
-        var tracks = await _repository.GetByArtist(id);
+        var tracks = await _repository.PlayArtist(id);
 
         var firstSource = tracks.First().Source;
 
@@ -42,7 +42,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id)
     {
-        var tracks = await _repository.GetByAlbum(id);
+        var tracks = await _repository.PlayAlbum(id);
         var album = await _albumRepository.GetAlbum(id);
 
         var playlistId = new PlaylistId(id, album.Source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
@@ -80,7 +80,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateLibraryPlaylist(string first = null)
     {
-        var tracks = await _repository.GetAll();
+        var tracks = await _repository.PlayAll();
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
@@ -95,7 +95,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping id)
     {
-        var tracks = await _repository.GetByGrouping(id);
+        var tracks = await _repository.PlayGrouping(id);
 
         var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Grouping, id.GetDisplayName());
 
@@ -110,7 +110,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateGenrePlaylist(string id)
     {
-        var tracks = await _repository.GetByGenre(id);
+        var tracks = await _repository.PlayGenre(id);
 
         var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Genre, id);
 
@@ -125,7 +125,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
     public async Task<PlaylistDefinition> CreateTagPlaylist(string id)
     {
-        var tracks = await _repository.GetByTag(id);
+        var tracks = await _repository.PlayTag(id);
 
         var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Tag, id);
 
