@@ -7,6 +7,10 @@ using Cadenza.Web.Common.Interfaces.Updates;
 using Cadenza.Web.Common.Interfaces.View;
 using Cadenza.Web.Core.Coordinators;
 using Cadenza.Web.Core.Utilities;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Cadenza.Web.Core.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 namespace Cadenza.Web.Core;
 
@@ -17,7 +21,8 @@ public static class Startup
         services
             .AddStartupServices()
             .AddUtilities()
-            .AddCoordinators();
+            .AddCoordinators()
+			.AddInternalServices();
 
         services
             .AddTransient<IAppStore, Store>()
@@ -27,12 +32,20 @@ public static class Startup
             .AddTransient<IItemPlayer, ItemPlayer>()
             .AddTransient<IItemViewer, ItemViewer>()
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<ISearchSyncService, SearchSyncService>()
             .AddTransient<IUrl, Url>();
 
         return services;
     }
+
+	private static IServiceCollection AddInternalServices(this IServiceCollection services)
+	{
+		return services
+			.AddTransient<IPlaylistCreator, PlaylistCreator>()
+			.AddTransient<ISubTaskRunner, SubTaskRunner>()
+			.AddTransient<ITaskProgressUpdater, TaskProgressUpdater>()
+			.AddTransient<ITaskRunner, TaskRunner>();
+	}
 
     private static IServiceCollection AddStartupServices(this IServiceCollection services)
     {
