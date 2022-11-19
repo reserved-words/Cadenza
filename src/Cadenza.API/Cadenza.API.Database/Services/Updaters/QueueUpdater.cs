@@ -62,16 +62,17 @@ internal class QueueUpdater : IQueueUpdater
 
 	private static void UpdateQueuedItem(EditedItem update, EditedItem queuedUpdate)
 	{
-		foreach (var newPropertyUpdate in update.Properties)
+		foreach (var newUpdate in update.Properties)
 		{
-			var existingPropertyUpdate = GetQueuedPropertyUpdate(queuedUpdate, newPropertyUpdate);
-			if (existingPropertyUpdate != null)
+			var existingUpdate = GetQueuedPropertyUpdate(queuedUpdate, newUpdate);
+
+			if (existingUpdate != null)
 			{
-				existingPropertyUpdate.UpdatedValue = newPropertyUpdate.UpdatedValue;
+				existingUpdate.UpdatedValue = newUpdate.UpdatedValue;
 			}
 			else
 			{
-				queuedUpdate.Properties.Add(newPropertyUpdate);
+				queuedUpdate.Properties.Add(newUpdate);
 			}
 		}
 	}
