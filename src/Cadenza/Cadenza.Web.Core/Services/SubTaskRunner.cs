@@ -17,50 +17,77 @@ internal class SubTaskRunner : ISubTaskRunner
 	{
 		try
 		{
-			await TryRunSubTask(task, cancellationToken);
+			await RunTask(task, cancellationToken);
+			await HandleCompletion(task);
 		}
 		catch (OperationCanceledException)
 		{
-			_progressUpdater.UpdateSubTask(task.Id, "Cancelled", TaskState.Cancelled, CancellationToken.None);
+			HandleCancellation(task);
 			throw;
 		}
 		catch (Exception ex)
 		{
-			_progressUpdater.UpdateSubTask(task.Id, ex.Message, TaskState.Errored, CancellationToken.None);
-			_logger.LogError("Subtask of long-running task errored", ex);
-			if (task.OnError != null)
-			{
-				await task.OnError(ex);
-			}
+			await HandleError(task, ex);
 		}
 	}
 
-	private async Task TryRunSubTask(SubTask task, CancellationToken cancellationToken)
+	private void HandleCancellation(SubTask task)
 	{
-		if (task.CheckStep != null)
-		{
-			var isTaskNeeded = await task.CheckStep.Task();
-			if (!isTaskNeeded)
-			{
-				_progressUpdater.UpdateSubTask(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
-				await task.OnCompleted();
-				return;
-			}
-		}
+		_progressUpdater.UpdateSubTask(task.Id, "Cancelled", TaskState.Cancelled, CancellationToken.None);
+	}
 
-		object result = null;
-
-		foreach (var step in task.Steps)
-		{
-			_progressUpdater.UpdateSubTask(task.Id, step.Caption, TaskState.Running, cancellationToken);
-			result = await step.Task(result, cancellationToken);
-		}
-
+	private async Task HandleCompletion(SubTask task)
+	{
 		_progressUpdater.UpdateSubTask(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
 
 		if (task.OnCompleted != null)
 		{
 			await task.OnCompleted();
 		}
+	}
+
+	private async Task HandleError(SubTask task, Exception ex)
+	{
+		_progressUpdater.UpdateSubTask(task.Id, ex.Message, TaskState.Errored, CancellationToken.None);
+		_logger.LogError("Subtask of long-running task errored", ex);
+
+		if (task.OnError != null)
+		{
+			await task.OnError(ex);
+		}
+	}
+
+	private async Task<bool> IsTaskNeeded(SubTask task)
+	{
+		if (task.CheckStep == null)
+			return true;
+
+		return await task.CheckStep.Task();
+	}
+
+	private async Task<object> RunStep(SubTask task, object result, TaskStep step, CancellationToken cancellationToken)
+	{
+		_progressUpdater.UpdateSubTask(task.Id, step.Caption, TaskState.Running, cancellationToken);
+		return await step.Task(result, cancellationToken);
+	}
+
+	private async Task RunSteps(SubTask task, CancellationToken cancellationToken)
+	{
+		object result = null;
+
+		foreach (var step in task.Steps)
+		{
+			result = await RunStep(task, result, step, cancellationToken);
+		}
+	}
+
+	private async Task RunTask(SubTask task, CancellationToken cancellationToken)
+	{
+		var isTaskNeeded = await IsTaskNeeded(task);
+
+		if (!isTaskNeeded)
+			return;
+
+		await RunSteps(task, cancellationToken);
 	}
 }
