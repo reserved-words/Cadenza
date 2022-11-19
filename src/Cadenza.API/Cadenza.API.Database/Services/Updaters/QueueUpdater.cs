@@ -17,32 +17,30 @@ internal class QueueUpdater : IQueueUpdater
 	}
 
 	public void Dequeue(List<EditedItem> queue, EditedItem update)
-    {
-        var queuedUpdate = queue.SingleOrDefault(u => u.Id == update.Id && u.Type == update.Type);
+	{
+		var queuedUpdate = GetQueuedItemUpdate(queue, update);
 
-        if (queuedUpdate == null)
-            return;
+		if (queuedUpdate == null)
+			return;
 
-        var propertyUpdatesToRemove = new List<EditedProperty>();
+		var propertiesToRemove = GetMatchingProperties(queuedUpdate, update);
 
-        foreach (var queuedPropertyUpdate in queuedUpdate.Properties)
-        {
-            if (update.Properties.Any(u => u.Property == queuedPropertyUpdate.Property
-                && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
-            {
-                propertyUpdatesToRemove.Add(queuedPropertyUpdate);
-            }
-        }
+		foreach (var property in propertiesToRemove)
+		{
+			queuedUpdate.Properties.Remove(property);
+		}
 
-        foreach (var propertyUpdate in propertyUpdatesToRemove)
-        {
-            queuedUpdate.Properties.Remove(propertyUpdate);
-        }
+		if (!queuedUpdate.Properties.Any())
+		{
+			queue.Remove(queuedUpdate);
+		}
+	}
 
-        if (!queuedUpdate.Properties.Any())
-        {
-            queue.Remove(queuedUpdate);
-        }
+	private static List<EditedProperty> GetMatchingProperties(EditedItem queuedUpdate, EditedItem compareUpdate)
+	{
+		return queuedUpdate.Properties
+			.Where(p => compareUpdate.Properties.Any(u => u.Property == p.Property && u.UpdatedValue == p.UpdatedValue))
+			.ToList();
 	}
 
 	private static void AddItemToQueue(List<EditedItem> queue, EditedItem update)
