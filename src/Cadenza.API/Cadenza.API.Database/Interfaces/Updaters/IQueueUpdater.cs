@@ -2,6 +2,6 @@
 
 internal interface IQueueUpdater
 {
-    void AddOrUpdate(List<EditedItem> queue, EditedItem updates);
-    void Remove(List<EditedItem> queue, EditedItem update);
+    void Queue(List<EditedItem> queue, EditedItem update);
+    void Dequeue(List<EditedItem> queue, EditedItem update);
 }

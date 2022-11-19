@@ -2,32 +2,31 @@
 
 internal class QueueUpdater : IQueueUpdater
 {
-    public void AddOrUpdate(List<EditedItem> queue, EditedItem updates)
+    public void Queue(List<EditedItem> queue, EditedItem update)
     {
-        var existingUpdate = queue.SingleOrDefault(e => e.Type == updates.Type && e.Id == updates.Id);
+        var queuedUpdate = queue.SingleOrDefault(e => e.Type == update.Type && e.Id == update.Id);
 
-        if (existingUpdate == null)
+        if (queuedUpdate == null)
         {
-            queue.Add(updates);
+            queue.Add(update);
         }
         else
         {
-            foreach (var newPropertyUpdate in updates.Properties)
+            foreach (var newPropertyUpdate in update.Properties)
             {
-                var existingPropertyUpdate = existingUpdate.Properties.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
+                var existingPropertyUpdate = queuedUpdate.Properties.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
                 if (existingPropertyUpdate != null)
                 {
-                    existingUpdate.Properties.Remove(existingPropertyUpdate);
+                    queuedUpdate.Properties.Remove(existingPropertyUpdate);
                 }
-                existingUpdate.Properties.Add(newPropertyUpdate);
+                queuedUpdate.Properties.Add(newPropertyUpdate);
             }
         }
     }
 
-    public void Remove(List<EditedItem> updates, EditedItem update)
+    public void Dequeue(List<EditedItem> queue, EditedItem update)
     {
-        var queuedUpdate = updates.SingleOrDefault(u => u.Id == update.Id
-            && u.Type == update.Type);
+        var queuedUpdate = queue.SingleOrDefault(u => u.Id == update.Id && u.Type == update.Type);
 
         if (queuedUpdate == null)
             return;
@@ -50,7 +49,7 @@ internal class QueueUpdater : IQueueUpdater
 
         if (!queuedUpdate.Properties.Any())
         {
-            updates.Remove(queuedUpdate);
+            queue.Remove(queuedUpdate);
         }
-    }
+	}
 }

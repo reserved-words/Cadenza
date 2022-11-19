@@ -35,7 +35,7 @@ internal class UpdateRepository : IUpdateRepository
     {
         await _dataAccess.UpdateUpdates(source, updates =>
         {
-            _updater.Remove(updates, update);
+            _updater.Dequeue(updates, update);
         });
     }
 
@@ -43,7 +43,7 @@ internal class UpdateRepository : IUpdateRepository
     {
         await _dataAccess.UpdateUpdates(source, updates =>
         {
-            _updater.AddOrUpdate(updates, update);
+            _updater.Queue(updates, update);
         });
     }
 }
