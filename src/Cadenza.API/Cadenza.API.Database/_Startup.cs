@@ -12,6 +12,9 @@ global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Interfaces.Utilities;
 global using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Cadenza.API.Database.Tests")]
 
 namespace Cadenza.API.Database;
 

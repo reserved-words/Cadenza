@@ -14,4 +14,9 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cadenza.API\Cadenza.API.Database\Cadenza.API.Database.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
