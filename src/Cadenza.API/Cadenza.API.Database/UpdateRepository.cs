@@ -11,7 +11,7 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task Add(ItemUpdates update, LibrarySource? itemSource)
+    public async Task Add(EditedItem update, LibrarySource? itemSource)
     {
         if (itemSource.HasValue)
         {
@@ -26,12 +26,12 @@ internal class UpdateRepository : IUpdateRepository
         }
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
         return await _dataAccess.GetUpdates(source);
     }
 
-    public async Task Remove(ItemUpdates update, LibrarySource source)
+    public async Task Remove(EditedItem update, LibrarySource source)
     {
         await _dataAccess.UpdateUpdates(source, updates =>
         {
@@ -39,7 +39,7 @@ internal class UpdateRepository : IUpdateRepository
         });
     }
 
-    private async Task AddToSource(ItemUpdates update, LibrarySource source)
+    private async Task AddToSource(EditedItem update, LibrarySource source)
     {
         await _dataAccess.UpdateUpdates(source, updates =>
         {

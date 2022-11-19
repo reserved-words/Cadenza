@@ -100,9 +100,9 @@ internal class DataAccess : IDataAccess
         return albumTracks;
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
-        return await _service.Get<List<ItemUpdates>>(_paths.Updates(source));
+        return await _service.Get<List<EditedItem>>(_paths.Updates(source));
     }
 
     public async Task UpdateLibrary(LibrarySource source, Action<FullLibrary> action)
@@ -112,7 +112,7 @@ internal class DataAccess : IDataAccess
         await SaveAll(library, source);
     }
 
-    public async Task UpdateUpdates(LibrarySource source, Action<List<ItemUpdates>> action)
+    public async Task UpdateUpdates(LibrarySource source, Action<List<EditedItem>> action)
     {
         var updates = await GetUpdates(source);
         action(updates);
@@ -147,7 +147,7 @@ internal class DataAccess : IDataAccess
         await SaveAlbumTracks(source, library.AlbumTracks);
     }
 
-    private async Task SaveUpdates(List<ItemUpdates> updates, LibrarySource source)
+    private async Task SaveUpdates(List<EditedItem> updates, LibrarySource source)
     {
         await _service.Save(_paths.Updates(source), updates);
     }

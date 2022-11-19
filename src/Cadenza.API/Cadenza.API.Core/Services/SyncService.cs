@@ -44,12 +44,12 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
         return await _updateRepository.GetUpdates(source);
     }
 
-    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, EditedItem update)
     {
         await ClearImages(source, update);
 
@@ -61,7 +61,7 @@ internal class SyncService : ISyncService
         await _repository.RemoveTracks(source, ids);
     }
 
-    private async Task ClearImages(LibrarySource source, ItemUpdates update)
+    private async Task ClearImages(LibrarySource source, EditedItem update)
     {
         var clearArtworkUpdates = GetClearImageUpdates(update, ItemProperty.Artwork);
         if (clearArtworkUpdates != null)
@@ -76,26 +76,26 @@ internal class SyncService : ISyncService
         }
     }
 
-    private ItemUpdates GetClearImageUpdates(ItemUpdates update, ItemProperty property)
+    private static EditedItem GetClearImageUpdates(EditedItem update, ItemProperty property)
     {
-        var propertyUpdate = update.Updates.SingleOrDefault(u => u.Property == property);
+        var propertyUpdate = update.Properties.SingleOrDefault(u => u.Property == property);
 
         if (propertyUpdate == null)
             return null;
 
-        var clearImageUpdate = new PropertyUpdate
+        var clearImageUpdate = new EditedProperty
         {
             Property = property,
             OriginalValue = propertyUpdate.OriginalValue,
             UpdatedValue = null
         };
 
-        return new ItemUpdates
+        return new EditedItem
         {
             Id = update.Id,
             Type = update.Type,
             Name = update.Name,
-            Updates = new List<PropertyUpdate> { clearImageUpdate }
+            Properties = new List<EditedProperty> { clearImageUpdate }
         };
     }
 }

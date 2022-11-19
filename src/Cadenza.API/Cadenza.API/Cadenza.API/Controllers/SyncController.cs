@@ -36,13 +36,13 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetUpdates/{source}")]
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
         return await _service.GetUpdates(source);
     }
 
     [HttpPost("MarkUpdated/{source}")]
-    public async Task MarkUpdated(LibrarySource source, [FromBody] ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, [FromBody] EditedItem update)
     {
         await _service.MarkUpdated(source, update);
     }

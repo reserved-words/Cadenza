@@ -13,7 +13,7 @@ internal class Id3Updater : IId3Updater
         _imageConverter = imageConverter;
     }
 
-    public void UpdateTags(string filepath, List<PropertyUpdate> updates)
+    public void UpdateTags(string filepath, List<EditedProperty> updates)
     {
         var data = _id3Service.GetId3Data(filepath);
         var commentData = _commentProcessor.GetData(data.Track.Comment);

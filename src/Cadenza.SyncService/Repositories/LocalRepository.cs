@@ -28,7 +28,7 @@ internal class LocalRepository : ISourceRepository
         return await _http.Get<TrackFull>(url);
     }
 
-    public async Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates)
+    public async Task UpdateTracks(List<string> trackIds, List<EditedProperty> updates)
     {
         var data = new MultiTrackUpdates
         {

@@ -40,7 +40,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
         {
             Update.ConfirmUpdates();
 
-            if (!Update.Updates.Any())
+            if (!Update.PropertyUpdates.Any())
             {
                 Cancel();
                 return;

@@ -22,7 +22,7 @@ public class GenreTabBase : ComponentBase, IDisposable
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
     {
-        if (!e.Update.IsUpdated(ItemProperty.Genre, out PropertyUpdate genreUpdate))
+        if (!e.Update.IsUpdated(ItemProperty.Genre, out var genreUpdate))
             return Task.CompletedTask;
 
         if (genreUpdate.OriginalValue == Id)
@@ -40,7 +40,7 @@ public class GenreTabBase : ComponentBase, IDisposable
         return Task.CompletedTask;
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         await UpdateGenre();
     }
@@ -58,5 +58,7 @@ public class GenreTabBase : ComponentBase, IDisposable
             return;
 
         Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
+
+		GC.SuppressFinalize(this);
     }
 }

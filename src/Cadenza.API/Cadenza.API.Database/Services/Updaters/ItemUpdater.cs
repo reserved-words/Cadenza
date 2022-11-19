@@ -2,7 +2,7 @@
 
 internal class ItemUpdater : IItemUpdater
 {
-    public void UpdateAlbum(AlbumInfo album, List<PropertyUpdate> updates)
+    public void UpdateAlbum(AlbumInfo album, List<EditedProperty> updates)
     {
         foreach (var update in updates)
         {
@@ -26,7 +26,7 @@ internal class ItemUpdater : IItemUpdater
         }
     }
 
-    public void UpdateTrack(TrackInfo track, List<PropertyUpdate> updates)
+    public void UpdateTrack(TrackInfo track, List<EditedProperty> updates)
     {
         foreach (var update in updates)
         {
@@ -50,7 +50,7 @@ internal class ItemUpdater : IItemUpdater
         }
     }
 
-    public void UpdateArtist(ArtistInfo artist, List<PropertyUpdate> updates)
+    public void UpdateArtist(ArtistInfo artist, List<EditedProperty> updates)
     {
         foreach (var update in updates)
         {

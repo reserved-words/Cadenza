@@ -28,7 +28,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
     public TInterface UpdatedItem { get; set; }
 
-    public List<PropertyUpdate> Updates { get; set; } = new();
+    public List<EditedProperty> PropertyUpdates { get; set; } = new();
 
     public void ApplyUpdates(TInterface item)
     {
@@ -37,17 +37,17 @@ public class ItemUpdate<TInterface> where TInterface : new()
 
     public void ConfirmUpdates()
     {
-        Updates = GetUpdates();
+        PropertyUpdates = GetUpdates();
     }
 
     public bool IsUpdated(ItemProperty property)
     {
-        return Updates.Any(p => p.Property == property);
+        return PropertyUpdates.Any(p => p.Property == property);
     }
 
-    public bool IsUpdated(ItemProperty property, out PropertyUpdate update)
+    public bool IsUpdated(ItemProperty property, out EditedProperty update)
     {
-        update = Updates.SingleOrDefault(p => p.Property == property);
+        update = PropertyUpdates.SingleOrDefault(p => p.Property == property);
         return update != null;
     }
 
@@ -67,9 +67,9 @@ public class ItemUpdate<TInterface> where TInterface : new()
         }
     }
 
-    private List<PropertyUpdate> GetUpdates()
+    private List<EditedProperty> GetUpdates()
     {
-        var updates = new List<PropertyUpdate>();
+        var updates = new List<EditedProperty>();
 
         var properties = typeof(TInterface).GetProperties();
 
@@ -88,7 +88,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
             if (AreEqual(originalValue, updatedValue))
                 continue;
 
-            updates.Add(new PropertyUpdate
+            updates.Add(new EditedProperty
             {
                 Property = itemProperty.Property,
                 OriginalValue = originalValue,

@@ -18,27 +18,27 @@ internal class MusicRepository : IMusicRepository
         return await _dataAccess.GetAll(source);
     }
 
-    public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateAlbum(LibrarySource source, EditedItem updates)
     {
         await _dataAccess.UpdateAlbum(source, updates.Id, album =>
         {
-            _itemUpdater.UpdateAlbum(album, updates.Updates);
+            _itemUpdater.UpdateAlbum(album, updates.Properties);
         });
     }
 
-    public async Task UpdateArtist(ItemUpdates updates)
+    public async Task UpdateArtist(EditedItem updates)
     {
         await _dataAccess.UpdateArtist(updates.Id, artist =>
         {
-            _itemUpdater.UpdateArtist(artist, updates.Updates);
+            _itemUpdater.UpdateArtist(artist, updates.Properties);
         });
     }
 
-    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateTrack(LibrarySource source, EditedItem updates)
     {
         await _dataAccess.UpdateTrack(source, updates.Id, track =>
         {
-            _itemUpdater.UpdateTrack(track, updates.Updates);
+            _itemUpdater.UpdateTrack(track, updates.Properties);
         });
     }
 

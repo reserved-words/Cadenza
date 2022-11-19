@@ -2,7 +2,7 @@
 
 internal interface ILocalFilesUpdater
 {
-    Task UpdateArtist(string id, List<PropertyUpdate> updates);
-    Task UpdateAlbum(string id, List<PropertyUpdate> updates);
-    Task UpdateTrack(string id, List<PropertyUpdate> updates);
+    Task UpdateArtist(string id, List<EditedProperty> updates);
+    Task UpdateAlbum(string id, List<EditedProperty> updates);
+    Task UpdateTrack(string id, List<EditedProperty> updates);
 }

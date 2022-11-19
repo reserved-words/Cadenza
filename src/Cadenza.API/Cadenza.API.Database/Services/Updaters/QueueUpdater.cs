@@ -2,7 +2,7 @@
 
 internal class QueueUpdater : IQueueUpdater
 {
-    public void AddOrUpdate(List<ItemUpdates> queue, ItemUpdates updates)
+    public void AddOrUpdate(List<EditedItem> queue, EditedItem updates)
     {
         var existingUpdate = queue.SingleOrDefault(e => e.Type == updates.Type && e.Id == updates.Id);
 
@@ -12,19 +12,19 @@ internal class QueueUpdater : IQueueUpdater
         }
         else
         {
-            foreach (var newPropertyUpdate in updates.Updates)
+            foreach (var newPropertyUpdate in updates.Properties)
             {
-                var existingPropertyUpdate = existingUpdate.Updates.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
+                var existingPropertyUpdate = existingUpdate.Properties.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
                 if (existingPropertyUpdate != null)
                 {
-                    existingUpdate.Updates.Remove(existingPropertyUpdate);
+                    existingUpdate.Properties.Remove(existingPropertyUpdate);
                 }
-                existingUpdate.Updates.Add(newPropertyUpdate);
+                existingUpdate.Properties.Add(newPropertyUpdate);
             }
         }
     }
 
-    public void Remove(List<ItemUpdates> updates, ItemUpdates update)
+    public void Remove(List<EditedItem> updates, EditedItem update)
     {
         var queuedUpdate = updates.SingleOrDefault(u => u.Id == update.Id
             && u.Type == update.Type);
@@ -32,11 +32,11 @@ internal class QueueUpdater : IQueueUpdater
         if (queuedUpdate == null)
             return;
 
-        var propertyUpdatesToRemove = new List<PropertyUpdate>();
+        var propertyUpdatesToRemove = new List<EditedProperty>();
 
-        foreach (var queuedPropertyUpdate in queuedUpdate.Updates)
+        foreach (var queuedPropertyUpdate in queuedUpdate.Properties)
         {
-            if (update.Updates.Any(u => u.Property == queuedPropertyUpdate.Property
+            if (update.Properties.Any(u => u.Property == queuedPropertyUpdate.Property
                 && u.UpdatedValue == queuedPropertyUpdate.UpdatedValue))
             {
                 propertyUpdatesToRemove.Add(queuedPropertyUpdate);
@@ -45,10 +45,10 @@ internal class QueueUpdater : IQueueUpdater
 
         foreach (var propertyUpdate in propertyUpdatesToRemove)
         {
-            queuedUpdate.Updates.Remove(propertyUpdate);
+            queuedUpdate.Properties.Remove(propertyUpdate);
         }
 
-        if (!queuedUpdate.Updates.Any())
+        if (!queuedUpdate.Properties.Any())
         {
             updates.Remove(queuedUpdate);
         }

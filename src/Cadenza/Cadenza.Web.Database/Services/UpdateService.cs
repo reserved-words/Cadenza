@@ -16,12 +16,12 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateAlbum(AlbumUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new EditedItem
         {
             Id = update.Id,
             Type = update.Type,
             Name = update.Name,
-            Updates = update.Updates
+            Properties = update.PropertyUpdates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum, update.OriginalItem.Source);
         await _http.Post(url, null, data);
@@ -29,12 +29,12 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateArtist(ArtistUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new EditedItem
         {
             Id = update.Id,
             Type = update.Type,
             Name = update.Name,
-            Updates = update.Updates
+            Properties = update.PropertyUpdates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateArtist);
         await _http.Post(url, null, data);
@@ -42,12 +42,12 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateTrack(TrackUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new EditedItem
         {
             Id = update.Id,
             Type = update.Type,
             Name = update.Name,
-            Updates = update.Updates
+            Properties = update.PropertyUpdates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack, update.OriginalItem.Source);
         await _http.Post(url, null, data);

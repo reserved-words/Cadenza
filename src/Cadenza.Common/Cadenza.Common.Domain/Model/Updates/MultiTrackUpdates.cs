@@ -3,5 +3,5 @@
 public class MultiTrackUpdates
 {
     public List<string> TrackIds { get; set; }
-    public List<PropertyUpdate> Updates { get; set; } = new();
+    public List<EditedProperty> Updates { get; set; } = new();
 }

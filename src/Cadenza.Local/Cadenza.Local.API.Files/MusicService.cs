@@ -17,7 +17,7 @@ internal class MusicService : IMusicFilesService
         return Task.FromResult(result);
     }
 
-    public Task UpdateFileData(string filepath, List<PropertyUpdate> updates)
+    public Task UpdateFileData(string filepath, List<EditedProperty> updates)
     {
         _updater.UpdateTags(filepath, updates);
         return Task.CompletedTask;

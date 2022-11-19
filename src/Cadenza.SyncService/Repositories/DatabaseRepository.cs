@@ -38,13 +38,13 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}/{source}";
-        return await _http.Get<List<ItemUpdates>>(url);
+        return await _http.Get<List<EditedItem>>(url);
     }
 
-    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, EditedItem update)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}/{source}";
         await _http.Post(url, null, update);

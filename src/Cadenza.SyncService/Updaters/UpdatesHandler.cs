@@ -34,15 +34,15 @@ internal class UpdatesHandler : IService
         await ProcessArtistUpdates(repository, source, updates.Where(u => u.Type == LibraryItemType.Artist).ToList());
     }
 
-    private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdates> updates)
+    private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, List<EditedItem> updates)
     {
-        _logger.LogInformation($"{updates.Count} artist updates to process");
+		_logger.LogInformation($"{updates.Count} artist updates to process");
 
         foreach (var update in updates)
         {
-            _logger.LogInformation($"Started processing update ID {update.Id}");
+			_logger.LogInformation($"Started processing update ID {update.Id}");
             var tracks = await _database.GetTracksByArtist(source, update.Id);
-            await repository.UpdateTracks(tracks, update.Updates);
+            await repository.UpdateTracks(tracks, update.Properties);
             await MarkUpdated(source, update);
             _logger.LogInformation($"Finished processing update ID {update.Id}");
         }
@@ -50,15 +50,15 @@ internal class UpdatesHandler : IService
         _logger.LogInformation("All artist updates processed");
     }
 
-    private async Task ProcessAlbumUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdates> updates)
+    private async Task ProcessAlbumUpdates(ISourceRepository repository, LibrarySource source, List<EditedItem> updates)
     {
-        _logger.LogInformation($"{updates.Count} album updates to process");
+		_logger.LogInformation($"{updates.Count} album updates to process");
 
         foreach (var update in updates)
         {
             _logger.LogInformation($"Started processing update ID {update.Id}");
             var tracks = await _database.GetTracksByAlbum(source, update.Id);
-            await repository.UpdateTracks(tracks, update.Updates);
+            await repository.UpdateTracks(tracks, update.Properties);
             await MarkUpdated(source, update);
             _logger.LogInformation($"Finished processing update ID {update.Id}");
         }
@@ -66,14 +66,14 @@ internal class UpdatesHandler : IService
         _logger.LogInformation("All album updates processed");
     }
 
-    private async Task ProcessTrackUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdates> updates)
+    private async Task ProcessTrackUpdates(ISourceRepository repository, LibrarySource source, List<EditedItem> updates)
     {
         _logger.LogInformation($"{updates.Count} track updates to process");
 
         foreach (var update in updates)
         {
             _logger.LogInformation($"Started processing update ID {update.Id}");
-            await repository.UpdateTracks(new List<string> { update.Id }, update.Updates);
+            await repository.UpdateTracks(new List<string> { update.Id }, update.Properties);
             await MarkUpdated(source, update);
             _logger.LogInformation($"Finished processing update ID {update.Id}");
         }
@@ -81,7 +81,7 @@ internal class UpdatesHandler : IService
         _logger.LogInformation("All track updates processed");
     }
 
-    private async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    private async Task MarkUpdated(LibrarySource source, EditedItem update)
     {
         await _database.MarkUpdated(source, update);
     }

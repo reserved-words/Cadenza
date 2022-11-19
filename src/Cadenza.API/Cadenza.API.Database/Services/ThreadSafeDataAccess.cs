@@ -52,7 +52,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public Task<List<EditedItem>> GetUpdates(LibrarySource source)
     {
         lock (obj)
         {
@@ -68,7 +68,7 @@ internal class ThreadSafeDataAccess : IDataAccess
         }
     }
 
-    public Task UpdateUpdates(LibrarySource source, Action<List<ItemUpdates>> updates)
+    public Task UpdateUpdates(LibrarySource source, Action<List<EditedItem>> updates)
     {
         lock (obj)
         {

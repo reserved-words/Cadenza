@@ -2,7 +2,7 @@
 
 internal interface IItemUpdater
 {
-    void UpdateAlbum(AlbumInfo album, List<PropertyUpdate> updates);
-    void UpdateArtist(ArtistInfo artist, List<PropertyUpdate> updates);
-    void UpdateTrack(TrackInfo track, List<PropertyUpdate> updates);
+    void UpdateAlbum(AlbumInfo album, List<EditedProperty> updates);
+    void UpdateArtist(ArtistInfo artist, List<EditedProperty> updates);
+    void UpdateTrack(TrackInfo track, List<EditedProperty> updates);
 }

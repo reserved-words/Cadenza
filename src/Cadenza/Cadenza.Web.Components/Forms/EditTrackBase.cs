@@ -34,7 +34,7 @@ public class EditTrackBase : FormBase<TrackInfo>
         {
             Update.ConfirmUpdates();
 
-            if (!Update.Updates.Any())
+            if (!Update.PropertyUpdates.Any())
             {
                 Cancel();
                 return;

@@ -2,8 +2,8 @@
 
 public interface IUpdateService
 {
-    Task<List<ItemUpdates>> GetQueuedUpdates();
-    Task UpdateTrack(LibrarySource source, ItemUpdates updates);
-    Task UpdateAlbum(LibrarySource source, ItemUpdates updates);
-    Task UpdateArtist(ItemUpdates updates);
+    Task<List<EditedItem>> GetQueuedItemEdits();
+    Task UpdateTrack(LibrarySource source, EditedItem editedItem);
+    Task UpdateAlbum(LibrarySource source, EditedItem editedItem);
+    Task UpdateArtist(EditedItem editedItem);
 }

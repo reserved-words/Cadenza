@@ -15,26 +15,26 @@ internal class UpdateService : IUpdateService
         _cachePopulater = cachePopulater;
     }
 
-    public Task<List<ItemUpdates>> GetQueuedUpdates()
+    public Task<List<EditedItem>> GetQueuedItemEdits()
     {
-        return Task.FromResult(new List<ItemUpdates>());
+        return Task.FromResult(new List<EditedItem>());
     }
 
-    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateTrack(LibrarySource source, EditedItem updates)
     {
         await _updateRepository.Add(updates, source);
         await _musicRepository.UpdateTrack(source, updates);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateAlbum(LibrarySource source, EditedItem updates)
     {
         await _updateRepository.Add(updates, source);
         await _musicRepository.UpdateAlbum(source, updates);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateArtist(ItemUpdates updates)
+    public async Task UpdateArtist(EditedItem updates)
     {
         await _updateRepository.Add(updates, null);
         await _musicRepository.UpdateArtist(updates);
