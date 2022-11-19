@@ -57,7 +57,7 @@ internal class SubTaskRunner : ISubTaskRunner
 		}
 	}
 
-	private async Task<bool> IsTaskNeeded(SubTask task)
+	private static async Task<bool> IsTaskNeeded(SubTask task)
 	{
 		if (task.CheckStep == null)
 			return true;
