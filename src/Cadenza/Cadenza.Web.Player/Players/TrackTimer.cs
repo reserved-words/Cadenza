@@ -3,7 +3,7 @@ using Timer = System.Timers.Timer;
 
 namespace Cadenza.Web.Player.Players;
 
-internal class TrackTimer : ITrackTimerController
+internal class TrackTimer : ITrackTimerController, IDisposable
 {
     private readonly IMessenger _messenger;
 
@@ -53,7 +53,12 @@ internal class TrackTimer : ITrackTimerController
         }
     }
 
-    internal class CurrentTrackTimer : IDisposable
+	public void Dispose()
+	{
+		_current?.Dispose();
+	}
+
+	internal class CurrentTrackTimer : IDisposable
     {
         private const int TickFrequencySeconds = 1;
 
@@ -89,6 +94,9 @@ internal class TrackTimer : ITrackTimerController
             _handler(sender, e);
         }
 
-        public void Dispose() => _timer.Dispose();
-    }
+		public void Dispose()
+		{
+			_timer?.Dispose();
+		}
+	}
 }

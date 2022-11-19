@@ -69,7 +69,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Info", "Cadenza\Cadenza.Web.Info\Cadenza.Web.Info.csproj", "{39F999B9-DF7B-486D-B4EF-ABD6BE3DC7D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.API.Cache", "Cadenza.API\Cadenza.API.Cache\Cadenza.API.Cache.csproj", "{47C61613-FB09-4315-8ED0-0D567DDC748E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.API.Cache", "Cadenza.API\Cadenza.API.Cache\Cadenza.API.Cache.csproj", "{47C61613-FB09-4315-8ED0-0D567DDC748E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Items", "_Items", "{1B8A4AE7-7D22-4378-9875-A460906BBA42}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4DFC5E89-619E-4DC1-BC8F-8A47590AE901}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
