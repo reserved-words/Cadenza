@@ -4,27 +4,19 @@ internal class QueueUpdater : IQueueUpdater
 {
     public void Queue(List<EditedItem> queue, EditedItem update)
     {
-        var queuedUpdate = queue.SingleOrDefault(e => e.Type == update.Type && e.Id == update.Id);
+		var queuedUpdate = GetQueuedItemUpdate(queue, update);
 
-        if (queuedUpdate == null)
-        {
-            queue.Add(update);
-        }
-        else
-        {
-            foreach (var newPropertyUpdate in update.Properties)
-            {
-                var existingPropertyUpdate = queuedUpdate.Properties.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
-                if (existingPropertyUpdate != null)
-                {
-                    queuedUpdate.Properties.Remove(existingPropertyUpdate);
-                }
-                queuedUpdate.Properties.Add(newPropertyUpdate);
-            }
-        }
-    }
+		if (queuedUpdate == null)
+		{
+			AddItemToQueue(queue, update);
+		}
+		else
+		{
+			UpdateQueuedItem(update, queuedUpdate);
+		}
+	}
 
-    public void Dequeue(List<EditedItem> queue, EditedItem update)
+	public void Dequeue(List<EditedItem> queue, EditedItem update)
     {
         var queuedUpdate = queue.SingleOrDefault(u => u.Id == update.Id && u.Type == update.Type);
 
@@ -51,5 +43,36 @@ internal class QueueUpdater : IQueueUpdater
         {
             queue.Remove(queuedUpdate);
         }
+	}
+
+	private static void AddItemToQueue(List<EditedItem> queue, EditedItem update)
+	{
+		queue.Add(update);
+	}
+
+	private static EditedItem GetQueuedItemUpdate(List<EditedItem> queue, EditedItem newItemUpdate)
+	{
+		return queue.SingleOrDefault(e => e.Type == newItemUpdate.Type && e.Id == newItemUpdate.Id);
+	}
+
+	private static EditedProperty GetQueuedPropertyUpdate(EditedItem queuedItem, EditedProperty newPropertyUpdate)
+	{
+		return queuedItem.Properties.SingleOrDefault(p => p.Property == newPropertyUpdate.Property);
+	}
+
+	private static void UpdateQueuedItem(EditedItem update, EditedItem queuedUpdate)
+	{
+		foreach (var newPropertyUpdate in update.Properties)
+		{
+			var existingPropertyUpdate = GetQueuedPropertyUpdate(queuedUpdate, newPropertyUpdate);
+			if (existingPropertyUpdate != null)
+			{
+				existingPropertyUpdate.UpdatedValue = newPropertyUpdate.UpdatedValue;
+			}
+			else
+			{
+				queuedUpdate.Properties.Add(newPropertyUpdate);
+			}
+		}
 	}
 }
