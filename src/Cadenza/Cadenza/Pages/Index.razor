@@ -5,6 +5,13 @@
 @if (IsInitialised)
 {
     <MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
+
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <MudTabPanel Text="HOME" ID="@(Tab.Home)">
+                <HomeTab />
+            </MudTabPanel>
+        </MudHidden>
+        
         <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
             <HistoryTab />
         </MudTabPanel>

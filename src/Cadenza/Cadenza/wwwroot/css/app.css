@@ -105,6 +105,12 @@ table tbody tr td {
     padding-right: 2rem;
 }
 
+.cdz-menu-sm {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+}
+
 .cdz-menu {
     margin-left: 1rem;
     margin-right: 1rem;
