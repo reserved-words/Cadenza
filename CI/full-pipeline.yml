@@ -22,7 +22,7 @@ variables:
   value: '12e84f5d-ac38-404d-8917-342d1a6b6267/9576344f-fdaa-4dd0-811d-1ff637c3c3bf'
 
 stages:
-- stage: local
+- stage: localBuild
   displayName: 'Local Build'
   variables:
   - group: appSettings.local
@@ -90,13 +90,13 @@ stages:
     steps:
     - template: Templates/github.yml@self
 
-- stage: laptop-build
+- stage: laptopBuild
   displayName: 'Laptop Build'
   variables:
   - group: appSettings.laptop
     
   jobs:
-  - job: buildLaptop
+  - job: build
     displayName: 'Build'
     steps:
     - task: UseDotNet@2
