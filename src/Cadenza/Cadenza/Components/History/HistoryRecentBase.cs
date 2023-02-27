@@ -13,6 +13,9 @@ public class HistoryRecentBase : ComponentBase
     [Inject]
     public IHistory History { get; set; }
 
+    [Parameter]
+    public int MaxItems { get; set; }
+
     public List<RecentTrack> Model { get; set; }
 
     public bool IsLoading { get; set; } = true;
@@ -59,7 +62,7 @@ public class HistoryRecentBase : ComponentBase
         if (status == ConnectorStatus.Loading)
             return;
 
-        Model = (await History.GetRecentTracks(20, 1)).ToList();
+        Model = (await History.GetRecentTracks(MaxItems, 1)).ToList();
         IsLoading = false;
     }
 }
