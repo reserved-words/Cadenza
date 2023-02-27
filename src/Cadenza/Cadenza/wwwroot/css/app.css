@@ -133,3 +133,8 @@ div.mud-menu button {
   margin-top: auto !important;
   margin-bottom: auto !important;
 }
+
+.mud-table-dense * .mud-table-row .mud-table-cell {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
