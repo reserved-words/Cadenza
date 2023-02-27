@@ -4,7 +4,7 @@
     <MudTabPanel Text="@Model.Group.GetDisplayName()">
         <AppScrollContainer Elevation="0">
             <ChildContent>
-                <AppGrid Items="@Model.Albums">
+                <AppGrid Items="@Model.Albums" ItemXs="6">
                     <ImageTemplate>
                          <AlbumArtworkView Model="@context" />
                     </ImageTemplate>
