@@ -1,32 +1,65 @@
 ﻿
 <TabGrid>
 
-    <TabGridColumn md="4">
-        <TabGridRow RowHeight="@RowHeight.Full">
-            <HistoryRecent />
-        </TabGridRow>
-    </TabGridColumn>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
 
-    <TabGridColumn md="8">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-
-            <SubGrid>
-                <SubGridColumn md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+        <TabGridColumn>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <MudTabs Elevation="2"
+                         Rounded="true"
+                         ApplyEffectsToContainer="true"
+                         Centered="true"
+                         KeepPanelsAlive="true"
+                         PanelClass="pa-2"
+                         Class="full-width">
+                    <MudTabPanel Text="Recent">
+                        <HistoryRecent />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Artists">
                         <HistoryArtists />
-                    </SubGridRow>
-                </SubGridColumn>
-                <SubGridColumn md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                    </MudTabPanel>
+                    <MudTabPanel Text="Albums">
+                        <HistoryAlbums />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Tracks">
                         <HistoryTracks />
-                    </SubGridRow>
-                </SubGridColumn>
-            </SubGrid>
+                    </MudTabPanel>
+                </MudTabs>
+            </TabGridRow>
+        </TabGridColumn>
 
-        </TabGridRow>
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <HistoryAlbums />
-        </TabGridRow>
-    </TabGridColumn>
+    </MudHidden>
+
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+
+        <TabGridColumn md="4">
+            <TabGridRow RowHeight="@RowHeight.Full">
+                <HistoryRecent />
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn md="8">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+
+                <SubGrid>
+                    <SubGridColumn md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+                            <HistoryArtists />
+                        </SubGridRow>
+                    </SubGridColumn>
+                    <SubGridColumn md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+                            <HistoryTracks />
+                        </SubGridRow>
+                    </SubGridColumn>
+                </SubGrid>
+
+            </TabGridRow>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <HistoryAlbums />
+            </TabGridRow>
+        </TabGridColumn>
+
+    </MudHidden>
 
 </TabGrid>

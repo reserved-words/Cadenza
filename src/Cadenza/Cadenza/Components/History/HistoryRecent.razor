@@ -6,41 +6,54 @@
              LoadingCaption="Loading recent tracks..."
              Items="@Model">
     <RowTemplate>
+
         <MudTd Class="td-img">
             <img src="@context.ImageUrl" width="50" height="50"><img>
         </MudTd>
 
-        <MudTd>
-            <MudText Typo="@Typo.body1">@context.Title</MudText>
-            <MudText Typo="@Typo.body2">@context.Artist</MudText>
-        </MudTd>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
 
-        @if (context.NowPlaying)
-        {
-            <MudTd Class="td-icon">
-                <CurrentlyPlayingIcon Playing="true" Class="ma-1" />
-            </MudTd>
-        }
-        else
-        {
-            <MudTd Class="td-datetime">
+            <MudTd>
+                <MudText Typo="@Typo.body1">@context.Title</MudText>
+                <MudText Typo="@Typo.body2">@context.Artist</MudText>
 
-                @if (context.Played.Date == DateTime.Today)
+                @if (context.NowPlaying)
                 {
-                    <MudText Typo="@Typo.body2">Today</MudText>
+                    <CurrentlyPlayingIcon Playing="true" Class="ma-1" />
                 }
                 else
                 {
-                    <MudText Typo="@Typo.body2">@context.Played.ToString("dd/MM/yyyy")</MudText>
+                    <HistoryPlayTime PlayedTrack="context" />
                 }
-
-                <MudText Typo="@Typo.body2">@context.Played.ToString("HH:mm")</MudText>
-
             </MudTd>
-        }
+
+        </MudHidden>
+
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+
+            <MudTd>
+                <MudText Typo="@Typo.body1">@context.Title</MudText>
+                <MudText Typo="@Typo.body2">@context.Artist</MudText>
+            </MudTd>
+
+            @if (context.NowPlaying)
+            {
+                <MudTd Class="td-icon">
+                    <CurrentlyPlayingIcon Playing="true" Class="ma-1" />
+                </MudTd>
+            }
+            else
+            {
+                <MudTd Class="td-datetime">
+                    <HistoryPlayTime PlayedTrack="context" />
+                </MudTd>
+            }
+
+        </MudHidden>
 
         <MudTd Class="td-icon">
             <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" />
         </MudTd>
+
     </RowTemplate>
 </HistoryCard>
