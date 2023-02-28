@@ -5,7 +5,16 @@
     <TabGridColumn>
         <TabGridRow RowHeight="@RowHeight.Stretch">
 
-            <Sidebar />
+            <MudContainer Class="ma-0 pa-0 px-2 my-2">
+                <CurrentlyPlayingHeader />
+            </MudContainer>
+            <MudContainer Class="container-max-width-sm">
+                <Player />
+            </MudContainer>
+            <MudSpacer />
+            <MudContainer Class="container-max-width-sm">
+                <PlayShortcuts />
+            </MudContainer>
 
         </TabGridRow>
     </TabGridColumn>

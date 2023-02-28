@@ -137,3 +137,9 @@ div.sub-grid-row:only-of-type {
     max-height: 100%;
     height: 100%;
 }
+
+div.container-max-width-sm {
+    max-width: $screen-sm-min;
+    padding: 0 2rem;
+    margin: 0 auto 2rem auto;
+}
