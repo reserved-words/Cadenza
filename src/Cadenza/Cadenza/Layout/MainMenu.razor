@@ -1,101 +1,22 @@
 ﻿@using Cadenza.Web.Common.Interfaces.Startup
 
 <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-    <MudIconButton Icon="@Icons.Material.Filled.Home" OnClick="@Home" Class="@MenuItemClass(Tab.Home)"></MudIconButton>
-    <MudIconButton Icon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)"></MudIconButton>
-    <MudIconButton Icon="@Icons.Material.Filled.BarChart" OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" />
-    <MudIconButton Icon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)"></MudIconButton>
-    <MudSpacer />
-    <Search />
+    <MenuItems IncludeHomeTab="true"
+               IncludeSearchTab="false"
+               ShowLabels="false"
+               IconSize="@Size.Medium" />
 </MudHidden>
 
 <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
-    <MudButton StartIcon="@Icons.Material.Filled.Home" OnClick="@Home" Class="@MenuItemClass(Tab.Home)">Home</MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)">History</MudButton>
-    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)">
-        <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
-        Playing
-    </MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)">Library</MudButton>
-    <MudSpacer />
-    <Search />
+    <MenuItems IncludeHomeTab="true"
+               IncludeSearchTab="false"
+               ShowLabels="true"
+               IconSize="@Size.Medium" />
 </MudHidden>
 
 <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-    <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
-    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
-        <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
-        Playing
-    </MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.Search" OnClick="@Search" Class="@MenuItemClass(Tab.Search)" Size="Size.Large">Search</MudButton>
-    <MudSpacer />
-    <Search />
+    <MenuItems IncludeHomeTab="false"
+               IncludeSearchTab="true"
+               ShowLabels="true"
+               IconSize="@Size.Large" />
 </MudHidden>
-
-@code {
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
-        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
-    }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private bool IsCurrentlyPlaying { get; set; }
-
-    private Tab ActiveTab = Tab.Home; // Need this to be History if Home tab doesn't exist on the page (i.e. MdAndUp)
-
-    private async Task History()
-    {
-        await UpdateActiveTab(Tab.History);
-    }
-
-    private async Task Home()
-    {
-        await UpdateActiveTab(Tab.Home);
-    }
-
-    private async Task CurrentTrack()
-    {
-        await UpdateActiveTab(Tab.CurrentTrack);
-    }
-
-    private async Task Library()
-    {
-        await UpdateActiveTab(Tab.Library);
-    }
-
-    private async Task Search()
-    {
-        await UpdateActiveTab(Tab.Search);
-    }
-
-    private string MenuItemClass(Tab tab)
-    {
-        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
-    }
-
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private async Task OnViewItem(object sender, ViewItemEventArgs args)
-    {
-        if (ActiveTab != Tab.Library)
-        {
-            await UpdateActiveTab(Tab.Library);
-        }
-    }
-
-    private async Task UpdateActiveTab(Tab tab)
-    {
-        await Messenger.Send(this, new ViewTabEventArgs(tab));
-        ActiveTab = tab;
-        StateHasChanged();
-    }
-}
