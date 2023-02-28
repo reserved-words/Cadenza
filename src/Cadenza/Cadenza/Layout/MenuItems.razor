@@ -19,19 +19,13 @@
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.History)" />
 
-<MenuItem Icon="@Icons.Material.Filled.BarChart"
+<MenuItem Icon="@Icons.Material.Filled.PlaylistPlay"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
           Label="Playing"
           Tab="@Tab.CurrentTrack"
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.CurrentTrack)" />
-
-@*    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)">
-        <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
-        Playing
-    </MudButton>*@
-
 
 <MenuItem Icon="@Icons.Material.Filled.FormatListBulleted"
           IconSize="@IconSize"
@@ -44,12 +38,12 @@
 @if (IncludeSearchTab)
 {
     <MenuItem Icon="@Icons.Material.Filled.Search"
-              IconSize="@IconSize"
-              ShowLabel="@ShowLabels"
-              Label="Search"
-              Tab="@Tab.Search"
-              OnClickItem="@UpdateActiveTab"
-              Class="@MenuItemClass(Tab.Search)" />
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="Search"
+          Tab="@Tab.Search"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.Search)" />
 }
 
 <MudSpacer />
@@ -75,7 +69,6 @@
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
         Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
     }
 
@@ -103,14 +96,5 @@
         await Messenger.Send(this, new ViewTabEventArgs(tab));
         ActiveTab = tab;
         StateHasChanged();
-    }
-
-    private bool IsCurrentlyPlaying { get; set; }
-
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 }

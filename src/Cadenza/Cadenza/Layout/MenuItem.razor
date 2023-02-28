@@ -1,13 +1,11 @@
-﻿
-@if (ShowLabel)
+﻿@if (ShowLabel)
 {
     <MudButton StartIcon="@Icon" OnClick="@OnClick" Class="@Class" Size="@IconSize">@Label</MudButton>
 }
 else
 {
-    <MudIconButton Icon="@Icon" OnClick="@OnClick" Class="@Class"></MudIconButton>
+    <MudIconButton Icon="@Icon" OnClick="@OnClick" Class="@Class" Size="@IconSize"></MudIconButton>
 }
-
 
 @code {
 
