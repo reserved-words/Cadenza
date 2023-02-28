@@ -1,21 +1,34 @@
 ﻿@using Cadenza.Web.Common.Interfaces.Startup
 
-<MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-    <MudIconButton Icon="@Icons.Material.Filled.Home" OnClick="@Home" Class="@MenuItemClass(Tab.Home, true)"></MudIconButton>
-    <MudIconButton Icon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History, true)"></MudIconButton>
-    <MudIconButton Icon="@Icons.Material.Filled.BarChart" OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack, true)" />
-    <MudIconButton Icon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library, true)"></MudIconButton>
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    <MudIconButton Icon="@Icons.Material.Filled.Home" OnClick="@Home" Class="@MenuItemClass(Tab.Home)"></MudIconButton>
+    <MudIconButton Icon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)"></MudIconButton>
+    <MudIconButton Icon="@Icons.Material.Filled.BarChart" OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" />
+    <MudIconButton Icon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)"></MudIconButton>
+    <MudSpacer />
     <Search />
 </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.SmAndDown">
-    <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History, false)" Size="Size.Large">History</MudButton>
-    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack, false)" Size="Size.Large">
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <MudButton StartIcon="@Icons.Material.Filled.Home" OnClick="@Home" Class="@MenuItemClass(Tab.Home)">Home</MudButton>
+    <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)">History</MudButton>
+    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)">
         <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
         Playing
     </MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library, false)" Size="Size.Large">Library</MudButton>
-    <MudButton StartIcon="@Icons.Material.Filled.Search" OnClick="@Search" Class="@MenuItemClass(Tab.Search, false)" Size="Size.Large">Search</MudButton>
+    <MudButton StartIcon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)">Library</MudButton>
+    <MudSpacer />
+    <Search />
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+    <MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
+    <MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
+        <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
+        Playing
+    </MudButton>
+    <MudButton StartIcon="@Icons.Material.Filled.FormatListBulleted" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
+    <MudButton StartIcon="@Icons.Material.Filled.Search" OnClick="@Search" Class="@MenuItemClass(Tab.Search)" Size="Size.Large">Search</MudButton>
     <MudSpacer />
     <Search />
 </MudHidden>
@@ -32,7 +45,7 @@
 
     private bool IsCurrentlyPlaying { get; set; }
 
-    private Tab ActiveTab = Tab.History;
+    private Tab ActiveTab = Tab.Home; // Need this to be History if Home tab doesn't exist on the page (i.e. MdAndUp)
 
     private async Task History()
     {
@@ -59,10 +72,9 @@
         await UpdateActiveTab(Tab.Search);
     }
 
-    private string MenuItemClass(Tab tab, bool small)
+    private string MenuItemClass(Tab tab)
     {
-        var mainClass = small ? "cdz-menu-sm" : "cdz-menu";
-        return mainClass + " " + (ActiveTab == tab ? "cdz-menu-active" : "");
+        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
     }
 
     private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)

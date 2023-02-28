@@ -4,13 +4,13 @@
 
     @if (IsLoading)
     {
-        <MudText>Loading items...</MudText>
+        <MudText></MudText>
     }
     else
     {
         <MudAutocomplete T="PlayerItem"
                          Class="ma-0 pa-0"
-                         Label="Quick search"
+                         Label="Search"
                          @bind-Value="Result"
                          SearchFunc="@Search"
                          ToStringFunc="@(e => e == null ? null : e.Name)"

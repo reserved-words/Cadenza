@@ -1,5 +1,11 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+/* MudBlazor breakpoints */
+$screen-sm-min: 600px;
+$screen-md-min: 960px;
+$screen-lg-min: 1280px;
+$screen-xl-min: 1920px;
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
@@ -109,19 +115,30 @@ table tbody tr td.td-img {
     padding-right: 2rem;
 }
 
-.cdz-menu-sm {
+.cdz-menu {
     margin-left: 0;
     margin-right: 0;
     border-radius: 0;
 }
 
-.cdz-menu {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    border-radius: 0;
+@media (min-width: #{$screen-sm-min}) {
+    .cdz-menu {
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+        border-radius: 0;
+    }
 }
 
-.cdz-menu.cdz-menu-active {
+@media (min-width: #{$screen-md-min}) {
+    .cdz-menu {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        border-radius: 0;
+    }
+}
+
+.cdz-menu.cdz-menu-active,
+.cdz-menu-sm.cdz-menu-active {
     border-bottom: solid white 1px;
 }
 
