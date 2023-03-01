@@ -5,12 +5,10 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GroupingDetail Id="@Grouping" />
+            <GroupingDetail Id="@Grouping" >
+                <GroupingToolbar Grouping="@Grouping" />
+            </GroupingDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <GroupingToolbar Grouping="@Grouping" />
 
     </TabGridColumn>
 

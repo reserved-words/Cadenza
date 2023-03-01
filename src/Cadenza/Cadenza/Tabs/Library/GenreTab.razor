@@ -4,12 +4,12 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GenreDetail Id="@Id" />
+            <GenreDetail Id="@Id">
+                <Toolbar>
+                    <GenreToolbar Genre="@Id" />
+                </Toolbar>
+            </GenreDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <GenreToolbar Genre="@Id" />
 
     </TabGridColumn>
 

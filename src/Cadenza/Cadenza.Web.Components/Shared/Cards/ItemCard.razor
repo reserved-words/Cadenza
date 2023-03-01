@@ -1,11 +1,7 @@
 ﻿
 <MudCard>
     <MudCardHeader Class="ma-0 px-2 pt-2 pb-0">
-        <AppCardHeader Icon="@Type.GetIcon()">
-            <MainContent>
-                <MudText Typo="@Typo.h5">@Heading</MudText>
-            </MainContent>
-        </AppCardHeader>
+        <ItemCardHeader Type="@Type" Heading="@Heading" Toolbar="@Toolbar" />
     </MudCardHeader>
     <MudCardContent Class="ma-0 pa-2 pt-0">
         <MudDivider Class="mt-0 mb-1" />
@@ -37,4 +33,7 @@
 
     [Parameter]
     public TagList Tags { get; set; }
+
+    [Parameter]
+    public RenderFragment Toolbar { get; set; }
 }

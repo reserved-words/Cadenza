@@ -4,13 +4,12 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackDetail Model="@Model.Track" />
+            <TrackDetail Model="@Model.Track">
+                <Toolbar>
+                    <TrackToolbar Track="@Model.Track" />
+                </Toolbar>
+            </TrackDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <TrackToolbar Track="@Model.Track" />
-
     </TabGridColumn>
 
     <TabGridColumn md="5">

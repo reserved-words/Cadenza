@@ -1,9 +1,9 @@
 ﻿
-<BaseToolbar>
-    <Content>
-        <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Grouping</MudButton>
-    </Content>
-</BaseToolbar>
+<MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
+    <MudButtonGroup >
+        <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
+    </MudButtonGroup>
+</MudPaper>
 
 @code {
     [Inject]

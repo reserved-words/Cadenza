@@ -1,12 +1,11 @@
 ﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
-<BaseToolbar>
-    <Content>
-        <MudButton StartIcon="@Icons.Material.Filled.PlayArrow" OnClick="OnPlay">Play Artist</MudButton>
-        <MudSpacer />
-        <MudButton StartIcon="@Icons.Material.Filled.Edit" OnClick="OnEdit">Edit Artist</MudButton>
-    </Content>
-</BaseToolbar>
+<MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
+    <MudButtonGroup >
+        <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
+        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
+    </MudButtonGroup>
+</MudPaper>
 
 @code {
     [Inject]

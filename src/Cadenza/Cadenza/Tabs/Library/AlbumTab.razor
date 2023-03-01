@@ -4,12 +4,12 @@
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <AlbumDetail Model="@Album" />
+            <AlbumDetail Model="@Album">
+                <Toolbar>
+                    <AlbumToolbar Album="@Album" />
+                </Toolbar>
+            </AlbumDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <AlbumToolbar Album="@Album" />
 
     </TabGridColumn>
 
