@@ -30,57 +30,7 @@
         <TabGridRow RowHeight="@RowHeight.Full">
             <AppCardScrollContainer>
                 <ChildContent>
-                    <AppTable T="@PlayerItem"
-                              Items="@Items"
-                              Filter="@OnFilter">
-                        <RowTemplate>
-                            <MudTd Class="td-icon">
-                                <MudIcon Icon="@context.Type.GetIcon()" Size="@Size.Small" />
-                            </MudTd>
-
-                            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                                <MudTd>
-                                    <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
-                                    <MudText Typo="Typo.body2">@context.Artist</MudText>
-                                    <MudText Typo="Typo.body2">@context.AlbumDisplay</MudText>
-                                </MudTd>
-                            </MudHidden>
-
-                            <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
-                                <MudTd>
-                                    <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
-                                    
-                                    @if (context.Type == PlayerItemType.Track)
-                                    {
-                                        <MudText Typo="Typo.body2">@context.Artist</MudText>
-                                    }
-
-                                </MudTd>
-                                <MudTd>
-
-                                    @if (context.Type != PlayerItemType.Track)
-                                    {
-                                        <MudText Typo="Typo.body1">@context.Artist</MudText>
-                                    }
-
-                                    <MudText Typo="Typo.body1">@context.AlbumDisplay</MudText>
-                                </MudTd>
-                            </MudHidden>
-
-                            <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-                                <MudTd>
-                                    <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
-                                </MudTd>
-                                <MudTd>
-                                    <MudText Typo="Typo.body2">@context.Artist</MudText>
-                                </MudTd>
-                                <MudTd>
-                                    <MudText Typo="Typo.body2">@context.AlbumDisplay</MudText>
-                                </MudTd>
-                            </MudHidden>
-
-                        </RowTemplate>
-                    </AppTable>
+                    <TagResultTable Items="@Items" OnViewItem="@OnViewItem" OnFilter="OnFilter" />
                 </ChildContent>
             </AppCardScrollContainer>
         </TabGridRow>
