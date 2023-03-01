@@ -1,10 +1,13 @@
-﻿<MudItem xs="12" md="@md" Class="tab-grid-col">
+﻿<MudItem xs="12" sm="@sm" md="@md" Class="tab-grid-col">
     @ChildContent
 </MudItem>
 
 @code {
     [Parameter]
     public int md { get; set; }
+
+    [Parameter]
+    public int sm { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
