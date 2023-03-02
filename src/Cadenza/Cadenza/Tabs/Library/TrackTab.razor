@@ -37,7 +37,34 @@
     </MudHidden>
 
 
-    <MudHidden Breakpoint="Breakpoint.Xs">
+    <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+
+        <TabGridColumn sm="5">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackDetail Model="@Model.Track" Album="@Model.Album">
+                    <Toolbar>
+                        <TrackToolbar Track="@Model.Track" />
+                    </Toolbar>
+                </TrackDetail>
+            </TabGridRow>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackArtist Model="@Model.Artist" />
+            </TabGridRow>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackAlbum Model="@Model.Album"
+                            AlbumTrack="@Model.AlbumTrack" />
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn sm="7">
+            <TabGridRow RowHeight="@RowHeight.Full">
+                <TrackLyrics Model="@Model.Track" />
+            </TabGridRow>
+        </TabGridColumn>
+    </MudHidden>
+
+
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
 
         <TabGridColumn sm="5" md="4">
             <TabGridRow RowHeight="@RowHeight.Fixed">
