@@ -2,31 +2,69 @@
 
 <TabGrid>
 
-    <TabGridColumn md="3">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackDetail Model="@Model.Track">
-                <Toolbar>
-                    <TrackToolbar Track="@Model.Track" />
-                </Toolbar>
-            </TrackDetail>
-        </TabGridRow>
-    </TabGridColumn>
+    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+        <TabGridColumn md="3">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackDetail Model="@Model.Track" Album="@Model.Album">
+                    <Toolbar>
+                        <TrackToolbar Track="@Model.Track" />
+                    </Toolbar>
+                </TrackDetail>
+            </TabGridRow>
+        </TabGridColumn>
+        <TabGridColumn>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <MudExpansionPanels>
+                    <MudExpansionPanel Text="Artist" Class="text-bold">
+                        <TrackArtist Model="@Model.Artist" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Album" Class="text-bold">
+                        <TrackAlbum Model="@Model.Album"
+                                    AlbumTrack="@Model.AlbumTrack" />
+                    </MudExpansionPanel>
 
-    <TabGridColumn md="5">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackArtist Model="@Model.Artist" />
-        </TabGridRow>
+                    @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
+                    {
+                        <MudExpansionPanel Text="Lyrics" Class="text-bold">
+                            <TrackLyrics Model="@Model.Track" />
+                        </MudExpansionPanel>
+                    }
 
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <TrackAlbum Model="@Model.Album"
-                        AlbumTrack="@Model.AlbumTrack" />
-        </TabGridRow>
-    </TabGridColumn>
+                </MudExpansionPanels>
 
-    <TabGridColumn md="4">
-        <TabGridRow RowHeight="@RowHeight.Full">
-            <TrackLyrics Model="@Model.Track" />
-        </TabGridRow>
-    </TabGridColumn>
+            </TabGridRow>
+        </TabGridColumn>
+    </MudHidden>
+
+
+    <MudHidden Breakpoint="Breakpoint.Xs">
+
+        <TabGridColumn sm="5" md="4">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackDetail Model="@Model.Track" Album="@Model.Album">
+                    <Toolbar>
+                        <TrackToolbar Track="@Model.Track" />
+                    </Toolbar>
+                </TrackDetail>
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn sm="7" md="4">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackArtist Model="@Model.Artist" />
+            </TabGridRow>
+
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <TrackAlbum Model="@Model.Album"
+                            AlbumTrack="@Model.AlbumTrack" />
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn sm="12" md="4">
+            <TabGridRow RowHeight="@RowHeight.Full">
+                <TrackLyrics Model="@Model.Track" />
+            </TabGridRow>
+        </TabGridColumn>
+    </MudHidden>
 
 </TabGrid>
