@@ -1,6 +1,6 @@
 ﻿@inherits ArtistViewBase
 
-<ItemCard Type="@PlayerItemType.Artist" Heading="Artist" Tags="@Model.Tags">
+<ItemCard Type="@PlayerItemType.Artist" Heading="Artist" Tags="@Model.Tags" DisplayAsCard="@DisplayAsCard" >
     <ChildContent>
         <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
         <MudText Typo="Typo.body1">@Model.Location()</MudText>
@@ -8,3 +8,8 @@
         <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
     </ChildContent>
 </ItemCard>
+
+@code {
+    [Parameter]
+    public bool DisplayAsCard { get; set; }
+}

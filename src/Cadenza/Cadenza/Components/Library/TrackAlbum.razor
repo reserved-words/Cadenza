@@ -3,7 +3,7 @@
 
 @inherits AlbumViewBase
 
-<ItemCard Type="@PlayerItemType.Album" Heading="Album" Tags="@Model.Tags">
+<ItemCard Type="@PlayerItemType.Album" Heading="Album" Tags="@Model.Tags" DisplayAsCard="@DisplayAsCard" >
     <ChildContent>
         <MudStack Spacing="0">
             <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
@@ -19,4 +19,7 @@
 @code {
     [Parameter]
     public AlbumTrackLink AlbumTrack { get; set; } = new();
+
+    [Parameter]
+    public bool DisplayAsCard { get; set; }
 }

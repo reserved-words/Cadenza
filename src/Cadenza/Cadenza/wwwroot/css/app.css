@@ -152,3 +152,8 @@ div.mud-menu button {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+.mud-expand-panel.panel-no-padding .mud-expand-panel-content {
+  padding: 1rem;
+  padding-top: 0;
+}

@@ -1,14 +1,38 @@
 ﻿@inherits LyricsViewBase
 
-<AppCardScrollContainer Elevation="3">
-    <HeaderContent>
-        <LyricsCardHeader />
-    </HeaderContent>
-    <ChildContent>
-        <MudContainer Class="ma-0 pt-0 pb-3 px-3">
-            <MudText Typo="@Typo.body1">
-                @Lyrics
-            </MudText>
-        </MudContainer>
-    </ChildContent>
-</AppCardScrollContainer>
+@if (DisplayAsCard)
+{
+    <AppCardScrollContainer Elevation="3">
+        <HeaderContent>
+            <LyricsCardHeader />
+        </HeaderContent>
+        <ChildContent>
+            <MudContainer Class="@ContentClass">
+                <MudText Typo="@Typo.body1">
+                    @Lyrics
+                </MudText>
+            </MudContainer>
+        </ChildContent>
+    </AppCardScrollContainer>
+}
+else
+{
+    <AppCardScrollContainer Elevation="0">
+        <ChildContent>
+            <MudContainer Class="@ContentClass">
+                <MudText Typo="@Typo.body1">
+                    @Lyrics
+                </MudText>
+            </MudContainer>
+        </ChildContent>
+    </AppCardScrollContainer>
+}
+
+
+
+@code {
+    [Parameter]
+    public bool DisplayAsCard { get; set; }
+
+    private const string ContentClass = "ma-0 pt-0 pb-3 px-3";
+}

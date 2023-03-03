@@ -15,18 +15,21 @@
         <TabGridColumn>
             <TabGridRow RowHeight="@RowHeight.Fixed">
                 <MudExpansionPanels>
-                    <MudExpansionPanel Text="Artist" Class="text-bold">
-                        <TrackArtist Model="@Model.Artist" />
+                    <MudExpansionPanel Text="Artist" Class="text-bold panel-no-padding">
+                        <TrackArtist Model="@Model.Artist"
+                                     DisplayAsCard="false" />
                     </MudExpansionPanel>
-                    <MudExpansionPanel Text="Album" Class="text-bold">
+                    <MudExpansionPanel Text="Album" Class="text-bold panel-no-padding">
                         <TrackAlbum Model="@Model.Album"
-                                    AlbumTrack="@Model.AlbumTrack" />
+                                    AlbumTrack="@Model.AlbumTrack"
+                                    DisplayAsCard="false" />
                     </MudExpansionPanel>
 
                     @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
                     {
-                        <MudExpansionPanel Text="Lyrics" Class="text-bold">
-                            <TrackLyrics Model="@Model.Track" />
+                        <MudExpansionPanel Text="Lyrics" Class="text-bold panel-no-padding">
+                            <TrackLyrics Model="@Model.Track"
+                                     DisplayAsCard="false" />
                         </MudExpansionPanel>
                     }
 
@@ -48,17 +51,19 @@
                 </TrackDetail>
             </TabGridRow>
             <TabGridRow RowHeight="@RowHeight.Fixed">
-                <TrackArtist Model="@Model.Artist" />
+                <TrackArtist Model="@Model.Artist" DisplayAsCard="true" />
             </TabGridRow>
             <TabGridRow RowHeight="@RowHeight.Fixed">
                 <TrackAlbum Model="@Model.Album"
-                            AlbumTrack="@Model.AlbumTrack" />
+                            AlbumTrack="@Model.AlbumTrack"
+                            DisplayAsCard="true" />
             </TabGridRow>
         </TabGridColumn>
 
         <TabGridColumn sm="7">
             <TabGridRow RowHeight="@RowHeight.Full">
-                <TrackLyrics Model="@Model.Track" />
+                <TrackLyrics Model="@Model.Track"
+                             DisplayAsCard="true" />
             </TabGridRow>
         </TabGridColumn>
     </MudHidden>
@@ -78,18 +83,21 @@
 
         <TabGridColumn sm="7" md="4">
             <TabGridRow RowHeight="@RowHeight.Fixed">
-                <TrackArtist Model="@Model.Artist" />
+                <TrackArtist Model="@Model.Artist"
+                             DisplayAsCard="true" />
             </TabGridRow>
 
             <TabGridRow RowHeight="@RowHeight.Fixed">
                 <TrackAlbum Model="@Model.Album"
-                            AlbumTrack="@Model.AlbumTrack" />
+                            AlbumTrack="@Model.AlbumTrack"
+                            DisplayAsCard="true" />
             </TabGridRow>
         </TabGridColumn>
 
         <TabGridColumn sm="12" md="4">
             <TabGridRow RowHeight="@RowHeight.Full">
-                <TrackLyrics Model="@Model.Track" />
+                <TrackLyrics Model="@Model.Track"
+                             DisplayAsCard="true" />
             </TabGridRow>
         </TabGridColumn>
     </MudHidden>
