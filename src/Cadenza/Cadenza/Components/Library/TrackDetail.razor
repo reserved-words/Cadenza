@@ -1,8 +1,10 @@
 ﻿@inherits TrackViewBase
 
-<ItemCard Type="@PlayerItemType.Track" Heading="@Model.Title" Tags="@Model.Tags" Toolbar="@Toolbar">
+<ItemCard Type="@PlayerItemType.Track" 
+          Heading="@Model.Title" 
+          Tags="@Model.Tags" 
+          Toolbar="@Toolbar">
     <ChildContent>
-        <AlbumArtworkView Model="@Album" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body1">@Model.Duration()</MudText>
         <MudText Typo="Typo.body1">@Model.Year</MudText>
@@ -12,7 +14,4 @@
 @code {
     [Parameter]
     public RenderFragment Toolbar { get; set; }
-
-    [Parameter]
-    public Album Album { get; set; }
 }

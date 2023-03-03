@@ -67,7 +67,6 @@
     protected override async Task OnInitializedAsync()
     {
         Messenger.Subscribe<ViewTabEventArgs>(OnViewTab);
-
         await OnStartup();
     }
 

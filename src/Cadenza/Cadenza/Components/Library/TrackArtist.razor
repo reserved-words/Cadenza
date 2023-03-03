@@ -1,15 +1,25 @@
 ﻿@inherits ArtistViewBase
 
-<ItemCard Type="@PlayerItemType.Artist" Heading="Artist" Tags="@Model.Tags" DisplayAsCard="@DisplayAsCard" >
+<ItemCard Type="@PlayerItemType.Artist" 
+          Heading="Artist" 
+          Tags="@Model.Tags" 
+          ShowHeader="@ShowHeader">
     <ChildContent>
-        <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
-        <MudText Typo="Typo.body1">@Model.Location()</MudText>
-        <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
-        <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
+        <MudGrid>
+            <MudItem xs="6">
+                <ArtistImageView Model="@Model" />
+            </MudItem>
+            <MudItem xs="6">
+                <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+                <MudText Typo="Typo.body1">@Model.Location()</MudText>
+                <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
+                <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
+            </MudItem>
+        </MudGrid>
     </ChildContent>
 </ItemCard>
 
 @code {
     [Parameter]
-    public bool DisplayAsCard { get; set; }
+    public bool ShowHeader { get; set; }
 }

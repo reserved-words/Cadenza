@@ -3,12 +3,28 @@
 
 @inherits AlbumViewBase
 
-<ItemCard Type="@PlayerItemType.Album" Heading="Current Album" Tags="@Model.Tags">
+<ItemCard Type="@PlayerItemType.Album" Heading="Current Album" Tags="@Model.Tags" ShowHeader="@ShowHeader">
     <ChildContent>
-        <AlbumArtworkView Model="@Model" />
-        <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
-        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
-        <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
-        <MudText Typo="@Typo.body1">@Model.Year</MudText>
+        <MudGrid>
+            <MudItem xs="6" md="12">
+                <AlbumArtworkView Model="@Model" />
+            </MudItem>
+            <MudItem xs="6" md="12">
+                <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+                <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+                <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
+                <MudText Typo="@Typo.body1">@Model.Year</MudText>
+                <MudText Typo="@Typo.body1">@Model.DiscPosition(AlbumTrack)</MudText>
+                <MudText Typo="@Typo.body1">@Model.TrackPosition(AlbumTrack)</MudText>
+            </MudItem>
+        </MudGrid>
     </ChildContent>
 </ItemCard>
+
+@code {
+    [Parameter]
+    public AlbumTrackLink AlbumTrack { get; set; } = new();
+
+    [Parameter]
+    public bool ShowHeader { get; set; }
+}
