@@ -42,7 +42,7 @@ div.mud-tabs-panels {
   max-height: 100%;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 600px) {
   div.mud-tabs-panels {
     height: 100%;
   }
