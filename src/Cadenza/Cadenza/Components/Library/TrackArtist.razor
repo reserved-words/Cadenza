@@ -3,7 +3,8 @@
 <ItemCard Type="@PlayerItemType.Artist" 
           Heading="Artist" 
           Tags="@Model.Tags" 
-          ShowHeader="@ShowHeader">
+          ShowHeader="@ShowHeader"
+          Breakpoint="@Breakpoint">
     <ChildContent>
         <MudGrid>
             <MudItem xs="6">
@@ -21,5 +22,7 @@
 
 @code {
     [Parameter]
-    public bool ShowHeader { get; set; }
+    public Breakpoint Breakpoint { get; set; }
+
+    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
 }

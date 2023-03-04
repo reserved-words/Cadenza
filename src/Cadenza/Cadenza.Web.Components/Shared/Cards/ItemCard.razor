@@ -1,5 +1,5 @@
 ﻿
-<MudCard Elevation="3">
+<MudCard Elevation="@Elevation" Square="@Square">
 
     @if (ShowHeader)
     {
@@ -49,4 +49,11 @@
 
     [Parameter]
     public RenderFragment Toolbar { get; set; }
+
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
+    private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
+
+    private bool Square => Breakpoint == Breakpoint.Xs ? true : false;
 }

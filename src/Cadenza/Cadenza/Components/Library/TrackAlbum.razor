@@ -3,7 +3,11 @@
 
 @inherits AlbumViewBase
 
-<ItemCard Type="@PlayerItemType.Album" Heading="Album" Tags="@Model.Tags" ShowHeader="@ShowHeader">
+<ItemCard Type="@PlayerItemType.Album" 
+          Heading="Album" 
+          Tags="@Model.Tags" 
+          ShowHeader="@ShowHeader" 
+          Breakpoint="@Breakpoint">
     <ChildContent>
         <MudGrid>
             <MudItem xs="6" md="12">
@@ -26,5 +30,7 @@
     public AlbumTrackLink AlbumTrack { get; set; } = new();
 
     [Parameter]
-    public bool ShowHeader { get; set; }
+    public Breakpoint Breakpoint { get; set; }
+
+    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
 }
