@@ -88,9 +88,14 @@ div.tab-grid-col {
 }
 div.tab-grid-row {
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0;
 }
 
+@media (min-width: 600px) {
+  div.tab-grid-row {
+    padding: 0.5rem 0;
+  }
+}
 div.sub-grid {
   margin: 0;
   padding: 0;

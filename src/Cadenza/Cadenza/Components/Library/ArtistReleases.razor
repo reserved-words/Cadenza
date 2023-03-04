@@ -1,7 +1,7 @@
 ﻿@if (Releases != null)
 {
     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-        <MudExpansionPanels>
+        <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
             @foreach (var group in Releases)
             {
                 <MudExpansionPanel Text="@group.Group.GetDisplayName()" Class="text-bold panel-no-padding">

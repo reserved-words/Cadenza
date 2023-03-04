@@ -98,7 +98,13 @@ div.tab-grid-col {
 
 div.tab-grid-row {
     margin: 0;
-    padding: 0.5rem 0;
+    padding: 0;
+}
+
+@media (min-width: #{$screen-sm-min}) {
+    div.tab-grid-row {
+        padding: 0.5rem 0;
+    }
 }
 
 div.sub-grid {
