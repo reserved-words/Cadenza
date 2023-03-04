@@ -5,6 +5,11 @@ html, body {
   font-size: 12px;
 }
 
+@media (min-width: 960px) {
+  .xs-only {
+    display: none;
+  }
+}
 .mud-typography-body1 {
   font-size: 12px;
 }
