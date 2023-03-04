@@ -1,66 +1,16 @@
 ﻿@inherits CurrentlyPlayingTabBase
 
-<TabGrid>
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.Xs"
+                                   Model="@Model" />
+</MudHidden>
 
-    @if (Model != null)
-    {
-        <TabGridColumn sm="6" md="8">
-            <TabGridRow RowHeight="@RowHeight.Fixed">
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.Sm" 
+                                   Model="@Model" />
+</MudHidden>
 
-                <SubGrid>
-                    <SubGridColumn sm="12" md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <PlayingTrack Model="@Model.Track"
-                                      ShowHeader="true" />
-                        </SubGridRow>
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-                                <PlayingArtist Model="@Model.Artist"
-                                           ShowHeader="false" />
-                            </MudHidden>
-                            <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                                <PlayingArtist Model="@Model.Artist"
-                                           ShowHeader="true" />
-                            </MudHidden>
-                        </SubGridRow>
-                    </SubGridColumn>
-
-                    <SubGridColumn sm="12" md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-                                <PlayingAlbum Model="@Model.Album"
-                                          AlbumTrack="@Model.AlbumTrack"
-                                          ShowHeader="false" />
-                            </MudHidden>
-                            <MudHidden Breakpoint="Breakpoint.SmAndDown">
-                                <PlayingAlbum Model="@Model.Album"
-                                          AlbumTrack="@Model.AlbumTrack"
-                                          ShowHeader="true" />
-                            </MudHidden>
-                        </SubGridRow>
-                    </SubGridColumn>
-                </SubGrid>
-
-            </TabGridRow>
-        </TabGridColumn>
-
-        <TabGridColumn sm="6" md="4">
-            <TabGridRow RowHeight="@RowHeight.Full">
-                <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                    <MudExpansionPanels>
-                        <MudExpansionPanel Class="text-bold panel-no-padding" Text="Lyrics">
-                            <PlayingLyrics Model="@Model.Track"
-                                           DisplayAsCard="false" />
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
-                </MudHidden>
-                <MudHidden Breakpoint="Breakpoint.Xs">
-                    <PlayingLyrics Model="@Model.Track"
-                                   DisplayAsCard="true" />
-                </MudHidden>
-            </TabGridRow>
-        </TabGridColumn>
-
-    }
-
-</TabGrid>
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.MdAndUp" 
+                                   Model="@Model" />
+</MudHidden>

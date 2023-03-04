@@ -26,5 +26,7 @@
     public AlbumTrackLink AlbumTrack { get; set; } = new();
 
     [Parameter]
-    public bool ShowHeader { get; set; }
+    public Breakpoint Breakpoint { get; set; }
+
+    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
 }

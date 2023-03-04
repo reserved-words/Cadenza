@@ -3,7 +3,7 @@
 <ItemCard Type="@PlayerItemType.Track" 
           Heading="Current Track" 
           Tags="@Model.Tags"
-          ShowHeader="@ShowHeader">
+          ShowHeader="true">
     <ChildContent>
         <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
@@ -14,5 +14,5 @@
 
 @code {
     [Parameter]
-    public bool ShowHeader { get; set; }
+    public Breakpoint Breakpoint { get; set; }
 }

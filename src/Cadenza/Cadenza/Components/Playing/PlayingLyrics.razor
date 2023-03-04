@@ -1,8 +1,8 @@
 ﻿@inherits LyricsViewBase
 
-<TrackLyrics Model="@Model" DisplayAsCard="@DisplayAsCard" />
+<TrackLyrics Model="@Model" Breakpoint="@Breakpoint" />
 
 @code {
     [Parameter]
-    public bool DisplayAsCard { get; set; }
+    public Breakpoint Breakpoint { get; set; }
 }
