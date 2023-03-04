@@ -15,9 +15,9 @@
                                 <TrackToolbar Track="@Model.Track" />
                             </Toolbar>
                         </TrackDetail>
-                    
+
                     </SubGridRow>
-                    
+
                     <SubGridRow RowHeight="@RowHeight.Fixed">
 
                         <MudDivider Class="xs-only" />
@@ -26,18 +26,33 @@
 
                     </SubGridRow>
 
+                    @if (Breakpoint == Breakpoint.Sm)
+                    {
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+
+                            <MudDivider Class="xs-only" />
+                            <TrackAlbum Model="@Model.Album"
+                                        AlbumTrack="@Model.AlbumTrack"
+                                        Breakpoint="@Breakpoint" />
+
+                        </SubGridRow>
+                    }
+
                 </SubGridColumn>
 
-                <SubGridColumn sm="12" md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                @if (Breakpoint != Breakpoint.Sm)
+                {
+                    <SubGridColumn md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                        <MudDivider Class="xs-only" />
-                        <TrackAlbum Model="@Model.Album"
-                                    AlbumTrack="@Model.AlbumTrack"
-                                    Breakpoint="@Breakpoint" />
+                            <MudDivider Class="xs-only" />
+                            <TrackAlbum Model="@Model.Album"
+                                        AlbumTrack="@Model.AlbumTrack"
+                                        Breakpoint="@Breakpoint" />
 
-                    </SubGridRow>
-                </SubGridColumn>
+                        </SubGridRow>
+                    </SubGridColumn>
+                }
 
             </SubGrid>
 
@@ -54,7 +69,7 @@
                     <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
                         <MudExpansionPanel Class="text-bold panel-no-padding" Text="Lyrics">
                             <TrackLyrics Model="@Model.Track"
-                                         Breakpoint="@Breakpoint" />
+                                     Breakpoint="@Breakpoint" />
                         </MudExpansionPanel>
                     </MudExpansionPanels>
                 </MudHidden>
@@ -76,7 +91,7 @@
     [Parameter]
     public Breakpoint Breakpoint { get; set; }
 
-    private bool ShowAlbumHeader => Breakpoint == Breakpoint.MdAndUp;
+    private bool ShowAlbumHeader => Breakpoint != Breakpoint.Xs;
 
-    private bool ShowArtistHeader => Breakpoint == Breakpoint.MdAndUp;
+    private bool ShowArtistHeader => Breakpoint != Breakpoint.Xs;
 }

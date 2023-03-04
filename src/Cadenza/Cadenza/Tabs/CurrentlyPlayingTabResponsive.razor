@@ -24,18 +24,33 @@
 
                         </SubGridRow>
 
+                        @if (Breakpoint == Breakpoint.Sm)
+                        {
+                            <SubGridRow RowHeight="@RowHeight.Fixed">
+
+                                <MudDivider Class="xs-only" />
+                                <PlayingAlbum Model="@Model.Album"
+                                              AlbumTrack="@Model.AlbumTrack"
+                                              Breakpoint="@Breakpoint" />
+
+                            </SubGridRow>
+                        }
+
                     </SubGridColumn>
 
-                    <SubGridColumn sm="12" md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
+                    @if (Breakpoint != Breakpoint.Sm)
+                    {
+                        <SubGridColumn sm="12" md="6">
+                            <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                            <MudDivider Class="xs-only" />
-                            <PlayingAlbum Model="@Model.Album"
-                                      AlbumTrack="@Model.AlbumTrack"
-                                      Breakpoint="@Breakpoint" />
+                                <MudDivider Class="xs-only" />
+                                <PlayingAlbum Model="@Model.Album"
+                                              AlbumTrack="@Model.AlbumTrack"
+                                              Breakpoint="@Breakpoint" />
 
-                        </SubGridRow>
-                    </SubGridColumn>
+                            </SubGridRow>
+                        </SubGridColumn>
+                    }
 
                 </SubGrid>
 
@@ -75,7 +90,7 @@
     [Parameter]
     public Breakpoint Breakpoint { get; set; }
 
-    private bool ShowAlbumHeader => Breakpoint == Breakpoint.MdAndUp;
+    private bool ShowAlbumHeader => Breakpoint != Breakpoint.Xs;
 
-    private bool ShowArtistHeader => Breakpoint == Breakpoint.MdAndUp;
+    private bool ShowArtistHeader => Breakpoint != Breakpoint.Xs;
 }

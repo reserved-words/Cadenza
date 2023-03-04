@@ -63,11 +63,15 @@ div.tab-grid {
   overflow-y: auto;
 }
 
+@media (min-width: 600px) {
+  div.tab-grid {
+    padding: 0.5rem;
+  }
+}
 @media (min-width: 960px) {
   div.tab-grid {
     max-height: 100%;
     overflow-y: hidden;
-    padding: 0.5rem;
   }
 }
 div.tab-grid-col {
@@ -78,12 +82,16 @@ div.tab-grid-col {
   overflow-y: auto;
 }
 
+@media (min-width: 600px) {
+  div.tab-grid-col {
+    padding: 0 0.5rem;
+  }
+}
 @media (min-width: 960px) {
   div.tab-grid-col {
     height: 100%;
     max-height: 100%;
     overflow-y: hidden;
-    padding: 0 0.5rem;
   }
 }
 div.tab-grid-row {
