@@ -1,67 +1,70 @@
 ﻿<TabGrid>
 
-    <TabGridColumn sm="6" md="8">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+    @if (Model != null)
+    {
+        <TabGridColumn sm="6" md="8">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
 
-            <SubGrid>
+                <SubGrid>
 
-                <SubGridColumn sm="12" md="6">
+                    <SubGridColumn sm="12" md="6">
 
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                        <PlayingTrack Model="@Model.Track"
+                            <PlayingTrack Model="@Model.Track"
                                       Breakpoint="@Breakpoint" />
-                    
-                    </SubGridRow>
-                    
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                        <MudDivider Class="xs-only" />
-                        <PlayingArtist Model="@Model.Artist"
+                        </SubGridRow>
+
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+
+                            <MudDivider Class="xs-only" />
+                            <PlayingArtist Model="@Model.Artist"
                                        Breakpoint="@Breakpoint" />
 
-                    </SubGridRow>
+                        </SubGridRow>
 
-                </SubGridColumn>
+                    </SubGridColumn>
 
-                <SubGridColumn sm="12" md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                    <SubGridColumn sm="12" md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                        <MudDivider Class="xs-only" />
-                        <PlayingAlbum Model="@Model.Album"
+                            <MudDivider Class="xs-only" />
+                            <PlayingAlbum Model="@Model.Album"
                                       AlbumTrack="@Model.AlbumTrack"
                                       Breakpoint="@Breakpoint" />
 
-                    </SubGridRow>
-                </SubGridColumn>
+                        </SubGridRow>
+                    </SubGridColumn>
 
-            </SubGrid>
+                </SubGrid>
 
-        </TabGridRow>
-    </TabGridColumn>
+            </TabGridRow>
+        </TabGridColumn>
 
-    <TabGridColumn sm="6" md="4">
-        <TabGridRow RowHeight="@RowHeight.Full">
+        <TabGridColumn sm="6" md="4">
+            <TabGridRow RowHeight="@RowHeight.Full">
 
-            @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
-            {
-                <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                    <MudDivider />
-                    <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
-                        <MudExpansionPanel Class="text-bold panel-no-padding" Text="Lyrics">
-                            <PlayingLyrics Model="@Model.Track"
-                                           Breakpoint="@Breakpoint" />
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
-                </MudHidden>
-            }
+                @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
+                {
+                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                        <MudDivider />
+                        <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
+                            <MudExpansionPanel Class="text-bold panel-no-padding" Text="Lyrics">
+                                <PlayingLyrics Model="@Model.Track"
+                                       Breakpoint="@Breakpoint" />
+                            </MudExpansionPanel>
+                        </MudExpansionPanels>
+                    </MudHidden>
+                }
 
-            <MudHidden Breakpoint="Breakpoint.Xs">
-                <PlayingLyrics Model="@Model.Track"
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <PlayingLyrics Model="@Model.Track"
                                Breakpoint="@Breakpoint" />
-            </MudHidden>
-        </TabGridRow>
-    </TabGridColumn>
+                </MudHidden>
+            </TabGridRow>
+        </TabGridColumn>
+    }
 
 </TabGrid>
 
