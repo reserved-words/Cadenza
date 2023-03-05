@@ -167,9 +167,16 @@ div.mud-menu button {
     padding-right: 1rem;
 }
 
-.mud-expand-panel.panel-no-padding .mud-expand-panel-content {
-    padding: 1rem;
-    padding-top: 0;
+.mud-expand-panel {
+    .mud-expand-panel-header {
+        font-weight: bold;
+        font-size: 1.2rem;
+    } 
+    
+    .mud-expand-panel-content {
+        padding: 1rem;
+        padding-top: 0;
+    }
 }
 
 img.edit-image {

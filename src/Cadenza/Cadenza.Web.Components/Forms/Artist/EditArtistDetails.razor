@@ -1,49 +1,41 @@
-﻿<MudCard Elevation="3" Class="pa-3">
-    <MudCardHeader Class="pa-0">
-        <MudText Typo="Typo.h6">Details</MudText>
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
-        <MudTextField Label="Name"
-                      ReadOnly="true"
-                      Disabled="true"
-                      @bind-Value="Model.Name" />
-        <MudSelect Label="Grouping"
-                   @bind-Value="Model.Grouping"
-                   For="@(() => Model.Grouping)">
-            @foreach (var type in Enum.GetValues<Grouping>())
-            {
-                <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
-            }
-        </MudSelect>
-        <MudTextField MaxLength="50"
-                      Label="Genre"
-                      @bind-Value="Model.Genre"
-                      For="@(() => Model.Genre)" />
-        <MudTextField MaxLength="50"
-                      Label="City"
-                      @bind-Value="Model.City"
-                      For="@(() => Model.City)" />
-        <MudTextField MaxLength="50"
-                      Label="State"
-                      @bind-Value="Model.State"
-                      For="@(() => Model.State)" />
-        <MudTextField MaxLength="50"
-                      Label="Country"
-                      @bind-Value="Model.Country"
-                      For="@(() => Model.Country)" />
-    </MudCardContent>
-</MudCard>
+﻿
+<EditCard Breakpoint="@Breakpoint" Title="Details">
+    <MudTextField Label="Name"
+                  ReadOnly="true"
+                  Disabled="true"
+                  @bind-Value="Model.Name" />
+    <MudSelect Label="Grouping"
+               @bind-Value="Model.Grouping"
+               For="@(() => Model.Grouping)">
+        @foreach (var type in Enum.GetValues<Grouping>())
+        {
+            <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField MaxLength="50"
+                  Label="Genre"
+                  @bind-Value="Model.Genre"
+                  For="@(() => Model.Genre)" />
+    <MudTextField MaxLength="50"
+                  Label="City"
+                  @bind-Value="Model.City"
+                  For="@(() => Model.City)" />
+    <MudTextField MaxLength="50"
+                  Label="State"
+                  @bind-Value="Model.State"
+                  For="@(() => Model.State)" />
+    <MudTextField MaxLength="50"
+                  Label="Country"
+                  @bind-Value="Model.Country"
+                  For="@(() => Model.Country)" />
+</EditCard>
 
-<MudCard Elevation="3" Class="pa-3">
-    <MudCardHeader Class="pa-0">
-        <MudText Typo="Typo.h6">Tags</MudText>
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
-        <TagsEditor Model="@Model.Tags" />
-    </MudCardContent>
-</MudCard>
+<EditTagsCard Breakpoint="@Breakpoint" Model="@Model.Tags" />
 
 @code {
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
     [Parameter]
     public ArtistInfo Model { get; set; }
 }

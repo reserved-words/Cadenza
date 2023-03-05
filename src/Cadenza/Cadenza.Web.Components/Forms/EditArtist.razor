@@ -2,22 +2,35 @@
 @inherits EditArtistBase
 
 <AppDialog Cancel="OnCancel"
-            CancelCaption="Cancel"
-            Submit="OnSubmit"
-            SubmitCaption="OK">
+           CancelCaption="Cancel"
+           Submit="OnSubmit"
+           SubmitCaption="OK">
     <ChildContent>
         <EditForm Model="@EditableItem">
 
             <DataAnnotationsValidator />
-            
-            <MudGrid Spacing="1" Class="modal-grid">
-                <MudItem sm="6">
-                    <EditArtistImage Model="@EditableItem" />
-                </MudItem>
-                <MudItem sm="6">
-                    <EditArtistDetails Model="@EditableItem" />
-                </MudItem>
-            </MudGrid>
+
+            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                <MudExpansionPanels Dense="true" DisableGutters="true" Elevation="0">
+                    <MudExpansionPanel Text="Image">
+                        <EditArtistImage Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Details">
+                        <EditArtistDetails Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudHidden>
+
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <MudGrid Spacing="1" Class="modal-grid">
+                    <MudItem sm="6">
+                        <EditArtistImage Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
+                    </MudItem>
+                    <MudItem sm="6">
+                        <EditArtistDetails Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
+                    </MudItem>
+                </MudGrid>
+            </MudHidden>
 
         </EditForm>
     </ChildContent>

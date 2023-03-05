@@ -4,7 +4,7 @@
         <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
             @foreach (var group in Releases)
             {
-                <MudExpansionPanel Text="@group.Group.GetDisplayName()" Class="text-bold panel-no-padding">
+                <MudExpansionPanel Text="@group.Group.GetDisplayName()">
                     <ArtistReleaseGroupView Model="@group" />
                 </MudExpansionPanel>
             }

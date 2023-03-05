@@ -1,30 +1,22 @@
-﻿<MudCard Elevation="3" Class="pa-3">
-    <MudCardHeader Class="pa-0">
-        <MudText Typo="Typo.h6">Details</MudText>
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
-        <MudTextField MaxLength="100"
-                      Label="Title"
-                      @bind-Value="Model.Title"
-                      For="@(() => Model.Title)" />
-        <MudTextField MaxLength="4"
-                      Label="Year"
-                      @bind-Value="Model.Year"
-                      For="@(() => Model.Year)"
-                      Mask="@(new PatternMask("0000"))" />
-    </MudCardContent>
-</MudCard>
+﻿
+<EditCard Breakpoint="@Breakpoint" Title="Details">
+    <MudTextField MaxLength="100"
+                  Label="Title"
+                  @bind-Value="Model.Title"
+                  For="@(() => Model.Title)" />
+    <MudTextField MaxLength="4"
+                  Label="Year"
+                  @bind-Value="Model.Year"
+                  For="@(() => Model.Year)"
+                  Mask="@(new PatternMask("0000"))" />
+</EditCard>
 
-<MudCard Elevation="3" Class="pa-3">
-    <MudCardHeader Class="pa-0">
-        <MudText Typo="Typo.h6">Tags</MudText>
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
-        <TagsEditor Model="@Model.Tags" />
-    </MudCardContent>
-</MudCard>
+<EditTagsCard Breakpoint="@Breakpoint" Model="@Model.Tags" />
 
 @code {
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
     [Parameter]
     public TrackInfo Model { get; set; }
 }

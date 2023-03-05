@@ -158,7 +158,33 @@ div.container-max-width-sm {
   margin: 0 auto 2rem auto;
 }
 
+.mud-dialog {
+  max-height: calc(100% - 64px);
+}
+.mud-dialog.fixed-height {
+  height: calc(100% - 64px);
+}
+.mud-dialog.no-padding-xs .mud-dialog-content {
+  padding-left: 0;
+  padding-right: 0;
+}
 .mud-dialog .mud-dialog-content {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.mud-dialog .mud-dialog-content textarea {
+  max-height: 300px;
+}
+
+@media (min-width: 600px) {
+  .mud-dialog.fixed-height {
+    height: unset;
+  }
+  .mud-dialog.no-padding-xs .mud-dialog-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .mud-dialog .mud-dialog-content textarea {
+    max-height: unset;
+  }
 }
