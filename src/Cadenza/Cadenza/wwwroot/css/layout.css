@@ -157,3 +157,8 @@ div.container-max-width-sm {
   padding: 0 2rem;
   margin: 0 auto 2rem auto;
 }
+
+.mud-dialog .mud-dialog-content {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
