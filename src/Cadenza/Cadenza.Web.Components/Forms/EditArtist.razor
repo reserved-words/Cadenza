@@ -1,101 +1,24 @@
-﻿@inherits EditArtistBase
+﻿@using Cadenza.Web.Components.Forms.Artist
+@inherits EditArtistBase
 
 <AppDialog Cancel="OnCancel"
             CancelCaption="Cancel"
             Submit="OnSubmit"
             SubmitCaption="OK">
-
     <ChildContent>
         <EditForm Model="@EditableItem">
+
             <DataAnnotationsValidator />
             
             <MudGrid Spacing="1" Class="modal-grid">
-
                 <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Image</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-
-                            <MudContainer Class="mt-3 d-flex flex-column align-center">
-                                @if (EditableItem.ImageUrl != null)
-                                {
-                                    <img class="artist-image" src="@EditableItem.ImageUrl" style="max-width: 300px; border-style: solid; border-width: 1px;" />
-                                }
-                                else
-                                {
-                                    <img class="artist-image" src="images/artwork-placeholder.png" style="max-width: 300px; border-style: solid; border-width: 1px;" />
-                                }
-
-                                <MudStack Row="true" Class="my-2">
-                                    <MudButton OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
-                                    <MudButton OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
-                                </MudStack>
-                            </MudContainer>
-
-                            <MudStack Row="true" Class="my-1">
-                                <MudTextField MaxLength="255"
-                                              Label="Image URL"
-                                              @bind-Value="ImageUrl"
-                                              For="@(() => ImageUrl)" />
-
-                                <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
-                            </MudStack>
-
-                        </MudCardContent>
-                    </MudCard>
+                    <EditArtistImage Model="@EditableItem" />
                 </MudItem>
-
                 <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Details</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <MudTextField Label="Name"
-                                          ReadOnly="true"
-                                          Disabled="true"
-                                          @bind-Value="EditableItem.Name" />
-                                <MudSelect Label="Grouping"
-                                           @bind-Value="EditableItem.Grouping"
-                                           For="@(() => EditableItem.Grouping)">
-                                    @foreach (var type in Enum.GetValues<Grouping>())
-                                    {
-                                        <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
-                                    }
-                                </MudSelect>
-                                <MudTextField MaxLength="50"
-                                              Label="Genre"
-                                              @bind-Value="EditableItem.Genre"
-                                              For="@(() => EditableItem.Genre)" />
-                                <MudTextField MaxLength="50"
-                                              Label="City"
-                                              @bind-Value="EditableItem.City"
-                                              For="@(() => EditableItem.City)" />
-                                <MudTextField MaxLength="50"
-                                              Label="State"
-                                              @bind-Value="EditableItem.State"
-                                              For="@(() => EditableItem.State)" />
-                                <MudTextField MaxLength="50"
-                                              Label="Country"
-                                              @bind-Value="EditableItem.Country"
-                                              For="@(() => EditableItem.Country)" />
-                        </MudCardContent>
-                    </MudCard>
-
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Tags</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <TagsEditor Model="@EditableItem.Tags" />
-                        </MudCardContent>
-                    </MudCard>
+                    <EditArtistDetails Model="@EditableItem" />
                 </MudItem>
-
             </MudGrid>
+
         </EditForm>
     </ChildContent>
-
 </AppDialog>

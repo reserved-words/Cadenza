@@ -1,0 +1,73 @@
+﻿<MudCard Elevation="3" Class="pa-3">
+    <MudCardHeader Class="pa-0">
+        <MudText Typo="Typo.h6">Image</MudText>
+    </MudCardHeader>
+    <MudCardContent Class="pa-0">
+
+        <MudContainer Class="mt-3 d-flex flex-column align-center">
+            @if (Model.ImageUrl != null)
+            {
+                <img class="artist-image edit-image" src="@Model.ImageUrl" />
+            }
+            else
+            {
+                <img class="artist-image edit-image" src="images/artwork-placeholder.png" />
+            }
+
+            <MudStack Row="true" Class="my-2">
+                <MudButton OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
+                <MudButton OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
+            </MudStack>
+        </MudContainer>
+
+        <MudStack Row="true" Class="my-1">
+            <MudTextField MaxLength="255"
+                          Label="Image URL"
+                          @bind-Value="ImageUrl"
+                          For="@(() => ImageUrl)" />
+
+            <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
+        </MudStack>
+
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public ArtistInfo Model { get; set; }
+
+    [Inject]
+    public IImageFinder ImageFinder { get; set; }
+
+    [Inject]
+    public INavigation Navigation { get; set; }
+
+    [Inject]
+    public INotificationService Alert { get; set; }
+
+    private string ImageUrl { get; set; }
+
+    protected async Task OnSearch(SearchSource source)
+    {
+        var searchUrl = ImageFinder.GetSearchUrl(Model, source);
+        await Navigation.OpenNewTab(searchUrl);
+    }
+
+    protected async Task OnUpdateUrl()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(ImageUrl))
+            {
+                throw new Exception("No URL entered");
+            }
+
+            Model.ImageUrl = await ImageFinder.GetBase64ArtworkSource(ImageUrl);
+        }
+        catch (Exception ex)
+        {
+            Alert.Error(ex.Message);
+            return;
+        }
+    }
+}

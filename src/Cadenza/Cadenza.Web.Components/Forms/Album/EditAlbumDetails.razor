@@ -1,0 +1,42 @@
+﻿<MudCard Elevation="3" Class="pa-3">
+    <MudCardHeader Class="pa-0">
+        <MudText Typo="Typo.h6">Details</MudText>
+    </MudCardHeader>
+    <MudCardContent Class="pa-0">
+        <MudTextField Label="Title"
+                      ReadOnly="true"
+                      Disabled="true"
+                      @bind-Value="Model.Title" />
+        <MudTextField Label="Artist"
+                      ReadOnly="true"
+                      Disabled="true"
+                      @bind-Value="Model.ArtistName" />
+        <MudSelect Label="Release Type"
+                   @bind-Value="Model.ReleaseType"
+                   For="@(() => Model.ReleaseType)">
+            @foreach (var type in Enum.GetValues<ReleaseType>())
+            {
+                <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField MaxLength="4"
+                      Label="Release Year"
+                      @bind-Value="Model.Year"
+                      For="@(() => Model.Year)"
+                      Mask="@(new PatternMask("0000"))" />
+    </MudCardContent>
+</MudCard>
+
+<MudCard Elevation="3" Class="pa-3">
+    <MudCardHeader Class="pa-0">
+        <MudText Typo="Typo.h6">Tags</MudText>
+    </MudCardHeader>
+    <MudCardContent Class="pa-0">
+        <TagsEditor Model="@Model.Tags" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public AlbumInfo Model { get; set; }
+}

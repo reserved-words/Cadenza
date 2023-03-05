@@ -1,71 +1,23 @@
-﻿@inherits EditTrackBase
+﻿@using Cadenza.Web.Components.Forms.Track
+@inherits EditTrackBase
 
 <AppDialog Cancel="OnCancel"
            CancelCaption="Cancel"
            Submit="OnSubmit"
            SubmitCaption="OK">
-
     <ChildContent>
         <EditForm Model="@EditableItem">
             <DataAnnotationsValidator />
 
             <MudGrid Spacing="1" Class="modal-grid">
-
                 <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Details</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <MudTextField MaxLength="100"
-                                          Label="Title"
-                                          @bind-Value="EditableItem.Title"
-                                          For="@(() => EditableItem.Title)" />
-                            <MudTextField MaxLength="4"
-                                          Label="Year"
-                                          @bind-Value="EditableItem.Year"
-                                          For="@(() => EditableItem.Year)"
-                                          Mask="@(new PatternMask("0000"))" />
-                        </MudCardContent>
-                    </MudCard>
-
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Tags</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <TagsEditor Model="@EditableItem.Tags" />
-                        </MudCardContent>
-                    </MudCard>
+                    <EditTrackDetails Model="@EditableItem" />
                 </MudItem>
-
                 <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Lyrics</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-
-                            <MudContainer Class="ma-0 pa-0 d-flex align-stretch">
-                                <MudTextField Class="textarea"
-                                              @bind-Value="EditableItem.Lyrics"
-                                              For="@(() => EditableItem.Lyrics)"
-                                              Lines="30" />
-                            </MudContainer>
-
-                            <MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
-                                <MudStack Row="true" Class="mt-2">
-                                    <MudButton OnClick="@OnLoad" Disabled="false">Load</MudButton>
-                                    <MudButton OnClick="@OnSearch">Search</MudButton>
-                                </MudStack>
-                            </MudContainer>
-
-                        </MudCardContent>
-                    </MudCard>
+                    <EditTrackLyrics Model="@EditableItem" />
                 </MudItem>
-
             </MudGrid>
+
         </EditForm>
     </ChildContent>
-
 </AppDialog>
