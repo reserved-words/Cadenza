@@ -1,25 +1,24 @@
-﻿
-@if (Discs != null)
+﻿@if (Discs != null)
 {
     <AppCardScrollContainer Elevation="0">
         <ChildContent>
-            <MudTabs>
-                @if (Discs.Count == 1)
-                {
-                    <MudTabPanel Text="Tracks">
-                        <AlbumDisc Model="@Discs.Single()" AlbumArtistId="@Album.ArtistId" />
-                    </MudTabPanel>
-                }
-                else
-                {
+
+            @if (Discs.Count == 1)
+            {
+                <AlbumDisc Model="@Discs.Single()" AlbumArtistId="@Album.ArtistId" />
+            }
+            else
+            {
+                <MudTabs ActivePanelIndex="@ActivePanelIndex">
                     @foreach (var disc in Discs)
                     {
                         <MudTabPanel Text="@("Disc " + disc.DiscNo)">
                             <AlbumDisc Model="@disc" AlbumArtistId="@Album.ArtistId" />
                         </MudTabPanel>
                     }
-                }
-            </MudTabs>
+                </MudTabs>
+            }
+
         </ChildContent>
     </AppCardScrollContainer>
 }
@@ -30,4 +29,11 @@
 
     [Parameter]
     public List<Disc> Discs { get; set; } = new();
+
+    private int ActivePanelIndex { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        ActivePanelIndex = 0;
+    }
 }

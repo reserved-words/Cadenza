@@ -2,20 +2,22 @@
 
 <TabGrid>
 
-    <TabGridColumn md="3">
+    <TabGridColumn sm="4" md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GenreDetail Id="@Id" />
+            <GenreDetail Id="@Id">
+                <Toolbar>
+                    <GenreToolbar Genre="@Id" />
+                </Toolbar>
+            </GenreDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <GenreToolbar Genre="@Id" />
-
     </TabGridColumn>
 
-    <TabGridColumn md="9">
+    <TabGridColumn sm="8" md="9">
         <TabGridRow RowHeight="@RowHeight.Full">
+
+            <MudDivider Class="xs-only" />
             <GenreArtists Artists="@Artists" />
+
         </TabGridRow>
     </TabGridColumn>
 

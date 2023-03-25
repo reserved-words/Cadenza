@@ -1,0 +1,100 @@
+﻿@using Cadenza.Web.Common.Interfaces.Startup
+
+@if (IncludeHomeTab)
+{
+    <MenuItem Icon="@Icons.Material.Filled.Home"
+              IconSize="@IconSize"
+              ShowLabel="@ShowLabels"
+              Label="Home"
+              Tab="@Tab.Home"
+              OnClickItem="@UpdateActiveTab"
+              Class="@MenuItemClass(Tab.Home)" />
+}
+
+<MenuItem Icon="@Icons.Material.Filled.History"
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="History"
+          Tab="@Tab.History"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.History)" />
+
+<MenuItem Icon="@Icons.Material.Filled.PlaylistPlay"
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="Playing"
+          Tab="@Tab.CurrentTrack"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.CurrentTrack)" />
+
+<MenuItem Icon="@Icons.Material.Filled.FormatListBulleted"
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="Library"
+          Tab="@Tab.Library"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.Library)" />
+
+@if (IncludeSearchTab)
+{
+    <MenuItem Icon="@Icons.Material.Filled.Search"
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="Search"
+          Tab="@Tab.Search"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.Search)" />
+}
+
+<MudSpacer />
+<Search />
+
+@code {
+    [Parameter]
+    public bool IncludeHomeTab { get; set; }
+
+    [Parameter]
+    public bool IncludeSearchTab { get; set; }
+
+    [Parameter]
+    public bool ShowLabels { get; set; }
+
+    [Parameter]
+    public Size IconSize { get; set; }
+
+    [Inject]
+    public IMessenger Messenger { get; set; }
+
+    private Tab ActiveTab;
+
+    protected override void OnInitialized()
+    {
+        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
+    }
+
+    protected override void OnParametersSet()
+    {
+        ActiveTab = IncludeHomeTab ? Tab.Home : Tab.History;
+        StateHasChanged();
+    }
+
+    private string MenuItemClass(Tab tab)
+    {
+        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
+    }
+
+    private async Task OnViewItem(object sender, ViewItemEventArgs args)
+    {
+        if (ActiveTab != Tab.Library)
+        {
+            await UpdateActiveTab(Tab.Library);
+        }
+    }
+
+    private async Task UpdateActiveTab(Tab tab)
+    {
+        await Messenger.Send(this, new ViewTabEventArgs(tab));
+        ActiveTab = tab;
+        StateHasChanged();
+    }
+}

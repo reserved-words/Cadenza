@@ -1,73 +1,22 @@
 ﻿@using Cadenza.Web.Common.Interfaces.Startup
 
-<MudButton StartIcon="@Icons.Material.Filled.History" OnClick="@History" Class="@MenuItemClass(Tab.History)" Size="Size.Large">History</MudButton>
-<MudButton OnClick="@CurrentTrack" Class="@MenuItemClass(Tab.CurrentTrack)" Size="Size.Large">
-    <CurrentlyPlayingIcon Playing="@IsCurrentlyPlaying" Class="ml-0 mr-3" />
-    Playing
-</MudButton>
-<MudButton StartIcon="@Icons.Material.Filled.LibraryBooks" OnClick="@Library" Class="@MenuItemClass(Tab.Library)" Size="Size.Large">Library</MudButton>
-<MudButton StartIcon="@Icons.Material.Filled.Search" OnClick="@Search" Class="@MenuItemClass(Tab.Search)" Size="Size.Large">Search</MudButton>
-<MudSpacer />
-<Search />
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    <MenuItems IncludeHomeTab="true"
+               IncludeSearchTab="false"
+               ShowLabels="false"
+               IconSize="@Size.Medium" />
+</MudHidden>
 
-@code {
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged);
-        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
-    }
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <MenuItems IncludeHomeTab="true"
+               IncludeSearchTab="false"
+               ShowLabels="true"
+               IconSize="@Size.Medium" />
+</MudHidden>
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private bool IsCurrentlyPlaying { get; set; }
-
-    private Tab ActiveTab = Tab.History;
-
-    private async Task History()
-    {
-        await UpdateActiveTab(Tab.History);
-    }
-
-    private async Task CurrentTrack()
-    {
-        await UpdateActiveTab(Tab.CurrentTrack);
-    }
-
-    private async Task Library()
-    {
-        await UpdateActiveTab(Tab.Library);
-    }
-
-    private async Task Search()
-    {
-        await UpdateActiveTab(Tab.Search);
-    }
-
-    private string MenuItemClass(Tab tab)
-    {
-        return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
-    }
-
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        IsCurrentlyPlaying = args.Status != PlayStatus.Stopped;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private async Task OnViewItem(object sender, ViewItemEventArgs args)
-    {
-        if (ActiveTab != Tab.Library)
-        {
-            await UpdateActiveTab(Tab.Library);
-        }
-    }
-
-    private async Task UpdateActiveTab(Tab tab)
-    {
-        await Messenger.Send(this, new ViewTabEventArgs(tab));
-        ActiveTab = tab;
-        StateHasChanged();
-    }
-}
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+    <MenuItems IncludeHomeTab="false"
+               IncludeSearchTab="true"
+               ShowLabels="true"
+               IconSize="@Size.Large" />
+</MudHidden>

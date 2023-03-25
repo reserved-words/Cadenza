@@ -1,0 +1,53 @@
+﻿
+<MudTd Class="td-icon">
+    <MudIcon Icon="@Model.Type.GetIcon()" Size="@Size.Small" />
+</MudTd>
+
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    <MudTd>
+        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+        <MudText Typo="Typo.body2">@Model.Artist</MudText>
+        <MudText Typo="Typo.body2">@Model.AlbumDisplay</MudText>
+    </MudTd>
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <MudTd>
+        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+
+        @if (Model.Type == PlayerItemType.Track)
+        {
+            <MudText Typo="Typo.body2">@Model.Artist</MudText>
+        }
+
+    </MudTd>
+    <MudTd>
+
+        @if (Model.Type != PlayerItemType.Track)
+        {
+            <MudText Typo="Typo.body1">@Model.Artist</MudText>
+        }
+
+        <MudText Typo="Typo.body1">@Model.AlbumDisplay</MudText>
+    </MudTd>
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+    <MudTd>
+        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+    </MudTd>
+    <MudTd>
+        <MudText Typo="Typo.body2">@Model.Artist</MudText>
+    </MudTd>
+    <MudTd>
+        <MudText Typo="Typo.body2">@Model.AlbumDisplay</MudText>
+    </MudTd>
+</MudHidden>
+
+@code {
+    [Parameter]
+    public PlayerItem Model { get; set; }
+
+    [Parameter]
+    public Func<PlayerItem, Task> OnViewItem { get; set; }
+}

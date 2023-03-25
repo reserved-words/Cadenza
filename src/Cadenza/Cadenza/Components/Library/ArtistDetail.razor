@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@Model.Tags">
+    <ItemCard Type="@PlayerItemType.Artist" Heading="@Model.Name" Tags="@Model.Tags" Toolbar="@Toolbar">
         <ChildContent>
             <ArtistImageView Model="@Model" />
             <MudText Typo="Typo.body1">@Model.Location()</MudText>
@@ -10,4 +10,9 @@
             <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
         </ChildContent>
     </ItemCard>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment Toolbar { get; set; }
 }

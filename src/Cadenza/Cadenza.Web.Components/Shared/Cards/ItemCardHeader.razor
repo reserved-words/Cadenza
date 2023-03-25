@@ -1,12 +1,23 @@
 ﻿
-<AppCardHeader Icon="@Type.GetIcon()">
+<MudContainer Class="d-flex flex-row pa-0 ma-0" Style="align-items: center;">
 
-    <MainContent>
+    <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0 mr-2">
+        <MudIcon Icon="@Type.GetIcon()"
+                 Size="@Size.Large"
+                 Class="ma-1"
+                 Style="font-size: 1.5rem;" />
+    </MudPaper>
+
+    <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0 d-flex flex-column">
         <MudText Typo="@Typo.h5">@Heading</MudText>
-        @ChildContent
-    </MainContent>
+    </MudPaper>
 
-</AppCardHeader>
+    @if (Toolbar != null)
+    {
+        @Toolbar
+    }
+
+</MudContainer>
 
 @code {
     [Parameter]
@@ -16,5 +27,5 @@
     public string Heading { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment Toolbar { get; set; }
 }

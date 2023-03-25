@@ -1,32 +1,65 @@
 ﻿
 <TabGrid>
 
-    <TabGridColumn md="4">
-        <TabGridRow RowHeight="@RowHeight.Full">
-            <HistoryRecent />
-        </TabGridRow>
-    </TabGridColumn>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
 
-    <TabGridColumn md="8">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+        <TabGridColumn>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <MudTabs Elevation="0"
+                         Rounded="true"
+                         ApplyEffectsToContainer="true"
+                         Centered="true"
+                         KeepPanelsAlive="true"
+                         PanelClass="pa-0"
+                         Class="full-width">
+                    <MudTabPanel Text="Recent">
+                        <HistoryRecent MaxItems="10" />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Artists">
+                        <HistoryArtists MaxItems="10" />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Albums">
+                        <HistoryAlbums MaxItems="10" />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Tracks">
+                        <HistoryTracks MaxItems="10" />
+                    </MudTabPanel>
+                </MudTabs>
+            </TabGridRow>
+        </TabGridColumn>
 
-            <SubGrid>
-                <SubGridColumn md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
-                        <HistoryArtists />
-                    </SubGridRow>
-                </SubGridColumn>
-                <SubGridColumn md="6">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
-                        <HistoryTracks />
-                    </SubGridRow>
-                </SubGridColumn>
-            </SubGrid>
+    </MudHidden>
 
-        </TabGridRow>
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <HistoryAlbums />
-        </TabGridRow>
-    </TabGridColumn>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+
+        <TabGridColumn md="4">
+            <TabGridRow RowHeight="@RowHeight.Full">
+                <HistoryRecent MaxItems="15" />
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn md="8">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+
+                <SubGrid>
+                    <SubGridColumn md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+                            <HistoryArtists MaxItems="5" />
+                        </SubGridRow>
+                    </SubGridColumn>
+                    <SubGridColumn md="6">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
+                            <HistoryTracks MaxItems="5" />
+                        </SubGridRow>
+                    </SubGridColumn>
+                </SubGrid>
+
+            </TabGridRow>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <HistoryAlbums MaxItems="5" />
+            </TabGridRow>
+        </TabGridColumn>
+
+    </MudHidden>
 
 </TabGrid>
