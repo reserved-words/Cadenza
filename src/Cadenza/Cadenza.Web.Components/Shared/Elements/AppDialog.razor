@@ -1,27 +1,19 @@
 ﻿
-<MudDialog>
+<MudDialog Class="fixed-height no-padding-xs">
     <DialogContent>
         @ChildContent
     </DialogContent>
     <DialogActions>
-        <MudPaper Class="d-flex justify-space-between flex-grow-1" Elevation="0">
-            <MudPaper Elevation="0">
-                @foreach (var action in Actions)
-                {
-                    <MudButton OnClick="@action.OnClick">@action.Caption</MudButton>
-                }
-            </MudPaper>
-            <MudPaper Elevation="0">
-                @if (ShowCancel)
-                {
-                    <MudButton OnClick="@Cancel">@CancelCaption</MudButton>
-                }
-                @if (ShowSubmit)
-                {
-                    <MudButton Color="Color.Primary" OnClick="@Submit">@SubmitCaption</MudButton>
-                }
-            </MudPaper>
-        </MudPaper>
+        <MudStack Row="true">
+            @if (ShowCancel)
+            {
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@Cancel">@CancelCaption</MudButton>
+            }
+            @if (ShowSubmit)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Submit">@SubmitCaption</MudButton>
+            }
+        </MudStack>
     </DialogActions>
 </MudDialog>
 
@@ -40,9 +32,6 @@
 
     [Parameter]
     public string SubmitCaption { get; set; }
-
-    [Parameter]
-    public List<DialogAction> Actions { get; set; } = new();
 
     public bool ShowCancel => CancelCaption != null;
 

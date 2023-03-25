@@ -1,8 +1,11 @@
 ﻿@inherits LyricsViewBase
 
-<AppCardScrollContainer Elevation="3">
+<AppCardScrollContainer Elevation="@Elevation">
     <HeaderContent>
-        <LyricsCardHeader />
+        @if (Breakpoint != Breakpoint.Xs)
+        {
+            <LyricsCardHeader />
+        }
     </HeaderContent>
     <ChildContent>
         <MudContainer Class="ma-0 pt-0 pb-3 px-3">
@@ -12,3 +15,12 @@
         </MudContainer>
     </ChildContent>
 </AppCardScrollContainer>
+
+@code {
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
+    private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
+
+    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
+}

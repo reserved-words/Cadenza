@@ -1,22 +1,23 @@
-﻿
-@inherits GroupingTabBase
+﻿@inherits GroupingTabBase
 
 <TabGrid>
 
-    <TabGridColumn md="3">
+    <TabGridColumn sm="4" md="3">
         <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GroupingDetail Id="@Grouping" />
+            <GroupingDetail Id="@Grouping">
+                <Toolbar>
+                    <GroupingToolbar Grouping="@Grouping" />
+                </Toolbar>
+            </GroupingDetail>
         </TabGridRow>
-
-        <MudDivider />
-
-        <GroupingToolbar Grouping="@Grouping" />
-
     </TabGridColumn>
 
-    <TabGridColumn md="9">
+    <TabGridColumn sm="8" md="9">
         <TabGridRow RowHeight="@RowHeight.Full">
+
+            <MudDivider Class="xs-only" />
             <GroupingGenres Genres="@Genres" />
+
         </TabGridRow>
     </TabGridColumn>
 

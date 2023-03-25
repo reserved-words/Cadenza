@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@Model.Tags">
+    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@Model.Tags" Toolbar="@Toolbar">
         <ChildContent>
             <AlbumArtworkView Model="@Model" />
             <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
@@ -10,4 +10,9 @@
             <MudText Typo="Typo.body2">@Model.Year</MudText>
         </ChildContent>
     </ItemCard>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment Toolbar { get; set; }
 }

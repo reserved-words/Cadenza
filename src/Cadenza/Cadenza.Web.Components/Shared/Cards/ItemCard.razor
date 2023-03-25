@@ -1,14 +1,20 @@
 ﻿
-<MudCard>
-    <MudCardHeader Class="ma-0 px-2 pt-2 pb-0">
-        <AppCardHeader Icon="@Type.GetIcon()">
-            <MainContent>
-                <MudText Typo="@Typo.h5">@Heading</MudText>
-            </MainContent>
-        </AppCardHeader>
-    </MudCardHeader>
+<MudCard Elevation="@Elevation" Square="@Square">
+
+    @if (ShowHeader)
+    {
+        <MudCardHeader Class="ma-0 px-2 pt-2 pb-0">
+            <ItemCardHeader Type="@Type" Heading="@Heading" Toolbar="@Toolbar" />
+        </MudCardHeader>
+    }
+
     <MudCardContent Class="ma-0 pa-2 pt-0">
-        <MudDivider Class="mt-0 mb-1" />
+
+        @if (ShowHeader)
+        {
+            <MudDivider Class="mt-0 mb-1" />
+        }
+
         <MudContainer Class="ma-0 pa-2 pt-0">
             @ChildContent
         </MudContainer>
@@ -30,6 +36,9 @@
     public PlayerItemType Type { get; set; }
 
     [Parameter]
+    public bool ShowHeader { get; set; } = true;
+
+    [Parameter]
     public string Heading { get; set; }
 
     [Parameter]
@@ -37,4 +46,14 @@
 
     [Parameter]
     public TagList Tags { get; set; }
+
+    [Parameter]
+    public RenderFragment Toolbar { get; set; }
+
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
+    private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
+
+    private bool Square => Breakpoint == Breakpoint.Xs ? true : false;
 }

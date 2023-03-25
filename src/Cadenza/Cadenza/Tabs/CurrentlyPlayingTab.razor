@@ -1,29 +1,16 @@
 ﻿@inherits CurrentlyPlayingTabBase
 
-<TabGrid>
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.Xs"
+                                   Model="@Model" />
+</MudHidden>
 
-    @if (Model != null)
-    {
-        <TabGridColumn md="4">
-            <TabGridRow RowHeight="@RowHeight.Fixed">
-                <PlayingTrack Model="@Model.Track" />
-            </TabGridRow>
-            <TabGridRow RowHeight="@RowHeight.Fixed">
-                <PlayingArtist Model="@Model.Artist" />
-            </TabGridRow>
-        </TabGridColumn>
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.Sm" 
+                                   Model="@Model" />
+</MudHidden>
 
-        <TabGridColumn md="4">
-            <TabGridRow RowHeight="@RowHeight.Fixed">
-                <PlayingAlbum Model="@Model.Album" />
-            </TabGridRow>
-        </TabGridColumn>
-
-        <TabGridColumn md="4">
-            <TabGridRow RowHeight="@RowHeight.Full">
-                <PlayingLyrics Model="@Model.Track" />
-            </TabGridRow>
-        </TabGridColumn>
-    }
-
-</TabGrid>
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+    <CurrentlyPlayingTabResponsive Breakpoint="Breakpoint.MdAndUp" 
+                                   Model="@Model" />
+</MudHidden>

@@ -17,13 +17,12 @@
                         }
                     </MudSelect>
                 </ChildContent>
+                <Toolbar>
+                    <TagToolbar Tag="@Id" />
+                </Toolbar>
             </ItemCard>
 
         </TabGridRow>
-
-        <MudDivider />
-
-        <TagToolbar Tag="@Id" />
 
     </TabGridColumn>
 
@@ -31,24 +30,7 @@
         <TabGridRow RowHeight="@RowHeight.Full">
             <AppCardScrollContainer>
                 <ChildContent>
-                    <AppTable T="@PlayerItem"
-                              Items="@Items"
-                              Filter="@OnFilter">
-                        <RowTemplate>
-                            <MudTd Class="td-icon">
-                                <MudIcon Icon="@context.Type.GetIcon()" Size="@Size.Small" />
-                            </MudTd>
-                            <MudTd>
-                                <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
-                            </MudTd>
-                            <MudTd>
-                                <MudText Typo="Typo.body1">@context.Artist</MudText>
-                            </MudTd>
-                            <MudTd>
-                                <MudText Typo="Typo.body1">@context.AlbumDisplay</MudText>
-                            </MudTd>
-                        </RowTemplate>
-                    </AppTable>
+                    <TagResultTable Items="@Items" OnViewItem="@OnViewItem" OnFilter="OnFilter" />
                 </ChildContent>
             </AppCardScrollContainer>
         </TabGridRow>

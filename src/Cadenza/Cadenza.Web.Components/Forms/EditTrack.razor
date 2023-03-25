@@ -1,71 +1,37 @@
-﻿@inherits EditTrackBase
+﻿@using Cadenza.Web.Components.Forms.Track
+@inherits EditTrackBase
 
 <AppDialog Cancel="OnCancel"
            CancelCaption="Cancel"
            Submit="OnSubmit"
            SubmitCaption="OK">
-
     <ChildContent>
         <EditForm Model="@EditableItem">
+
             <DataAnnotationsValidator />
 
-            <MudGrid Spacing="1" Class="tab-grid fixed-height ma-0 pa-0">
+            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                <MudExpansionPanels Dense="true" DisableGutters="true" Elevation="0">
+                    <MudExpansionPanel Text="Details">
+                        <EditTrackDetails Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Lyrics">
+                        <EditTrackLyrics Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudHidden>
 
-                <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Details</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <MudTextField MaxLength="100"
-                                          Label="Title"
-                                          @bind-Value="EditableItem.Title"
-                                          For="@(() => EditableItem.Title)" />
-                            <MudTextField MaxLength="4"
-                                          Label="Year"
-                                          @bind-Value="EditableItem.Year"
-                                          For="@(() => EditableItem.Year)"
-                                          Mask="@(new PatternMask("0000"))" />
-                        </MudCardContent>
-                    </MudCard>
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <MudGrid Spacing="1" Class="modal-grid">
+                    <MudItem sm="6">
+                        <EditTrackDetails Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
+                    </MudItem>
+                    <MudItem sm="6">
+                        <EditTrackLyrics Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
+                    </MudItem>
+                </MudGrid>
+            </MudHidden>
 
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Tags</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <TagsEditor Model="@EditableItem.Tags" />
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-
-                <MudItem sm="6">
-                    <MudCard Elevation="3" Class="pa-3">
-                        <MudCardHeader Class="pa-0">
-                            <MudText Typo="Typo.h6">Lyrics</MudText>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-
-                            <MudContainer Class="ma-0 pa-0 d-flex align-stretch">
-                                <MudTextField Class="textarea"
-                                              @bind-Value="EditableItem.Lyrics"
-                                              For="@(() => EditableItem.Lyrics)"
-                                              Lines="30" />
-                            </MudContainer>
-
-                            <MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
-                                <MudStack Row="true" Class="mt-2">
-                                    <MudButton OnClick="@OnLoad" Disabled="false">Load</MudButton>
-                                    <MudButton OnClick="@OnSearch">Search</MudButton>
-                                </MudStack>
-                            </MudContainer>
-
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-
-            </MudGrid>
         </EditForm>
     </ChildContent>
-
 </AppDialog>

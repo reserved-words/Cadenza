@@ -1,0 +1,14 @@
+﻿
+@if (PlayedTrack.Played.Date == DateTime.Today)
+{
+    <MudText Typo="@Typo.body2">Today @PlayedTrack.Played.ToString("HH:mm")</MudText>
+}
+else
+{
+    <MudText Typo="@Typo.body2">@PlayedTrack.Played.ToString("dd/MM/yyyy HH:mm")</MudText>
+}
+
+@code {
+    [Parameter]
+    public RecentTrack PlayedTrack { get; set; }
+}

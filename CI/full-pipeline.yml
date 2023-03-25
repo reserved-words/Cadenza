@@ -22,10 +22,10 @@ variables:
   value: '12e84f5d-ac38-404d-8917-342d1a6b6267/9576344f-fdaa-4dd0-811d-1ff637c3c3bf'
 
 stages:
-- stage: build
-  displayName: 'Build'
+- stage: localBuild
+  displayName: 'Local Build'
   variables:
-  - group: appSettings
+  - group: appSettings.local
     
   jobs:
   - job: build
@@ -89,3 +89,55 @@ stages:
     displayName: 'Push to GitHub'
     steps:
     - template: Templates/github.yml@self
+
+- stage: laptopBuild
+  displayName: 'Laptop Build'
+  variables:
+  - group: appSettings.laptop
+    
+  jobs:
+  - job: build
+    displayName: 'Build'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '6.0.x'
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '$(RestoreBuildProjects)'
+        feedsToUse: 'select'
+        vstsFeed: '$(PackageFeed)'
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: '$(RestoreBuildProjects)'
+        arguments: '--no-restore --configuration $(BuildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Apps'
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: |
+         **/*Cadenza.API.csproj
+         **/*Cadenza.Local.API.csproj
+         **/*Cadenza.Local.SyncService.csproj
+         **/*Cadenza.SyncService.csproj
+         **/Cadenza.csproj
+        arguments: '--no-build --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        zipAfterPublish: false
+    - task: FileTransform@2
+      displayName: 'File Transform'
+      inputs:
+        xmlTransformationRules: ''
+        folderPath: '$(build.artifactstagingdirectory)'
+        jsonTargetFiles: '$(SettingsFiles)'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: 'Cadenza-laptop-drop' 
+      condition: succeededOrFailed()

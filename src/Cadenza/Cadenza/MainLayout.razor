@@ -7,16 +7,25 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" DisableGutters="@true">
-        <MainMenu />
-    </MudAppBar>
-    <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
-        <Sidebar />
-    </MudDrawer>
+
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        <MudAppBar Color="Color.Dark" Fixed="true" DisableGutters="true" Dense="true">
+            <MainMenu />
+        </MudAppBar>
+    </MudHidden>
+
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <MudAppBar Elevation="1" DisableGutters="@true">
+            <MainMenu />
+        </MudAppBar>
+        <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
+            <Sidebar />
+        </MudDrawer>
+    </MudHidden>
+
     <MudMainContent>
-
         @Body
-
     </MudMainContent>
+
 </MudLayout>
 

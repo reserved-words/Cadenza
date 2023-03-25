@@ -1,8 +1,8 @@
 ﻿<MudTable Items="@Items"
           T="T"
           Hover="true"
-          Breakpoint="Breakpoint.Sm"
           Dense="true"
+          Breakpoint="Breakpoint.None"
           RowTemplate="@RowTemplate"
           Striped="false"
           Class="ma-0 pa-0"
@@ -10,8 +10,9 @@
           OnRowClick="@OnRowClick"
           @bind-SelectedItem="@SelectedItem"
           @ondblclick="OnDoubleClick"
-          Style="width: 100%;">
-
+          Style="width: 100%;"
+          PagerContent="@PagerContent"
+          RowsPerPage="@RowsPerPage">
 </MudTable>
 
 @typeparam T
@@ -34,6 +35,12 @@
 
     [Parameter]
     public Func<T, Task> OnRowDoubleClick { get; set; }
+
+    [Parameter]
+    public RenderFragment PagerContent { get; set; }
+
+    [Parameter]
+    public int RowsPerPage { get; set; }
 
     public async Task OnDoubleClick(MouseEventArgs args)
     {

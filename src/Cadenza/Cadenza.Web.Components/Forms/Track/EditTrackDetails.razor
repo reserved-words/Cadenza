@@ -1,0 +1,22 @@
+﻿
+<EditCard Breakpoint="@Breakpoint" Title="Details">
+    <MudTextField MaxLength="100"
+                  Label="Title"
+                  @bind-Value="Model.Title"
+                  For="@(() => Model.Title)" />
+    <MudTextField MaxLength="4"
+                  Label="Year"
+                  @bind-Value="Model.Year"
+                  For="@(() => Model.Year)"
+                  Mask="@(new PatternMask("0000"))" />
+</EditCard>
+
+<EditTagsCard Breakpoint="@Breakpoint" Model="@Model.Tags" />
+
+@code {
+    [Parameter]
+    public Breakpoint Breakpoint { get; set; }
+
+    [Parameter]
+    public TrackInfo Model { get; set; }
+}
