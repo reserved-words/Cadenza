@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="b7b01f91-8ee8-4454-86a7-03bc022fdd11" ChangeDateTime="03/26/2023 10:06:58">
+    <Property Name="ElementName" Value="[Library].[Artists].[Grouping]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Library].[Artists]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GroupingId" />
+  </Operation>
+</Operations>
