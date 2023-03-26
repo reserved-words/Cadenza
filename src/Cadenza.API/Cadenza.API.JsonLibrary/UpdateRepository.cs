@@ -1,4 +1,7 @@
-﻿namespace Cadenza.API.Database;
+﻿using Cadenza.API.JsonLibrary.Interfaces;
+using Cadenza.API.JsonLibrary.Interfaces.Updaters;
+
+namespace Cadenza.API.JsonLibrary;
 
 internal class UpdateRepository : IUpdateRepository
 {

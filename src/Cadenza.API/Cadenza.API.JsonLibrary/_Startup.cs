@@ -1,8 +1,4 @@
-﻿global using Cadenza.API.Database.Interfaces;
-global using Cadenza.API.Database.Interfaces.Updaters;
-global using Cadenza.API.Database.Services;
-global using Cadenza.API.Database.Services.Updaters;
-global using Cadenza.API.Interfaces.Repositories;
+﻿global using Cadenza.API.Interfaces.Repositories;
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Domain.Model.Album;
@@ -11,9 +7,13 @@ global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Interfaces.Utilities;
 global using Microsoft.Extensions.Options;
+using Cadenza.API.JsonLibrary.Interfaces;
+using Cadenza.API.JsonLibrary.Interfaces.Updaters;
+using Cadenza.API.JsonLibrary.Services;
+using Cadenza.API.JsonLibrary.Services.Updaters;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cadenza.API.Database;
+namespace Cadenza.API.JsonLibrary;
 
 public static class _Startup
 {

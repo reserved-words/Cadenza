@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Services;
+﻿using Cadenza.API.JsonLibrary.Interfaces;
+
+namespace Cadenza.API.JsonLibrary.Services;
 
 internal class ThreadSafeDataAccess : IDataAccess
 {

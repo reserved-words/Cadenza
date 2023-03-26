@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Services.Updaters;
+﻿using Cadenza.API.JsonLibrary.Interfaces.Updaters;
+
+namespace Cadenza.API.JsonLibrary.Services.Updaters;
 
 internal class LibraryUpdater : ILibraryUpdater
 {

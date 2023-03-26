@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Database.Interfaces;
+﻿namespace Cadenza.API.JsonLibrary.Interfaces;
 
 internal interface IDataAccess
 {

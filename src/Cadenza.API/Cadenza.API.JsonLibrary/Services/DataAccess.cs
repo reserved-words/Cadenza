@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Database.Services;
+﻿using Cadenza.API.JsonLibrary.Interfaces;
+
+namespace Cadenza.API.JsonLibrary.Services;
 
 internal class DataAccess : IDataAccess
 {
@@ -65,7 +67,7 @@ internal class DataAccess : IDataAccess
 
     public async Task<List<TrackInfo>> GetTracks(LibrarySource source)
     {
-        var tracks =  await _service.Get<List<TrackInfo>>(_paths.Tracks(source));
+        var tracks = await _service.Get<List<TrackInfo>>(_paths.Tracks(source));
 
         // Temporarily need to populate artist names and track years - once done a few saves can remove this
         var artistNames = (await GetArtists()).ToDictionary(a => a.Id, a => a.Name);

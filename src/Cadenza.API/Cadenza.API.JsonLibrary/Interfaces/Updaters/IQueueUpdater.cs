@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Database.Interfaces.Updaters;
+﻿namespace Cadenza.API.JsonLibrary.Interfaces.Updaters;
 
 internal interface IQueueUpdater
 {
