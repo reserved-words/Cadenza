@@ -4,6 +4,7 @@ using Dapper;
 using System.Data;
 
 namespace Cadenza.API.SqlLibrary.Services;
+
 internal class InsertService : IInsertService
 {
     private const string AddArtistProcedure = "[Library].[AddArtist]";
@@ -28,6 +29,7 @@ internal class InsertService : IInsertService
         parameters.Add(nameof(data.Title), data.Title);
         parameters.Add(nameof(data.ReleaseTypeId), data.ReleaseTypeId);
         parameters.Add(nameof(data.Year), data.Year);
+        parameters.Add(nameof(data.DiscCount), data.DiscCount);
         parameters.Add(nameof(data.ArtworkUrl), data.ArtworkUrl);
         parameters.Add(nameof(data.TagList), data.TagList);
 

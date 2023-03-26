@@ -6,6 +6,7 @@
     [Title] NVARCHAR(500) NOT NULL,
     [ReleaseTypeId] INT NOT NULL,
     [Year] NCHAR(4) NOT NULL,
+    [DiscCount] INT NOT NULL,
     [ArtworkUrl] NVARCHAR(500) NULL, 
     CONSTRAINT [FK_Albums_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Admin].[Sources]([Id]), 
     CONSTRAINT [FK_Albums_ToArtists] FOREIGN KEY ([ArtistId]) REFERENCES [Library].[Artists]([Id]), 

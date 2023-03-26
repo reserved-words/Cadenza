@@ -60,4 +60,10 @@ internal class MusicRepository : IMusicRepository
             _libraryUpdater.AddTrack(library, track);
         });
     }
+
+    public async Task<List<string>> GetAllTracks(LibrarySource source)
+    {
+        var library = await _dataAccess.GetAll(source);
+        return library.Tracks.Where(t => t.Source == source).Select(t => t.Id).ToList();
+    }
 }

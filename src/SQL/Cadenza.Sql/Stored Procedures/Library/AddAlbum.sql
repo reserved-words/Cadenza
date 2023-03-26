@@ -4,6 +4,7 @@
 	@Title NVARCHAR(500),
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
+	@DiscCount INT,
 	@ArtworkUrl NVARCHAR(500),
 	@TagList NVARCHAR(1000),
 	@Id INT OUTPUT
@@ -25,6 +26,7 @@ BEGIN
 		[Title],
 		[ReleaseTypeId],
 		[Year],
+		[DiscCount],
 		[ArtworkUrl]
 	)
 	VALUES (
@@ -33,6 +35,7 @@ BEGIN
 		@Title,
 		@ReleaseTypeId,
 		@Year,
+		@DiscCount,
 		@ArtworkUrl
 	)
 

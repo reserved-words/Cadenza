@@ -17,11 +17,7 @@ internal class SyncService : ISyncService
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        var library = await _repository.Get(source);
-
-        return library.Tracks
-            .Select(t => t.Id)
-            .ToList();
+        return await _repository.GetAllTracks(source);
     }
 
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)

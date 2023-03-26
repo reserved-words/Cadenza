@@ -79,6 +79,11 @@
     <Build Include="Stored Procedures\Library\AddAlbum.sql" />
     <Build Include="Stored Procedures\Library\AddDisc.sql" />
     <Build Include="Stored Procedures\Library\AddTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbums.sql" />
+    <Build Include="Stored Procedures\Library\GetArtists.sql" />
+    <Build Include="Stored Procedures\Library\GetDiscs.sql" />
+    <Build Include="Stored Procedures\Library\GetTracks.sql" />
+    <Build Include="Stored Procedures\Library\GetTrackIds.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

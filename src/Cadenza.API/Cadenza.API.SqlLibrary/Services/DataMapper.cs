@@ -1,7 +1,5 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Common.Interfaces.Utilities;
 
 namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
@@ -22,6 +20,7 @@ internal class DataMapper : IDataMapper
             Title = track.Album.Title,
             ReleaseTypeId = (int)track.Album.ReleaseType,
             Year = track.Album.Year,
+            DiscCount = track.Album.DiscCount,
             ArtworkUrl = track.Album.ArtworkUrl,
             TagList = track.Album.Tags.ToString()
         };
@@ -90,6 +89,70 @@ internal class DataMapper : IDataMapper
             Country = track.Artist.Country,
             ImageUrl = track.Artist.ImageUrl,
             TagList = track.Artist.Tags.ToString()
+        };
+    }
+
+
+
+    public AlbumInfo MapAlbum(GetAlbumData album, List<GetDiscData> discs)
+    {
+        return new AlbumInfo
+        {
+            Source = (LibrarySource)album.SourceId,
+            Id = album.Id.ToString(),
+            ArtistId = album.ArtistNameId,
+            ArtistName = album.ArtistName,
+            Title = album.Title,
+            ReleaseType = (ReleaseType)album.ReleaseTypeId,
+            Year = album.Year,
+            DiscCount = album.DiscCount,
+            TrackCounts = discs.Select(d => d.TrackCount).ToList(),
+            ArtworkUrl = album.ArtworkUrl,
+            Tags = new TagList(album.TagList)
+        };
+    }
+
+    public AlbumTrackLink MapAlbumTrack(GetTrackData track)
+    {
+        return new AlbumTrackLink
+        {
+            TrackId = track.IdFromSource,
+            AlbumId = track.AlbumId.ToString(),
+            DiscNo = track.DiscIndex,
+            TrackNo = track.TrackNo
+        };
+    }
+
+    public ArtistInfo MapArtist(GetArtistData artist)
+    {
+        return new ArtistInfo
+        {
+            Id = artist.NameId,
+            Name = artist.Name,
+            Grouping = (Grouping)artist.GroupingId,
+            Genre = artist.Genre,
+            City = artist.City,
+            State = artist.State,
+            Country = artist.Country,
+            ImageUrl = artist.ImageUrl,
+            Tags = new TagList(artist.TagList)
+        };
+    }
+
+    public TrackInfo MapTrack(GetTrackData track)
+    {
+        return new TrackInfo
+        {
+            Source = (LibrarySource)track.SourceId,
+            Id = track.IdFromSource,
+            ArtistId = track.ArtistNameId,
+            ArtistName = track.ArtistName,
+            AlbumId = track.AlbumId.ToString(),
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            Year = track.Year,
+            Lyrics = track.Lyrics,
+            Tags = new TagList(track.TagList)
         };
     }
 }

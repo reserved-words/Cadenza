@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Library].[Artists]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
     [NameId] NVARCHAR(200) NOT NULL, 
     [Name] NVARCHAR(200) NOT NULL, 
     [GroupingId] INT NOT NULL, 
