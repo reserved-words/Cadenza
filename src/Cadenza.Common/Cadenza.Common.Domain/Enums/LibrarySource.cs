@@ -2,5 +2,5 @@
 
 public enum LibrarySource
 {
-    Local
+    Local = 1
 }

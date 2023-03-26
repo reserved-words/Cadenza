@@ -2,10 +2,10 @@
 
 public enum Grouping
 {
-    None,
-    Alternative,
-    Classical,
-    Metal,
-    Musicals,
-    Pop
+    None = 0,
+    Alternative = 1,
+    Classical = 2,
+    Metal = 3,
+    Musicals = 4,
+    Pop = 5
 }

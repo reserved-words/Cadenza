@@ -61,6 +61,8 @@
     <Folder Include="Tables\Library" />
     <Folder Include="Tables\Admin" />
     <Folder Include="SeedData" />
+    <Folder Include="Stored Procedures" />
+    <Folder Include="Stored Procedures\Library" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -73,6 +75,10 @@
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
     <None Include="SeedData\Groupings.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
+    <Build Include="Stored Procedures\Library\AddArtist.sql" />
+    <Build Include="Stored Procedures\Library\AddAlbum.sql" />
+    <Build Include="Stored Procedures\Library\AddDisc.sql" />
+    <Build Include="Stored Procedures\Library\AddTrack.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

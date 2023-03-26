@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Library].[Tracks]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-	[IdFromSource] NVARCHAR(500),
+	[IdFromSource] NVARCHAR(500) NOT NULL,
 	[ArtistId] INT NOT NULL,
 	[DiscId] INT NOT NULL,
 	[TrackNo] INT NOT NULL,
@@ -15,7 +15,10 @@
 
 GO
 
-CREATE INDEX [UNQ_Tracks] ON [Library].[Tracks] ([ArtistId],[DiscId],[TrackNo])
+CREATE INDEX [UNQ_Tracks] ON [Library].[Tracks] ([IdFromSource])
+GO
+
+CREATE INDEX [UNQ_DiscTracks] ON [Library].[Tracks] ([DiscId],[TrackNo])
 GO
 
 
