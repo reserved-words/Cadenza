@@ -4,7 +4,7 @@ using Dapper;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
-internal class ReadService : IReadService
+internal class DataReadService : IDataReadService
 {
     private const string GetArtistsProcedure = "[Library].[GetArtists]";
     private const string GetAlbumsProcedure = "[Library].[GetAlbums]";
@@ -13,9 +13,9 @@ internal class ReadService : IReadService
     private const string GetTrackIdsProcedure = "[Library].[GetTrackIds]";
     private const string SourceIdParameter = "@SourceId";
 
-    private IDatabaseAccess _dbAccess;
+    private IDataAccess _dbAccess;
 
-    public ReadService(IDatabaseAccess dbAccess)
+    public DataReadService(IDataAccess dbAccess)
     {
         _dbAccess = dbAccess;
     }

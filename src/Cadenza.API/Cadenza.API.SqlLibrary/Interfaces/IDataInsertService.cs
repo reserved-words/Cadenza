@@ -2,7 +2,7 @@
 
 namespace Cadenza.API.SqlLibrary.Interfaces;
 
-internal interface IInsertService
+internal interface IDataInsertService
 {
     Task<int> AddArtist(AddArtistData data);
     Task<int> AddAlbum(AddAlbumData data);

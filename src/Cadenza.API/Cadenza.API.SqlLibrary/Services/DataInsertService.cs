@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
-internal class InsertService : IInsertService
+internal class DataInsertService : IDataInsertService
 {
     private const string AddArtistProcedure = "[Library].[AddArtist]";
     private const string AddAlbumProcedure = "[Library].[AddAlbum]";
@@ -13,9 +13,9 @@ internal class InsertService : IInsertService
     private const string AddTrackProcedure = "[Library].[AddTrack]";
     private const string IdParameter = "Id";
 
-    private IDatabaseAccess _dbAccess;
+    private IDataAccess _dbAccess;
 
-    public InsertService(IDatabaseAccess dbAccess)
+    public DataInsertService(IDataAccess dbAccess)
     {
         _dbAccess = dbAccess;
     }

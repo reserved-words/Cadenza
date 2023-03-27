@@ -89,6 +89,14 @@
     <Build Include="Views\Library\vw_ArtistTags.sql" />
     <Build Include="Views\Library\vw_AlbumTags.sql" />
     <Build Include="Views\Library\vw_TrackTags.sql" />
+    <Build Include="Stored Procedures\Library\DeleteTrack.sql" />
+    <Build Include="Stored Procedures\Library\DeleteEmptyArtists.sql" />
+    <Build Include="Stored Procedures\Library\DeleteEmptyAlbums.sql" />
+    <Build Include="Stored Procedures\Library\DeleteEmptyDiscs.sql" />
+    <Build Include="Views\Library\vw_NonEmptyArtists.sql" />
+    <Build Include="Views\Library\vw_EmptyArtists.sql" />
+    <Build Include="Views\Library\vw_EmptyAlbums.sql" />
+    <Build Include="Views\Library\vw_EmptyDiscs.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

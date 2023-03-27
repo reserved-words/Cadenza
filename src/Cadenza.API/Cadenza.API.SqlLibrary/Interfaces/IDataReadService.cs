@@ -2,7 +2,7 @@
 
 namespace Cadenza.API.SqlLibrary.Interfaces;
 
-internal interface IReadService
+internal interface IDataReadService
 {
     Task<List<GetArtistData>> GetArtists();
     Task<List<GetAlbumData>> GetAlbums(LibrarySource? source);

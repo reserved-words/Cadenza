@@ -1,0 +1,9 @@
+﻿using Dapper;
+
+namespace Cadenza.API.SqlLibrary.Interfaces;
+
+internal interface IDataAccess
+{
+    Task Execute(string storedProcedureName, DynamicParameters parameters = null);
+    Task<List<T>> Query<T>(string storedProcedureName, DynamicParameters parameters = null);
+}
