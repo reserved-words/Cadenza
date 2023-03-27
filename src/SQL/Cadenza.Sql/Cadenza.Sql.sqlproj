@@ -63,6 +63,8 @@
     <Folder Include="SeedData" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Stored Procedures\Library" />
+    <Folder Include="Views" />
+    <Folder Include="Views\Library" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -84,6 +86,9 @@
     <Build Include="Stored Procedures\Library\GetDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetTracks.sql" />
     <Build Include="Stored Procedures\Library\GetTrackIds.sql" />
+    <Build Include="Views\Library\vw_ArtistTags.sql" />
+    <Build Include="Views\Library\vw_AlbumTags.sql" />
+    <Build Include="Views\Library\vw_TrackTags.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

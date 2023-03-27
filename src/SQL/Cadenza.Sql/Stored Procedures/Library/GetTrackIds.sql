@@ -4,13 +4,13 @@ AS
 BEGIN
 
 	SELECT 
-		T.[IdFromSource]
+		TRK.[IdFromSource]
 	FROM
-		[Library].[Tracks] T
+		[Library].[Tracks] TRK
 	INNER JOIN 
-		[Library].[Discs] D ON D.[Id] = T.[DiscId]
+		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
 	INNER JOIN 
-		[Library].[Albums] A ON A.[Id] = D.[AlbumId]
-		AND (@SourceId IS NULL OR A.[SourceId] = @SourceId)
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
+		AND (@SourceId IS NULL OR ALB.[SourceId] = @SourceId)
 
 END

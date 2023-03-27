@@ -4,14 +4,14 @@ AS
 BEGIN
 
 	SELECT 
-		D.[Id],
-		D.[AlbumId],
-		D.[Index],
-		D.[TrackCount]
+		DSC.[Id],
+		DSC.[AlbumId],
+		DSC.[Index],
+		DSC.[TrackCount]
 	FROM
-		[Library].[Discs] D
+		[Library].[Discs] DSC
 	INNER JOIN
-		[Library].[Albums] A ON A.[Id] = D.[AlbumId] 
-		AND (@SourceId IS NULL OR A.[SourceId] = @SourceId)
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId] 
+		AND (@SourceId IS NULL OR ALB.[SourceId] = @SourceId)
 
 END

@@ -4,29 +4,32 @@ AS
 BEGIN
 
 	SELECT 
-		T.[Id],
-		T.[IdFromSource],
-		T.[ArtistId],
-		T.[DiscId],
-		T.[TrackNo],
-		T.[Title],
-		T.[DurationSeconds],
-		T.[Year],
-		T.[Lyrics],
-		A.[Id] [AlbumId],
-		D.[Index] [DiscIndex],
-		A.[SourceId] [SourceId],
+		TRK.[Id],
+		TRK.[IdFromSource],
+		TRK.[ArtistId],
+		TRK.[DiscId],
+		TRK.[TrackNo],
+		TRK.[Title],
+		TRK.[DurationSeconds],
+		TRK.[Year],
+		TRK.[Lyrics],
+		ALB.[Id] [AlbumId],
+		DSC.[Index] [DiscIndex],
+		ALB.[SourceId] [SourceId],
 		ART.[NameId] [ArtistNameId],
-		ART.[Name] [ArtistName]
+		ART.[Name] [ArtistName],
+		TAG.[TagList]
 	FROM
-		[Library].[Tracks] T
+		[Library].[Tracks] TRK
 	INNER JOIN 
-		[Library].[Discs] D ON D.[Id] = T.[DiscId]
+		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
 	INNER JOIN 
-		[Library].[Albums] A ON A.[Id] = D.[AlbumId]
-		AND (@SourceId IS NULL OR A.[SourceId] = @SourceId)
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
+		AND (@SourceId IS NULL OR ALB.[SourceId] = @SourceId)
 	INNER JOIN 
-		[Library].[Artists] ART ON ART.[Id] = T.[ArtistId]
+		[Library].[Artists] ART ON ART.[Id] = TRK.[ArtistId]
+	LEFT JOIN
+		[Library].[vw_TrackTags] TAG ON TAG.[TrackId] = TRK.[Id]
 
 
 END

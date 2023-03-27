@@ -13,13 +13,18 @@ BEGIN
 		ALB.[DiscCount],
 		ALB.[ArtworkUrl],
 		ART.[NameId] [ArtistNameId],
-		ART.[Name] [ArtistName]
+		ART.[Name] [ArtistName],
+		TAG.[TagList]
 	FROM
 		[Library].[Albums] ALB
 	INNER JOIN
 		[Library].[Artists] ART ON ART.[Id] = ALB.[ArtistId]
+	LEFT JOIN
+		[Library].[vw_AlbumTags] TAG ON TAG.[AlbumId] = ALB.[Id]
 	WHERE
 		@SourceId IS NULL 
-		OR [SourceId] = @SourceId
+		OR ALB.[SourceId] = @SourceId
+
+
 
 END
