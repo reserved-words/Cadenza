@@ -20,7 +20,7 @@ internal class DataInsertService : IDataInsertService
         _dbAccess = dbAccess;
     }
 
-    public async Task<int> AddAlbum(AddAlbumData data)
+    public async Task<int> AddAlbum(NewAlbumData data)
     {
         var parameters = new DynamicParameters();
 
@@ -40,7 +40,7 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public async Task<int> AddArtist(AddArtistData data)
+    public async Task<int> AddArtist(NewArtistData data)
     {
         var parameters = new DynamicParameters();
 
@@ -61,7 +61,7 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public async Task<int> AddDisc(AddDiscData data)
+    public async Task<int> AddDisc(NewDiscData data)
     {
         var parameters = new DynamicParameters();
 
@@ -76,7 +76,7 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public async Task<int> AddTrack(AddTrackData data)
+    public async Task<int> AddTrack(NewTrackData data)
     {
         var parameters = new DynamicParameters();
 

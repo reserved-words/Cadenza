@@ -4,8 +4,8 @@ namespace Cadenza.API.SqlLibrary.Interfaces;
 
 internal interface IDataInsertService
 {
-    Task<int> AddArtist(AddArtistData data);
-    Task<int> AddAlbum(AddAlbumData data);
-    Task<int> AddDisc(AddDiscData data);
-    Task<int> AddTrack(AddTrackData data);
+    Task<int> AddArtist(NewArtistData data);
+    Task<int> AddAlbum(NewAlbumData data);
+    Task<int> AddDisc(NewDiscData data);
+    Task<int> AddTrack(NewTrackData data);
 }

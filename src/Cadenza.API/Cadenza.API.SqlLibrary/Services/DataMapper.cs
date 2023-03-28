@@ -11,9 +11,9 @@ internal class DataMapper : IDataMapper
         _idGenerator = idGenerator;
     }
 
-    public AddAlbumData MapAlbum(TrackFull track, int artistId)
+    public NewAlbumData MapAlbum(TrackFull track, int artistId)
     {
-        return new AddAlbumData
+        return new NewAlbumData
         {
             SourceId = (int)track.Album.Source,
             ArtistId = artistId,
@@ -26,9 +26,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AddArtistData MapAlbumArtist(TrackFull track)
+    public NewArtistData MapAlbumArtist(TrackFull track)
     {
-        return new AddArtistData
+        return new NewArtistData
         {
             NameId = _idGenerator.GenerateId(track.AlbumArtist.Name),
             Name = track.AlbumArtist.Name,
@@ -42,7 +42,7 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AddDiscData MapDisc(TrackFull track, int albumId)
+    public NewDiscData MapDisc(TrackFull track, int albumId)
     {
         var index = track.AlbumTrack.DiscNo;
         if (index <= 0)
@@ -52,7 +52,7 @@ internal class DataMapper : IDataMapper
             ? track.Album.TrackCounts[index - 1]
             : 0;
 
-        return new AddDiscData
+        return new NewDiscData
         {
             AlbumId = albumId,
             Index = index,
@@ -60,9 +60,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AddTrackData MapTrack(TrackFull track, int artistId, int discId)
+    public NewTrackData MapTrack(TrackFull track, int artistId, int discId)
     {
-        return new AddTrackData
+        return new NewTrackData
         {
             IdFromSource = track.Track.Id,
             ArtistId = artistId,
@@ -76,9 +76,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AddArtistData MapTrackArtist(TrackFull track)
+    public NewArtistData MapTrackArtist(TrackFull track)
     {
-        return new AddArtistData
+        return new NewArtistData
         {
             NameId = _idGenerator.GenerateId(track.Artist.Name),
             Name = track.Artist.Name,

@@ -2,5 +2,4 @@
 
 internal class GetArtistData : ArtistData
 {
-    public int Id { get; set; }
 }

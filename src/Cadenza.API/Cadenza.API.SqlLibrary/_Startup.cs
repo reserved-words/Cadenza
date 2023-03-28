@@ -4,6 +4,7 @@ global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Interfaces.Utilities;
+global using Cadenza.Common.Domain.Model.Updates;
 
 using Cadenza.API.Interfaces.Repositories;
 using Cadenza.API.SqlLibrary.Interfaces;

@@ -2,5 +2,4 @@
 
 internal class GetDiscData : DiscData
 {
-    public int Id { get; set; }
 }

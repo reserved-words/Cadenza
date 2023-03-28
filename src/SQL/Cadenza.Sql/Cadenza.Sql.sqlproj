@@ -97,6 +97,12 @@
     <Build Include="Views\Library\vw_EmptyArtists.sql" />
     <Build Include="Views\Library\vw_EmptyAlbums.sql" />
     <Build Include="Views\Library\vw_EmptyDiscs.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbum.sql" />
+    <Build Include="Stored Procedures\Library\GetArtist.sql" />
+    <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\UpdateAlbum.sql" />
+    <Build Include="Stored Procedures\Library\UpdateArtist.sql" />
+    <Build Include="Stored Procedures\Library\UpdateTrack.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

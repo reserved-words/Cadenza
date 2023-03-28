@@ -2,5 +2,7 @@
 
 internal interface ILibraryUpdater
 {
-    Task RemoveChildlessItems();
+    Task UpdateAlbum(ItemUpdates updates);
+    Task UpdateArtist(ItemUpdates updates);
+    Task UpdateTrack(ItemUpdates updates);
 }

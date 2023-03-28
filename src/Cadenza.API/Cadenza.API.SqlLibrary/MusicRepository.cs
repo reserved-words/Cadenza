@@ -1,19 +1,20 @@
 ﻿using Cadenza.API.Interfaces.Repositories;
 using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.SqlLibrary;
 internal class MusicRepository : IMusicRepository
 {
     private readonly ILibraryReader _libraryReader;
+    private readonly ILibraryUpdater _libraryUpdater;
     private readonly ITrackAdder _trackAdder;
     private readonly ITrackRemover _trackRemover;
 
-    public MusicRepository(ITrackAdder trackAdder, ITrackRemover trackRemover, ILibraryReader libraryReader)
+    public MusicRepository(ITrackAdder trackAdder, ITrackRemover trackRemover, ILibraryReader libraryReader, ILibraryUpdater libraryUpdater)
     {
         _trackAdder = trackAdder;
         _trackRemover = trackRemover;
         _libraryReader = libraryReader;
+        _libraryUpdater = libraryUpdater;
     }
 
     public async Task AddTrack(LibrarySource source, TrackFull track)
@@ -36,18 +37,18 @@ internal class MusicRepository : IMusicRepository
         await _trackRemover.RemoveTracks(source, ids);
     }
 
-    public Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateAlbum(LibrarySource source, ItemUpdates updates)
     {
-        throw new NotImplementedException();
+        await _libraryUpdater.UpdateAlbum(updates);
     }
 
-    public Task UpdateArtist(ItemUpdates updates)
+    public async Task UpdateArtist(ItemUpdates updates)
     {
-        throw new NotImplementedException();
+        await _libraryUpdater.UpdateArtist(updates);
     }
 
-    public Task UpdateTrack(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
     {
-        throw new NotImplementedException();
+        await _libraryUpdater.UpdateTrack(updates);
     }
 }

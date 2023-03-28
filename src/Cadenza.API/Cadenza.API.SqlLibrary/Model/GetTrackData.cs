@@ -2,7 +2,6 @@
 
 internal class GetTrackData : TrackData
 {
-    public int Id { get; set; }
     public int AlbumId { get; set; }
     public int DiscIndex { get; set; }
     public LibrarySource SourceId { get; internal set; }

@@ -9,4 +9,7 @@ internal interface IDataReadService
     Task<List<GetDiscData>> GetDiscs(LibrarySource? source);
     Task<List<GetTrackData>> GetTracks(LibrarySource? source);
     Task<List<string>> GetAllTrackIds(LibrarySource source);
+    Task<AlbumData> GetAlbum(int albumId);
+    Task<ArtistData> GetArtist(string nameId);
+    Task<TrackData> GetTrack(string idFromSource);
 }
