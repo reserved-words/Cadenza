@@ -1,6 +1,4 @@
 ﻿using Cadenza.API.Interfaces.Repositories;
-using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.API.SqlLibrary;
 
