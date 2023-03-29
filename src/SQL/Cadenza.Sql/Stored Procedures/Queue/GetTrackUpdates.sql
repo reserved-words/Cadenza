@@ -1,8 +1,11 @@
 ﻿CREATE PROCEDURE [Queue].[GetTrackUpdates]
+	@SourceId INT
 AS
 BEGIN
 
 	SELECT 
+		UPD.[Id],
+		UPD.[SourceId],
 		UPD.[TrackId],
 		PRP.[Name] [PropertyName],
 		UPD.[OriginalValue],
@@ -12,6 +15,8 @@ BEGIN
 	INNER JOIN
 		[Admin].[TrackProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
 	WHERE
+		UPD.[SourceId] = @SourceId
+	AND
 		UPD.[DateProcessed] IS NULL
 	AND 
 		UPD.[DateRemoved] IS NULL

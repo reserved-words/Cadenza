@@ -7,4 +7,7 @@ internal interface IDataUpdateService
     Task UpdateAlbum(AlbumData album);
     Task UpdateArtist(ArtistData artist);
     Task UpdateTrack(TrackData track);
+    Task MarkAlbumUpdateDone(int id);
+    Task MarkArtistUpdateDone(int id);
+    Task MarkTrackUpdateDone(int id);
 }

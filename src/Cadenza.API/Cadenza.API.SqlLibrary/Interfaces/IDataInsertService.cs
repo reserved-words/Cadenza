@@ -8,4 +8,7 @@ internal interface IDataInsertService
     Task<int> AddAlbum(NewAlbumData data);
     Task<int> AddDisc(NewDiscData data);
     Task<int> AddTrack(NewTrackData data);
+    Task AddAlbumUpdate(NewAlbumUpdateData data);
+    Task AddArtistUpdate(NewArtistUpdateData data);
+    Task AddTrackUpdate(NewTrackUpdateData data);
 }

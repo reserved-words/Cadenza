@@ -40,6 +40,11 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
+    public Task AddAlbumUpdate(NewAlbumUpdateData data)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<int> AddArtist(NewArtistData data)
     {
         var parameters = new DynamicParameters();
@@ -59,6 +64,11 @@ internal class DataInsertService : IDataInsertService
         await _dbAccess.Execute(AddArtistProcedure, parameters);
 
         return parameters.Get<int>(IdParameter);
+    }
+
+    public Task AddArtistUpdate(NewArtistUpdateData data)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<int> AddDisc(NewDiscData data)
@@ -95,5 +105,10 @@ internal class DataInsertService : IDataInsertService
         await _dbAccess.Execute(AddTrackProcedure, parameters);
 
         return parameters.Get<int>(IdParameter);
+    }
+
+    public Task AddTrackUpdate(NewTrackUpdateData data)
+    {
+        throw new NotImplementedException();
     }
 }

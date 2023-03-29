@@ -41,6 +41,11 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<GetAlbumData>(GetAlbumsProcedure, parameters);
     }
 
+    public Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<string>> GetAllTrackIds(LibrarySource source)
     {
         var parameters = new DynamicParameters();
@@ -58,6 +63,11 @@ internal class DataReadService : IDataReadService
     public async Task<List<GetArtistData>> GetArtists()
     {
         return await _dbAccess.Query<GetArtistData>(GetArtistsProcedure, null);
+    }
+
+    public Task<List<ArtistUpdateData>> GetArtistUpdates()
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<List<GetDiscData>> GetDiscs(LibrarySource? source)
@@ -81,5 +91,10 @@ internal class DataReadService : IDataReadService
         parameters.Add(SourceIdParameter, (int?)source);
         return await _dbAccess.Query<GetTrackData>(GetTracksProcedure, parameters);
 
+    }
+
+    public Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source)
+    {
+        throw new NotImplementedException();
     }
 }

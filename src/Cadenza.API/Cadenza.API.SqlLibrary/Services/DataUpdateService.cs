@@ -16,6 +16,21 @@ internal class DataUpdateService : IDataUpdateService
         _dbAccess = dbAccess;
     }
 
+    public Task MarkAlbumUpdateDone(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task MarkArtistUpdateDone(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task MarkTrackUpdateDone(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task UpdateAlbum(AlbumData album)
     {
         await _dbAccess.Execute(UpdateAlbumProcedure, album);

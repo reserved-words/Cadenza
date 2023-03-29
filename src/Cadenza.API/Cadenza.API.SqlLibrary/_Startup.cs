@@ -28,6 +28,8 @@ public static class _Startup
         return services
             .AddTransient<ILibraryReader, LibraryReader>()
             .AddTransient<ILibraryUpdater, LibraryUpdater>()
+            .AddTransient<IQueueReader, QueueReader>()
+            .AddTransient<IQueueUpdater, QueueUpdater>()
             .AddTransient<ITrackAdder, TrackAdder>()
             .AddTransient<ITrackRemover, TrackRemover>()
             .AddTransient<IDataAccess, DataAccess>()

@@ -12,4 +12,7 @@ internal interface IDataReadService
     Task<AlbumData> GetAlbum(int albumId);
     Task<ArtistData> GetArtist(string nameId);
     Task<TrackData> GetTrack(string idFromSource);
+    Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source);
+    Task<List<ArtistUpdateData>> GetArtistUpdates();
+    Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source);
 }

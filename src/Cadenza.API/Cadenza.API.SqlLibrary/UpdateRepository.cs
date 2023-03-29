@@ -1,21 +1,32 @@
 ﻿using Cadenza.API.Interfaces.Repositories;
+using Cadenza.API.SqlLibrary.Interfaces;
 
 namespace Cadenza.API.SqlLibrary;
 
 internal class UpdateRepository : IUpdateRepository
 {
-    public Task Add(ItemUpdates update, LibrarySource? itemSource)
+    private readonly IQueueReader _reader;
+    private readonly IQueueUpdater _updater;
+
+
+    public UpdateRepository(IQueueReader reader, IQueueUpdater updater)
     {
-        throw new NotImplementedException();
+        _reader = reader;
+        _updater = updater;
     }
 
-    public Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task Add(ItemUpdates update, LibrarySource? itemSource)
     {
-        throw new NotImplementedException();
+        await _updater.QueueUpdates(update);
     }
 
-    public Task Remove(ItemUpdates update, LibrarySource source)
+    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        return await _reader.GetUpdates(source);
+    }
+
+    public async Task Remove(ItemUpdates update, LibrarySource source)
+    {
+        await _updater.MarkUpdatesDone(update);
     }
 }

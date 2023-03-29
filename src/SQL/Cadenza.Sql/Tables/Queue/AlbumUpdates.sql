@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [Queue].[AlbumUpdates]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[SourceId] INT NOT NULL,
 	[AlbumId] INT NOT NULL,
 	[PropertyId] INT NOT NULL,
 	[OriginalValue] NVARCHAR(MAX),
@@ -9,7 +10,8 @@
 	[DateProcessed] DATETIME NULL, 
 	[DateRemoved] DATETIME NULL,
 	[DateErrored] DATETIME NULL,
-    CONSTRAINT [FK_AlbumUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[AlbumProperties]([Id])
+    CONSTRAINT [FK_AlbumUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[AlbumProperties]([Id]), 
+    CONSTRAINT [FK_AlbumUpdates_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Admin].[Sources]([Id])
 )
 
 GO

@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [Queue].[TrackUpdates]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[SourceId] INT NOT NULL,
 	[TrackId] INT NOT NULL,
 	[PropertyId] INT NOT NULL,
 	[OriginalValue] NVARCHAR(MAX),
@@ -9,7 +10,8 @@
 	[DateProcessed] DATETIME NULL, 
 	[DateRemoved] DATETIME NULL,
 	[DateErrored] DATETIME NULL,
-    CONSTRAINT [FK_TrackUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[TrackProperties]([Id])
+    CONSTRAINT [FK_TrackUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[TrackProperties]([Id]), 
+    CONSTRAINT [FK_TrackUpdates_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Admin].[Sources]([Id])
 )
 
 GO

@@ -121,6 +121,9 @@
     <Build Include="Stored Procedures\Queue\GetAlbumUpdates.sql" />
     <Build Include="Stored Procedures\Queue\GetArtistUpdates.sql" />
     <Build Include="Stored Procedures\Queue\GetTrackUpdates.sql" />
+    <Build Include="Stored Procedures\Queue\MarkAlbumUpdateDone.sql" />
+    <Build Include="Stored Procedures\Queue\MarkArtistUpdateDone.sql" />
+    <Build Include="Stored Procedures\Queue\MarkTrackUpdateDone.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
