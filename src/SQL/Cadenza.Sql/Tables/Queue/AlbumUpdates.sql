@@ -16,3 +16,6 @@ GO
 
 CREATE INDEX [IX_AlbumUpdates] ON [Queue].[AlbumUpdates] ([AlbumId])
 GO
+
+CREATE INDEX [IX_AlbumUpdate_Properties] ON [Queue].[AlbumUpdates] ([AlbumId], [PropertyId])
+GO

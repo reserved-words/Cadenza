@@ -66,6 +66,7 @@
     <Folder Include="Views" />
     <Folder Include="Views\Library" />
     <Folder Include="Tables\Queue" />
+    <Folder Include="Stored Procedures\Queue" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -114,6 +115,12 @@
     <None Include="SeedData\ArtistProperties.sql" />
     <None Include="SeedData\AlbumProperties.sql" />
     <None Include="SeedData\TrackProperties.sql" />
+    <Build Include="Stored Procedures\Queue\AddAlbumUpdate.sql" />
+    <Build Include="Stored Procedures\Queue\AddArtistUpdate.sql" />
+    <Build Include="Stored Procedures\Queue\AddTrackUpdate.sql" />
+    <Build Include="Stored Procedures\Queue\GetAlbumUpdates.sql" />
+    <Build Include="Stored Procedures\Queue\GetArtistUpdates.sql" />
+    <Build Include="Stored Procedures\Queue\GetTrackUpdates.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

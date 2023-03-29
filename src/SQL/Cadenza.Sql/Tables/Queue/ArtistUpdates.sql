@@ -16,3 +16,6 @@ GO
 
 CREATE INDEX [IX_ArtistUpdates] ON [Queue].[ArtistUpdates] ([ArtistId])
 GO
+
+CREATE INDEX [IX_ArtistUpdate_Properties] ON [Queue].[ArtistUpdates] ([ArtistId], [PropertyId])
+GO

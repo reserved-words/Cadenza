@@ -16,3 +16,6 @@ GO
 
 CREATE INDEX [IX_TrackUpdates] ON [Queue].[TrackUpdates] ([TrackId])
 GO
+
+CREATE INDEX [IX_TrackUpdate_Properties] ON [Queue].[TrackUpdates] ([TrackId], [PropertyId])
+GO
