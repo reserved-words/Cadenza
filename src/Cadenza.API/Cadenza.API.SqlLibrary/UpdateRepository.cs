@@ -8,7 +8,6 @@ internal class UpdateRepository : IUpdateRepository
     private readonly IQueueReader _reader;
     private readonly IQueueUpdater _updater;
 
-
     public UpdateRepository(IQueueReader reader, IQueueUpdater updater)
     {
         _reader = reader;
@@ -17,7 +16,17 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task Add(ItemUpdates update, LibrarySource? itemSource)
     {
-        await _updater.QueueUpdates(update);
+        if (itemSource.HasValue)
+        {
+            await _updater.QueueUpdates(update, itemSource.Value);
+        }
+        else
+        {
+            foreach (var source in Enum.GetValues<LibrarySource>())
+            {
+                await _updater.QueueUpdates(update, source);
+            }
+        }
     }
 
     public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)

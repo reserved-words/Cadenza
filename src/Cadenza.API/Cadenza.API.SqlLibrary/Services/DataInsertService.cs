@@ -11,6 +11,9 @@ internal class DataInsertService : IDataInsertService
     private const string AddAlbumProcedure = "[Library].[AddAlbum]";
     private const string AddDiscProcedure = "[Library].[AddDisc]";
     private const string AddTrackProcedure = "[Library].[AddTrack]";
+    private const string AddAlbumUpdateProcedure = "[Queue].[AddAlbumUpdate]";
+    private const string AddArtistUpdateProcedure = "[Queue].[AddArtistUpdate]";
+    private const string AddTrackUpdateProcedure = "[Queue].[AddTrackUpdate]";
     private const string IdParameter = "Id";
 
     private IDataAccess _dbAccess;
@@ -40,9 +43,9 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public Task AddAlbumUpdate(NewAlbumUpdateData data)
+    public async Task AddAlbumUpdate(NewAlbumUpdateData data)
     {
-        throw new NotImplementedException();
+        await _dbAccess.Execute(AddAlbumUpdateProcedure, data);
     }
 
     public async Task<int> AddArtist(NewArtistData data)
@@ -66,9 +69,9 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public Task AddArtistUpdate(NewArtistUpdateData data)
+    public async Task AddArtistUpdate(NewArtistUpdateData data)
     {
-        throw new NotImplementedException();
+        await _dbAccess.Execute(AddArtistUpdateProcedure, data);
     }
 
     public async Task<int> AddDisc(NewDiscData data)
@@ -107,8 +110,8 @@ internal class DataInsertService : IDataInsertService
         return parameters.Get<int>(IdParameter);
     }
 
-    public Task AddTrackUpdate(NewTrackUpdateData data)
+    public async Task AddTrackUpdate(NewTrackUpdateData data)
     {
-        throw new NotImplementedException();
+        await _dbAccess.Execute(AddTrackUpdateProcedure, data);
     }
 }

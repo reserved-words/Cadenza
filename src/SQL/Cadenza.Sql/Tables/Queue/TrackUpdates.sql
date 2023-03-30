@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [Queue].[TrackUpdates]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[Name] NVARCHAR(200),
 	[SourceId] INT NOT NULL,
 	[TrackId] INT NOT NULL,
 	[PropertyId] INT NOT NULL,

@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [Queue].[AddAlbumUpdate]
 	@AlbumId INT,
+	@Name NVARCHAR(200),
 	@SourceId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
@@ -31,12 +32,14 @@ BEGIN
 
 	INSERT INTO [Queue].[AlbumUpdates] (
 		[AlbumId],
+		[Name],
 		[PropertyId],
 		[OriginalValue],
 		[UpdatedValue]
 	)
 	VALUES (
 		@AlbumId,
+		@Name,
 		@PropertyId,
 		@OriginalValue,
 		@UpdatedValue

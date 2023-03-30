@@ -1,5 +1,6 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
+using Dapper;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
@@ -8,6 +9,11 @@ internal class DataUpdateService : IDataUpdateService
     private const string UpdateAlbumProcedure = "[Library].[UpdateAlbum]";
     private const string UpdateArtistProcedure = "[Library].[UpdateArtist]";
     private const string UpdateTrackProcedure = "[Library].[UpdateTrack]";
+    private const string MarkAlbumUpdateDoneProcedure = "[Queue].[MarkAlbumUpdateDone]";
+    private const string MarkArtistUpdateDoneProcedure = "[Queue].[MarkArtistUpdateDone]";
+    private const string MarkTrackUpdateDoneProcedure = "[Queue].[MarkTrackUpdateDone]";
+
+    private const string IdParameter = "@Id";
 
     private IDataAccess _dbAccess;
 
@@ -16,19 +22,25 @@ internal class DataUpdateService : IDataUpdateService
         _dbAccess = dbAccess;
     }
 
-    public Task MarkAlbumUpdateDone(int id)
+    public async Task MarkAlbumUpdateDone(int id)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.QuerySingle<TrackData>(MarkAlbumUpdateDoneProcedure, parameters);
     }
 
-    public Task MarkArtistUpdateDone(int id)
+    public async Task MarkArtistUpdateDone(int id)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.QuerySingle<TrackData>(MarkArtistUpdateDoneProcedure, parameters);
     }
 
-    public Task MarkTrackUpdateDone(int id)
+    public async Task MarkTrackUpdateDone(int id)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.QuerySingle<TrackData>(MarkTrackUpdateDoneProcedure, parameters);
     }
 
     public async Task UpdateAlbum(AlbumData album)

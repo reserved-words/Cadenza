@@ -14,6 +14,9 @@ internal class DataReadService : IDataReadService
     private const string GetTrackProcedure = "[Library].[GetTrack]";
     private const string GetTracksProcedure = "[Library].[GetTracks]";
     private const string GetTrackIdsProcedure = "[Library].[GetTrackIds]";
+    private const string GetAlbumUpdatesProcedure = "[Queue].[GetAlbumUpdates]";
+    private const string GetArtistUpdatesProcedure = "[Queue].[GetArtistUpdates]";
+    private const string GetTrackUpdatesProcedure = "[Queue].[GetTrackUpdates]";
 
     private const string IdParameter = "@Id";
     private const string IdFromSourceParameter = "@IdFromSource";
@@ -41,9 +44,11 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<GetAlbumData>(GetAlbumsProcedure, parameters);
     }
 
-    public Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
+    public async Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(SourceIdParameter, (int?)source);
+        return await _dbAccess.Query<AlbumUpdateData>(GetAlbumUpdatesProcedure, parameters);
     }
 
     public async Task<List<string>> GetAllTrackIds(LibrarySource source)
@@ -65,9 +70,11 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<GetArtistData>(GetArtistsProcedure, null);
     }
 
-    public Task<List<ArtistUpdateData>> GetArtistUpdates()
+    public async Task<List<ArtistUpdateData>> GetArtistUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(SourceIdParameter, (int?)source);
+        return await _dbAccess.Query<ArtistUpdateData>(GetArtistUpdatesProcedure, parameters);
     }
 
     public async Task<List<GetDiscData>> GetDiscs(LibrarySource? source)
@@ -75,7 +82,6 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(SourceIdParameter, (int?)source);
         return await _dbAccess.Query<GetDiscData>(GetDiscsProcedure, parameters);
-
     }
 
     public async Task<TrackData> GetTrack(string idFromSource)
@@ -93,8 +99,10 @@ internal class DataReadService : IDataReadService
 
     }
 
-    public Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source)
+    public async Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source)
     {
-        throw new NotImplementedException();
+        var parameters = new DynamicParameters();
+        parameters.Add(SourceIdParameter, (int?)source);
+        return await _dbAccess.Query<TrackUpdateData>(GetTrackUpdatesProcedure, parameters);
     }
 }
