@@ -41,6 +41,7 @@ BEGIN
 	INSERT INTO [Queue].[ArtistUpdates] (
 		[ArtistId],
 		[Name],
+		[SourceId],
 		[PropertyId],
 		[OriginalValue],
 		[UpdatedValue]
@@ -48,6 +49,7 @@ BEGIN
 	VALUES (
 		@ArtistId,
 		@Name,
+		@SourceId,
 		@PropertyId,
 		@OriginalValue,
 		@UpdatedValue

@@ -41,6 +41,7 @@ BEGIN
 	INSERT INTO [Queue].[TrackUpdates] (
 		[TrackId],
 		[Name],
+		[SourceId],
 		[PropertyId],
 		[OriginalValue],
 		[UpdatedValue]
@@ -48,6 +49,7 @@ BEGIN
 	VALUES (
 		@TrackId,
 		@Name,
+		@SourceId,
 		@PropertyId,
 		@OriginalValue,
 		@UpdatedValue

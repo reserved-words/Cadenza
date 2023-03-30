@@ -26,21 +26,21 @@ internal class DataUpdateService : IDataUpdateService
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
-        await _dbAccess.QuerySingle<TrackData>(MarkAlbumUpdateDoneProcedure, parameters);
+        await _dbAccess.Execute(MarkAlbumUpdateDoneProcedure, parameters);
     }
 
     public async Task MarkArtistUpdateDone(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
-        await _dbAccess.QuerySingle<TrackData>(MarkArtistUpdateDoneProcedure, parameters);
+        await _dbAccess.Execute(MarkArtistUpdateDoneProcedure, parameters);
     }
 
     public async Task MarkTrackUpdateDone(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
-        await _dbAccess.QuerySingle<TrackData>(MarkTrackUpdateDoneProcedure, parameters);
+        await _dbAccess.Execute(MarkTrackUpdateDoneProcedure, parameters);
     }
 
     public async Task UpdateAlbum(AlbumData album)

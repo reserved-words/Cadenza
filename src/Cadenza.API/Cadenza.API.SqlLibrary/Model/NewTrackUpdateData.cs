@@ -2,5 +2,5 @@
 
 internal class NewTrackUpdateData : NewUpdateData
 {
-    public string IdFromSource { get; set; }
+    public string TrackIdFromSource { get; set; }
 }

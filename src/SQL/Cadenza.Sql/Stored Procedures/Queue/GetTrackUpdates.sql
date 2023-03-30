@@ -7,7 +7,7 @@ BEGIN
 		UPD.[Id],
 		UPD.[Name],
 		UPD.[SourceId],
-		UPD.[TrackId],
+		TRK.[IdFromSource] [TrackIdFromSource],
 		PRP.[Name] [PropertyName],
 		UPD.[OriginalValue],
 		UPD.[UpdatedValue]
@@ -15,6 +15,8 @@ BEGIN
 		[Queue].[TrackUpdates] UPD
 	INNER JOIN
 		[Admin].[TrackProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
+	INNER JOIN
+		[Library].[Tracks] TRK ON TRK.[Id] = UPD.[TrackId]
 	WHERE
 		UPD.[SourceId] = @SourceId
 	AND

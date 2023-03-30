@@ -26,16 +26,17 @@ public static class _Startup
     private static IServiceCollection AddInternalServices(this IServiceCollection services)
     {
         return services
+            .AddTransient<IDataAccess, DataAccess>()
+            .AddTransient<IDataDeletionService, DataDeletionService>()
+            .AddTransient<IDataInsertService, DataInsertService>()
+            .AddTransient<IDataMapper, DataMapper>()
+            .AddTransient<IDataReadService, DataReadService>()
+            .AddTransient<IDataUpdateService, DataUpdateService>()
             .AddTransient<ILibraryReader, LibraryReader>()
             .AddTransient<ILibraryUpdater, LibraryUpdater>()
             .AddTransient<IQueueReader, QueueReader>()
             .AddTransient<IQueueUpdater, QueueUpdater>()
             .AddTransient<ITrackAdder, TrackAdder>()
-            .AddTransient<ITrackRemover, TrackRemover>()
-            .AddTransient<IDataAccess, DataAccess>()
-            .AddTransient<IDataMapper, DataMapper>()
-            .AddTransient<IDataDeletionService, DataDeletionService>()
-            .AddTransient<IDataInsertService, DataInsertService>()
-            .AddTransient<IDataReadService, DataReadService>();
+            .AddTransient<ITrackRemover, TrackRemover>();
     }
 }

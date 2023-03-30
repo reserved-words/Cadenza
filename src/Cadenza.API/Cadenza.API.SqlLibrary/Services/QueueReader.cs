@@ -45,7 +45,7 @@ internal class QueueReader : IQueueReader
 
     private List<ItemUpdates> ConvertArtistUpdates(List<ArtistUpdateData> data)
     {
-        return data.GroupBy(d => d.NameId)
+        return data.GroupBy(d => d.ArtistNameId)
             .Select(a => new ItemUpdates
             {
                 Type = LibraryItemType.Artist,
@@ -64,7 +64,7 @@ internal class QueueReader : IQueueReader
 
     private List<ItemUpdates> ConvertTrackUpdates(List<TrackUpdateData> data)
     {
-        return data.GroupBy(d => d.IdFromSource)
+        return data.GroupBy(d => d.TrackIdFromSource)
             .Select(a => new ItemUpdates
             {
                 Type = LibraryItemType.Track,

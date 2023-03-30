@@ -7,7 +7,7 @@ BEGIN
 		UPD.[Id],
 		UPD.[Name],
 		UPD.[SourceId],
-		UPD.[ArtistId],
+		ART.[NameId] [ArtistNameId],
 		PRP.[Name] [PropertyName],
 		UPD.[OriginalValue],
 		UPD.[UpdatedValue]
@@ -15,6 +15,8 @@ BEGIN
 		[Queue].[ArtistUpdates] UPD
 	INNER JOIN
 		[Admin].[ArtistProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
+	INNER JOIN
+		[Library].[Artists] ART ON ART.[Id] = UPD.[ArtistId]
 	WHERE
 		UPD.[SourceId] = @SourceId
 	AND
