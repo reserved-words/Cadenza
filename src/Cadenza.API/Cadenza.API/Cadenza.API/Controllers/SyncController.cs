@@ -44,7 +44,7 @@ public class SyncController : ControllerBase
     [HttpPost("MarkErrored/{source}")]
     public async Task MarkErrored(LibrarySource source, [FromBody] ItemUpdates update)
     {
-        await _service.MarkUpdated(source, update);
+        await _service.MarkErrored(source, update);
     }
 
     [HttpPost("MarkUpdated/{source}")]
