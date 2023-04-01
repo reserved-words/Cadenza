@@ -12,6 +12,9 @@ internal class DataUpdateService : IDataUpdateService
     private const string MarkAlbumUpdateDoneProcedure = "[Queue].[MarkAlbumUpdateDone]";
     private const string MarkArtistUpdateDoneProcedure = "[Queue].[MarkArtistUpdateDone]";
     private const string MarkTrackUpdateDoneProcedure = "[Queue].[MarkTrackUpdateDone]";
+    private const string MarkAlbumUpdateErroredProcedure = "[Queue].[MarkAlbumUpdateErrored]";
+    private const string MarkArtistUpdateErroredProcedure = "[Queue].[MarkArtistUpdateErrored]";
+    private const string MarkTrackUpdateErroredProcedure = "[Queue].[MarkTrackUpdateErrored]";
 
     private const string IdParameter = "@Id";
 
@@ -41,6 +44,27 @@ internal class DataUpdateService : IDataUpdateService
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
         await _dbAccess.Execute(MarkTrackUpdateDoneProcedure, parameters);
+    }
+
+    public async Task MarkAlbumUpdateErrored(int id)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.Execute(MarkAlbumUpdateErroredProcedure, parameters);
+    }
+
+    public async Task MarkArtistUpdateErrored(int id)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.Execute(MarkArtistUpdateErroredProcedure, parameters);
+    }
+
+    public async Task MarkTrackUpdateErrored(int id)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.Execute(MarkTrackUpdateErroredProcedure, parameters);
     }
 
     public async Task UpdateAlbum(AlbumData album)

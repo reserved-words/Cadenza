@@ -30,6 +30,22 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
+    public async Task MarkUpdatesErrored(ItemUpdates updates)
+    {
+        Func<int, Task> markAsErrored = updates.Type switch
+        {
+            LibraryItemType.Artist => _updateService.MarkArtistUpdateErrored,
+            LibraryItemType.Album => _updateService.MarkAlbumUpdateErrored,
+            LibraryItemType.Track => _updateService.MarkTrackUpdateErrored,
+            _ => throw new NotImplementedException()
+        };
+
+        foreach (var update in updates.Updates)
+        {
+            await markAsErrored(update.Id);
+        }
+    }
+
     public async Task QueueUpdates(ItemUpdates updates, LibrarySource source)
     {
         Func<ItemUpdates, LibrarySource, PropertyUpdate, Task> queue = updates.Type switch

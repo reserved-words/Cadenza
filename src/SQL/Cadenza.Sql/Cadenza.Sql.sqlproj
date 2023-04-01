@@ -124,6 +124,9 @@
     <Build Include="Stored Procedures\Queue\MarkAlbumUpdateDone.sql" />
     <Build Include="Stored Procedures\Queue\MarkArtistUpdateDone.sql" />
     <Build Include="Stored Procedures\Queue\MarkTrackUpdateDone.sql" />
+    <Build Include="Stored Procedures\Queue\MarkAlbumUpdateErrored.sql" />
+    <Build Include="Stored Procedures\Queue\MarkArtistUpdateErrored.sql" />
+    <Build Include="Stored Procedures\Queue\MarkTrackUpdateErrored.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

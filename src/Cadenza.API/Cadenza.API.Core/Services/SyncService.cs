@@ -45,11 +45,16 @@ internal class SyncService : ISyncService
         return await _updateRepository.GetUpdates(source);
     }
 
+    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    {
+        await _updateRepository.MarkAsErrored(update, source);
+    }
+
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await ClearImages(source, update);
+        // await ClearImages(source, update);
 
-        await _updateRepository.Remove(update, source);
+        await _updateRepository.MarkAsDone(update, source);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)

@@ -34,8 +34,13 @@ internal class UpdateRepository : IUpdateRepository
         return await _reader.GetUpdates(source);
     }
 
-    public async Task Remove(ItemUpdates update, LibrarySource source)
+    public async Task MarkAsDone(ItemUpdates update, LibrarySource source)
     {
         await _updater.MarkUpdatesDone(update);
+    }
+
+    public async Task MarkAsErrored(ItemUpdates update, LibrarySource source)
+    {
+        await _updater.MarkUpdatesErrored(update);
     }
 }

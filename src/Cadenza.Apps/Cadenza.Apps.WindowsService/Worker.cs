@@ -23,28 +23,33 @@ public class Worker : BackgroundService
         {
             _logger.LogInformation("Started processing");
 
-            try
+            foreach (var updater in _services)
             {
-                foreach (var updater in _services)
-                {
-                    await updater.Run();
+                await TryRun(updater);
 
-                    if (stoppingToken.IsCancellationRequested)
-                    {
-                        _logger.LogInformation("Processing cancelled");
-                        return;
-                    }
+                if (stoppingToken.IsCancellationRequested)
+                {
+                    _logger.LogInformation("Processing cancelled");
+                    return;
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Processing errored");
             }
 
             _logger.LogInformation("Finished processing");
             _logger.LogInformation("---------------------------------------------");
 
             await Task.Delay(runFrequency, stoppingToken);
+        }
+    }
+
+    private async Task TryRun(IService updater)
+    {
+        try
+        {
+            await updater.Run();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Processing errored");
         }
     }
 

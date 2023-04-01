@@ -10,4 +10,7 @@ internal interface IDataUpdateService
     Task MarkAlbumUpdateDone(int id);
     Task MarkArtistUpdateDone(int id);
     Task MarkTrackUpdateDone(int id);
+    Task MarkAlbumUpdateErrored(int id);
+    Task MarkArtistUpdateErrored(int id);
+    Task MarkTrackUpdateErrored(int id);
 }

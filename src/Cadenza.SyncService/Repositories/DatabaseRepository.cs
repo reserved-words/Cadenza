@@ -44,6 +44,12 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<ItemUpdates>>(url);
     }
 
+    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkErrored}/{source}";
+        await _http.Post(url, null, update);
+    }
+
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}/{source}";

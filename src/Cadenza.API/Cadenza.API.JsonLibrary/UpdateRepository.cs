@@ -34,12 +34,18 @@ internal class UpdateRepository : IUpdateRepository
         return await _dataAccess.GetUpdates(source);
     }
 
-    public async Task Remove(ItemUpdates update, LibrarySource source)
+    public async Task MarkAsDone(ItemUpdates update, LibrarySource source)
     {
         await _dataAccess.UpdateUpdates(source, updates =>
         {
             _updater.Remove(updates, update);
         });
+    }
+
+    public Task MarkAsErrored(ItemUpdates update, LibrarySource source)
+    {
+        // Not implemented in this library type
+        return Task.CompletedTask;
     }
 
     private async Task AddToSource(ItemUpdates update, LibrarySource source)
