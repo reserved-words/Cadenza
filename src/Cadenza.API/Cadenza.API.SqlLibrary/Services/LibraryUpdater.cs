@@ -30,9 +30,6 @@ internal class LibraryUpdater : ILibraryUpdater
                 case ItemProperty.ReleaseYear:
                     album.Year = update.UpdatedValue;
                     break;
-                case ItemProperty.Artwork:
-                    album.ArtworkUrl = update.UpdatedValue;
-                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -49,9 +46,6 @@ internal class LibraryUpdater : ILibraryUpdater
         {
             switch (update.Property)
             {
-                case ItemProperty.ArtistImage:
-                    artist.ImageUrl = update.UpdatedValue;
-                    break;
                 case ItemProperty.ArtistTags:
                     artist.TagList = update.UpdatedValue;
                     break;

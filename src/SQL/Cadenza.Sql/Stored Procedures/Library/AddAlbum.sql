@@ -5,7 +5,6 @@
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
 	@DiscCount INT,
-	@ArtworkUrl NVARCHAR(500),
 	@TagList NVARCHAR(1000),
 	@Id INT OUTPUT
 AS
@@ -26,8 +25,7 @@ BEGIN
 		[Title],
 		[ReleaseTypeId],
 		[Year],
-		[DiscCount],
-		[ArtworkUrl]
+		[DiscCount]
 	)
 	VALUES (
 		@SourceId,
@@ -35,8 +33,7 @@ BEGIN
 		@Title,
 		@ReleaseTypeId,
 		@Year,
-		@DiscCount,
-		@ArtworkUrl
+		@DiscCount
 	)
 
 	SET @Id = SCOPE_IDENTITY()
