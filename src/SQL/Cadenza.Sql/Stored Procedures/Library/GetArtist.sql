@@ -12,7 +12,8 @@ BEGIN
 		ART.[City],
 		ART.[State],
 		ART.[Country],
-		IMG.[Image],
+		IMG.[MimeType] [ImageMimeType],
+		IMG.[Content] [ImageContent],
 		TAG.[TagList]
 	FROM 
 		[Library].[Artists] ART

@@ -11,7 +11,8 @@ BEGIN
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
-		IMG.[Artwork],
+		IMG.[MimeType] [ArtworkMimeType],
+		IMG.[Content] [ArtworkContent],
 		TAG.[TagList]
 	FROM
 		[Library].[Albums] ALB

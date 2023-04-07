@@ -1,5 +1,5 @@
 ﻿namespace Cadenza.API.SqlLibrary.Model;
 
-internal class GetArtistData : ArtistData
+internal class GetArtistData : ArtistDataBase
 {
 }

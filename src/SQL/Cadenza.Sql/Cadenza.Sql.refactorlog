@@ -7,4 +7,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="GroupingId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9eef6dd3-49fa-4d7b-8a8c-c2c4d362b683" ChangeDateTime="04/07/2023 16:44:49">
+    <Property Name="ElementName" Value="[Library].[ArtistImages].[Image]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Library].[ArtistImages]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MimeType" />
+  </Operation>
 </Operations>

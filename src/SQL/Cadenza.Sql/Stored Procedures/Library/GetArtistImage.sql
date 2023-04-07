@@ -4,7 +4,8 @@ AS
 BEGIN
 
 	SELECT 
-		IMG.[Image]
+		IMG.[MimeType],
+		IMG.[Content]
 	FROM 
 		[Library].[Artists] ART
 	LEFT JOIN

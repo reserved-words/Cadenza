@@ -6,8 +6,9 @@
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
 	@DiscCount INT,
-	@Artwork NVARCHAR(MAX),
-	@TagList NVARCHAR(1000)
+	@TagList NVARCHAR(1000),
+	@ArtworkMimeType NVARCHAR(30),
+	@ArtworkContent VARBINARY(MAX)
 AS
 BEGIN
 
@@ -28,13 +29,17 @@ BEGIN
 	WHERE 
 		[AlbumId] = @Id
 
-	IF @Artwork IS NOT NULL
+	IF @ArtworkMimeType IS NOT NULL AND @ArtworkContent IS NOT NULL
 	BEGIN
 		INSERT INTO [Library].[AlbumArtwork] (
 			[AlbumId],
-			[Artwork]
+			[MimeType],
+			[Content]
 		)
-		VALUES (@Id, @Artwork)
+		VALUES (
+			@Id, 
+			@ArtworkMimeType, 
+			@ArtworkContent)
 	END
 
 	DELETE  

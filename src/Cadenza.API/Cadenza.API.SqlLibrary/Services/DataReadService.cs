@@ -39,11 +39,11 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.QuerySingle<AlbumData>(GetAlbumProcedure, parameters);
     }
 
-    public async Task<string> GetAlbumArtwork(int albumId)
+    public async Task<AlbumArtwork> GetAlbumArtwork(int albumId)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, albumId);
-        return await _dbAccess.QuerySingle<string>(GetAlbumArtworkProcedure, parameters);
+        return await _dbAccess.QuerySingle<AlbumArtwork>(GetAlbumArtworkProcedure, parameters);
     }
 
     public async Task<List<GetAlbumData>> GetAlbums(LibrarySource? source)
@@ -74,11 +74,11 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.QuerySingle<ArtistData>(GetArtistProcedure, parameters);
     }
 
-    public async Task<string> GetArtistImage(string nameId)
+    public async Task<ArtistImage> GetArtistImage(string nameId)
     {
         var parameters = new DynamicParameters();
         parameters.Add(NameIdParameter, nameId);
-        return await _dbAccess.QuerySingle<string>(GetArtistImageProcedure, parameters);
+        return await _dbAccess.QuerySingle<ArtistImage>(GetArtistImageProcedure, parameters);
     }
 
     public async Task<List<GetArtistData>> GetArtists()

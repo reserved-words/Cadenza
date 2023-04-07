@@ -33,7 +33,8 @@ internal class DataInsertService : IDataInsertService
         parameters.Add(nameof(data.ReleaseTypeId), data.ReleaseTypeId);
         parameters.Add(nameof(data.Year), data.Year);
         parameters.Add(nameof(data.DiscCount), data.DiscCount);
-        parameters.Add(nameof(data.Artwork), data.Artwork);
+        parameters.Add(nameof(data.ArtworkMimeType), data.ArtworkMimeType);
+        parameters.Add(nameof(data.ArtworkContent), data.ArtworkContent, DbType.Binary);
         parameters.Add(nameof(data.TagList), data.TagList);
 
         parameters.Add(IdParameter, dbType: DbType.Int32, direction: ParameterDirection.Output);
@@ -59,7 +60,8 @@ internal class DataInsertService : IDataInsertService
         parameters.Add(nameof(data.City), data.City);
         parameters.Add(nameof(data.State), data.State);
         parameters.Add(nameof(data.Country), data.Country);
-        parameters.Add(nameof(data.Image), data.Image);
+        parameters.Add(nameof(data.ImageMimeType), data.ImageMimeType);
+        parameters.Add(nameof(data.ImageContent), data.ImageContent, DbType.Binary);
         parameters.Add(nameof(data.TagList), data.TagList);
 
         parameters.Add(IdParameter, dbType: DbType.Int32, direction: ParameterDirection.Output);

@@ -6,11 +6,13 @@ internal class LibraryReader : ILibraryReader
 {
     private readonly IDataMapper _mapper;
     private readonly IDataReadService _readService;
+    private readonly IImageConverter _imageConverter;
 
-    public LibraryReader(IDataMapper mapper, IDataReadService readService)
+    public LibraryReader(IDataMapper mapper, IDataReadService readService, IImageConverter imageConverter)
     {
         _mapper = mapper;
         _readService = readService;
+        _imageConverter = imageConverter;
     }
 
     public async Task<FullLibrary> Get(LibrarySource? source)
@@ -43,7 +45,9 @@ internal class LibraryReader : ILibraryReader
 
     public async Task<string> GetAlbumArtwork(int id)
     {
-        return await _readService.GetAlbumArtwork(id);
+        var data = await _readService.GetAlbumArtwork(id);
+        var image = new ArtworkImage(data.Content, data.MimeType);
+        return _imageConverter.GetBase64UrlFromImage(image);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
@@ -53,7 +57,9 @@ internal class LibraryReader : ILibraryReader
 
     public async Task<string> GetArtistImage(string nameId)
     {
-        return await _readService.GetArtistImage(nameId);
+        var data = await _readService.GetArtistImage(nameId);
+        var image = new ArtworkImage(data.Content, data.MimeType);
+        return _imageConverter.GetBase64UrlFromImage(image);
     }
 
     private async Task AddSource(FullLibrary library, LibrarySource source)

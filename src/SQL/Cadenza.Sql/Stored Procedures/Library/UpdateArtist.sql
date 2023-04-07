@@ -7,8 +7,9 @@
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
 	@Country NVARCHAR(100),
-	@Image NVARCHAR(MAX),
-	@TagList NVARCHAR(1000)
+	@TagList NVARCHAR(1000),
+	@ImageMimeType NVARCHAR(30),
+	@ImageContent VARBINARY(MAX)
 AS
 BEGIN
 
@@ -30,13 +31,17 @@ BEGIN
 	WHERE 
 		[ArtistId] = @Id
 
-	IF @Image IS NOT NULL
+	IF @ImageMimeType IS NOT NULL AND @ImageContent IS NOT NULL
 	BEGIN
 		INSERT INTO [Library].[ArtistImages] (
 			[ArtistId],
-			[Image]
+			[MimeType],
+			[Content]
 		)
-		VALUES (@Id, @Image)
+		VALUES (
+			@Id, 
+			@ImageMimeType,
+			@ImageContent)
 	END
 
 	DELETE  

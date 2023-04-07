@@ -5,14 +5,20 @@ namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
 {
     private IIdGenerator _idGenerator;
+    private IImageConverter _imageConverter;
 
-    public DataMapper(IIdGenerator idGenerator)
+    public DataMapper(IIdGenerator idGenerator, IImageConverter imageConverter)
     {
         _idGenerator = idGenerator;
+        _imageConverter = imageConverter;
     }
 
     public NewAlbumData MapAlbum(TrackFull track, int artistId)
     {
+        var image = track.Album.ArtworkUrl == null
+            ? null
+            : _imageConverter.GetImageFromBase64Url(track.Album.ArtworkUrl);
+
         return new NewAlbumData
         {
             SourceId = (int)track.Album.Source,
@@ -21,13 +27,18 @@ internal class DataMapper : IDataMapper
             ReleaseTypeId = (int)track.Album.ReleaseType,
             Year = track.Album.Year,
             DiscCount = track.Album.DiscCount,
-            Artwork = track.Album.ArtworkUrl,
-            TagList = track.Album.Tags.ToString()
+            TagList = track.Album.Tags.ToString(),
+            ArtworkMimeType = image?.MimeType,
+            ArtworkContent = image?.Bytes
         };
     }
 
     public NewArtistData MapAlbumArtist(TrackFull track)
     {
+        var image = track.AlbumArtist.ImageUrl == null
+            ? null
+            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageUrl);
+
         return new NewArtistData
         {
             NameId = _idGenerator.GenerateId(track.AlbumArtist.Name),
@@ -37,8 +48,9 @@ internal class DataMapper : IDataMapper
             City = track.AlbumArtist.City,
             State = track.AlbumArtist.State,
             Country = track.AlbumArtist.Country,
-            Image = track.AlbumArtist.ImageUrl,
-            TagList = track.AlbumArtist.Tags.ToString()
+            TagList = track.AlbumArtist.Tags.ToString(),
+            ImageMimeType = image?.MimeType,
+            ImageContent = image?.Bytes
         };
     }
 
@@ -78,6 +90,10 @@ internal class DataMapper : IDataMapper
 
     public NewArtistData MapTrackArtist(TrackFull track)
     {
+        var image = track.AlbumArtist.ImageUrl == null
+            ? null
+            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageUrl);
+
         return new NewArtistData
         {
             NameId = _idGenerator.GenerateId(track.Artist.Name),
@@ -87,8 +103,9 @@ internal class DataMapper : IDataMapper
             City = track.Artist.City,
             State = track.Artist.State,
             Country = track.Artist.Country,
-            Image = track.Artist.ImageUrl,
-            TagList = track.Artist.Tags.ToString()
+            TagList = track.Artist.Tags.ToString(),
+            ImageMimeType = image?.MimeType,
+            ImageContent = image?.Bytes
         };
     }
 
@@ -107,7 +124,6 @@ internal class DataMapper : IDataMapper
             Year = album.Year,
             DiscCount = album.DiscCount,
             TrackCounts = discs.Select(d => d.TrackCount).ToList(),
-            ArtworkUrl = album.Artwork,
             Tags = new TagList(album.TagList)
         };
     }
@@ -134,7 +150,6 @@ internal class DataMapper : IDataMapper
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
-            ImageUrl = artist.Image,
             Tags = new TagList(artist.TagList)
         };
     }

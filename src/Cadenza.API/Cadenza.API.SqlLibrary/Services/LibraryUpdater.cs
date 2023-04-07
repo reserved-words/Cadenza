@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
+using Cadenza.Common.Domain.Model.Artist;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
@@ -6,11 +7,13 @@ internal class LibraryUpdater : ILibraryUpdater
 {
     private readonly IDataReadService _readService;
     private readonly IDataUpdateService _updateService;
+    private readonly IImageConverter _imageConverter;
 
-    public LibraryUpdater(IDataUpdateService updateService, IDataReadService readService)
+    public LibraryUpdater(IDataUpdateService updateService, IDataReadService readService, IImageConverter imageConverter)
     {
         _updateService = updateService;
         _readService = readService;
+        _imageConverter = imageConverter;
     }
 
     public async Task UpdateAlbum(ItemUpdates updates)
@@ -31,7 +34,9 @@ internal class LibraryUpdater : ILibraryUpdater
                     album.Year = update.UpdatedValue;
                     break;
                 case ItemProperty.Artwork:
-                    album.Artwork = update.UpdatedValue;
+                    var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
+                    album.ArtworkMimeType = image.MimeType;
+                    album.ArtworkContent = image.Bytes;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -50,7 +55,9 @@ internal class LibraryUpdater : ILibraryUpdater
             switch (update.Property)
             {
                 case ItemProperty.ArtistImage:
-                    artist.Image = update.UpdatedValue;
+                    var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
+                    artist.ImageMimeType = image.MimeType;
+                    artist.ImageContent = image.Bytes;
                     break;
                 case ItemProperty.ArtistTags:
                     artist.TagList = update.UpdatedValue;
