@@ -15,30 +15,40 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     public async Task<string> GetArtistImageUrl(ArtistInfo artist, string trackId = null)
     {
-        if (artist != null && artist.Id != null && artist.ImageUrl == null)
+        if (artist != null && artist.ImageUrl == null)
         {
-            foreach (var sourceFetcher in _sourceFetchers)
-            {
-                var imageUrl = await sourceFetcher.GetArtistImageUrl(artist, trackId);
-
-                if (imageUrl != null)
-                {
-                    artist.ImageUrl = imageUrl;
-                    break;
-                }
-            }
+            artist.ImageUrl = $"https://localhost:56457/api/Image/Artist/{artist.Id}";
         }
+
+        //if (artist != null && artist.Id != null && artist.ImageUrl == null)
+        //{
+        //    foreach (var sourceFetcher in _sourceFetchers)
+        //    {
+        //        var imageUrl = await sourceFetcher.GetArtistImageUrl(artist, trackId);
+
+        //        if (imageUrl != null)
+        //        {
+        //            artist.ImageUrl = imageUrl;
+        //            break;
+        //        }
+        //    }
+        //}
 
         return artist?.ImageUrl ?? ArtworkPlaceholderUrl;
     }
 
     public async Task<string> GetArtworkUrl(Album album, string trackId = null)
     {
-        if (album != null && album.Id != null && album.ArtworkUrl == null)
+        if (album != null && album.ArtworkUrl == null)
         {
-            var sourceFetcher = _sourceFetchers.Single(p => p.Source == album.Source);
-            album.ArtworkUrl = await sourceFetcher.GetArtworkUrl(album, trackId);
+            album.ArtworkUrl = $"https://localhost:56457/api/Image/Album/{album.Id}";
         }
+
+        //if (album != null && album.Id != null && album.ArtworkUrl == null)
+        //{
+        //    var sourceFetcher = _sourceFetchers.Single(p => p.Source == album.Source);
+        //    album.ArtworkUrl = await sourceFetcher.GetArtworkUrl(album, trackId);
+        //}
 
         return album?.ArtworkUrl ?? ArtworkPlaceholderUrl;
     }

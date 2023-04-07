@@ -129,6 +129,8 @@
     <Build Include="Stored Procedures\Queue\MarkTrackUpdateErrored.sql" />
     <Build Include="Tables\Library\AlbumArtwork.sql" />
     <Build Include="Tables\Library\ArtistImages.sql" />
+    <Build Include="Stored Procedures\Library\GetArtistImage.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbumArtwork.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

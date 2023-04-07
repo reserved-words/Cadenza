@@ -7,8 +7,10 @@ namespace Cadenza.API.SqlLibrary.Services;
 internal class DataReadService : IDataReadService
 {
     private const string GetAlbumProcedure = "[Library].[GetAlbum]";
+    private const string GetAlbumArtworkProcedure = "[Library].[GetAlbumArtwork]";
     private const string GetAlbumsProcedure = "[Library].[GetAlbums]";
     private const string GetArtistProcedure = "[Library].[GetArtist]";
+    private const string GetArtistImageProcedure = "[Library].[GetArtistImage]";
     private const string GetArtistsProcedure = "[Library].[GetArtists]";
     private const string GetDiscsProcedure = "[Library].[GetDiscs]";
     private const string GetTrackProcedure = "[Library].[GetTrack]";
@@ -37,6 +39,13 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.QuerySingle<AlbumData>(GetAlbumProcedure, parameters);
     }
 
+    public async Task<string> GetAlbumArtwork(int albumId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, albumId);
+        return await _dbAccess.QuerySingle<string>(GetAlbumArtworkProcedure, parameters);
+    }
+
     public async Task<List<GetAlbumData>> GetAlbums(LibrarySource? source)
     {
         var parameters = new DynamicParameters();
@@ -63,6 +72,13 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(NameIdParameter, nameId);
         return await _dbAccess.QuerySingle<ArtistData>(GetArtistProcedure, parameters);
+    }
+
+    public async Task<string> GetArtistImage(string nameId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(NameIdParameter, nameId);
+        return await _dbAccess.QuerySingle<string>(GetArtistImageProcedure, parameters);
     }
 
     public async Task<List<GetArtistData>> GetArtists()

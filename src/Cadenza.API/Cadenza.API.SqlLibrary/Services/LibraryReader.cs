@@ -41,9 +41,19 @@ internal class LibraryReader : ILibraryReader
         return library;
     }
 
+    public async Task<string> GetAlbumArtwork(int id)
+    {
+        return await _readService.GetAlbumArtwork(id);
+    }
+
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _readService.GetAllTrackIds(source);
+    }
+
+    public async Task<string> GetArtistImage(string nameId)
+    {
+        return await _readService.GetArtistImage(nameId);
     }
 
     private async Task AddSource(FullLibrary library, LibrarySource source)

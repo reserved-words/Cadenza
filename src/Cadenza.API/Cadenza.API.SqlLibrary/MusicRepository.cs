@@ -2,6 +2,7 @@
 using Cadenza.API.SqlLibrary.Interfaces;
 
 namespace Cadenza.API.SqlLibrary;
+
 internal class MusicRepository : IMusicRepository
 {
     private readonly ILibraryReader _libraryReader;

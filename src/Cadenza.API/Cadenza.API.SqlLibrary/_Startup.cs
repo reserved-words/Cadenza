@@ -19,6 +19,7 @@ public static class _Startup
     {
         return services
             .AddInternalServices()
+            .AddTransient<IImageRepository, ImageRepository>()
             .AddTransient<IMusicRepository, MusicRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }

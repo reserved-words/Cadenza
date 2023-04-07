@@ -13,6 +13,9 @@ public class DatabaseApiEndpoints
     public string UpdateArtist { get; set; }
     public string UpdateTrack { get; set; }
 
+    public string ArtistImage { get; set; }
+    public string AlbumArtwork { get; set; }
+
     public string Artist { get; set; }
     public string ArtistAlbums { get; set; }
     public string ArtistTracks { get; set; }
