@@ -4,8 +4,10 @@
 AS
 BEGIN
 
-	DELETE 
-		TRK
+	DECLARE @Id INT
+
+	SELECT 
+		@Id = TRK.[Id]
 	FROM
 		[Library].[Tracks] TRK
 	INNER JOIN
@@ -16,5 +18,15 @@ BEGIN
 		ALB.[SourceId] = @SourceId
 	AND
 		TRK.[IdFromSource] = @IdFromSource
+		
+	DELETE
+		[Library].[TrackTags]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE 
+		[Library].[Tracks]
+	WHERE 
+		[Id] = @Id
 
 END

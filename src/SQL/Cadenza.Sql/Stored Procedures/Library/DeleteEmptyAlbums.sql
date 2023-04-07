@@ -8,6 +8,13 @@ BEGIN
 		[Library].[AlbumTags] TAG
 	INNER JOIN 
 		[Library].[vw_EmptyAlbums] EMP ON EMP.[Id] = TAG.[AlbumId]
+	
+	DELETE
+		IMG
+	FROM
+		[Library].[AlbumArtwork] IMG
+	INNER JOIN 
+		[Library].[vw_EmptyAlbums] EMP ON EMP.[Id] = IMG.[AlbumId]
 
 	DELETE
 		ALB

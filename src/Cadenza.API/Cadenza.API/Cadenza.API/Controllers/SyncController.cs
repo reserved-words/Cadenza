@@ -54,7 +54,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpPost("RemoveTracks/{source}")]
-    public async Task RemoveTrack(LibrarySource source, [FromBody] List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, [FromBody] List<string> ids)
     {
         await _service.RemoveTracks(source, ids);
     }

@@ -5,12 +5,14 @@ internal class Id3ToModelConverter : IId3ToModelConverter
     private readonly IBase64Converter _base64Converter;
     private readonly IIdGenerator _idGenerator;
     private readonly ICommentProcessor _commentProcessor;
+    private readonly IImageConverter _imageConverter;
 
-    public Id3ToModelConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor, IBase64Converter base64Converter)
+    public Id3ToModelConverter(IIdGenerator idGenerator, ICommentProcessor commentProcessor, IBase64Converter base64Converter, IImageConverter imageConverter)
     {
         _idGenerator = idGenerator;
         _commentProcessor = commentProcessor;
         _base64Converter = base64Converter;
+        _imageConverter = imageConverter;
     }
 
     public AlbumInfo ConvertAlbum(Id3Data data)
@@ -29,7 +31,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             ReleaseType = Enum.TryParse(data.Album.ReleaseType, out ReleaseType result) ? result : ReleaseType.Album,
             TrackCounts = new List<int>(),
             Year = data.Album.Year.Nullify(),
-            Tags = commentData.AlbumTags
+            Tags = commentData.AlbumTags,
+            ArtworkUrl = _imageConverter.GetBase64UrlFromImage(data.Album.Artwork)
         };
 
         var discNo = data.Disc.DiscNo == 0 ? 1 : data.Disc.DiscNo;
@@ -98,7 +101,8 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             City = commentData.City.Nullify(),
             State = commentData.State.Nullify(),
             Country = commentData.Country.Nullify(),
-            Tags = commentData.ArtistTags
+            Tags = commentData.ArtistTags,
+            ImageUrl = _imageConverter.GetBase64UrlFromImage(data.Artist.Image)
         };
     }
 }
