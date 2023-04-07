@@ -7,7 +7,7 @@
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
 	@Country NVARCHAR(100),
-	@ImageUrl NVARCHAR(500),
+	@Image NVARCHAR(MAX),
 	@TagList NVARCHAR(1000)
 AS
 BEGIN
@@ -21,10 +21,23 @@ BEGIN
 		[Genre] = @Genre,
 		[City] = @City,
 		[State] = @State,
-		[Country] = @Country,
-		[ImageUrl] = @ImageUrl
+		[Country] = @Country
 	WHERE	
 		[Id] = @Id
+
+	DELETE  
+		[Library].[ArtistImages]
+	WHERE 
+		[ArtistId] = @Id
+
+	IF @Image IS NOT NULL
+	BEGIN
+		INSERT INTO [Library].[ArtistImages] (
+			[ArtistId],
+			[Image]
+		)
+		VALUES (@Id, @Image)
+	END
 
 	DELETE  
 		[Library].[ArtistTags]

@@ -21,7 +21,7 @@ internal class DataMapper : IDataMapper
             ReleaseTypeId = (int)track.Album.ReleaseType,
             Year = track.Album.Year,
             DiscCount = track.Album.DiscCount,
-            ArtworkUrl = track.Album.ArtworkUrl,
+            Artwork = track.Album.ArtworkUrl,
             TagList = track.Album.Tags.ToString()
         };
     }
@@ -37,7 +37,7 @@ internal class DataMapper : IDataMapper
             City = track.AlbumArtist.City,
             State = track.AlbumArtist.State,
             Country = track.AlbumArtist.Country,
-            ImageUrl = track.AlbumArtist.ImageUrl,
+            Image = track.AlbumArtist.ImageUrl,
             TagList = track.AlbumArtist.Tags.ToString()
         };
     }
@@ -87,7 +87,7 @@ internal class DataMapper : IDataMapper
             City = track.Artist.City,
             State = track.Artist.State,
             Country = track.Artist.Country,
-            ImageUrl = track.Artist.ImageUrl,
+            Image = track.Artist.ImageUrl,
             TagList = track.Artist.Tags.ToString()
         };
     }
@@ -107,7 +107,7 @@ internal class DataMapper : IDataMapper
             Year = album.Year,
             DiscCount = album.DiscCount,
             TrackCounts = discs.Select(d => d.TrackCount).ToList(),
-            ArtworkUrl = album.ArtworkUrl,
+            ArtworkUrl = album.Artwork,
             Tags = new TagList(album.TagList)
         };
     }
@@ -134,7 +134,7 @@ internal class DataMapper : IDataMapper
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
-            ImageUrl = artist.ImageUrl,
+            ImageUrl = artist.Image,
             Tags = new TagList(artist.TagList)
         };
     }

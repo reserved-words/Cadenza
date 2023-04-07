@@ -9,6 +9,6 @@ internal class NewArtistData
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
-    public string ImageUrl { get; set; }
+    public string Image { get; set; }
     public string TagList { get; set; }
 }

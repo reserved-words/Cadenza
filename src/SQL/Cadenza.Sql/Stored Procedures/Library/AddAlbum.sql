@@ -5,7 +5,7 @@
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
 	@DiscCount INT,
-	@ArtworkUrl NVARCHAR(500),
+	@Artwork NVARCHAR(MAX),
 	@TagList NVARCHAR(1000),
 	@Id INT OUTPUT
 AS
@@ -26,8 +26,7 @@ BEGIN
 		[Title],
 		[ReleaseTypeId],
 		[Year],
-		[DiscCount],
-		[ArtworkUrl]
+		[DiscCount]
 	)
 	VALUES (
 		@SourceId,
@@ -35,11 +34,19 @@ BEGIN
 		@Title,
 		@ReleaseTypeId,
 		@Year,
-		@DiscCount,
-		@ArtworkUrl
+		@DiscCount
 	)
 
 	SET @Id = SCOPE_IDENTITY()
+
+	IF @Artwork IS NOT NULL
+	BEGIN
+		INSERT INTO [Library].[AlbumArtwork] (
+			[AlbumId],
+			[Artwork]
+		)
+		VALUES (@Id, @Artwork)
+	END
 
 	IF @TagList IS NOT NULL
 	BEGIN

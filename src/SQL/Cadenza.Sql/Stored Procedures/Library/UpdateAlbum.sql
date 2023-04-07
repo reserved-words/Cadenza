@@ -6,7 +6,7 @@
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
 	@DiscCount INT,
-	@ArtworkUrl NVARCHAR(500),
+	@Artwork NVARCHAR(MAX),
 	@TagList NVARCHAR(1000)
 AS
 BEGIN
@@ -19,10 +19,23 @@ BEGIN
 		[Title] = @Title,
 		[ReleaseTypeId] = @ReleaseTypeId,
 		[Year] = @Year,
-		[DiscCount] = @DiscCount,
-		[ArtworkUrl] = @ArtworkUrl
+		[DiscCount] = @DiscCount
 	WHERE
 		[Id] = @Id
+
+	DELETE  
+		[Library].[AlbumArtwork]
+	WHERE 
+		[AlbumId] = @Id
+
+	IF @Artwork IS NOT NULL
+	BEGIN
+		INSERT INTO [Library].[AlbumArtwork] (
+			[AlbumId],
+			[Artwork]
+		)
+		VALUES (@Id, @Artwork)
+	END
 
 	DELETE  
 		[Library].[AlbumTags]

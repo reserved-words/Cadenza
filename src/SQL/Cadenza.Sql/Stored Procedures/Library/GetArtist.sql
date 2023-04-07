@@ -12,12 +12,14 @@ BEGIN
 		ART.[City],
 		ART.[State],
 		ART.[Country],
-		ART.[ImageUrl],
+		IMG.[Image],
 		TAG.[TagList]
 	FROM 
 		[Library].[Artists] ART
 	LEFT JOIN
 		[Library].[vw_ArtistTags] TAG ON TAG.[ArtistId] = ART.[Id]
+	LEFT JOIN
+		[Library].[ArtistImages] IMG ON IMG.[ArtistId] = ART.[Id]
 	WHERE ART.[NameId] = @NameId
 
 END

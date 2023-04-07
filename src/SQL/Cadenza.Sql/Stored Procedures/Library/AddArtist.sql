@@ -6,7 +6,7 @@
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
 	@Country NVARCHAR(100),
-	@ImageUrl NVARCHAR(500),
+	@Image NVARCHAR(MAX),
 	@TagList NVARCHAR(1000),
 	@Id INT OUTPUT
 AS
@@ -26,8 +26,7 @@ BEGIN
 		[Genre],
 		[City],
 		[State],
-		[Country],
-		[ImageUrl]
+		[Country]
 	)
 	VALUES (
 		@NameId,
@@ -36,11 +35,19 @@ BEGIN
 		@Genre,
 		@City,
 		@State,
-		@Country,
-		@ImageUrl
+		@Country
 	)
 
 	SET @Id = SCOPE_IDENTITY()
+
+	IF @Image IS NOT NULL
+	BEGIN
+		INSERT INTO [Library].[ArtistImages] (
+			[ArtistId],
+			[Image]
+		)
+		VALUES (@Id, @Image)
+	END
 
 	IF @TagList IS NOT NULL
 	BEGIN

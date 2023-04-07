@@ -11,12 +11,14 @@ BEGIN
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
-		ALB.[ArtworkUrl],
+		IMG.[Artwork],
 		TAG.[TagList]
 	FROM
 		[Library].[Albums] ALB
 	LEFT JOIN
 		[Library].[vw_AlbumTags] TAG ON TAG.[AlbumId] = ALB.[Id]
+	LEFT JOIN
+		[Library].[AlbumArtwork] IMG ON IMG.[AlbumId] = ALB.[Id]
 	WHERE
 		ALB.[Id] = @Id
 

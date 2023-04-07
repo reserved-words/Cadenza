@@ -11,7 +11,7 @@ BEGIN
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
-		ALB.[ArtworkUrl],
+		IMG.[Artwork],
 		ART.[NameId] [ArtistNameId],
 		ART.[Name] [ArtistName],
 		TAG.[TagList]
@@ -21,6 +21,8 @@ BEGIN
 		[Library].[Artists] ART ON ART.[Id] = ALB.[ArtistId]
 	LEFT JOIN
 		[Library].[vw_AlbumTags] TAG ON TAG.[AlbumId] = ALB.[Id]
+	LEFT JOIN
+		[Library].[AlbumArtwork] IMG ON IMG.[AlbumId] = ALB.[Id]
 	WHERE
 		@SourceId IS NULL 
 		OR ALB.[SourceId] = @SourceId
