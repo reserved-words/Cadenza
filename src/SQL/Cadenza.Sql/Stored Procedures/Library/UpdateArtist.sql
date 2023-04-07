@@ -7,6 +7,7 @@
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
 	@Country NVARCHAR(100),
+	@ImageUrl NVARCHAR(500),
 	@TagList NVARCHAR(1000)
 AS
 BEGIN
@@ -20,7 +21,8 @@ BEGIN
 		[Genre] = @Genre,
 		[City] = @City,
 		[State] = @State,
-		[Country] = @Country
+		[Country] = @Country,
+		[ImageUrl] = @ImageUrl
 	WHERE	
 		[Id] = @Id
 

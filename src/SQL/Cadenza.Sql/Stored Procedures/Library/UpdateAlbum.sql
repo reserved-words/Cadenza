@@ -6,6 +6,7 @@
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
 	@DiscCount INT,
+	@ArtworkUrl NVARCHAR(500),
 	@TagList NVARCHAR(1000)
 AS
 BEGIN
@@ -18,7 +19,8 @@ BEGIN
 		[Title] = @Title,
 		[ReleaseTypeId] = @ReleaseTypeId,
 		[Year] = @Year,
-		[DiscCount] = @DiscCount
+		[DiscCount] = @DiscCount,
+		[ArtworkUrl] = @ArtworkUrl
 	WHERE
 		[Id] = @Id
 

@@ -11,6 +11,7 @@ BEGIN
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
+		ALB.[ArtworkUrl],
 		ART.[NameId] [ArtistNameId],
 		ART.[Name] [ArtistName],
 		TAG.[TagList]

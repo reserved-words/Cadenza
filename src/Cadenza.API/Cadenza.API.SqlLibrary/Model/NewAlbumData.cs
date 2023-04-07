@@ -7,5 +7,6 @@ internal class NewAlbumData
     public int ReleaseTypeId { get; set; }
     public string Year { get; set; }
     public int DiscCount { get; set; }
+    public string ArtworkUrl { get; set; }
     public string TagList { get; set; }
 }

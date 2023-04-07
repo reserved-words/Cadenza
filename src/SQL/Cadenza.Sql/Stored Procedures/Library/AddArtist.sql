@@ -6,6 +6,7 @@
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
 	@Country NVARCHAR(100),
+	@ImageUrl NVARCHAR(500),
 	@TagList NVARCHAR(1000),
 	@Id INT OUTPUT
 AS
@@ -25,7 +26,8 @@ BEGIN
 		[Genre],
 		[City],
 		[State],
-		[Country]
+		[Country],
+		[ImageUrl]
 	)
 	VALUES (
 		@NameId,
@@ -34,7 +36,8 @@ BEGIN
 		@Genre,
 		@City,
 		@State,
-		@Country
+		@Country,
+		@ImageUrl
 	)
 
 	SET @Id = SCOPE_IDENTITY()

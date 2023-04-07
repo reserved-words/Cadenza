@@ -8,6 +8,7 @@
     [City] NVARCHAR(100) NULL, 
     [State] NVARCHAR(100) NULL, 
     [Country] NVARCHAR(100) NULL, 
+    [ImageUrl] NVARCHAR(500) NULL, 
     CONSTRAINT [FK_Artists_ToGroupings] FOREIGN KEY ([GroupingId]) REFERENCES [Admin].[Groupings]([Id])
 )
 GO

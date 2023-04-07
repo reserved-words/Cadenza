@@ -12,6 +12,7 @@ BEGIN
 		ART.[City],
 		ART.[State],
 		ART.[Country],
+		ART.[ImageUrl],
 		TAG.[TagList]
 	FROM 
 		[Library].[Artists] ART
