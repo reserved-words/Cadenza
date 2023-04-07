@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-using TagLib;
+﻿using TagLib;
 
 namespace Cadenza.Local.API.Files.Services;
 
@@ -170,7 +169,7 @@ internal class Id3TagsService : IId3TagsService
         };
     }
 
-    public ArtworkImage GetArtwork(TagLib.File f, PictureType pictureType)
+    private ArtworkImage GetArtwork(TagLib.File f, PictureType pictureType)
     {
         var image = f.Tag.Pictures.FirstOrDefault(im => im.Type == pictureType);
 

@@ -23,7 +23,6 @@ namespace Cadenza.Local.API.Core
         private static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
             return services
-                .AddTransient<IImageSrcGenerator, ImageSrcGenerator>()
                 .AddTransient<IMusicDirectory, MusicDirectory>();
         }
     }

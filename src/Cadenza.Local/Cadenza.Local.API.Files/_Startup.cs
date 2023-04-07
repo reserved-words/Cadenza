@@ -26,11 +26,4 @@ public static class _Startup
             .AddTransient<IId3Updater, Id3Updater>()
             .AddTransient<IMusicFilesService, MusicService>();
     }
-
-    public static IServiceCollection AddArtworkService(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IId3TagsService, Id3TagsService>()
-            .AddTransient<IArtworkFilesService, ArtworkService>();
-    }
 }

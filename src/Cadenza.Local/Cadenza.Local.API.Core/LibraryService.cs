@@ -5,40 +5,12 @@ namespace Cadenza.Local.API.Core;
 internal class LibraryService : ILibraryService
 {
     private readonly IBase64Converter _converter;
-    private readonly IImageSrcGenerator _imageSrcGenerator;
     private readonly IOptions<CurrentlyPlayingSettings> _settings;
 
-    public LibraryService(IOptions<CurrentlyPlayingSettings> settings, IBase64Converter converter, IImageSrcGenerator imageSrcGenerator)
+    public LibraryService(IOptions<CurrentlyPlayingSettings> settings, IBase64Converter converter)
     {
         _settings = settings;
         _converter = converter;
-        _imageSrcGenerator = imageSrcGenerator;
-    }
-
-    public Task<ArtworkImage> GetArtistImage(string id)
-    {
-        var result = _imageSrcGenerator.GetArtistImage(id);
-
-        if (result == null || result.Bytes == null || result.Bytes.Length == 0)
-        {
-            var bytes = File.ReadAllBytes("Images/default.png");
-            result = new ArtworkImage(bytes, "image/png");
-        }
-
-        return Task.FromResult(result);
-    }
-
-    public Task<ArtworkImage> GetArtwork(string id)
-    {
-        var result = _imageSrcGenerator.GetArtwork(id);
-
-        if (result == null || result.Bytes == null || result.Bytes.Length == 0)
-        {
-            var bytes = File.ReadAllBytes("Images/default.png");
-            result = new ArtworkImage(bytes, "image/png");
-        }
-
-        return Task.FromResult(result);
     }
 
     public Task<string> GetPlayPath(string id)
