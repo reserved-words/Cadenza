@@ -37,7 +37,7 @@ internal class Id3TagsService : IId3TagsService
             Name = GetArtistName(f.Tag.JoinedPerformers, f.Tag.FirstPerformer),
             Genre = GetValue(f.Tag.Genres.FirstOrDefault()),
             Grouping = GetValue(f.Tag.Grouping),
-            Image = GetArtwork(f, PictureType.Artist, false)
+            Image = GetArtwork(f, PictureType.Artist)
         };
 
         var album = new AlbumId3Data
@@ -47,7 +47,7 @@ internal class Id3TagsService : IId3TagsService
             Year = f.Tag.Year.ToString(),
             DiscCount = (int)f.Tag.DiscCount,
             ReleaseType = GetValue(f.Tag.MusicBrainzReleaseType),
-            Artwork = GetArtwork(f, PictureType.FrontCover, true)
+            Artwork = GetArtwork(f, PictureType.FrontCover)
         };
 
         var disc = new DiscId3Data
@@ -69,21 +69,18 @@ internal class Id3TagsService : IId3TagsService
     public ArtworkImage GetAlbumArtwork(string filepath)
     {
         using TagLib.File f = GetFile(filepath);
-        return GetArtwork(f, PictureType.FrontCover, true);
+        return GetArtwork(f, PictureType.FrontCover);
     }
 
     public ArtworkImage GetArtistImage(string filepath)
     {
         using TagLib.File f = GetFile(filepath);
-        return GetArtwork(f, PictureType.Artist, false);
+        return GetArtwork(f, PictureType.Artist);
     }
 
     public void SaveId3Data(string filepath, Id3Data data)
     {
         using TagLib.File f = GetFile(filepath);
-
-        f.Tag.Pictures = null;
-        var pictures = new List<IPicture>();
 
         if (data.Track != null)
         {
@@ -101,11 +98,6 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.Genres = null;
             f.Tag.Genres = new[] { data.Artist.Genre };
             f.Tag.Grouping = data.Artist.Grouping;
-
-            if (data.Artist.Image != null)
-            {
-                pictures.Add(CreatePicture(data.Artist.Image, PictureType.Artist));
-            }
         }
 
         if (data.Album != null)
@@ -123,11 +115,6 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.MusicBrainzReleaseType = data.Album.ReleaseType;
 
             f.Tag.DiscCount = Convert.ToUInt16(data.Album.DiscCount);
-
-            if (data.Album.Artwork != null)
-            {
-                pictures.Add(CreatePicture(data.Album.Artwork, PictureType.FrontCover));
-            }
         }
 
         if (data.Disc != null)
@@ -139,6 +126,20 @@ internal class Id3TagsService : IId3TagsService
         if (data.Track.Comment != null)
         {
             f.Tag.Comment = data.Track.Comment;
+        }
+
+        f.Tag.Pictures = null;
+
+        var pictures = new List<IPicture>();
+        
+        if (data.Album.Artwork != null)
+        {
+            pictures.Add(CreatePicture(data.Album.Artwork, PictureType.FrontCover));
+        }
+
+        if (data.Artist.Image != null)
+        {
+            pictures.Add(CreatePicture(data.Artist.Image, PictureType.Artist));
         }
 
         f.Tag.Pictures = pictures.ToArray();
@@ -169,13 +170,16 @@ internal class Id3TagsService : IId3TagsService
         };
     }
 
-    public ArtworkImage GetArtwork(TagLib.File f, PictureType pictureType, bool orFirstImage)
+    public ArtworkImage GetArtwork(TagLib.File f, PictureType pictureType)
     {
         var image = f.Tag.Pictures.FirstOrDefault(im => im.Type == pictureType);
 
-        if (image == null && orFirstImage)
+        if (image == null)
         {
-            image = f.Tag.Pictures.FirstOrDefault();
+            // Album artwork is always saved first, artist image second
+            // Not reliable to use Type or Description fields as these aren't always saved correctly
+            var index = pictureType == PictureType.FrontCover ? 0 : 1;
+            image = f.Tag.Pictures.Skip(index).FirstOrDefault();
         }
 
         if (image == null)
