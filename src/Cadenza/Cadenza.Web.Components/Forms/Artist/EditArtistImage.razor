@@ -1,13 +1,13 @@
 ﻿
 <EditCard Breakpoint="@Breakpoint" Title="Image">
     <MudContainer Class="mt-3 d-flex flex-column align-center">
-        @if (Model.ImageUrl != null)
+        @if (Model.ImageBase64 != null)
         {
-            <img class="artist-image edit-image" src="@Model.ImageUrl" />
+            <img class="artist-image edit-image" src="@Model.ImageBase64" />
         }
         else
         {
-            <img class="artist-image edit-image" src="images/artwork-placeholder.png" />
+            <img class="artist-image edit-image" src="@OriginalImageUrl" />
         }
 
         <MudStack Row="true" Class="my-2">
@@ -42,7 +42,17 @@
     [Inject]
     public INotificationService Alert { get; set; }
 
+    [Inject]
+    public IArtworkFetcher ArtworkFetcher { get; set; }
+
     private string ImageUrl { get; set; }
+
+    private string OriginalImageUrl { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        OriginalImageUrl = ArtworkFetcher.GetArtistImageUrl(Model);
+    }
 
     protected async Task OnSearch(SearchSource source)
     {
@@ -59,7 +69,7 @@
                 throw new Exception("No URL entered");
             }
 
-            Model.ImageUrl = await ImageFinder.GetBase64ArtworkSource(ImageUrl);
+            Model.ImageBase64 = await ImageFinder.GetBase64ArtworkSource(ImageUrl);
         }
         catch (Exception ex)
         {

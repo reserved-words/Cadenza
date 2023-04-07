@@ -6,13 +6,11 @@ internal class LibraryReader : ILibraryReader
 {
     private readonly IDataMapper _mapper;
     private readonly IDataReadService _readService;
-    private readonly IImageConverter _imageConverter;
 
-    public LibraryReader(IDataMapper mapper, IDataReadService readService, IImageConverter imageConverter)
+    public LibraryReader(IDataMapper mapper, IDataReadService readService)
     {
         _mapper = mapper;
         _readService = readService;
-        _imageConverter = imageConverter;
     }
 
     public async Task<FullLibrary> Get(LibrarySource? source)
@@ -43,11 +41,13 @@ internal class LibraryReader : ILibraryReader
         return library;
     }
 
-    public async Task<string> GetAlbumArtwork(int id)
+    public async Task<ArtworkImage> GetAlbumArtwork(int id)
     {
         var data = await _readService.GetAlbumArtwork(id);
-        var image = new ArtworkImage(data.Content, data.MimeType);
-        return _imageConverter.GetBase64UrlFromImage(image);
+        if (data?.Content == null)
+            return null;
+
+        return new ArtworkImage(data.Content, data.MimeType);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
@@ -55,11 +55,13 @@ internal class LibraryReader : ILibraryReader
         return await _readService.GetAllTrackIds(source);
     }
 
-    public async Task<string> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(string nameId)
     {
         var data = await _readService.GetArtistImage(nameId);
-        var image = new ArtworkImage(data.Content, data.MimeType);
-        return _imageConverter.GetBase64UrlFromImage(image);
+        if (data?.Content == null)
+            return null;
+
+        return new ArtworkImage(data.Content, data.MimeType);
     }
 
     private async Task AddSource(FullLibrary library, LibrarySource source)

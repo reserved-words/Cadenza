@@ -11,26 +11,18 @@ internal class ArtworkFetcher : IArtworkFetcher
         _settings = settings.Value;
     }
 
-    public Task<string> GetArtistImageUrl(ArtistInfo artist, string trackId = null)
+    public string GetArtistImageUrl(Artist artist)
     {
-        if (artist != null && artist.ImageUrl == null)
-        {
-            artist.ImageUrl = GetUrl(_settings.Endpoints.ArtistImage, artist.Id);
-        }
-
-        var result = artist?.ImageUrl ?? ArtworkPlaceholderUrl;
-        return Task.FromResult(result);
+        return artist?.Id != null
+            ? GetUrl(_settings.Endpoints.ArtistImage, artist.Id)
+            : ArtworkPlaceholderUrl;
     }
 
-    public Task<string> GetArtworkUrl(Album album, string trackId = null)
+    public string GetArtworkUrl(Album album)
     {
-        if (album != null && album.ArtworkUrl == null)
-        {
-            album.ArtworkUrl = GetUrl(_settings.Endpoints.AlbumArtwork, album.Id);
-        }
-
-        var result = album?.ArtworkUrl ?? ArtworkPlaceholderUrl;
-        return Task.FromResult(result);
+        return album?.Id != null
+            ? GetUrl(_settings.Endpoints.AlbumArtwork, album.Id)
+            : ArtworkPlaceholderUrl;
     }
     
     private string GetUrl(string endpoint, object id)

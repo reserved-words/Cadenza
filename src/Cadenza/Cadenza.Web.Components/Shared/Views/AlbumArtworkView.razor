@@ -16,9 +16,9 @@
 
     public string ArtworkUrl { get; private set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
-        ArtworkUrl = await ArtworkFetcher.GetArtworkUrl(Model);
+        ArtworkUrl = ArtworkFetcher.GetArtworkUrl(Model);
     }
 
     public async Task Play()

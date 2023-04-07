@@ -12,12 +12,12 @@ internal class ImageRepository : IImageRepository
         _libraryReader = libraryReader;
     }
 
-    public async Task<string> GetAlbumArtwork(int albumId)
+    public async Task<ArtworkImage> GetAlbumArtwork(int albumId)
     {
         return await _libraryReader.GetAlbumArtwork(albumId);
     }
 
-    public async Task<string> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(string nameId)
     {
         return await _libraryReader.GetArtistImage(nameId);
     }

@@ -15,9 +15,9 @@ internal class DataMapper : IDataMapper
 
     public NewAlbumData MapAlbum(TrackFull track, int artistId)
     {
-        var image = track.Album.ArtworkUrl == null
+        var image = track.Album.ArtworkBase64 == null
             ? null
-            : _imageConverter.GetImageFromBase64Url(track.Album.ArtworkUrl);
+            : _imageConverter.GetImageFromBase64Url(track.Album.ArtworkBase64);
 
         return new NewAlbumData
         {
@@ -35,9 +35,9 @@ internal class DataMapper : IDataMapper
 
     public NewArtistData MapAlbumArtist(TrackFull track)
     {
-        var image = track.AlbumArtist.ImageUrl == null
+        var image = track.AlbumArtist.ImageBase64 == null
             ? null
-            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageUrl);
+            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageBase64);
 
         return new NewArtistData
         {
@@ -90,9 +90,9 @@ internal class DataMapper : IDataMapper
 
     public NewArtistData MapTrackArtist(TrackFull track)
     {
-        var image = track.AlbumArtist.ImageUrl == null
+        var image = track.AlbumArtist.ImageBase64 == null
             ? null
-            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageUrl);
+            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageBase64);
 
         return new NewArtistData
         {

@@ -13,8 +13,8 @@
 
     public string ImageUrl { get; private set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
-        ImageUrl = await ArtworkFetcher.GetArtistImageUrl(Model);
+        ImageUrl = ArtworkFetcher.GetArtistImageUrl(Model);
     }
 }

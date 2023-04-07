@@ -32,7 +32,7 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             TrackCounts = new List<int>(),
             Year = data.Album.Year.Nullify(),
             Tags = commentData.AlbumTags,
-            ArtworkUrl = _imageConverter.GetBase64UrlFromImage(data.Album.Artwork)
+            ArtworkBase64 = _imageConverter.GetBase64UrlFromImage(data.Album.Artwork)
         };
 
         var discNo = data.Disc.DiscNo == 0 ? 1 : data.Disc.DiscNo;
@@ -102,7 +102,7 @@ internal class Id3ToModelConverter : IId3ToModelConverter
             State = commentData.State.Nullify(),
             Country = commentData.Country.Nullify(),
             Tags = commentData.ArtistTags,
-            ImageUrl = _imageConverter.GetBase64UrlFromImage(data.Artist.Image)
+            ImageBase64 = _imageConverter.GetBase64UrlFromImage(data.Artist.Image)
         };
     }
 }

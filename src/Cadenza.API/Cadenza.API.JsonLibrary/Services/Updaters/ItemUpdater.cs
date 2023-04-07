@@ -20,7 +20,7 @@ internal class ItemUpdater : IItemUpdater
                     album.Year = update.UpdatedValue;
                     break;
                 case ItemProperty.Artwork:
-                    album.ArtworkUrl = update.UpdatedValue;
+                    album.ArtworkBase64 = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -59,7 +59,7 @@ internal class ItemUpdater : IItemUpdater
             switch (update.Property)
             {
                 case ItemProperty.ArtistImage:
-                    artist.ImageUrl = update.UpdatedValue;
+                    artist.ImageBase64 = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistTags:
                     artist.Tags = new TagList(update.UpdatedValue);
