@@ -1,7 +1,7 @@
 ﻿
 @if (Model != null)
 {
-    <img class="artwork" src="@ArtworkUrl" @ondblclick="@Play" />
+    <img class="artwork" src="@ArtworkSrc" @ondblclick="@Play" />
 }
 
 @code {
@@ -14,11 +14,11 @@
     [Parameter]
     public Album Model { get; set; }
 
-    public string ArtworkUrl { get; private set; }
+    public string ArtworkSrc { get; private set; }
 
     protected override void OnParametersSet()
     {
-        ArtworkUrl = ArtworkFetcher.GetArtworkUrl(Model);
+        ArtworkSrc = Model.ArtworkBase64 ?? ArtworkFetcher.GetArtworkUrl(Model);
     }
 
     public async Task Play()
