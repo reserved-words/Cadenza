@@ -90,9 +90,9 @@ internal class DataMapper : IDataMapper
 
     public NewArtistData MapTrackArtist(TrackFull track)
     {
-        var image = track.AlbumArtist.ImageBase64 == null
+        var image = track.Artist.ImageBase64 == null
             ? null
-            : _imageConverter.GetImageFromBase64Url(track.AlbumArtist.ImageBase64);
+            : _imageConverter.GetImageFromBase64Url(track.Artist.ImageBase64);
 
         return new NewArtistData
         {
