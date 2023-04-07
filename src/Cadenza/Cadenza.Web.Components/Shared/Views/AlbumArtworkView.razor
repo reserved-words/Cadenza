@@ -18,7 +18,7 @@
 
     protected override void OnParametersSet()
     {
-        ArtworkSrc = Model.ArtworkBase64 ?? ArtworkFetcher.GetArtworkUrl(Model);
+        ArtworkSrc = ArtworkFetcher.GetAlbumArtworkSrc(Model);
     }
 
     public async Task Play()

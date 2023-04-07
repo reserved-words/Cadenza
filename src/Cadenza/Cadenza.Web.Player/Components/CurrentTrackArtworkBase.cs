@@ -23,7 +23,7 @@ public class CurrentTrackArtworkBase : ComponentBase
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        ArtworkUrl = ArtworkFetcher.GetArtworkUrl(Model?.Album);
+        ArtworkUrl = ArtworkFetcher.GetAlbumArtworkSrc(Model?.Album);
 
         StateHasChanged();
     }

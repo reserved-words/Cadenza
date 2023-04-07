@@ -2,6 +2,6 @@
 
 public interface IArtworkFetcher
 {
-    string GetArtistImageUrl(Artist artist);
-    string GetArtworkUrl(Album album);
+    string GetArtistImageSrc(ArtistInfo artist);
+    string GetAlbumArtworkSrc(Album album);
 }

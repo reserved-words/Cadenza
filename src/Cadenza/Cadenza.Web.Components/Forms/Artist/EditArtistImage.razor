@@ -7,7 +7,7 @@
         }
         else
         {
-            <img class="artist-image edit-image" src="@OriginalImageUrl" />
+            <img class="artist-image edit-image" src="@OriginalImageSrc" />
         }
 
         <MudStack Row="true" Class="my-2">
@@ -47,11 +47,11 @@
 
     private string ImageUrl { get; set; }
 
-    private string OriginalImageUrl { get; set; }
+    private string OriginalImageSrc { get; set; }
 
     protected override void OnParametersSet()
     {
-        OriginalImageUrl = ArtworkFetcher.GetArtistImageUrl(Model);
+        OriginalImageSrc = ArtworkFetcher.GetArtistImageSrc(Model);
     }
 
     protected async Task OnSearch(SearchSource source)
