@@ -82,6 +82,9 @@ internal class Id3TagsService : IId3TagsService
     {
         using TagLib.File f = GetFile(filepath);
 
+        f.Tag.Pictures = null;
+        var pictures = new List<IPicture>();
+
         if (data.Track != null)
         {
             f.Tag.Title = data.Track.Title;
@@ -98,6 +101,11 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.Genres = null;
             f.Tag.Genres = new[] { data.Artist.Genre };
             f.Tag.Grouping = data.Artist.Grouping;
+
+            if (data.Artist.Image != null)
+            {
+                pictures.Add(CreatePicture(data.Artist.Image, PictureType.Artist));
+            }
         }
 
         if (data.Album != null)
@@ -116,17 +124,10 @@ internal class Id3TagsService : IId3TagsService
 
             f.Tag.DiscCount = Convert.ToUInt16(data.Album.DiscCount);
 
-            f.Tag.Pictures = null;
-            var pictures = new List<IPicture>();
             if (data.Album.Artwork != null)
             {
                 pictures.Add(CreatePicture(data.Album.Artwork, PictureType.FrontCover));
             }
-            if (data.Artist.Image != null)
-            {
-                pictures.Add(CreatePicture(data.Artist.Image, PictureType.Artist));
-            }
-            f.Tag.Pictures = pictures.ToArray();
         }
 
         if (data.Disc != null)
@@ -139,6 +140,8 @@ internal class Id3TagsService : IId3TagsService
         {
             f.Tag.Comment = data.Track.Comment;
         }
+
+        f.Tag.Pictures = pictures.ToArray();
 
         f.Save();
     }

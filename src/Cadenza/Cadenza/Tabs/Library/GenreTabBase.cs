@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Components.Tabs.Items;
+﻿namespace Cadenza.Tabs.Library;
 
 public class GenreTabBase : ComponentBase, IDisposable
 {

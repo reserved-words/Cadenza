@@ -1,6 +1,6 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
 
-namespace Cadenza.Web.Components.Tabs.Main;
+namespace Cadenza.Tabs;
 
 public class CurrentlyPlayingTabBase : ComponentBase
 {

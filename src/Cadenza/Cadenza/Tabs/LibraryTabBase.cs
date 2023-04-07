@@ -1,4 +1,4 @@
-﻿namespace Cadenza;
+﻿namespace Cadenza.Tabs;
 
 public class LibraryTabBase : ComponentBase
 {
