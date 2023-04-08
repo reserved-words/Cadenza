@@ -12,7 +12,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpPost("AddTrack/{source}")]
-    public async Task AddTrack(LibrarySource source, [FromBody] TrackFull track)
+    public async Task AddTrack(LibrarySource source, [FromBody] SyncTrack track)
     {
         await _service.AddTrack(source, track);
     }

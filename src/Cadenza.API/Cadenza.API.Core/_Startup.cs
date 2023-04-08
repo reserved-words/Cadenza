@@ -7,8 +7,10 @@ global using Cadenza.Common.Domain.Model.Album;
 global using Cadenza.Common.Domain.Model.Artist;
 global using Cadenza.Common.Domain.Model.History;
 global using Cadenza.Common.Domain.Model.LastFm;
+global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
+
 global using Microsoft.Extensions.DependencyInjection;
 using Cadenza.API.Core.Services;
 using Cadenza.API.Interfaces;

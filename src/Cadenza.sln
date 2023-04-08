@@ -75,8 +75,6 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Cadenza.Sql", "SQL\Cadenza.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.API.SqlLibrary", "Cadenza.API\Cadenza.API.SqlLibrary\Cadenza.API.SqlLibrary.csproj", "{8B664E90-9793-40DE-AD5B-28B657351FA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.API.JsonLibrary", "Cadenza.API\Cadenza.API.JsonLibrary\Cadenza.API.JsonLibrary.csproj", "{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,10 +199,6 @@ Global
 		{8B664E90-9793-40DE-AD5B-28B657351FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B664E90-9793-40DE-AD5B-28B657351FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B664E90-9793-40DE-AD5B-28B657351FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,7 +232,6 @@ Global
 		{47C61613-FB09-4315-8ED0-0D567DDC748E} = {89F6ECE8-7907-4F76-9165-39696EA42F68}
 		{71FE5444-309C-4DEE-9129-A8DA218CDD6D} = {E56D5E25-73E0-487F-98F9-7116B2DBEEA1}
 		{8B664E90-9793-40DE-AD5B-28B657351FA3} = {89F6ECE8-7907-4F76-9165-39696EA42F68}
-		{31E17AB0-F6F8-4A7F-B7A4-8B0299D1746B} = {89F6ECE8-7907-4F76-9165-39696EA42F68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC17F3E1-56B9-47E8-83C4-C7358F820CD1}

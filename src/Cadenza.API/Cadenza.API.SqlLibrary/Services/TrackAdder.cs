@@ -13,10 +13,9 @@ internal class TrackAdder : ITrackAdder
         _mapper = mapper;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
-        track.Track.Source = source;
-        track.Album.Source = source;
+        track.Source = source;
 
         var trackArtistData = _mapper.MapTrackArtist(track);
         var trackArtistId = await _insertService.AddArtist(trackArtistData);

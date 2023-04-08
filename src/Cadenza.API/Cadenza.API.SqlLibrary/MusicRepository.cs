@@ -18,7 +18,7 @@ internal class MusicRepository : IMusicRepository
         _libraryUpdater = libraryUpdater;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         await _trackAdder.AddTrack(source, track);
     }

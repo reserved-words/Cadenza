@@ -33,10 +33,10 @@ internal class Id3Updater : IId3Updater
         switch (ItemProperty)
         {
             case ItemProperty.AlbumTags:
-                commentData.AlbumTags = new TagList(value);
+                commentData.AlbumTagList = value;
                 break;
             case ItemProperty.ArtistTags:
-                commentData.ArtistTags = new TagList(value);
+                commentData.ArtistTagList = value;
                 break;
             case ItemProperty.ArtistImage:
                 trackData.Artist.Image = _imageConverter.GetImageFromBase64Url(value);
@@ -69,7 +69,7 @@ internal class Id3Updater : IId3Updater
                 commentData.State = value;
                 break;
             case ItemProperty.TrackTags:
-                commentData.TrackTags = new TagList(value);
+                commentData.TrackTagList = value;
                 break;
             case ItemProperty.TrackTitle:
                 trackData.Track.Title = value;
