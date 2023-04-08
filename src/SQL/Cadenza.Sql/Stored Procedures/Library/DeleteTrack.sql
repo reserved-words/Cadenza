@@ -20,6 +20,11 @@ BEGIN
 		TRK.[IdFromSource] = @IdFromSource
 		
 	DELETE
+		[Queue].[TrackUpdates]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE
 		[Library].[TrackTags]
 	WHERE
 		[TrackId] = @Id
