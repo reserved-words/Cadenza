@@ -43,7 +43,7 @@ public static class Startup
             .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
             .AddTransient<IUpdateService, UpdateService>()
-            .AddTransient<IArtworkFetcher, ArtworkFetcher>();
+            .AddSingleton<IArtworkFetcher, ArtworkFetcher>();
     }
 
     private static IServiceCollection AddInternals(this IServiceCollection services)
