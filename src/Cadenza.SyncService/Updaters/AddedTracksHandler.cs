@@ -45,7 +45,7 @@ internal class AddedTracksHandler : IService
     {
         var track = await repository.GetTrack(trackId);
 
-        _logger.LogInformation($"Adding track {track.Track.Title} by {track.Artist.Name}");
+        _logger.LogInformation($"Adding track {track.Title} by {track.Artist.Name}");
 
         await _database.AddTrack(source, track);
     }

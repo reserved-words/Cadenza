@@ -1,4 +1,5 @@
 ﻿namespace Cadenza.API.Core.Services;
+
 internal class SyncService : ISyncService
 {
     private readonly IMusicRepository _repository;
@@ -10,18 +11,14 @@ internal class SyncService : ISyncService
         _updateRepository = updateRepository;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         await _repository.AddTrack(source, track);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        var library = await _repository.Get(source);
-
-        return library.Tracks
-            .Select(t => t.Id)
-            .ToList();
+        return await _repository.GetAllTracks(source);
     }
 
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
@@ -49,53 +46,18 @@ internal class SyncService : ISyncService
         return await _updateRepository.GetUpdates(source);
     }
 
+    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    {
+        await _updateRepository.MarkAsErrored(update, source);
+    }
+
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
     {
-        await ClearImages(source, update);
-
-        await _updateRepository.Remove(update, source);
+        await _updateRepository.MarkAsDone(update, source);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
         await _repository.RemoveTracks(source, ids);
-    }
-
-    private async Task ClearImages(LibrarySource source, ItemUpdates update)
-    {
-        var clearArtworkUpdates = GetClearImageUpdates(update, ItemProperty.Artwork);
-        if (clearArtworkUpdates != null)
-        {
-            await _repository.UpdateAlbum(source, clearArtworkUpdates);
-        }
-
-        var clearArtistImageUpdates = GetClearImageUpdates(update, ItemProperty.ArtistImage);
-        if (clearArtistImageUpdates != null)
-        {
-            await _repository.UpdateArtist(clearArtistImageUpdates);
-        }
-    }
-
-    private ItemUpdates GetClearImageUpdates(ItemUpdates update, ItemProperty property)
-    {
-        var propertyUpdate = update.Updates.SingleOrDefault(u => u.Property == property);
-
-        if (propertyUpdate == null)
-            return null;
-
-        var clearImageUpdate = new PropertyUpdate
-        {
-            Property = property,
-            OriginalValue = propertyUpdate.OriginalValue,
-            UpdatedValue = null
-        };
-
-        return new ItemUpdates
-        {
-            Id = update.Id,
-            Type = update.Type,
-            Name = update.Name,
-            Updates = new List<PropertyUpdate> { clearImageUpdate }
-        };
     }
 }

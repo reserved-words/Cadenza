@@ -19,5 +19,5 @@ public class Album
     public string Year { get; set; }
 
     [ItemProperty(ItemProperty.Artwork)]
-    public string ArtworkUrl { get; set; }
+    public string ArtworkBase64 { get; set; }
 }

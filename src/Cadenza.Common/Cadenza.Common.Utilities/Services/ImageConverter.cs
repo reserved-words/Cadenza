@@ -12,12 +12,18 @@ internal class ImageConverter : IImageConverter
 
     public string GetBase64UrlFromImage(ArtworkImage artwork)
     {
+        if (artwork == null)
+            return null;
+
         var base64String = Convert.ToBase64String(artwork.Bytes);
         return string.Format(Base64UrlFormat, artwork.MimeType, base64String);
     }
 
     public ArtworkImage GetImageFromBase64Url(string base64Url)
     {
+        if (base64Url == null) 
+            return null;
+
         var pattern = string.Format(RegexFormat, MimeTypePattern, Base64StringPattern);
 
         var regex = new Regex(pattern);

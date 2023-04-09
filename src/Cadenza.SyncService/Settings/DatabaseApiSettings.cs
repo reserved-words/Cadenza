@@ -13,6 +13,7 @@ public class DatabaseApiEndpoints
     public string GetTracksByArtist { get; set; }
     public string GetTracksByAlbum { get; set; }
     public string GetUpdates { get; set; }
+    public string MarkErrored { get; set; }
     public string MarkUpdated { get; set; }
     public string RemoveTracks { get; set; }
 }

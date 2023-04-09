@@ -21,7 +21,6 @@ public static class Startup
 
         services
             .AddTransient<IAppStore, Store>()
-            .AddTransient<IArtworkFetcher, ArtworkFetcher>()
             .AddTransient<IImageFinder, ImageFinder>()
             .AddTransient<ICurrentTrackStore, CurrentTrackStore>()
             .AddTransient<IItemPlayer, ItemPlayer>()

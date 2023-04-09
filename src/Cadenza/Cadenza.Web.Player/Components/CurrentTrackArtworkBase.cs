@@ -17,15 +17,13 @@ public class CurrentTrackArtworkBase : ComponentBase
 
     public string ArtworkUrl { get; private set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         AlbumDisplay = Model == null
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        ArtworkUrl = Model == null
-            ? await ArtworkFetcher.GetArtworkUrl(null)
-            : await ArtworkFetcher.GetArtworkUrl(Model.Album, Model.Track.Id);
+        ArtworkUrl = ArtworkFetcher.GetAlbumArtworkSrc(Model?.Album);
 
         StateHasChanged();
     }

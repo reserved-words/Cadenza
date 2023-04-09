@@ -14,7 +14,7 @@ internal class DatabaseRepository : IDatabaseRepository
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}/{source}";
         await _http.Post(url, null, track);
@@ -42,6 +42,12 @@ internal class DatabaseRepository : IDatabaseRepository
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}/{source}";
         return await _http.Get<List<ItemUpdates>>(url);
+    }
+
+    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkErrored}/{source}";
+        await _http.Post(url, null, update);
     }
 
     public async Task MarkUpdated(LibrarySource source, ItemUpdates update)

@@ -12,7 +12,7 @@ public class ArtistInfo : Artist
     public string Country { get; set; }
 
     [ItemProperty(ItemProperty.ArtistImage)]
-    public string ImageUrl { get; set; }
+    public string ImageBase64 { get; set; }
 
     [ItemProperty(ItemProperty.ArtistTags)]
     public TagList Tags { get; set; } = new TagList();

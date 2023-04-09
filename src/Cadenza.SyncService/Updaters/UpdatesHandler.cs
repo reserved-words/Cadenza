@@ -40,11 +40,8 @@ internal class UpdatesHandler : IService
 
         foreach (var update in updates)
         {
-            _logger.LogInformation($"Started processing update ID {update.Id}");
             var tracks = await _database.GetTracksByArtist(source, update.Id);
-            await repository.UpdateTracks(tracks, update.Updates);
-            await MarkUpdated(source, update);
-            _logger.LogInformation($"Finished processing update ID {update.Id}");
+            await TryUpdateTracks(repository, tracks, source, update);
         }
 
         _logger.LogInformation("All artist updates processed");
@@ -56,11 +53,8 @@ internal class UpdatesHandler : IService
 
         foreach (var update in updates)
         {
-            _logger.LogInformation($"Started processing update ID {update.Id}");
             var tracks = await _database.GetTracksByAlbum(source, update.Id);
-            await repository.UpdateTracks(tracks, update.Updates);
-            await MarkUpdated(source, update);
-            _logger.LogInformation($"Finished processing update ID {update.Id}");
+            await TryUpdateTracks(repository, tracks, source, update);
         }
 
         _logger.LogInformation("All album updates processed");
@@ -72,13 +66,33 @@ internal class UpdatesHandler : IService
 
         foreach (var update in updates)
         {
-            _logger.LogInformation($"Started processing update ID {update.Id}");
-            await repository.UpdateTracks(new List<string> { update.Id }, update.Updates);
-            await MarkUpdated(source, update);
-            _logger.LogInformation($"Finished processing update ID {update.Id}");
+            var tracks = new List<string> { update.Id };
+            await TryUpdateTracks(repository, tracks, source, update);
         }
 
         _logger.LogInformation("All track updates processed");
+    }
+
+    private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, LibrarySource source, ItemUpdates update)
+    {
+        _logger.LogInformation($"Started processing update ID {update.Id}");
+
+        try
+        {
+            await repository.UpdateTracks(tracks, update.Updates);
+            await MarkUpdated(source, update);
+            _logger.LogInformation($"Finished processing update ID {update.Id}");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to process update ID {update.Id}");
+            await MarkErrored(source, update);
+        }
+    }
+
+    private async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    {
+        await _database.MarkErrored(source, update);
     }
 
     private async Task MarkUpdated(LibrarySource source, ItemUpdates update)

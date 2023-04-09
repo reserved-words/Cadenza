@@ -7,14 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\default.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Cache\Cadenza.API.Cache.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.Database\Cadenza.API.Database.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.LastFM\Cadenza.API.LastFM.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.SqlLibrary\Cadenza.API.SqlLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Core;
+﻿using Cadenza.Common.Domain.Model.Sync;
+
+namespace Cadenza.Local.API.Core;
 
 internal class SyncService : ISyncService
 {
@@ -22,7 +24,7 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<SyncTrack> GetTrack(string id)
     {
         var path = _base64Converter.FromBase64(id);
         return await _musicLibrary.GetFileData(path);
