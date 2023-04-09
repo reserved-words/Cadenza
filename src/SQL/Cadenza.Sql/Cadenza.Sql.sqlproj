@@ -67,6 +67,7 @@
     <Folder Include="Views\Library" />
     <Folder Include="Tables\Queue" />
     <Folder Include="Stored Procedures\Queue" />
+    <Folder Include="_publish" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -145,7 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\Sources.sql" />
-    <None Include="Cadenza.publish.xml" />
+    <None Include="_publish\Cadenza.publish.xml" />
+    <None Include="_publish\cadenza-local.publish.xml" />
+    <None Include="_publish\cadenza-test.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment.sql" />
