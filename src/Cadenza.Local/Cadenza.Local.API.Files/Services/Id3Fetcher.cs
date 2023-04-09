@@ -37,7 +37,7 @@ internal class Id3Fetcher : IId3Fetcher
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = comment.TrackYear.Nullify() ?? data.Album.Year,
             Lyrics = data.Track.Lyrics.Nullify(),
-            TagList = comment.TrackTagList,
+            TagList = comment.TrackTags,
             DiscNo = data.Disc.DiscNo <= 0 ? 1 : data.Disc.DiscNo,
             TrackNo = data.Track.TrackNo
         };
@@ -52,7 +52,7 @@ internal class Id3Fetcher : IId3Fetcher
             ReleaseType = Enum.TryParse(data.Album.ReleaseType, out ReleaseType result) ? result : ReleaseType.Album,
             TrackCounts = new List<int>(),
             Year = data.Album.Year.Nullify(),
-            TagList = comment.AlbumTagList,
+            TagList = comment.AlbumTags,
             ArtworkMimeType = data.Album.Artwork?.MimeType,
             ArtworkContent = data.Album.Artwork?.Bytes
         };
@@ -82,7 +82,7 @@ internal class Id3Fetcher : IId3Fetcher
             City = commentData.City.Nullify(),
             State = commentData.State.Nullify(),
             Country = commentData.Country.Nullify(),
-            TagList = commentData.ArtistTagList,
+            TagList = commentData.ArtistTags,
             ImageMimeType = data.Artist.Image?.MimeType,
             ImageContent = data.Artist.Image?.Bytes
         };
