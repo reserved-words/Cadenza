@@ -149,8 +149,15 @@
     <None Include="_publish\Cadenza.publish.xml" />
     <None Include="_publish\cadenza-local.publish.xml" />
     <None Include="_publish\cadenza-test.publish.xml" />
+    <None Include="Permissions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="APIUser">
+      <DefaultValue>TBC</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>

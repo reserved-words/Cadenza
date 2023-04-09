@@ -1,4 +1,6 @@
 ﻿
+:r .\Permissions.sql
+
 :r .\SeedData\AlbumProperties.sql
 :r .\SeedData\ArtistProperties.sql
 :r .\SeedData\Groupings.sql
