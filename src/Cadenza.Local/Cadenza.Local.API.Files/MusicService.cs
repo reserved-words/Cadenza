@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Files;
+﻿using Cadenza.Common.Domain.Model.Sync;
+
+namespace Cadenza.Local.API.Files;
 
 internal class MusicService : IMusicFilesService
 {
@@ -11,7 +13,7 @@ internal class MusicService : IMusicFilesService
         _fetcher = fetcher;
     }
 
-    public Task<TrackFull> GetFileData(string filepath)
+    public Task<SyncTrack> GetFileData(string filepath)
     {
         var result = _fetcher.GetFileData(filepath);
         return Task.FromResult(result);

@@ -11,8 +11,10 @@ global using Cadenza.Common.Domain.Model.Album;
 global using Cadenza.Common.Domain.Model.Artist;
 global using Cadenza.Common.Domain.Model.History;
 global using Cadenza.Common.Domain.Model.LastFm;
+global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
+
 global using Cadenza.Common.Utilities;
 global using Microsoft.AspNetCore.Mvc;
 using Cadenza.API.SqlLibrary;

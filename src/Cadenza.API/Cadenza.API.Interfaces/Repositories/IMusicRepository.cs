@@ -8,5 +8,5 @@ public interface IMusicRepository
     Task UpdateArtist(ItemUpdates updates);
     Task UpdateAlbum(LibrarySource source, ItemUpdates updates);
     Task UpdateTrack(LibrarySource source, ItemUpdates updates);
-    Task AddTrack(LibrarySource source, TrackFull track);
+    Task AddTrack(LibrarySource source, SyncTrack track);
 }

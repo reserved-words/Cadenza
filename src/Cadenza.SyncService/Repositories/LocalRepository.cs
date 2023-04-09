@@ -22,10 +22,10 @@ internal class LocalRepository : ISourceRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<SyncTrack> GetTrack(string id)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{id}";
-        return await _http.Get<TrackFull>(url);
+        return await _http.Get<SyncTrack>(url);
     }
 
     public async Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates)

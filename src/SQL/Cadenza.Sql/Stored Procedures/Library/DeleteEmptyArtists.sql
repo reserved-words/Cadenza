@@ -3,6 +3,13 @@ AS
 BEGIN
 
 	DELETE
+		UPD
+	FROM
+		[Queue].[ArtistUpdates] UPD
+	INNER JOIN 
+		[Library].[vw_EmptyArtists] EMP ON EMP.[Id] = UPD.[ArtistId]
+
+	DELETE
 		TAG
 	FROM
 		[Library].[ArtistTags] TAG

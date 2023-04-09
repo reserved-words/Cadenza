@@ -3,11 +3,11 @@
 namespace Cadenza.API.SqlLibrary.Interfaces;
 internal interface IDataMapper
 {
-    NewArtistData MapTrackArtist(TrackFull track);
-    NewArtistData MapAlbumArtist(TrackFull track);
-    NewAlbumData MapAlbum(TrackFull track, int artistId);
-    NewDiscData MapDisc(TrackFull track, int albumId);
-    NewTrackData MapTrack(TrackFull track, int artistId, int discId);
+    NewArtistData MapTrackArtist(SyncTrack track);
+    NewArtistData MapAlbumArtist(SyncTrack track);
+    NewAlbumData MapAlbum(SyncTrack track, int artistId);
+    NewDiscData MapDisc(SyncTrack track, int albumId);
+    NewTrackData MapTrack(SyncTrack track, int artistId, int discId);
 
     ArtistInfo MapArtist(GetArtistData artist);
     AlbumInfo MapAlbum(GetAlbumData album, List<GetDiscData> discs);

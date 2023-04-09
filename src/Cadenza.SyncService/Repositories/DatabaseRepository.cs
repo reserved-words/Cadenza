@@ -14,7 +14,7 @@ internal class DatabaseRepository : IDatabaseRepository
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}/{source}";
         await _http.Post(url, null, track);

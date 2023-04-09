@@ -8,6 +8,9 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     private readonly DatabaseApiSettings _settings;
 
+    private readonly Dictionary<string, string> _updateAlbumArtwork = new();
+    private readonly Dictionary<string, string> _updatedArtistImages = new ();
+
     public ArtworkFetcher(IOptions<DatabaseApiSettings> settings)
     {
         _settings = settings.Value;
@@ -15,22 +18,36 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     public string GetArtistImageSrc(ArtistInfo artist)
     {
-        if (artist?.ImageBase64 != null)
-            return artist.ImageBase64;
+        if (artist == null || artist.Id == null)
+            return ArtworkPlaceholderUrl;
 
-        return artist?.Id != null
-            ? GetUrl(_settings.Endpoints.ArtistImage, artist.Id)
-            : ArtworkPlaceholderUrl;
+        if (artist.ImageBase64 != null)
+        {
+            _updatedArtistImages.Remove(artist.Id);
+            _updatedArtistImages.Add(artist.Id, artist.ImageBase64);
+        }
+
+        if (_updatedArtistImages.TryGetValue(artist.Id, out var imageSrc))
+            return imageSrc;
+
+        return GetUrl(_settings.Endpoints.ArtistImage, artist.Id);
     }
 
     public string GetAlbumArtworkSrc(Album album)
     {
-        if (album?.ArtworkBase64 != null)
-            return album.ArtworkBase64;
+        if (album == null || album.Id == null)
+            return ArtworkPlaceholderUrl;
 
-        return album?.Id != null
-            ? GetUrl(_settings.Endpoints.AlbumArtwork, album.Id)
-            : ArtworkPlaceholderUrl;
+        if (album.ArtworkBase64 != null)
+        {
+            _updateAlbumArtwork.Remove(album.Id);
+            _updateAlbumArtwork.Add(album.Id, album.ArtworkBase64);
+        }
+
+        if (_updateAlbumArtwork.TryGetValue(album.Id, out var imageSrc))
+            return imageSrc;
+
+        return GetUrl(_settings.Endpoints.AlbumArtwork, album.Id);
     }
     
     private string GetUrl(string endpoint, object id)

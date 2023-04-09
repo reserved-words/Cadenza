@@ -18,7 +18,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetTrack/{id}")]
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<SyncTrack> GetTrack(string id)
     {
         return await _service.GetTrack(id);
     }

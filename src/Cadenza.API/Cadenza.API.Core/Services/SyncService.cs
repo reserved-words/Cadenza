@@ -1,4 +1,5 @@
 ﻿namespace Cadenza.API.Core.Services;
+
 internal class SyncService : ISyncService
 {
     private readonly IMusicRepository _repository;
@@ -10,7 +11,7 @@ internal class SyncService : ISyncService
         _updateRepository = updateRepository;
     }
 
-    public async Task AddTrack(LibrarySource source, TrackFull track)
+    public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         await _repository.AddTrack(source, track);
     }
