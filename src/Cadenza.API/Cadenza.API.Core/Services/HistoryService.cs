@@ -9,6 +9,11 @@ internal class HistoryService : IHistoryService
         _repository = repository;
     }
 
+    public async Task<List<RecentlyPlayedItem>> GetRecentlyPlayedItems(int maxItems)
+    {
+        return await _repository.GetRecentlyPlayedItems(maxItems);
+    }
+
     public async Task LogAlbumPlay(int albumId)
     {
         await _repository.LogAlbumPlay(albumId);

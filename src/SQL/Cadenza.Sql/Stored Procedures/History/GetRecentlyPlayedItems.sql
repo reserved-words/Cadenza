@@ -59,7 +59,7 @@ BEGIN
 			WHEN @Tag THEN PLY.[ItemIdAsString] -- tag
 		END [PlaylistName],
 		ARTIST.[Name] [ArtistName],
-		ALBUM.[Title] [AlbumName]
+		ALBUM.[Title] [AlbumTitle]
 	FROM
 		@Items PLY
 	LEFT JOIN 

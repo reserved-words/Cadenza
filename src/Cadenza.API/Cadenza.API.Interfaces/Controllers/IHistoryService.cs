@@ -2,6 +2,7 @@
 
 public interface IHistoryService
 {
+    Task<List<RecentlyPlayedItem>> GetRecentlyPlayedItems(int maxItems);
     Task LogLibraryPlay();
     Task LogArtistPlay(string nameId);
     Task LogAlbumPlay(int albumId);

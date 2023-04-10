@@ -169,7 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\Sources.sql" />
-    <None Include="_publish\Cadenza.publish.xml" />
     <None Include="_publish\cadenza-local.publish.xml" />
     <None Include="_publish\cadenza-test.publish.xml" />
     <None Include="Permissions.sql" />
