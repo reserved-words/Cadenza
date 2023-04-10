@@ -6,85 +6,61 @@ internal class ItemPlayer : IItemPlayer
 {
     private readonly IPlaylistCreator _playlistCreator;
     private readonly IPlayCoordinator _playCoordinator;
+    private readonly IHistoryLogger _historyLogger;
 
-    public ItemPlayer(IPlayCoordinator playCoordinator, IPlaylistCreator playlistCreator)
+    public ItemPlayer(IPlayCoordinator playCoordinator, IPlaylistCreator playlistCreator, IHistoryLogger historyLogger)
     {
         _playCoordinator = playCoordinator;
         _playlistCreator = playlistCreator;
+        _historyLogger = historyLogger;
     }
 
     public async Task PlayAlbum(string id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateAlbumPlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayArtist(string id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateArtistPlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayGenre(string id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateGenrePlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayGrouping(Grouping id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateGroupingPlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayTag(string id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateTagPlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayTrack(string id)
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateTrackPlaylist(id);
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
     public async Task PlayAll()
     {
-        await _playCoordinator.StopCurrentPlaylist();
         var playlist = await _playlistCreator.CreateLibraryPlaylist();
-        await _playCoordinator.Play(playlist);
+        await Play(playlist);
     }
 
-    public async Task PlayItem(PlayerItemType type, string id)
+    private async Task Play(PlaylistDefinition playlist)
     {
-        switch (type)
-        {
-            case PlayerItemType.Album:
-                await PlayAlbum(id);
-                break;
-            case PlayerItemType.Artist:
-                await PlayArtist(id);
-                break;
-            case PlayerItemType.Genre:
-                await PlayGenre(id);
-                break;
-            case PlayerItemType.Grouping:
-                await PlayGrouping(id.Parse<Grouping>());
-                break;
-            case PlayerItemType.Tag:
-                await PlayTag(id);
-                break;
-            case PlayerItemType.Track:
-                await PlayTrack(id);
-                break;
-        }
-
+        await _playCoordinator.StopCurrentPlaylist();
+        await _playCoordinator.Play(playlist);
+        await _historyLogger.LogPlayedItem(playlist.Id);
     }
 }
