@@ -29,7 +29,7 @@ public class HistoryController : ControllerBase
         await _service.LogGenrePlay(genre);
     }
 
-    [HttpPost("LogGrouping/{albumId}")]
+    [HttpPost("LogGrouping/{grouping}")]
     public async Task LogGroupingPlay(Grouping grouping)
     {
         await _service.LogGroupingPlay(grouping);
