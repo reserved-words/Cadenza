@@ -68,6 +68,9 @@
     <Folder Include="Tables\Queue" />
     <Folder Include="Stored Procedures\Queue" />
     <Folder Include="_publish" />
+    <Folder Include="Tables\History" />
+    <Folder Include="Stored Procedures\History" />
+    <Folder Include="Views\History" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -132,6 +135,26 @@
     <Build Include="Tables\Library\ArtistImages.sql" />
     <Build Include="Stored Procedures\Library\GetArtistImage.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumArtwork.sql" />
+    <Build Include="Schemas\History.sql" />
+    <Build Include="Tables\History\PlayedArtists.sql" />
+    <Build Include="Tables\Admin\PlaylistTypes.sql" />
+    <None Include="SeedData\PlaylistTypes.sql" />
+    <Build Include="Tables\History\PlayedAlbums.sql" />
+    <Build Include="Tables\History\PlayedTracks.sql" />
+    <Build Include="Tables\History\PlayedGenres.sql" />
+    <Build Include="Tables\History\PlayedGroupings.sql" />
+    <Build Include="Tables\History\PlayedTags.sql" />
+    <Build Include="Tables\History\PlayedItems.sql" />
+    <Build Include="Stored Procedures\History\LogArtistPlay.sql" />
+    <Build Include="Stored Procedures\History\LogAlbumPlay.sql" />
+    <Build Include="Stored Procedures\History\LogTrackPlay.sql" />
+    <Build Include="Stored Procedures\History\LogGenrePlay.sql" />
+    <Build Include="Stored Procedures\History\LogGroupingPlay.sql" />
+    <Build Include="Stored Procedures\History\LogTagPlay.sql" />
+    <Build Include="Stored Procedures\History\LogLibraryPlay.sql" />
+    <Build Include="Views\History\vw_PlayedItems.sql" />
+    <Build Include="Views\History\vw_PlayedAlbums.sql" />
+    <Build Include="Stored Procedures\History\GetRecentAlbums.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
@@ -146,7 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SeedData\Sources.sql" />
-    <None Include="_publish\Cadenza.publish.xml" />
     <None Include="_publish\cadenza-local.publish.xml" />
     <None Include="_publish\cadenza-test.publish.xml" />
     <None Include="Permissions.sql" />

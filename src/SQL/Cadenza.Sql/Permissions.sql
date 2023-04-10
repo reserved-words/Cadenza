@@ -1,8 +1,14 @@
 ﻿
-IF NOT EXISTS (SELECT [name] FROM sys.database_principals WHERE [name] = '$(APIUser)')
+IF '$(APIUser)' != 'N/A'
 BEGIN
-	CREATE USER [$(APIUser)] FOR LOGIN [$(APIUser)]
-END
 
-GRANT EXECUTE ON SCHEMA::[Library] TO [$(APIUser)]
-GRANT EXECUTE ON SCHEMA::[Queue] TO [$(APIUser)]
+	IF NOT EXISTS (SELECT [name] FROM sys.database_principals WHERE [name] = '$(APIUser)')
+	BEGIN
+		CREATE USER [$(APIUser)] FOR LOGIN [$(APIUser)]
+	END
+
+	GRANT EXECUTE ON SCHEMA::[History] TO [$(APIUser)]
+	GRANT EXECUTE ON SCHEMA::[Library] TO [$(APIUser)]
+	GRANT EXECUTE ON SCHEMA::[Queue] TO [$(APIUser)]
+
+END

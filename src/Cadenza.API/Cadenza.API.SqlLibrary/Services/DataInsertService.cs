@@ -1,5 +1,6 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
+using Cadenza.Common.Domain.Model.Album;
 using Dapper;
 using System.Data;
 
@@ -11,10 +12,26 @@ internal class DataInsertService : IDataInsertService
     private const string AddAlbumProcedure = "[Library].[AddAlbum]";
     private const string AddDiscProcedure = "[Library].[AddDisc]";
     private const string AddTrackProcedure = "[Library].[AddTrack]";
+    
     private const string AddAlbumUpdateProcedure = "[Queue].[AddAlbumUpdate]";
     private const string AddArtistUpdateProcedure = "[Queue].[AddArtistUpdate]";
     private const string AddTrackUpdateProcedure = "[Queue].[AddTrackUpdate]";
+
+    private const string LogLibraryPlayProcedure = "[History].[LogLibraryPlay]";
+    private const string LogArtistPlayProcedure = "[History].[LogArtistPlay]";
+    private const string LogAlbumPlayProcedure = "[History].[LogAlbumPlay]";
+    private const string LogTrackPlayProcedure = "[History].[LogTrackPlay]";
+    private const string LogGroupingPlayProcedure = "[History].[LogGroupingPlay]";
+    private const string LogGenrePlayProcedure = "[History].[LogGenrePlay]";
+    private const string LogTagPlayProcedure = "[History].[LogTagPlay]";
+
+    private const string AlbumIdParameter = "AlbumId";
+    private const string IdFromSourceParameter = "IdFromSource";
     private const string IdParameter = "Id";
+    private const string GenreParameter = "Genre";
+    private const string GroupingIdParameter = "GroupingId";
+    private const string NameIdParameter = "NameId";
+    private const string TagParameter = "Tag";
 
     private IDataAccess _dbAccess;
 
@@ -115,5 +132,52 @@ internal class DataInsertService : IDataInsertService
     public async Task AddTrackUpdate(NewTrackUpdateData data)
     {
         await _dbAccess.Execute(AddTrackUpdateProcedure, data);
+    }
+
+    public async Task LogAlbumPlay(int albumId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(AlbumIdParameter, albumId);
+        await _dbAccess.Execute(LogAlbumPlayProcedure, parameters);
+    }
+
+    public async Task LogArtistPlay(string nameId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(NameIdParameter, nameId);
+        await _dbAccess.Execute(LogArtistPlayProcedure, parameters);
+    }
+
+    public async Task LogGenrePlay(string genre)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(GenreParameter, genre);
+        await _dbAccess.Execute(LogGenrePlayProcedure, parameters);
+    }
+
+    public async Task LogGroupingPlay(int groupingId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(GroupingIdParameter, groupingId);
+        await _dbAccess.Execute(LogGroupingPlayProcedure, parameters);
+    }
+
+    public async Task LogLibraryPlay()
+    {
+        await _dbAccess.Execute(LogLibraryPlayProcedure);
+    }
+
+    public async Task LogTagPlay(string tag)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(TagParameter, tag);
+        await _dbAccess.Execute(LogTagPlayProcedure, parameters);
+    }
+
+    public async Task LogTrackPlay(string idFromSource)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdFromSourceParameter, idFromSource);
+        await _dbAccess.Execute(LogTrackPlayProcedure, parameters);
     }
 }

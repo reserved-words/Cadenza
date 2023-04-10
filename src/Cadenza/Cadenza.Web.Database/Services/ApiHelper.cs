@@ -23,6 +23,12 @@ internal class ApiHelper : IApiHelper
         return await _http.Get<T>(url);
     }
 
+    public async Task Post(string endpoint)
+    {
+        var url = GetApiEndpoint(endpoint);
+        await _http.Post(url, null, null);
+    }
+
     public async Task Post<T>(string endpoint, T data)
     {
         var url = GetApiEndpoint(endpoint);

@@ -35,6 +35,9 @@ public static class Startup
 
     private static IServiceCollection AddApiRepositories(this IServiceCollection services)
     {
+        services
+            .AddSingleton<IArtworkFetcher, ArtworkFetcher>();
+
         return services
             .AddTransient<IAlbumRepository, AlbumRepository>()
             .AddTransient<IArtistRepository, ArtistRepository>()
@@ -43,7 +46,8 @@ public static class Startup
             .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
             .AddTransient<IUpdateService, UpdateService>()
-            .AddSingleton<IArtworkFetcher, ArtworkFetcher>();
+            .AddTransient<IHistoryLogger, HistoryRepository>()
+            .AddTransient<IHistoryFetcher, HistoryRepository>();
     }
 
     private static IServiceCollection AddInternals(this IServiceCollection services)

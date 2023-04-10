@@ -9,5 +9,4 @@ public interface IItemPlayer
     Task PlayGrouping(Grouping id);
     Task PlayTag(string id);
     Task PlayTrack(string id);
-    Task PlayItem(PlayerItemType type, string id);
 }
