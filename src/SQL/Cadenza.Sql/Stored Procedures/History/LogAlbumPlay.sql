@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [History].[AddPlayedTag]
-	@Tag NVARCHAR(200)
+﻿CREATE PROCEDURE [History].[LogAlbumPlay]
+	@AlbumId INT
 AS
 BEGIN
 	
@@ -12,15 +12,15 @@ BEGIN
 	FROM
 		[Admin].[PlaylistTypes]
 	WHERE
-		[Name] = 'Tag'
+		[Name] = 'Album'
 
 	SET @PlayedItemId = SCOPE_IDENTITY()
 
-	INSERT INTO [History].[PlayedTags] (
+	INSERT INTO [History].[PlayedAlbums] (
 		[PlayedItemId],
-		[Tag])
+		[AlbumId])
 	VALUES (
 		@PlayedItemId,
-		@Tag)
+		@AlbumId)
 
 END

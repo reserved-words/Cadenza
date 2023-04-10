@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [History].[AddPlayedGenre]
+﻿CREATE PROCEDURE [History].[LogGenrePlay]
 	@Genre NVARCHAR(100)
 AS
 BEGIN

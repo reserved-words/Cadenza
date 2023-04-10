@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [History].[AddPlayedArtist]
-	@NameId NVARCHAR(200)
+﻿CREATE PROCEDURE [History].[LogTrackPlay]
+	@IdFromSource NVARCHAR(500)
 AS
 BEGIN
 	
@@ -12,19 +12,19 @@ BEGIN
 	FROM
 		[Admin].[PlaylistTypes]
 	WHERE
-		[Name] = 'Artist'
+		[Name] = 'Track'
 
 	SET @PlayedItemId = SCOPE_IDENTITY()
 
-	INSERT INTO [History].[PlayedArtists] (
+	INSERT INTO [History].[PlayedTracks] (
 		[PlayedItemId],
-		[ArtistId])
+		[TrackId])
 	SELECT
 		@PlayedItemId,
 		[Id]
 	FROM
-		[Library].[Artists]
+		[Library].[Tracks]
 	WHERE
-		[NameId] = @NameId
+		[IdFromSource] = @IdFromSource
 
 END

@@ -144,12 +144,13 @@
     <Build Include="Tables\History\PlayedGroupings.sql" />
     <Build Include="Tables\History\PlayedTags.sql" />
     <Build Include="Tables\History\PlayedItems.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedArtist.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedAlbum.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedTrack.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedGenre.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedGrouping.sql" />
-    <Build Include="Stored Procedures\History\AddPlayedTag.sql" />
+    <Build Include="Stored Procedures\History\LogArtistPlay.sql" />
+    <Build Include="Stored Procedures\History\LogAlbumPlay.sql" />
+    <Build Include="Stored Procedures\History\LogTrackPlay.sql" />
+    <Build Include="Stored Procedures\History\LogGenrePlay.sql" />
+    <Build Include="Stored Procedures\History\LogGroupingPlay.sql" />
+    <Build Include="Stored Procedures\History\LogTagPlay.sql" />
+    <Build Include="Stored Procedures\History\LogLibraryPlay.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
