@@ -20,7 +20,7 @@ public class PlayShortcutsBase : ComponentBase
     protected override void OnInitialized()
     {
         Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
-        Messenger.Subscribe<PlaylistStartedEventArgs>(OnPlaylistStarted);
+        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
 
         Groupings = Enum.GetValues<Grouping>()
             .Where(g => g != Grouping.None)
@@ -39,7 +39,7 @@ public class PlayShortcutsBase : ComponentBase
         await UpdateRecentAlbums();
     }
 
-    private async Task OnPlaylistStarted(object sender, PlaylistStartedEventArgs e)
+    private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
     {
         await UpdateRecentAlbums();
     }
