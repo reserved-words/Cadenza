@@ -20,6 +20,7 @@ public class PlayShortcutsBase : ComponentBase
     protected override void OnInitialized()
     {
         Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
+        Messenger.Subscribe<PlaylistStartedEventArgs>(OnPlaylistStarted);
 
         Groupings = Enum.GetValues<Grouping>()
             .Where(g => g != Grouping.None)
@@ -35,7 +36,12 @@ public class PlayShortcutsBase : ComponentBase
         if (e.Status != ConnectorStatus.Connected)
             return;
 
-        RecentAlbums = await History.GetRecentAlbums(5);
+        await UpdateRecentAlbums();
+    }
+
+    private async Task OnPlaylistStarted(object sender, PlaylistStartedEventArgs e)
+    {
+        await UpdateRecentAlbums();
     }
 
     protected async Task PlayLibrary()
@@ -51,5 +57,11 @@ public class PlayShortcutsBase : ComponentBase
     protected async Task PlayRecentAlbum(RecentAlbum album)
     {
         await Player.PlayAlbum(album.Id.ToString());
+    }
+
+    private async Task UpdateRecentAlbums()
+    {
+        RecentAlbums = await History.GetRecentAlbums(10);
+        StateHasChanged();
     }
 }
