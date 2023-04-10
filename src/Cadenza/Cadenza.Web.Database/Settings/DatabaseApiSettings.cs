@@ -9,7 +9,7 @@ public class DatabaseApiEndpoints
     public string Connect { get; set; }
     public string Populate { get; set; }
 
-    public string GetRecentlyPlayedItems { get; set; }
+    public string GetRecentAlbums { get; set; }
     public string LogLibraryPlay { get; set; }
     public string LogArtistPlay { get; set; }
     public string LogAlbumPlay { get; set; }

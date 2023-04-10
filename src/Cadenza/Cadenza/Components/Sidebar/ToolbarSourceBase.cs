@@ -33,11 +33,6 @@ public class ToolbarSourceBase : ComponentBase
 
         Model.ShowError = false;
 
-        //if (e.Status == ConnectorStatus.Errored)
-        //{
-        //    Notification.Error($"{e.Connector} error: {e.Error}");
-        //}
-
         StateHasChanged();
 
         return Task.CompletedTask;

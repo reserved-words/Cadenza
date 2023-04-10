@@ -14,17 +14,15 @@ internal class HistoryRepository : IHistoryRepository
         _readService = readService;
     }
 
-    public async Task<List<RecentlyPlayedItem>> GetRecentlyPlayedItems(int maxItems)
+    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
     {
-        var data = await _readService.GetRecentlyPlayedItems(maxItems);
+        var data = await _readService.GetRecentAlbums(maxItems);
 
-        return data.Select(d => new RecentlyPlayedItem
+        return data.Select(d => new RecentAlbum
         {
-            TypeId = d.TypeId,
-            ItemId = d.ItemId,
-            PlaylistName = d.PlaylistName,
-            ArtistName = d.ArtistName,
-            AlbumTitle = d.AlbumTitle
+            Id = d.AlbumId,
+            Title = d.AlbumTitle,
+            ArtistName = d.ArtistName
         })
         .ToList();
     }

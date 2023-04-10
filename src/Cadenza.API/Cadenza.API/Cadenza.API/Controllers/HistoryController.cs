@@ -11,10 +11,10 @@ public class HistoryController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("GetRecentlyPlayedItems/{maxItems}")]
-    public async Task GetRecentlyPlayedItems(int maxItems)
+    [HttpGet("GetRecentAlbums/{maxItems}")]
+    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
     {
-        await _service.GetRecentlyPlayedItems(maxItems);
+        return await _service.GetRecentAlbums(maxItems);
     }
 
     [HttpPost("LogAlbum/{albumId}")]

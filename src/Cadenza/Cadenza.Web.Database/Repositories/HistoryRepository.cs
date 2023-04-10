@@ -1,16 +1,20 @@
-﻿using Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Database.Repositories;
 
-namespace Cadenza.Web.Database.Repositories;
-
-internal class HistoryLogger : IHistoryLogger
+internal class HistoryRepository : IHistoryLogger, IHistoryFetcher
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHelper _apiHelper;
 
-    public HistoryLogger(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
+    public HistoryRepository(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;
+    }
+
+    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
+    {
+        var url = $"{_settings.GetRecentAlbums}/{maxItems}";
+        return await _apiHelper.Get<List<RecentAlbum>>(url);
     }
 
     public async Task LogPlayedItem(PlaylistId playlistId)

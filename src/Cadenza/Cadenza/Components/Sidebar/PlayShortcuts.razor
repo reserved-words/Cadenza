@@ -1,4 +1,6 @@
-﻿@using Cadenza.Web.Common.Interfaces.Play
+﻿@inherits PlayShortcutsBase
+
+@using Cadenza.Web.Common.Interfaces.Play
 
 <MudButton Class="mt-2" 
            OnClick="@PlayLibrary" 
@@ -21,29 +23,20 @@
     }
 </MudMenu>
 
-
-@code {
-
-    [Inject]
-    public IItemPlayer Player { get; set; }
-
-    protected override void OnInitialized()
+<MudMenu FullWidth="true"
+         EndIcon="@Icons.Filled.KeyboardArrowRight"
+         Label="Play Recent Album"
+         Variant="Variant.Filled"
+         ActivationEvent="@MouseEvent.LeftClick"
+         Size="@Size.Large"
+         AnchorOrigin="@Origin.BottomRight"
+         TransformOrigin="@Origin.BottomLeft">
+    @foreach (var item in RecentAlbums)
     {
-        Groupings = Enum.GetValues<Grouping>()
-            .Where(g => g != Grouping.None)
-            .OrderBy(g => g.ToString())
-            .ToList();
+        <MudMenuItem OnClick="@(() => PlayRecentAlbum(item))" Icon="@Icons.Material.Filled.History">
+            <MudText Typo="@Typo.body1">@item.Title</MudText>
+            <MudText Typo="@Typo.body2">@item.ArtistName</MudText>
+        </MudMenuItem>
     }
+</MudMenu>
 
-    private List<Grouping> Groupings { get; set; }
-
-    private async Task PlayLibrary()
-    {
-        await Player.PlayAll();
-    }
-
-    private async Task PlayGrouping(Grouping grouping)
-    {
-        await Player.PlayGrouping(grouping);
-    }
-}

@@ -38,41 +38,6 @@ internal class SearchCoordinator : ISearchCoordinator, ISearchCache
         }
     }
 
-    //public void AddTracks(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddAlbums(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddArtists(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddPlaylists(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddGenres(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddGroupings(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
-    //public void AddTags(List<PlayerItem> items)
-    //{
-    //    Items.AddRange(items);
-    //}
-
     public void AddItems(List<PlayerItem> items)
     {
         Items.AddRange(items);

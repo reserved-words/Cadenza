@@ -46,7 +46,8 @@ public static class Startup
             .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
             .AddTransient<IUpdateService, UpdateService>()
-            .AddTransient<IHistoryLogger, HistoryLogger>();
+            .AddTransient<IHistoryLogger, HistoryRepository>()
+            .AddTransient<IHistoryFetcher, HistoryRepository>();
     }
 
     private static IServiceCollection AddInternals(this IServiceCollection services)
