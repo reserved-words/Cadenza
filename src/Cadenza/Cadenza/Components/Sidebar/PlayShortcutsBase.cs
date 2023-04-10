@@ -4,6 +4,9 @@ namespace Cadenza.Components.Sidebar;
 
 public class PlayShortcutsBase : ComponentBase
 {
+    [Parameter]
+    public bool IsAppLoaded { get;set;}
+
     [Inject]
     public IItemPlayer Player { get; set; }
 
@@ -26,6 +29,14 @@ public class PlayShortcutsBase : ComponentBase
             .Where(g => g != Grouping.None)
             .OrderBy(g => g.ToString())
             .ToList();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsAppLoaded)
+        {
+            await UpdateRecentAlbums();
+        }
     }
 
     private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
