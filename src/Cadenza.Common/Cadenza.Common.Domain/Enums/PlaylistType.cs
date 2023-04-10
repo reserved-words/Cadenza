@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Enums;
+﻿namespace Cadenza.Common.Domain.Enums;
 
 public enum PlaylistType
 {
