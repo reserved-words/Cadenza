@@ -9,28 +9,14 @@
     Play All
 </MudButton>
 
-<MudMenu FullWidth="true" 
-         EndIcon="@Icons.Filled.KeyboardArrowRight" 
-         Label="Play Grouping" 
-         Variant="Variant.Filled" 
-         ActivationEvent="@MouseEvent.LeftClick"
-         Size="@Size.Large"
-         AnchorOrigin="@Origin.BottomRight"
-         TransformOrigin="@Origin.BottomLeft">
+<PlayShortcutsMenu Label="Play Grouping">
     @foreach (var grouping in Groupings)
     {
         <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping</MudMenuItem>
     }
-</MudMenu>
+</PlayShortcutsMenu>
 
-<MudMenu FullWidth="true"
-         EndIcon="@Icons.Filled.KeyboardArrowRight"
-         Label="Play Recent Album"
-         Variant="Variant.Filled"
-         ActivationEvent="@MouseEvent.LeftClick"
-         Size="@Size.Large"
-         AnchorOrigin="@Origin.BottomRight"
-         TransformOrigin="@Origin.BottomLeft">
+<PlayShortcutsMenu Label="Play Recent Album">
     @foreach (var item in RecentAlbums)
     {
         <MudMenuItem OnClick="@(() => PlayRecentAlbum(item))" Icon="@Icons.Material.Filled.History">
@@ -38,5 +24,5 @@
             <MudText Typo="@Typo.body2">@item.ArtistName</MudText>
         </MudMenuItem>
     }
-</MudMenu>
+</PlayShortcutsMenu>
 
