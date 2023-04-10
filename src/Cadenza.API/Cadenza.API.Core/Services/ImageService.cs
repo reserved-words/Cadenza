@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class ImageService : IImageService
 {

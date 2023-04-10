@@ -29,6 +29,7 @@ public static class Startup
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
+            .AddTransient<IHistoryService, HistoryService>()
             .AddTransient<IImageService, ImageService>()
             .AddTransient<ILastFmService, LastFmService>()
             .AddTransient<ILibraryService, LibraryService>()
