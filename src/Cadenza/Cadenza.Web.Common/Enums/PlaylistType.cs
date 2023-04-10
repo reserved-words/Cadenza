@@ -2,11 +2,11 @@
 
 public enum PlaylistType
 {
-    All,
-    Album,
-    Artist,
-    Track,
-    Genre,
-    Grouping,
-    Tag
+    All = 0,
+    Artist = 1,
+    Album = 2,
+    Track = 3,
+    Genre = 4,
+    Grouping = 5,
+    Tag = 6
 }

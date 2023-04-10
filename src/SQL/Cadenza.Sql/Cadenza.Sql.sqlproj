@@ -68,6 +68,8 @@
     <Folder Include="Tables\Queue" />
     <Folder Include="Stored Procedures\Queue" />
     <Folder Include="_publish" />
+    <Folder Include="Tables\History" />
+    <Folder Include="Stored Procedures\History" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -132,6 +134,22 @@
     <Build Include="Tables\Library\ArtistImages.sql" />
     <Build Include="Stored Procedures\Library\GetArtistImage.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumArtwork.sql" />
+    <Build Include="Schemas\History.sql" />
+    <Build Include="Tables\History\PlayedArtists.sql" />
+    <Build Include="Tables\Admin\PlaylistTypes.sql" />
+    <None Include="SeedData\PlaylistTypes.sql" />
+    <Build Include="Tables\History\PlayedAlbums.sql" />
+    <Build Include="Tables\History\PlayedTracks.sql" />
+    <Build Include="Tables\History\PlayedGenres.sql" />
+    <Build Include="Tables\History\PlayedGroupings.sql" />
+    <Build Include="Tables\History\PlayedTags.sql" />
+    <Build Include="Tables\History\PlayedItems.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedArtist.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedAlbum.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedTrack.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedGenre.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedGrouping.sql" />
+    <Build Include="Stored Procedures\History\AddPlayedTag.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
