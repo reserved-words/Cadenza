@@ -70,6 +70,7 @@
     <Folder Include="_publish" />
     <Folder Include="Tables\History" />
     <Folder Include="Stored Procedures\History" />
+    <Folder Include="Views\History" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -151,6 +152,9 @@
     <Build Include="Stored Procedures\History\LogGroupingPlay.sql" />
     <Build Include="Stored Procedures\History\LogTagPlay.sql" />
     <Build Include="Stored Procedures\History\LogLibraryPlay.sql" />
+    <Build Include="Views\History\vw_PlayedItems.sql" />
+    <Build Include="Views\History\vw_MostRecentPlays.sql" />
+    <Build Include="Stored Procedures\History\GetRecentlyPlayedItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
