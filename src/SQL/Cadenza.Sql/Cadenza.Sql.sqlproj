@@ -155,6 +155,8 @@
     <Build Include="Views\History\vw_PlayedItems.sql" />
     <Build Include="Views\History\vw_PlayedAlbums.sql" />
     <Build Include="Stored Procedures\History\GetRecentAlbums.sql" />
+    <Build Include="Views\History\vw_PlayedTags.sql" />
+    <Build Include="Stored Procedures\History\GetRecentTags.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

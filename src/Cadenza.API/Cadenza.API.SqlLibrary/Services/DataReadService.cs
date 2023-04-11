@@ -20,6 +20,7 @@ internal class DataReadService : IDataReadService
     private const string GetArtistUpdatesProcedure = "[Queue].[GetArtistUpdates]";
     private const string GetTrackUpdatesProcedure = "[Queue].[GetTrackUpdates]";
     private const string GetRecentAlbumsProcedure = "[History].[GetRecentAlbums]";
+    private const string GetRecentTagsProcedure = "[History].[GetRecentTags]";
 
     private const string IdParameter = "@Id";
     private const string IdFromSourceParameter = "@IdFromSource";
@@ -107,6 +108,13 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(MaxItemsParameter, maxItems);
         return await _dbAccess.Query<RecentAlbumData>(GetRecentAlbumsProcedure, parameters);
+    }
+
+    public async Task<List<RecentTagData>> GetRecentTags(int maxItems)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(MaxItemsParameter, maxItems);
+        return await _dbAccess.Query<RecentTagData>(GetRecentTagsProcedure, parameters);
     }
 
     public async Task<TrackData> GetTrack(string idFromSource)

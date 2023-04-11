@@ -26,3 +26,10 @@
     }
 </PlayShortcutsMenu>
 
+<PlayShortcutsMenu Label="Play Recent Tag">
+    @foreach (var tag in RecentTags)
+    {
+        <MudMenuItem OnClick="@(() => PlayRecentTag(tag))" Icon="@Icons.Material.Filled.History">@tag</MudMenuItem>
+    }
+</PlayShortcutsMenu>
+

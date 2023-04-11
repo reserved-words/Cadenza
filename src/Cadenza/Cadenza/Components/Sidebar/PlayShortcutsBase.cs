@@ -17,8 +17,8 @@ public class PlayShortcutsBase : ComponentBase
     public IHistoryFetcher History { get; set; }
 
     protected List<Grouping> Groupings { get; set; } = new();
-
     protected List<RecentAlbum> RecentAlbums { get; set; } = new();
+    protected List<string> RecentTags { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -35,7 +35,7 @@ public class PlayShortcutsBase : ComponentBase
     {
         if (IsAppLoaded)
         {
-            await UpdateRecentAlbums();
+            await UpdateRecentlyPlayedItems();
         }
     }
 
@@ -47,12 +47,12 @@ public class PlayShortcutsBase : ComponentBase
         if (e.Status != ConnectorStatus.Connected)
             return;
 
-        await UpdateRecentAlbums();
+        await UpdateRecentlyPlayedItems();
     }
 
     private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
     {
-        await UpdateRecentAlbums();
+        await UpdateRecentlyPlayedItems();
     }
 
     protected async Task PlayLibrary()
@@ -70,9 +70,15 @@ public class PlayShortcutsBase : ComponentBase
         await Player.PlayAlbum(album.Id.ToString());
     }
 
-    private async Task UpdateRecentAlbums()
+    protected async Task PlayRecentTag(string tag)
+    {
+        await Player.PlayTag(tag);
+    }
+
+    private async Task UpdateRecentlyPlayedItems()
     {
         RecentAlbums = await History.GetRecentAlbums(10);
+        RecentTags = await History.GetRecentTags(10);
         StateHasChanged();
     }
 }
