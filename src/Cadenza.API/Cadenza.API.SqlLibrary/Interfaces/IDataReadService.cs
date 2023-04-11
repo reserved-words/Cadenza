@@ -18,4 +18,5 @@ internal interface IDataReadService
     Task<AlbumArtwork> GetAlbumArtwork(int albumId);
     Task<ArtistImage> GetArtistImage(string nameId);
     Task<List<RecentAlbumData>> GetRecentAlbums(int maxItems);
+    Task<List<RecentTagData>> GetRecentTags(int maxItems);
 }

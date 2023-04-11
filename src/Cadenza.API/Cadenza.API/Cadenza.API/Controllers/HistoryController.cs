@@ -17,6 +17,12 @@ public class HistoryController : ControllerBase
         return await _service.GetRecentAlbums(maxItems);
     }
 
+    [HttpGet("GetRecentTags/{maxItems}")]
+    public async Task<List<string>> GetRecentTags(int maxItems)
+    {
+        return await _service.GetRecentTags(maxItems);
+    }
+
     [HttpPost("LogAlbum/{albumId}")]
     public async Task LogAlbumPlay(int albumId)
     {

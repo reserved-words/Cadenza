@@ -14,6 +14,11 @@ internal class HistoryService : IHistoryService
         return await _repository.GetRecentAlbums(maxItems);
     }
 
+
+    public async Task<List<string>> GetRecentTags(int maxItems)
+    {
+        return await _repository.GetRecentTags(maxItems);
+    }
     public async Task LogAlbumPlay(int albumId)
     {
         await _repository.LogAlbumPlay(albumId);

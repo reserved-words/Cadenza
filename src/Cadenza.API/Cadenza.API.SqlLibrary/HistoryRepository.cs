@@ -27,6 +27,12 @@ internal class HistoryRepository : IHistoryRepository
         .ToList();
     }
 
+    public async Task<List<string>> GetRecentTags(int maxItems)
+    {
+        var data = await _readService.GetRecentTags(maxItems);
+        return data.Select(d => d.Tag).ToList();
+    }
+
     public async Task LogAlbumPlay(int albumId)
     {
         await _insertService.LogAlbumPlay(albumId);

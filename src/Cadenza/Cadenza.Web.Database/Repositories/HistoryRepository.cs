@@ -17,6 +17,12 @@ internal class HistoryRepository : IHistoryLogger, IHistoryFetcher
         return await _apiHelper.Get<List<RecentAlbum>>(url);
     }
 
+    public async Task<List<string>> GetRecentTags(int maxItems)
+    {
+        var url = $"{_settings.GetRecentTags}/{maxItems}";
+        return await _apiHelper.Get<List<string>>(url);
+    }
+
     public async Task LogPlayedItem(PlaylistId playlistId)
     {
         switch (playlistId.Type)
