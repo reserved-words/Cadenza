@@ -23,6 +23,12 @@ internal class PlayCoordinator : IPlayCoordinator
     public async Task Play(PlaylistDefinition playlistDefinition)
     {
         _currentPlaylist = new Playlist(playlistDefinition);
+
+        for (var i = 0; i < playlistDefinition.StartIndex; i++)
+        {
+            await _currentPlaylist.MoveNext();
+        }
+
         await _messenger.Send(this, new PlaylistStartedEventArgs { Playlist = _currentPlaylist.Id });
         await PlayTrack();
     }

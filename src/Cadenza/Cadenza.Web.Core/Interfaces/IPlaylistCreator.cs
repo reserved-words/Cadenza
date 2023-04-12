@@ -2,7 +2,7 @@
 
 internal interface IPlaylistCreator
 {
-    Task<PlaylistDefinition> CreateAlbumPlaylist(string id);
+    Task<PlaylistDefinition> CreateAlbumPlaylist(string id, string startTrackId);
     Task<PlaylistDefinition> CreateArtistPlaylist(string id);
     Task<PlaylistDefinition> CreateGenrePlaylist(string id);
     Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping id);

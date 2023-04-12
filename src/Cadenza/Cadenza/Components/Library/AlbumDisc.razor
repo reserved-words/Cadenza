@@ -35,6 +35,6 @@
 
     protected async Task OnDoubleClick(AlbumTrack track)
     {
-        await ItemPlayer.PlayAlbum(AlbumId);
+        await ItemPlayer.PlayAlbum(AlbumId, track.TrackId);
     }
 }
