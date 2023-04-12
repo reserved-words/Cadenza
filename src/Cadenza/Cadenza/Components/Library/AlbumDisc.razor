@@ -1,6 +1,7 @@
-﻿
-<AppTable T="@AlbumTrack"
-          Items="@Model.Tracks">
+﻿@using Cadenza.Web.Common.Interfaces.Play;
+
+<AppTable Items="@Model.Tracks"
+          OnRowDoubleClick="@OnDoubleClick">
     <RowTemplate>
         <MudTd Class="td-int">@context.TrackNo</MudTd>
         <MudTd>
@@ -17,9 +18,23 @@
 </AppTable>
 
 @code {
+    [Inject]
+    public IItemPlayer ItemPlayer { get; set; }
+
     [Parameter]
     public Disc Model { get; set; } = new();
 
     [Parameter]
+    public string AlbumId { get; set; }
+
+    [Parameter]
     public string AlbumArtistId { get; set; }
+
+    [Inject]
+    public IDebugLogger Logger { get; set; }
+
+    protected async Task OnDoubleClick(AlbumTrack track)
+    {
+        await ItemPlayer.PlayAlbum(AlbumId);
+    }
 }

@@ -5,7 +5,7 @@
 
             @if (Discs.Count == 1)
             {
-                <AlbumDisc Model="@Discs.Single()" AlbumArtistId="@Album.ArtistId" />
+                <AlbumDisc Model="@Discs.Single()" AlbumId="@Album.Id" AlbumArtistId="@Album.ArtistId" />
             }
             else
             {
@@ -13,7 +13,7 @@
                     @foreach (var disc in Discs)
                     {
                         <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-                            <AlbumDisc Model="@disc" AlbumArtistId="@Album.ArtistId" />
+                            <AlbumDisc Model="@disc" AlbumId="@Album.Id" AlbumArtistId="@Album.ArtistId" />
                         </MudTabPanel>
                     }
                 </MudTabs>
