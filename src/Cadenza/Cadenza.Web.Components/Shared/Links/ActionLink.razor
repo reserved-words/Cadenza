@@ -2,10 +2,10 @@
     
     @if (Icon != null)
     {
-        <MudIcon Icon="@Icon" Size="@Size.Small" Class="mr-2" />
+        <MudIcon Icon="@Icon" Size="@Size.Small" Class="@IconClass" />
     }
 
-    <MudLink Typo="@Typo" Style="cursor: pointer;" onclick="@(() => OnClick())" Color="@Color.Surface">
+    <MudLink Typo="@Typo" Style="cursor: pointer;" onclick="@(() => OnClick())" Color="@Color.Surface" Class="@Class">
         @Text
     </MudLink>
 </MudText>
@@ -22,5 +22,10 @@
     public string Icon { get; set; }
 
     [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
     public Func<Task> OnClick { get; set; }
+
+    private string IconClass => "mr-2 " + Class;
 }

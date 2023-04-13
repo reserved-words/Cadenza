@@ -23,6 +23,10 @@ html, body {
     width: 100%;
 }
 
+.inline {
+    float: left;
+}
+
 .invalid {
     outline: 1px solid red;
 }

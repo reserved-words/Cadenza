@@ -3,23 +3,24 @@
 <AppTable Items="@Model.Tracks"
           OnRowDoubleClick="@OnDoubleClick">
     <RowTemplate>
-        <MudTd Class="td-playing-icon">
+        @{
+            var cellStyle = context.TrackId == CurrentTrackId ? "background-color: var(--mud-palette-primary-darken);" : "";
+        }
+        <MudTd Class="td-int" Style="@cellStyle">@context.TrackNo</MudTd>
+        <MudTd Style="@cellStyle">
             @if (context.TrackId == CurrentTrackId)
             {
-                <CurrentlyPlayingIcon />
+                <CurrentlyPlayingIcon Class="mr-2 inline" />
             }
+            <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" Class="inline" />
         </MudTd>
-        <MudTd Class="td-int">@context.TrackNo</MudTd>
-        <MudTd>
-            <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" />
-        </MudTd>
-        <MudTd>
+        <MudTd Style="@cellStyle">
             @if (context.ArtistId != AlbumArtistId)
             {
                 <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
             }
         </MudTd>
-        <MudTd Class="td-int">@context.Duration()</MudTd>
+        <MudTd Class="td-int" Style="@cellStyle">@context.Duration()</MudTd>
     </RowTemplate>
 </AppTable>
 

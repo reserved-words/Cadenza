@@ -1,5 +1,5 @@
 ﻿
-<ActionLink Typo="@Typo" Text="@Title" OnClick="@View"></ActionLink>
+<ActionLink Typo="@Typo" Text="@Title" OnClick="@View" Class="@Class"></ActionLink>
 
 @code {
     [Inject]
@@ -13,6 +13,9 @@
 
     [Parameter]
     public Typo Typo { get; set; } = Typo.body1;
+
+    [Parameter]
+    public string Class { get; set; }
 
     private async Task View()
     {
