@@ -2,5 +2,6 @@
 
 public class RemoveTrackRequest
 {
-    public List<string> TrackIds { get; set; }
+    public int RequestId { get; set; }
+    public string TrackId { get; set; }
 }

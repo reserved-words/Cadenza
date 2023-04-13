@@ -7,6 +7,6 @@ public interface ISyncService
 {
     Task<List<string>> GetAllTracks();
     Task<SyncTrack> GetTrack(string id);
-    Task RemoveTracks(List<string> trackIds);
+    Task RemoveTrack(string trackId);
     Task UpdateTracks(MultiTrackUpdates updates);
 }
