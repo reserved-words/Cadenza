@@ -6,5 +6,6 @@ internal interface ISourceRepository
 
     Task<List<string>> GetAllTracks();
     Task<SyncTrack> GetTrack(string id);
+    Task RemoveTrack(RemoveTrackRequest request);
     Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates);
 }
