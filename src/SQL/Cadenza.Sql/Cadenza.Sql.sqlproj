@@ -157,6 +157,11 @@
     <Build Include="Stored Procedures\History\GetRecentAlbums.sql" />
     <Build Include="Views\History\vw_PlayedTags.sql" />
     <Build Include="Stored Procedures\History\GetRecentTags.sql" />
+    <Build Include="Tables\Queue\TrackRemovals.sql" />
+    <Build Include="Stored Procedures\Queue\AddTrackRemoval.sql" />
+    <Build Include="Stored Procedures\Queue\GetTrackRemovals.sql" />
+    <Build Include="Stored Procedures\Queue\MarkTrackRemovalDone.sql" />
+    <Build Include="Stored Procedures\Queue\MarkTrackRemovalErrored.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

@@ -11,13 +11,11 @@
 	[DateProcessed] DATETIME NULL, 
 	[DateRemoved] DATETIME NULL,
 	[DateErrored] DATETIME NULL,
+    CONSTRAINT [FK_AlbumUpdates_ToAlbums] FOREIGN KEY ([AlbumId]) REFERENCES [Library].[Albums]([Id]),
     CONSTRAINT [FK_AlbumUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[AlbumProperties]([Id]), 
     CONSTRAINT [FK_AlbumUpdates_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Admin].[Sources]([Id])
 )
 
-GO
-
-CREATE INDEX [IX_AlbumUpdates] ON [Queue].[AlbumUpdates] ([AlbumId])
 GO
 
 CREATE INDEX [IX_AlbumUpdate_Properties] ON [Queue].[AlbumUpdates] ([AlbumId], [PropertyId])

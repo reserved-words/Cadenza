@@ -11,13 +11,11 @@
 	[DateProcessed] DATETIME NULL, 
 	[DateRemoved] DATETIME NULL,
 	[DateErrored] DATETIME NULL,
+    CONSTRAINT [FK_ArtistUpdates_ToArtists] FOREIGN KEY ([ArtistId]) REFERENCES [Library].[Artists]([Id]),
     CONSTRAINT [FK_ArtistUpdates_ToProperties] FOREIGN KEY ([PropertyId]) REFERENCES [Admin].[ArtistProperties]([Id]), 
     CONSTRAINT [FK_ArtistUpdates_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Admin].[Sources]([Id])
 )
 
-GO
-
-CREATE INDEX [IX_ArtistUpdates] ON [Queue].[ArtistUpdates] ([ArtistId])
 GO
 
 CREATE INDEX [IX_ArtistUpdate_Properties] ON [Queue].[ArtistUpdates] ([ArtistId], [PropertyId])
