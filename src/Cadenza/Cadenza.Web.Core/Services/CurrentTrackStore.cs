@@ -31,10 +31,20 @@ public class CurrentTrackStore : ICurrentTrackStore
         return track.Value;
     }
 
+    public async Task<string> GetCurrentTrackId()
+    {
+        var track = await _store.GetValue<string>(StoreKey.CurrentTrackId);
+        if (track == null)
+            return null;
+
+        return track.Value;
+    }
+
     public async Task SetCurrentTrack(string id)
     {
         var track = await _repository.GetTrack(id);
         await _store.SetValue(StoreKey.CurrentTrack, track);
+        await _store.SetValue(StoreKey.CurrentTrackId, track.Track.Id);
         await _store.SetValue(StoreKey.CurrentTrackSource, track.Track.Source);
     }
 }
