@@ -14,7 +14,12 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task Add(ItemUpdateRequest request, LibrarySource? itemSource)
+    public async Task AddRemovalRequest(TrackRemovalRequest request)
+    {
+        await _updater.QueueRemoval(request);
+    }
+
+    public async Task AddUpdateRequest(ItemUpdateRequest request, LibrarySource? itemSource)
     {
         if (itemSource.HasValue)
         {
@@ -29,18 +34,33 @@ internal class UpdateRepository : IUpdateRepository
         }
     }
 
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    {
+        return await _reader.GetRemovalRequests(source);
+    }
+
     public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
         return await _reader.GetUpdateRequests(source);
     }
 
-    public async Task MarkAsDone(ItemUpdateRequest request, LibrarySource source)
+    public async Task MarkRemovalDone(int requestId)
     {
-        await _updater.MarkUpdatesDone(request);
+        await _updater.MarkRemovalDone(requestId);
     }
 
-    public async Task MarkAsErrored(ItemUpdateRequest request, LibrarySource source)
+    public async Task MarkRemovalErrored(int requestId)
     {
-        await _updater.MarkUpdatesErrored(request);
+        await _updater.MarkRemovalErrored(requestId);
+    }
+
+    public async Task MarkUpdateDone(ItemUpdateRequest request, LibrarySource source)
+    {
+        await _updater.MarkUpdateDone(request);
+    }
+
+    public async Task MarkUpdateErrored(ItemUpdateRequest request, LibrarySource source)
+    {
+        await _updater.MarkUpdateErrored(request);
     }
 }

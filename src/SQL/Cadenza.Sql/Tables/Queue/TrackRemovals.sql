@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [Queue].[TrackRemovals]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	[Name] NVARCHAR(200),
 	[SourceId] INT NOT NULL,
 	[TrackId] INT NOT NULL,
 	[DateQueued] DATETIME NOT NULL DEFAULT GETDATE(),

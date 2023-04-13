@@ -12,10 +12,22 @@ internal class QueueReader : IQueueReader
         _readService = readService;
     }
 
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    {
+        var requests = await _readService.GetTrackRemovals(source);
+        return requests.Select(r => new TrackRemovalRequest
+        {
+            RequestId = r.Id,
+            Source = (LibrarySource)r.SourceId,
+            TrackId = r.TrackIdFromSource
+        })
+        .ToList();
+    }
+
     public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
         var artistUpdates = await _readService.GetArtistUpdates(source);
-        var albumUpdates = await _readService.GetAlbumUpdates(source); 
+        var albumUpdates = await _readService.GetAlbumUpdates(source);
         var trackUpdates = await _readService.GetTrackUpdates(source);
 
         return ConvertArtistUpdateRequests(artistUpdates)

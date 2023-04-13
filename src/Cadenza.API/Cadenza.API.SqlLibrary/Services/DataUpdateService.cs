@@ -50,7 +50,7 @@ internal class DataUpdateService : IDataUpdateService
         await _dbAccess.Execute(MarkTrackUpdateDoneProcedure, parameters);
     }
 
-    public async Task MarkTrackRemovalDone(int id)
+    public async Task MarkRemovalDone(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
@@ -78,7 +78,7 @@ internal class DataUpdateService : IDataUpdateService
         await _dbAccess.Execute(MarkTrackUpdateErroredProcedure, parameters);
     }
 
-    public async Task MarkTrackRemovalErrored(int id)
+    public async Task MarkRemovalErrored(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);

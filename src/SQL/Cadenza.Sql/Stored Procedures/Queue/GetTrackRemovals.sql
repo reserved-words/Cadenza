@@ -5,7 +5,6 @@ BEGIN
 
 	SELECT 
 		REM.[Id],
-		REM.[Name],
 		REM.[SourceId],
 		TRK.[IdFromSource] [TrackIdFromSource]
 	FROM

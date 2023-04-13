@@ -14,7 +14,17 @@ internal class QueueUpdater : IQueueUpdater
         _updateService = updateService;
     }
 
-    public async Task MarkUpdatesDone(ItemUpdateRequest request)
+    public async Task MarkRemovalDone(int requestId)
+    {
+        await _updateService.MarkRemovalDone(requestId);
+    }
+
+    public async Task MarkRemovalErrored(int requestId)
+    {
+        await _updateService.MarkRemovalErrored(requestId);
+    }
+
+    public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
         Func<int, Task> markAsDone = request.Type switch
         {
@@ -30,7 +40,7 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
-    public async Task MarkUpdatesErrored(ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
         Func<int, Task> markAsErrored = request.Type switch
         {
@@ -44,6 +54,17 @@ internal class QueueUpdater : IQueueUpdater
         {
             await markAsErrored(update.Id);
         }
+    }
+
+    public async Task QueueRemoval(TrackRemovalRequest request)
+    {
+        var data = new NewTrackRemovalData
+        {
+            SourceId = (int)request.Source,
+            TrackIdFromSource = request.TrackId
+        };
+
+        await _insertionService.AddTrackRemoval(data);
     }
 
     public async Task QueueUpdates(ItemUpdateRequest request, LibrarySource source)

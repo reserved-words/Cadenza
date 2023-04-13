@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [Queue].[AddTrackRemoval]
 	@TrackIdFromSource NVARCHAR(500),
-	@Name NVARCHAR(200),
 	@SourceId INT
 AS
 BEGIN
@@ -27,12 +26,10 @@ BEGIN
 
 	INSERT INTO [Queue].[TrackRemovals] (
 		[TrackId],
-		[Name],
 		[SourceId]
 	)
 	VALUES (
 		@TrackId,
-		@Name,
 		@SourceId
 	)
 

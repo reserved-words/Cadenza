@@ -16,6 +16,6 @@ internal interface IDataUpdateService
     Task MarkArtistUpdateErrored(int id);
     Task MarkTrackUpdateErrored(int id);
 
-    Task MarkTrackRemovalDone(int id);
-    Task MarkTrackRemovalErrored(int id);
+    Task MarkRemovalDone(int id);
+    Task MarkRemovalErrored(int id);
 }
