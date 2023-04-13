@@ -3,24 +3,21 @@
 <AppTable Items="@Model.Tracks"
           OnRowDoubleClick="@OnDoubleClick">
     <RowTemplate>
-        @{
-            var cellStyle = context.TrackId == CurrentTrackId ? "background-color: var(--mud-palette-primary-darken);" : "";
-        }
-        <MudTd Class="td-int" Style="@cellStyle">@context.TrackNo</MudTd>
-        <MudTd Style="@cellStyle">
-            @if (context.TrackId == CurrentTrackId)
+        <MudTd Class="@CellClass(context, true)">@context.TrackNo</MudTd>
+        <MudTd Class="@CellClass(context, false)">
+            @if (IsPlaying(context))
             {
                 <CurrentlyPlayingIcon Class="mr-2 inline" />
             }
             <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" Class="inline" />
         </MudTd>
-        <MudTd Style="@cellStyle">
-            @if (context.ArtistId != AlbumArtistId)
+        <MudTd Class="@CellClass(context, false)">
+            @if (!IsTrackArtistSameAsAlbumArtist(context))
             {
                 <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
             }
         </MudTd>
-        <MudTd Class="td-int" Style="@cellStyle">@context.Duration()</MudTd>
+        <MudTd Class="@CellClass(context, true)">@context.Duration()</MudTd>
     </RowTemplate>
 </AppTable>
 
@@ -63,6 +60,22 @@
     protected async Task OnDoubleClick(AlbumTrack track)
     {
         await ItemPlayer.PlayAlbum(AlbumId, track.TrackId);
+    }
+
+    private string CellClass(AlbumTrack track, bool isInt)
+    {
+        return (isInt ? "td-int " : "")
+            + (track.TrackId == CurrentTrackId ? "td-highlight" : "");
+    }
+
+    private bool IsPlaying(AlbumTrack track)
+    {
+        return track.TrackId == CurrentTrackId;
+    }
+
+    private bool IsTrackArtistSameAsAlbumArtist(AlbumTrack track)
+    {
+        return track.ArtistId == AlbumArtistId;
     }
 
     private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs args)

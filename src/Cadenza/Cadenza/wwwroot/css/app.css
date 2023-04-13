@@ -110,16 +110,13 @@ table tbody tr td {
         width: 1px;
     }
 
-    table tbody tr td.td-playing-icon {
-        margin: 0 2px;
-        width: 16px;
-        min-width: 16px;
-        max-width: 16px;
-    }
-
     table tbody tr td.td-img {
         width: 1px;
         padding: 1rem 1rem 0 1rem;
+    }
+
+    table tbody tr td.td-highlight {
+        background-color: var(--mud-palette-primary-darken);
     }
 
 .mud-list-item-icon {
