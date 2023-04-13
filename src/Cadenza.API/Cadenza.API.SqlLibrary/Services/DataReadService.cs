@@ -16,9 +16,12 @@ internal class DataReadService : IDataReadService
     private const string GetTrackProcedure = "[Library].[GetTrack]";
     private const string GetTracksProcedure = "[Library].[GetTracks]";
     private const string GetTrackIdsProcedure = "[Library].[GetTrackIds]";
+
     private const string GetAlbumUpdatesProcedure = "[Queue].[GetAlbumUpdates]";
     private const string GetArtistUpdatesProcedure = "[Queue].[GetArtistUpdates]";
     private const string GetTrackUpdatesProcedure = "[Queue].[GetTrackUpdates]";
+    private const string GetTrackRemovalsProcedure = "[Queue].[GetTrackRemovals]";
+
     private const string GetRecentAlbumsProcedure = "[History].[GetRecentAlbums]";
     private const string GetRecentTagsProcedure = "[History].[GetRecentTags]";
 
@@ -122,6 +125,13 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(IdFromSourceParameter, idFromSource);
         return await _dbAccess.QuerySingle<TrackData>(GetTrackProcedure, parameters);
+    }
+
+    public async Task<List<TrackRemovalData>> GetTrackRemovals(LibrarySource source)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(SourceIdParameter, (int?)source);
+        return await _dbAccess.Query<TrackRemovalData>(GetTrackRemovalsProcedure, parameters);
     }
 
     public async Task<List<GetTrackData>> GetTracks(LibrarySource? source)
