@@ -35,22 +35,22 @@ public class SyncController : ControllerBase
         return await _service.GetTracksByArtist(source, artistId);
     }
 
-    [HttpGet("GetUpdates/{source}")]
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    [HttpGet("GetUpdateRequests/{source}")]
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        return await _service.GetUpdates(source);
+        return await _service.GetUpdateRequests(source);
     }
 
     [HttpPost("MarkErrored/{source}")]
-    public async Task MarkErrored(LibrarySource source, [FromBody] ItemUpdates update)
+    public async Task MarkErrored(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
-        await _service.MarkErrored(source, update);
+        await _service.MarkErrored(source, request);
     }
 
     [HttpPost("MarkUpdated/{source}")]
-    public async Task MarkUpdated(LibrarySource source, [FromBody] ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
-        await _service.MarkUpdated(source, update);
+        await _service.MarkUpdated(source, request);
     }
 
     [HttpPost("RemoveTracks/{source}")]

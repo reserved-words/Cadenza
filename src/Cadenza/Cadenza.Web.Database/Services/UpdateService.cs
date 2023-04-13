@@ -16,7 +16,7 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateAlbum(AlbumUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,
@@ -29,7 +29,7 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateArtist(ArtistUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,
@@ -42,7 +42,7 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateTrack(TrackUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,

@@ -12,20 +12,20 @@ public class UpdateController : ControllerBase
     }
 
     [HttpPost("UpdateTrack/{source}")]
-    public async Task UpdateTrack(LibrarySource source, [FromBody] ItemUpdates update)
+    public async Task UpdateTrack(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
-        await _service.UpdateTrack(source, update);
+        await _service.UpdateTrack(source, request);
     }
 
     [HttpPost("UpdateArtist")]
-    public async Task UpdateArtist([FromBody] ItemUpdates update)
+    public async Task UpdateArtist([FromBody] ItemUpdateRequest request)
     {
-        await _service.UpdateArtist(update);
+        await _service.UpdateArtist(request);
     }
 
     [HttpPost("UpdateAlbum/{source}")]
-    public async Task UpdateAlbum(LibrarySource source, [FromBody] ItemUpdates update)
+    public async Task UpdateAlbum(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
-        await _service.UpdateAlbum(source, update);
+        await _service.UpdateAlbum(source, request);
     }
 }

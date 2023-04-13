@@ -15,11 +15,11 @@ internal class LibraryUpdater : ILibraryUpdater
         _imageConverter = imageConverter;
     }
 
-    public async Task UpdateAlbum(ItemUpdates updates)
+    public async Task UpdateAlbum(ItemUpdateRequest request)
     {
-        var album = await _readService.GetAlbum(int.Parse(updates.Id));
+        var album = await _readService.GetAlbum(int.Parse(request.Id));
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
             switch (update.Property)
             {
@@ -45,11 +45,11 @@ internal class LibraryUpdater : ILibraryUpdater
         await _updateService.UpdateAlbum(album);
     }
 
-    public async Task UpdateArtist(ItemUpdates updates)
+    public async Task UpdateArtist(ItemUpdateRequest request)
     {
-        var artist = await _readService.GetArtist(updates.Id);
+        var artist = await _readService.GetArtist(request.Id);
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
             switch (update.Property)
             {
@@ -84,11 +84,11 @@ internal class LibraryUpdater : ILibraryUpdater
         await _updateService.UpdateArtist(artist);
     }
 
-    public async Task UpdateTrack(ItemUpdates updates)
+    public async Task UpdateTrack(ItemUpdateRequest request)
     {
-        var track = await _readService.GetTrack(updates.Id);
+        var track = await _readService.GetTrack(request.Id);
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
             switch (update.Property)
             {

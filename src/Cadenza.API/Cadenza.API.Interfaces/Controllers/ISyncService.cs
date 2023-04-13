@@ -8,8 +8,8 @@ public interface ISyncService
     Task<List<string>> GetAllTracks(LibrarySource source);
     Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId);
     Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId);
-    Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
-    Task MarkErrored(LibrarySource source, ItemUpdates update);
-    Task MarkUpdated(LibrarySource source, ItemUpdates update);
+    Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
+    Task MarkErrored(LibrarySource source, ItemUpdateRequest request);
+    Task MarkUpdated(LibrarySource source, ItemUpdateRequest request);
     Task RemoveTracks(LibrarySource source, List<string> ids);
 }

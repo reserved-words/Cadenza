@@ -2,5 +2,5 @@
 
 internal interface IQueueReader
 {
-    Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
+    Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
 }

@@ -14,9 +14,9 @@ internal class QueueUpdater : IQueueUpdater
         _updateService = updateService;
     }
 
-    public async Task MarkUpdatesDone(ItemUpdates updates)
+    public async Task MarkUpdatesDone(ItemUpdateRequest request)
     {
-        Func<int, Task> markAsDone = updates.Type switch
+        Func<int, Task> markAsDone = request.Type switch
         {
             LibraryItemType.Artist => _updateService.MarkArtistUpdateDone,
             LibraryItemType.Album => _updateService.MarkAlbumUpdateDone,
@@ -24,15 +24,15 @@ internal class QueueUpdater : IQueueUpdater
             _ => throw new NotImplementedException()
         };
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
             await markAsDone(update.Id);
         }
     }
 
-    public async Task MarkUpdatesErrored(ItemUpdates updates)
+    public async Task MarkUpdatesErrored(ItemUpdateRequest request)
     {
-        Func<int, Task> markAsErrored = updates.Type switch
+        Func<int, Task> markAsErrored = request.Type switch
         {
             LibraryItemType.Artist => _updateService.MarkArtistUpdateErrored,
             LibraryItemType.Album => _updateService.MarkAlbumUpdateErrored,
@@ -40,15 +40,15 @@ internal class QueueUpdater : IQueueUpdater
             _ => throw new NotImplementedException()
         };
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
             await markAsErrored(update.Id);
         }
     }
 
-    public async Task QueueUpdates(ItemUpdates updates, LibrarySource source)
+    public async Task QueueUpdates(ItemUpdateRequest request, LibrarySource source)
     {
-        Func<ItemUpdates, LibrarySource, PropertyUpdate, Task> queue = updates.Type switch
+        Func<ItemUpdateRequest, LibrarySource, PropertyUpdate, Task> queue = request.Type switch
         {
             LibraryItemType.Artist => QueueArtistUpdate,
             LibraryItemType.Album => QueueAlbumUpdate,
@@ -56,18 +56,18 @@ internal class QueueUpdater : IQueueUpdater
             _ => throw new NotImplementedException()
         };
 
-        foreach (var update in updates.Updates)
+        foreach (var update in request.Updates)
         {
-            await queue(updates, source, update);
+            await queue(request, source, update);
         }
     }
 
-    private async Task QueueArtistUpdate(ItemUpdates updates, LibrarySource source, PropertyUpdate update)
+    private async Task QueueArtistUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
     {
         var artistUpdate = new NewArtistUpdateData
         {
-            ArtistNameId = updates.Id,
-            Name = updates.Name,
+            ArtistNameId = request.Id,
+            Name = request.Name,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
@@ -77,12 +77,12 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddArtistUpdate(artistUpdate);
     }
 
-    private async Task QueueAlbumUpdate(ItemUpdates updates, LibrarySource source, PropertyUpdate update)
+    private async Task QueueAlbumUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
     {
         var albumUpdate = new NewAlbumUpdateData
         {
-            AlbumId = int.Parse(updates.Id),
-            Name = updates.Name,
+            AlbumId = int.Parse(request.Id),
+            Name = request.Name,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
@@ -92,12 +92,12 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddAlbumUpdate(albumUpdate);
     }
 
-    private async Task QueueTrackUpdate(ItemUpdates updates, LibrarySource source, PropertyUpdate update)
+    private async Task QueueTrackUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
     {
         var trackUpdate = new NewTrackUpdateData
         {
-            TrackIdFromSource = updates.Id,
-            Name = updates.Name,
+            TrackIdFromSource = request.Id,
+            Name = request.Name,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,

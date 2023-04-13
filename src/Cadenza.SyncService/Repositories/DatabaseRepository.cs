@@ -38,22 +38,22 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdates}/{source}";
-        return await _http.Get<List<ItemUpdates>>(url);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdateRequests}/{source}";
+        return await _http.Get<List<ItemUpdateRequest>>(url);
     }
 
-    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    public async Task MarkErrored(LibrarySource source, ItemUpdateRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkErrored}/{source}";
-        await _http.Post(url, null, update);
+        await _http.Post(url, null, request);
     }
 
-    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, ItemUpdateRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdated}/{source}";
-        await _http.Post(url, null, update);
+        await _http.Post(url, null, request);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)

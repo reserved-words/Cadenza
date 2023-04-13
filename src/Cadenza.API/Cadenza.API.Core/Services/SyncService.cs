@@ -41,19 +41,19 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        return await _updateRepository.GetUpdates(source);
+        return await _updateRepository.GetUpdateRequests(source);
     }
 
-    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    public async Task MarkErrored(LibrarySource source, ItemUpdateRequest request)
     {
-        await _updateRepository.MarkAsErrored(update, source);
+        await _updateRepository.MarkAsErrored(request, source);
     }
 
-    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdated(LibrarySource source, ItemUpdateRequest request)
     {
-        await _updateRepository.MarkAsDone(update, source);
+        await _updateRepository.MarkAsDone(request, source);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)

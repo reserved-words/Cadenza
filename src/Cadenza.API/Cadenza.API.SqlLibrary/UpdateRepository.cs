@@ -14,33 +14,33 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task Add(ItemUpdates update, LibrarySource? itemSource)
+    public async Task Add(ItemUpdateRequest request, LibrarySource? itemSource)
     {
         if (itemSource.HasValue)
         {
-            await _updater.QueueUpdates(update, itemSource.Value);
+            await _updater.QueueUpdates(request, itemSource.Value);
         }
         else
         {
             foreach (var source in Enum.GetValues<LibrarySource>())
             {
-                await _updater.QueueUpdates(update, source);
+                await _updater.QueueUpdates(request, source);
             }
         }
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        return await _reader.GetUpdates(source);
+        return await _reader.GetUpdateRequests(source);
     }
 
-    public async Task MarkAsDone(ItemUpdates update, LibrarySource source)
+    public async Task MarkAsDone(ItemUpdateRequest request, LibrarySource source)
     {
-        await _updater.MarkUpdatesDone(update);
+        await _updater.MarkUpdatesDone(request);
     }
 
-    public async Task MarkAsErrored(ItemUpdates update, LibrarySource source)
+    public async Task MarkAsErrored(ItemUpdateRequest request, LibrarySource source)
     {
-        await _updater.MarkUpdatesErrored(update);
+        await _updater.MarkUpdatesErrored(request);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Model.Updates;
 
-public class ItemUpdates
+public class ItemUpdateRequest
 {
     public LibraryItemType Type { get; set; }
     public string Id { get; set; }

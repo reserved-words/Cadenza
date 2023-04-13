@@ -12,22 +12,22 @@ internal class QueueReader : IQueueReader
         _readService = readService;
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
         var artistUpdates = await _readService.GetArtistUpdates(source);
         var albumUpdates = await _readService.GetAlbumUpdates(source); 
         var trackUpdates = await _readService.GetTrackUpdates(source);
 
-        return ConvertArtistUpdates(artistUpdates)
-            .Concat(ConvertAlbumUpdates(albumUpdates))
-            .Concat(ConvertTrackUpdates(trackUpdates))
+        return ConvertArtistUpdateRequests(artistUpdates)
+            .Concat(ConvertAlbumUpdateRequests(albumUpdates))
+            .Concat(ConvertTrackUpdateRequests(trackUpdates))
             .ToList();
     }
 
-    private List<ItemUpdates> ConvertAlbumUpdates(List<AlbumUpdateData> data)
+    private List<ItemUpdateRequest> ConvertAlbumUpdateRequests(List<AlbumUpdateData> data)
     {
         return data.GroupBy(d => d.AlbumId)
-            .Select(a => new ItemUpdates
+            .Select(a => new ItemUpdateRequest
             {
                 Type = LibraryItemType.Album,
                 Id = a.Key.ToString(),
@@ -43,10 +43,10 @@ internal class QueueReader : IQueueReader
             .ToList();
     }
 
-    private List<ItemUpdates> ConvertArtistUpdates(List<ArtistUpdateData> data)
+    private List<ItemUpdateRequest> ConvertArtistUpdateRequests(List<ArtistUpdateData> data)
     {
         return data.GroupBy(d => d.ArtistNameId)
-            .Select(a => new ItemUpdates
+            .Select(a => new ItemUpdateRequest
             {
                 Type = LibraryItemType.Artist,
                 Id = a.Key,
@@ -62,10 +62,10 @@ internal class QueueReader : IQueueReader
             .ToList();
     }
 
-    private List<ItemUpdates> ConvertTrackUpdates(List<TrackUpdateData> data)
+    private List<ItemUpdateRequest> ConvertTrackUpdateRequests(List<TrackUpdateData> data)
     {
         return data.GroupBy(d => d.TrackIdFromSource)
-            .Select(a => new ItemUpdates
+            .Select(a => new ItemUpdateRequest
             {
                 Type = LibraryItemType.Track,
                 Id = a.Key.ToString(),
