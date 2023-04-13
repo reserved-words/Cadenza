@@ -28,4 +28,10 @@ public class SyncController : ControllerBase
     {
         await _service.UpdateTracks(updates);
     }
+
+    [HttpDelete("RemoveTracks")]
+    public async Task RemoveTracks([FromBody] RemoveTrackRequest request)
+    {
+        await _service.RemoveTracks(request.TrackIds);
+    }
 }

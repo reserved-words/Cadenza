@@ -4,4 +4,5 @@ internal interface IMusicDirectory
 {
     Task<List<FileDetails>> GetAllFiles();
     Task<List<FileDetails>> GetModifiedFiles(DateTime sinceDate);
+    Task RemoveFile(string filepath);
 }

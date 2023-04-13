@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.Utilities.Services;
+﻿using System.IO;
+
+namespace Cadenza.Common.Utilities.Services;
 
 internal class FileAccess : IFileAccess
 {
@@ -39,6 +41,13 @@ internal class FileAccess : IFileAccess
         return File.Exists(path)
             ? File.ReadAllText(path)
             : null;
+    }
+
+    public void MoveFile(string sourcePath, string targetPath)
+    {
+        var directory = Path.GetDirectoryName(targetPath);
+        Directory.CreateDirectory(directory);
+        File.Move(sourcePath, targetPath);
     }
 
     public void SaveText(string path, string text)
