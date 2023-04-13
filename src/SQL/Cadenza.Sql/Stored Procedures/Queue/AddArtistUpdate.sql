@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [Queue].[AddArtistUpdate]
 	@ArtistNameId NVARCHAR(200),
-	@Name NVARCHAR(200),
 	@SourceId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
@@ -40,7 +39,6 @@ BEGIN
 
 	INSERT INTO [Queue].[ArtistUpdates] (
 		[ArtistId],
-		[Name],
 		[SourceId],
 		[PropertyId],
 		[OriginalValue],
@@ -48,7 +46,6 @@ BEGIN
 	)
 	VALUES (
 		@ArtistId,
-		@Name,
 		@SourceId,
 		@PropertyId,
 		@OriginalValue,

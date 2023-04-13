@@ -20,7 +20,6 @@ internal class UpdateService : IUpdateService
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum, update.OriginalItem.Source);
@@ -33,7 +32,6 @@ internal class UpdateService : IUpdateService
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateArtist);
@@ -46,7 +44,6 @@ internal class UpdateService : IUpdateService
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack, update.OriginalItem.Source);

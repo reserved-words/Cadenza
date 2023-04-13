@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [Queue].[AddTrackUpdate]
 	@TrackIdFromSource NVARCHAR(500),
-	@Name NVARCHAR(200),
 	@SourceId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
@@ -40,7 +39,6 @@ BEGIN
 
 	INSERT INTO [Queue].[TrackUpdates] (
 		[TrackId],
-		[Name],
 		[SourceId],
 		[PropertyId],
 		[OriginalValue],
@@ -48,7 +46,6 @@ BEGIN
 	)
 	VALUES (
 		@TrackId,
-		@Name,
 		@SourceId,
 		@PropertyId,
 		@OriginalValue,

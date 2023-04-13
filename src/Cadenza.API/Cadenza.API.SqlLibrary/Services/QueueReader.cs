@@ -43,7 +43,6 @@ internal class QueueReader : IQueueReader
             {
                 Type = LibraryItemType.Album,
                 Id = a.Key.ToString(),
-                Name = a.First().Name,
                 Updates = a.Select(u => new PropertyUpdate
                 {
                     Id = u.Id,
@@ -62,7 +61,6 @@ internal class QueueReader : IQueueReader
             {
                 Type = LibraryItemType.Artist,
                 Id = a.Key,
-                Name = a.First().Name,
                 Updates = a.Select(u => new PropertyUpdate
                 {
                     Id = u.Id,
@@ -81,7 +79,6 @@ internal class QueueReader : IQueueReader
             {
                 Type = LibraryItemType.Track,
                 Id = a.Key.ToString(),
-                Name = a.First().Name,
                 Updates = a.Select(u => new PropertyUpdate
                 {
                     Id = u.Id,

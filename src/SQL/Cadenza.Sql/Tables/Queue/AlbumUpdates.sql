@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [Queue].[AlbumUpdates]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	[Name] NVARCHAR(200),
 	[SourceId] INT NOT NULL,
 	[AlbumId] INT NOT NULL,
 	[PropertyId] INT NOT NULL,
