@@ -19,6 +19,7 @@ public class DatabaseApiEndpoints
     public string LogGenrePlay { get; set; }
     public string LogTagPlay { get; set; }
 
+    public string RemoveTrack { get; set; }
     public string UpdateAlbum { get; set; }
     public string UpdateArtist { get; set; }
     public string UpdateTrack { get; set; }

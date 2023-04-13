@@ -11,6 +11,12 @@ public class UpdateController : ControllerBase
         _service = service;
     }
 
+    [HttpDelete("RemoveTrack")]
+    public async Task RemoveTrack([FromBody] TrackRemovalRequest request)
+    {
+        await _service.RemoveTrack(request);
+    }
+
     [HttpPost("UpdateTrack/{source}")]
     public async Task UpdateTrack(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {

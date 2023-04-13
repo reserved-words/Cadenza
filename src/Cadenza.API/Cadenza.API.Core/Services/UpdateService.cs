@@ -15,9 +15,11 @@ internal class UpdateService : IUpdateService
         _cachePopulater = cachePopulater;
     }
 
-    public Task<List<ItemUpdateRequest>> GetQueuedUpdateRequests()
+    public async Task RemoveTrack(TrackRemovalRequest request)
     {
-        return Task.FromResult(new List<ItemUpdateRequest>());
+        await _updateRepository.AddRemovalRequest(request);
+        await _musicRepository.RemoveTracks(request.Source, new List<string> { request.TrackId });
+        await _cachePopulater.Populate(false);
     }
 
     public async Task UpdateTrack(LibrarySource source, ItemUpdateRequest request)
