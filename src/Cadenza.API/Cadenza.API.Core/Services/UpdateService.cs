@@ -20,7 +20,7 @@ internal class UpdateService : IUpdateService
         return Task.FromResult(new List<ItemUpdates>());
     }
 
-    public async Task UpdateTrack(LibrarySource source, ItemUpdates updates)
+    public async Task UpdateTrack(LibrarySource source, ItemUpdateRequest updates)
     {
         await _updateRepository.Add(updates, source);
         await _musicRepository.UpdateTrack(source, updates);
