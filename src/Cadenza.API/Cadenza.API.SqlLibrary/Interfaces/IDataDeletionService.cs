@@ -2,7 +2,7 @@
 
 internal interface IDataDeletionService
 {
-    Task DeleteTrack(LibrarySource source, string id);
+    Task DeleteTrack(string id);
     Task DeleteEmptyDiscs();
     Task DeleteEmptyAlbums();
     Task DeleteEmptyArtists();

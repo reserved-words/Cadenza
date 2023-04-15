@@ -1,6 +1,5 @@
 ﻿<MudTable Items="@Items"
           T="T"
-          Hover="true"
           Dense="true"
           Breakpoint="Breakpoint.None"
           RowTemplate="@RowTemplate"
@@ -32,6 +31,9 @@
 
     [Parameter]
     public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
+
+    [Parameter]
+    public Func<T, Task> OnRowDelete { get; set; }
 
     [Parameter]
     public Func<T, Task> OnRowDoubleClick { get; set; }

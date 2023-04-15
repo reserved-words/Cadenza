@@ -60,7 +60,6 @@ internal class QueueUpdater : IQueueUpdater
     {
         var data = new NewTrackRemovalData
         {
-            SourceId = (int)request.Source,
             TrackIdFromSource = request.TrackId
         };
 

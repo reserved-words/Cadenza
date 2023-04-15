@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [Library].[DeleteTrack]
-	@SourceId INT,
 	@IdFromSource NVARCHAR(500)
 AS
 BEGIN
@@ -7,18 +6,19 @@ BEGIN
 	DECLARE @Id INT
 
 	SELECT 
-		@Id = TRK.[Id]
+		@Id = [Id]
 	FROM
-		[Library].[Tracks] TRK
-	INNER JOIN
-		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
-	INNER JOIN
-		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
+		[Library].[Tracks]
 	WHERE 
-		ALB.[SourceId] = @SourceId
-	AND
-		TRK.[IdFromSource] = @IdFromSource
+		[IdFromSource] = @IdFromSource
 		
+	DELETE
+		[Queue].[TrackUpdates]
+	WHERE
+		[TrackId] = @Id
+		
+	EXECUTE [Queue].[ArchiveTrackRemovals] @Id
+
 	DELETE
 		[Queue].[TrackUpdates]
 	WHERE

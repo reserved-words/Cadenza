@@ -33,9 +33,9 @@ internal class MusicRepository : IMusicRepository
         return await _libraryReader.GetAllTracks(source);
     }
 
-    public async Task RemoveTracks(LibrarySource source, List<string> ids)
+    public async Task RemoveTracks(List<string> ids)
     {
-        await _trackRemover.RemoveTracks(source, ids);
+        await _trackRemover.RemoveTracks(ids);
     }
 
     public async Task UpdateAlbum(LibrarySource source, ItemUpdateRequest request)

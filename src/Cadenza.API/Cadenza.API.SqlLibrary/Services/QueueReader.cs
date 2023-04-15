@@ -18,7 +18,6 @@ internal class QueueReader : IQueueReader
         return requests.Select(r => new TrackRemovalRequest
         {
             RequestId = r.Id,
-            Source = (LibrarySource)r.SourceId,
             TrackId = r.TrackIdFromSource
         })
         .ToList();

@@ -58,6 +58,6 @@ internal class SyncService : ISyncService
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
-        await _repository.RemoveTracks(source, ids);
+        await _repository.RemoveTracks(ids);
     }
 }
