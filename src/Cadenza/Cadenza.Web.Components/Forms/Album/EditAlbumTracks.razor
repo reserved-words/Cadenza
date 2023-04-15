@@ -48,7 +48,7 @@
                 ArtistName = track.ArtistName
             };
 
-        await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", true);
+        await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", false);
     }
 
     private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
