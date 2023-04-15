@@ -1,7 +1,9 @@
 ﻿
-<MudDialog Class="fixed-height no-padding-xs">
+<MudDialog Class="no-padding-xs">
     <DialogContent>
-        @ChildContent
+        <MudContainer Class="pa-0 ma-0 fixed-height">
+            @ChildContent
+        </MudContainer>
     </DialogContent>
     <DialogActions>
         <MudStack Row="true">

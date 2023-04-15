@@ -10,27 +10,14 @@
 
             <DataAnnotationsValidator />
 
-            <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                <MudExpansionPanels Dense="true" DisableGutters="true" Elevation="0">
-                    <MudExpansionPanel Text="Details">
-                        <EditTrackDetails Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="Lyrics">
-                        <EditTrackLyrics Model="@EditableItem" Breakpoint="Breakpoint.Xs" />
-                    </MudExpansionPanel>
-                </MudExpansionPanels>
-            </MudHidden>
-
-            <MudHidden Breakpoint="Breakpoint.Xs">
-                <MudGrid Spacing="1" Class="modal-grid">
-                    <MudItem sm="6">
-                        <EditTrackDetails Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
-                    </MudItem>
-                    <MudItem sm="6">
-                        <EditTrackLyrics Model="@EditableItem" Breakpoint="Breakpoint.SmAndUp" />
-                    </MudItem>
-                </MudGrid>
-            </MudHidden>
+            <MudTabs Elevation="3">
+                <MudTabPanel Text="Details">
+                    <EditTrackDetails Model="@EditableItem" />
+                </MudTabPanel>
+                <MudTabPanel Text="Lyrics">
+                    <EditTrackLyrics Model="@EditableItem" />
+                </MudTabPanel>
+            </MudTabs>
 
         </EditForm>
     </ChildContent>

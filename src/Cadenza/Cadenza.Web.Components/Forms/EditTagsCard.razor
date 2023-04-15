@@ -1,5 +1,5 @@
 ﻿
-<MudCard Elevation="@Elevation" Square="@Square" Class="pa-3">
+<MudCard Elevation="0" Square="true" Class="pa-3">
 
    <MudCardHeader Class="pa-0">
         <MudText Typo="Typo.h6">Tags</MudText>
@@ -12,14 +12,5 @@
 
 @code {
     [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
-    [Parameter]
     public TagList Model { get; set; }
-
-    private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
-
-    private bool ShowTitle => Breakpoint != Breakpoint.Xs;
-
-    private bool Square => Breakpoint == Breakpoint.Xs;
 }
