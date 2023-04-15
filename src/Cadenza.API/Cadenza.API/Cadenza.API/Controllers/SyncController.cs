@@ -41,16 +41,34 @@ public class SyncController : ControllerBase
         return await _service.GetUpdateRequests(source);
     }
 
-    [HttpPost("MarkErrored/{source}")]
-    public async Task MarkErrored(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("MarkUpdateErrored/{source}")]
+    public async Task MarkUpdateErrored(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
         await _service.MarkUpdateErrored(source, request);
     }
 
-    [HttpPost("MarkUpdated/{source}")]
-    public async Task MarkUpdated(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("MarkUpdateDone/{source}")]
+    public async Task MarkUpdateDone(LibrarySource source, [FromBody] ItemUpdateRequest request)
     {
         await _service.MarkUpdateDone(source, request);
+    }
+
+    [HttpGet("GetRemovalRequests/{source}")]
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    {
+        return await _service.GetRemovalRequests(source);
+    }
+
+    [HttpPost("MarkRemovalErrored")]
+    public async Task MarkRemovalErrored([FromBody] TrackRemovalRequest request)
+    {
+        await _service.MarkRemovalErrored(request);
+    }
+
+    [HttpPost("MarkRemovalDone")]
+    public async Task MarkRemovalDone([FromBody] TrackRemovalRequest request)
+    {
+        await _service.MarkRemovalDone(request);
     }
 
     [HttpPost("RemoveTracks/{source}")]

@@ -92,11 +92,11 @@ internal class UpdateRequestsHandler : IService
 
     private async Task MarkErrored(LibrarySource source, ItemUpdateRequest request)
     {
-        await _database.MarkErrored(source, request);
+        await _database.MarkUpdateErrored(source, request);
     }
 
     private async Task MarkUpdated(LibrarySource source, ItemUpdateRequest request)
     {
-        await _database.MarkUpdated(source, request);
+        await _database.MarkUpdateDone(source, request);
     }
 }

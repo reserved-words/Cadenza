@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Sync;
-
-namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ISyncService
 {
@@ -11,5 +9,8 @@ public interface ISyncService
     Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
     Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request);
     Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request);
+    Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source);
+    Task MarkRemovalErrored(TrackRemovalRequest request);
+    Task MarkRemovalDone(TrackRemovalRequest request);
     Task RemoveTracks(LibrarySource source, List<string> ids);
 }

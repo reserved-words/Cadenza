@@ -10,11 +10,4 @@ BEGIN
 	WHERE
 		[Id] = @Id
 
-	UPDATE
-		[Queue].[ArchivedTrackRemovals]
-	SET
-		[DateProcessed] = GETDATE()
-	WHERE
-		[RequestId] = @Id
-
 END

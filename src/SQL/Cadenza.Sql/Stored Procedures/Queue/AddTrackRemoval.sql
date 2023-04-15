@@ -3,39 +3,43 @@
 AS
 BEGIN
 
-	DECLARE @TrackId INT,
-			@SourceId INT
-
-	SELECT
-		@TrackId = TRK.[Id],
-		@SourceId = ALB.[SourceId]
-	FROM
-		[Library].[Tracks] TRK
-	INNER JOIN 
-		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
-	INNER JOIN
-		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
-	WHERE
-		TRK.[IdFromSource] = @TrackIdFromSource
-
 	UPDATE
 		[Queue].[TrackRemovals]
 	SET
 		[DateRemoved] = GETDATE()
 	WHERE
-		[TrackId] = @TrackId
+		[TrackIdFromSource] = @TrackIdFromSource
 	AND
 		[DateProcessed] IS NULL
 	AND
 		[DateRemoved] IS NULL
 
 	INSERT INTO [Queue].[TrackRemovals] (
-		[TrackId],
-		[SourceId]
+		[SourceId],
+		[TrackIdFromSource],
+		[TrackTitle],
+		[TrackArtist],
+		[AlbumTitle],
+		[AlbumArtist]
 	)
-	VALUES (
-		@TrackId,
-		@SourceId
-	)
+	SELECT
+		ALB.[SourceId],
+		TRK.[IdFromSource],
+		TRK.[Title],
+		ART.[Name],
+		ALB.[Title],
+		ALA.[Name]
+	FROM 
+		[Library].[Tracks] TRK
+	INNER JOIN
+		[Library].[Artists] ART ON ART.[Id] = TRK.[ArtistId]
+	INNER JOIN
+		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
+	INNER JOIN
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
+	INNER JOIN
+		[Library].[Artists] ALA ON ALA.[Id] = ALB.[ArtistId]
+	WHERE
+		TRK.[IdFromSource] = @TrackIdFromSource
 
 END

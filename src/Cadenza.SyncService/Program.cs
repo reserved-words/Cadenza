@@ -9,7 +9,8 @@
         .AddTransient<ISourceRepository, LocalRepository>()
         .AddTransient<IService, AddedTracksHandler>()
         .AddTransient<IService, RemovedTracksHandler>()
-        .AddTransient<IService, UpdateRequestsHandler>();
+        .AddTransient<IService, UpdateRequestsHandler>()
+        .AddTransient<IService, RemovalRequestsHandler>();
 
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")

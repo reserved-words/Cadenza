@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Updates;
+
+namespace Cadenza.API.Core.Services;
 
 internal class SyncService : ISyncService
 {
@@ -54,6 +56,21 @@ internal class SyncService : ISyncService
     public async Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request)
     {
         await _updateRepository.MarkUpdateDone(request, source);
+    }
+
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    {
+        return await _updateRepository.GetRemovalRequests(source);
+    }
+
+    public async Task MarkRemovalErrored(TrackRemovalRequest request)
+    {
+        await _updateRepository.MarkRemovalErrored(request.RequestId);
+    }
+
+    public async Task MarkRemovalDone(TrackRemovalRequest request)
+    {
+        await _updateRepository.MarkRemovalDone(request.RequestId);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)

@@ -16,8 +16,6 @@ BEGIN
 		[Queue].[TrackUpdates]
 	WHERE
 		[TrackId] = @Id
-		
-	EXECUTE [Queue].[ArchiveTrackRemovals] @Id
 
 	DELETE
 		[Queue].[TrackUpdates]
