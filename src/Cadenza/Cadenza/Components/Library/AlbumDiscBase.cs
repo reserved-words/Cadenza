@@ -27,13 +27,11 @@ public class AlbumDiscBase : ComponentBase
 
     private Guid _playlistFinishedSubscriptionId = Guid.Empty;
     private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
 
     protected override void OnInitialized()
     {
         Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged, out _playStatusUpdatedSubscriptionId);
         Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished, out _playlistFinishedSubscriptionId);
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -79,17 +77,6 @@ public class AlbumDiscBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
-    {
-        var trackOnDisc = Model.Tracks.SingleOrDefault(t => t.TrackId == args.TrackId);
-        if (trackOnDisc == null)
-            return Task.CompletedTask;
-
-        Model.Tracks.Remove(trackOnDisc);
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
     private void UpdateCurrentTrack(string currentTrackId)
     {
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
@@ -113,11 +100,6 @@ public class AlbumDiscBase : ComponentBase
         if (_playlistFinishedSubscriptionId != Guid.Empty)
         {
             Messenger.Unsubscribe<PlaylistFinishedEventArgs>(_playlistFinishedSubscriptionId);
-        }
-
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
         }
     }
 }
