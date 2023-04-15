@@ -34,13 +34,13 @@ internal class DatabaseRepository : IDatabaseRepository
 
     public async Task MarkRemovalErrored(TrackRemovalRequest request)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateErrored}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalErrored}";
         await _http.Post(url, null, request);
     }
 
     public async Task MarkRemovalDone(TrackRemovalRequest request)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateDone}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalDone}";
         await _http.Post(url, null, request);
     }
 

@@ -2,6 +2,6 @@
 
 internal class TrackRemovalData : NewTrackRemovalData
 {
-    public int Id { get; set; }
+    public int RequestId { get; set; }
     public int SourceId { get; set; }
 }
