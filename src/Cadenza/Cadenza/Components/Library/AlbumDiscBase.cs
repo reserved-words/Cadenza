@@ -1,7 +1,5 @@
 ﻿using Cadenza.Web.Common.Interfaces.Play;
 using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Components.Forms;
-using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Components.Library;
 
@@ -15,9 +13,6 @@ public class AlbumDiscBase : ComponentBase
 
     [Inject]
     public ICurrentTrackStore Store { get; set; }
-
-    [Inject]
-    public IDialogService DialogService { get; set; }
 
     [Parameter]
     public Disc Model { get; set; } = new();
@@ -93,20 +88,6 @@ public class AlbumDiscBase : ComponentBase
         Model.Tracks.Remove(trackOnDisc);
         StateHasChanged();
         return Task.CompletedTask;
-    }
-
-    protected async Task OnRemoveTrack(AlbumTrack track)
-    {
-        // If is currently playing prevent removing
-
-        var trackToRemove = new TrackToRemove
-        {
-            Id = track.TrackId,
-            Title = track.Title,
-            ArtistName = track.ArtistName
-        };
-
-        await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", true);
     }
 
     private void UpdateCurrentTrack(string currentTrackId)

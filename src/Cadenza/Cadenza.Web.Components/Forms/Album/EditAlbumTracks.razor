@@ -1,0 +1,72 @@
+﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+
+<EditCard>
+    
+    <AppTable Items="@Model">
+        <RowTemplate>
+            <MudTd Class="td-int">@context.DiscTrackNo()</MudTd>
+            <MudTd>@context.Title</MudTd>
+            <MudTd>@context.ArtistName</MudTd>
+            <MudTd>@context.Duration()</MudTd>
+            <MudTd Class="td-int">
+                <MudIconButton Size="@Size.Small"
+                               Icon="@Icons.Material.Filled.Delete" 
+                               Variant="@Variant.Outlined"
+                               OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </AppTable>
+
+</EditCard>
+
+@code {
+
+    [Inject]
+    public IDialogService DialogService { get; set; }
+
+    [Inject]
+    public IMessenger Messenger { get; set; }
+
+    [Parameter]
+    public List<AlbumTrack> Model { get; set; }
+
+    private Guid _trackRemovedSubscriptionId = Guid.Empty;
+
+    protected override void OnInitialized()
+    {
+        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
+    }
+
+    protected async Task OnRemoveTrack(AlbumTrack track)
+    {
+        // If is currently playing prevent removing
+
+        var trackToRemove = new TrackToRemove
+            {
+                Id = track.TrackId,
+                Title = track.Title,
+                ArtistName = track.ArtistName
+            };
+
+        await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", true);
+    }
+
+    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
+    {
+        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == args.TrackId);
+        if (trackOnDisc == null)
+            return Task.CompletedTask;
+
+        Model.Remove(trackOnDisc);
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        if (_trackRemovedSubscriptionId != Guid.Empty)
+        {
+            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
+        }
+    }
+}

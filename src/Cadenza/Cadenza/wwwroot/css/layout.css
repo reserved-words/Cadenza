@@ -170,25 +170,30 @@ div.container-max-width-sm {
     margin: 0 auto 2rem auto;
 }
 
-    .mud-dialog.no-padding-xs .mud-dialog-content {
-        padding-left: 0;
-        padding-right: 0;
-    }
+.mud-dialog.no-padding-xs .mud-dialog-content {
+    padding-left: 0;
+    padding-right: 0;
+}
 
-    .mud-dialog .mud-dialog-content {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+.mud-dialog .mud-dialog-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 
-        .mud-dialog .mud-dialog-content .fixed-height {
-            height: 500px;
-            min-height: 500px;
-        }
+    .mud-dialog .mud-dialog-content .fixed-height {
+        height: 500px;
+        min-height: 500px;
+    }
 
         .mud-dialog .mud-dialog-content .fixed-height textarea {
             height: 375px;
             max-height: 375px;
             overflow-y: scroll;
+        }
+
+        .mud-dialog .mud-dialog-content .fixed-height div.mud-table {
+            overflow-y: scroll;
+            max-height: 400px;
         }
 
 @media (min-width: 600px) {

@@ -8,7 +8,6 @@
           Filter="@Filter"
           OnRowClick="@OnRowClick"
           @bind-SelectedItem="@SelectedItem"
-          @ondblclick="OnDoubleClick"
           Style="width: 100%;"
           PagerContent="@PagerContent"
           RowsPerPage="@RowsPerPage">
@@ -33,9 +32,6 @@
     public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
 
     [Parameter]
-    public Func<T, Task> OnRowDelete { get; set; }
-
-    [Parameter]
     public Func<T, Task> OnRowDoubleClick { get; set; }
 
     [Parameter]
@@ -43,15 +39,4 @@
 
     [Parameter]
     public int RowsPerPage { get; set; }
-
-    public async Task OnDoubleClick(MouseEventArgs args)
-    {
-        if (OnRowDoubleClick == null)
-            return;
-
-        if (SelectedItem == null)
-            return;
-
-        await OnRowDoubleClick(SelectedItem);
-    }
 }
