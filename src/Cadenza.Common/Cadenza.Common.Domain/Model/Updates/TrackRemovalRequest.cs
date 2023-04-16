@@ -3,5 +3,5 @@
 public class TrackRemovalRequest
 {
     public int RequestId { get; set; }
-    public string TrackId { get; set; }
+    public int TrackId { get; set; }
 }

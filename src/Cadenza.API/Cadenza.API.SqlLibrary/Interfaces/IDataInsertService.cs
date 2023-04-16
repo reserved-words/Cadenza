@@ -10,7 +10,7 @@ internal interface IDataInsertService
     Task<int> AddTrack(NewTrackData data);
     Task AddAlbumUpdate(NewAlbumUpdateData data);
     Task AddArtistUpdate(NewArtistUpdateData data);
-    Task AddTrackRemoval(NewTrackRemovalData data);
+    Task AddTrackRemoval(int trackId);
     Task AddTrackUpdate(NewTrackUpdateData data);
     Task LogLibraryPlay();
     Task LogArtistPlay(string nameId);

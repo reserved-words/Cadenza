@@ -1,14 +1,23 @@
 ﻿CREATE PROCEDURE [Queue].[AddTrackRemoval]
-	@TrackIdFromSource NVARCHAR(500)
+	@Id INT
 AS
 BEGIN
+
+	DECLARE @IdFromSource NVARCHAR(500)
+
+	SELECT 
+		@IdFromSource = [IdFromSource]
+	FROM
+		[Library].[Tracks]
+	WHERE
+		[Id] = @Id
 
 	UPDATE
 		[Queue].[TrackRemovals]
 	SET
 		[DateRemoved] = GETDATE()
 	WHERE
-		[TrackIdFromSource] = @TrackIdFromSource
+		[TrackIdFromSource] = @IdFromSource
 	AND
 		[DateProcessed] IS NULL
 	AND
@@ -40,6 +49,6 @@ BEGIN
 	INNER JOIN
 		[Library].[Artists] ALA ON ALA.[Id] = ALB.[ArtistId]
 	WHERE
-		TRK.[IdFromSource] = @TrackIdFromSource
+		TRK.[Id] = @Id
 
 END

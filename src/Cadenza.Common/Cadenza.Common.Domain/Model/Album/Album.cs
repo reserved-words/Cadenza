@@ -2,7 +2,6 @@
 
 public class Album
 {
-    public LibrarySource Source { get; set; }
     public int Id { get; set; }
     public int ArtistId { get; set; }
 

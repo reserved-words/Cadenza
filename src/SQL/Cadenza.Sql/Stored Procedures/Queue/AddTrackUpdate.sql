@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [Queue].[AddTrackUpdate]
-	@TrackIdFromSource NVARCHAR(500),
-	@SourceId INT,
+	@TrackId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
 	@UpdatedValue NVARCHAR(MAX)
@@ -8,7 +7,7 @@ AS
 BEGIN
 
 	DECLARE @PropertyId INT,
-			@TrackId INT
+			@SourceId INT
 
 	SELECT 
 		@PropertyId = [Id] 
@@ -17,12 +16,7 @@ BEGIN
 	WHERE
 		[Name] = @PropertyName
 
-	SELECT
-		@TrackId = [Id]
-	FROM
-		[Library].[Tracks]
-	WHERE
-		[IdFromSource] = @TrackIdFromSource
+	EXECUTE [Library].[GetTrackSourceId] @TrackId, @SourceId OUTPUT
 
 	UPDATE
 		[Queue].[TrackUpdates]

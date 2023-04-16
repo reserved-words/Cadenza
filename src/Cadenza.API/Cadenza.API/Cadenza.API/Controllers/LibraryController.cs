@@ -66,7 +66,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Track")]
-    public async Task<TrackFull> Track(string id)
+    public async Task<TrackFull> Track(int id)
     {
         return await _service.Track(id);
     }

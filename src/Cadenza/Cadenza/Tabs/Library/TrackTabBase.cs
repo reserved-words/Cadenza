@@ -6,7 +6,7 @@ public class TrackTabBase : ComponentBase
     public ITrackRepository Repository { get; set; }
 
     [Parameter]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public TrackFull Model { get; set; } = new();
 

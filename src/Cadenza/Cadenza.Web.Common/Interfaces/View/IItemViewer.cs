@@ -9,5 +9,5 @@ public interface IItemViewer
     Task ViewPlaying(PlaylistId playlist);
     Task ViewSearchResult(PlayerItem item);
     Task ViewTag(string id);
-    Task ViewTrack(string id, string title);
+    Task ViewTrack(int id, string title);
 }

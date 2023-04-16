@@ -55,7 +55,7 @@ public class SearchableTrack : PlayerItem
         : base(PlayerItemType.Track, id, title, artist, album, album + (albumArtist == artist ? "" : $" ({albumArtist})")) { }
 
     public SearchableTrack(TrackInfo track, AlbumInfo album)
-        : this(track.Id, track.Title, track.ArtistName, album.Title, album.ArtistName) { }
+        : this(track.Id.ToString(), track.Title, track.ArtistName, album.Title, album.ArtistName) { }
 }
 
 public class SearchableGrouping : PlayerItem

@@ -73,7 +73,7 @@ internal class LibraryService : ILibraryService
         return await _cache.Tags.GetTag(id);
     }
 
-    public async Task<TrackFull> Track(string id)
+    public async Task<TrackFull> Track(int id)
     {
         await PopulateCache();
         return await _cache.Tracks.GetTrack(id);

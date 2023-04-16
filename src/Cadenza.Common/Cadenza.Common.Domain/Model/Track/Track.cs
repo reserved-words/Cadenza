@@ -3,7 +3,8 @@
 public class Track
 {
     public LibrarySource Source { get; set; }
-    public string Id { get; set; }
+    public int Id { get; set; }
+    public string IdFromSource { get; set; }
     public int ArtistId { get; set; }
 
     [ItemProperty(ItemProperty.TrackTitle)]

@@ -17,7 +17,7 @@ internal class LibraryUpdater : ILibraryUpdater
 
     public async Task UpdateAlbum(ItemUpdateRequest request)
     {
-        var album = await _readService.GetAlbum(int.Parse(request.Id));
+        var album = await _readService.GetAlbum(request.Id);
 
         foreach (var update in request.Updates)
         {
@@ -47,7 +47,7 @@ internal class LibraryUpdater : ILibraryUpdater
 
     public async Task UpdateArtist(ItemUpdateRequest request)
     {
-        var artist = await _readService.GetArtist(int.Parse(request.Id));
+        var artist = await _readService.GetArtist(request.Id);
 
         foreach (var update in request.Updates)
         {

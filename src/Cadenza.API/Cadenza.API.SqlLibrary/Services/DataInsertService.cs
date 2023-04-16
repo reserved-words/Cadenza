@@ -1,6 +1,5 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Domain.Model.Album;
 using Dapper;
 using System.Data;
 
@@ -135,9 +134,11 @@ internal class DataInsertService : IDataInsertService
         await _dbAccess.Execute(AddTrackUpdateProcedure, data);
     }
 
-    public async Task AddTrackRemoval(NewTrackRemovalData data)
+    public async Task AddTrackRemoval(int trackId)
     {
-        await _dbAccess.Execute(AddTrackRemovalProcedure, data);
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, trackId);
+        await _dbAccess.Execute(AddTrackRemovalProcedure, parameters);
     }
 
     public async Task LogAlbumPlay(int albumId)
