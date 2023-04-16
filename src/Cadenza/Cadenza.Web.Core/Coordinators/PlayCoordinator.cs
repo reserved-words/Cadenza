@@ -78,7 +78,7 @@ internal class PlayCoordinator : IPlayCoordinator
 
     private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
     {
-        _currentPlaylist.RemoveTrack(args.TrackId);
+        _currentPlaylist?.RemoveTrack(args.TrackId);
         return Task.CompletedTask;
     }
 
