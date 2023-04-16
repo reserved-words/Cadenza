@@ -7,10 +7,10 @@
         .AddHttpHelper(sp => new HttpClient())
         .AddTransient<IDatabaseRepository, DatabaseRepository>()
         .AddTransient<ISourceRepository, LocalRepository>()
-        .AddTransient<IService, AddedTracksHandler>()
+        .AddTransient<IService, RemovalRequestsHandler>()
         .AddTransient<IService, RemovedTracksHandler>()
-        .AddTransient<IService, UpdateRequestsHandler>()
-        .AddTransient<IService, RemovalRequestsHandler>();
+        .AddTransient<IService, AddedTracksHandler>()
+        .AddTransient<IService, UpdateRequestsHandler>();
 
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")

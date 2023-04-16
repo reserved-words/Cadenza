@@ -29,14 +29,14 @@ internal class RemovalRequestsHandler : IService
     {
         var requests = await _database.GetRemovalRequests(source);
 
-        _logger.LogInformation($"{requests.Count} track update requests to process");
+        _logger.LogInformation($"{requests.Count} track removal requests to process");
 
         foreach (var request in requests)
         {
             await TryRemoveTrack(repository, request);
         }
 
-        _logger.LogInformation("All track update requests processed");
+        _logger.LogInformation("All track removal requests processed");
     }
 
     private async Task TryRemoveTrack(ISourceRepository repository, TrackRemovalRequest request)

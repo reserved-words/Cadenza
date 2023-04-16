@@ -2,8 +2,8 @@
 
 internal class Playlist : IPlaylist
 {
-    private readonly Stack<PlayTrack> _played;
-    private readonly Stack<PlayTrack> _toPlay;
+    private Stack<PlayTrack> _played;
+    private Stack<PlayTrack> _toPlay;
     private readonly List<PlayTrack> _allTracks;
 
     private PlayTrack _playing;
@@ -15,10 +15,9 @@ internal class Playlist : IPlaylist
         Id = def.Id;
         _allTracks = def.Tracks.ToList();
 
-        var toPlay = new List<PlayTrack>(_allTracks);
-        toPlay.Reverse();
-        _played = new Stack<PlayTrack>();
-        _toPlay = new Stack<PlayTrack>(toPlay);
+        PopulateToPlay(_allTracks);
+        PopulatePlayed();
+
         _playing = _toPlay.Pop();
     }
 
@@ -49,5 +48,41 @@ internal class Playlist : IPlaylist
         }
 
         return Task.FromResult(_playing);
+    }
+
+    public void RemoveTrack(string trackId)
+    {
+        var track = _allTracks.SingleOrDefault(t => t.Id == trackId);
+        if (track == null)
+            return;
+
+        _allTracks.Remove(track);
+
+        if (_played.Contains(track))
+        {
+            var playedTracks = new List<PlayTrack>(_played);
+            playedTracks.Remove(track);
+            PopulatePlayed(playedTracks);
+        }
+
+        if (_toPlay.Contains(track))
+        {
+            var toPlayTracks = new List<PlayTrack>(_toPlay);
+            toPlayTracks.Remove(track);
+            PopulateToPlay(toPlayTracks);
+        }
+    }
+
+    private void PopulatePlayed(List<PlayTrack> played = null)
+    {
+        _played = played == null 
+            ? new Stack<PlayTrack>()
+            : new Stack<PlayTrack>(played);
+    }
+
+    private void PopulateToPlay(List<PlayTrack> toPlay)
+    {
+        toPlay.Reverse();
+        _toPlay = new Stack<PlayTrack>(toPlay);
     }
 }
