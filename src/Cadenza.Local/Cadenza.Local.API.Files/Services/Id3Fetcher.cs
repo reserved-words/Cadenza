@@ -31,7 +31,6 @@ internal class Id3Fetcher : IId3Fetcher
     {
         return new SyncTrack
         {
-            Source = LibrarySource.Local,
             IdFromSource = _base64Converter.ToBase64(data.Track.Filepath),
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,

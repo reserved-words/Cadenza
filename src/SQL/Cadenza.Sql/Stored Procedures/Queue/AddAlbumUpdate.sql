@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [Queue].[AddAlbumUpdate]
 	@AlbumId INT,
-	@SourceId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
 	@UpdatedValue NVARCHAR(MAX)
 AS
 BEGIN
 
-	DECLARE @PropertyId INT
+	DECLARE @PropertyId INT,
+			@SourceId INT
 
 	SELECT 
 		@PropertyId = [Id] 
@@ -15,6 +15,13 @@ BEGIN
 		[Admin].[AlbumProperties]
 	WHERE
 		[Name] = @PropertyName
+
+	SELECT
+		@SourceId = [SourceId]
+	FROM
+		[Library].[Albums]
+	WHERE
+		[Id] = @AlbumId
 
 	UPDATE
 		[Queue].[AlbumUpdates]

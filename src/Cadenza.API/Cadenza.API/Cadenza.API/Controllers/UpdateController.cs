@@ -17,10 +17,10 @@ public class UpdateController : ControllerBase
         await _service.RemoveTrack(request);
     }
 
-    [HttpPost("UpdateTrack/{source}")]
-    public async Task UpdateTrack(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("UpdateTrack")]
+    public async Task UpdateTrack([FromBody] ItemUpdateRequest request)
     {
-        await _service.UpdateTrack(source, request);
+        await _service.UpdateTrack(request);
     }
 
     [HttpPost("UpdateArtist")]
@@ -29,9 +29,9 @@ public class UpdateController : ControllerBase
         await _service.UpdateArtist(request);
     }
 
-    [HttpPost("UpdateAlbum/{source}")]
-    public async Task UpdateAlbum(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("UpdateAlbum")]
+    public async Task UpdateAlbum([FromBody] ItemUpdateRequest request)
     {
-        await _service.UpdateAlbum(source, request);
+        await _service.UpdateAlbum(request);
     }
 }

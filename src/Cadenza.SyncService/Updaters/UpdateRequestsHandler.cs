@@ -40,7 +40,7 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var tracks = await _database.GetTracksByArtist(source, request.Id);
+            var tracks = await _database.GetTracksByArtist(request.Id);
             await TryUpdateTracks(repository, tracks, source, request);
         }
 
@@ -53,7 +53,7 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var tracks = await _database.GetTracksByAlbum(source, request.Id);
+            var tracks = await _database.GetTracksByAlbum(request.Id);
             await TryUpdateTracks(repository, tracks, source, request);
         }
 
@@ -81,23 +81,23 @@ internal class UpdateRequestsHandler : IService
         try
         {
             await repository.UpdateTracks(tracks, request.Updates);
-            await MarkUpdated(source, request);
+            await MarkUpdated(request);
             _logger.LogInformation($"Finished processing update ID {request.Id}");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Failed to process update ID {request.Id}");
-            await MarkErrored(source, request);
+            await MarkErrored(request);
         }
     }
 
-    private async Task MarkErrored(LibrarySource source, ItemUpdateRequest request)
+    private async Task MarkErrored(ItemUpdateRequest request)
     {
-        await _database.MarkUpdateErrored(source, request);
+        await _database.MarkUpdateErrored(request);
     }
 
-    private async Task MarkUpdated(LibrarySource source, ItemUpdateRequest request)
+    private async Task MarkUpdated(ItemUpdateRequest request)
     {
-        await _database.MarkUpdateDone(source, request);
+        await _database.MarkUpdateDone(request);
     }
 }

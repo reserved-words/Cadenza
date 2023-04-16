@@ -19,19 +19,9 @@ internal class UpdateRepository : IUpdateRepository
         await _updater.QueueRemoval(request);
     }
 
-    public async Task AddUpdateRequest(ItemUpdateRequest request, LibrarySource? itemSource)
+    public async Task AddUpdateRequest(ItemUpdateRequest request)
     {
-        if (itemSource.HasValue)
-        {
-            await _updater.QueueUpdates(request, itemSource.Value);
-        }
-        else
-        {
-            foreach (var source in Enum.GetValues<LibrarySource>())
-            {
-                await _updater.QueueUpdates(request, source);
-            }
-        }
+        await _updater.QueueUpdates(request);
     }
 
     public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
@@ -54,12 +44,12 @@ internal class UpdateRepository : IUpdateRepository
         await _updater.MarkRemovalErrored(requestId);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequest request, LibrarySource source)
+    public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
         await _updater.MarkUpdateDone(request);
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequest request, LibrarySource source)
+    public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
         await _updater.MarkUpdateErrored(request);
     }

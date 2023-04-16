@@ -50,15 +50,15 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<SyncSourceTrack>(url);
     }
 
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
+    public async Task<List<string>> GetTracksByAlbum(int albumId)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}/{source}/{albumId}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}/{albumId}";
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId)
+    public async Task<List<string>> GetTracksByArtist(int artistId)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}/{source}/{artistId}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}/{artistId}";
         return await _http.Get<List<string>>(url);
     }
 
@@ -68,15 +68,15 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<ItemUpdateRequest>>(url);
     }
 
-    public async Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateErrored}/{source}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateErrored}";
         await _http.Post(url, null, request);
     }
 
-    public async Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateDone}/{source}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateDone}";
         await _http.Post(url, null, request);
     }
 

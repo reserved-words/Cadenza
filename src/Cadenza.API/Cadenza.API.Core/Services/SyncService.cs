@@ -21,14 +21,14 @@ internal class SyncService : ISyncService
         return await _musicRepository.GetAllTracks(source);
     }
 
-    public async Task<List<string>> GetAlbumTrackSourceIds(LibrarySource source, int albumId)
+    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
-        return await _musicRepository.GetAlbumTrackSourceIds(source, albumId);
+        return await _musicRepository.GetAlbumTrackSourceIds(albumId);
     }
 
-    public async Task<List<string>> GetArtistTrackSourceIds(LibrarySource source, int artistId)
+    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
-        return await _musicRepository.GetArtistTrackSourceIds(source, artistId);
+        return await _musicRepository.GetArtistTrackSourceIds(artistId);
     }
 
     public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
@@ -42,14 +42,14 @@ internal class SyncService : ISyncService
         return await _updateRepository.GetUpdateRequests(source);
     }
 
-    public async Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
-        await _updateRepository.MarkUpdateErrored(request, source);
+        await _updateRepository.MarkUpdateErrored(request);
     }
 
-    public async Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
-        await _updateRepository.MarkUpdateDone(request, source);
+        await _updateRepository.MarkUpdateDone(request);
     }
 
     public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
