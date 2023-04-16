@@ -11,11 +11,11 @@ internal class AlbumRepository : IAlbumRepository
         _apiHelper = apiHelper;
     }
 
-    public async Task<AlbumInfo> GetAlbum(string id)
+    public async Task<AlbumInfo> GetAlbum(int id)
     {
         return await _apiHelper.Get<AlbumInfo>(_settings.Album, id);
     }
-    public async Task<List<AlbumTrack>> GetAlbumTracks(string id)
+    public async Task<List<AlbumTrack>> GetAlbumTracks(int id)
     {
         return await _apiHelper.Get<List<AlbumTrack>>(_settings.AlbumTracks, id);
     }

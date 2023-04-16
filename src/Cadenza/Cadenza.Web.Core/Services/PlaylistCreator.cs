@@ -40,12 +40,12 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(string id, string startTrackId)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(int id, string startTrackId)
     {
         var tracks = await _repository.PlayAlbum(id);
         var album = await _albumRepository.GetAlbum(id);
 
-        var playlistId = new PlaylistId(id, album.Source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
+        var playlistId = new PlaylistId(id.ToString(), album.Source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
 
         var startTrack = tracks.SingleOrDefault(t => t.Id == startTrackId);
         var startIndex = startTrack != null ? tracks.IndexOf(startTrack) : 0;

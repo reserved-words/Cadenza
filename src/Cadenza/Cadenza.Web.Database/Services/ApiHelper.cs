@@ -17,6 +17,12 @@ internal class ApiHelper : IApiHelper
         return await _http.Get<T>(url);
     }
 
+    public async Task<T> Get<T>(string endpoint, int id)
+    {
+        var url = GetApiEndpoint(endpoint, id);
+        return await _http.Get<T>(url);
+    }
+
     public async Task<T> Get<T>(string endpoint, string id)
     {
         var url = GetApiEndpoint(endpoint, id);
@@ -40,7 +46,7 @@ internal class ApiHelper : IApiHelper
         return $"{_settings.Value.BaseUrl}{endpoint}";
     }
 
-    private string GetApiEndpoint(string endpoint, string id)
+    private string GetApiEndpoint(string endpoint, object id)
     {
         return $"{GetApiEndpoint(endpoint)}?id={id}";
     }

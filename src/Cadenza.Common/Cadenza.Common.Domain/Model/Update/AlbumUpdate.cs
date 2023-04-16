@@ -6,5 +6,5 @@ public class AlbumUpdate : ItemUpdate<AlbumInfo>
         : base() { }
 
     public AlbumUpdate(AlbumInfo album)
-        : base(LibraryItemType.Album, album.Id, album) { }
+        : base(LibraryItemType.Album, album.Id.ToString(), album) { }
 }

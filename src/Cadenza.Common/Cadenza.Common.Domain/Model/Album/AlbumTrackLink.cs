@@ -2,7 +2,7 @@
 
 public class AlbumTrackLink
 {
-    public string AlbumId { get; set; }
+    public int AlbumId { get; set; }
     public string TrackId { get; set; }
     public int DiscNo { get; set; }
     public int TrackNo { get; set; }

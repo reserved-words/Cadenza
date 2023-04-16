@@ -19,7 +19,7 @@ internal class PlayTrackService : IPlayTrackService
         return await _cache.PlayTracks.PlayAll();
     }
 
-    public async Task<List<PlayTrack>> GetPlayTracksByAlbum(string id)
+    public async Task<List<PlayTrack>> GetPlayTracksByAlbum(int id)
     {
         await PopulateCache();
         return await _cache.PlayTracks.PlayAlbum(id);

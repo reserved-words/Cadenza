@@ -22,7 +22,7 @@ public class CurrentTrackBase : ComponentBase
 
     private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
     {
-        if (Model == null || args.Update.Id != Model.Album.Id)
+        if (Model == null || args.Update.Id != Model.Album.Id.ToString())
             return Task.CompletedTask;
 
         args.Update.ApplyUpdates(Model.Album);

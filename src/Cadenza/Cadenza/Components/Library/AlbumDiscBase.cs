@@ -18,7 +18,7 @@ public class AlbumDiscBase : ComponentBase
     public Disc Model { get; set; } = new();
 
     [Parameter]
-    public string AlbumId { get; set; }
+    public int AlbumId { get; set; }
 
     [Parameter]
     public string AlbumArtistId { get; set; }

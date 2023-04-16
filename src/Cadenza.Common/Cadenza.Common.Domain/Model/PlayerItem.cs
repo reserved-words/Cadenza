@@ -31,7 +31,7 @@ public class SearchableAlbum : PlayerItem
         : base(PlayerItemType.Album, id, title, artist, null, null) { }
 
     public SearchableAlbum(AlbumInfo album)
-        : this(album.Id, album.Title, album.ArtistName) { }
+        : this(album.Id.ToString(), album.Title, album.ArtistName) { }
 }
 
 public class SearchableArtist : PlayerItem

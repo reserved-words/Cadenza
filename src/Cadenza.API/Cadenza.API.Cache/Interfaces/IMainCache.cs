@@ -7,7 +7,7 @@ internal interface IMainCache
     void CacheArtist(ArtistInfo album);
     void CacheTrack(TrackInfo track);
     void Clear();
-    AlbumInfo GetAlbum(string id);
+    AlbumInfo GetAlbum(int id);
     AlbumTrackLink GetAlbumTrack(string trackId);
     List<Artist> GetAllArtists();
     ArtistInfo GetArtist(string id);

@@ -13,13 +13,13 @@ internal class LibraryService : ILibraryService
         _populater = populater;
     }
 
-    public async Task<AlbumInfo> Album(string id)
+    public async Task<AlbumInfo> Album(int id)
     {
         await PopulateCache();
         return await _cache.Albums.GetAlbum(id);
     }
 
-    public async Task<List<AlbumTrack>> AlbumTracks(string id)
+    public async Task<List<AlbumTrack>> AlbumTracks(int id)
     {
         await PopulateCache();
         return await _cache.Albums.GetAlbumTracks(id);

@@ -6,7 +6,7 @@ internal class HelperCache : IHelperCache
     private readonly Dictionary<string, List<ArtistInfo>> _artistsByGenre = new();
     private readonly Dictionary<Grouping, List<ArtistInfo>> _artistsByGrouping = new();
 
-    private readonly Dictionary<string, List<(TrackInfo Track, AlbumTrackLink AlbumTrack)>> _tracksByAlbum = new();
+    private readonly Dictionary<int, List<(TrackInfo Track, AlbumTrackLink AlbumTrack)>> _tracksByAlbum = new();
     private readonly Dictionary<string, List<TrackInfo>> _tracksByArtist = new();
 
     public void CacheAlbum(AlbumInfo album)
@@ -59,7 +59,7 @@ internal class HelperCache : IHelperCache
         return _tracksByArtist.GetList<string, TrackInfo, Track>(id);
     }
 
-    public List<AlbumTrack> GetAlbumTracks(string id)
+    public List<AlbumTrack> GetAlbumTracks(int id)
     {
         var result = new List<AlbumTrack>();
 

@@ -26,7 +26,7 @@ public class AlbumViewBase : ComponentBase, IDisposable
 
     private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
     {
-        if (Model != null && Model.Id == args.Update.Id)
+        if (Model != null && Model.Id.ToString() == args.Update.Id)
         {
             args.Update.ApplyUpdates(Model);
             StateHasChanged();

@@ -24,7 +24,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetTracksByAlbum/{source}/{albumId}")]
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
+    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
     {
         return await _service.GetTracksByAlbum(source, albumId);
     }

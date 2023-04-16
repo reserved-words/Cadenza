@@ -12,13 +12,13 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album")]
-    public async Task<AlbumInfo> Album(string id)
+    public async Task<AlbumInfo> Album(int id)
     {
         return await _service.Album(id);
     }
 
     [HttpGet("Album/Tracks")]
-    public async Task<List<AlbumTrack>> AlbumTracks(string id)
+    public async Task<List<AlbumTrack>> AlbumTracks(int id)
     {
         return await _service.AlbumTracks(id);
     }

@@ -8,7 +8,7 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     private readonly DatabaseApiSettings _settings;
 
-    private readonly Dictionary<string, string> _updateAlbumArtwork = new();
+    private readonly Dictionary<int, string> _updateAlbumArtwork = new();
     private readonly Dictionary<string, string> _updatedArtistImages = new ();
 
     public ArtworkFetcher(IOptions<DatabaseApiSettings> settings)
@@ -35,7 +35,7 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     public string GetAlbumArtworkSrc(Album album)
     {
-        if (album == null || album.Id == null)
+        if (album == null || album.Id == 0)
             return ArtworkPlaceholderUrl;
 
         if (album.ArtworkBase64 != null)

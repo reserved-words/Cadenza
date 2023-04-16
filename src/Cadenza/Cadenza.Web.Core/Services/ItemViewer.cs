@@ -14,9 +14,9 @@ internal class ItemViewer : IItemViewer
         _idGenerator = idGenerator;
     }
 
-    public async Task ViewAlbum(string id, string title)
+    public async Task ViewAlbum(int id, string title)
     {
-        var playerItem = new ViewItem(PlayerItemType.Album, id, title);
+        var playerItem = new ViewItem(PlayerItemType.Album, id.ToString(), title);
         await _controller.RequestItem(playerItem);
     }
 

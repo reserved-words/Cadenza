@@ -2,7 +2,7 @@
 
 public interface IItemViewer
 {
-    Task ViewAlbum(string id, string title);
+    Task ViewAlbum(int id, string title);
     Task ViewArtist(string id, string name);
     Task ViewArtist(string name);
     Task ViewGenre(string id);

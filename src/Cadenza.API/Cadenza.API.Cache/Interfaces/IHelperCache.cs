@@ -8,7 +8,7 @@ internal interface IHelperCache
     void CacheTrack(TrackInfo track);
     void Clear();
     List<Album> GetAlbumsByArtist(string id);
-    List<AlbumTrack> GetAlbumTracks(string id);
+    List<AlbumTrack> GetAlbumTracks(int id);
     List<Artist> GetArtistsByGenre(string id);
     List<Artist> GetArtistsByGrouping(Grouping id);
     List<Track> GetArtistTracks(string id);

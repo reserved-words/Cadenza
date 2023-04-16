@@ -96,7 +96,7 @@ internal class DataMapper : IDataMapper
         return new AlbumInfo
         {
             Source = (LibrarySource)album.SourceId,
-            Id = album.Id.ToString(),
+            Id = album.Id,
             ArtistId = album.ArtistNameId,
             ArtistName = album.ArtistName,
             Title = album.Title,
@@ -113,7 +113,7 @@ internal class DataMapper : IDataMapper
         return new AlbumTrackLink
         {
             TrackId = track.IdFromSource,
-            AlbumId = track.AlbumId.ToString(),
+            AlbumId = track.AlbumId,
             DiscNo = track.DiscIndex,
             TrackNo = track.TrackNo
         };
@@ -142,7 +142,7 @@ internal class DataMapper : IDataMapper
             Id = track.IdFromSource,
             ArtistId = track.ArtistNameId,
             ArtistName = track.ArtistName,
-            AlbumId = track.AlbumId.ToString(),
+            AlbumId = track.AlbumId,
             Title = track.Title,
             DurationSeconds = track.DurationSeconds,
             Year = track.Year,

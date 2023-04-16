@@ -63,13 +63,13 @@ internal class CacheService : ICacheService
         return Task.CompletedTask;
     }
 
-    public Task<AlbumInfo> GetAlbum(string id)
+    public Task<AlbumInfo> GetAlbum(int id)
     {
         var result = _mainCache.GetAlbum(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<AlbumTrack>> GetAlbumTracks(string id)
+    public Task<List<AlbumTrack>> GetAlbumTracks(int id)
     {
         var result = _helperCache.GetAlbumTracks(id);
         return Task.FromResult(result);
@@ -164,7 +164,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayTrack>> PlayAlbum(string id)
+    public Task<List<PlayTrack>> PlayAlbum(int id)
     {
         var result = GetAlbumPlayTracks(id).ToList();
         return Task.FromResult(result);
@@ -200,7 +200,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    private IEnumerable<PlayTrack> GetAlbumPlayTracks(string id)
+    private IEnumerable<PlayTrack> GetAlbumPlayTracks(int id)
     {
         return _helperCache.GetAlbumTracks(id).Select(t => _playCache.GetTrack(t.TrackId)).ToList();
     }
