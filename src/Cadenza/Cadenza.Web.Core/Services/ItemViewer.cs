@@ -6,12 +6,10 @@ namespace Cadenza.Web.Core.Services;
 internal class ItemViewer : IItemViewer
 {
     private readonly IViewCoordinator _controller;
-    private readonly IIdGenerator _idGenerator;
 
-    public ItemViewer(IViewCoordinator controller, IIdGenerator idGenerator)
+    public ItemViewer(IViewCoordinator controller)
     {
         _controller = controller;
-        _idGenerator = idGenerator;
     }
 
     public async Task ViewAlbum(int id, string title)
@@ -20,16 +18,10 @@ internal class ItemViewer : IItemViewer
         await _controller.RequestItem(playerItem);
     }
 
-    public async Task ViewArtist(string id, string name)
+    public async Task ViewArtist(int id, string name)
     {
-        var playerItem = new ViewItem(PlayerItemType.Artist, id, name);
+        var playerItem = new ViewItem(PlayerItemType.Artist, id.ToString(), name);
         await _controller.RequestItem(playerItem);
-    }
-
-    public async Task ViewArtist(string name)
-    {
-        var id = _idGenerator.GenerateId(name);
-        await ViewArtist(id, name);
     }
 
     public async Task ViewGenre(string id)
@@ -67,9 +59,9 @@ internal class ItemViewer : IItemViewer
         await _controller.RequestItem(playerItem);
     }
 
-    public async Task ViewTrack(string id, string title)
+    public async Task ViewTrack(int id, string title)
     {
-        var playerItem = new ViewItem(PlayerItemType.Track, id, title);
+        var playerItem = new ViewItem(PlayerItemType.Track, id.ToString(), title);
         await _controller.RequestItem(playerItem);
     }
 }

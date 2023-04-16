@@ -16,7 +16,7 @@ internal class CorePlayer : IPlayer
     public async Task Play(PlayTrack track)
     {
         var service = await GetCurrentSourcePlayer(track.Source);
-        await service.Play(track.Id);
+        await service.Play(track.IdFromSource);
 
         var fullTrack = await GetCurrentTrack();
         var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);

@@ -25,19 +25,19 @@ internal class LibraryService : ILibraryService
         return await _cache.Albums.GetAlbumTracks(id);
     }
 
-    public async Task<ArtistInfo> Artist(string id)
+    public async Task<ArtistInfo> Artist(int id)
     {
         await PopulateCache();
         return await _cache.Artists.GetArtist(id);
     }
 
-    public async Task<List<Album>> ArtistAlbums(string id)
+    public async Task<List<Album>> ArtistAlbums(int id)
     {
         await PopulateCache();
         return await _cache.Artists.GetAlbums(id);
     }
 
-    public async Task<List<Track>> ArtistTracks(string id)
+    public async Task<List<Track>> ArtistTracks(int id)
     {
         await PopulateCache();
         return await _cache.Artists.GetArtistTracks(id);
@@ -73,7 +73,7 @@ internal class LibraryService : ILibraryService
         return await _cache.Tags.GetTag(id);
     }
 
-    public async Task<TrackFull> Track(string id)
+    public async Task<TrackFull> Track(int id)
     {
         await PopulateCache();
         return await _cache.Tracks.GetTrack(id);

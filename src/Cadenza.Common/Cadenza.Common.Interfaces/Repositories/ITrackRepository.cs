@@ -4,5 +4,5 @@ namespace Cadenza.Common.Interfaces.Repositories;
 
 public interface ITrackRepository
 {
-    Task<TrackFull> GetTrack(string id);
+    Task<TrackFull> GetTrack(int id);
 }

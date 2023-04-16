@@ -6,7 +6,7 @@ BEGIN
 	SELECT 
 		UPD.[Id],
 		UPD.[SourceId],
-		TRK.[IdFromSource] [TrackIdFromSource],
+		TRK.[Id] [TrackId],
 		PRP.[Name] [PropertyName],
 		UPD.[OriginalValue],
 		UPD.[UpdatedValue]

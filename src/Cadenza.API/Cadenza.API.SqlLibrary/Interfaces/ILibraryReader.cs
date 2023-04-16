@@ -2,8 +2,11 @@
 
 internal interface ILibraryReader
 {
-    Task<FullLibrary> Get(LibrarySource? source);
+    Task<FullLibrary> Get();
     Task<List<string>> GetAllTracks(LibrarySource source);
     Task<ArtworkImage> GetAlbumArtwork(int id);
-    Task<ArtworkImage> GetArtistImage(string nameId);
+    Task<ArtworkImage> GetArtistImage(int id);
+    Task<List<string>> GetAlbumTrackSourceIds(int albumId);
+    Task<List<string>> GetArtistTrackSourceIds(int artistId);
+    Task<string> GetTrackIdFromSource(int trackId);
 }

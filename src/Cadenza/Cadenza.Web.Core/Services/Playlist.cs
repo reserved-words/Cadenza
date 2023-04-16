@@ -50,7 +50,7 @@ internal class Playlist : IPlaylist
         return Task.FromResult(_playing);
     }
 
-    public void RemoveTrack(string trackId)
+    public void RemoveTrack(int trackId)
     {
         var track = _allTracks.SingleOrDefault(t => t.Id == trackId);
         if (track == null)

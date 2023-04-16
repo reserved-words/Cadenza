@@ -1,17 +1,24 @@
 ﻿CREATE PROCEDURE [Library].[DeleteTrack]
+	@Id INT,
 	@IdFromSource NVARCHAR(500)
 AS
 BEGIN
 
-	DECLARE @Id INT
+	IF (@Id IS NULL)
+	BEGIN
+		SELECT 
+			@Id = [Id]
+		FROM
+			[Library].[Tracks]
+		WHERE
+			[IdFromSource] = @IdFromSource
+	END
 
-	SELECT 
-		@Id = [Id]
-	FROM
-		[Library].[Tracks]
-	WHERE 
-		[IdFromSource] = @IdFromSource
-		
+	DELETE
+		[History].[PlayedTracks]
+	WHERE
+		[TrackId] = @Id
+
 	DELETE
 		[Queue].[TrackUpdates]
 	WHERE

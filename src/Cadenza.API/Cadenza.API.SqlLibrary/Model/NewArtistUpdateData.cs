@@ -2,5 +2,5 @@
 
 internal class NewArtistUpdateData : NewUpdateData
 {
-    public string ArtistNameId { get; set; }
+    public int ArtistId { get; set; }
 }

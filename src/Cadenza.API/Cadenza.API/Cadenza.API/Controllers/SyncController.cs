@@ -20,19 +20,25 @@ public class SyncController : ControllerBase
     [HttpGet("GetAllTracks/{source}")]
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        return await _service.GetAllTracks(source);
+        return await _service.GetAllTrackSourceIds(source);
     }
 
-    [HttpGet("GetTracksByAlbum/{source}/{albumId}")]
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
+    [HttpGet("GetTrackIdFromSource/{trackId}")]
+    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
     {
-        return await _service.GetTracksByAlbum(source, albumId);
+        return await _service.GetTrackIdFromSource(trackId);
     }
 
-    [HttpGet("GetTracksByArtist/{source}/{artistId}")]
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    [HttpGet("GetTracksByAlbum/{albumId}")]
+    public async Task<List<string>> GetTracksByAlbum(int albumId)
     {
-        return await _service.GetTracksByArtist(source, artistId);
+        return await _service.GetAlbumTrackSourceIds(albumId);
+    }
+
+    [HttpGet("GetTracksByArtist/{artistId}")]
+    public async Task<List<string>> GetTracksByArtist(int artistId)
+    {
+        return await _service.GetArtistTrackSourceIds(artistId);
     }
 
     [HttpGet("GetUpdateRequests/{source}")]
@@ -41,39 +47,39 @@ public class SyncController : ControllerBase
         return await _service.GetUpdateRequests(source);
     }
 
-    [HttpPost("MarkUpdateErrored/{source}")]
-    public async Task MarkUpdateErrored(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("MarkUpdateErrored")]
+    public async Task MarkUpdateErrored([FromBody] ItemUpdateRequest request)
     {
-        await _service.MarkUpdateErrored(source, request);
+        await _service.MarkUpdateErrored(request);
     }
 
-    [HttpPost("MarkUpdateDone/{source}")]
-    public async Task MarkUpdateDone(LibrarySource source, [FromBody] ItemUpdateRequest request)
+    [HttpPost("MarkUpdateDone")]
+    public async Task MarkUpdateDone([FromBody] ItemUpdateRequest request)
     {
-        await _service.MarkUpdateDone(source, request);
+        await _service.MarkUpdateDone(request);
     }
 
     [HttpGet("GetRemovalRequests/{source}")]
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         return await _service.GetRemovalRequests(source);
     }
 
     [HttpPost("MarkRemovalErrored")]
-    public async Task MarkRemovalErrored([FromBody] TrackRemovalRequest request)
+    public async Task MarkRemovalErrored([FromBody] SyncTrackRemovalRequest request)
     {
         await _service.MarkRemovalErrored(request);
     }
 
     [HttpPost("MarkRemovalDone")]
-    public async Task MarkRemovalDone([FromBody] TrackRemovalRequest request)
+    public async Task MarkRemovalDone([FromBody] SyncTrackRemovalRequest request)
     {
         await _service.MarkRemovalDone(request);
     }
 
     [HttpPost("RemoveTracks/{source}")]
-    public async Task RemoveTracks(LibrarySource source, [FromBody] List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, [FromBody] List<string> idsFromSource)
     {
-        await _service.RemoveTracks(source, ids);
+        await _service.RemoveTracks(source, idsFromSource);
     }
 }

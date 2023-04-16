@@ -39,7 +39,7 @@ internal class RemovalRequestsHandler : IService
         _logger.LogInformation("All track removal requests processed");
     }
 
-    private async Task TryRemoveTrack(ISourceRepository repository, TrackRemovalRequest request)
+    private async Task TryRemoveTrack(ISourceRepository repository, SyncTrackRemovalRequest request)
     {
         _logger.LogInformation($"Started processing removal request ID {request.RequestId}");
 
@@ -56,12 +56,12 @@ internal class RemovalRequestsHandler : IService
         }
     }
 
-    private async Task MarkErrored(TrackRemovalRequest request)
+    private async Task MarkErrored(SyncTrackRemovalRequest request)
     {
         await _database.MarkRemovalErrored(request);
     }
 
-    private async Task MarkDone(TrackRemovalRequest request)
+    private async Task MarkDone(SyncTrackRemovalRequest request)
     {
         await _database.MarkRemovalDone(request);
     }

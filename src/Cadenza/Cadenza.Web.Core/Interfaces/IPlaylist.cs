@@ -4,7 +4,7 @@ internal interface IPlaylist
 {
     Task<PlayTrack> MoveNext();
     Task<PlayTrack> MovePrevious();
-    void RemoveTrack(string trackId);
+    void RemoveTrack(int trackId);
 
     PlaylistId Id { get; }
     PlayTrack Current { get; }

@@ -11,11 +11,19 @@ internal class TrackRemover : ITrackRemover
         _deletionService = deletionService;
     }
 
-    public async Task RemoveTracks(List<string> ids)
+    public async Task RemoveTrack(int id)
     {
-        foreach (var id in ids)
+        await _deletionService.DeleteTrackById(id);
+        await _deletionService.DeleteEmptyDiscs();
+        await _deletionService.DeleteEmptyAlbums();
+        await _deletionService.DeleteEmptyArtists();
+    }
+
+    public async Task RemoveTracks(List<string> idsFromSource)
+    {
+        foreach (var idFromSource in idsFromSource)
         {
-            await _deletionService.DeleteTrack(id);
+            await _deletionService.DeleteTrackByIdFromSource(idFromSource);
         }
 
         await _deletionService.DeleteEmptyDiscs();

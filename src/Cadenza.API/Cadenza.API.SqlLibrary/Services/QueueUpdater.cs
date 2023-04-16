@@ -58,17 +58,12 @@ internal class QueueUpdater : IQueueUpdater
 
     public async Task QueueRemoval(TrackRemovalRequest request)
     {
-        var data = new NewTrackRemovalData
-        {
-            TrackIdFromSource = request.TrackId
-        };
-
-        await _insertionService.AddTrackRemoval(data);
+        await _insertionService.AddTrackRemoval(request.TrackId);
     }
 
-    public async Task QueueUpdates(ItemUpdateRequest request, LibrarySource source)
+    public async Task QueueUpdates(ItemUpdateRequest request)
     {
-        Func<ItemUpdateRequest, LibrarySource, PropertyUpdate, Task> queue = request.Type switch
+        Func<ItemUpdateRequest, PropertyUpdate, Task> queue = request.Type switch
         {
             LibraryItemType.Artist => QueueArtistUpdate,
             LibraryItemType.Album => QueueAlbumUpdate,
@@ -78,16 +73,15 @@ internal class QueueUpdater : IQueueUpdater
 
         foreach (var update in request.Updates)
         {
-            await queue(request, source, update);
+            await queue(request, update);
         }
     }
 
-    private async Task QueueArtistUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
+    private async Task QueueArtistUpdate(ItemUpdateRequest request, PropertyUpdate update)
     {
         var artistUpdate = new NewArtistUpdateData
         {
-            ArtistNameId = request.Id,
-            SourceId = (int)source,
+            ArtistId = request.Id,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
             UpdatedValue = update.UpdatedValue
@@ -96,12 +90,11 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddArtistUpdate(artistUpdate);
     }
 
-    private async Task QueueAlbumUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
+    private async Task QueueAlbumUpdate(ItemUpdateRequest request, PropertyUpdate update)
     {
         var albumUpdate = new NewAlbumUpdateData
         {
-            AlbumId = int.Parse(request.Id),
-            SourceId = (int)source,
+            AlbumId = request.Id,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
             UpdatedValue = update.UpdatedValue
@@ -110,12 +103,11 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddAlbumUpdate(albumUpdate);
     }
 
-    private async Task QueueTrackUpdate(ItemUpdateRequest request, LibrarySource source, PropertyUpdate update)
+    private async Task QueueTrackUpdate(ItemUpdateRequest request, PropertyUpdate update)
     {
         var trackUpdate = new NewTrackUpdateData
         {
-            TrackIdFromSource = request.Id,
-            SourceId = (int)source,
+            TrackId = request.Id,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
             UpdatedValue = update.UpdatedValue

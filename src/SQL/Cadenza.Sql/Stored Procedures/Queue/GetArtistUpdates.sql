@@ -6,7 +6,7 @@ BEGIN
 	SELECT 
 		UPD.[Id],
 		UPD.[SourceId],
-		ART.[NameId] [ArtistNameId],
+		ART.[Id] [ArtistId],
 		PRP.[Name] [PropertyName],
 		UPD.[OriginalValue],
 		UPD.[UpdatedValue]

@@ -8,7 +8,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         UpdatedItem = new();
     }
 
-    public ItemUpdate(LibraryItemType type, string id, TInterface originalItem)
+    public ItemUpdate(LibraryItemType type, int id, TInterface originalItem)
     {
         Id = id;
         Type = type;
@@ -17,7 +17,7 @@ public class ItemUpdate<TInterface> where TInterface : new()
         CopyValues(originalItem, UpdatedItem);
     }
 
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public LibraryItemType Type { get; set; }
 

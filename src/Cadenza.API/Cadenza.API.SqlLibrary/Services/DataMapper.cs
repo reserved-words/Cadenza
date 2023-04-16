@@ -11,11 +11,11 @@ internal class DataMapper : IDataMapper
         _idGenerator = idGenerator;
     }
 
-    public NewAlbumData MapAlbum(SyncTrack track, int artistId)
+    public NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId)
     {
         return new NewAlbumData
         {
-            SourceId = (int)track.Source,
+            SourceId = (int)source,
             ArtistId = artistId,
             Title = track.Album.Title,
             ReleaseTypeId = (int)track.Album.ReleaseType,
@@ -60,7 +60,7 @@ internal class DataMapper : IDataMapper
     {
         return new NewTrackData
         {
-            IdFromSource = track.Id,
+            IdFromSource = track.IdFromSource,
             ArtistId = artistId,
             DiscId = discId,
             TrackNo = track.TrackNo,
@@ -95,9 +95,8 @@ internal class DataMapper : IDataMapper
     {
         return new AlbumInfo
         {
-            Source = (LibrarySource)album.SourceId,
             Id = album.Id,
-            ArtistId = album.ArtistNameId,
+            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
@@ -112,7 +111,7 @@ internal class DataMapper : IDataMapper
     {
         return new AlbumTrackLink
         {
-            TrackId = track.IdFromSource,
+            TrackId = track.Id,
             AlbumId = track.AlbumId,
             DiscNo = track.DiscIndex,
             TrackNo = track.TrackNo
@@ -123,7 +122,7 @@ internal class DataMapper : IDataMapper
     {
         return new ArtistInfo
         {
-            Id = artist.NameId,
+            Id = artist.Id,
             Name = artist.Name,
             Grouping = (Grouping)artist.GroupingId,
             Genre = artist.Genre,
@@ -139,8 +138,9 @@ internal class DataMapper : IDataMapper
         return new TrackInfo
         {
             Source = (LibrarySource)track.SourceId,
-            Id = track.IdFromSource,
-            ArtistId = track.ArtistNameId,
+            Id = track.Id,
+            IdFromSource = track.IdFromSource,
+            ArtistId = track.ArtistId,
             ArtistName = track.ArtistName,
             AlbumId = track.AlbumId,
             Title = track.Title,

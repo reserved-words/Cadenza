@@ -3,6 +3,6 @@
 public class ItemUpdateRequest
 {
     public LibraryItemType Type { get; set; }
-    public string Id { get; set; }
+    public int Id { get; set; }
     public List<PropertyUpdate> Updates { get; set; } = new();
 }

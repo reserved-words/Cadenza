@@ -2,6 +2,6 @@
 
 public interface IImageRepository
 {
-    Task<ArtworkImage> GetArtistImage(string nameId);
+    Task<ArtworkImage> GetArtistImage(int artistId);
     Task<ArtworkImage> GetAlbumArtwork(int albumId);
 }

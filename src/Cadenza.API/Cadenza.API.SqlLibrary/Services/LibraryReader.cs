@@ -13,7 +13,7 @@ internal class LibraryReader : ILibraryReader
         _readService = readService;
     }
 
-    public async Task<FullLibrary> Get(LibrarySource? source)
+    public async Task<FullLibrary> Get()
     {
         var artistsData = await _readService.GetArtists();
         var artists = artistsData.Select(a => _mapper.MapArtist(a)).ToList();
@@ -26,16 +26,9 @@ internal class LibraryReader : ILibraryReader
             AlbumTracks = new List<AlbumTrackLink>()
         };
 
-        if (source.HasValue)
+        foreach (var src in Enum.GetValues<LibrarySource>())
         {
-            await AddSource(library, source.Value);
-        }
-        else
-        {
-            foreach (var src in Enum.GetValues<LibrarySource>())
-            {
-                await AddSource(library, src);
-            }
+            await AddSource(library, src);
         }
 
         return library;
@@ -50,18 +43,33 @@ internal class LibraryReader : ILibraryReader
         return new ArtworkImage(data.Content, data.MimeType);
     }
 
+    public Task<List<string>> GetAlbumTrackSourceIds(int albumId)
+    {
+        return _readService.GetAlbumTrackSourceIds(albumId);
+    }
+
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _readService.GetAllTrackIds(source);
     }
 
-    public async Task<ArtworkImage> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(int id)
     {
-        var data = await _readService.GetArtistImage(nameId);
+        var data = await _readService.GetArtistImage(id);
         if (data?.Content == null)
             return null;
 
         return new ArtworkImage(data.Content, data.MimeType);
+    }
+
+    public Task<List<string>> GetArtistTrackSourceIds(int artistId)
+    {
+        return _readService.GetArtistTrackSourceIds(artistId);
+    }
+
+    public Task<string> GetTrackIdFromSource(int trackId)
+    {
+        return _readService.GetTrackIdFromSource(trackId);
     }
 
     private async Task AddSource(FullLibrary library, LibrarySource source)
