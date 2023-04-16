@@ -1,4 +1,5 @@
-﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@using Cadenza.Web.Common.Interfaces.Store;
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 <EditCard>
     
@@ -20,12 +21,17 @@
 </EditCard>
 
 @code {
+    [Inject]
+    public ICurrentTrackStore Store { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }
 
     [Inject]
     public IMessenger Messenger { get; set; }
+
+    [Inject]
+    public INotificationService Notification { get; set; }
 
     [Parameter]
     public List<AlbumTrack> Model { get; set; }
@@ -39,7 +45,13 @@
 
     protected async Task OnRemoveTrack(AlbumTrack track)
     {
-        // If is currently playing prevent removing
+        var currentTrackId = await Store.GetCurrentTrackId();
+
+        if (currentTrackId == track.TrackId)
+        {
+            Notification.Error("Track cannot be removed while currently playing");
+            return;
+        }
 
         var trackToRemove = new TrackToRemove
             {
