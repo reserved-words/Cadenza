@@ -27,7 +27,7 @@ public class ArtistViewBase : ComponentBase, IDisposable
 
     private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
     {
-        if (Model != null && Model.Id == args.Update.Id)
+        if (Model != null && Model.Id.ToString() == args.Update.Id)
         {
             args.Update.ApplyUpdates(Model);
             StateHasChanged();

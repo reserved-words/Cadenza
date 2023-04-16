@@ -4,7 +4,7 @@ internal class MainCache : IMainCache
 {
     private readonly Dictionary<string, TrackInfo> _tracks = new();
     private readonly Dictionary<int, AlbumInfo> _albums = new();
-    private readonly Dictionary<string, ArtistInfo> _artists = new();
+    private readonly Dictionary<int, ArtistInfo> _artists = new();
     private readonly Dictionary<string, AlbumTrackLink> _albumTracks = new();
 
     public void CacheAlbum(AlbumInfo album)
@@ -48,10 +48,10 @@ internal class MainCache : IMainCache
 
     public List<Artist> GetAllArtists()
     {
-        return _artists.GetAllValues<string, ArtistInfo, Artist>();
+        return _artists.GetAllValues<int, ArtistInfo, Artist>();
     }
 
-    public ArtistInfo GetArtist(string id)
+    public ArtistInfo GetArtist(int id)
     {
         return _artists.GetValue(id);
     }

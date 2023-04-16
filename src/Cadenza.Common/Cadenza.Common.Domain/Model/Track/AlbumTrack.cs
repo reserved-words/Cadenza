@@ -20,7 +20,7 @@ public class AlbumTrack
 
     public string TrackId { get; set; }
     public string Title { get; set; }
-    public string ArtistId { get; set; }
+    public int ArtistId { get; set; }
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }
     public int DiscNo { get; set; }

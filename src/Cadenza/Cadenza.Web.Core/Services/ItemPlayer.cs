@@ -21,7 +21,7 @@ internal class ItemPlayer : IItemPlayer
         await Play(playlist);
     }
 
-    public async Task PlayArtist(string id)
+    public async Task PlayArtist(int id)
     {
         var playlist = await _playlistCreator.CreateArtistPlaylist(id);
         await Play(playlist);

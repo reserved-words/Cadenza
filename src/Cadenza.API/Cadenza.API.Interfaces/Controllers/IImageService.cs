@@ -2,6 +2,6 @@
 
 public interface IImageService
 {
-    Task<ArtworkImage> GetArtistImage(string id);
+    Task<ArtworkImage> GetArtistImage(int id);
     Task<ArtworkImage> GetAlbumArtwork(int id);
 }

@@ -27,7 +27,7 @@ public class GenreTabBase : ComponentBase, IDisposable
 
         if (genreUpdate.OriginalValue == Id)
         {
-            Artists.RemoveWhere(a => a.Id == e.Update.Id);
+            Artists.RemoveWhere(a => a.Id.ToString() == e.Update.Id);
         }
 
         if (genreUpdate.UpdatedValue == Id)

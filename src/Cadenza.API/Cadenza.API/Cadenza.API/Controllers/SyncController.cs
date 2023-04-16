@@ -30,7 +30,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetTracksByArtist/{source}/{artistId}")]
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    public async Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId)
     {
         return await _service.GetTracksByArtist(source, artistId);
     }

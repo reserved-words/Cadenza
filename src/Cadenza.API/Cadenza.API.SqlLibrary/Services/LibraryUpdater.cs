@@ -47,7 +47,7 @@ internal class LibraryUpdater : ILibraryUpdater
 
     public async Task UpdateArtist(ItemUpdateRequest request)
     {
-        var artist = await _readService.GetArtist(request.Id);
+        var artist = await _readService.GetArtist(int.Parse(request.Id));
 
         foreach (var update in request.Updates)
         {

@@ -40,7 +40,7 @@ public class SearchableArtist : PlayerItem
         : base(PlayerItemType.Artist, id, name, null, null, null) { }
 
     public SearchableArtist(ArtistInfo artist)
-        : this(artist.Id, artist.Name) { }
+        : this(artist.Id.ToString(), artist.Name) { }
 }
 
 public class SearchableTag : PlayerItem

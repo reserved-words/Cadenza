@@ -2,4 +2,5 @@
 
 internal class GetArtistData : ArtistDataBase
 {
+    public int Id { get; set; }
 }

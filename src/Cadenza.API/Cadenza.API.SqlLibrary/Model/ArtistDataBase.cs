@@ -2,7 +2,6 @@
 
 internal class ArtistDataBase
 {
-    public string NameId { get; set; }
     public string Name { get; set; }
     public int GroupingId { get; set; }
     public string Genre { get; set; }

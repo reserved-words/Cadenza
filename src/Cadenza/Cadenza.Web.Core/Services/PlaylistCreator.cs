@@ -18,7 +18,7 @@ internal class PlaylistCreator : IPlaylistCreator
         _trackRepository = trackRepository;
     }
 
-    public async Task<PlaylistDefinition> CreateArtistPlaylist(string id)
+    public async Task<PlaylistDefinition> CreateArtistPlaylist(int id)
     {
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.PlayArtist(id);
@@ -29,7 +29,7 @@ internal class PlaylistCreator : IPlaylistCreator
             ? firstSource
             : null;
 
-        var playlistId = new PlaylistId(id, source, PlaylistType.Artist, artist.Name);
+        var playlistId = new PlaylistId(id.ToString(), source, PlaylistType.Artist, artist.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 

@@ -97,7 +97,7 @@ internal class DataMapper : IDataMapper
         {
             Source = (LibrarySource)album.SourceId,
             Id = album.Id,
-            ArtistId = album.ArtistNameId,
+            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
@@ -123,7 +123,7 @@ internal class DataMapper : IDataMapper
     {
         return new ArtistInfo
         {
-            Id = artist.NameId,
+            Id = artist.Id,
             Name = artist.Name,
             Grouping = (Grouping)artist.GroupingId,
             Genre = artist.Genre,
@@ -140,7 +140,7 @@ internal class DataMapper : IDataMapper
         {
             Source = (LibrarySource)track.SourceId,
             Id = track.IdFromSource,
-            ArtistId = track.ArtistNameId,
+            ArtistId = track.ArtistId,
             ArtistName = track.ArtistName,
             AlbumId = track.AlbumId,
             Title = track.Title,

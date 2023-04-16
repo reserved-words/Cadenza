@@ -26,17 +26,17 @@ internal class ArtistRepository : IArtistRepository
         return await _apiHelper.Get<List<Artist>>(_settings.GenreArtists, id);
     }
 
-    public async Task<ArtistInfo> GetArtist(string id)
+    public async Task<ArtistInfo> GetArtist(int id)
     {
         return await _apiHelper.Get<ArtistInfo>(_settings.Artist, id);
     }
 
-    public async Task<List<Album>> GetAlbums(string id)
+    public async Task<List<Album>> GetAlbums(int id)
     {
         return await _apiHelper.Get<List<Album>>(_settings.ArtistAlbums, id);
     }
 
-    public async Task<List<Track>> GetArtistTracks(string id)
+    public async Task<List<Track>> GetArtistTracks(int id)
     {
         return await _apiHelper.Get<List<Track>>(_settings.ArtistTracks, id);
     }

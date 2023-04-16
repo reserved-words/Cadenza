@@ -55,9 +55,9 @@ internal class LibraryReader : ILibraryReader
         return await _readService.GetAllTrackIds(source);
     }
 
-    public async Task<ArtworkImage> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(int id)
     {
-        var data = await _readService.GetArtistImage(nameId);
+        var data = await _readService.GetArtistImage(id);
         if (data?.Content == null)
             return null;
 

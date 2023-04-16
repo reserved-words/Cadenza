@@ -4,7 +4,7 @@ public class Album
 {
     public LibrarySource Source { get; set; }
     public int Id { get; set; }
-    public string ArtistId { get; set; }
+    public int ArtistId { get; set; }
 
     public string ArtistName { get; set; }
 

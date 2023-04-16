@@ -4,9 +4,9 @@ public interface ILibraryService
 {
     Task<AlbumInfo> Album(int id);
     Task<List<AlbumTrack>> AlbumTracks(int id);
-    Task<ArtistInfo> Artist(string id);
-    Task<List<Album>> ArtistAlbums(string id);
-    Task<List<Track>> ArtistTracks(string id);
+    Task<ArtistInfo> Artist(int id);
+    Task<List<Album>> ArtistAlbums(int id);
+    Task<List<Track>> ArtistTracks(int id);
     Task<List<Artist>> Artists();
     Task<List<Artist>> GenreArtists(string id);
     Task<List<Artist>> GroupingArtists(Grouping id);

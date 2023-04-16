@@ -21,7 +21,7 @@ public class AlbumDiscBase : ComponentBase
     public int AlbumId { get; set; }
 
     [Parameter]
-    public string AlbumArtistId { get; set; }
+    public int AlbumArtistId { get; set; }
 
     protected string CurrentTrackId { get; set; }
 

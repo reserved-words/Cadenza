@@ -28,7 +28,6 @@ internal class DataReadService : IDataReadService
     private const string IdParameter = "@Id";
     private const string IdFromSourceParameter = "@IdFromSource";
     private const string MaxItemsParameter = "@MaxItems";
-    private const string NameIdParameter = "@NameId";
     private const string SourceIdParameter = "@SourceId";
 
     private IDataAccess _dbAccess;
@@ -73,17 +72,17 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<string>(GetTrackIdsProcedure, parameters);
     }
 
-    public async Task<ArtistData> GetArtist(string nameId)
+    public async Task<ArtistData> GetArtist(int artistId)
     {
         var parameters = new DynamicParameters();
-        parameters.Add(NameIdParameter, nameId);
+        parameters.Add(IdParameter, artistId);
         return await _dbAccess.QuerySingle<ArtistData>(GetArtistProcedure, parameters);
     }
 
-    public async Task<ArtistImage> GetArtistImage(string nameId)
+    public async Task<ArtistImage> GetArtistImage(int artistId)
     {
         var parameters = new DynamicParameters();
-        parameters.Add(NameIdParameter, nameId);
+        parameters.Add(IdParameter, artistId);
         return await _dbAccess.QuerySingle<ArtistImage>(GetArtistImageProcedure, parameters);
     }
 

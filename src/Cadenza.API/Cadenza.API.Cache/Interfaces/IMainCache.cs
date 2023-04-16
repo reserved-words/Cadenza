@@ -10,7 +10,7 @@ internal interface IMainCache
     AlbumInfo GetAlbum(int id);
     AlbumTrackLink GetAlbumTrack(string trackId);
     List<Artist> GetAllArtists();
-    ArtistInfo GetArtist(string id);
+    ArtistInfo GetArtist(int id);
     TrackInfo GetTrack(string id);
     TrackFull GetFullTrack(string id);
 }

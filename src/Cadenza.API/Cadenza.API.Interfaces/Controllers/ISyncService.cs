@@ -4,7 +4,7 @@ public interface ISyncService
 {
     Task AddTrack(LibrarySource source, SyncTrack track);
     Task<List<string>> GetAllTracks(LibrarySource source);
-    Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId);
+    Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId);
     Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId);
     Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
     Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request);

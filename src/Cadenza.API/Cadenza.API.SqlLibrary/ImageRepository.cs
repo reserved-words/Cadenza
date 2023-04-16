@@ -17,8 +17,8 @@ internal class ImageRepository : IImageRepository
         return await _libraryReader.GetAlbumArtwork(albumId);
     }
 
-    public async Task<ArtworkImage> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(int artistId)
     {
-        return await _libraryReader.GetArtistImage(nameId);
+        return await _libraryReader.GetArtistImage(artistId);
     }
 }

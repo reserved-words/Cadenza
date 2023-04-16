@@ -4,7 +4,6 @@ BEGIN
 
 	SELECT 
 		ART.[Id],
-		ART.[NameId],
 		ART.[Name],
 		ART.[GroupingId],
 		ART.[Genre],
