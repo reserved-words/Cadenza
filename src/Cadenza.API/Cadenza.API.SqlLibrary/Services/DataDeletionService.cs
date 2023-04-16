@@ -9,7 +9,8 @@ internal class DataDeletionService : IDataDeletionService
     private const string DeleteAlbumsProcedure = "[Library].[DeleteEmptyAlbums]";
     private const string DeleteDiscsProcedure = "[Library].[DeleteEmptyDiscs]";
     private const string DeleteTrackProcedure = "[Library].[DeleteTrack]";
-    private const string IdParameter = "IdFromSource";
+    private const string IdParameter = "Id";
+    private const string IdFromSourceParameter = "IdFromSource";
 
     private IDataAccess _dbAccess;
 
@@ -33,10 +34,27 @@ internal class DataDeletionService : IDataDeletionService
         await _dbAccess.Execute(DeleteDiscsProcedure);
     }
 
-    public async Task DeleteTrack(string id)
+    public async Task DeleteTrackById(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
+        parameters.Add(IdFromSourceParameter, null);
         await _dbAccess.Execute(DeleteTrackProcedure, parameters);
+    }
+
+    public async Task DeleteTrackByIdFromSource(string idFromSource)
+    {
+        try
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add(IdParameter, null);
+            parameters.Add(IdFromSourceParameter, idFromSource);
+            await _dbAccess.Execute(DeleteTrackProcedure, parameters);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 }

@@ -60,7 +60,7 @@ internal class DataMapper : IDataMapper
     {
         return new NewTrackData
         {
-            IdFromSource = track.Id,
+            IdFromSource = track.IdFromSource,
             ArtistId = artistId,
             DiscId = discId,
             TrackNo = track.TrackNo,
@@ -112,7 +112,7 @@ internal class DataMapper : IDataMapper
     {
         return new AlbumTrackLink
         {
-            TrackId = track.IdFromSource,
+            TrackId = track.Id,
             AlbumId = track.AlbumId,
             DiscNo = track.DiscIndex,
             TrackNo = track.TrackNo
@@ -139,7 +139,8 @@ internal class DataMapper : IDataMapper
         return new TrackInfo
         {
             Source = (LibrarySource)track.SourceId,
-            Id = track.IdFromSource,
+            Id = track.Id,
+            IdFromSource = track.IdFromSource,
             ArtistId = track.ArtistId,
             ArtistName = track.ArtistName,
             AlbumId = track.AlbumId,

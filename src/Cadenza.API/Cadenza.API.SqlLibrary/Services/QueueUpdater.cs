@@ -58,12 +58,7 @@ internal class QueueUpdater : IQueueUpdater
 
     public async Task QueueRemoval(TrackRemovalRequest request)
     {
-        var data = new NewTrackRemovalData
-        {
-            TrackIdFromSource = request.TrackId
-        };
-
-        await _insertionService.AddTrackRemoval(data);
+        await _insertionService.AddTrackRemoval(request.TrackId);
     }
 
     public async Task QueueUpdates(ItemUpdateRequest request, LibrarySource source)

@@ -18,7 +18,7 @@ internal class UpdateService : IUpdateService
     public async Task RemoveTrack(TrackRemovalRequest request)
     {
         await _updateRepository.AddRemovalRequest(request);
-        await _musicRepository.RemoveTracks(new List<string> { request.TrackId });
+        await _musicRepository.RemoveTrack(request.TrackId);
         await _cachePopulater.Populate(false);
     }
 

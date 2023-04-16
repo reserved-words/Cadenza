@@ -2,7 +2,7 @@
 
 internal class PlayCache : IPlayCache
 {
-    private readonly Dictionary<string, PlayTrack> _playTracks = new();
+    private readonly Dictionary<int, PlayTrack> _playTracks = new();
     private readonly Dictionary<string, List<PlayTrack>> _tagPlayTracks = new();
 
     public void CacheTrack(TrackInfo track, ArtistInfo artist, AlbumInfo album)
@@ -10,6 +10,7 @@ internal class PlayCache : IPlayCache
         var playTrack = new PlayTrack
         {
             Id = track.Id,
+            IdFromSource = track.IdFromSource,
             Title = track.Title,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,
@@ -26,7 +27,7 @@ internal class PlayCache : IPlayCache
         _tagPlayTracks.Clear();
     }
 
-    public PlayTrack GetTrack(string id)
+    public PlayTrack GetTrack(int id)
     {
         return _playTracks[id];
     }

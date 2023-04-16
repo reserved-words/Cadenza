@@ -40,7 +40,7 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateAlbumPlaylist(int id, string startTrackId)
+    public async Task<PlaylistDefinition> CreateAlbumPlaylist(int id, int startTrackId)
     {
         var tracks = await _repository.PlayAlbum(id);
         var album = await _albumRepository.GetAlbum(id);
@@ -58,13 +58,14 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateTrackPlaylist(string id)
+    public async Task<PlaylistDefinition> CreateTrackPlaylist(int id)
     {
         var track = await _trackRepository.GetTrack(id);
 
         var playTrack = new PlayTrack
         {
             Id = id,
+            IdFromSource = track.Track.IdFromSource,
             Source = track.Track.Source,
             ArtistId = track.Artist.Id,
             AlbumId = track.Album.Id,
@@ -73,7 +74,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var tracks = new List<PlayTrack> { playTrack };
 
-        var playlistId = new PlaylistId(id, playTrack.Source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+        var playlistId = new PlaylistId(id.ToString(), playTrack.Source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
 
         return new PlaylistDefinition
         {

@@ -20,19 +20,19 @@ public class SyncController : ControllerBase
     [HttpGet("GetAllTracks/{source}")]
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        return await _service.GetAllTracks(source);
+        return await _service.GetAllTrackSourceIds(source);
     }
 
     [HttpGet("GetTracksByAlbum/{source}/{albumId}")]
     public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
     {
-        return await _service.GetTracksByAlbum(source, albumId);
+        return await _service.GetAlbumTrackSourceIds(source, albumId);
     }
 
     [HttpGet("GetTracksByArtist/{source}/{artistId}")]
     public async Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId)
     {
-        return await _service.GetTracksByArtist(source, artistId);
+        return await _service.GetArtistTrackSourceIds(source, artistId);
     }
 
     [HttpGet("GetUpdateRequests/{source}")]
@@ -54,26 +54,26 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetRemovalRequests/{source}")]
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         return await _service.GetRemovalRequests(source);
     }
 
     [HttpPost("MarkRemovalErrored")]
-    public async Task MarkRemovalErrored([FromBody] TrackRemovalRequest request)
+    public async Task MarkRemovalErrored([FromBody] SyncTrackRemovalRequest request)
     {
         await _service.MarkRemovalErrored(request);
     }
 
     [HttpPost("MarkRemovalDone")]
-    public async Task MarkRemovalDone([FromBody] TrackRemovalRequest request)
+    public async Task MarkRemovalDone([FromBody] SyncTrackRemovalRequest request)
     {
         await _service.MarkRemovalDone(request);
     }
 
     [HttpPost("RemoveTracks/{source}")]
-    public async Task RemoveTracks(LibrarySource source, [FromBody] List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, [FromBody] List<string> idsFromSource)
     {
-        await _service.RemoveTracks(source, ids);
+        await _service.RemoveTracks(source, idsFromSource);
     }
 }

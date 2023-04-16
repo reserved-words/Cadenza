@@ -6,5 +6,5 @@ internal interface IPlayCache
     void Clear();
     List<PlayTrack> GetAll();
     List<PlayTrack> GetTag(string id);
-    PlayTrack GetTrack(string id);
+    PlayTrack GetTrack(int id);
 }

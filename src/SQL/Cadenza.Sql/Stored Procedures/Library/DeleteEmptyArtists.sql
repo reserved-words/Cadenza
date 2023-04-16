@@ -10,6 +10,13 @@ BEGIN
 		[Library].[vw_EmptyArtists] EMP ON EMP.[Id] = UPD.[ArtistId]
 
 	DELETE
+		HST
+	FROM
+		[History].[PlayedArtists] HST
+	INNER JOIN 
+		[Library].[vw_EmptyArtists] EMP ON EMP.[Id] = HST.[ArtistId]
+
+	DELETE
 		TAG
 	FROM
 		[Library].[ArtistTags] TAG

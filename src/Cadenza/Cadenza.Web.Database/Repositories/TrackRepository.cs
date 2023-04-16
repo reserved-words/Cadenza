@@ -11,7 +11,7 @@ internal class TrackRepository : ITrackRepository
         _apiHelper = apiHelper;
     }
 
-    public async Task<TrackFull> GetTrack(string id)
+    public async Task<TrackFull> GetTrack(int id)
     {
         return await _apiHelper.Get<TrackFull>(_settings.Track, id);
     }

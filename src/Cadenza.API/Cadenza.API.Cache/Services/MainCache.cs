@@ -2,10 +2,10 @@
 
 internal class MainCache : IMainCache
 {
-    private readonly Dictionary<string, TrackInfo> _tracks = new();
+    private readonly Dictionary<int, TrackInfo> _tracks = new();
     private readonly Dictionary<int, AlbumInfo> _albums = new();
     private readonly Dictionary<int, ArtistInfo> _artists = new();
-    private readonly Dictionary<string, AlbumTrackLink> _albumTracks = new();
+    private readonly Dictionary<int, AlbumTrackLink> _albumTracks = new();
 
     public void CacheAlbum(AlbumInfo album)
     {
@@ -41,7 +41,7 @@ internal class MainCache : IMainCache
         return _albums.GetValue(id);
     }
 
-    public AlbumTrackLink GetAlbumTrack(string trackId)
+    public AlbumTrackLink GetAlbumTrack(int trackId)
     {
         return _albumTracks.GetValue(trackId);
     }
@@ -56,7 +56,7 @@ internal class MainCache : IMainCache
         return _artists.GetValue(id);
     }
 
-    public TrackFull GetFullTrack(string id)
+    public TrackFull GetFullTrack(int id)
     {
         var track = GetTrack(id);
         var album = GetAlbum(track.AlbumId);
@@ -71,7 +71,7 @@ internal class MainCache : IMainCache
         };
     }
 
-    public TrackInfo GetTrack(string id)
+    public TrackInfo GetTrack(int id)
     {
         return _tracks.GetValue(id);
     }

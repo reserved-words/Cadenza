@@ -26,7 +26,7 @@ public class TrackViewBase : ComponentBase, IDisposable
 
     private Task OnTrackUpdated(object sender, TrackUpdatedEventArgs args)
     {
-        if (args.Update.Id == Model.Id)
+        if (args.Update.Id == Model.Id.ToString())
         {
             args.Update.ApplyUpdates(Model);
             StateHasChanged();

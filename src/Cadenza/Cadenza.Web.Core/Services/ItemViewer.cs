@@ -59,9 +59,9 @@ internal class ItemViewer : IItemViewer
         await _controller.RequestItem(playerItem);
     }
 
-    public async Task ViewTrack(string id, string title)
+    public async Task ViewTrack(int id, string title)
     {
-        var playerItem = new ViewItem(PlayerItemType.Track, id, title);
+        var playerItem = new ViewItem(PlayerItemType.Track, id.ToString(), title);
         await _controller.RequestItem(playerItem);
     }
 }

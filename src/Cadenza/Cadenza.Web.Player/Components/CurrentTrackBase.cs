@@ -32,7 +32,7 @@ public class CurrentTrackBase : ComponentBase
 
     private Task OnTrackUpdated(object sender, TrackUpdatedEventArgs args)
     {
-        if (Model == null || args.Update.Id != Model.Track.Id)
+        if (Model == null || args.Update.Id != Model.Track.Id.ToString())
             return Task.CompletedTask;
 
         args.Update.ApplyUpdates(Model.Track);

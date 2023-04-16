@@ -23,7 +23,7 @@ public class AlbumDiscBase : ComponentBase
     [Parameter]
     public int AlbumArtistId { get; set; }
 
-    protected string CurrentTrackId { get; set; }
+    protected int? CurrentTrackId { get; set; }
 
     private Guid _playlistFinishedSubscriptionId = Guid.Empty;
     private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
@@ -77,7 +77,7 @@ public class AlbumDiscBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private void UpdateCurrentTrack(string currentTrackId)
+    private void UpdateCurrentTrack(int? currentTrackId)
     {
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
         var isNewCurrentTrackOnDisc = currentTrackId != null && Model.Tracks.Any(t => t.TrackId == currentTrackId);

@@ -21,7 +21,7 @@ else if (Item.Type == PlayerItemType.Tag)
 }
 else if (Item.Type == PlayerItemType.Track)
 {
-    <TrackTab Id="@Item.Id" />
+    <TrackTab Id="@int.Parse(Item.Id)" />
 }
 
 @code {

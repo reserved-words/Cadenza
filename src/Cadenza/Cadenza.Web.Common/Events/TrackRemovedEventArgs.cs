@@ -2,10 +2,10 @@
 
 public class TrackRemovedEventArgs : EventArgs
 {
-    public TrackRemovedEventArgs(string trackId)
+    public TrackRemovedEventArgs(int trackId)
     {
         TrackId = trackId;
     }
 
-    public string TrackId { get; }
+    public int TrackId { get; }
 }

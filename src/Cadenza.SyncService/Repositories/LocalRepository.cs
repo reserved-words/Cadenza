@@ -28,7 +28,7 @@ internal class LocalRepository : ISourceRepository
         return await _http.Get<SyncTrack>(url);
     }
 
-    public async Task RemoveTrack(TrackRemovalRequest request)
+    public async Task RemoveTrack(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTrack}";
         await _http.Delete(url, null, request);

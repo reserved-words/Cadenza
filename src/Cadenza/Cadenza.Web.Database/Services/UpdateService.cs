@@ -6,27 +6,21 @@ internal class UpdateService : IUpdateService
 {
     private readonly DatabaseApiSettings _settings;
     private readonly IHttpHelper _http;
-    private readonly IDebugLogger _logger;
 
-    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings, IDebugLogger logger)
+    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
     {
         _http = http;
         _settings = settings.Value;
-        _logger = logger;
     }
 
-    public async Task RemoveTrack(string trackId)
+    public async Task RemoveTrack(int trackId)
     {
-        await _logger.LogInfo("UpdateService.RemoveTrack");
-        await _logger.LogInfo(trackId);
         var data = new TrackRemovalRequest
         {
             TrackId = trackId
         };
         var url = GetApiEndpoint(_settings.Endpoints.RemoveTrack);
-        await _logger.LogInfo(url);
-        var response = await _http.Delete(url, null, data);
-        await _logger.LogInfo(response.StatusCode.ToString());
+        await _http.Delete(url, null, data);
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)

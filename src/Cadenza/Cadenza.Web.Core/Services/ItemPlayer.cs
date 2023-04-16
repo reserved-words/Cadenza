@@ -15,7 +15,7 @@ internal class ItemPlayer : IItemPlayer
         _historyLogger = historyLogger;
     }
 
-    public async Task PlayAlbum(int id, string startTrackId = null)
+    public async Task PlayAlbum(int id, int startTrackId = 0)
     {
         var playlist = await _playlistCreator.CreateAlbumPlaylist(id, startTrackId);
         await Play(playlist);
@@ -45,7 +45,7 @@ internal class ItemPlayer : IItemPlayer
         await Play(playlist);
     }
 
-    public async Task PlayTrack(string id)
+    public async Task PlayTrack(int id)
     {
         var playlist = await _playlistCreator.CreateTrackPlaylist(id);
         await Play(playlist);

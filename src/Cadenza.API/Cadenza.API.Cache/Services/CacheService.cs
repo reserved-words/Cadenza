@@ -152,7 +152,7 @@ internal class CacheService : ICacheService
         var result = _itemCache.GetTag(id);
         return Task.FromResult(result);
     }
-    public Task<TrackFull> GetTrack(string id)
+    public Task<TrackFull> GetTrack(int id)
     {
         var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);

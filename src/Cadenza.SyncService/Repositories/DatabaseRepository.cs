@@ -26,19 +26,19 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetRemovalRequests}/{source}";
-        return await _http.Get<List<TrackRemovalRequest>>(url);
+        return await _http.Get<List<SyncTrackRemovalRequest>>(url);
     }
 
-    public async Task MarkRemovalErrored(TrackRemovalRequest request)
+    public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalErrored}";
         await _http.Post(url, null, request);
     }
 
-    public async Task MarkRemovalDone(TrackRemovalRequest request)
+    public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalDone}";
         await _http.Post(url, null, request);
@@ -74,9 +74,9 @@ internal class DatabaseRepository : IDatabaseRepository
         await _http.Post(url, null, request);
     }
 
-    public async Task RemoveTracks(LibrarySource source, List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, List<string> idsFromSource)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTracks}/{source}";
-        await _http.Post(url, null, ids);
+        await _http.Post(url, null, idsFromSource);
     }
 }

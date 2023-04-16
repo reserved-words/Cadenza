@@ -34,7 +34,7 @@ internal class UpdateRepository : IUpdateRepository
         }
     }
 
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         return await _reader.GetRemovalRequests(source);
     }

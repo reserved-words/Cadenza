@@ -12,13 +12,13 @@ internal class QueueReader : IQueueReader
         _readService = readService;
     }
 
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         var requests = await _readService.GetTrackRemovals(source);
-        return requests.Select(r => new TrackRemovalRequest
+        return requests.Select(r => new SyncTrackRemovalRequest
         {
             RequestId = r.RequestId,
-            TrackId = r.TrackIdFromSource
+            TrackIdFromSource = r.TrackIdFromSource
         })
         .ToList();
     }

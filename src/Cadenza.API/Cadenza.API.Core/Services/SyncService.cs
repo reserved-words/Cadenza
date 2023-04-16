@@ -16,28 +16,28 @@ internal class SyncService : ISyncService
         await _repository.AddTrack(source, track);
     }
 
-    public async Task<List<string>> GetAllTracks(LibrarySource source)
+    public async Task<List<string>> GetAllTrackSourceIds(LibrarySource source)
     {
         return await _repository.GetAllTracks(source);
     }
 
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
+    public async Task<List<string>> GetAlbumTrackSourceIds(LibrarySource source, int albumId)
     {
         var library = await _repository.Get(source);
 
         return library.Tracks
             .Where(t => t.AlbumId == albumId)
-            .Select(t => t.Id)
+            .Select(t => t.IdFromSource)
             .ToList();
     }
 
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId)
+    public async Task<List<string>> GetArtistTrackSourceIds(LibrarySource source, int artistId)
     {
         var library = await _repository.Get(source);
 
         return library.Tracks
             .Where(t => t.ArtistId == artistId)
-            .Select(t => t.Id)
+            .Select(t => t.IdFromSource)
             .ToList();
     }
 
@@ -56,23 +56,23 @@ internal class SyncService : ISyncService
         await _updateRepository.MarkUpdateDone(request, source);
     }
 
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         return await _updateRepository.GetRemovalRequests(source);
     }
 
-    public async Task MarkRemovalErrored(TrackRemovalRequest request)
+    public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
     {
         await _updateRepository.MarkRemovalErrored(request.RequestId);
     }
 
-    public async Task MarkRemovalDone(TrackRemovalRequest request)
+    public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
     {
         await _updateRepository.MarkRemovalDone(request.RequestId);
     }
 
-    public async Task RemoveTracks(LibrarySource source, List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, List<string> idsFromSource)
     {
-        await _repository.RemoveTracks(ids);
+        await _repository.RemoveTracks(idsFromSource);
     }
 }

@@ -3,7 +3,7 @@
 public class SyncTrack
 {
     public LibrarySource Source { get; set; }
-    public string Id { get; set; }
+    public string IdFromSource { get; set; }
     public string Title { get; set; }
     public int DurationSeconds { get; set; }
     public string Year { get; set; }
