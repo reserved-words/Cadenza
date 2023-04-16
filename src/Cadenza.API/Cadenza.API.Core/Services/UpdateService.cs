@@ -22,23 +22,23 @@ internal class UpdateService : IUpdateService
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateTrack(LibrarySource source, ItemUpdateRequest request)
+    public async Task UpdateTrack(ItemUpdateRequest request)
     {
-        await _updateRepository.AddUpdateRequest(request, source);
-        await _musicRepository.UpdateTrack(source, request);
+        await _updateRepository.AddUpdateRequest(request);
+        await _musicRepository.UpdateTrack(request);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateAlbum(LibrarySource source, ItemUpdateRequest request)
+    public async Task UpdateAlbum(ItemUpdateRequest request)
     {
-        await _updateRepository.AddUpdateRequest(request, source);
-        await _musicRepository.UpdateAlbum(source, request);
+        await _updateRepository.AddUpdateRequest(request);
+        await _musicRepository.UpdateAlbum(request);
         await _cachePopulater.Populate(false);
     }
 
     public async Task UpdateArtist(ItemUpdateRequest request)
     {
-        await _updateRepository.AddUpdateRequest(request, null);
+        await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateArtist(request);
         await _cachePopulater.Populate(false);
     }

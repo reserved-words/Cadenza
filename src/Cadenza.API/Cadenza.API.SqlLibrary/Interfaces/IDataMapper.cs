@@ -5,7 +5,7 @@ internal interface IDataMapper
 {
     NewArtistData MapTrackArtist(SyncTrack track);
     NewArtistData MapAlbumArtist(SyncTrack track);
-    NewAlbumData MapAlbum(SyncTrack track, int artistId);
+    NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId);
     NewDiscData MapDisc(SyncTrack track, int albumId);
     NewTrackData MapTrack(SyncTrack track, int artistId, int discId);
 

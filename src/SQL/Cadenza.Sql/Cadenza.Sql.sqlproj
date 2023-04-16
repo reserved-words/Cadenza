@@ -165,6 +165,7 @@
     <Build Include="Stored Procedures\Library\GetTrackIdFromSource.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
+    <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

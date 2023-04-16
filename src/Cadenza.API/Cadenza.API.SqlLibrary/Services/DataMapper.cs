@@ -11,11 +11,11 @@ internal class DataMapper : IDataMapper
         _idGenerator = idGenerator;
     }
 
-    public NewAlbumData MapAlbum(SyncTrack track, int artistId)
+    public NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId)
     {
         return new NewAlbumData
         {
-            SourceId = (int)track.Source,
+            SourceId = (int)source,
             ArtistId = artistId,
             Title = track.Album.Title,
             ReleaseTypeId = (int)track.Album.ReleaseType,
@@ -95,7 +95,6 @@ internal class DataMapper : IDataMapper
     {
         return new AlbumInfo
         {
-            Source = (LibrarySource)album.SourceId,
             Id = album.Id,
             ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,

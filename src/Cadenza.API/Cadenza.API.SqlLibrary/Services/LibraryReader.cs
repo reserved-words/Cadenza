@@ -13,7 +13,7 @@ internal class LibraryReader : ILibraryReader
         _readService = readService;
     }
 
-    public async Task<FullLibrary> Get(LibrarySource? source)
+    public async Task<FullLibrary> Get()
     {
         var artistsData = await _readService.GetArtists();
         var artists = artistsData.Select(a => _mapper.MapArtist(a)).ToList();
@@ -26,16 +26,9 @@ internal class LibraryReader : ILibraryReader
             AlbumTracks = new List<AlbumTrackLink>()
         };
 
-        if (source.HasValue)
+        foreach (var src in Enum.GetValues<LibrarySource>())
         {
-            await AddSource(library, source.Value);
-        }
-        else
-        {
-            foreach (var src in Enum.GetValues<LibrarySource>())
-            {
-                await AddSource(library, src);
-            }
+            await AddSource(library, src);
         }
 
         return library;

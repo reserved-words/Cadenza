@@ -23,12 +23,12 @@ internal class MusicRepository : IMusicRepository
         await _trackAdder.AddTrack(source, track);
     }
 
-    public async Task<FullLibrary> Get(LibrarySource? source)
+    public async Task<FullLibrary> Get()
     {
-        return await _libraryReader.Get(source);
+        return await _libraryReader.Get();
     }
 
-    public async Task<List<string>> GetAlbumTrackSourceIds(LibrarySource source, int albumId)
+    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
         return await _libraryReader.GetAlbumTrackSourceIds(albumId);
     }
@@ -38,7 +38,7 @@ internal class MusicRepository : IMusicRepository
         return await _libraryReader.GetAllTracks(source);
     }
 
-    public async Task<List<string>> GetArtistTrackSourceIds(LibrarySource source, int artistId)
+    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
         return await _libraryReader.GetArtistTrackSourceIds(artistId);
     }
@@ -58,7 +58,7 @@ internal class MusicRepository : IMusicRepository
         await _trackRemover.RemoveTracks(idsFromSource);
     }
 
-    public async Task UpdateAlbum(LibrarySource source, ItemUpdateRequest request)
+    public async Task UpdateAlbum(ItemUpdateRequest request)
     {
         await _libraryUpdater.UpdateAlbum(request);
     }
@@ -68,7 +68,7 @@ internal class MusicRepository : IMusicRepository
         await _libraryUpdater.UpdateArtist(request);
     }
 
-    public async Task UpdateTrack(LibrarySource source, ItemUpdateRequest request)
+    public async Task UpdateTrack(ItemUpdateRequest request)
     {
         await _libraryUpdater.UpdateTrack(request);
     }

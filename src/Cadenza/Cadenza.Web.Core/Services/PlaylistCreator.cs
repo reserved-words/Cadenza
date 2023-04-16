@@ -23,13 +23,7 @@ internal class PlaylistCreator : IPlaylistCreator
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.PlayArtist(id);
 
-        var firstSource = tracks.First().Source;
-
-        LibrarySource? source = tracks.All(t => t.Source == firstSource)
-            ? firstSource
-            : null;
-
-        var playlistId = new PlaylistId(id.ToString(), source, PlaylistType.Artist, artist.Name);
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Artist, artist.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
@@ -45,7 +39,7 @@ internal class PlaylistCreator : IPlaylistCreator
         var tracks = await _repository.PlayAlbum(id);
         var album = await _albumRepository.GetAlbum(id);
 
-        var playlistId = new PlaylistId(id.ToString(), album.Source, PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
 
         var startTrack = tracks.SingleOrDefault(t => t.Id == startTrackId);
         var startIndex = startTrack != null ? tracks.IndexOf(startTrack) : 0;
@@ -74,7 +68,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var tracks = new List<PlayTrack> { playTrack };
 
-        var playlistId = new PlaylistId(id.ToString(), playTrack.Source, PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
 
         return new PlaylistDefinition
         {
@@ -89,7 +83,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
-        var playlistId = new PlaylistId("", null, PlaylistType.All, "All Library");
+        var playlistId = new PlaylistId("", PlaylistType.All, "All Library");
 
         return new PlaylistDefinition
         {
@@ -102,7 +96,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayGrouping(id);
 
-        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Grouping, id.GetDisplayName());
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Grouping, id.GetDisplayName());
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
@@ -117,7 +111,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayGenre(id);
 
-        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Genre, id);
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Genre, id);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
@@ -132,7 +126,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayTag(id);
 
-        var playlistId = new PlaylistId(id.ToString(), null, PlaylistType.Tag, id);
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Tag, id);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 

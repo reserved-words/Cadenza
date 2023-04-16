@@ -18,7 +18,7 @@ internal class CachePopulater : ICachePopulater
         if (onlyIfEmpty && _cache.IsPopulated)
             return;
 
-        var library = await _repository.Get(null);
+        var library = await _repository.Get();
         await _cache.Populate(library);
     }
 }
