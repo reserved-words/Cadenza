@@ -2,16 +2,26 @@
 @using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 <EditCard>
-    
+
     <AppTable Items="@Model">
         <RowTemplate>
             <MudTd Class="td-int">@context.DiscTrackNo()</MudTd>
-            <MudTd>@context.Title</MudTd>
-            <MudTd>@context.ArtistName</MudTd>
-            <MudTd>@context.Duration()</MudTd>
+
+            <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                <MudTd>
+                    <MudText Typo="@Typo.body1">@context.Title</MudText>
+                    <MudText Typo="@Typo.body2">@context.ArtistName</MudText>
+                </MudTd>
+            </MudHidden>
+
+            <MudHidden Breakpoint="@Breakpoint.Xs" Invert="false">
+                <MudTd>@context.Title</MudTd>
+                <MudTd>@context.ArtistName</MudTd>
+            </MudHidden>
+
             <MudTd Class="td-int">
                 <MudIconButton Size="@Size.Small"
-                               Icon="@Icons.Material.Filled.Delete" 
+                               Icon="@Icons.Material.Filled.Delete"
                                Variant="@Variant.Outlined"
                                OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
             </MudTd>
