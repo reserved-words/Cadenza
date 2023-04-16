@@ -8,6 +8,7 @@
           Filter="@Filter"
           OnRowClick="@OnRowClick"
           @bind-SelectedItem="@SelectedItem"
+          @ondblclick="OnDoubleClick"
           Style="width: 100%;"
           PagerContent="@PagerContent"
           RowsPerPage="@RowsPerPage">
@@ -39,4 +40,15 @@
 
     [Parameter]
     public int RowsPerPage { get; set; }
+
+    public async Task OnDoubleClick(MouseEventArgs args)
+    {
+        if (OnRowDoubleClick == null)
+            return;
+
+        if (SelectedItem == null)
+            return;
+
+        await OnRowDoubleClick(SelectedItem);
+    }
 }
