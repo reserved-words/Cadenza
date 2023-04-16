@@ -9,14 +9,14 @@ internal class DatabaseConnector : IConnector
     private readonly IConnectionCoordinator _connectorController;
     private readonly IHttpHelper _http;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
-    private readonly ISearchSyncService _searchSyncService;
+    private readonly ISearchCoordinator _searchCoordinator;
 
-    public DatabaseConnector(IConnectionCoordinator connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchSyncService searchSyncService)
+    public DatabaseConnector(IConnectionCoordinator connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
     {
         _apiSettings = apiSettings;
         _connectorController = connectorController;
         _http = http;
-        _searchSyncService = searchSyncService;
+        _searchCoordinator = searchCoordinator;
     }
 
     public SubTask GetConnectionTask()
@@ -32,7 +32,7 @@ internal class DatabaseConnector : IConnector
 
         subTask.AddStep("Checking connection", Connect);
         subTask.AddStep("Populating library", Populate);
-        subTask.AddStep("Populating search items", () => _searchSyncService.PopulateSearchItems());
+        subTask.AddStep("Populating search items", () => _searchCoordinator.Populate());
 
         return subTask;
     }
