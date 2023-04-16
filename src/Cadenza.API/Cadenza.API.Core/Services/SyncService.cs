@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core.Services;
+﻿using Cadenza.Common.Domain.Model.Updates;
+
+namespace Cadenza.API.Core.Services;
 
 internal class SyncService : ISyncService
 {
@@ -41,23 +43,38 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        return await _updateRepository.GetUpdates(source);
+        return await _updateRepository.GetUpdateRequests(source);
     }
 
-    public async Task MarkErrored(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request)
     {
-        await _updateRepository.MarkAsErrored(update, source);
+        await _updateRepository.MarkUpdateErrored(request, source);
     }
 
-    public async Task MarkUpdated(LibrarySource source, ItemUpdates update)
+    public async Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request)
     {
-        await _updateRepository.MarkAsDone(update, source);
+        await _updateRepository.MarkUpdateDone(request, source);
+    }
+
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    {
+        return await _updateRepository.GetRemovalRequests(source);
+    }
+
+    public async Task MarkRemovalErrored(TrackRemovalRequest request)
+    {
+        await _updateRepository.MarkRemovalErrored(request.RequestId);
+    }
+
+    public async Task MarkRemovalDone(TrackRemovalRequest request)
+    {
+        await _updateRepository.MarkRemovalDone(request.RequestId);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> ids)
     {
-        await _repository.RemoveTracks(source, ids);
+        await _repository.RemoveTracks(ids);
     }
 }

@@ -8,10 +8,9 @@ public class ItemUpdate<TInterface> where TInterface : new()
         UpdatedItem = new();
     }
 
-    public ItemUpdate(LibraryItemType type, string id, string name, TInterface originalItem)
+    public ItemUpdate(LibraryItemType type, string id, TInterface originalItem)
     {
         Id = id;
-        Name = name;
         Type = type;
         OriginalItem = originalItem;
         UpdatedItem = new TInterface();
@@ -19,8 +18,6 @@ public class ItemUpdate<TInterface> where TInterface : new()
     }
 
     public string Id { get; set; }
-
-    public string Name { get; set; }
 
     public LibraryItemType Type { get; set; }
 

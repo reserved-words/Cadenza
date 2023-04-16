@@ -2,5 +2,6 @@
 
 internal interface IQueueReader
 {
-    Task<List<ItemUpdates>> GetUpdates(LibrarySource source);
+    Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source);
+    Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
 }

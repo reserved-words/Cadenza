@@ -16,6 +16,7 @@ internal class DataInsertService : IDataInsertService
     private const string AddAlbumUpdateProcedure = "[Queue].[AddAlbumUpdate]";
     private const string AddArtistUpdateProcedure = "[Queue].[AddArtistUpdate]";
     private const string AddTrackUpdateProcedure = "[Queue].[AddTrackUpdate]";
+    private const string AddTrackRemovalProcedure = "[Queue].[AddTrackRemoval]";
 
     private const string LogLibraryPlayProcedure = "[History].[LogLibraryPlay]";
     private const string LogArtistPlayProcedure = "[History].[LogArtistPlay]";
@@ -132,6 +133,11 @@ internal class DataInsertService : IDataInsertService
     public async Task AddTrackUpdate(NewTrackUpdateData data)
     {
         await _dbAccess.Execute(AddTrackUpdateProcedure, data);
+    }
+
+    public async Task AddTrackRemoval(NewTrackRemovalData data)
+    {
+        await _dbAccess.Execute(AddTrackRemovalProcedure, data);
     }
 
     public async Task LogAlbumPlay(int albumId)

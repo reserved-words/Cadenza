@@ -10,5 +10,6 @@ public class LocalApiEndpoints
 {
     public string GetTracks { get; set; }
     public string GetTrack { get; set; }
+    public string RemoveTrack { get; set; }
     public string UpdateTracks { get; set; }
 }

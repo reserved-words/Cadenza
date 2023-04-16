@@ -30,6 +30,12 @@ internal class SyncService : ISyncService
         return await _musicLibrary.GetFileData(path);
     }
 
+    public async Task RemoveTrack(string trackId)
+    {
+        var path = _base64Converter.FromBase64(trackId);
+        await _musicDirectory.RemoveFile(path);
+    }
+
     public async Task UpdateTracks(MultiTrackUpdates updates)
     {
         foreach (var trackId in updates.TrackIds)

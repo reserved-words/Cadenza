@@ -1,5 +1,5 @@
 ﻿
-<EditCard Breakpoint="@Breakpoint" Title="Lyrics">
+<EditCard>
     <MudContainer Class="ma-0 pa-0 d-flex align-stretch">
         <MudTextField Class="textarea"
                       @bind-Value="Model.Lyrics"
@@ -16,9 +16,6 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
     [Parameter]
     public TrackInfo Model { get; set; }
 

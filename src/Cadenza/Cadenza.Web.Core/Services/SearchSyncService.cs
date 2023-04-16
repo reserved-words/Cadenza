@@ -5,63 +5,34 @@ namespace Cadenza.Web.Core.Services;
 internal class SearchSyncService : ISearchSyncService
 {
     private readonly ISearchRepository _repository;
-    private readonly ISearchCoordinator _cache;
 
-    public SearchSyncService(ISearchRepository repository, ISearchCoordinator cache)
+    public SearchSyncService(ISearchRepository repository)
     {
         _repository = repository;
-        _cache = cache;
     }
 
-    public async Task PopulateSearchItems()
+    public async Task<List<PlayerItem>> GetSearchItems()
     {
-        await _cache.StartUpdate();
+        var items = new List<PlayerItem>();
 
-        _cache.Clear();
+        var tracks = await _repository.GetTracks();
+        items.AddRange(tracks);
 
-        await FetchArtists();
-        await FetchAlbums();
-        await FetchTracks();
-        await FetchGenres();
-        await FetchGroupings();
-        await FetchTags();
+        var albums = await _repository.GetSearchAlbums();
+        items.AddRange(albums);
 
-        await _cache.FinishUpdate();
-    }
+        var artists = await _repository.GetArtists();
+        items.AddRange(artists);
 
-    private async Task FetchTracks()
-    {
-        var response = await _repository.GetTracks();
-        _cache.AddItems(response);
-    }
+        var genres = await _repository.GetGenres();
+        items.AddRange(genres);
 
-    private async Task FetchAlbums()
-    {
-        var response = await _repository.GetSearchAlbums();
-        _cache.AddItems(response);
-    }
+        var groupings = await _repository.GetGroupings();
+        items.AddRange(groupings);
 
-    private async Task FetchArtists()
-    {
-        var response = await _repository.GetArtists();
-        _cache.AddItems(response);
-    }
+        var tags = await _repository.GetTags();
+        items.AddRange(tags);
 
-    private async Task FetchGenres()
-    {
-        var response = await _repository.GetGenres();
-        _cache.AddItems(response);
-    }
-
-    private async Task FetchGroupings()
-    {
-        var response = await _repository.GetGroupings();
-        _cache.AddItems(response);
-    }
-
-    private async Task FetchTags()
-    {
-        var response = await _repository.GetTags();
-        _cache.AddItems(response);
+        return items;
     }
 }

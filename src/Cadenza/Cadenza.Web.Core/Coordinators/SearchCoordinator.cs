@@ -5,47 +5,37 @@ namespace Cadenza.Web.Core.Coordinators;
 internal class SearchCoordinator : ISearchCoordinator, ISearchCache
 {
     private readonly IMessenger _messenger;
+    private readonly ISearchSyncService _syncService;
 
-    public SearchCoordinator(IMessenger messenger)
+
+    public SearchCoordinator(IMessenger messenger, ISearchSyncService syncService)
     {
         _messenger = messenger;
+        _syncService = syncService;
+
+        SubscribeToUpdateEvent<ArtistUpdatedEventArgs>();
+        SubscribeToUpdateEvent<AlbumUpdatedEventArgs>();
+        SubscribeToUpdateEvent<TrackUpdatedEventArgs>();
+        SubscribeToUpdateEvent<TrackRemovedEventArgs>();
     }
 
     public List<PlayerItem> Items { get; set; } = new();
 
-    public async Task StartUpdate()
+    private void SubscribeToUpdateEvent<T>() where T : EventArgs
+    {
+        // For now repopulate all items whenever anything is updated
+        // Could narrow this down to only repopulating the relevant items
+        _messenger.Subscribe<T>(async (s, e) => await Populate());
+    }
+
+    public async Task Populate()
     {
         await _messenger.Send(this, new SearchUpdateStartedEventArgs());
-    }
 
-    public async Task FinishUpdate()
-    {
-        await _messenger.Send(this, new SearchUpdateCompletedEventArgs());
-        _messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated);
-    }
-
-    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
-    {
-        AddIfMissing(PlayerItemType.Genre, e.Update.UpdatedItem.Genre);
-        return Task.CompletedTask;
-    }
-
-    private void AddIfMissing(PlayerItemType type, string id, string name = null)
-    {
-        if (!Items.Any(i => i.Type == type && i.Id == id))
-        {
-            Items.Add(new PlayerItem(type, id, name ?? id, null, null, null));
-        }
-    }
-
-    public void AddItems(List<PlayerItem> items)
-    {
-        Items.AddRange(items);
-    }
-
-    public void Clear()
-    {
         Items.Clear();
+        Items = await _syncService.GetSearchItems();
+
+        await _messenger.Send(this, new SearchUpdateCompletedEventArgs());
     }
 }
 

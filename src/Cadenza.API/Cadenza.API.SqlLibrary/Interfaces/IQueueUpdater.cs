@@ -2,7 +2,11 @@
 
 internal interface IQueueUpdater
 {
-    Task QueueUpdates(ItemUpdates updates, LibrarySource source);
-    Task MarkUpdatesDone(ItemUpdates updates);
-    Task MarkUpdatesErrored(ItemUpdates updates);
+    Task QueueUpdates(ItemUpdateRequest request, LibrarySource source);
+    Task MarkUpdateDone(ItemUpdateRequest request);
+    Task MarkUpdateErrored(ItemUpdateRequest request);
+
+    Task QueueRemoval(TrackRemovalRequest request);
+    Task MarkRemovalDone(int requestId);
+    Task MarkRemovalErrored(int requestId);
 }

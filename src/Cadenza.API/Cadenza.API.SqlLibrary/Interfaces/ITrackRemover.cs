@@ -2,5 +2,5 @@
 
 internal interface ITrackRemover
 {
-    Task RemoveTracks(LibrarySource source, List<string> id);
+    Task RemoveTracks(List<string> id);
 }

@@ -9,12 +9,16 @@ internal class DataUpdateService : IDataUpdateService
     private const string UpdateAlbumProcedure = "[Library].[UpdateAlbum]";
     private const string UpdateArtistProcedure = "[Library].[UpdateArtist]";
     private const string UpdateTrackProcedure = "[Library].[UpdateTrack]";
+
     private const string MarkAlbumUpdateDoneProcedure = "[Queue].[MarkAlbumUpdateDone]";
     private const string MarkArtistUpdateDoneProcedure = "[Queue].[MarkArtistUpdateDone]";
     private const string MarkTrackUpdateDoneProcedure = "[Queue].[MarkTrackUpdateDone]";
+    private const string MarkTrackRemovalDoneProcedure = "[Queue].[MarkTrackRemovalDone]";
+
     private const string MarkAlbumUpdateErroredProcedure = "[Queue].[MarkAlbumUpdateErrored]";
     private const string MarkArtistUpdateErroredProcedure = "[Queue].[MarkArtistUpdateErrored]";
     private const string MarkTrackUpdateErroredProcedure = "[Queue].[MarkTrackUpdateErrored]";
+    private const string MarkTrackRemovalErroredProcedure = "[Queue].[MarkTrackRemovalErrored]";
 
     private const string IdParameter = "@Id";
 
@@ -46,6 +50,13 @@ internal class DataUpdateService : IDataUpdateService
         await _dbAccess.Execute(MarkTrackUpdateDoneProcedure, parameters);
     }
 
+    public async Task MarkRemovalDone(int id)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.Execute(MarkTrackRemovalDoneProcedure, parameters);
+    }
+
     public async Task MarkAlbumUpdateErrored(int id)
     {
         var parameters = new DynamicParameters();
@@ -65,6 +76,13 @@ internal class DataUpdateService : IDataUpdateService
         var parameters = new DynamicParameters();
         parameters.Add(IdParameter, id);
         await _dbAccess.Execute(MarkTrackUpdateErroredProcedure, parameters);
+    }
+
+    public async Task MarkRemovalErrored(int id)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, id);
+        await _dbAccess.Execute(MarkTrackRemovalErroredProcedure, parameters);
     }
 
     public async Task UpdateAlbum(AlbumData album)

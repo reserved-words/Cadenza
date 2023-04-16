@@ -4,23 +4,37 @@ namespace Cadenza.Web.Database.Services;
 
 internal class UpdateService : IUpdateService
 {
-
     private readonly DatabaseApiSettings _settings;
     private readonly IHttpHelper _http;
+    private readonly IDebugLogger _logger;
 
-    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
+    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings, IDebugLogger logger)
     {
         _http = http;
         _settings = settings.Value;
+        _logger = logger;
+    }
+
+    public async Task RemoveTrack(string trackId)
+    {
+        await _logger.LogInfo("UpdateService.RemoveTrack");
+        await _logger.LogInfo(trackId);
+        var data = new TrackRemovalRequest
+        {
+            TrackId = trackId
+        };
+        var url = GetApiEndpoint(_settings.Endpoints.RemoveTrack);
+        await _logger.LogInfo(url);
+        var response = await _http.Delete(url, null, data);
+        await _logger.LogInfo(response.StatusCode.ToString());
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum, update.OriginalItem.Source);
@@ -29,11 +43,10 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateArtist(ArtistUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateArtist);
@@ -42,11 +55,10 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateTrack(TrackUpdate update)
     {
-        var data = new ItemUpdates
+        var data = new ItemUpdateRequest
         {
             Id = update.Id,
             Type = update.Type,
-            Name = update.Name,
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack, update.OriginalItem.Source);

@@ -1,5 +1,5 @@
 ﻿
-<EditCard Breakpoint="@Breakpoint" Title="Artwork">
+<EditCard>
     <MudContainer Class="mt-3 d-flex flex-column align-center">
 
         @if (Model.ArtworkBase64 != null)
@@ -28,9 +28,6 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
     [Parameter]
     public AlbumInfo Model { get; set; }
 

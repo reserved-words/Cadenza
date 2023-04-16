@@ -14,33 +14,53 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task Add(ItemUpdates update, LibrarySource? itemSource)
+    public async Task AddRemovalRequest(TrackRemovalRequest request)
+    {
+        await _updater.QueueRemoval(request);
+    }
+
+    public async Task AddUpdateRequest(ItemUpdateRequest request, LibrarySource? itemSource)
     {
         if (itemSource.HasValue)
         {
-            await _updater.QueueUpdates(update, itemSource.Value);
+            await _updater.QueueUpdates(request, itemSource.Value);
         }
         else
         {
             foreach (var source in Enum.GetValues<LibrarySource>())
             {
-                await _updater.QueueUpdates(update, source);
+                await _updater.QueueUpdates(request, source);
             }
         }
     }
 
-    public async Task<List<ItemUpdates>> GetUpdates(LibrarySource source)
+    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
-        return await _reader.GetUpdates(source);
+        return await _reader.GetRemovalRequests(source);
     }
 
-    public async Task MarkAsDone(ItemUpdates update, LibrarySource source)
+    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
     {
-        await _updater.MarkUpdatesDone(update);
+        return await _reader.GetUpdateRequests(source);
     }
 
-    public async Task MarkAsErrored(ItemUpdates update, LibrarySource source)
+    public async Task MarkRemovalDone(int requestId)
     {
-        await _updater.MarkUpdatesErrored(update);
+        await _updater.MarkRemovalDone(requestId);
+    }
+
+    public async Task MarkRemovalErrored(int requestId)
+    {
+        await _updater.MarkRemovalErrored(requestId);
+    }
+
+    public async Task MarkUpdateDone(ItemUpdateRequest request, LibrarySource source)
+    {
+        await _updater.MarkUpdateDone(request);
+    }
+
+    public async Task MarkUpdateErrored(ItemUpdateRequest request, LibrarySource source)
+    {
+        await _updater.MarkUpdateErrored(request);
     }
 }
