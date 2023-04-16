@@ -44,13 +44,19 @@ internal class DatabaseRepository : IDatabaseRepository
         await _http.Post(url, null, request);
     }
 
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
+    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    {
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrackIdFromSource}/{trackId}";
+        return await _http.Get<SyncSourceTrack>(url);
+    }
+
+    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByAlbum}/{source}/{albumId}";
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    public async Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTracksByArtist}/{source}/{artistId}";
         return await _http.Get<List<string>>(url);

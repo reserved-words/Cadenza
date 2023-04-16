@@ -44,17 +44,9 @@ internal class DataDeletionService : IDataDeletionService
 
     public async Task DeleteTrackByIdFromSource(string idFromSource)
     {
-        try
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add(IdParameter, null);
-            parameters.Add(IdFromSourceParameter, idFromSource);
-            await _dbAccess.Execute(DeleteTrackProcedure, parameters);
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, null);
+        parameters.Add(IdFromSourceParameter, idFromSource);
+        await _dbAccess.Execute(DeleteTrackProcedure, parameters);
     }
 }

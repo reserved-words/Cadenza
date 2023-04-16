@@ -7,7 +7,7 @@ BEGIN
 	FROM
 		[Queue].[AlbumUpdates] UPD
 	INNER JOIN 
-		[Library].[vw_EmptyArtists] EMP ON EMP.[Id] = UPD.[AlbumId]
+		[Library].[vw_EmptyAlbums] EMP ON EMP.[Id] = UPD.[AlbumId]
 
 	DELETE
 		HST

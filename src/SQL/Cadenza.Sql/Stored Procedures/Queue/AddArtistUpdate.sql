@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Queue].[AddArtistUpdate]
-	@ArtistNameId NVARCHAR(200),
+	@ArtistId INT,
 	@SourceId INT,
 	@PropertyName NVARCHAR(50),
 	@OriginalValue NVARCHAR(MAX),
@@ -7,8 +7,7 @@
 AS
 BEGIN
 
-	DECLARE @PropertyId INT,
-			@ArtistId INT
+	DECLARE @PropertyId INT
 
 	SELECT 
 		@PropertyId = [Id] 
@@ -16,13 +15,6 @@ BEGIN
 		[Admin].[ArtistProperties]
 	WHERE
 		[Name] = @PropertyName
-
-	SELECT
-		@ArtistId = [Id]
-	FROM
-		[Library].[Artists]
-	WHERE
-		[NameId] = @ArtistNameId
 
 	UPDATE
 		[Queue].[ArtistUpdates]

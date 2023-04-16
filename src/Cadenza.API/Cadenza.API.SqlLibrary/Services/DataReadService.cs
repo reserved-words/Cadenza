@@ -17,6 +17,10 @@ internal class DataReadService : IDataReadService
     private const string GetTracksProcedure = "[Library].[GetTracks]";
     private const string GetTrackIdsProcedure = "[Library].[GetTrackIds]";
 
+    private const string GetTrackIdFromSourceProcedure = "[Library].[GetTrackIdFromSource]";
+    private const string GetAlbumTrackSourceIdsProcedure = "[Library].[GetAlbumTrackSourceIds]";
+    private const string GetArtistTrackSourceIdsProcedure = "[Library].[GetArtistTrackSourceIds]";
+
     private const string GetAlbumUpdatesProcedure = "[Queue].[GetAlbumUpdates]";
     private const string GetArtistUpdatesProcedure = "[Queue].[GetArtistUpdates]";
     private const string GetTrackUpdatesProcedure = "[Queue].[GetTrackUpdates]";
@@ -26,7 +30,6 @@ internal class DataReadService : IDataReadService
     private const string GetRecentTagsProcedure = "[History].[GetRecentTags]";
 
     private const string IdParameter = "@Id";
-    private const string IdFromSourceParameter = "@IdFromSource";
     private const string MaxItemsParameter = "@MaxItems";
     private const string SourceIdParameter = "@SourceId";
 
@@ -56,6 +59,13 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(SourceIdParameter, (int?)source);
         return await _dbAccess.Query<GetAlbumData>(GetAlbumsProcedure, parameters);
+    }
+
+    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, albumId);
+        return await _dbAccess.Query<string>(GetAlbumTrackSourceIdsProcedure, parameters);
     }
 
     public async Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
@@ -91,6 +101,13 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<GetArtistData>(GetArtistsProcedure, null);
     }
 
+    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, artistId);
+        return await _dbAccess.Query<string>(GetArtistTrackSourceIdsProcedure, parameters);
+    }
+
     public async Task<List<ArtistUpdateData>> GetArtistUpdates(LibrarySource source)
     {
         var parameters = new DynamicParameters();
@@ -119,11 +136,18 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<RecentTagData>(GetRecentTagsProcedure, parameters);
     }
 
-    public async Task<TrackData> GetTrack(string idFromSource)
+    public async Task<TrackData> GetTrack(int trackId)
     {
         var parameters = new DynamicParameters();
-        parameters.Add(IdFromSourceParameter, idFromSource);
+        parameters.Add(IdParameter, trackId);
         return await _dbAccess.QuerySingle<TrackData>(GetTrackProcedure, parameters);
+    }
+
+    public async Task<string> GetTrackIdFromSource(int trackId)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add(IdParameter, trackId);
+        return await _dbAccess.QuerySingle<string>(GetTrackIdFromSourceProcedure, parameters);
     }
 
     public async Task<List<TrackRemovalData>> GetTrackRemovals(LibrarySource source)

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.Common.Domain.Model.Album;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -21,6 +23,12 @@ public class SyncController : ControllerBase
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _service.GetAllTrackSourceIds(source);
+    }
+
+    [HttpGet("GetTrackIdFromSource/{trackId}")]
+    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    {
+        return await _service.GetTrackIdFromSource(trackId);
     }
 
     [HttpGet("GetTracksByAlbum/{source}/{albumId}")]

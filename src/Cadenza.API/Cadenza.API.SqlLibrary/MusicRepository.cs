@@ -28,9 +28,24 @@ internal class MusicRepository : IMusicRepository
         return await _libraryReader.Get(source);
     }
 
+    public async Task<List<string>> GetAlbumTrackSourceIds(LibrarySource source, int albumId)
+    {
+        return await _libraryReader.GetAlbumTrackSourceIds(albumId);
+    }
+
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _libraryReader.GetAllTracks(source);
+    }
+
+    public async Task<List<string>> GetArtistTrackSourceIds(LibrarySource source, int artistId)
+    {
+        return await _libraryReader.GetArtistTrackSourceIds(artistId);
+    }
+
+    public async Task<string> GetTrackIdFromSource(int trackId)
+    {
+        return await _libraryReader.GetTrackIdFromSource(trackId);
     }
 
     public async Task RemoveTrack(int id)

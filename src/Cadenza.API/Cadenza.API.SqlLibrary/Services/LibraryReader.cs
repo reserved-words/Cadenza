@@ -50,6 +50,11 @@ internal class LibraryReader : ILibraryReader
         return new ArtworkImage(data.Content, data.MimeType);
     }
 
+    public Task<List<string>> GetAlbumTrackSourceIds(int albumId)
+    {
+        return _readService.GetAlbumTrackSourceIds(albumId);
+    }
+
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
         return await _readService.GetAllTrackIds(source);
@@ -62,6 +67,16 @@ internal class LibraryReader : ILibraryReader
             return null;
 
         return new ArtworkImage(data.Content, data.MimeType);
+    }
+
+    public Task<List<string>> GetArtistTrackSourceIds(int artistId)
+    {
+        return _readService.GetArtistTrackSourceIds(artistId);
+    }
+
+    public Task<string> GetTrackIdFromSource(int trackId)
+    {
+        return _readService.GetTrackIdFromSource(trackId);
     }
 
     private async Task AddSource(FullLibrary library, LibrarySource source)

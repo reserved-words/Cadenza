@@ -162,6 +162,9 @@
     <Build Include="Stored Procedures\Queue\MarkTrackRemovalDone.sql" />
     <Build Include="Stored Procedures\Queue\MarkTrackRemovalErrored.sql" />
     <Build Include="Tables\Queue\TrackRemovals.sql" />
+    <Build Include="Stored Procedures\Library\GetTrackIdFromSource.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
+    <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

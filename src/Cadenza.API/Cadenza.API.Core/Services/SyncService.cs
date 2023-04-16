@@ -2,43 +2,39 @@
 
 internal class SyncService : ISyncService
 {
-    private readonly IMusicRepository _repository;
+    private readonly IMusicRepository _musicRepository;
     private readonly IUpdateRepository _updateRepository;
 
-    public SyncService(IMusicRepository repository, IUpdateRepository updateRepository)
+    public SyncService(IMusicRepository musicRepository, IUpdateRepository updateRepository)
     {
-        _repository = repository;
+        _musicRepository = musicRepository;
         _updateRepository = updateRepository;
     }
 
     public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
-        await _repository.AddTrack(source, track);
+        await _musicRepository.AddTrack(source, track);
     }
 
     public async Task<List<string>> GetAllTrackSourceIds(LibrarySource source)
     {
-        return await _repository.GetAllTracks(source);
+        return await _musicRepository.GetAllTracks(source);
     }
 
     public async Task<List<string>> GetAlbumTrackSourceIds(LibrarySource source, int albumId)
     {
-        var library = await _repository.Get(source);
-
-        return library.Tracks
-            .Where(t => t.AlbumId == albumId)
-            .Select(t => t.IdFromSource)
-            .ToList();
+        return await _musicRepository.GetAlbumTrackSourceIds(source, albumId);
     }
 
     public async Task<List<string>> GetArtistTrackSourceIds(LibrarySource source, int artistId)
     {
-        var library = await _repository.Get(source);
+        return await _musicRepository.GetArtistTrackSourceIds(source, artistId);
+    }
 
-        return library.Tracks
-            .Where(t => t.ArtistId == artistId)
-            .Select(t => t.IdFromSource)
-            .ToList();
+    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    {
+        var idFromSource = await _musicRepository.GetTrackIdFromSource(trackId);
+        return new SyncSourceTrack { IdFromSource = idFromSource };
     }
 
     public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
@@ -73,6 +69,6 @@ internal class SyncService : ISyncService
 
     public async Task RemoveTracks(LibrarySource source, List<string> idsFromSource)
     {
-        await _repository.RemoveTracks(idsFromSource);
+        await _musicRepository.RemoveTracks(idsFromSource);
     }
 }

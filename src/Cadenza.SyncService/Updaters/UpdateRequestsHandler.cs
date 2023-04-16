@@ -66,7 +66,8 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var tracks = new List<string> { request.Id };
+            var trackIdFromSource = await _database.GetTrackIdFromSource(request.Id);
+            var tracks = new List<string> { trackIdFromSource.IdFromSource };
             await TryUpdateTracks(repository, tracks, source, request);
         }
 

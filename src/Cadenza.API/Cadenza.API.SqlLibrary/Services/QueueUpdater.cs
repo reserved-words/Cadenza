@@ -81,7 +81,7 @@ internal class QueueUpdater : IQueueUpdater
     {
         var artistUpdate = new NewArtistUpdateData
         {
-            ArtistNameId = request.Id,
+            ArtistId = request.Id,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
@@ -95,7 +95,7 @@ internal class QueueUpdater : IQueueUpdater
     {
         var albumUpdate = new NewAlbumUpdateData
         {
-            AlbumId = int.Parse(request.Id),
+            AlbumId = request.Id,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,
@@ -109,7 +109,7 @@ internal class QueueUpdater : IQueueUpdater
     {
         var trackUpdate = new NewTrackUpdateData
         {
-            TrackIdFromSource = request.Id,
+            TrackId = request.Id,
             SourceId = (int)source,
             PropertyName = update.Property.ToString(),
             OriginalValue = update.OriginalValue,

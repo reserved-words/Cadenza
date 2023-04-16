@@ -6,5 +6,5 @@ public class ArtistUpdate : ItemUpdate<ArtistInfo>
         : base() { }
 
     public ArtistUpdate(ArtistInfo artist)
-        : base(LibraryItemType.Artist, artist.Id.ToString(), artist) { }
+        : base(LibraryItemType.Artist, artist.Id, artist) { }
 }

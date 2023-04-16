@@ -22,9 +22,9 @@ internal class LocalRepository : ISourceRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<SyncTrack> GetTrack(string id)
+    public async Task<SyncTrack> GetTrack(string idFromSource)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{id}";
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{idFromSource}";
         return await _http.Get<SyncTrack>(url);
     }
 
@@ -34,11 +34,11 @@ internal class LocalRepository : ISourceRepository
         await _http.Delete(url, null, request);
     }
 
-    public async Task UpdateTracks(List<string> trackIds, List<PropertyUpdate> updates)
+    public async Task UpdateTracks(List<string> trackIdsFromSource, List<PropertyUpdate> updates)
     {
         var data = new MultiTrackUpdates
         {
-            TrackIds = trackIds,
+            TrackIds = trackIdsFromSource,
             Updates = updates
         };
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTracks}";

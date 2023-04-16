@@ -7,11 +7,11 @@ internal interface IDatabaseRepository
     Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source);
     Task MarkRemovalErrored(SyncTrackRemovalRequest request);
     Task MarkRemovalDone(SyncTrackRemovalRequest request);
-    Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId);
-    Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId);
+    Task<List<string>> GetTracksByArtist(LibrarySource source, int artistId);
+    Task<List<string>> GetTracksByAlbum(LibrarySource source, int albumId);
+    Task<SyncSourceTrack> GetTrackIdFromSource(int trackId);
     Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
     Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request);
     Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request);
-    Task RemoveTracks(LibrarySource source, List<string> ids);
-
+    Task RemoveTracks(LibrarySource source, List<string> idsFromSource);
 }
