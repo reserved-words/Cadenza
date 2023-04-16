@@ -23,12 +23,6 @@ internal class PlaylistCreator : IPlaylistCreator
         var artist = await _artistRepository.GetArtist(id);
         var tracks = await _repository.PlayArtist(id);
 
-        var firstSource = tracks.First().Source;
-
-        LibrarySource? source = tracks.All(t => t.Source == firstSource)
-            ? firstSource
-            : null;
-
         var playlistId = new PlaylistId(id.ToString(), PlaylistType.Artist, artist.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());

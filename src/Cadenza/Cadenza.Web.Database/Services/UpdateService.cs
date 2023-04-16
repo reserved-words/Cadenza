@@ -59,10 +59,8 @@ internal class UpdateService : IUpdateService
         await _http.Post(url, null, data);
     }
 
-    private string GetApiEndpoint(string endpoint, LibrarySource? source = null)
+    private string GetApiEndpoint(string endpoint)
     {
-        return source.HasValue
-            ? $"{_settings.BaseUrl}{endpoint}/{source.Value}"
-            : $"{_settings.BaseUrl}{endpoint}";
+        return $"{_settings.BaseUrl}{endpoint}";
     }
 }
