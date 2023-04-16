@@ -2,5 +2,5 @@
 
 public interface ISearchSyncService
 {
-    Task PopulateSearchItems();
+    Task<List<PlayerItem>> GetSearchItems();
 }

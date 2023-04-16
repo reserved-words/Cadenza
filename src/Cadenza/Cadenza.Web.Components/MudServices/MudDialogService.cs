@@ -12,7 +12,7 @@ internal class MudDialogService : IDialogService
         _mudService = mudService;
     }
 
-    public Task Display<TView, TModel>(TModel model, string title, bool narrow = false)
+    public Task Display<TView, TModel>(TModel model, string title, bool fullWidth = true)
         where TView : ViewBase<TModel>
         where TModel : class
     {
@@ -23,14 +23,14 @@ internal class MudDialogService : IDialogService
         _mudService.Show<TView>(title, parameters, new DialogOptions
         {
             DisableBackdropClick = true,
-            MaxWidth = narrow ? MaxWidth.Small : MaxWidth.Medium,
-            FullWidth = !narrow
+            MaxWidth = fullWidth ? MaxWidth.Medium : MaxWidth.Small,
+            FullWidth = fullWidth
         });
 
         return Task.CompletedTask;
     }
 
-    public async Task<(bool Saved, TModel Data)> DisplayForm<TForm, TModel>(TModel model, string title, bool narrow = false)
+    public async Task<(bool Saved, TModel Data)> DisplayForm<TForm, TModel>(TModel model, string title, bool fullWidth = true)
         where TForm : FormBase<TModel>
         where TModel : class
     {
@@ -41,8 +41,8 @@ internal class MudDialogService : IDialogService
         var formReference = _mudService.Show<TForm>(title, parameters, new DialogOptions
         {
             DisableBackdropClick = true,
-            MaxWidth = narrow ? MaxWidth.Small : MaxWidth.Medium,
-            FullWidth = !narrow
+            MaxWidth = fullWidth ? MaxWidth.Medium : MaxWidth.Small,
+            FullWidth = fullWidth
         });
         var result = await formReference.Result;
         return (!result.Cancelled, result.Data as TModel);

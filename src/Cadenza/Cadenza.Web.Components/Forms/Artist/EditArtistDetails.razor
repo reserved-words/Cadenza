@@ -1,5 +1,5 @@
 ﻿
-<EditCard Breakpoint="@Breakpoint" Title="Details">
+<EditCard>
     <MudTextField Label="Name"
                   ReadOnly="true"
                   Disabled="true"
@@ -30,12 +30,9 @@
                   For="@(() => Model.Country)" />
 </EditCard>
 
-<EditTagsCard Breakpoint="@Breakpoint" Model="@Model.Tags" />
+<EditTagsCard Model="@Model.Tags" />
 
 @code {
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
     [Parameter]
     public ArtistInfo Model { get; set; }
 }

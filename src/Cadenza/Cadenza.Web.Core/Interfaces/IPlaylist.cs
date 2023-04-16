@@ -2,9 +2,11 @@
 
 internal interface IPlaylist
 {
-    PlaylistId Id { get; }
     Task<PlayTrack> MoveNext();
     Task<PlayTrack> MovePrevious();
+    void RemoveTrack(string trackId);
+
+    PlaylistId Id { get; }
     PlayTrack Current { get; }
     bool CurrentIsLast { get; }
 }

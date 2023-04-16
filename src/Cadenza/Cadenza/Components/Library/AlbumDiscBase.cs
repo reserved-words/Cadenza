@@ -1,7 +1,5 @@
 ﻿using Cadenza.Web.Common.Interfaces.Play;
 using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Components.Forms;
-using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Components.Library;
 
@@ -16,9 +14,6 @@ public class AlbumDiscBase : ComponentBase
     [Inject]
     public ICurrentTrackStore Store { get; set; }
 
-    [Inject]
-    public IDialogService DialogService { get; set; }
-
     [Parameter]
     public Disc Model { get; set; } = new();
 
@@ -32,13 +27,11 @@ public class AlbumDiscBase : ComponentBase
 
     private Guid _playlistFinishedSubscriptionId = Guid.Empty;
     private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
 
     protected override void OnInitialized()
     {
         Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged, out _playStatusUpdatedSubscriptionId);
         Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished, out _playlistFinishedSubscriptionId);
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -84,31 +77,6 @@ public class AlbumDiscBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
-    {
-        var trackOnDisc = Model.Tracks.SingleOrDefault(t => t.TrackId == args.TrackId);
-        if (trackOnDisc == null)
-            return Task.CompletedTask;
-
-        Model.Tracks.Remove(trackOnDisc);
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    protected async Task OnRemoveTrack(AlbumTrack track)
-    {
-        // If is currently playing prevent removing
-
-        var trackToRemove = new TrackToRemove
-        {
-            Id = track.TrackId,
-            Title = track.Title,
-            ArtistName = track.ArtistName
-        };
-
-        await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", true);
-    }
-
     private void UpdateCurrentTrack(string currentTrackId)
     {
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
@@ -132,11 +100,6 @@ public class AlbumDiscBase : ComponentBase
         if (_playlistFinishedSubscriptionId != Guid.Empty)
         {
             Messenger.Unsubscribe<PlaylistFinishedEventArgs>(_playlistFinishedSubscriptionId);
-        }
-
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
         }
     }
 }

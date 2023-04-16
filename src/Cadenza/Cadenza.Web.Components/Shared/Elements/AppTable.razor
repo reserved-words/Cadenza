@@ -33,9 +33,6 @@
     public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
 
     [Parameter]
-    public Func<T, Task> OnRowDelete { get; set; }
-
-    [Parameter]
     public Func<T, Task> OnRowDoubleClick { get; set; }
 
     [Parameter]

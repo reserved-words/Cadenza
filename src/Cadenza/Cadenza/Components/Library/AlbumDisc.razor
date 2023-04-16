@@ -1,8 +1,7 @@
 ﻿@inherits AlbumDiscBase
 
 <AppTable Items="@Model.Tracks"
-          OnRowDoubleClick="@OnDoubleClick"
-          OnRowDelete="@OnRemoveTrack">
+          OnRowDoubleClick="@OnDoubleClick">
     <RowTemplate>
         <MudTd Class="@CellClass(context, true)">@context.TrackNo</MudTd>
         <MudTd Class="@CellClass(context, false)">
@@ -19,10 +18,5 @@
             }
         </MudTd>
         <MudTd Class="@CellClass(context, true)">@context.Duration()</MudTd>
-        <MudTd Class="@CellClass(context, true)">
-            <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                <MudMenuItem OnClick="@(() => OnRemoveTrack(context))">Remove</MudMenuItem>
-            </MudMenu>
-        </MudTd>
     </RowTemplate>
 </AppTable>

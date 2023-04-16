@@ -16,6 +16,7 @@ internal class PlayCoordinator : IPlayCoordinator
         _messenger.Subscribe<SkipNextTrackEventArgs>(OnSkipNext);
         _messenger.Subscribe<SkipPreviousTrackEventArgs>(OnSkipPrevious);
         _messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
+        _messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved);
     }
 
     private IPlaylist _currentPlaylist;
@@ -70,9 +71,15 @@ internal class PlayCoordinator : IPlayCoordinator
         await PlayTrack();
     }
 
-    private async Task OnTrackFinished(object arg1, TrackFinishedEventArgs arg2)
+    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
     {
         await OnSkipNext(this, null);
+    }
+
+    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
+    {
+        _currentPlaylist?.RemoveTrack(args.TrackId);
+        return Task.CompletedTask;
     }
 
     private async Task OnSkipPrevious(object sender, SkipPreviousTrackEventArgs args)

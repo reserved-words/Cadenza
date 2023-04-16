@@ -1,11 +1,4 @@
-﻿<MudCard Elevation="@Elevation" Square="@Square" Class="pa-3">
-
-    @if (ShowTitle)
-    {
-        <MudCardHeader Class="pa-0">
-            <MudText Typo="Typo.h6">@Title</MudText>
-        </MudCardHeader>
-    }
+﻿<MudCard Elevation="0" Square="false" Class="pa-3">
 
     <MudCardContent Class="pa-0">
         @ChildContent
@@ -15,17 +8,5 @@
 
 @code {
     [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
     public RenderFragment ChildContent { get; set; }
-
-    private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
-
-    private bool ShowTitle => Breakpoint != Breakpoint.Xs;
-
-    private bool Square => Breakpoint == Breakpoint.Xs;
 }

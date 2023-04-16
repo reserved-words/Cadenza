@@ -1,7 +1,9 @@
 ﻿
-<MudDialog Class="fixed-height no-padding-xs">
+<MudDialog Class="no-padding-xs">
     <DialogContent>
-        @ChildContent
+        <MudContainer Class="@Class">
+            @ChildContent
+        </MudContainer>
     </DialogContent>
     <DialogActions>
         <MudStack Row="true">
@@ -22,6 +24,9 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
+    public bool FullHeight { get; set; }
+
+    [Parameter]
     public EventCallback<MouseEventArgs> Cancel { get; set; }
 
     [Parameter]
@@ -36,4 +41,6 @@
     public bool ShowCancel => CancelCaption != null;
 
     public bool ShowSubmit => SubmitCaption != null;
+
+    public string Class => "pa-0 ma-0" + (FullHeight ? " fixed-height" : "");
 }

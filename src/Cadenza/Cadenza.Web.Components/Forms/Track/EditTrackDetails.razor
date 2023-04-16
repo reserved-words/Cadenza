@@ -1,5 +1,5 @@
 ﻿
-<EditCard Breakpoint="@Breakpoint" Title="Details">
+<EditCard>
     <MudTextField MaxLength="100"
                   Label="Title"
                   @bind-Value="Model.Title"
@@ -11,12 +11,9 @@
                   Mask="@(new PatternMask("0000"))" />
 </EditCard>
 
-<EditTagsCard Breakpoint="@Breakpoint" Model="@Model.Tags" />
+<EditTagsCard Model="@Model.Tags" />
 
 @code {
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
-
     [Parameter]
     public TrackInfo Model { get; set; }
 }
