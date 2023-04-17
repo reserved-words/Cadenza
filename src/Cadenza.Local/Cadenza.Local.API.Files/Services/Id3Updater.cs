@@ -35,6 +35,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.AlbumTags:
                 commentData.AlbumTags = value;
                 break;
+            case ItemProperty.AlbumTitle:
+                trackData.Album.Title = value;
+                break;
             case ItemProperty.ArtistTags:
                 commentData.ArtistTags = value;
                 break;
