@@ -7,5 +7,8 @@ public class HttpException : Exception
     {
     }
 
-    public HttpExceptionType Type { get; }
+    public HttpException(string error)
+        : base(error)
+    {
+    }
 }

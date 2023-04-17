@@ -20,8 +20,7 @@ internal class UpdateService : IUpdateService
             TrackId = trackId
         };
         var url = GetApiEndpoint(_settings.Endpoints.RemoveTrack);
-        var response = await _http.Delete(url, null, data);
-        await ValidateResponse(response);
+        await _http.Delete(url, null, data);
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)
@@ -33,8 +32,7 @@ internal class UpdateService : IUpdateService
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum);
-        var response = await _http.Post(url, null, data);
-        await ValidateResponse(response);
+        await _http.Post(url, null, data);
     }
 
     public async Task UpdateArtist(ArtistUpdate update)
@@ -46,8 +44,7 @@ internal class UpdateService : IUpdateService
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateArtist);
-        var response = await _http.Post(url, null, data);
-        await ValidateResponse(response);
+        await _http.Post(url, null, data);
     }
 
     public async Task UpdateTrack(TrackUpdate update)
@@ -59,24 +56,11 @@ internal class UpdateService : IUpdateService
             Updates = update.Updates
         };
         var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack);
-        var response = await _http.Post(url, null, data);
-        await ValidateResponse(response);
+        await _http.Post(url, null, data);
     }
 
     private string GetApiEndpoint(string endpoint)
     {
         return $"{_settings.BaseUrl}{endpoint}";
-    }
-
-    private async Task ValidateResponse(HttpResponseMessage response)
-    {
-        if (response.IsSuccessStatusCode)
-            return;
-
-        var responseContent = await response.Content.ReadFromJsonAsync<ApiError>();
-
-        var errorMessage = responseContent?.Message ?? response.StatusCode.ToString();
-
-        throw new Exception(errorMessage);
     }
 }
