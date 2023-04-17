@@ -14,7 +14,7 @@
 
 GO
 
-CREATE INDEX [UNQ_Albums] ON [Library].[Albums] ([ArtistId], [Title], [ReleaseTypeId])
+CREATE UNIQUE INDEX [UNQ_Albums] ON [Library].[Albums] ([ArtistId], [Title], [ReleaseTypeId])
 GO
 
 

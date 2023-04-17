@@ -41,7 +41,6 @@ public class EditAlbumBase : FormBase<AlbumInfo>
         {
             // Log error
             Alert.Error("Error updating album: " + ex.Message);
-            Alert.Error("Error updating album: " + ex.StackTrace);
         }
     }
 
