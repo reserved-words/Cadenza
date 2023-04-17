@@ -67,7 +67,7 @@ public class PlayShortcutsBase : ComponentBase
 
     protected async Task PlayRecentAlbum(RecentAlbum album)
     {
-        await Player.PlayAlbum(album.Id.ToString());
+        await Player.PlayAlbum(album.Id);
     }
 
     protected async Task PlayRecentTag(string tag)

@@ -9,9 +9,9 @@ internal class ImageService : IImageService
         _repository = repository;
     }
 
-    public async Task<ArtworkImage> GetArtistImage(string nameId)
+    public async Task<ArtworkImage> GetArtistImage(int id)
     {
-        var image = await _repository.GetArtistImage(nameId);
+        var image = await _repository.GetArtistImage(id);
         return image ?? GetDefaultImage();
     }
 

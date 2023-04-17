@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Library].[GetTrack]
-	@IdFromSource NVARCHAR(500)
+	@Id INT
 AS
 BEGIN
 
@@ -19,6 +19,6 @@ BEGIN
 	LEFT JOIN
 		[Library].[vw_TrackTags] TAG ON TAG.[TrackId] = TRK.[Id]
 	WHERE
-		TRK.[IdFromSource] = @IdFromSource
+		TRK.[Id] = @Id
 
 END

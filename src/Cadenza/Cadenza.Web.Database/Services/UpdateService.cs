@@ -6,27 +6,21 @@ internal class UpdateService : IUpdateService
 {
     private readonly DatabaseApiSettings _settings;
     private readonly IHttpHelper _http;
-    private readonly IDebugLogger _logger;
 
-    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings, IDebugLogger logger)
+    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
     {
         _http = http;
         _settings = settings.Value;
-        _logger = logger;
     }
 
-    public async Task RemoveTrack(string trackId)
+    public async Task RemoveTrack(int trackId)
     {
-        await _logger.LogInfo("UpdateService.RemoveTrack");
-        await _logger.LogInfo(trackId);
         var data = new TrackRemovalRequest
         {
             TrackId = trackId
         };
         var url = GetApiEndpoint(_settings.Endpoints.RemoveTrack);
-        await _logger.LogInfo(url);
-        var response = await _http.Delete(url, null, data);
-        await _logger.LogInfo(response.StatusCode.ToString());
+        await _http.Delete(url, null, data);
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)
@@ -37,7 +31,7 @@ internal class UpdateService : IUpdateService
             Type = update.Type,
             Updates = update.Updates
         };
-        var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum, update.OriginalItem.Source);
+        var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum);
         await _http.Post(url, null, data);
     }
 
@@ -61,14 +55,12 @@ internal class UpdateService : IUpdateService
             Type = update.Type,
             Updates = update.Updates
         };
-        var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack, update.OriginalItem.Source);
+        var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack);
         await _http.Post(url, null, data);
     }
 
-    private string GetApiEndpoint(string endpoint, LibrarySource? source = null)
+    private string GetApiEndpoint(string endpoint)
     {
-        return source.HasValue
-            ? $"{_settings.BaseUrl}{endpoint}/{source.Value}"
-            : $"{_settings.BaseUrl}{endpoint}";
+        return $"{_settings.BaseUrl}{endpoint}";
     }
 }

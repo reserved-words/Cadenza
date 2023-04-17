@@ -2,9 +2,10 @@
 
 public class Artist
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     //[ItemProperty(ItemProperty.Artist)]
+
     public string Name { get; set; }
 
     [ItemProperty(ItemProperty.Grouping)]

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Library].[GetArtist]
-	@NameId NVARCHAR(200)
+	@Id INT
 AS
 BEGIN
 
@@ -21,6 +21,7 @@ BEGIN
 		[Library].[vw_ArtistTags] TAG ON TAG.[ArtistId] = ART.[Id]
 	LEFT JOIN
 		[Library].[ArtistImages] IMG ON IMG.[ArtistId] = ART.[Id]
-	WHERE ART.[NameId] = @NameId
+	WHERE 
+		ART.[Id] = @Id
 
 END

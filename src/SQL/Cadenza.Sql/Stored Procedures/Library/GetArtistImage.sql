@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Library].[GetArtistImage]
-	@NameId NVARCHAR(200)
+	@Id INT
 AS
 BEGIN
 
@@ -11,6 +11,6 @@ BEGIN
 	LEFT JOIN
 		[Library].[ArtistImages] IMG ON IMG.[ArtistId] = ART.[Id]
 	WHERE 
-		ART.[NameId] = @NameId
+		ART.[Id] = @Id
 
 END

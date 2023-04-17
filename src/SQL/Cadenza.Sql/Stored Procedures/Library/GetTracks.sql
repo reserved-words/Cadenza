@@ -16,7 +16,7 @@ BEGIN
 		ALB.[Id] [AlbumId],
 		DSC.[Index] [DiscIndex],
 		ALB.[SourceId] [SourceId],
-		ART.[NameId] [ArtistNameId],
+		ART.[Id] [ArtistId],
 		ART.[Name] [ArtistName],
 		TAG.[TagList]
 	FROM

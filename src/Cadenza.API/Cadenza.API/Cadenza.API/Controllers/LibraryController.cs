@@ -12,31 +12,31 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album")]
-    public async Task<AlbumInfo> Album(string id)
+    public async Task<AlbumInfo> Album(int id)
     {
         return await _service.Album(id);
     }
 
     [HttpGet("Album/Tracks")]
-    public async Task<List<AlbumTrack>> AlbumTracks(string id)
+    public async Task<List<AlbumTrack>> AlbumTracks(int id)
     {
         return await _service.AlbumTracks(id);
     }
 
     [HttpGet("Artist")]
-    public async Task<ArtistInfo> Artist(string id)
+    public async Task<ArtistInfo> Artist(int id)
     {
         return await _service.Artist(id);
     }
 
     [HttpGet("Artist/Albums")]
-    public async Task<List<Album>> ArtistAlbums(string id)
+    public async Task<List<Album>> ArtistAlbums(int id)
     {
         return await _service.ArtistAlbums(id);
     }
 
     [HttpGet("Artist/Tracks")]
-    public async Task<List<Track>> ArtistTracks(string id)
+    public async Task<List<Track>> ArtistTracks(int id)
     {
         return await _service.ArtistTracks(id);
     }
@@ -66,7 +66,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Track")]
-    public async Task<TrackFull> Track(string id)
+    public async Task<TrackFull> Track(int id)
     {
         return await _service.Track(id);
     }

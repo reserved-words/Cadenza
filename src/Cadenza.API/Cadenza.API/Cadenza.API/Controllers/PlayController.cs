@@ -12,13 +12,13 @@ public class PlayController : ControllerBase
     }
 
     [HttpGet("Album")]
-    public async Task<List<PlayTrack>> Album(string id)
+    public async Task<List<PlayTrack>> Album(int id)
     {
         return await _service.GetPlayTracksByAlbum(id);
     }
 
     [HttpGet("Artist")]
-    public async Task<List<PlayTrack>> Artist(string id)
+    public async Task<List<PlayTrack>> Artist(int id)
     {
         return await _service.GetPlayTracksByArtist(id);
     }

@@ -1,46 +1,40 @@
-﻿using Cadenza.Common.Domain.Model.Updates;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class SyncService : ISyncService
 {
-    private readonly IMusicRepository _repository;
+    private readonly IMusicRepository _musicRepository;
     private readonly IUpdateRepository _updateRepository;
 
-    public SyncService(IMusicRepository repository, IUpdateRepository updateRepository)
+    public SyncService(IMusicRepository musicRepository, IUpdateRepository updateRepository)
     {
-        _repository = repository;
+        _musicRepository = musicRepository;
         _updateRepository = updateRepository;
     }
 
     public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
-        await _repository.AddTrack(source, track);
+        await _musicRepository.AddTrack(source, track);
     }
 
-    public async Task<List<string>> GetAllTracks(LibrarySource source)
+    public async Task<List<string>> GetAllTrackSourceIds(LibrarySource source)
     {
-        return await _repository.GetAllTracks(source);
+        return await _musicRepository.GetAllTracks(source);
     }
 
-    public async Task<List<string>> GetTracksByAlbum(LibrarySource source, string albumId)
+    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
-        var library = await _repository.Get(source);
-
-        return library.Tracks
-            .Where(t => t.AlbumId == albumId)
-            .Select(t => t.Id)
-            .ToList();
+        return await _musicRepository.GetAlbumTrackSourceIds(albumId);
     }
 
-    public async Task<List<string>> GetTracksByArtist(LibrarySource source, string artistId)
+    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
-        var library = await _repository.Get(source);
+        return await _musicRepository.GetArtistTrackSourceIds(artistId);
+    }
 
-        return library.Tracks
-            .Where(t => t.ArtistId == artistId)
-            .Select(t => t.Id)
-            .ToList();
+    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    {
+        var idFromSource = await _musicRepository.GetTrackIdFromSource(trackId);
+        return new SyncSourceTrack { IdFromSource = idFromSource };
     }
 
     public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
@@ -48,33 +42,33 @@ internal class SyncService : ISyncService
         return await _updateRepository.GetUpdateRequests(source);
     }
 
-    public async Task MarkUpdateErrored(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
-        await _updateRepository.MarkUpdateErrored(request, source);
+        await _updateRepository.MarkUpdateErrored(request);
     }
 
-    public async Task MarkUpdateDone(LibrarySource source, ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
-        await _updateRepository.MarkUpdateDone(request, source);
+        await _updateRepository.MarkUpdateDone(request);
     }
 
-    public async Task<List<TrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
     {
         return await _updateRepository.GetRemovalRequests(source);
     }
 
-    public async Task MarkRemovalErrored(TrackRemovalRequest request)
+    public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
     {
         await _updateRepository.MarkRemovalErrored(request.RequestId);
     }
 
-    public async Task MarkRemovalDone(TrackRemovalRequest request)
+    public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
     {
         await _updateRepository.MarkRemovalDone(request.RequestId);
     }
 
-    public async Task RemoveTracks(LibrarySource source, List<string> ids)
+    public async Task RemoveTracks(LibrarySource source, List<string> idsFromSource)
     {
-        await _repository.RemoveTracks(ids);
+        await _musicRepository.RemoveTracks(idsFromSource);
     }
 }

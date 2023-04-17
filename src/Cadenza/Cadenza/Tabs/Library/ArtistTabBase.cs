@@ -6,7 +6,7 @@ public class ArtistTabBase : ComponentBase
     public IArtistRepository Repository { get; set; }
 
     [Parameter]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public ArtistInfo Artist { get; set; }
 

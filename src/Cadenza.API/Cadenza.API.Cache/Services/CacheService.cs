@@ -63,19 +63,19 @@ internal class CacheService : ICacheService
         return Task.CompletedTask;
     }
 
-    public Task<AlbumInfo> GetAlbum(string id)
+    public Task<AlbumInfo> GetAlbum(int id)
     {
         var result = _mainCache.GetAlbum(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<AlbumTrack>> GetAlbumTracks(string id)
+    public Task<List<AlbumTrack>> GetAlbumTracks(int id)
     {
         var result = _helperCache.GetAlbumTracks(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<Album>> GetAlbums(string artistId)
+    public Task<List<Album>> GetAlbums(int artistId)
     {
         var result = _helperCache.GetAlbumsByArtist(artistId);
         return Task.FromResult(result);
@@ -87,7 +87,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<ArtistInfo> GetArtist(string id)
+    public Task<ArtistInfo> GetArtist(int id)
     {
         var result = _mainCache.GetArtist(id);
         return Task.FromResult(result);
@@ -105,7 +105,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<Track>> GetArtistTracks(string artistId)
+    public Task<List<Track>> GetArtistTracks(int artistId)
     {
         var result = _helperCache.GetArtistTracks(artistId);
         return Task.FromResult(result);
@@ -152,7 +152,7 @@ internal class CacheService : ICacheService
         var result = _itemCache.GetTag(id);
         return Task.FromResult(result);
     }
-    public Task<TrackFull> GetTrack(string id)
+    public Task<TrackFull> GetTrack(int id)
     {
         var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);
@@ -164,13 +164,13 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayTrack>> PlayAlbum(string id)
+    public Task<List<PlayTrack>> PlayAlbum(int id)
     {
         var result = GetAlbumPlayTracks(id).ToList();
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayTrack>> PlayArtist(string id)
+    public Task<List<PlayTrack>> PlayArtist(int id)
     {
         var result = GetArtistPlayTracks(id).ToList();
         return Task.FromResult(result);
@@ -200,12 +200,12 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    private IEnumerable<PlayTrack> GetAlbumPlayTracks(string id)
+    private IEnumerable<PlayTrack> GetAlbumPlayTracks(int id)
     {
         return _helperCache.GetAlbumTracks(id).Select(t => _playCache.GetTrack(t.TrackId)).ToList();
     }
 
-    private IEnumerable<PlayTrack> GetArtistPlayTracks(string id)
+    private IEnumerable<PlayTrack> GetArtistPlayTracks(int id)
     {
         return _helperCache.GetArtistTracks(id).Select(t => _playCache.GetTrack(t.Id)).ToList();
     }

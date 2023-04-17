@@ -1,11 +1,11 @@
 ﻿
 @if (Item.Type == PlayerItemType.Album)
 {
-    <AlbumTab Id="@Item.Id" />
+    <AlbumTab Id="@int.Parse(Item.Id)" />
 }
 else if (Item.Type == PlayerItemType.Artist)
 {
-    <ArtistTab Id="@Item.Id" />
+    <ArtistTab Id="@int.Parse(Item.Id)" />
 }
 else if (Item.Type == PlayerItemType.Genre)
 {
@@ -21,7 +21,7 @@ else if (Item.Type == PlayerItemType.Tag)
 }
 else if (Item.Type == PlayerItemType.Track)
 {
-    <TrackTab Id="@Item.Id" />
+    <TrackTab Id="@int.Parse(Item.Id)" />
 }
 
 @code {

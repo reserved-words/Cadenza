@@ -31,7 +31,7 @@ public class SearchableAlbum : PlayerItem
         : base(PlayerItemType.Album, id, title, artist, null, null) { }
 
     public SearchableAlbum(AlbumInfo album)
-        : this(album.Id, album.Title, album.ArtistName) { }
+        : this(album.Id.ToString(), album.Title, album.ArtistName) { }
 }
 
 public class SearchableArtist : PlayerItem
@@ -40,7 +40,7 @@ public class SearchableArtist : PlayerItem
         : base(PlayerItemType.Artist, id, name, null, null, null) { }
 
     public SearchableArtist(ArtistInfo artist)
-        : this(artist.Id, artist.Name) { }
+        : this(artist.Id.ToString(), artist.Name) { }
 }
 
 public class SearchableTag : PlayerItem
@@ -55,7 +55,7 @@ public class SearchableTrack : PlayerItem
         : base(PlayerItemType.Track, id, title, artist, album, album + (albumArtist == artist ? "" : $" ({albumArtist})")) { }
 
     public SearchableTrack(TrackInfo track, AlbumInfo album)
-        : this(track.Id, track.Title, track.ArtistName, album.Title, album.ArtistName) { }
+        : this(track.Id.ToString(), track.Title, track.ArtistName, album.Title, album.ArtistName) { }
 }
 
 public class SearchableGrouping : PlayerItem

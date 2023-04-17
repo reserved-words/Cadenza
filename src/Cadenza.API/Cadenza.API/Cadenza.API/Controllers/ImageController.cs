@@ -12,7 +12,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpGet("Artist/{id}")]
-    public async Task Artist(string id)
+    public async Task Artist(int id)
     {
         var artwork = await _service.GetArtistImage(id);
         Response.ContentType = artwork.MimeType;

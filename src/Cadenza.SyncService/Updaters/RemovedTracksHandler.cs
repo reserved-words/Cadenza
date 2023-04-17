@@ -46,11 +46,6 @@ internal class RemovedTracksHandler : IService
 
     private async Task RemoveTracks(LibrarySource source, List<string> trackIds)
     {
-        foreach (var trackId in trackIds)
-        {
-            _logger.LogInformation($"Removing track {trackId}");
-        }
-
         await _database.RemoveTracks(source, trackIds);
 
         _logger.LogInformation("Tracks removed");

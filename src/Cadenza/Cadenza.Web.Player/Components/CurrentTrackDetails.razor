@@ -7,8 +7,8 @@
     [Parameter]
     public TrackInfo Model { get; set; }
 
-    public string ArtistId => Model?.ArtistId;
+    public int ArtistId => Model?.ArtistId ?? 0;
     public string ArtistName => Model?.ArtistName ?? "Artist Name";
-    public string Id => Model?.Id;
+    public int Id => Model?.Id ?? 0;
     public string Title => Model?.Title ?? "Track Title";
 }

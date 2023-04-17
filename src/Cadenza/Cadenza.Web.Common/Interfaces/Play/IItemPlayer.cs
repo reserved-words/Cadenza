@@ -3,10 +3,10 @@
 public interface IItemPlayer
 {
     Task PlayAll();
-    Task PlayAlbum(string id, string startTrackId = null);
-    Task PlayArtist(string id);
+    Task PlayAlbum(int id, int startTrackId = 0);
+    Task PlayArtist(int id);
     Task PlayGenre(string id);
     Task PlayGrouping(Grouping id);
     Task PlayTag(string id);
-    Task PlayTrack(string id);
+    Task PlayTrack(int id);
 }

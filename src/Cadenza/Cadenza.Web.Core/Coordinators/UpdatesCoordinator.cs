@@ -11,7 +11,7 @@ internal class UpdatesCoordinator : IUpdatesCoordinator
         _messenger = messenger;
     }
 
-    public async Task RemoveTrack(string trackId)
+    public async Task RemoveTrack(int trackId)
     {
         await _messenger.Send(this, new TrackRemovedEventArgs(trackId));
     }

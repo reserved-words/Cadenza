@@ -11,7 +11,7 @@ public class AlbumTabBase : ComponentBase
     public IAlbumRepository Repository { get; set; }
 
     [Parameter]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public AlbumInfo Album { get; set; }
 
