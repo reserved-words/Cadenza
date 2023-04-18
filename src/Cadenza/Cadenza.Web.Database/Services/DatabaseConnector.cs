@@ -58,12 +58,7 @@ internal class DatabaseConnector : IConnector
     {
         try
         {
-            var response = await _http.Post(GetPopulateUrl(), null, null);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception();
-            }
+            await _http.Post(GetPopulateUrl(), null, null);
         }
         catch (Exception)
         {

@@ -12,7 +12,7 @@ internal class HttpHelper : IHttpHelper
         _client = client;
     }
 
-    public async Task<HttpResponseMessage> Post(string url, string authHeader = null, object data = null)
+    public async Task Post(string url, string authHeader = null, object data = null)
     {
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -26,10 +26,11 @@ internal class HttpHelper : IHttpHelper
             httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
-        return await _client.SendAsync(httpRequest);
+        var response = await _client.SendAsync(httpRequest);
+        await ValidateResponse(response);
     }
 
-    public async Task<HttpResponseMessage> Post(string url, string authHeader = null, Dictionary<string, string> parameters = null)
+    public async Task Post(string url, string authHeader = null, Dictionary<string, string> parameters = null)
     {
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
 
@@ -43,10 +44,11 @@ internal class HttpHelper : IHttpHelper
             httpRequest.Headers.Add("Authorization", authHeader);
         }
 
-        return await _client.SendAsync(httpRequest);
+        var response = await _client.SendAsync(httpRequest);
+        await ValidateResponse(response);
     }
 
-    public async Task<HttpResponseMessage> Put(string url, string authHeader = null, object data = null)
+    public async Task Put(string url, string authHeader = null, object data = null)
     {
         var httpRequest = new HttpRequestMessage(HttpMethod.Put, url);
 
@@ -60,10 +62,11 @@ internal class HttpHelper : IHttpHelper
             httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
-        return await _client.SendAsync(httpRequest);
+        var response = await _client.SendAsync(httpRequest);
+        await ValidateResponse(response);
     }
 
-    public async Task<HttpResponseMessage> Delete(string url, string authHeader = null, object data = null)
+    public async Task Delete(string url, string authHeader = null, object data = null)
     {
         var httpRequest = new HttpRequestMessage(HttpMethod.Delete, url);
 
@@ -77,7 +80,8 @@ internal class HttpHelper : IHttpHelper
             httpRequest.Content = JsonContent.Create(data);
         }
 
-        return await _client.SendAsync(httpRequest);
+        var response = await _client.SendAsync(httpRequest);
+        await ValidateResponse(response);
     }
 
     public async Task<HttpResponseMessage> Get(string url, string authHeader = null)
@@ -89,12 +93,27 @@ internal class HttpHelper : IHttpHelper
             httpRequest.Headers.Add("Authorization", authHeader);
         }
 
-        return await _client.SendAsync(httpRequest);
+        var response = await _client.SendAsync(httpRequest);
+        await ValidateResponse(response);
+        return response;
     }
 
     public async Task<T> Get<T>(string url, string authHeader = null)
     {
         var response = await Get(url, authHeader);
+        await ValidateResponse(response);
         return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
+    }
+
+    private async Task ValidateResponse(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+            return;
+
+        var responseContent = await response.Content.ReadFromJsonAsync<ApiError>();
+
+        var errorMessage = responseContent?.Message ?? response.StatusCode.ToString();
+
+        throw new HttpException(errorMessage);
     }
 }

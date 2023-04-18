@@ -7,7 +7,7 @@ public enum ItemProperty
     ArtistImage,
     ArtistTags,
     //AlbumArtist, 
-    //AlbumTitle,
+    AlbumTitle,
     //Artist,
     City,
     Country,

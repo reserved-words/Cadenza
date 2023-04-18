@@ -7,7 +7,7 @@ public class Album
 
     public string ArtistName { get; set; }
 
-    //[ItemProperty(ItemProperty.AlbumTitle)]
+    [ItemProperty(ItemProperty.AlbumTitle)]
     public string Title { get; set; }
 
     [ItemProperty(ItemProperty.ReleaseType)]

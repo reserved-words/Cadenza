@@ -16,12 +16,6 @@ public static class HttpHelperExtensions
         return await response.GetString();
     }
 
-    public static async Task Post(this IHttpHelper http, string url)
-    {
-        var response = await http.Post(url, null, null);
-        response.Validate();
-    }
-
     private static async Task<string> GetString(this HttpResponseMessage response)
     {
         if (!response.IsSuccessStatusCode)
@@ -40,13 +34,5 @@ public static class HttpHelperExtensions
         }
 
         return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
-    }
-
-    private static void Validate(this HttpResponseMessage response)
-    {
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new HttpException(response);
-        }
     }
 }

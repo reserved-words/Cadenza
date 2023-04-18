@@ -1,6 +1,8 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Interfaces.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Cadenza.Apps.API;
 
@@ -27,10 +29,10 @@ public class ErrorHandlingMiddleware
             _logger.LogError(error, "Unhandled API error");
 
             var response = context.Response;
+            response.StatusCode = (int)HttpStatusCode.InternalServerError;
             response.ContentType = "application/json";
-
             var jsonConverter = context.RequestServices.GetRequiredService<IJsonConverter>();
-            var result = jsonConverter.Serialize(new { message = error?.Message });
+            var result = jsonConverter.Serialize(new ApiError { Message = error?.Message });
             await response.WriteAsync(result);
         }
     }

@@ -23,19 +23,22 @@ internal class LibraryUpdater : ILibraryUpdater
         {
             switch (update.Property)
             {
-                case ItemProperty.ReleaseType:
-                    album.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
-                    break;
                 case ItemProperty.AlbumTags:
                     album.TagList = update.UpdatedValue;
                     break;
-                case ItemProperty.ReleaseYear:
-                    album.Year = update.UpdatedValue;
+                case ItemProperty.AlbumTitle:
+                    album.Title = update.UpdatedValue;
                     break;
                 case ItemProperty.Artwork:
                     var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
                     album.ArtworkMimeType = image.MimeType;
                     album.ArtworkContent = image.Bytes;
+                    break;
+                case ItemProperty.ReleaseType:
+                    album.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
+                    break;
+                case ItemProperty.ReleaseYear:
+                    album.Year = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();

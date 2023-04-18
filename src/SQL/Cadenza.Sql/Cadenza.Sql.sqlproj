@@ -171,7 +171,6 @@
     <Build Include="Tables\Library\Artists.sql" />
     <Build Include="Tables\Library\Albums.sql" />
     <Build Include="Tables\Library\Tracks.sql" />
-    <Build Include="Tables\Library\AlbumTracks.sql" />
     <Build Include="Schemas\Admin.sql" />
     <Build Include="Tables\Library\ArtistTags.sql" />
   </ItemGroup>
