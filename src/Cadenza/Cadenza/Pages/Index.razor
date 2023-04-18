@@ -1,5 +1,8 @@
 ﻿@page "/"
 @page "/player"
+
+@attribute [Authorize] 
+
 @using Cadenza.Web.Common.Interfaces.Startup
 
 @if (IsInitialised)
