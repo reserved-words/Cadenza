@@ -1,4 +1,6 @@
 ﻿@page "/authentication/{action}"
+@using Cadenza.Web.Common.Interfaces.Startup;
+@using Cadenza.Web.Core.Coordinators;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.Extensions.Configuration
 
@@ -23,5 +25,24 @@
 </RemoteAuthenticatorView>
 
 @code {
+
+
+    [Inject]
+    public IStartupService StartupService { get; set; }
+
+    [Inject]
+    public StartupCoordinator StartupCoordinator { get; set; }
+
     [Parameter] public string Action { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Action == "login-callback")
+        {
+            var success = await StartupService.Startup();
+            StartupCoordinator.StartedUp = true;
+            StartupCoordinator.Success = success;
+            Navigation.NavigateTo("/");
+        }
+    }
 }

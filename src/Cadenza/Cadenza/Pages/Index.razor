@@ -1,82 +1,77 @@
 ﻿@page "/"
-@page "/player"
+@using Cadenza.Web.Common.Interfaces.Startup;
+@using Cadenza.Web.Core.Coordinators;
 
 @attribute [Authorize] 
 
-@using Cadenza.Web.Common.Interfaces.Startup
+<MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
 
-@if (IsInitialised)
-{
-    <MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
 
-        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        <MudTabPanel Text="HOME" ID="@(Tab.Home)">
+            <HomeTab />
+        </MudTabPanel>
+        <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
+            <HistoryTab />
+        </MudTabPanel>
+        <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
+            <CurrentlyPlayingTab />
+        </MudTabPanel>
+        <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
+            <LibraryTab />
+        </MudTabPanel>
+        <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
+            <SearchTab />
+        </MudTabPanel>
 
-            <MudTabPanel Text="HOME" ID="@(Tab.Home)">
-                <HomeTab />
-            </MudTabPanel>
-            <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
-                <HistoryTab />
-            </MudTabPanel>
-            <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
-                <CurrentlyPlayingTab />
-            </MudTabPanel>
-            <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
-                <LibraryTab />
-            </MudTabPanel>
-            <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
-                <SearchTab />
-            </MudTabPanel>
+    </MudHidden>
 
-        </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown">
 
-        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+        <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
+            <HistoryTab />
+        </MudTabPanel>
+        <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
+            <CurrentlyPlayingTab />
+        </MudTabPanel>
+        <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
+            <LibraryTab />
+        </MudTabPanel>
+        <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
+            <SearchTab />
+        </MudTabPanel>
 
-            <MudTabPanel Text="HISTORY" ID="@(Tab.History)">
-                <HistoryTab />
-            </MudTabPanel>
-            <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
-                <CurrentlyPlayingTab />
-            </MudTabPanel>
-            <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
-                <LibraryTab />
-            </MudTabPanel>
-            <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
-                <SearchTab />
-            </MudTabPanel>
+    </MudHidden>
 
-        </MudHidden>
-
-    </MudTabs>
-}
+</MudTabs>
 
 @code {
 
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
-
-    [Inject]
-    public IStartupConnectService ConnectService { get; set; }
-
-    [Inject]
-    public IProgressDialogService DialogService { get; set; }
-
-    [Inject]
     public IMessenger Messenger { get; set; }
+
+    [Inject]
+    public StartupCoordinator StartupCoordinator { get; set; }
+
+    [Inject]
+    public IStartupService StartupService { get; set; }
+
+    [Inject]
+    public NavigationManager Navigation { get; set; }
 
     MudTabs tabs;
 
-    protected bool IsInitialised { get; set; }
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         Messenger.Subscribe<ViewTabEventArgs>(OnViewTab);
-        await OnStartup();
     }
 
-    protected async Task OnStartup()
+    protected override async Task OnParametersSetAsync()
     {
-        var success = await DialogService.Run(() => ConnectService.GetStartupTasks(), "Connecting Services", true);
-        IsInitialised = success;
+        if (!StartupCoordinator.StartedUp)
+        {
+            await StartupService.Startup();
+        }
     }
 
     private Task OnViewTab(object sender, ViewTabEventArgs args)
