@@ -26,10 +26,8 @@ public static class API
         builder.Services.AddHttpClient();
 
         builder
-            .RegisterCorsPolicies()
+            .SetCorsPolicy()
             .RegisterDocumentation();
-
-        //builder.Services.AddTransient<Func<HttpClient>>(sp => () => new HttpClient());
 
         builder.Services.Configure<JsonOptions>(options =>
         {

@@ -1,51 +1,27 @@
-﻿using Cadenza.Apps.API;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-
-namespace Cadenza.Apps.API;
+﻿namespace Cadenza.Apps.API;
 
 public static class Cors
 {
-    public static WebApplicationBuilder RegisterCorsPolicies(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder SetCorsPolicy(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(opts => builder.SetUpCorsOptions(opts));
-        return builder;
-    }
+        builder.Services.AddCors(opts => 
+        {
+            var allowedClients = GetAllowedClients(builder.Configuration);
 
-    public static WebApplication AddCors(this WebApplication app)
-    {
-        var allowedClients = GetAllowedClients(app.Configuration);
-        allowedClients.ForEach(cli => app.UseCors(cli.Name));
-        return app;
-    }
+            var allowedOrigins = allowedClients.Select(c => c.Origin).ToArray();
 
-    private static void SetUpCorsOptions(this WebApplicationBuilder builder, CorsOptions opts)
-    {
-        var allowedClients = GetAllowedClients(builder.Configuration);
+            var cli = allowedClients.Single();
 
-        allowedClients.ForEach(cli => opts.AddPolicy(
-            name: cli.Name,
-            builder =>
+            opts.AddDefaultPolicy(builder =>
             {
                 builder
-                    .WithOrigins(cli.Origin)
+                    .WithOrigins(allowedOrigins)
                     .WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
-                    //.WithHeaders("content-type")
-                    .AllowAnyHeader();
-            }));
-
-        //var cli = allowedClients.Single();
-
-        //opts.AddDefaultPolicy(builder =>
-        //{
-        //    builder
-        //        .WithOrigins(cli.Origin)
-        //        .AllowAnyHeader()
-        //        .WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
-        //        .AllowCredentials();
-        //        //.WithOrigins(cli.Origin)
-        //        //.WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
-        //        //.WithHeaders("content-type");
-        //});
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
+        });
+        return builder;
     }
 
     private static List<AllowedClient> GetAllowedClients(IConfiguration configuration)
