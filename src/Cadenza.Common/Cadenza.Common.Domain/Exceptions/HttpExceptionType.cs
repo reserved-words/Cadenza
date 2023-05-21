@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Utilities.Exceptions;
+﻿namespace Cadenza.Common.Domain.Exceptions;
 
 public enum HttpExceptionType
 {

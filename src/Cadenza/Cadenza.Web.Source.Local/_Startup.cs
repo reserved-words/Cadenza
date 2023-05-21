@@ -1,8 +1,5 @@
 ﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.Album;
-global using Cadenza.Common.Interfaces.Repositories;
 global using Cadenza.Common.Interfaces.Utilities;
-global using Cadenza.Common.Utilities.Extensions;
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
@@ -11,8 +8,10 @@ global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
+using Cadenza.Common.Utilities.Services;
 using Cadenza.Web.Common.Interfaces.Player;
 using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Source.Local.Interfaces;
 
 namespace Cadenza.Web.Source.Local;
 
@@ -26,6 +25,7 @@ public static class Startup
                 sp.GetRequiredService<TAudioPlayer>(),
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
                 sp.GetRequiredService<IUrl>()))
-            .AddTransient<IConnector, LocalSourceConnector>();
+            .AddTransient<IConnector, LocalSourceConnector>()
+            .AddTransient<ILocalHttpHelper, LocalHttpHelper>();
     }
 }

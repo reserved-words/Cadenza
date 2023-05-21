@@ -2,6 +2,7 @@
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 using Cadenza.Common.Domain.JsonConverters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -22,27 +23,52 @@ public static class API
 
         registerDependencies(builder.Services, builder.Configuration);
 
+        builder.Services.AddHttpClient();
+
         builder
             .RegisterCorsPolicies()
             .RegisterDocumentation();
+
+        //builder.Services.AddTransient<Func<HttpClient>>(sp => () => new HttpClient());
 
         builder.Services.Configure<JsonOptions>(options =>
         {
             JsonSerialization.SetOptions(options.JsonSerializerOptions);
         });
 
+        var domain = $"https://{builder.Configuration["Authentication:Domain"]}/";
+        var audience = builder.Configuration["Authentication:Audience"];
+        var scope = builder.Configuration["Authentication:Scope"];
+
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+            {
+                c.Authority = domain;
+                c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidAudience = audience,
+                    ValidIssuer = domain
+                };
+            });
+
+        builder.Services.AddAuthorization(options => options.AddPolicy(scope, policy => policy.Requirements.Add(new
+            HasScopeRequirement(scope, domain))));
+
         return builder;
     }
 
     public static WebApplication CreateApp(WebApplicationBuilder builder)
     {
+        var scope = builder.Configuration["Authentication:Scope"];
+
         var app = builder.Build();
 
         app.UseMiddleware<ErrorHandlingMiddleware>();
-
-        app.AddCors();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseCors();
+        app.MapControllers().RequireAuthorization(scope);
         app.AddDocumentation();
-        app.MapControllers();
         app.AddDocumentationUI();
 
         return app;

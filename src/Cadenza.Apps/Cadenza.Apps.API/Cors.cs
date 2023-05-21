@@ -28,9 +28,24 @@ public static class Cors
             {
                 builder
                     .WithOrigins(cli.Origin)
-                    .WithMethods("GET", "POST", "OPTIONS", "DELETE")
-                    .WithHeaders("content-type");
+                    .WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
+                    //.WithHeaders("content-type")
+                    .AllowAnyHeader();
             }));
+
+        //var cli = allowedClients.Single();
+
+        //opts.AddDefaultPolicy(builder =>
+        //{
+        //    builder
+        //        .WithOrigins(cli.Origin)
+        //        .AllowAnyHeader()
+        //        .WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
+        //        .AllowCredentials();
+        //        //.WithOrigins(cli.Origin)
+        //        //.WithMethods("GET", "POST", "PUT", "OPTIONS", "DELETE")
+        //        //.WithHeaders("content-type");
+        //});
     }
 
     private static List<AllowedClient> GetAllowedClients(IConfiguration configuration)

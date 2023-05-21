@@ -3,10 +3,10 @@
 internal class Authoriser : IAuthoriser
 {
     private readonly IUrl _url;
-    private readonly IHttpHelper _http;
+    private readonly ILastFmHttpHelper _http;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Authoriser(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiEndpoints)
+    public Authoriser(IUrl url, ILastFmHttpHelper http, IOptions<LastFmApiSettings> apiEndpoints)
     {
         _url = url;
         _http = http;
@@ -16,12 +16,12 @@ internal class Authoriser : IAuthoriser
     public async Task<string> CreateSession(string token)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.CreateSession, ("token", token));
-        return await _http.GetString(url);
+        return await _http.Get(url);
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AuthUrl, ("redirectUri", redirectUri));
-        return await _http.GetString(url);
+        return await _http.Get(url);
     }
 }

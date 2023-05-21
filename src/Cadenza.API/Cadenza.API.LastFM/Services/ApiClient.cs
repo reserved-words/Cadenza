@@ -21,7 +21,7 @@ internal class ApiClient : IApiClient
 
         var response = await _httpClient.Get(url);
 
-        var xml = await _responseReader.GetXmlContent(response);
+        var xml = _responseReader.GetXmlContent(response);
 
         return getValue(xml);
     }

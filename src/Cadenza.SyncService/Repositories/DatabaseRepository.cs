@@ -1,14 +1,13 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.SyncService.Repositories;
 
 internal class DatabaseRepository : IDatabaseRepository
 {
-    private readonly IHttpHelper _http;
+    private readonly IMainApiHttpHelper _http;
     private readonly DatabaseApiSettings _apiSettings;
 
-    public DatabaseRepository(IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
+    public DatabaseRepository(IMainApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
     {
         _http = http;
         _apiSettings = apiSettings.Value;
@@ -17,7 +16,7 @@ internal class DatabaseRepository : IDatabaseRepository
     public async Task AddTrack(LibrarySource source, SyncTrack track)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}/{source}";
-        await _http.Post(url, null, track);
+        await _http.Post(url, track);
     }
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
@@ -35,13 +34,13 @@ internal class DatabaseRepository : IDatabaseRepository
     public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalErrored}";
-        await _http.Post(url, null, request);
+        await _http.Post(url, request);
     }
 
     public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalDone}";
-        await _http.Post(url, null, request);
+        await _http.Post(url, request);
     }
 
     public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
@@ -71,18 +70,18 @@ internal class DatabaseRepository : IDatabaseRepository
     public async Task MarkUpdateErrored(ItemUpdateRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateErrored}";
-        await _http.Post(url, null, request);
+        await _http.Post(url, request);
     }
 
     public async Task MarkUpdateDone(ItemUpdateRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateDone}";
-        await _http.Post(url, null, request);
+        await _http.Post(url, request);
     }
 
     public async Task RemoveTracks(LibrarySource source, List<string> idsFromSource)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTracks}/{source}";
-        await _http.Post(url, null, idsFromSource);
+        await _http.Post(url, idsFromSource);
     }
 }

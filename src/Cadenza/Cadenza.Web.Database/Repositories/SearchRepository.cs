@@ -3,9 +3,9 @@
 internal class SearchRepository : ISearchRepository
 {
     private readonly DatabaseApiEndpoints _settings;
-    private readonly IApiHelper _apiHelper;
+    private readonly IApiHttpHelper _apiHelper;
 
-    public SearchRepository(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
+    public SearchRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;

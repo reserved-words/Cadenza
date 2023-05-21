@@ -2,10 +2,8 @@
 
 internal class ResponseReader : IResponseReader
 {
-    public async Task<XElement> GetXmlContent(HttpResponseMessage response)
+    public XElement GetXmlContent(string contentAsString)
     {
-        var contentAsString = await response.Content.ReadAsStringAsync();
-
         var xml = XDocument.Parse(contentAsString);
 
         var root = xml.Element("lfm");

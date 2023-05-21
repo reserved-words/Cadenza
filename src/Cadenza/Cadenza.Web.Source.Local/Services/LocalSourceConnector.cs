@@ -1,21 +1,20 @@
 ﻿using Cadenza.Web.Common.Interfaces.Connections;
 using Cadenza.Web.Common.Interfaces.Startup;
+using Cadenza.Web.Source.Local.Interfaces;
 
 namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalSourceConnector : IConnector
 {
     private readonly IConnectionCoordinator _connectorController;
-    private readonly IHttpHelper _http;
+    private readonly ILocalHttpHelper _httpHelper;
     private readonly IOptions<LocalApiSettings> _apiSettings;
-    private readonly IUrl _url;
 
-    public LocalSourceConnector(IConnectionCoordinator connectorController, IOptions<LocalApiSettings> apiSettings, IHttpHelper http, IUrl url)
+    public LocalSourceConnector(IConnectionCoordinator connectorController, IOptions<LocalApiSettings> apiSettings, ILocalHttpHelper httpHelper)
     {
         _apiSettings = apiSettings;
         _connectorController = connectorController;
-        _http = http;
-        _url = url;
+        _httpHelper = httpHelper;
     }
 
     public SubTask GetConnectionTask()
@@ -36,10 +35,6 @@ internal class LocalSourceConnector : IConnector
 
     public async Task Connect()
     {
-        var url = _url.Build(_apiSettings.Value.BaseUrl, _apiSettings.Value.Endpoints.Connect);
-        var response = await _http.Get(url);
-
-        if (!response.IsSuccessStatusCode)
-            throw new Exception("Failed to connect to local source");
+        await _httpHelper.Get(_apiSettings.Value.Endpoints.Connect);
     }
 }

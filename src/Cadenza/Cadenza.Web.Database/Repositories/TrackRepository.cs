@@ -3,9 +3,9 @@
 internal class TrackRepository : ITrackRepository
 {
     private readonly DatabaseApiEndpoints _settings;
-    private readonly IApiHelper _apiHelper;
+    private readonly IApiHttpHelper _apiHelper;
 
-    public TrackRepository(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
+    public TrackRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;

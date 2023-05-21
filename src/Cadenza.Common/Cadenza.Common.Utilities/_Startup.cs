@@ -1,6 +1,5 @@
 ﻿global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Interfaces.Utilities;
-global using Cadenza.Common.Utilities.Exceptions;
 global using Cadenza.Common.Utilities.Services;
 global using Microsoft.Extensions.DependencyInjection;
 using FileAccess = Cadenza.Common.Utilities.Services.FileAccess;
@@ -23,8 +22,8 @@ public static class _Startup
             .AddTransient<IShuffler, Shuffler>();
     }
 
-    public static IServiceCollection AddHttpHelper(this IServiceCollection services, Func<IServiceProvider, HttpClient> resolveClient)
+    public static IServiceCollection AddDefaultHttpHelper(this IServiceCollection services)
     {
-        return services.AddTransient<IHttpHelper>(sp => new HttpHelper(resolveClient(sp)));
+        return services.AddTransient<IHttpHelper, DefaultHttpHelper>();
     }
 }

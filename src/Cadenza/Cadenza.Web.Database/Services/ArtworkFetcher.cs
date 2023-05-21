@@ -47,7 +47,7 @@ internal class ArtworkFetcher : IArtworkFetcher
 
         return GetUrl(_settings.Endpoints.AlbumArtwork, album.Id);
     }
-    
+
     private string GetUrl(string endpoint, int id)
     {
         return $"{_settings.BaseUrl}{string.Format(endpoint, id)}";

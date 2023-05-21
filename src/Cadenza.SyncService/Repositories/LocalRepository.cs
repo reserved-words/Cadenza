@@ -5,10 +5,10 @@ namespace Cadenza.SyncService.Repositories;
 
 internal class LocalRepository : ISourceRepository
 {
-    private readonly IHttpHelper _http;
+    private readonly ILocalHttpHelper _http;
     private readonly LocalApiSettings _apiSettings;
 
-    public LocalRepository(IHttpHelper http, IOptions<LocalApiSettings> apiSettings)
+    public LocalRepository(ILocalHttpHelper http, IOptions<LocalApiSettings> apiSettings)
     {
         _http = http;
         _apiSettings = apiSettings.Value;
@@ -31,7 +31,7 @@ internal class LocalRepository : ISourceRepository
     public async Task RemoveTrack(SyncTrackRemovalRequest request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTrack}";
-        await _http.Delete(url, null, request);
+        await _http.Delete(url, request);
     }
 
     public async Task UpdateTracks(List<string> trackIdsFromSource, List<PropertyUpdate> updates)
@@ -42,6 +42,6 @@ internal class LocalRepository : ISourceRepository
             Updates = updates
         };
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.UpdateTracks}";
-        await _http.Post(url, null, data);
+        await _http.Post(url, data);
     }
 }

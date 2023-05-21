@@ -1,119 +1,115 @@
-﻿using Cadenza.Common.Domain.JsonConverters;
+﻿using Cadenza.Common.Domain.Exceptions;
 using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Services;
 
-internal class HttpHelper : IHttpHelper
+internal class DefaultHttpHelper : HttpHelper
 {
-    private readonly HttpClient _client;
-
-    public HttpHelper(HttpClient client)
+    public DefaultHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter) : base(httpClientFactory, jsonConverter)
     {
-        _client = client;
     }
 
-    public async Task Post(string url, string authHeader = null, object data = null)
+    protected override string ClientName => "External";
+}
+
+public abstract class HttpHelper : IHttpHelper
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IJsonConverter _jsonConverter;
+
+    public HttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
-
-        if (data != null)
-        {
-            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
-        }
-
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        _httpClientFactory = httpClientFactory;
+        _jsonConverter = jsonConverter;
     }
 
-    public async Task Post(string url, string authHeader = null, Dictionary<string, string> parameters = null)
-    {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+    protected abstract string ClientName { get; }
 
-        if (parameters != null)
-        {
-            httpRequest.Content = new FormUrlEncodedContent(parameters);
-        }
+    private HttpClient HttpClient => _httpClientFactory.CreateClient(ClientName);
 
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
-
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
-    }
-
-    public async Task Put(string url, string authHeader = null, object data = null)
-    {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Put, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
-
-        if (data != null)
-        {
-            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
-        }
-
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
-    }
-
-    public async Task Delete(string url, string authHeader = null, object data = null)
+    public async Task Delete(string url, object data)
     {
         var httpRequest = new HttpRequestMessage(HttpMethod.Delete, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
 
         if (data != null)
         {
             httpRequest.Content = JsonContent.Create(data);
         }
 
-        var response = await _client.SendAsync(httpRequest);
+        var response = await HttpClient.SendAsync(httpRequest);
         await ValidateResponse(response);
     }
 
-    public async Task<HttpResponseMessage> Get(string url, string authHeader = null)
+    public async Task<T> Get<T>(string url) where T : new()
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
+        var content = await Get(url);
+        return _jsonConverter.Deserialize<T>(content);
+    }
 
-        if (authHeader != null)
+    public async Task<string> Get(string url)
+    {
+        var response = await HttpClient.GetAsync(url);
+        await ValidateResponse(response);
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<ArtworkImage> GetImage(string url)
+    {
+        var response = await HttpClient.GetAsync(url);
+        await ValidateResponse(response);
+
+        var bytes = await response.Content.ReadAsByteArrayAsync();
+        var mimeType = response.Content.Headers.ContentType.MediaType;
+
+        if (!mimeType.StartsWith("image/"))
         {
-            httpRequest.Headers.Add("Authorization", authHeader);
+            throw new Exception("Not an image URL");
         }
 
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
-        return response;
+        return new ArtworkImage(bytes, mimeType);
     }
 
-    public async Task<T> Get<T>(string url, string authHeader = null)
+    public async Task Post(string url, Dictionary<string, string> parameters)
     {
-        var response = await Get(url, authHeader);
+        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+        httpRequest.Content = new FormUrlEncodedContent(parameters);
+        var response = await HttpClient.SendAsync(httpRequest);
         await ValidateResponse(response);
-        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
     }
 
-    private async Task ValidateResponse(HttpResponseMessage response)
+    public async Task Post(string url, object data)
+    {
+        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+
+        if (data != null)
+        {
+            httpRequest.Content = JsonContent.Create(data);
+        }
+
+        var response = await HttpClient.SendAsync(httpRequest);
+        await ValidateResponse(response);
+    }
+
+    public async Task Put(string url, object data)
+    {
+        var httpRequest = new HttpRequestMessage(HttpMethod.Put, url);
+
+        if (data != null)
+        {
+            httpRequest.Content = JsonContent.Create(data);
+        }
+
+        var response = await HttpClient.SendAsync(httpRequest);
+        await ValidateResponse(response);
+    }
+
+    public async Task ValidateResponse(HttpResponseMessage response)
     {
         if (response.IsSuccessStatusCode)
             return;
 
-        var responseContent = await response.Content.ReadFromJsonAsync<ApiError>();
+        var responseContent = await response.Content.ReadAsStringAsync();
 
-        var errorMessage = responseContent?.Message ?? response.StatusCode.ToString();
-
-        throw new HttpException(errorMessage);
+        throw new HttpException(response.RequestMessage.RequestUri, response.StatusCode, responseContent);
     }
 }

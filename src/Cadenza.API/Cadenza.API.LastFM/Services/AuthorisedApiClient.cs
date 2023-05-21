@@ -20,6 +20,6 @@ internal class AuthorisedApiClient : IAuthorisedApiClient
 
         _signer.Sign(parameters);
 
-        await _httpClient.Post(_config.Value.ApiBaseUrl, null, parameters);
+        await _httpClient.Post(_config.Value.ApiBaseUrl, parameters);
     }
 }

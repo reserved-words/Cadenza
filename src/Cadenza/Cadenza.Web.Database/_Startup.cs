@@ -17,7 +17,6 @@ global using Cadenza.Web.Database.Services;
 global using Cadenza.Web.Database.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-global using System.Net.Http.Json;
 using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Common.Interfaces.Updates;
 
@@ -28,9 +27,9 @@ public static class Startup
     public static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         return services
-            .AddInternals()
             .AddApiRepositories()
-            .AddTransient<IConnector, DatabaseConnector>();
+            .AddTransient<IConnector, DatabaseConnector>()
+            .AddTransient<IApiHttpHelper, ApiHttpHelper>();
     }
 
     private static IServiceCollection AddApiRepositories(this IServiceCollection services)
@@ -48,11 +47,5 @@ public static class Startup
             .AddTransient<IUpdateService, UpdateService>()
             .AddTransient<IHistoryLogger, HistoryRepository>()
             .AddTransient<IHistoryFetcher, HistoryRepository>();
-    }
-
-    private static IServiceCollection AddInternals(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IApiHelper, ApiHelper>();
     }
 }

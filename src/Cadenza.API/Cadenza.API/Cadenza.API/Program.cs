@@ -14,9 +14,9 @@ global using Cadenza.Common.Domain.Model.LastFm;
 global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
-
 global using Cadenza.Common.Utilities;
 global using Microsoft.AspNetCore.Mvc;
+
 using Cadenza.API.SqlLibrary;
 
 var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
@@ -27,7 +27,7 @@ var builder = API.CreateBuilder(args, (IServiceCollection services, IConfigurati
         .AddSqlLibrary()
         .AddLastFM()
         .AddUtilities()
-        .AddHttpHelper(sp => new HttpClient());
+        .AddDefaultHttpHelper();
 
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")
