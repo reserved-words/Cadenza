@@ -3,6 +3,7 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 using Cadenza.Common.Domain.JsonConverters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -51,6 +52,8 @@ public static class API
 
         builder.Services.AddAuthorization(options => options.AddPolicy(scope, policy => policy.Requirements.Add(new
             HasScopeRequirement(scope, domain))));
+
+        builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
         return builder;
     }
