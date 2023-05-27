@@ -108,7 +108,9 @@ public abstract class HttpHelper : IHttpHelper
         if (response.IsSuccessStatusCode)
             return;
 
-        var responseContent = await response.Content.ReadAsStringAsync();
+        var responseContent = response.Content != null
+            ? await response.Content.ReadAsStringAsync()
+            : "";
 
         throw new HttpException(response.RequestMessage.RequestUri, response.StatusCode, responseContent);
     }
