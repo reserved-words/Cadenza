@@ -8,7 +8,7 @@ namespace Cadenza.Web.Info.Services;
 internal class WebInfoHttpHelper : HttpHelper, IWebInfoHttpHelper
 {
     public WebInfoHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
-            : base(HttpClientName.Default, jsonConverter, sender)
+            : base(HttpClientName.Database, jsonConverter, sender)
     {
     }
 }
