@@ -46,6 +46,6 @@ internal class DatabaseConnector : IConnector
     private async Task Populate()
     {
         var url = _apiSettings.Value.Endpoints.Populate;
-        await _http.Post(url, null);
+        await _http.Post(url);
     }
 }
