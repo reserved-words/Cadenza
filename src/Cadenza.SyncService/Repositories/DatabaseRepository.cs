@@ -4,10 +4,10 @@ namespace Cadenza.SyncService.Repositories;
 
 internal class DatabaseRepository : IDatabaseRepository
 {
-    private readonly IMainApiHttpHelper _http;
+    private readonly ISyncHttpHelper _http;
     private readonly DatabaseApiSettings _apiSettings;
 
-    public DatabaseRepository(IMainApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
+    public DatabaseRepository(ISyncHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
     {
         _http = http;
         _apiSettings = apiSettings.Value;

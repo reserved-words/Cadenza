@@ -103,7 +103,7 @@ public abstract class HttpHelper : IHttpHelper
         await ValidateResponse(response);
     }
 
-    public async Task ValidateResponse(HttpResponseMessage response)
+    private static async Task ValidateResponse(HttpResponseMessage response)
     {
         if (response.IsSuccessStatusCode)
             return;

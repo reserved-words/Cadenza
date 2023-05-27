@@ -1,15 +1,13 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-
-var builder = Service.CreateBuilder(args, services =>
+﻿var builder = Service.CreateBuilder(args, services =>
 {
     var configuration = services.RegisterConfiguration();
 
     services
-        .AddHttpClient("MainApi", client => client.BaseAddress = new Uri(configuration["DatabaseApi:BaseUrl"]));
+        .AddHttpClient();
 
-    services
-        .AddHttpClient("LocalApi", client => client.BaseAddress = new Uri(configuration["LocalApi:BaseUrl"]));
-    
+    services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+         .CreateClient());
+
     services
         .AddUtilities()
         .AddTransient<IDatabaseRepository, DatabaseRepository>()
@@ -20,8 +18,7 @@ var builder = Service.CreateBuilder(args, services =>
         .AddTransient<IService, UpdateRequestsHandler>();
 
     services
-        .AddTransient<IMainApiHttpHelper, MainApiHttpHelper>()
-        .AddTransient<ILocalHttpHelper, LocalApiHttpHelper>();
+        .AddTransient<ISyncHttpHelper, SyncHttpHelper>();
 
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")

@@ -1,14 +1,13 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Cadenza.SyncService.Repositories;
 
 internal class LocalRepository : ISourceRepository
 {
-    private readonly ILocalHttpHelper _http;
+    private readonly ISyncHttpHelper _http;
     private readonly LocalApiSettings _apiSettings;
 
-    public LocalRepository(ILocalHttpHelper http, IOptions<LocalApiSettings> apiSettings)
+    public LocalRepository(ISyncHttpHelper http, IOptions<LocalApiSettings> apiSettings)
     {
         _http = http;
         _apiSettings = apiSettings.Value;
