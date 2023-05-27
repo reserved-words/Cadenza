@@ -10,15 +10,14 @@
 
     services
         .AddUtilities()
+        .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
+        .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<IDatabaseRepository, DatabaseRepository>()
         .AddTransient<ISourceRepository, LocalRepository>()
         .AddTransient<IService, RemovalRequestsHandler>()
         .AddTransient<IService, RemovedTracksHandler>()
         .AddTransient<IService, AddedTracksHandler>()
         .AddTransient<IService, UpdateRequestsHandler>();
-
-    services
-        .AddTransient<ISyncHttpHelper, SyncHttpHelper>();
 
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")

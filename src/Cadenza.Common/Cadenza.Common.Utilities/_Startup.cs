@@ -18,6 +18,7 @@ public static class _Startup
             .AddTransient<IIdGenerator, IdGenerator>()
             .AddTransient<IImageConverter, ImageConverter>()
             .AddTransient<IJsonConverter, JsonConverter>()
+            .AddTransient<IHttpRequestSender, HttpRequestSender>()
             .AddTransient<INameComparer, NameComparer>()
             .AddTransient<IShuffler, Shuffler>();
     }
