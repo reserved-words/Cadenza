@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.HttpMessageHandlers;
+using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.Info;
 using Cadenza.Web.Player;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -58,35 +59,5 @@ public static class Dependencies
             .AddTransient<IDebugLogger, ConsoleLogger>()
             .AddTransient<INavigation, NavigationInterop>()
             .AddTransient<IStore, StoreInterop>();
-    }
-}
-
-public class MainApiAuthorizationMessageHandler : AuthorizationMessageHandler
-{
-    public MainApiAuthorizationMessageHandler(IAccessTokenProvider provider,
-        NavigationManager navigation, IConfiguration config)
-        : base(provider, navigation)
-    {
-        var baseUrl = config["DatabaseApi:BaseUrl"];
-        var scope = config["Authentication:Scopes:Database"];
-
-        ConfigureHandler(
-            authorizedUrls: new[] { baseUrl },
-            scopes: new List<string> { scope });
-    }
-}
-
-public class LocalApiAuthorizationMessageHandler : AuthorizationMessageHandler
-{
-    public LocalApiAuthorizationMessageHandler(IAccessTokenProvider provider,
-        NavigationManager navigation, IConfiguration config)
-        : base(provider, navigation)
-    {
-        var baseUrl = config["LocalApi:BaseUrl"];
-        var scope = config["Authentication:Scopes:Local"];
-
-        ConfigureHandler(
-            authorizedUrls: new[] { baseUrl },
-            scopes: new List<string> { scope } );
     }
 }
