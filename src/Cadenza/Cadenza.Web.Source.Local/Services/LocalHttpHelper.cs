@@ -1,15 +1,12 @@
-﻿
-using Cadenza.Common.Utilities.Services;
+﻿using Cadenza.Common.Utilities.Services;
 using Cadenza.Web.Source.Local.Interfaces;
 
 namespace Cadenza.Web.Source.Local.Services;
 
 public class LocalHttpHelper : HttpHelper, ILocalHttpHelper
 {
-    public LocalHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter)
-        : base(httpClientFactory, jsonConverter)
+    public LocalHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
+        : base(HttpClientName.Local, jsonConverter, sender)
     {
     }
-
-    protected override string ClientName => "LocalAPI";
 }

@@ -4,9 +4,8 @@ namespace Cadenza.Web.LastFM.Services;
 
 public class LastFmHttpHelper : HttpHelper, ILastFmHttpHelper
 {
-    public LastFmHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter) : base(httpClientFactory, jsonConverter)
+    public LastFmHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender) 
+        : base(HttpClientName.Database, jsonConverter, sender)
     {
     }
-
-    protected override string ClientName => "MainAPI";
 }

@@ -18,8 +18,6 @@ internal class SyncHttpHelper : ISyncHttpHelper
         _tokenFetcher = tokenFetcher;
     }
 
-    private HttpClient HttpClient => _httpClientFactory.CreateClient();
-
     public async Task Delete<T>(string url, T data)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -30,7 +28,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
             request.Content = JsonContent.Create(data);
         }
 
-        await _httpRequestSender.TrySendRequest(HttpClient, request);
+        await _httpRequestSender.TrySendRequest(request);
     }
 
     public async Task<T> Get<T>(string url) where T : class, new()
@@ -38,7 +36,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         await AddAuthToken(request);
 
-        var response = await _httpRequestSender.TrySendRequest(HttpClient, request);
+        var response = await _httpRequestSender.TrySendRequest(request);
 
         var content = await response.Content.ReadAsStringAsync();
         return _jsonConverter.Deserialize<T>(content);
@@ -54,7 +52,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
             request.Content = JsonContent.Create(data);
         }
 
-        await _httpRequestSender.TrySendRequest(HttpClient, request);
+        await _httpRequestSender.TrySendRequest(request);
     }
 
     private async Task AddAuthToken(HttpRequestMessage request)

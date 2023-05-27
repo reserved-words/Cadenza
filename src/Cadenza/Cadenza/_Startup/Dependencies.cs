@@ -12,8 +12,8 @@ public static class Dependencies
     {
         services
             .RegisterExternalHttpHelper()
-            .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, "LocalAPI", "LocalApi:BaseUrl")
-            .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, "MainAPI", "DatabaseApi:BaseUrl");
+            .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
+            .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "DatabaseApi:BaseUrl");
 
         return services
             .AddDatabase()
@@ -29,26 +29,26 @@ public static class Dependencies
 
     private static IServiceCollection RegisterExternalHttpHelper(this IServiceCollection services)
     {
-        services.AddHttpClient("External");
+        services.AddHttpClient(HttpClientName.Default.ToString());
 
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-          .CreateClient("External"));
+          .CreateClient(HttpClientName.Default.ToString()));
 
         services.AddDefaultHttpHelper();
 
         return services;
     }
 
-    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, string apiName, string configBaseUrl) 
+    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl) 
         where THandler : AuthorizationMessageHandler
     {
         services
             .AddTransient<THandler>()
-            .AddHttpClient(apiName, client => client.BaseAddress = new Uri(configuration[configBaseUrl]))
+            .AddHttpClient(clientName.ToString(), client => client.BaseAddress = new Uri(configuration[configBaseUrl]))
             .AddHttpMessageHandler<THandler>();
 
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-          .CreateClient(apiName));
+          .CreateClient(clientName.ToString()));
 
         return services;
     }

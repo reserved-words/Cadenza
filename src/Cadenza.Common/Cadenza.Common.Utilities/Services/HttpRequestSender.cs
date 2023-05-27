@@ -1,11 +1,20 @@
-﻿using Cadenza.Common.Domain.Exceptions;
+﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Domain.Exceptions;
 
 namespace Cadenza.Common.Utilities.Services;
 
 internal class HttpRequestSender : IHttpRequestSender
 {
-    public async Task<HttpResponseMessage> TrySendRequest(HttpClient httpClient, HttpRequestMessage request)
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public HttpRequestSender(IHttpClientFactory httpClientFactory)
     {
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task<HttpResponseMessage> TrySendRequest(HttpRequestMessage request, HttpClientName httpClientName = HttpClientName.Default)
+    {
+        var httpClient = _httpClientFactory.CreateClient(httpClientName.ToString());
         var response = await httpClient.SendAsync(request);
         await ValidateResponse(response);
         return response;

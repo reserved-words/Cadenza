@@ -8,7 +8,6 @@ global using Cadenza.Common.Domain.Model.History;
 global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Update;
 global using Cadenza.Web.Common.Enums;
-global using Cadenza.Web.Common.Events;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Common.Tasks;
 global using System.ComponentModel.DataAnnotations;

@@ -1,6 +1,8 @@
-﻿namespace Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Domain.Enums;
+
+namespace Cadenza.Common.Interfaces.Utilities;
 
 public interface IHttpRequestSender
 {
-    Task<HttpResponseMessage> TrySendRequest(HttpClient httpClient, HttpRequestMessage request);
+    Task<HttpResponseMessage> TrySendRequest(HttpRequestMessage request, HttpClientName httpClientName = HttpClientName.Default);
 }

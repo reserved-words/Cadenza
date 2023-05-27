@@ -1,62 +1,52 @@
-﻿using Cadenza.Common.Domain.Exceptions;
+﻿using Cadenza.Common.Domain.Enums;
 using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Services;
 
-internal class DefaultHttpHelper : HttpHelper
-{
-    public DefaultHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter) : base(httpClientFactory, jsonConverter)
-    {
-    }
-
-    protected override string ClientName => "External";
-}
-
 public abstract class HttpHelper : IHttpHelper
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClientName _httpClientName;
+    private readonly IHttpRequestSender _requestSender;
     private readonly IJsonConverter _jsonConverter;
 
-    public HttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter)
+    public HttpHelper(HttpClientName httpClientName, IJsonConverter jsonConverter, IHttpRequestSender requestSender)
     {
-        _httpClientFactory = httpClientFactory;
+        _httpClientName = httpClientName;
         _jsonConverter = jsonConverter;
+        _requestSender = requestSender;
     }
-
-    protected abstract string ClientName { get; }
-
-    private HttpClient HttpClient => _httpClientFactory.CreateClient(ClientName);
 
     public async Task Delete(string url, object data)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Delete, url);
+        var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await HttpClient.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
     public async Task<T> Get<T>(string url) where T : new()
     {
-        var content = await Get(url);
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
+        var content = await response.Content.ReadAsStringAsync();
         return _jsonConverter.Deserialize<T>(content);
     }
 
     public async Task<string> Get(string url)
     {
-        var response = await HttpClient.GetAsync(url);
-        await ValidateResponse(response);
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
         return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<ArtworkImage> GetImage(string url)
     {
-        var response = await HttpClient.GetAsync(url);
-        await ValidateResponse(response);
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
 
         var bytes = await response.Content.ReadAsByteArrayAsync();
         var mimeType = response.Content.Headers.ContentType.MediaType;
@@ -71,47 +61,39 @@ public abstract class HttpHelper : IHttpHelper
 
     public async Task Post(string url, Dictionary<string, string> parameters)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-        httpRequest.Content = new FormUrlEncodedContent(parameters);
-        var response = await HttpClient.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        var request = new HttpRequestMessage(HttpMethod.Post, url);
+
+        request.Content = new FormUrlEncodedContent(parameters);
+
+        await Send(request);
     }
 
     public async Task Post(string url, object data)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+        var request = new HttpRequestMessage(HttpMethod.Post, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await HttpClient.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
     public async Task Put(string url, object data)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Put, url);
+        var request = new HttpRequestMessage(HttpMethod.Put, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await HttpClient.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
-    private static async Task ValidateResponse(HttpResponseMessage response)
+    private async Task<HttpResponseMessage> Send(HttpRequestMessage request)
     {
-        if (response.IsSuccessStatusCode)
-            return;
-
-        var responseContent = response.Content != null
-            ? await response.Content.ReadAsStringAsync()
-            : "";
-
-        throw new HttpException(response.RequestMessage.RequestUri, response.StatusCode, responseContent);
+        return await _requestSender.TrySendRequest(request, _httpClientName);
     }
 }

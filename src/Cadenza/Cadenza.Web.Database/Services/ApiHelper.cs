@@ -4,12 +4,10 @@ namespace Cadenza.Web.Database.Services;
 
 internal class ApiHttpHelper : HttpHelper, IApiHttpHelper
 {
-    public ApiHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter)
-        :base(httpClientFactory, jsonConverter)
+    public ApiHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
+        :base(HttpClientName.Database, jsonConverter, sender)
     {
     }
-
-    protected override string ClientName => "MainAPI";
 
     public async Task<T> Get<T>(string url, object id) where T : new()
     {

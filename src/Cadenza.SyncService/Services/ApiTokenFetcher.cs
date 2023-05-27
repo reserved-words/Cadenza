@@ -8,20 +8,16 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 {
     private readonly AuthSettings _settings;
     private readonly IApiTokenCache _cache;
-    private readonly IHttpClientFactory _httpClientFactory;
     private readonly IJsonConverter _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
 
-    public ApiTokenFetcher(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
+    public ApiTokenFetcher(IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
     {
-        _httpClientFactory = httpClientFactory;
         _jsonConverter = jsonConverter;
         _settings = settings.Value;
         _httpRequestSender = httpRequestSender;
         _cache = cache;
     }
-
-    private HttpClient HttpClient => _httpClientFactory.CreateClient();
 
     public async Task<string> GetToken()
     {
@@ -42,7 +38,7 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 
         request.Content = JsonContent.Create(data);
 
-        var response = await _httpRequestSender.TrySendRequest(HttpClient, request);
+        var response = await _httpRequestSender.TrySendRequest(request);
 
         var content = await response.Content.ReadAsStringAsync();
         var tokenResponse = _jsonConverter.Deserialize<TokenResponse>(content);
