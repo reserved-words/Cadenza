@@ -1,21 +1,21 @@
 ﻿using Cadenza.Common.Domain.Exceptions;
 using Cadenza.Common.Interfaces.Utilities;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
-namespace Cadenza.SyncService.Repositories;
+namespace Cadenza.SyncService.Services;
 
 internal class SyncHttpHelper : ISyncHttpHelper
 {
-    private readonly IConfiguration _configuration;
+    private readonly AuthSettings _settings;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IJsonConverter _jsonConverter;
 
-    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IConfiguration configuration)
+    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IOptions<AuthSettings> settings)
     {
         _httpClientFactory = httpClientFactory;
         _jsonConverter = jsonConverter;
-        _configuration = configuration;
+        _settings = settings.Value;
     }
 
     private HttpClient HttpClient => _httpClientFactory.CreateClient();
@@ -70,20 +70,13 @@ internal class SyncHttpHelper : ISyncHttpHelper
     {
         // TODO - cache token
 
-        var auth = _configuration.GetSection("Authentication");
-
-        var clientId = auth.GetValue<string>("ClientId");
-        var clientSecret = auth.GetValue<string>("ClientSecret");
-        var audience = auth.GetValue<string>("Audience");
-        var tokenEndpoint = auth.GetValue<string>("TokenEndpoint");
-
-        var request = new HttpRequestMessage(HttpMethod.Post, tokenEndpoint);
+        var request = new HttpRequestMessage(HttpMethod.Post, _settings.TokenEndpoint);
 
         var data = new TokenRequest
         {
-            client_id = clientId,
-            client_secret = clientSecret,
-            audience = audience,
+            client_id = _settings.ClientId,
+            client_secret = _settings.ClientSecret,
+            audience = _settings.Audience,
             grant_type = "client_credentials"
         };
 
@@ -95,22 +88,6 @@ internal class SyncHttpHelper : ISyncHttpHelper
         var content = await response.Content.ReadAsStringAsync();
         var tokenResponse = _jsonConverter.Deserialize<TokenResponse>(content);
         return tokenResponse.access_token;
-    }
-
-    private class TokenRequest
-    {
-        public string client_id { get; set; }
-        public string client_secret { get; set; }
-        public string audience { get; set; }
-        public string grant_type { get; set; }
-    }
-
-    private class TokenResponse
-    {
-        public string access_token { get; set; }
-        public string token_type { get; set; }
-        public string scope { get; set; }
-        public int expires_in { get; set; }
     }
 
     private static async Task ValidateResponse(HttpResponseMessage response)

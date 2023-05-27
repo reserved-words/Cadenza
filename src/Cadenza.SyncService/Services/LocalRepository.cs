@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Cadenza.SyncService.Repositories;
+namespace Cadenza.SyncService.Services;
 
 internal class LocalRepository : ISourceRepository
 {

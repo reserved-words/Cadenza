@@ -23,7 +23,8 @@
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
         .ConfigureSettings<DatabaseApiSettings>(configuration, "DatabaseApi")
-        .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi");
+        .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
+        .ConfigureSettings<AuthSettings>(configuration, "Authentication");
 
 });
 

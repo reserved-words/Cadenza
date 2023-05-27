@@ -9,11 +9,10 @@ global using Cadenza.Apps.WindowsService.Settings;
 
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model.Sync;
-global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Utilities;
 
 global using Cadenza.SyncService.Interfaces;
-global using Cadenza.SyncService.Repositories;
+global using Cadenza.SyncService.Services;
 global using Cadenza.SyncService.Settings;
 global using Cadenza.SyncService.Updaters;
