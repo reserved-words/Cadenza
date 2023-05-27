@@ -10,6 +10,7 @@
 
     services
         .AddUtilities()
+        .AddSingleton<IApiTokenCache, ApiTokenCache>()
         .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<IDatabaseRepository, DatabaseRepository>()

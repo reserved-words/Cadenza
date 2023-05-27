@@ -7,23 +7,28 @@ namespace Cadenza.SyncService.Services;
 internal class ApiTokenFetcher : IApiTokenFetcher
 {
     private readonly AuthSettings _settings;
+    private readonly IApiTokenCache _cache;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IJsonConverter _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
 
-    public ApiTokenFetcher(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender)
+    public ApiTokenFetcher(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
     {
         _httpClientFactory = httpClientFactory;
         _jsonConverter = jsonConverter;
         _settings = settings.Value;
         _httpRequestSender = httpRequestSender;
+        _cache = cache;
     }
 
     private HttpClient HttpClient => _httpClientFactory.CreateClient();
 
     public async Task<string> GetToken()
     {
-        // TODO - cache token
+        var cachedToken = _cache.GetToken();
+
+        if (cachedToken != null)
+            return cachedToken;
 
         var request = new HttpRequestMessage(HttpMethod.Post, _settings.TokenEndpoint);
 
@@ -41,6 +46,9 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 
         var content = await response.Content.ReadAsStringAsync();
         var tokenResponse = _jsonConverter.Deserialize<TokenResponse>(content);
+
+        _cache.CacheToken(tokenResponse);
+
         return tokenResponse.access_token;
     }
 }
