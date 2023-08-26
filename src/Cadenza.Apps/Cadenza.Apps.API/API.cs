@@ -35,9 +35,9 @@ public static class API
             JsonSerialization.SetOptions(options.JsonSerializerOptions);
         });
 
-        var domain = $"https://{builder.Configuration["Authentication:Domain"]}/";
-        var audience = builder.Configuration["Authentication:Audience"];
-        var scope = builder.Configuration["Authentication:Scope"];
+        var domain = $"https://{builder.Configuration["ApiAuthentication:Domain"]}/";
+        var audience = builder.Configuration["ApiAuthentication:Audience"];
+        var scope = builder.Configuration["ApiAuthentication:Scope"];
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
@@ -60,7 +60,7 @@ public static class API
 
     public static WebApplication CreateApp(WebApplicationBuilder builder)
     {
-        var scope = builder.Configuration["Authentication:Scope"];
+        var scope = builder.Configuration["ApiAuthentication:Scope"];
 
         var app = builder.Build();
 

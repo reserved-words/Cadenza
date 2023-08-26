@@ -24,7 +24,7 @@
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
         .ConfigureSettings<DatabaseApiSettings>(configuration, "DatabaseApi")
         .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
-        .ConfigureSettings<AuthSettings>(configuration, "Authentication");
+        .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
 
 });
 
