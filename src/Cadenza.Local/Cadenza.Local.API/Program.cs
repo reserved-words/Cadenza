@@ -10,7 +10,7 @@ global using Microsoft.AspNetCore.Mvc;
 using Cadenza.Apps;
 using Cadenza.Apps.API;
 
-var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
+var builder = API.CreateBuilder("LocalApiAuthentication", (IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddUtilities()

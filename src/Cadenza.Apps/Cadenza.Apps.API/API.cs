@@ -11,9 +11,9 @@ namespace Cadenza.Apps.API;
 
 public static class API
 {
-    public static WebApplicationBuilder CreateBuilder(string[] args, Action<IServiceCollection, IConfiguration> registerDependencies)
+    public static WebApplicationBuilder CreateBuilder(string authConfigSectionName, Action<IServiceCollection, IConfiguration> registerDependencies)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(Array.Empty<string>());
 
         builder.RegisterConfiguration();
 
@@ -35,9 +35,9 @@ public static class API
             JsonSerialization.SetOptions(options.JsonSerializerOptions);
         });
 
-        var domain = $"https://{builder.Configuration["ApiAuthentication:Domain"]}/";
-        var audience = builder.Configuration["ApiAuthentication:Audience"];
-        var scope = builder.Configuration["ApiAuthentication:Scope"];
+        var domain = $"https://{builder.Configuration[$"{authConfigSectionName}:Domain"]}/";
+        var audience = builder.Configuration[$"{authConfigSectionName}:Audience"];
+        var scope = builder.Configuration[$"{authConfigSectionName}:Scope"];
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>

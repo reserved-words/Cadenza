@@ -19,7 +19,7 @@ global using Microsoft.AspNetCore.Mvc;
 
 using Cadenza.API.SqlLibrary;
 
-var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
+var builder = API.CreateBuilder("MainApiAuthentication", (IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddCache()
