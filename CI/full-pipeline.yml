@@ -82,6 +82,7 @@ stages:
       
 - stage: github
   displayName: 'GitHub'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   variables:
   - group: github
   jobs:
