@@ -10,7 +10,8 @@ public static class Configuration
             .ConfigureSettings<InfoApiSettings>(builder.Configuration, "InfoApi")
             .ConfigureSettings<LastFmApiSettings>(builder.Configuration, "LastFmApi")
             .ConfigureSettings<LocalApiSettings>(builder.Configuration, "LocalApi")
-            .ConfigureSettings<DatabaseApiSettings>(builder.Configuration, "DatabaseApi");
+            .ConfigureSettings<DatabaseApiSettings>(builder.Configuration, "DatabaseApi")
+            .ConfigureSettings<AuthenticationSettings>(builder.Configuration, "AppAuthentication");
 
         return builder;
     }
