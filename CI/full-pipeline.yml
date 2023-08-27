@@ -26,6 +26,10 @@ stages:
   displayName: 'Local Build'
   variables:
   - group: appSettings.local
+  - group: auth.blazor.local
+  - group: auth.service.local
+  - group: auth.mainApi.local
+  - group: auth.localApi.local
     
   jobs:
   - job: build
@@ -82,6 +86,7 @@ stages:
       
 - stage: github
   displayName: 'GitHub'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   variables:
   - group: github
   jobs:
