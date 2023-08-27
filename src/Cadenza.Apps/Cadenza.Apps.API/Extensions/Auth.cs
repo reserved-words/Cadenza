@@ -13,34 +13,34 @@ internal static class Auth
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
             {
-                c.Authority = authSettings.Domain;
+                c.Authority = authSettings.FullDomain;
                 c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidAudience = authSettings.Audience,
-                    ValidIssuer = authSettings.Domain
+                    ValidIssuer = authSettings.FullDomain
                 };
             });
 
-        builder.Services.AddAuthorization(options => options.AddPolicy(authSettings.Scope, policy => policy.Requirements.Add(new
-            HasScopeRequirement(authSettings.Scope, authSettings.Domain))));
+        builder.Services.AddAuthorization(options => options.AddPolicy(authSettings.Scope, policy =>
+        {
+            policy.Requirements.Add(new HasScopeRequirement(authSettings.Scope, authSettings.FullDomain));
+            policy.Requirements.Add(new IsValidUserRequirement(authSettings.ValidUsers, authSettings.FullDomain));
+        }));
 
         builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+        builder.Services.AddSingleton<IAuthorizationHandler, IsValidUserHandler>();
 
         return builder;
     }
 
-    internal static void RequireAuthorization(this ControllerActionEndpointConventionBuilder builder, IConfiguration config)
+    internal static void RequireAuthorization(this ControllerActionEndpointConventionBuilder builder, IConfiguration config, string configSectionName)
     {
-        var scope = config["ApiAuthentication:Scope"];
+        var scope = config[$"{configSectionName}:Scope"];
         builder.RequireAuthorization(scope);
     }
 
-    private static (string Domain, string Audience, string Scope) GetAuthSettings(this WebApplicationBuilder builder, string authConfigSectionName)
+    private static ApiAuthSettings GetAuthSettings(this WebApplicationBuilder builder, string authConfigSectionName)
     {
-        var domain = $"https://{builder.Configuration[$"{authConfigSectionName}:Domain"]}/";
-        var audience = builder.Configuration[$"{authConfigSectionName}:Audience"];
-        var scope = builder.Configuration[$"{authConfigSectionName}:Scope"];
-
-        return (domain, audience, scope);
+        return builder.Configuration.GetSection(authConfigSectionName).Get<ApiAuthSettings>();
     }
 }

@@ -10,7 +10,9 @@ global using Microsoft.AspNetCore.Mvc;
 using Cadenza.Apps;
 using Cadenza.Apps.API;
 
-var builder = API.CreateBuilder("LocalApiAuthentication", (IServiceCollection services, IConfiguration configuration) =>
+const string AuthConfigSectionName = "LocalApiAuthentication";
+
+var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddUtilities()
@@ -22,6 +24,6 @@ var builder = API.CreateBuilder("LocalApiAuthentication", (IServiceCollection se
         .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
 });
 
-var app = API.CreateApp(builder);
+var app = API.CreateApp(builder, AuthConfigSectionName);
 
 app.Run();

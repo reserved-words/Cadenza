@@ -19,7 +19,9 @@ global using Microsoft.AspNetCore.Mvc;
 
 using Cadenza.API.SqlLibrary;
 
-var builder = API.CreateBuilder("MainApiAuthentication", (IServiceCollection services, IConfiguration configuration) =>
+const string AuthConfigSectionName = "MainApiAuthentication";
+
+var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddCache()
@@ -34,6 +36,6 @@ var builder = API.CreateBuilder("MainApiAuthentication", (IServiceCollection ser
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings");
 });
 
-var app = API.CreateApp(builder);
+var app = API.CreateApp(builder, AuthConfigSectionName);
 
 app.Run();

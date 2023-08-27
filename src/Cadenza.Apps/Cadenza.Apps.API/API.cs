@@ -20,7 +20,7 @@ public static class API
             .ConfigureAuthentication(authConfigSectionName);
     }
 
-    public static WebApplication CreateApp(WebApplicationBuilder builder)
+    public static WebApplication CreateApp(WebApplicationBuilder builder, string authConfigSectionName)
     {
         var app = builder.Build();
 
@@ -28,7 +28,7 @@ public static class API
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors();
-        app.MapControllers().RequireAuthorization(builder.Configuration);
+        app.MapControllers().RequireAuthorization(builder.Configuration, authConfigSectionName);
         app.AddDocumentation();
         app.AddDocumentationUI();
 
