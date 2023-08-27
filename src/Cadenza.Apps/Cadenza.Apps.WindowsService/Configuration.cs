@@ -5,7 +5,6 @@ public static class Configuration
     public static IConfiguration RegisterConfiguration(this IServiceCollection services)
     {
         var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", false)
             .AddEnvironmentJsonFile()
             .AddEnvironmentVariables()
