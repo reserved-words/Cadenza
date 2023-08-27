@@ -9,7 +9,7 @@ public class LocalApiAuthorizationMessageHandler : AuthorizationMessageHandler
         : base(provider, navigation)
     {
         var baseUrl = config["LocalApi:BaseUrl"];
-        var scope = config["Authentication:Scopes:Local"];
+        var scope = config["AppAuthentication:Scopes:Local"];
 
         ConfigureHandler(
             authorizedUrls: new[] { baseUrl },

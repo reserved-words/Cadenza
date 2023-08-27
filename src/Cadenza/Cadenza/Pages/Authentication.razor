@@ -10,9 +10,9 @@
 <RemoteAuthenticatorView Action="@Action">
     <LogOut>
         @{
-            var authority = (string)Configuration["Authentication:Authority"];
-            var clientId = (string)Configuration["Authentication:ClientId"];
-            var redirectUrl = (string)Configuration["Authentication:LogoutRedirect"];
+            var authority = (string)Configuration["AppAuthentication:Authority"];
+            var clientId = (string)Configuration["AppAuthentication:ClientId"];
+            var redirectUrl = (string)Configuration["AppAuthentication:LogoutRedirect"];
 
             Navigation.NavigateTo($"{authority}/v2/logout?client_id={clientId}&returnTo={redirectUrl}");
         }
