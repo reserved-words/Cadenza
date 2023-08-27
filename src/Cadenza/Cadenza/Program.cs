@@ -10,7 +10,7 @@ public class Program
 
         builder.RegisterComponents();
 
-        await builder.RegisterConfiguration();
+        builder.RegisterConfiguration();
 
         builder.Services.RegisterDependencies(builder.Configuration);
 
