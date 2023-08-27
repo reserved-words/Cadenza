@@ -372,5 +372,3 @@ FodyWeavers.xsd
 
 # App Settings
 *appsettings.*.json
-/src/Cadenza.API/Cadenza.API/Cadenza.API/appsettings.Development.json
-/src/Cadenza.API/Cadenza.API/Cadenza.API/appsettings.Development.json
