@@ -1,11 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
-using Cadenza.Common.Domain.JsonConverters;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using Cadenza.Apps.API.Extensions;
 
 namespace Cadenza.Apps.API;
 
@@ -15,63 +11,34 @@ public static class API
     {
         var builder = WebApplication.CreateBuilder(Array.Empty<string>());
 
-        builder.RegisterConfiguration();
-
-        builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File(ctx.Configuration.LogFilePath(), rollingInterval: RollingInterval.Day));
-
-        registerDependencies(builder.Services, builder.Configuration);
-
-        builder.Services.AddHttpClient();
-
-        builder
+        return builder
+            .ConfigureLogging()
+            .RegisterDependencies(registerDependencies)
             .SetCorsPolicy()
-            .RegisterDocumentation();
-
-        builder.Services.Configure<JsonOptions>(options =>
-        {
-            JsonSerialization.SetOptions(options.JsonSerializerOptions);
-        });
-
-        var domain = $"https://{builder.Configuration[$"{authConfigSectionName}:Domain"]}/";
-        var audience = builder.Configuration[$"{authConfigSectionName}:Audience"];
-        var scope = builder.Configuration[$"{authConfigSectionName}:Scope"];
-
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
-            {
-                c.Authority = domain;
-                c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidAudience = audience,
-                    ValidIssuer = domain
-                };
-            });
-
-        builder.Services.AddAuthorization(options => options.AddPolicy(scope, policy => policy.Requirements.Add(new
-            HasScopeRequirement(scope, domain))));
-
-        builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-
-        return builder;
+            .RegisterDocumentation()
+            .ConfigureJsonConverter()
+            .ConfigureAuthentication(authConfigSectionName);
     }
 
     public static WebApplication CreateApp(WebApplicationBuilder builder)
     {
-        var scope = builder.Configuration["ApiAuthentication:Scope"];
-
         var app = builder.Build();
 
         app.UseMiddleware<ErrorHandlingMiddleware>();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors();
-        app.MapControllers().RequireAuthorization(scope);
+        app.MapControllers().RequireAuthorization(builder.Configuration);
         app.AddDocumentation();
         app.AddDocumentationUI();
 
         return app;
+    }
+
+    private static WebApplicationBuilder RegisterDependencies(this WebApplicationBuilder builder, Action<IServiceCollection, IConfiguration> registerDependencies)
+    {
+        registerDependencies(builder.Services, builder.Configuration);
+        builder.Services.AddHttpClient();
+        return builder;
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace Cadenza.Apps.API;
+﻿namespace Cadenza.Apps.API.Extensions;
 
-public static class Documentation
+internal static class Documentation
 {
-    public static WebApplicationBuilder RegisterDocumentation(this WebApplicationBuilder builder)
+    internal static WebApplicationBuilder RegisterDocumentation(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -10,13 +10,13 @@ public static class Documentation
         return builder;
     }
 
-    public static WebApplication AddDocumentation(this WebApplication app)
+    internal static WebApplication AddDocumentation(this WebApplication app)
     {
         app.UseSwagger();
         return app;
     }
 
-    public static WebApplication AddDocumentationUI(this WebApplication app)
+    internal static WebApplication AddDocumentationUI(this WebApplication app)
     {
         app.UseSwaggerUI(options =>
         {

@@ -1,10 +1,10 @@
-﻿namespace Cadenza.Apps.API;
+﻿namespace Cadenza.Apps.API.Extensions;
 
-public static class Cors
+internal static class Cors
 {
-    public static WebApplicationBuilder SetCorsPolicy(this WebApplicationBuilder builder)
+    internal static WebApplicationBuilder SetCorsPolicy(this WebApplicationBuilder builder)
     {
-        builder.Services.AddCors(opts => 
+        builder.Services.AddCors(opts =>
         {
             var allowedClients = GetAllowedClients(builder.Configuration);
 
