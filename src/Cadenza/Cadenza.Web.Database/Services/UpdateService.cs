@@ -5,9 +5,9 @@ namespace Cadenza.Web.Database.Services;
 internal class UpdateService : IUpdateService
 {
     private readonly DatabaseApiSettings _settings;
-    private readonly IHttpHelper _http;
+    private readonly IApiHttpHelper _http;
 
-    public UpdateService(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
+    public UpdateService(IApiHttpHelper http, IOptions<DatabaseApiSettings> settings)
     {
         _http = http;
         _settings = settings.Value;
@@ -19,8 +19,7 @@ internal class UpdateService : IUpdateService
         {
             TrackId = trackId
         };
-        var url = GetApiEndpoint(_settings.Endpoints.RemoveTrack);
-        await _http.Delete(url, null, data);
+        await _http.Delete(_settings.Endpoints.RemoveTrack, data);
     }
 
     public async Task UpdateAlbum(AlbumUpdate update)
@@ -31,8 +30,7 @@ internal class UpdateService : IUpdateService
             Type = update.Type,
             Updates = update.Updates
         };
-        var url = GetApiEndpoint(_settings.Endpoints.UpdateAlbum);
-        await _http.Post(url, null, data);
+        await _http.Post(_settings.Endpoints.UpdateAlbum, data);
     }
 
     public async Task UpdateArtist(ArtistUpdate update)
@@ -43,8 +41,7 @@ internal class UpdateService : IUpdateService
             Type = update.Type,
             Updates = update.Updates
         };
-        var url = GetApiEndpoint(_settings.Endpoints.UpdateArtist);
-        await _http.Post(url, null, data);
+        await _http.Post(_settings.Endpoints.UpdateArtist, data);
     }
 
     public async Task UpdateTrack(TrackUpdate update)
@@ -55,12 +52,6 @@ internal class UpdateService : IUpdateService
             Type = update.Type,
             Updates = update.Updates
         };
-        var url = GetApiEndpoint(_settings.Endpoints.UpdateTrack);
-        await _http.Post(url, null, data);
-    }
-
-    private string GetApiEndpoint(string endpoint)
-    {
-        return $"{_settings.BaseUrl}{endpoint}";
+        await _http.Post(_settings.Endpoints.UpdateTrack, data);
     }
 }

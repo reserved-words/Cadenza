@@ -1,10 +1,28 @@
-<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+
+@inject NavigationManager Navigation
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    <MudContainer Clsas="pa-3">
+                        <p>Checking login status...</p>
+                    </MudContainer>
+                </Authorizing>
+                <NotAuthorized>
+                    @{
+                        Navigation.NavigateTo("authentication/login");
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <MudContainer Clsas="pa-3">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </MudContainer>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

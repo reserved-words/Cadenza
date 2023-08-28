@@ -16,7 +16,6 @@ public class ConsoleLogger : IDebugLogger
 
     public async Task LogError(Exception ex)
     {
-        await DisplayInfo("ERROR - see console");
         await _js.InvokeVoidAsync("console.log", ex.Message);
         await _js.InvokeVoidAsync("console.log", ex.StackTrace);
     }

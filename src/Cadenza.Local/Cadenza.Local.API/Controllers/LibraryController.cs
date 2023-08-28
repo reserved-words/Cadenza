@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Local.API.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace Cadenza.Local.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -12,6 +14,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Track/{id}")]
+    [AllowAnonymous] // Override authentication for now - later can improve this
     public async Task<IActionResult> Track(string id)
     {
         var path = await _service.GetPlayPath(id);

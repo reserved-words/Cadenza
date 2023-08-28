@@ -3,10 +3,10 @@
 internal class History : IHistory
 {
     private readonly IUrl _url;
-    private readonly IHttpHelper _http;
+    private readonly ILastFmHttpHelper _http;
     private readonly LastFmApiSettings _apiSettings;
 
-    public History(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings)
+    public History(IUrl url, ILastFmHttpHelper http, IOptions<LastFmApiSettings> apiSettings)
     {
         _http = http;
         _url = url;

@@ -6,11 +6,11 @@ namespace Cadenza.Web.LastFM.Services;
 internal class Favourites : IFavouritesMessenger, IFavouritesController
 {
     private readonly IUrl _url;
-    private readonly IHttpHelper _http;
+    private readonly ILastFmHttpHelper _http;
     private readonly IAppStore _store;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Favourites(IUrl url, IHttpHelper http, IOptions<LastFmApiSettings> apiSettings, IAppStore store)
+    public Favourites(IUrl url, ILastFmHttpHelper http, IOptions<LastFmApiSettings> apiSettings, IAppStore store)
     {
         _url = url;
         _http = http;
@@ -28,14 +28,14 @@ internal class Favourites : IFavouritesMessenger, IFavouritesController
     {
         var track = await GetTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Favourite);
-        await _http.Post(url, null, track);
+        await _http.Post(url, track);
     }
 
     public async Task Unfavourite(string artist, string title)
     {
         var track = await GetTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Unfavourite);
-        await _http.Post(url, null, track);
+        await _http.Post(url, track);
     }
 
     private async Task<LFM_Track> GetTrack(string artist, string title)

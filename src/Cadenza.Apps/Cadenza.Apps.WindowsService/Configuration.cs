@@ -4,10 +4,10 @@ public static class Configuration
 {
     public static IConfiguration RegisterConfiguration(this IServiceCollection services)
     {
-        var settingsPath = GetPath();
-
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile(settingsPath, false)
+            .AddJsonFile("appsettings.json", false)
+            .AddEnvironmentJsonFile()
+            .AddEnvironmentVariables()
             .Build();
 
         services.AddSingleton(configuration);
@@ -15,8 +15,13 @@ public static class Configuration
         return configuration;
     }
 
-    private static string GetPath()
+    private static IConfigurationBuilder AddEnvironmentJsonFile(this IConfigurationBuilder builder)
     {
-        return Environment.GetEnvironmentVariable("SETTINGS_PATH") ?? "appsettings.json";
+        var env = Environment.GetEnvironmentVariable("ENVIRONMENT");
+
+        if (string.IsNullOrWhiteSpace(env))
+            return builder;
+
+        return builder.AddJsonFile($"appsettings.{env}.json", false);
     }
 }

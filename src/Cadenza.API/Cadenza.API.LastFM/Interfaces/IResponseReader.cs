@@ -2,5 +2,5 @@
 
 internal interface IResponseReader
 {
-    Task<XElement> GetXmlContent(HttpResponseMessage response);
+    XElement GetXmlContent(string contentAsString);
 }

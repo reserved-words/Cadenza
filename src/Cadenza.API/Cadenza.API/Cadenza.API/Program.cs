@@ -14,12 +14,14 @@ global using Cadenza.Common.Domain.Model.LastFm;
 global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
-
 global using Cadenza.Common.Utilities;
 global using Microsoft.AspNetCore.Mvc;
+
 using Cadenza.API.SqlLibrary;
 
-var builder = API.CreateBuilder(args, (IServiceCollection services, IConfiguration configuration) =>
+const string AuthConfigSectionName = "MainApiAuthentication";
+
+var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddCache()
@@ -27,13 +29,13 @@ var builder = API.CreateBuilder(args, (IServiceCollection services, IConfigurati
         .AddSqlLibrary()
         .AddLastFM()
         .AddUtilities()
-        .AddHttpHelper(sp => new HttpClient());
+        .AddDefaultHttpHelper();
 
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings");
 });
 
-var app = API.CreateApp(builder);
+var app = API.CreateApp(builder, AuthConfigSectionName);
 
 app.Run();

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.LastFM;
+﻿using Cadenza.Common.Domain.Exceptions;
+
+namespace Cadenza.API.LastFM;
 
 internal class Authoriser : IAuthoriser
 {
@@ -33,14 +35,17 @@ internal class Authoriser : IAuthoriser
 
     public async Task<string> CreateSession(string token)
     {
-        var url = GetSessionKeyUrl(token);
-        var response = await _http.Get(url);
-
-        if (!response.IsSuccessStatusCode)
+        try
+        {
+            var url = GetSessionKeyUrl(token);
+            var response = await _http.Get(url);
+            var xml = _responseReader.GetXmlContent(response);
+            return _parser.Get(xml, "session", "key");
+        }
+        catch (HttpException)
+        {
             return "";
-
-        var xml = await _responseReader.GetXmlContent(response);
-        return _parser.Get(xml, "session", "key");
+        }
     }
 
     private string GetSessionKeyUrl(string token)

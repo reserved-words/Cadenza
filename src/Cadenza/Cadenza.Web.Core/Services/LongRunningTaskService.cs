@@ -4,11 +4,13 @@ namespace Cadenza.Web.Core.Services;
 
 internal class LongRunningTaskService : ILongRunningTaskService
 {
+    private readonly IDebugLogger _logger;
     private readonly IMessenger _messenger;
 
-    public LongRunningTaskService(IMessenger messenger)
+    public LongRunningTaskService(IMessenger messenger, IDebugLogger logger)
     {
         _messenger = messenger;
+        _logger = logger;
     }
 
     public async Task RunTasks(TaskGroup taskGroup, CancellationToken cancellationToken)
@@ -31,11 +33,31 @@ internal class LongRunningTaskService : ILongRunningTaskService
             }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Task.WhenAll(tasks).ContinueWith(t =>
+            Task.WhenAll(tasks).ContinueWith(async parentTask =>
             {
-                if (t.IsFaulted)
+                if (parentTask.IsCanceled)
                 {
-                    if (tasks.All(tsk => tsk.IsFaulted))
+                    await _logger.LogInfo("Parent task cancelled");
+                    Update(TaskState.Cancelling, CancellationToken.None);
+                    Update(TaskState.Cancelled, CancellationToken.None);
+                }
+                else if (!tasks.Any(t => t.IsFaulted))
+                {
+                    await _logger.LogInfo("All tasks succeeded");
+                    Update(TaskState.Completed, CancellationToken.None);
+                }
+                else
+                {
+                    await _logger.LogInfo("At least one task faulted");
+                    foreach (var task in tasks.Where(t => t.IsFaulted))
+                    {
+                        foreach (var ex in task.Exception.InnerExceptions)
+                        {
+                            await _logger.LogError(ex);
+                        }
+                    }
+
+                    if (tasks.All(t => t.IsFaulted))
                     {
                         Update(TaskState.Errored, CancellationToken.None);
                     }
@@ -43,24 +65,6 @@ internal class LongRunningTaskService : ILongRunningTaskService
                     {
                         Update(TaskState.CompletedWithErrors, CancellationToken.None);
                     }
-
-                    foreach (var ex in t.Exception.InnerExceptions)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(ex.StackTrace);
-                    }
-
-                    throw t.Exception;
-                }
-                else if (t.IsCanceled)
-                {
-                    Update(TaskState.Cancelling, CancellationToken.None);
-                    // Add any cancellation tasks
-                    Update(TaskState.Cancelled, CancellationToken.None);
-                }
-                else
-                {
-                    Update(TaskState.Completed, CancellationToken.None);
                 }
             }, cancellationToken);
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -119,6 +123,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
             {
                 await task.OnError(ex);
             }
+            throw;
         }
     }
 

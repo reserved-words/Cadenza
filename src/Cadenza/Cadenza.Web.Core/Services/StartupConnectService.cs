@@ -3,7 +3,7 @@ using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.Core.Services;
 
-internal class StartupConnectService : IStartupConnectService
+internal class StartupConnectService : IStartupTaskService
 {
     private readonly IAppStore _storeSetter;
     private readonly IEnumerable<IConnector> _connectors;

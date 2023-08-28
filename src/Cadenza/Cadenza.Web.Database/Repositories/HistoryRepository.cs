@@ -3,9 +3,9 @@
 internal class HistoryRepository : IHistoryLogger, IHistoryFetcher
 {
     private readonly DatabaseApiEndpoints _settings;
-    private readonly IApiHelper _apiHelper;
+    private readonly IApiHttpHelper _apiHelper;
 
-    public HistoryRepository(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
+    public HistoryRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;

@@ -59,6 +59,10 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             ProgressMessage = e.Message;
             State = e.State;
             StateHasChanged();
+            if (State == TaskState.Completed)
+            {
+                OnClose();
+            }
             return Task.CompletedTask;
         }
 

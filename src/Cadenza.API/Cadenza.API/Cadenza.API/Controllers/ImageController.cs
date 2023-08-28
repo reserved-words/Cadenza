@@ -1,7 +1,10 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[AllowAnonymous] // Override authentication for now - later can improve this
 public class ImageController : ControllerBase
 {
     private readonly IImageService _service;

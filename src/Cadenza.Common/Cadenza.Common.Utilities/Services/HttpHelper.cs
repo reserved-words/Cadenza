@@ -1,119 +1,99 @@
-﻿using Cadenza.Common.Domain.JsonConverters;
+﻿using Cadenza.Common.Domain.Enums;
 using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Services;
 
-internal class HttpHelper : IHttpHelper
+public abstract class HttpHelper : IHttpHelper
 {
-    private readonly HttpClient _client;
+    private readonly HttpClientName _httpClientName;
+    private readonly IHttpRequestSender _requestSender;
+    private readonly IJsonConverter _jsonConverter;
 
-    public HttpHelper(HttpClient client)
+    public HttpHelper(HttpClientName httpClientName, IJsonConverter jsonConverter, IHttpRequestSender requestSender)
     {
-        _client = client;
+        _httpClientName = httpClientName;
+        _jsonConverter = jsonConverter;
+        _requestSender = requestSender;
     }
 
-    public async Task Post(string url, string authHeader = null, object data = null)
+    public async Task Delete(string url, object data)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
+        var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
-    public async Task Post(string url, string authHeader = null, Dictionary<string, string> parameters = null)
+    public async Task<T> Get<T>(string url) where T : new()
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-
-        if (parameters != null)
-        {
-            httpRequest.Content = new FormUrlEncodedContent(parameters);
-        }
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
-
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
+        var content = await response.Content.ReadAsStringAsync();
+        return _jsonConverter.Deserialize<T>(content);
     }
 
-    public async Task Put(string url, string authHeader = null, object data = null)
+    public async Task<string> Get(string url)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Put, url);
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
+        return await response.Content.ReadAsStringAsync();
+    }
 
-        if (authHeader != null)
+    public async Task<ArtworkImage> GetImage(string url)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await Send(request);
+
+        var bytes = await response.Content.ReadAsByteArrayAsync();
+        var mimeType = response.Content.Headers.ContentType.MediaType;
+
+        if (!mimeType.StartsWith("image/"))
         {
-            httpRequest.Headers.Add("Authorization", authHeader);
+            throw new Exception("Not an image URL");
         }
+
+        return new ArtworkImage(bytes, mimeType);
+    }
+
+    public async Task Post(string url, Dictionary<string, string> parameters)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, url);
+
+        request.Content = new FormUrlEncodedContent(parameters);
+
+        await Send(request);
+    }
+
+    public async Task Post(string url, object data)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data, options: JsonSerialization.Options);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
-    public async Task Delete(string url, string authHeader = null, object data = null)
+    public async Task Put(string url, object data)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Delete, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
+        var request = new HttpRequestMessage(HttpMethod.Put, url);
 
         if (data != null)
         {
-            httpRequest.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data);
         }
 
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
+        await Send(request);
     }
 
-    public async Task<HttpResponseMessage> Get(string url, string authHeader = null)
+    private async Task<HttpResponseMessage> Send(HttpRequestMessage request)
     {
-        var httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
-
-        if (authHeader != null)
-        {
-            httpRequest.Headers.Add("Authorization", authHeader);
-        }
-
-        var response = await _client.SendAsync(httpRequest);
-        await ValidateResponse(response);
-        return response;
-    }
-
-    public async Task<T> Get<T>(string url, string authHeader = null)
-    {
-        var response = await Get(url, authHeader);
-        await ValidateResponse(response);
-        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
-    }
-
-    private async Task ValidateResponse(HttpResponseMessage response)
-    {
-        if (response.IsSuccessStatusCode)
-            return;
-
-        var responseContent = await response.Content.ReadFromJsonAsync<ApiError>();
-
-        var errorMessage = responseContent?.Message ?? response.StatusCode.ToString();
-
-        throw new HttpException(errorMessage);
+        return await _requestSender.TrySendRequest(request, _httpClientName);
     }
 }

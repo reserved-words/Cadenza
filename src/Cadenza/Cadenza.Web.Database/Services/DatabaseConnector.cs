@@ -7,11 +7,11 @@ namespace Cadenza.Web.Database.Services;
 internal class DatabaseConnector : IConnector
 {
     private readonly IConnectionCoordinator _connectorController;
-    private readonly IHttpHelper _http;
+    private readonly IApiHttpHelper _http;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
     private readonly ISearchCoordinator _searchCoordinator;
 
-    public DatabaseConnector(IConnectionCoordinator connectorController, IHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
+    public DatabaseConnector(IConnectionCoordinator connectorController, IApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
     {
         _apiSettings = apiSettings;
         _connectorController = connectorController;
@@ -39,40 +39,13 @@ internal class DatabaseConnector : IConnector
 
     private async Task Connect()
     {
-        try
-        {
-            var response = await _http.Get(GetConnectUrl());
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception();
-            }
-        }
-        catch (Exception)
-        {
-            throw new Exception("Failed to connect to database");
-        }
+        var url = _apiSettings.Value.Endpoints.Connect;
+        await _http.Get(url);
     }
 
     private async Task Populate()
     {
-        try
-        {
-            await _http.Post(GetPopulateUrl(), null, null);
-        }
-        catch (Exception)
-        {
-            throw new Exception("Failed to populate local library");
-        }
-    }
-
-    private string GetConnectUrl()
-    {
-        return $"{_apiSettings.Value.BaseUrl}{_apiSettings.Value.Endpoints.Connect}";
-    }
-
-    private string GetPopulateUrl()
-    {
-        return $"{_apiSettings.Value.BaseUrl}{_apiSettings.Value.Endpoints.Populate}";
+        var url = _apiSettings.Value.Endpoints.Populate;
+        await _http.Post(url);
     }
 }

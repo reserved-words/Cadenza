@@ -27,23 +27,8 @@ internal class ImageFinder : IImageFinder
 
         try
         {
-            var response = await _httpHelper.Get(uri.ToString());
+            var image = await _httpHelper.GetImage(url);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                // Log exact error
-                throw new Exception("Access was not allowed");
-            }
-
-            var bytes = await response.Content.ReadAsByteArrayAsync();
-            var mimeType = response.Content.Headers.ContentType.MediaType;
-
-            if (!mimeType.StartsWith("image/"))
-            {
-                throw new Exception("Not an image URL");
-            }
-
-            var image = new ArtworkImage(bytes, mimeType);
             return _imageConverter.GetBase64UrlFromImage(image);
 
         }

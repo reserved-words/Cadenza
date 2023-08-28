@@ -1,53 +1,17 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using Cadenza.Common.Utilities.Services;
 
-internal class ApiHelper : IApiHelper
+namespace Cadenza.Web.Database.Services;
+
+internal class ApiHttpHelper : HttpHelper, IApiHttpHelper
 {
-    private readonly IOptions<DatabaseApiSettings> _settings;
-    private readonly IHttpHelper _http;
-
-    public ApiHelper(IHttpHelper http, IOptions<DatabaseApiSettings> settings)
+    public ApiHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
+        :base(HttpClientName.Database, jsonConverter, sender)
     {
-        _http = http;
-        _settings = settings;
     }
 
-    public async Task<T> Get<T>(string endpoint)
+    public async Task<T> Get<T>(string url, object id) where T : new()
     {
-        var url = GetApiEndpoint(endpoint);
-        return await _http.Get<T>(url);
-    }
-
-    public async Task<T> Get<T>(string endpoint, int id)
-    {
-        var url = GetApiEndpoint(endpoint, id);
-        return await _http.Get<T>(url);
-    }
-
-    public async Task<T> Get<T>(string endpoint, string id)
-    {
-        var url = GetApiEndpoint(endpoint, id);
-        return await _http.Get<T>(url);
-    }
-
-    public async Task Post(string endpoint)
-    {
-        var url = GetApiEndpoint(endpoint);
-        await _http.Post(url, null, null);
-    }
-
-    public async Task Post<T>(string endpoint, T data)
-    {
-        var url = GetApiEndpoint(endpoint);
-        await _http.Post(url, null, data);
-    }
-
-    private string GetApiEndpoint(string endpoint)
-    {
-        return $"{_settings.Value.BaseUrl}{endpoint}";
-    }
-
-    private string GetApiEndpoint(string endpoint, object id)
-    {
-        return $"{GetApiEndpoint(endpoint)}?id={id}";
+        var urlWithId = $"{url}/{id}";
+        return await Get<T>(urlWithId);
     }
 }

@@ -1,0 +1,57 @@
+﻿@page "/authentication/{action}"
+@using Cadenza.Web.Common.Interfaces.Startup;
+@using Cadenza.Web.Core.Coordinators;
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Options;
+
+@inject NavigationManager Navigation
+
+<RemoteAuthenticatorView Action="@Action">
+    <LogOut>
+        @{
+            Navigation.NavigateTo(LogOutUrl);
+        }
+    </LogOut>
+    <LogOutSucceeded>
+        @{
+            Navigation.NavigateTo(LogInUrl);
+        }
+    </LogOutSucceeded>
+</RemoteAuthenticatorView>
+
+@code {
+
+
+    [Inject]
+    public IStartupService StartupService { get; set; }
+
+    [Inject]
+    public StartupCoordinator StartupCoordinator { get; set; }
+
+    [Inject]
+    public IOptions<AuthenticationSettings> AuthSettings { get; set; }
+
+    [Parameter] public string Action { get; set; }
+
+    protected string LogInUrl => "authentication/login";
+
+    protected string LogOutUrl => GetLogOutUrl();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Action == "login-callback")
+        {
+            var success = await StartupService.Startup();
+            StartupCoordinator.StartedUp = true;
+            StartupCoordinator.Success = success;
+            Navigation.NavigateTo("/");
+        }
+    }
+
+    private string GetLogOutUrl()
+    {
+        var auth = AuthSettings.Value;
+        return $"{auth.Authority}/v2/logout?client_id={auth.ClientId}&returnTo={auth.LogoutRedirect}";
+    }
+}

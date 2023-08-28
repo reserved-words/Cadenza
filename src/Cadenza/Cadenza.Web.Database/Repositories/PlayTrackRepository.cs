@@ -3,9 +3,9 @@
 internal class PlayTrackRepository : IPlayTrackRepository
 {
     private readonly DatabaseApiEndpoints _settings;
-    private readonly IApiHelper _apiHelper;
+    private readonly IApiHttpHelper _apiHelper;
 
-    public PlayTrackRepository(IOptions<DatabaseApiSettings> settings, IApiHelper apiHelper)
+    public PlayTrackRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;

@@ -36,7 +36,8 @@ public static class Startup
     private static IServiceCollection AddStartupServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<IStartupConnectService, StartupConnectService>();
+            .AddTransient<IStartupService, StartupService>()
+            .AddTransient<IStartupTaskService, StartupConnectService>();
     }
 
     private static IServiceCollection AddCoordinators(this IServiceCollection services)
@@ -46,6 +47,7 @@ public static class Startup
             .AddSingleton<ConnectionCoordinator>()
             .AddSingleton<PlayCoordinator>()
             .AddSingleton<SearchCoordinator>()
+            .AddSingleton<StartupCoordinator>()
             .AddSingleton<UpdatesCoordinator>()
             .AddSingleton<ViewCoordinator>()
             .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>())

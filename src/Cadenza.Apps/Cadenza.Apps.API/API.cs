@@ -1,50 +1,44 @@
 ﻿global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
-using Cadenza.Common.Domain.JsonConverters;
-using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using Cadenza.Apps.API.Extensions;
 
 namespace Cadenza.Apps.API;
 
 public static class API
 {
-    public static WebApplicationBuilder CreateBuilder(string[] args, Action<IServiceCollection, IConfiguration> registerDependencies)
+    public static WebApplicationBuilder CreateBuilder(string authConfigSectionName, Action<IServiceCollection, IConfiguration> registerDependencies)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(Array.Empty<string>());
 
-        builder.RegisterConfiguration();
-
-        builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File(ctx.Configuration.LogFilePath(), rollingInterval: RollingInterval.Day));
-
-        registerDependencies(builder.Services, builder.Configuration);
-
-        builder
-            .RegisterCorsPolicies()
-            .RegisterDocumentation();
-
-        builder.Services.Configure<JsonOptions>(options =>
-        {
-            JsonSerialization.SetOptions(options.JsonSerializerOptions);
-        });
-
-        return builder;
+        return builder
+            .ConfigureLogging()
+            .RegisterDependencies(registerDependencies)
+            .SetCorsPolicy()
+            .RegisterDocumentation()
+            .ConfigureJsonConverter()
+            .ConfigureAuthentication(authConfigSectionName);
     }
 
-    public static WebApplication CreateApp(WebApplicationBuilder builder)
+    public static WebApplication CreateApp(WebApplicationBuilder builder, string authConfigSectionName)
     {
         var app = builder.Build();
 
         app.UseMiddleware<ErrorHandlingMiddleware>();
-
-        app.AddCors();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseCors();
+        app.MapControllers().RequireAuthorization(builder.Configuration, authConfigSectionName);
         app.AddDocumentation();
-        app.MapControllers();
         app.AddDocumentationUI();
 
         return app;
+    }
+
+    private static WebApplicationBuilder RegisterDependencies(this WebApplicationBuilder builder, Action<IServiceCollection, IConfiguration> registerDependencies)
+    {
+        registerDependencies(builder.Services, builder.Configuration);
+        builder.Services.AddHttpClient();
+        return builder;
     }
 }
