@@ -4,7 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>865defa7-aec1-442c-9b31-7931bf57f593</UserSecretsId>
+	<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+	  <ServiceWorker Include="wwwroot\service-worker.js"
+					 PublishedContent="wwwroot\service-worker.published.js" />	
+  </ItemGroup>
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
