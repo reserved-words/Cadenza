@@ -17,29 +17,29 @@ internal class UpdateService : IUpdateService
 
     public async Task RemoveTrack(TrackRemovalRequest request)
     {
+        await _updateRepository.AddRemovalRequest(request);
         await _musicRepository.RemoveTrack(request.TrackId);
         await _cachePopulater.Populate(false);
-        await _updateRepository.AddRemovalRequest(request);
     }
 
     public async Task UpdateTrack(ItemUpdateRequest request)
     {
+        await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateTrack(request);
         await _cachePopulater.Populate(false);
-        await _updateRepository.AddUpdateRequest(request);
     }
 
     public async Task UpdateAlbum(ItemUpdateRequest request)
     {
+        await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateAlbum(request);
         await _cachePopulater.Populate(false);
-        await _updateRepository.AddUpdateRequest(request);
     }
 
     public async Task UpdateArtist(ItemUpdateRequest request)
     {
+        await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateArtist(request);
         await _cachePopulater.Populate(false);
-        await _updateRepository.AddUpdateRequest(request);
     }
 }
