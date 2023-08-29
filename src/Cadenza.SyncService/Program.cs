@@ -15,10 +15,8 @@
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<IDatabaseRepository, DatabaseRepository>()
         .AddTransient<ISourceRepository, LocalRepository>()
-        .AddTransient<IService, RemovalRequestsHandler>()
-        .AddTransient<IService, RemovedTracksHandler>()
-        .AddTransient<IService, AddedTracksHandler>()
-        .AddTransient<IService, UpdateRequestsHandler>();
+        .AddTransient<IService, UpdateRequestsHandler>()
+        .AddTransient<IService, SyncHandler>();
 
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
