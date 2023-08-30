@@ -4,7 +4,9 @@ using Cadenza.API.SqlLibrary.Model;
 namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
 {
-    private IIdGenerator _idGenerator;
+    private const string DefaultGenre = "None";
+
+    private readonly IIdGenerator _idGenerator;
 
     public DataMapper(IIdGenerator idGenerator)
     {
@@ -34,7 +36,7 @@ internal class DataMapper : IDataMapper
             NameId = _idGenerator.GenerateId(track.Album.ArtistName),
             Name = track.Album.ArtistName,
             GroupingId = (int)Grouping.None,
-            Genre = "None"
+            Genre = DefaultGenre
         };
     }
 
@@ -79,7 +81,7 @@ internal class DataMapper : IDataMapper
             NameId = _idGenerator.GenerateId(track.Artist.Name),
             Name = track.Artist.Name,
             GroupingId = (int)track.Artist.Grouping,
-            Genre = track.Artist.Genre,
+            Genre = ValueOrDefault(track.Artist.Genre, DefaultGenre),
             City = track.Artist.City,
             State = track.Artist.State,
             Country = track.Artist.Country,
@@ -88,8 +90,6 @@ internal class DataMapper : IDataMapper
             ImageContent = track.Artist.ImageContent
         };
     }
-
-
 
     public AlbumInfo MapAlbum(GetAlbumData album, List<GetDiscData> discs)
     {
@@ -137,7 +137,7 @@ internal class DataMapper : IDataMapper
     {
         return new TrackInfo
         {
-            Source = (LibrarySource)track.SourceId,
+            Source = track.SourceId,
             Id = track.Id,
             IdFromSource = track.IdFromSource,
             ArtistId = track.ArtistId,
@@ -149,5 +149,10 @@ internal class DataMapper : IDataMapper
             Lyrics = track.Lyrics,
             Tags = new TagList(track.TagList)
         };
+    }
+
+    private static string ValueOrDefault(string value, string defaultValue)
+    {
+        return string.IsNullOrWhiteSpace(value) ? defaultValue : value;
     }
 }
