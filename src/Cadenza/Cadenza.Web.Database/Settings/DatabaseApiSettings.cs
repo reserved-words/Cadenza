@@ -26,6 +26,7 @@ public class DatabaseApiEndpoints
 
     public string ArtistImage { get; set; }
     public string AlbumArtwork { get; set; }
+    public string AlbumsFeaturingArtist { get; set; }
 
     public string Artist { get; set; }
     public string ArtistAlbums { get; set; }

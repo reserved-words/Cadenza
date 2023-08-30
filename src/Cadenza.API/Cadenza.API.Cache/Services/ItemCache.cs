@@ -5,7 +5,7 @@ internal class ItemCache : IItemCache
     private readonly Dictionary<PlayerItemType, List<PlayerItem>> _items = new();
     private readonly Dictionary<string, List<PlayerItem>> _tags = new();
 
-    public void CacheAllbum(AlbumInfo album)
+    public void CacheAlbum(AlbumInfo album)
     {
         var item = new SearchableAlbum(album);
         _items.Cache(PlayerItemType.Album, item);

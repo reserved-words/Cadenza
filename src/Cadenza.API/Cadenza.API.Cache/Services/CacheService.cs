@@ -33,7 +33,7 @@ internal class CacheService : ICacheService
         foreach (var album in library.Albums)
         {
             _helperCache.CacheAlbum(album);
-            _itemCache.CacheAllbum(album);
+            _itemCache.CacheAlbum(album);
             _mainCache.CacheAlbum(album);
         }
 
@@ -47,17 +47,12 @@ internal class CacheService : ICacheService
             _playCache.CacheTrack(track, artist, album);
         }
 
-        var albumTracks = library.AlbumTracks
-            .OrderBy(at => at.AlbumId)
-            .ThenBy(at => at.DiscNo)
-            .ThenBy(at => at.TrackNo)
-            .ToList();
+        var albumTrackAlbums = library.AlbumTracks
+            .GroupBy(at => at.AlbumId);
 
-        foreach (var albumTrack in albumTracks)
+        foreach (var album in albumTrackAlbums)
         {
-            var track = _mainCache.GetTrack(albumTrack.TrackId);
-            _helperCache.CacheAlbumTrack(albumTrack, track);
-            _mainCache.CacheAlbumTrack(albumTrack);
+            CacheAlbumTracks(album);
         }
 
         return Task.CompletedTask;
@@ -78,6 +73,12 @@ internal class CacheService : ICacheService
     public Task<List<Album>> GetAlbums(int artistId)
     {
         var result = _helperCache.GetAlbumsByArtist(artistId);
+        return Task.FromResult(result);
+    }
+
+    public Task<List<Album>> GetAlbumsFeaturingArtist(int artistId)
+    {
+        var result = _helperCache.GetAlbumsFeaturingArtist(artistId);
         return Task.FromResult(result);
     }
 
@@ -208,5 +209,28 @@ internal class CacheService : ICacheService
     private IEnumerable<PlayTrack> GetArtistPlayTracks(int id)
     {
         return _helperCache.GetArtistTracks(id).Select(t => _playCache.GetTrack(t.Id)).ToList();
+    }
+
+    private void CacheAlbumTracks(IGrouping<int, AlbumTrackLink> albumTracks)
+    {
+        var album = _mainCache.GetAlbum(albumTracks.Key);
+
+        var tracks = albumTracks
+            .OrderBy(at => at.DiscNo)
+            .ThenBy(at => at.TrackNo)
+            .ToList();
+
+        foreach (var t in tracks)
+        {
+            var track = _mainCache.GetTrack(t.TrackId);
+
+            if (track.ArtistId != album.ArtistId)
+            {
+                _helperCache.CacheAlbumFeaturingArtist(track.ArtistId, album);
+            }
+
+            _helperCache.CacheAlbumTrack(t, track);
+            _mainCache.CacheAlbumTrack(t);
+        }
     }
 }

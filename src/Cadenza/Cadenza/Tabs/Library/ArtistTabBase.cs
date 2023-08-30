@@ -21,9 +21,13 @@ public class ArtistTabBase : ComponentBase
     {
         Artist = await Repository.GetArtist(Id);
 
-        var albums = await Repository.GetAlbums(Id);
+        var albumsByArtist = await Repository.GetAlbums(Id);
 
-        Releases = albums.GroupByReleaseType();
+        var albumsFeaturingArtist = await Repository.GetAlbumsFeaturingArtist(Id);
+
+        Releases = albumsByArtist
+            .GroupByReleaseType()
+            .AddAlbumsFeaturingArtist(albumsFeaturingArtist);
 
         StateHasChanged();
     }

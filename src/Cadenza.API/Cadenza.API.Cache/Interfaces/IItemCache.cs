@@ -2,7 +2,7 @@
 
 internal interface IItemCache
 {
-    void CacheAllbum(AlbumInfo album);
+    void CacheAlbum(AlbumInfo album);
     void CacheArtist(ArtistInfo artist);
     void CacheTrack(TrackInfo track, AlbumInfo album);
     void Clear();
