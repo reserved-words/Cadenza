@@ -40,6 +40,20 @@ public static class ItemExtensions
             .ToList();
     }
 
+    public static List<ArtistReleaseGroup> AddAlbumsFeaturingArtist(this List<ArtistReleaseGroup> groupedAlbums, List<Album> byOtherArtists)
+    {
+        if (byOtherArtists.Any())
+        {
+            groupedAlbums.Add(new ArtistReleaseGroup
+            {
+                Group = ReleaseTypeGroup.ByOtherArtists,
+                Albums = byOtherArtists
+            });
+        }
+
+        return groupedAlbums;
+    }
+
     public static PlayerItemType? GetItemType(this PlaylistType playlistType)
     {
         return playlistType switch

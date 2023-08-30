@@ -19,6 +19,12 @@ internal class LibraryService : ILibraryService
         return await _cache.Albums.GetAlbum(id);
     }
 
+    public async Task<List<Album>> AlbumsFeaturingArtist(int id)
+    {
+        await PopulateCache();
+        return await _cache.Artists.GetAlbumsFeaturingArtist(id);
+    }
+
     public async Task<List<AlbumTrack>> AlbumTracks(int id)
     {
         await PopulateCache();

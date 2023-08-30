@@ -54,6 +54,9 @@ internal static class CacheExtensions
             dictionary.Add(key, list);
         }
 
+        if (list.Contains(value))
+            return;
+
         list.Add(value);
     }
 
