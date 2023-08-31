@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Cadenza.Common.Interfaces.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cadenza.Local.API.Controllers;
 
@@ -6,17 +7,21 @@ namespace Cadenza.Local.API.Controllers;
 [ApiController]
 public class LibraryController : ControllerBase
 {
+    private readonly IBase64Encoder _base64Encoder;
     private readonly ILibraryService _service;
 
-    public LibraryController(ILibraryService service)
+    public LibraryController(ILibraryService service, IBase64Encoder base64Encoder)
     {
         _service = service;
+        _base64Encoder = base64Encoder;
     }
 
-    [HttpGet("Track/{id}")]
+    [HttpGet("Track/{idBase64}")]
     [AllowAnonymous] // Override authentication for now - later can improve this
-    public async Task<IActionResult> Track(string id)
+    public async Task<IActionResult> Track(string idBase64)
     {
+        var id = _base64Encoder.Decode(idBase64);
+
         var path = await _service.GetPlayPath(id);
 
         Stream stream = new FileStream(path, FileMode.Open);

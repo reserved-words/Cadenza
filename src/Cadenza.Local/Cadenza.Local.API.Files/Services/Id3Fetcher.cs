@@ -4,15 +4,13 @@ namespace Cadenza.Local.API.Files.Services;
 
 internal class Id3Fetcher : IId3Fetcher
 {
-    private readonly IBase64Converter _base64Converter;
     private readonly ICommentProcessor _commentProcessor;
     private readonly IId3TagsService _id3Service;
 
-    public Id3Fetcher(ICommentProcessor commentProcessor, IId3TagsService id3Service, IBase64Converter base64Converter)
+    public Id3Fetcher(ICommentProcessor commentProcessor, IId3TagsService id3Service)
     {
         _commentProcessor = commentProcessor;
         _id3Service = id3Service;
-        _base64Converter = base64Converter;
     }
 
     public SyncTrack GetFileData(string filepath)
@@ -31,7 +29,7 @@ internal class Id3Fetcher : IId3Fetcher
     {
         return new SyncTrack
         {
-            IdFromSource = _base64Converter.ToBase64(data.Track.Filepath),
+            IdFromSource = data.Track.Filepath,
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = comment.TrackYear.Nullify() ?? data.Album.Year,

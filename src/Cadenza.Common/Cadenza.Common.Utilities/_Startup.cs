@@ -11,7 +11,7 @@ public static class _Startup
     public static IServiceCollection AddUtilities(this IServiceCollection services)
     {
         return services
-            .AddTransient<IBase64Converter, Base64Converter>()
+            .AddTransient<IBase64Encoder, Base64Encoder>()
             .AddTransient<IDateTime, CurrentDateTime>()
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IHasher, Hasher>()

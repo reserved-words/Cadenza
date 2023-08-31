@@ -1,14 +1,18 @@
-﻿namespace Cadenza.Local.API.Controllers;
+﻿using Cadenza.Common.Interfaces.Utilities;
+
+namespace Cadenza.Local.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class SyncController : ControllerBase
 {
+    private readonly IBase64Encoder _base64Encoder;
     private readonly ISyncService _service;
 
-    public SyncController(ISyncService service)
+    public SyncController(ISyncService service, IBase64Encoder base64Encoder)
     {
         _service = service;
+        _base64Encoder = base64Encoder;
     }
 
     [HttpGet("GetAllTracks")]
@@ -17,9 +21,10 @@ public class SyncController : ControllerBase
         return await _service.GetAllTracks();
     }
 
-    [HttpGet("GetTrack/{id}")]
-    public async Task<SyncTrack> GetTrack(string id)
+    [HttpGet("GetTrack/{idBase64}")]
+    public async Task<SyncTrack> GetTrack(string idBase64)
     {
+        var id = _base64Encoder.Decode(idBase64);
         return await _service.GetTrack(id);
     }
 

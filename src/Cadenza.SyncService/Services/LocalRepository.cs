@@ -1,16 +1,19 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Common.Interfaces.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.SyncService.Services;
 
 internal class LocalRepository : ISourceRepository
 {
+    private readonly IBase64Encoder _base64Encoder;
     private readonly ISyncHttpHelper _http;
     private readonly LocalApiSettings _apiSettings;
 
-    public LocalRepository(ISyncHttpHelper http, IOptions<LocalApiSettings> apiSettings)
+    public LocalRepository(ISyncHttpHelper http, IOptions<LocalApiSettings> apiSettings, IBase64Encoder base64Encoder)
     {
         _http = http;
         _apiSettings = apiSettings.Value;
+        _base64Encoder = base64Encoder;
     }
 
     public LibrarySource Source => LibrarySource.Local;
@@ -23,7 +26,8 @@ internal class LocalRepository : ISourceRepository
 
     public async Task<SyncTrack> GetTrack(string idFromSource)
     {
-        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{idFromSource}";
+        var idBase64 = _base64Encoder.Encode(idFromSource);
+        var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{idBase64}";
         return await _http.Get<SyncTrack>(url);
     }
 

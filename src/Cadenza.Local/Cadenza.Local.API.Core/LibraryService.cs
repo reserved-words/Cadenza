@@ -4,22 +4,19 @@ namespace Cadenza.Local.API.Core;
 
 internal class LibraryService : ILibraryService
 {
-    private readonly IBase64Converter _converter;
     private readonly IOptions<CurrentlyPlayingSettings> _settings;
 
-    public LibraryService(IOptions<CurrentlyPlayingSettings> settings, IBase64Converter converter)
+    public LibraryService(IOptions<CurrentlyPlayingSettings> settings)
     {
         _settings = settings;
-        _converter = converter;
     }
 
     public Task<string> GetPlayPath(string id)
     {
-        var filepath = _converter.FromBase64(id);
-        var copyFilename = CreatePlayingFilepath(filepath);
+        var copyFilename = CreatePlayingFilepath(id);
         var copyLocation = GetCopyLocation();
         var copyFilepath = Path.Combine(copyLocation, copyFilename);
-        File.Copy(filepath, copyFilepath);
+        File.Copy(id, copyFilepath);
         return Task.FromResult(copyFilepath);
     }
 
