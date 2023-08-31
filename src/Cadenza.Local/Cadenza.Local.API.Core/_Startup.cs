@@ -1,5 +1,4 @@
 ﻿global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Interfaces.Utilities;
 global using Cadenza.Local.API.Common.Controllers;
@@ -8,6 +7,9 @@ global using Cadenza.Local.API.Core.Interfaces;
 global using Cadenza.Local.API.Core.Services;
 global using Cadenza.Local.API.Core.Settings;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Cadenza.Local.API.Core.Tests")]
 
 namespace Cadenza.Local.API.Core
 {
@@ -23,6 +25,7 @@ namespace Cadenza.Local.API.Core
         private static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
             return services
+                .AddTransient<IFilepathParser, FilepathParser>()
                 .AddTransient<IMusicDirectory, MusicDirectory>();
         }
     }

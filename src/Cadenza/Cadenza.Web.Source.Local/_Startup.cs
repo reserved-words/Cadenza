@@ -8,7 +8,6 @@ global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-using Cadenza.Common.Utilities.Services;
 using Cadenza.Web.Common.Interfaces.Player;
 using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Source.Local.Interfaces;
@@ -24,7 +23,8 @@ public static class Startup
             .AddTransient<ISourcePlayer>(sp => new LocalPlayer(
                 sp.GetRequiredService<TAudioPlayer>(),
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
-                sp.GetRequiredService<IUrl>()))
+                sp.GetRequiredService<IUrl>(),
+                sp.GetRequiredService<IBase64Encoder>()))
             .AddTransient<IConnector, LocalSourceConnector>()
             .AddTransient<ILocalHttpHelper, LocalHttpHelper>();
     }

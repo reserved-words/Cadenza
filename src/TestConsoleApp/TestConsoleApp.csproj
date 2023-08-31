@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
   </ItemGroup>
 

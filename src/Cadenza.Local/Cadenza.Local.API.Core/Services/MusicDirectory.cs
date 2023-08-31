@@ -30,8 +30,8 @@ internal class MusicDirectory : IMusicDirectory
 
     public Task RemoveFile(string filepath)
     {
-        var filename = Path.GetFileName(filepath);
-        var targetLocation = Path.Combine(_settings.RemovedDirectory, filename);
+        var relativePath = Path.GetRelativePath(_settings.Directory, filepath);
+        var targetLocation = Path.Combine(_settings.RemovedDirectory, relativePath);
         _fileAccess.MoveFile(filepath, targetLocation);
         return Task.CompletedTask;
     }

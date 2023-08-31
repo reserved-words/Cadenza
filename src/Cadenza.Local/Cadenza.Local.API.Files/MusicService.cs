@@ -13,9 +13,9 @@ internal class MusicService : IMusicFilesService
         _fetcher = fetcher;
     }
 
-    public Task<SyncTrack> GetFileData(string filepath)
+    public Task<SyncTrack> GetFileData(string id, string filepath)
     {
-        var result = _fetcher.GetFileData(filepath);
+        var result = _fetcher.GetFileData(id, filepath);
         return Task.FromResult(result);
     }
 
