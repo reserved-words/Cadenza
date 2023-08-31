@@ -2,7 +2,11 @@
 global using Cadenza.Common.Interfaces.Utilities;
 global using Cadenza.Common.Utilities.Services;
 global using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using FileAccess = Cadenza.Common.Utilities.Services.FileAccess;
+
+[assembly:InternalsVisibleTo("Cadenza.Common.Utilities.Tests")]
+[assembly: InternalsVisibleTo("TestConsoleApp")]
 
 namespace Cadenza.Common.Utilities;
 
@@ -12,10 +16,8 @@ public static class _Startup
     {
         return services
             .AddTransient<IBase64Encoder, Base64Encoder>()
-            .AddTransient<IDateTime, CurrentDateTime>()
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IHasher, Hasher>()
-            .AddTransient<IIdGenerator, IdGenerator>()
             .AddTransient<IImageConverter, ImageConverter>()
             .AddTransient<IJsonConverter, JsonConverter>()
             .AddTransient<IHttpRequestSender, HttpRequestSender>()

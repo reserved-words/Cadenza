@@ -111,7 +111,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayGenre(id);
 
-        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Genre, id);
+        var playlistId = new PlaylistId(id, PlaylistType.Genre, id);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 
@@ -126,7 +126,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayTag(id);
 
-        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Tag, id);
+        var playlistId = new PlaylistId(id, PlaylistType.Tag, id);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 

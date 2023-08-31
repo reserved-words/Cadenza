@@ -93,7 +93,7 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.Performers = null;
             f.Tag.PerformersSort = null;
             f.Tag.Performers = new[] { data.Artist.Name };
-            f.Tag.PerformersSort = new[] { _nameComparer.GetSortName(data.Artist.Name) };
+            f.Tag.PerformersSort = new[] { _nameComparer.GetCompareName(data.Artist.Name) };
             f.Tag.Genres = null;
             f.Tag.Genres = new[] { data.Artist.Genre };
             f.Tag.Grouping = data.Artist.Grouping;
@@ -107,7 +107,7 @@ internal class Id3TagsService : IId3TagsService
             f.Tag.AlbumArtists = null;
             f.Tag.AlbumArtistsSort = null;
             f.Tag.AlbumArtists = new[] { data.Album.ArtistName };
-            f.Tag.AlbumArtistsSort = new[] { _nameComparer.GetSortName(data.Album.ArtistName) };
+            f.Tag.AlbumArtistsSort = new[] { _nameComparer.GetCompareName(data.Album.ArtistName) };
 
             f.Tag.Year = Convert.ToUInt16(data.Album.Year);
 

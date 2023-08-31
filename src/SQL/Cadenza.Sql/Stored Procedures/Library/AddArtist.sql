@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [Library].[AddArtist]
-	@NameId NVARCHAR(200),
 	@Name NVARCHAR(200),
+	@CompareName NVARCHAR(200),
 	@GroupingId INT,
 	@Genre NVARCHAR(100),
 	@City NVARCHAR(100),
@@ -15,14 +15,14 @@ BEGIN
 
 	SELECT @Id = [Id] 
 	FROM [Library].[Artists] 
-	WHERE [NameId] = @NameId
+	WHERE [CompareName] = @CompareName
 
 	IF @Id IS NOT NULL
 		RETURN
 
 	INSERT INTO [Library].[Artists] (
-		[NameId],
 		[Name],
+		[CompareName],
 		[GroupingId],
 		[Genre],
 		[City],
@@ -30,8 +30,8 @@ BEGIN
 		[Country]
 	)
 	VALUES (
-		@NameId,
 		@Name,
+		@CompareName,
 		@GroupingId,
 		@Genre,
 		@City,

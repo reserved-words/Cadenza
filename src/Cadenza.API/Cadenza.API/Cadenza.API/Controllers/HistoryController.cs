@@ -29,10 +29,10 @@ public class HistoryController : ControllerBase
         await _service.LogAlbumPlay(albumId);
     }
 
-    [HttpPost("LogArtist/{nameId}")]
-    public async Task LogArtistPlay(string nameId)
+    [HttpPost("LogArtist/{artistId}")]
+    public async Task LogArtistPlay(int artistId)
     {
-        await _service.LogArtistPlay(nameId);
+        await _service.LogArtistPlay(artistId);
     }
 
     [HttpPost("LogGenre/{genre}")]
@@ -59,9 +59,9 @@ public class HistoryController : ControllerBase
         await _service.LogTagPlay(tag);
     }
 
-    [HttpPost("LogTrack/{idFromSource}")]
-    public async Task LogTrackPlay(string idFromSource)
+    [HttpPost("LogTrack/{trackId}")]
+    public async Task LogTrackPlay(int trackId)
     {
-        await _service.LogTrackPlay(idFromSource);
+        await _service.LogTrackPlay(trackId);
     }
 }

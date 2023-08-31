@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [History].[LogTrackPlay]
-	@IdFromSource NVARCHAR(500)
+	@TrackId INT
 AS
 BEGIN
 	
@@ -19,12 +19,8 @@ BEGIN
 	INSERT INTO [History].[PlayedTracks] (
 		[PlayedItemId],
 		[TrackId])
-	SELECT
+	VALUES (
 		@PlayedItemId,
-		[Id]
-	FROM
-		[Library].[Tracks]
-	WHERE
-		[IdFromSource] = @IdFromSource
+		@TrackId)
 
 END

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [History].[LogArtistPlay]
-	@NameId NVARCHAR(200)
+	@ArtistId INT
 AS
 BEGIN
 	
@@ -19,12 +19,8 @@ BEGIN
 	INSERT INTO [History].[PlayedArtists] (
 		[PlayedItemId],
 		[ArtistId])
-	SELECT
+	VALUES (
 		@PlayedItemId,
-		[Id]
-	FROM
-		[Library].[Artists]
-	WHERE
-		[NameId] = @NameId
+		@ArtistId)
 
 END

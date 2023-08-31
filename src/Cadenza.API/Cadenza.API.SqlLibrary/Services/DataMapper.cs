@@ -6,11 +6,11 @@ internal class DataMapper : IDataMapper
 {
     private const string DefaultGenre = "None";
 
-    private readonly IIdGenerator _idGenerator;
+    private readonly INameComparer _nameComparer;
 
-    public DataMapper(IIdGenerator idGenerator)
+    public DataMapper(INameComparer nameComparer)
     {
-        _idGenerator = idGenerator;
+        _nameComparer = nameComparer;
     }
 
     public NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId)
@@ -33,8 +33,8 @@ internal class DataMapper : IDataMapper
     {
         return new NewArtistData
         {
-            NameId = _idGenerator.GenerateId(track.Album.ArtistName),
             Name = track.Album.ArtistName,
+            CompareName = _nameComparer.GetCompareName(track.Album.ArtistName),
             GroupingId = (int)Grouping.None,
             Genre = DefaultGenre
         };
@@ -78,8 +78,8 @@ internal class DataMapper : IDataMapper
     {
         return new NewArtistData
         {
-            NameId = _idGenerator.GenerateId(track.Artist.Name),
             Name = track.Artist.Name,
+            CompareName = _nameComparer.GetCompareName(track.Artist.Name),
             GroupingId = (int)track.Artist.Grouping,
             Genre = ValueOrDefault(track.Artist.Genre, DefaultGenre),
             City = track.Artist.City,
