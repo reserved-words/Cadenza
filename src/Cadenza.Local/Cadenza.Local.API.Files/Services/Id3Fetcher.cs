@@ -13,23 +13,23 @@ internal class Id3Fetcher : IId3Fetcher
         _id3Service = id3Service;
     }
 
-    public SyncTrack GetFileData(string filepath)
+    public SyncTrack GetFileData(string id, string filepath)
     {
         var data = _id3Service.GetId3Data(filepath);
         var comment = _commentProcessor.GetData(data.Track.Comment);
 
-        var track = ConvertTrack(data, comment);
+        var track = ConvertTrack(id, data, comment);
         track.Artist = ConvertTrackArtist(data);
         track.Album = ConvertAlbum(data, comment);
 
         return track;
     }
 
-    private SyncTrack ConvertTrack(Id3Data data, CommentData comment)
+    private SyncTrack ConvertTrack(string id, Id3Data data, CommentData comment)
     {
         return new SyncTrack
         {
-            IdFromSource = data.Track.Filepath,
+            IdFromSource = id,
             Title = data.Track.Title,
             DurationSeconds = (int)data.Track.Duration.TotalSeconds,
             Year = comment.TrackYear.Nullify() ?? data.Album.Year,

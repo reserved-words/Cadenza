@@ -2,18 +2,20 @@
 using System.Text;
 
 namespace TestConsoleApp;
-internal class UpdateFromBase64ToFilepaths
+internal class StripBaseDirectoryFromFilepath
 {
     private const string ConnectionString = "Data Source=localhost;Initial Catalog={0};Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
 
     private const string GetTracksSql = "SELECT Id, IdFromSource FROM Library.Tracks";
-    private const string UpdateTrackSql = "UPDATE Library.Tracks SET IdFromSource = @FilePath WHERE Id = @Id";
+    private const string UpdateTrackSql = "UPDATE Library.Tracks SET IdFromSource = @Trimmed WHERE Id = @Id";
 
     private const string GetRemovedTracksSql = "SELECT Id, TrackIdFromSource FROM [Queue].[TrackRemovals]";
-    private const string UpdateRemovedTrackSql = "UPDATE [Queue].[TrackRemovals] SET TrackIdFromSource = @FilePath WHERE Id = @Id";
+    private const string UpdateRemovedTrackSql = "UPDATE [Queue].[TrackRemovals] SET TrackIdFromSource = @Trimmed WHERE Id = @Id";
 
-    internal async Task Run(string databaseName)
+    internal async Task Run(string databaseName, string trimString)
     {
+        var trimLength = trimString.Length;
+
         var connectionString = string.Format(ConnectionString, databaseName);
 
         using var connection = new SqlConnection(connectionString);
@@ -22,8 +24,8 @@ internal class UpdateFromBase64ToFilepaths
         {
             connection.Open();
 
-            await RunSql(connection, GetTracksSql, UpdateTrackSql);
-            await RunSql(connection, GetRemovedTracksSql, UpdateRemovedTrackSql);
+            await RunSql(connection, GetTracksSql, UpdateTrackSql, trimLength);
+            await RunSql(connection, GetRemovedTracksSql, UpdateRemovedTrackSql, trimLength);
         }
         finally
         {
@@ -34,7 +36,7 @@ internal class UpdateFromBase64ToFilepaths
         }
     }
 
-    private async Task RunSql(SqlConnection connection, string getSql, string updateSql)
+    private async Task RunSql(SqlConnection connection, string getSql, string updateSql, int trimLength)
     {
         List<(int Id, string IdFromSource)> tracks = new();
 
@@ -54,14 +56,13 @@ internal class UpdateFromBase64ToFilepaths
 
         foreach (var track in tracks)
         {
-            var textBytes = Convert.FromBase64String(track.IdFromSource);
-            var filepath = Encoding.UTF8.GetString(textBytes);
+            var trimmed = track.IdFromSource.Substring(trimLength, track.IdFromSource.Length - trimLength);
 
-            Console.WriteLine($"{track.Id}: {track.IdFromSource}: {filepath}");
+            Console.WriteLine($"{track.Id}: {track.IdFromSource}: {trimmed}");
 
             using (var command = new SqlCommand(updateSql, connection))
             {
-                command.Parameters.Add(new SqlParameter("FilePath", filepath));
+                command.Parameters.Add(new SqlParameter("Trimmed", trimmed));
                 command.Parameters.Add(new SqlParameter("Id", track.Id));
 
                 await command.ExecuteNonQueryAsync();

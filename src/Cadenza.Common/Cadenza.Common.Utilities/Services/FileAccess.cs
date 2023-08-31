@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Cadenza.Common.Utilities.Services;
+﻿namespace Cadenza.Common.Utilities.Services;
 
 internal class FileAccess : IFileAccess
 {
