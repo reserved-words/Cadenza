@@ -26,12 +26,12 @@ internal class DataInsertService : IDataInsertService
     private const string LogTagPlayProcedure = "[History].[LogTagPlay]";
 
     private const string AlbumIdParameter = "AlbumId";
-    private const string IdFromSourceParameter = "IdFromSource";
+    private const string ArtistIdParameter = "ArtistId";
     private const string IdParameter = "Id";
     private const string GenreParameter = "Genre";
     private const string GroupingIdParameter = "GroupingId";
-    private const string NameIdParameter = "NameId";
     private const string TagParameter = "Tag";
+    private const string TrackIdParameter = "TrackId";
 
     private IDataAccess _dbAccess;
 
@@ -70,8 +70,8 @@ internal class DataInsertService : IDataInsertService
     {
         var parameters = new DynamicParameters();
 
-        parameters.Add(nameof(data.NameId), data.NameId);
         parameters.Add(nameof(data.Name), data.Name);
+        parameters.Add(nameof(data.CompareName), data.CompareName);
         parameters.Add(nameof(data.GroupingId), data.GroupingId);
         parameters.Add(nameof(data.Genre), data.Genre);
         parameters.Add(nameof(data.City), data.City);
@@ -148,10 +148,10 @@ internal class DataInsertService : IDataInsertService
         await _dbAccess.Execute(LogAlbumPlayProcedure, parameters);
     }
 
-    public async Task LogArtistPlay(string nameId)
+    public async Task LogArtistPlay(int artistId)
     {
         var parameters = new DynamicParameters();
-        parameters.Add(NameIdParameter, nameId);
+        parameters.Add(ArtistIdParameter, artistId);
         await _dbAccess.Execute(LogArtistPlayProcedure, parameters);
     }
 
@@ -181,10 +181,10 @@ internal class DataInsertService : IDataInsertService
         await _dbAccess.Execute(LogTagPlayProcedure, parameters);
     }
 
-    public async Task LogTrackPlay(string idFromSource)
+    public async Task LogTrackPlay(int trackId)
     {
         var parameters = new DynamicParameters();
-        parameters.Add(IdFromSourceParameter, idFromSource);
+        parameters.Add(TrackIdParameter, trackId);
         await _dbAccess.Execute(LogTrackPlayProcedure, parameters);
     }
 }

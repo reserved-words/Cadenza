@@ -13,9 +13,9 @@ internal interface IDataInsertService
     Task AddTrackRemoval(int trackId);
     Task AddTrackUpdate(NewTrackUpdateData data);
     Task LogLibraryPlay();
-    Task LogArtistPlay(string nameId);
+    Task LogArtistPlay(int artistId);
     Task LogAlbumPlay(int albumId);
-    Task LogTrackPlay(string idFromSource);
+    Task LogTrackPlay(int trackId);
     Task LogGroupingPlay(int groupingId);
     Task LogGenrePlay(string genre);
     Task LogTagPlay(string tag);

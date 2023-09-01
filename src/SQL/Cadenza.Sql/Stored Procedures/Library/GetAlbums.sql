@@ -11,7 +11,6 @@ BEGIN
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
-		ART.[NameId] [ArtistNameId],
 		ART.[Name] [ArtistName],
 		TAG.[TagList]
 	FROM

@@ -38,9 +38,9 @@ internal class HistoryRepository : IHistoryRepository
         await _insertService.LogAlbumPlay(albumId);
     }
 
-    public async Task LogArtistPlay(string nameId)
+    public async Task LogArtistPlay(int artistId)
     {
-        await _insertService.LogArtistPlay(nameId);
+        await _insertService.LogArtistPlay(artistId);
     }
 
     public async Task LogGenrePlay(string genre)
@@ -63,8 +63,8 @@ internal class HistoryRepository : IHistoryRepository
         await _insertService.LogTagPlay(tag);
     }
 
-    public async Task LogTrackPlay(string idFromSource)
+    public async Task LogTrackPlay(int trackId)
     {
-        await _insertService.LogTrackPlay(idFromSource);
+        await _insertService.LogTrackPlay(trackId);
     }
 }
