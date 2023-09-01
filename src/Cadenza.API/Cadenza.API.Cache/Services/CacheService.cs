@@ -100,7 +100,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<Artist>> GetArtistsByGrouping(Grouping id)
+    public Task<List<Artist>> GetArtistsByGrouping(int id)
     {
         var result = _helperCache.GetArtistsByGrouping(id);
         return Task.FromResult(result);
@@ -186,7 +186,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayTrack>> PlayGrouping(Grouping id)
+    public Task<List<PlayTrack>> PlayGrouping(int id)
     {
         var result = _helperCache.GetArtistsByGrouping(id)
             .SelectMany(a => GetArtistPlayTracks(a.Id))

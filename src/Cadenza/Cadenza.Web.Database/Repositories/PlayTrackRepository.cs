@@ -31,9 +31,9 @@ internal class PlayTrackRepository : IPlayTrackRepository
         return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGenre, id);
     }
 
-    public async Task<List<PlayTrack>> PlayGrouping(Grouping id)
+    public async Task<List<PlayTrack>> PlayGrouping(int id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGrouping, id.ToString());
+        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGrouping, id);
     }
 
     public async Task<List<PlayTrack>> PlayTag(string id)

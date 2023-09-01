@@ -21,9 +21,9 @@ internal class ArtistRepository : IArtistRepository
         return await _apiHelper.Get<List<Artist>>(_settings.AllArtists);
     }
 
-    public async Task<List<Artist>> GetArtistsByGrouping(Grouping id)
+    public async Task<List<Artist>> GetArtistsByGrouping(int id)
     {
-        return await _apiHelper.Get<List<Artist>>(_settings.GroupingArtists, id.ToString());
+        return await _apiHelper.Get<List<Artist>>(_settings.GroupingArtists, id);
     }
 
     public async Task<List<Artist>> GetArtistsByGenre(string id)

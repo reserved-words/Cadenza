@@ -12,6 +12,6 @@ internal interface IHelperCache
     List<Album> GetAlbumsFeaturingArtist(int id);
     List<AlbumTrack> GetAlbumTracks(int id);
     List<Artist> GetArtistsByGenre(string id);
-    List<Artist> GetArtistsByGrouping(Grouping id);
+    List<Artist> GetArtistsByGrouping(int id);
     List<Track> GetArtistTracks(int id);
 }

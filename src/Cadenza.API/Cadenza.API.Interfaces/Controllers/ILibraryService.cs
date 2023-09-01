@@ -10,7 +10,7 @@ public interface ILibraryService
     Task<List<Track>> ArtistTracks(int id);
     Task<List<Artist>> Artists();
     Task<List<Artist>> GenreArtists(string id);
-    Task<List<Artist>> GroupingArtists(Grouping id);
+    Task<List<Artist>> GroupingArtists(int id);
     Task<List<PlayerItem>> Tag(string id);
     Task<TrackFull> Track(int id);
 }

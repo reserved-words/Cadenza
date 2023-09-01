@@ -1,13 +1,13 @@
 ﻿
 <AppCard>
     <HeaderContent>
-        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Id.GetDisplayName()" Toolbar="@Toolbar" />
+        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Grouping.Name" Toolbar="@Toolbar" />
     </HeaderContent>
 </AppCard>
 
 @code {
     [Parameter]
-    public Grouping Id { get; set; }
+    public Grouping Grouping { get; set; }
     
     [Parameter]
     public RenderFragment Toolbar { get; set; }

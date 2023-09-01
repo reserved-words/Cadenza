@@ -9,9 +9,7 @@ public class GroupingTabBase : ComponentBase, IDisposable
     public IMessenger Messenger { get; set; }
 
     [Parameter]
-    public string Id { get; set; }
-
-    public Grouping Grouping => Id.Parse<Grouping>();
+    public Grouping Grouping { get; set; }
 
     public List<string> Genres { get; set; } = new();
 
@@ -31,7 +29,7 @@ public class GroupingTabBase : ComponentBase, IDisposable
 
     private async Task UpdateGrouping()
     {
-        var artists = await Repository.GetArtistsByGrouping(Id.Parse<Grouping>());
+        var artists = await Repository.GetArtistsByGrouping(Grouping.Id);
         _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
         Genres = _artistsByGenre.Keys.ToList();
         StateHasChanged();

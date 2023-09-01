@@ -30,7 +30,7 @@ public class PlayController : ControllerBase
     }
 
     [HttpGet("Grouping/{id}")]
-    public async Task<List<PlayTrack>> Grouping(Grouping id)
+    public async Task<List<PlayTrack>> Grouping(int id)
     {
         return await _service.GetPlayTracksByGrouping(id);
     }

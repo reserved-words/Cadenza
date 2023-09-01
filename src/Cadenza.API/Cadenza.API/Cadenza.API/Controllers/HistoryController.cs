@@ -41,10 +41,10 @@ public class HistoryController : ControllerBase
         await _service.LogGenrePlay(genre);
     }
 
-    [HttpPost("LogGrouping/{grouping}")]
-    public async Task LogGroupingPlay(Grouping grouping)
+    [HttpPost("LogGrouping/{groupingId}")]
+    public async Task LogGroupingPlay(int groupingId)
     {
-        await _service.LogGroupingPlay(grouping);
+        await _service.LogGroupingPlay(groupingId);
     }
 
     [HttpPost("LogLibrary")]

@@ -35,7 +35,7 @@ internal class DataMapper : IDataMapper
         {
             Name = track.Album.ArtistName,
             CompareName = _nameComparer.GetCompareName(track.Album.ArtistName),
-            GroupingId = (int)Grouping.None,
+            GroupingId = 0,
             Genre = DefaultGenre
         };
     }
@@ -80,7 +80,7 @@ internal class DataMapper : IDataMapper
         {
             Name = track.Artist.Name,
             CompareName = _nameComparer.GetCompareName(track.Artist.Name),
-            GroupingId = (int)track.Artist.Grouping,
+            GroupingName = track.Artist.Grouping,
             Genre = ValueOrDefault(track.Artist.Genre, DefaultGenre),
             City = track.Artist.City,
             State = track.Artist.State,
@@ -124,7 +124,7 @@ internal class DataMapper : IDataMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = (Grouping)artist.GroupingId,
+            Grouping = new Grouping(artist.GroupingId, artist.GroupingName),
             Genre = artist.Genre,
             City = artist.City,
             State = artist.State,

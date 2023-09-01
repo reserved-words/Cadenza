@@ -3,7 +3,7 @@
 public class SyncArtist
 {
     public string Name { get; set; }
-    public Grouping Grouping { get; set; }
+    public string Grouping { get; set; }
     public string Genre { get; set; }
     public string City { get; set; }
     public string State { get; set; }

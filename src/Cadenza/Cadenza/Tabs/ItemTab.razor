@@ -13,7 +13,7 @@ else if (Item.Type == PlayerItemType.Genre)
 }
 else if (Item.Type == PlayerItemType.Grouping)
 {
-    <GroupingTab Id="@Item.Id" />
+    <GroupingTab Grouping="@ItemAsGrouping" />
 }
 else if (Item.Type == PlayerItemType.Tag)
 {
@@ -27,4 +27,6 @@ else if (Item.Type == PlayerItemType.Track)
 @code {
     [Parameter]
     public ViewItem Item { get; set; }
+
+    private Grouping ItemAsGrouping => new Grouping(int.Parse(Item.Id), Item.Name);
 }

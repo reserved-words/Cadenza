@@ -5,7 +5,7 @@ public interface IItemViewer
     Task ViewAlbum(int id, string title);
     Task ViewArtist(int id, string name);
     Task ViewGenre(string id);
-    Task ViewGrouping(Grouping id);
+    Task ViewGrouping(Grouping grouping);
     Task ViewPlaying(PlaylistId playlist);
     Task ViewSearchResult(PlayerItem item);
     Task ViewTag(string id);

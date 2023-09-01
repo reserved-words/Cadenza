@@ -71,6 +71,7 @@
     <Folder Include="Tables\History" />
     <Folder Include="Stored Procedures\History" />
     <Folder Include="Views\History" />
+    <Folder Include="Stored Procedures\Admin" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -81,7 +82,6 @@
     <Build Include="Tables\Admin\Groupings.sql" />
     <Build Include="Tables\Library\Discs.sql" />
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
-    <None Include="SeedData\Groupings.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
     <Build Include="Stored Procedures\Library\AddArtist.sql" />
     <Build Include="Stored Procedures\Library\AddAlbum.sql" />
@@ -166,6 +166,8 @@
     <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
+    <Build Include="Stored Procedures\Admin\GetGroupings.sql" />
+    <None Include="SeedData\Groupings.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

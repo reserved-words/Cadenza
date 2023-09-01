@@ -16,7 +16,7 @@ internal class ItemCache : IItemCache
     {
         var item = new SearchableArtist(artist);
         _items.Cache(PlayerItemType.Artist, item);
-        _items.Cache(PlayerItemType.Grouping, artist.Grouping.ToString(), () => new SearchableGrouping(artist.Grouping));
+        _items.Cache(PlayerItemType.Grouping, artist.Grouping.Id.ToString(), () => new SearchableGrouping(artist.Grouping));
         _items.Cache(PlayerItemType.Genre, artist.Genre, () => new SearchableGenre(artist.Genre));
         _tags.Cache(artist.Tags, item);
     }

@@ -2,12 +2,12 @@
 
 namespace Cadenza.Web.Database.Services;
 
-internal class UpdateService : IUpdateService
+internal class UpdateRepository : IUpdateRepository
 {
     private readonly DatabaseApiSettings _settings;
     private readonly IApiHttpHelper _http;
 
-    public UpdateService(IApiHttpHelper http, IOptions<DatabaseApiSettings> settings)
+    public UpdateRepository(IApiHttpHelper http, IOptions<DatabaseApiSettings> settings)
     {
         _http = http;
         _settings = settings.Value;

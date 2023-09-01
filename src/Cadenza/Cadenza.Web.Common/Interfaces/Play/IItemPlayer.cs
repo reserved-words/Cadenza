@@ -6,7 +6,7 @@ public interface IItemPlayer
     Task PlayAlbum(int id, int startTrackId = 0);
     Task PlayArtist(int id);
     Task PlayGenre(string id);
-    Task PlayGrouping(Grouping id);
+    Task PlayGrouping(Grouping grouping);
     Task PlayTag(string id);
     Task PlayTrack(int id);
 }

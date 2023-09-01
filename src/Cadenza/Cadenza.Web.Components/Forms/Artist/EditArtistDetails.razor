@@ -7,9 +7,9 @@
     <MudSelect Label="Grouping"
                @bind-Value="Model.Grouping"
                For="@(() => Model.Grouping)">
-        @foreach (var type in Enum.GetValues<Grouping>())
+        @foreach (var grouping in Groupings)
         {
-            <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+            <MudSelectItem Value="@grouping">@grouping.Name</MudSelectItem>
         }
     </MudSelect>
     <MudTextField MaxLength="50"
@@ -35,4 +35,7 @@
 @code {
     [Parameter]
     public ArtistInfo Model { get; set; }
+
+    [Parameter]
+    public List<Grouping> Groupings { get; set; }
 }

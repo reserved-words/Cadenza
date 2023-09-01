@@ -48,9 +48,9 @@ internal class HistoryRepository : IHistoryRepository
         await _insertService.LogGenrePlay(genre);
     }
 
-    public async Task LogGroupingPlay(Grouping grouping)
+    public async Task LogGroupingPlay(int groupingId)
     {
-        await _insertService.LogGroupingPlay((int)grouping);
+        await _insertService.LogGroupingPlay(groupingId);
     }
 
     public async Task LogLibraryPlay()

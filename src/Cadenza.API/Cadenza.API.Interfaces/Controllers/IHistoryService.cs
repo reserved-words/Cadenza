@@ -8,7 +8,7 @@ public interface IHistoryService
     Task LogArtistPlay(int artistId);
     Task LogAlbumPlay(int albumId);
     Task LogTrackPlay(int trackId);
-    Task LogGroupingPlay(Grouping grouping);
+    Task LogGroupingPlay(int groupingId);
     Task LogGenrePlay(string genre);
     Task LogTagPlay(string tag);
 }

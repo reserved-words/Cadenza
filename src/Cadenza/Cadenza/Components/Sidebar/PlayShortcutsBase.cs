@@ -8,6 +8,9 @@ public class PlayShortcutsBase : ComponentBase
     public bool IsAppLoaded { get;set;}
 
     [Inject]
+    public IAdminRepository AdminRepository { get; set; }
+
+    [Inject]
     public IItemPlayer Player { get; set; }
 
     [Inject]
@@ -20,15 +23,12 @@ public class PlayShortcutsBase : ComponentBase
     protected List<RecentAlbum> RecentAlbums { get; set; } = new();
     protected List<string> RecentTags { get; set; } = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
         Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
 
-        Groupings = Enum.GetValues<Grouping>()
-            .Where(g => g != Grouping.None)
-            .OrderBy(g => g.ToString())
-            .ToList();
+        Groupings = await AdminRepository.GetGroupingOptions();
     }
 
     protected override async Task OnParametersSetAsync()

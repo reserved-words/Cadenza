@@ -74,7 +74,7 @@ internal class Id3Fetcher : IId3Fetcher
         return new SyncArtist
         {
             Name = data.Artist.Name,
-            Grouping = Enum.TryParse(data.Artist.Grouping, out Grouping result) ? result : Grouping.None,
+            Grouping = data.Artist.Grouping,
             Genre = data.Artist.Genre.Nullify(),
             City = commentData.City.Nullify(),
             State = commentData.State.Nullify(),
