@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Common.Interfaces.Updates;
 
-public interface IUpdateService
+public interface IUpdateRepository
 {
     Task RemoveTrack(int trackId);
     Task UpdateAlbum(AlbumUpdate albumUpdate);

@@ -38,13 +38,14 @@ public static class Startup
             .AddSingleton<IArtworkFetcher, ArtworkFetcher>();
 
         return services
+            .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IAlbumRepository, AlbumRepository>()
             .AddTransient<IArtistRepository, ArtistRepository>()
             .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
             .AddTransient<ISearchRepository, SearchRepository>()
             .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
-            .AddTransient<IUpdateService, UpdateService>()
+            .AddTransient<IUpdateRepository, UpdateRepository>()
             .AddTransient<IHistoryLogger, HistoryRepository>()
             .AddTransient<IHistoryFetcher, HistoryRepository>();
     }

@@ -3,7 +3,10 @@
 public class EditArtistBase : FormBase<ArtistInfo>
 {
     [Inject]
-    public IUpdateService Repository { get; set; }
+    public IAdminRepository AdminRepository { get; set; }
+
+    [Inject]
+    public IUpdateRepository UpdateRepository { get; set; }
 
     [Inject]
     public INotificationService Alert { get; set; }
@@ -13,7 +16,14 @@ public class EditArtistBase : FormBase<ArtistInfo>
 
     public ArtistUpdate Update { get; set; }
 
+    public List<Grouping> Groupings { get; set; } = new List<Grouping>();
+
     public ArtistInfo EditableItem => Update.UpdatedItem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Groupings = await AdminRepository.GetGroupingOptions();
+    }
 
     protected override void OnParametersSet()
     {
@@ -32,7 +42,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
                 return;
             }
 
-            await Repository.UpdateArtist(Update);
+            await UpdateRepository.UpdateArtist(Update);
             Alert.Success("Artist updated");
             await UpdatesCoordinator.UpdateArtist(Update);
             Submit();

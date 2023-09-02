@@ -60,8 +60,8 @@ public class SearchableTrack : PlayerItem
 
 public class SearchableGrouping : PlayerItem
 {
-    public SearchableGrouping(Grouping id)
-        : base(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName(), null, null, null) { }
+    public SearchableGrouping(Grouping grouping)
+        : base(PlayerItemType.Grouping, grouping.Id.ToString(), grouping.Name, null, null, null) { }
 }
 
 public class SearchableGenre : PlayerItem

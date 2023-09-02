@@ -37,7 +37,7 @@ internal class PlayTrackService : IPlayTrackService
         return await _cache.PlayTracks.PlayGenre(id);
     }
 
-    public async Task<List<PlayTrack>> GetPlayTracksByGrouping(Grouping id)
+    public async Task<List<PlayTrack>> GetPlayTracksByGrouping(int id)
     {
         await PopulateCache();
         return await _cache.PlayTracks.PlayGrouping(id);

@@ -72,7 +72,7 @@ internal class DataInsertService : IDataInsertService
 
         parameters.Add(nameof(data.Name), data.Name);
         parameters.Add(nameof(data.CompareName), data.CompareName);
-        parameters.Add(nameof(data.GroupingId), data.GroupingId);
+        parameters.Add(nameof(data.GroupingName), data.GroupingName);
         parameters.Add(nameof(data.Genre), data.Genre);
         parameters.Add(nameof(data.City), data.City);
         parameters.Add(nameof(data.State), data.State);

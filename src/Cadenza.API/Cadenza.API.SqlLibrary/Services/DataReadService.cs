@@ -29,6 +29,8 @@ internal class DataReadService : IDataReadService
     private const string GetRecentAlbumsProcedure = "[History].[GetRecentAlbums]";
     private const string GetRecentTagsProcedure = "[History].[GetRecentTags]";
 
+    private const string GetGroupingsProcedure = "[Admin].[GetGroupings]";
+
     private const string IdParameter = "@Id";
     private const string MaxItemsParameter = "@MaxItems";
     private const string SourceIdParameter = "@SourceId";
@@ -120,6 +122,11 @@ internal class DataReadService : IDataReadService
         var parameters = new DynamicParameters();
         parameters.Add(SourceIdParameter, (int?)source);
         return await _dbAccess.Query<GetDiscData>(GetDiscsProcedure, parameters);
+    }
+
+    public async Task<List<Grouping>> GetGroupings()
+    {
+        return await _dbAccess.Query<Grouping>(GetGroupingsProcedure);
     }
 
     public async Task<List<RecentAlbumData>> GetRecentAlbums(int maxItems)

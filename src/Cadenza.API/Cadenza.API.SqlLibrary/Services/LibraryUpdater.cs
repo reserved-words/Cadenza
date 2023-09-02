@@ -74,7 +74,9 @@ internal class LibraryUpdater : ILibraryUpdater
                     artist.Genre = update.UpdatedValue;
                     break;
                 case ItemProperty.Grouping:
-                    artist.GroupingId = (int)Enum.Parse<Grouping>(update.UpdatedValue);
+                    var groupings = await _readService.GetGroupings();
+                    var grouping = groupings.Single(g => g.Name == update.UpdatedValue);
+                    artist.GroupingId = grouping.Id;
                     break;
                 case ItemProperty.State:
                     artist.State = update.UpdatedValue;

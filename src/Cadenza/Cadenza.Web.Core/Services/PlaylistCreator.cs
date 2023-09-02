@@ -92,11 +92,11 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping id)
+    public async Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping grouping)
     {
-        var tracks = await _repository.PlayGrouping(id);
+        var tracks = await _repository.PlayGrouping(grouping.Id);
 
-        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Grouping, id.GetDisplayName());
+        var playlistId = new PlaylistId(grouping.Id.ToString(), PlaylistType.Grouping, grouping.Name);
 
         var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
 

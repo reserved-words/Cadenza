@@ -67,7 +67,7 @@ internal class LibraryService : ILibraryService
         return await _cache.Artists.GetAllArtists();
     }
 
-    public async Task<List<Artist>> GroupingArtists(Grouping id)
+    public async Task<List<Artist>> GroupingArtists(int id)
     {
         await PopulateCache();
         return await _cache.Artists.GetArtistsByGrouping(id);

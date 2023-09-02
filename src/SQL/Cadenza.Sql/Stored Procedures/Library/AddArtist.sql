@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [Library].[AddArtist]
 	@Name NVARCHAR(200),
 	@CompareName NVARCHAR(200),
-	@GroupingId INT,
+	@GroupingName NVARCHAR(50),
 	@Genre NVARCHAR(100),
 	@City NVARCHAR(100),
 	@State NVARCHAR(100),
@@ -20,6 +20,12 @@ BEGIN
 	IF @Id IS NOT NULL
 		RETURN
 
+	DECLARE @GroupingId INT
+
+	SELECT @GroupingId = [Id]
+	FROM [Admin].[Groupings]
+	WHERE [Name] = @GroupingName
+
 	INSERT INTO [Library].[Artists] (
 		[Name],
 		[CompareName],
@@ -32,7 +38,7 @@ BEGIN
 	VALUES (
 		@Name,
 		@CompareName,
-		@GroupingId,
+		ISNULL(@GroupingId, 0),
 		@Genre,
 		@City,
 		@State,

@@ -6,7 +6,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdateService UpdateService { get; set; }
+    public IUpdateRepository UpdateRepository { get; set; }
 
     [Inject]
     public IUpdatesCoordinator UpdatesCoordinator { get; set; }
@@ -32,7 +32,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
                 return;
             }
 
-            await UpdateService.UpdateAlbum(Update);
+            await UpdateRepository.UpdateAlbum(Update);
             Alert.Success("Album updated");
             await UpdatesCoordinator.UpdateAlbum(Update);
             Submit();

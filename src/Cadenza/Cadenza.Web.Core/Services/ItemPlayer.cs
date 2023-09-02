@@ -33,9 +33,9 @@ internal class ItemPlayer : IItemPlayer
         await Play(playlist);
     }
 
-    public async Task PlayGrouping(Grouping id)
+    public async Task PlayGrouping(Grouping grouping)
     {
-        var playlist = await _playlistCreator.CreateGroupingPlaylist(id);
+        var playlist = await _playlistCreator.CreateGroupingPlaylist(grouping);
         await Play(playlist);
     }
 

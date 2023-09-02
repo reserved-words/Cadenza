@@ -20,6 +20,7 @@ public static class _Startup
     {
         return services
             .AddInternalServices()
+            .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
             .AddTransient<IMusicRepository, MusicRepository>()

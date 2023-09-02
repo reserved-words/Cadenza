@@ -12,7 +12,7 @@
 <PlayShortcutsMenu Label="Play Grouping">
     @foreach (var grouping in Groupings)
     {
-        <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping</MudMenuItem>
+        <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping.Name</MudMenuItem>
     }
 </PlayShortcutsMenu>
 

@@ -8,7 +8,7 @@ public class RemoveTrackBase : FormBase<TrackToRemove>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdateService UpdateService { get; set; }
+    public IUpdateRepository UpdateRepository { get; set; }
 
     [Inject]
     public IUpdatesCoordinator UpdatesCoordinator { get; set; }
@@ -17,7 +17,7 @@ public class RemoveTrackBase : FormBase<TrackToRemove>
     {
         try
         {
-            await UpdateService.RemoveTrack(Model.Id);
+            await UpdateRepository.RemoveTrack(Model.Id);
             Alert.Success("Track removed");
             await UpdatesCoordinator.RemoveTrack(Model.Id);
             Submit();

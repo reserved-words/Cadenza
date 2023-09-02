@@ -6,7 +6,7 @@ public class EditTrackBase : FormBase<TrackInfo>
     public INotificationService Alert { get; set; }
 
     [Inject]
-    public IUpdateService UpdateService { get; set; }
+    public IUpdateRepository UpdateRepository { get; set; }
 
     [Inject]
     public IUpdatesCoordinator UpdatesCoordinator { get; set; }
@@ -32,7 +32,7 @@ public class EditTrackBase : FormBase<TrackInfo>
                 return;
             }
 
-            await UpdateService.UpdateTrack(Update);
+            await UpdateRepository.UpdateTrack(Update);
             Alert.Success("Track updated");
             await UpdatesCoordinator.UpdateTrack(Update);
             Submit();

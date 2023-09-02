@@ -60,7 +60,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Artists/Grouping/{id}")]
-    public async Task<List<Artist>> GroupingArtists(Grouping id)
+    public async Task<List<Artist>> GroupingArtists(int id)
     {
         return await _service.GroupingArtists(id);
     }

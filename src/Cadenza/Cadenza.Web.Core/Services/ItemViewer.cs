@@ -30,9 +30,9 @@ internal class ItemViewer : IItemViewer
         await _controller.RequestItem(playerItem);
     }
 
-    public async Task ViewGrouping(Grouping id)
+    public async Task ViewGrouping(Grouping grouping)
     {
-        var playerItem = new ViewItem(PlayerItemType.Grouping, id.ToString(), id.GetDisplayName());
+        var playerItem = new ViewItem(PlayerItemType.Grouping, grouping.Id.ToString(), grouping.Name);
         await _controller.RequestItem(playerItem);
     }
 

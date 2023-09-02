@@ -1,4 +1,4 @@
-﻿<ActionLink Typo="@Typo" Text="@Name" OnClick="@View"></ActionLink>
+﻿<ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
 
 @code {
     [Inject]
@@ -9,8 +9,6 @@
 
     [Parameter]
     public Typo Typo { get; set; } = Typo.body1;
-
-    public string Name => Grouping.GetDisplayName();
 
     private async Task View()
     {

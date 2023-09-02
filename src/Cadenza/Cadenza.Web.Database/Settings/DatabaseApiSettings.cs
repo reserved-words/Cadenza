@@ -11,6 +11,9 @@ public class DatabaseApiEndpoints
 
     public string GetRecentAlbums { get; set; }
     public string GetRecentTags { get; set; }
+
+    public string GroupingOptions { get; set; }
+
     public string LogLibraryPlay { get; set; }
     public string LogArtistPlay { get; set; }
     public string LogAlbumPlay { get; set; }
