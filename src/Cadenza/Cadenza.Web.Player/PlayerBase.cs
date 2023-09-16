@@ -1,7 +1,13 @@
-﻿namespace Cadenza.Web.Player;
+﻿using Cadenza.State.Actions;
+using Fluxor;
+
+namespace Cadenza.Web.Player;
 
 public class PlayerBase : ComponentBase
 {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+
     [Inject]
     public IMessenger Messenger { get; set; }
 
@@ -31,13 +37,15 @@ public class PlayerBase : ComponentBase
     protected async Task Pause()
     {
         await Player.Pause();
-        await OnStatusChanged(PlayStatus.Paused);
+        //await OnStatusChanged(PlayStatus.Paused);
+        Dispatcher.Dispatch(new PlayStatusPausedAction());
     }
 
     protected async Task Resume()
     {
         await Player.Resume();
-        await OnStatusChanged(PlayStatus.Playing);
+        //await OnStatusChanged(PlayStatus.Playing);
+        Dispatcher.Dispatch(new PlayStatusResumedAction());
     }
 
     private async Task OnStartTrack(object sender, StartTrackEventArgs e)
@@ -48,7 +56,8 @@ public class PlayerBase : ComponentBase
         IsLastTrack = e.IsLastTrack;
         StateHasChanged();
         await Player.Play(Track);
-        await OnStatusChanged(PlayStatus.Playing);
+        //await OnStatusChanged(PlayStatus.Playing);
+        Dispatcher.Dispatch(new PlayStatusPlayingAction(Track));
     }
 
     private async Task OnStopTrack(object sender, StopTrackEventArgs e)
@@ -60,13 +69,14 @@ public class PlayerBase : ComponentBase
         Loading = true;
         StateHasChanged();
         await Player.Stop();
-        await OnStatusChanged(PlayStatus.Stopped);
+        //await OnStatusChanged(PlayStatus.Stopped);
+        Dispatcher.Dispatch(new PlayStatusStoppedAction());
     }
 
-    private async Task OnStatusChanged(PlayStatus status)
-    {
-        await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
-    }
+    //private async Task OnStatusChanged(PlayStatus status)
+    //{
+        // await Messenger.Send(this, new PlayStatusEventArgs { Track = Track, Status = status });
+    //}
 
     private Task OnPlaylistFinished(object arg1, PlaylistFinishedEventArgs arg2)
     {

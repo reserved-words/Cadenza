@@ -1,5 +1,8 @@
-﻿@using Cadenza.Web.Common.Interfaces.Store;
-@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@inherits FluxorComponent
+
+@using Cadenza.State.Store;
+@using Cadenza.Web.Common.Interfaces.Store
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <EditCard>
 
@@ -31,8 +34,11 @@
 </EditCard>
 
 @code {
+    // [Inject]
+    // public ICurrentTrackStore Store { get; set; }
+
     [Inject]
-    public ICurrentTrackStore Store { get; set; }
+    public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }
@@ -55,7 +61,7 @@
 
     protected async Task OnRemoveTrack(AlbumTrack track)
     {
-        var currentTrackId = await Store.GetCurrentTrackId();
+        var currentTrackId = CurrentTrackState.Value.Track.Track.Id;
 
         if (currentTrackId == track.TrackId)
         {

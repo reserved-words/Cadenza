@@ -1,9 +1,12 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
+﻿using Cadenza.State.Store;
+using Cadenza.Web.Common.Interfaces.Play;
 using Cadenza.Web.Common.Interfaces.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Library;
 
-public class AlbumDiscBase : ComponentBase
+public class AlbumDiscBase : FluxorComponent
 {
     [Inject]
     public IItemPlayer ItemPlayer { get; set; }
@@ -13,6 +16,9 @@ public class AlbumDiscBase : ComponentBase
 
     [Inject]
     public ICurrentTrackStore Store { get; set; }
+
+    [Inject]
+    public IState<PlayStatusState> PlayStatusState { get; set; }
 
     [Parameter]
     public Disc Model { get; set; } = new();
@@ -26,12 +32,21 @@ public class AlbumDiscBase : ComponentBase
     protected int? CurrentTrackId { get; set; }
 
     private Guid _playlistFinishedSubscriptionId = Guid.Empty;
-    private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
+    //private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged, out _playStatusUpdatedSubscriptionId);
+        //Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged, out _playStatusUpdatedSubscriptionId);
         Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished, out _playlistFinishedSubscriptionId);
+        PlayStatusState.StateChanged += PlayStatusState_StateChanged;
+    }
+
+    private void PlayStatusState_StateChanged(object sender, EventArgs e)
+    {
+        if (PlayStatusState.Value.Status == PlayStatus.Playing)
+        {
+            UpdateCurrentTrack(PlayStatusState.Value.Track.Id);
+        }
     }
 
     protected override async Task OnParametersSetAsync()
@@ -67,18 +82,21 @@ public class AlbumDiscBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        if (args.Status == PlayStatus.Playing)
-        {
-            UpdateCurrentTrack(args.Track?.Id);
-        }
+    //private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
+    //{
+    //    if (args.Status == PlayStatus.Playing)
+    //    {
+    //        UpdateCurrentTrack(args.Track?.Id);
+    //    }
 
-        return Task.CompletedTask;
-    }
+    //    return Task.CompletedTask;
+    //}
 
     private void UpdateCurrentTrack(int? currentTrackId)
     {
+        // CHECK - should this be another state / in a rerducer / effect / somewhere else?
+        // Could just be doing CurrentTrackId => State.Track.Id and that would take care of all of this anyway?
+
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
         var isNewCurrentTrackOnDisc = currentTrackId != null && Model.Tracks.Any(t => t.TrackId == currentTrackId);
 
@@ -92,10 +110,14 @@ public class AlbumDiscBase : ComponentBase
 
     public void Dispose()
     {
-        if (_playStatusUpdatedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<PlayStatusEventArgs>(_playStatusUpdatedSubscriptionId);
-        }
+        // CHECK - don't need to worry about event listener for state changed?
+
+        //if (_playStatusUpdatedSubscriptionId != Guid.Empty)
+        //{
+        //    Messenger.Unsubscribe<PlayStatusEventArgs>(_playStatusUpdatedSubscriptionId);
+        //}
+
+        PlayStatusState.StateChanged -= PlayStatusState_StateChanged;
 
         if (_playlistFinishedSubscriptionId != Guid.Empty)
         {

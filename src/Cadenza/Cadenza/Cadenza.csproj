@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <ServiceWorker Include="wwwroot\service-worker.js"
-					 PublishedContent="wwwroot\service-worker.published.js" />	
+	  <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />	
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.21" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.21" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" PrivateAssets="all" />
@@ -31,6 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Cadenza.State.Effects\Cadenza.State.Effects.csproj" />
+    <ProjectReference Include="..\..\Cadenza.State\Cadenza.State.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />

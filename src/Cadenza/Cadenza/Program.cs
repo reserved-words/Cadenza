@@ -1,5 +1,10 @@
 namespace Cadenza;
 
+using Cadenza.State;
+using Cadenza.State.Effects;
+using Cadenza.State.Middleware;
+using Cadenza.State.Store;
+using Fluxor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 public class Program
@@ -11,6 +16,13 @@ public class Program
         builder.RegisterComponents();
 
         builder.RegisterConfiguration();
+        
+        var currentAssembly = typeof(Program).Assembly;
+        var stateAssembly = typeof(PlayStatusState).Assembly;
+        var effectsAssembly = typeof(RecentPlayHistoryEffects).Assembly;
+        builder.Services
+            .AddFluxor(options => options.ScanAssemblies(currentAssembly, stateAssembly, effectsAssembly)
+            .AddMiddleware<LoggingMiddleware>());
 
         builder.Services.RegisterDependencies(builder.Configuration);
 
