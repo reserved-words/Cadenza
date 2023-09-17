@@ -32,7 +32,7 @@ public class RecentPlayHistoryEffects
         {
             await UpdateNowPlaying(action.Track, 1);
         }
-        else if (action.Status == PlayStatus.Stopped)
+        else if (action.Status == PlayStatus.Stopped && action.Track != null)
         {
             await RecordPlay(action.Track, progress);
         }
