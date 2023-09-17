@@ -29,8 +29,7 @@ public static class PlayStatusReducers
     {
         return state with
         {
-            Status = PlayStatus.Playing,
-            Track = action.Track
+            Status = PlayStatus.Playing
         };
     }
 }

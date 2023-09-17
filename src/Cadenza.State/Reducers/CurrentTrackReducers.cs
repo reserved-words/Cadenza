@@ -5,7 +5,7 @@ namespace Cadenza.State.Reducers;
 
 public static class CurrentTrackReducers
 {
-    [ReducerMethod(typeof(UpdateCurrentTrackRequest))]
+    [ReducerMethod(typeof(FetchFullTrackRequest))]
     public static CurrentTrackState ReduceFetchCurrentTrackAction(CurrentTrackState state) => state with
     {
         IsLoading = true
@@ -15,6 +15,8 @@ public static class CurrentTrackReducers
     public static CurrentTrackState ReduceFetchCurrentTrackResultAction(CurrentTrackState state, UpdateCurrentTrackAction action) => state with
     {
         IsLoading = false,
-        Track = action.Result
+        PlayTrack = action.PlayTrack,
+        FullTrack = action.FullTrack,
+        IsLastInPlaylist = action.IsLastTrackInPlaylist
     };
 }

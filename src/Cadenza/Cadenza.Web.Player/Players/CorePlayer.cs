@@ -1,28 +1,27 @@
 ﻿using Cadenza.State.Store;
 using Fluxor;
-using System.Text.Json;
 
 namespace Cadenza.Web.Player.Players;
 
 internal class CorePlayer : IPlayer
 {
-    private readonly IState<PlaylistTrackState> _playlistTrackState;
+    private readonly IState<CurrentTrackState> _currentTrackState;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
 
-    public CorePlayer(IState<PlaylistTrackState> playlistTrackState, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
+    public CorePlayer(IState<CurrentTrackState> currentTrackState, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
     {
-        _playlistTrackState = playlistTrackState;
+        _currentTrackState = currentTrackState;
         _sourcePlayers = sourcePlayers.ToList();
         _utilityPlayers = utilityPlayers.ToList();
     }
 
-    public async Task Play(PlayTrack track)
+    public async Task Play(Track track)
     {
         var service = GetCurrentSourcePlayer(track.Source);
         await service.Play(track.IdFromSource);
 
-        var duration = track.Duration;
+        var duration = track.DurationSeconds;
         var progress = new TrackProgress(0, duration);
 
         await RunUtilities(p => p.OnPlay(progress));
@@ -52,7 +51,7 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var duration = _playlistTrackState.Value.CurrentTrack.Duration;
+            var duration = _currentTrackState.Value.FullTrack.Track.DurationSeconds;
             progress = new TrackProgress(duration, duration);
         }
 
@@ -61,7 +60,7 @@ internal class CorePlayer : IPlayer
 
     private ISourcePlayer GetCurrentSourcePlayer(LibrarySource? source = null)
     {
-        var currentSource = source ?? _playlistTrackState.Value.CurrentTrack?.Source;
+        var currentSource = source ?? _currentTrackState.Value.FullTrack?.Track.Source;
 
         if (currentSource == null)
             return null;

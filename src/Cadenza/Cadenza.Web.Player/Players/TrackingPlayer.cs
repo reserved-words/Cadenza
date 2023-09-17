@@ -36,7 +36,7 @@ internal class TrackingPlayer : IUtilityPlayer
 
     private async Task RecordPlay(TrackProgress progress)
     {
-        var currentTrack = _currentTrackState.Value.Track;
+        var currentTrack = _currentTrackState.Value.FullTrack;
 
         if (currentTrack == null)
             return;
@@ -49,7 +49,7 @@ internal class TrackingPlayer : IUtilityPlayer
 
     private async Task UpdateNowPlaying(TrackProgress progress)
     {
-        var currentTrack = _currentTrackState.Value.Track;
+        var currentTrack = _currentTrackState.Value.FullTrack;
 
         if (currentTrack == null)
             return;

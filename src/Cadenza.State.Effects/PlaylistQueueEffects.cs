@@ -1,6 +1,7 @@
 ﻿using Cadenza.State.Actions;
 using Cadenza.State.Store;
 using Fluxor;
+using System;
 
 namespace Cadenza.State.Effects;
 
@@ -33,7 +34,7 @@ public class PlaylistQueueEffects
 
     private Task DispatchUpdatePlaylistTrackAction(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new PlaylistTrackUpdateAction(false, _state.Value.CurrentTrack, _state.Value.IsCurrentTrackLast));
+        dispatcher.Dispatch(new FetchFullTrackRequest(_state.Value.CurrentTrack, _state.Value.IsCurrentTrackLast));
         return Task.CompletedTask;
     }
 }

@@ -17,7 +17,7 @@ public class PlayerEffects
     public async Task HandlePlayerPlayAction(PlayerPlayRequest action, IDispatcher dispatcher)
     {
         await _player.Play(action.Track);
-        dispatcher.Dispatch(new PlayStatusPlayingAction(action.Track));
+        dispatcher.Dispatch(new PlayStatusPlayingAction());
     }
 
 
