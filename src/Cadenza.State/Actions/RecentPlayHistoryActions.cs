@@ -2,6 +2,10 @@
 
 namespace Cadenza.State.Actions;
 
+public record UpdateRecentPlayHistoryRequest();
+
+public record UpdateRecentPlayHistoryResult();
+
 public record FetchRecentPlayHistoryRequest();
 
-public record FetchRecentPlayHistoryAction(List<RecentTrack> Result);
+public record FetchRecentPlayHistoryResult(List<RecentTrack> Result);

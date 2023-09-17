@@ -21,7 +21,7 @@ public class CurrentTrackEffects
     }
 
     [EffectMethod]
-    public Task HandleUpdateCurrentTrackAction_PlayNewTrack(UpdateCurrentTrackAction action, IDispatcher dispatcher)
+    public Task HandleUpdateCurrentTrackAction(UpdateCurrentTrackAction action, IDispatcher dispatcher)
     {
         dispatcher.Dispatch(new PlayerPlayRequest(action.FullTrack.Track));
         return Task.CompletedTask;

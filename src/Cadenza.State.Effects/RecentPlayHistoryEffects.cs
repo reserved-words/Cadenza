@@ -13,11 +13,24 @@ public class RecentPlayHistoryEffects
         _history = history;
     }
 
-    [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
-    public async Task HandleFetchRecentPlayHistoryAction(IDispatcher dispatcher)
+    [EffectMethod(typeof(UpdateRecentPlayHistoryRequest))]
+    public async Task HandleUpdateRecentPlayHistoryRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(2000);
+        // Do scrobbling / update now playing here
+        dispatcher.Dispatch(new UpdateRecentPlayHistoryResult());
+    }
+
+    [EffectMethod(typeof(UpdateRecentPlayHistoryResult))]
+    public Task HandleUpdateRecentPlayHistoryResult(IDispatcher dispatcher)
+    {
+        dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
+        return Task.CompletedTask;
+    }
+
+    [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
+    public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
+    {
         var result = await _history.GetRecentTracks(20, 1); 
-        dispatcher.Dispatch(new FetchRecentPlayHistoryAction(result.ToList()));
+        dispatcher.Dispatch(new FetchRecentPlayHistoryResult(result.ToList()));
     }
 }

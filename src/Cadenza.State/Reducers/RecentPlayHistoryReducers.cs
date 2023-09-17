@@ -12,7 +12,7 @@ public static class RecentPlayHistoryReducers
     };
 
     [ReducerMethod]
-    public static RecentPlayHistoryState ReduceFetchRecentPlayHistoryResultAction(RecentPlayHistoryState state, FetchRecentPlayHistoryAction action) => state with
+    public static RecentPlayHistoryState ReduceFetchRecentPlayHistoryResultAction(RecentPlayHistoryState state, FetchRecentPlayHistoryResult action) => state with
     {
         IsLoading = false,
         Tracks = action.Result
