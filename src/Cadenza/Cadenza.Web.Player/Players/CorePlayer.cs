@@ -1,46 +1,49 @@
-﻿namespace Cadenza.Web.Player.Players;
+﻿using Cadenza.State.Store;
+using Fluxor;
+
+namespace Cadenza.Web.Player.Players;
 
 internal class CorePlayer : IPlayer
 {
-    private readonly ICurrentTrackStore _store;
+    private readonly IState<CurrentTrackState> _currentTrackState;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
 
-    public CorePlayer(ICurrentTrackStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
+    public CorePlayer(IState<CurrentTrackState> currentTrackState, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
     {
-        _store = store;
+        _currentTrackState = currentTrackState;
         _sourcePlayers = sourcePlayers.ToList();
         _utilityPlayers = utilityPlayers.ToList();
     }
 
     public async Task Play(PlayTrack track)
     {
-        var service = await GetCurrentSourcePlayer(track.Source);
+        var service = GetCurrentSourcePlayer(track.Source);
         await service.Play(track.IdFromSource);
 
-        var fullTrack = await GetCurrentTrack();
-        var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
+        var duration = _currentTrackState.Value.Track.Track.DurationSeconds;
+        var progress = new TrackProgress(0, duration);
 
         await RunUtilities(p => p.OnPlay(progress));
     }
 
     public async Task Pause()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetCurrentSourcePlayer();
         var progress = await service.Pause();
         await RunUtilities(p => p.OnPause(progress));
     }
 
     public async Task Resume()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetCurrentSourcePlayer();
         var progress = await service.Resume();
         await RunUtilities(p => p.OnResume(progress));
     }
 
     public async Task Stop()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetCurrentSourcePlayer();
 
         if (service == null)
             return;
@@ -48,18 +51,18 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var track = await _store.GetCurrentTrack();
-            progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
+            var duration = _currentTrackState.Value.Track.Track.DurationSeconds;
+            progress = new TrackProgress(duration, duration);
         }
 
         await RunUtilities(p => p.OnStop(progress));
     }
 
-    private async Task<ISourcePlayer> GetCurrentSourcePlayer(LibrarySource? source = null)
+    private ISourcePlayer GetCurrentSourcePlayer(LibrarySource? source = null)
     {
-        var currentSource = source ?? await GetCurrentSource();
+        var currentSource = source ?? _currentTrackState.Value.Track?.Track.Source;
 
-        if (!currentSource.HasValue)
+        if (currentSource == null)
             return null;
 
         return _sourcePlayers.Single(p => p.Source == currentSource.Value);
@@ -71,15 +74,5 @@ internal class CorePlayer : IPlayer
         {
             await action(player);
         }
-    }
-
-    private async Task<LibrarySource?> GetCurrentSource()
-    {
-        return await _store.GetCurrentSource();
-    }
-
-    private async Task<TrackFull> GetCurrentTrack()
-    {
-        return await _store.GetCurrentTrack();
     }
 }

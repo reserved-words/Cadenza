@@ -21,7 +21,6 @@ public static class Startup
         services
             .AddTransient<IAppStore, Store>()
             .AddTransient<IImageFinder, ImageFinder>()
-            .AddTransient<ICurrentTrackStore, CurrentTrackStore>()
             .AddTransient<IItemViewer, ItemViewer>()
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()

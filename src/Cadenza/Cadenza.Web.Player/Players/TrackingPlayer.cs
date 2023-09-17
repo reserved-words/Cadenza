@@ -1,14 +1,17 @@
-﻿namespace Cadenza.Web.Player.Players;
+﻿using Cadenza.State.Store;
+using Fluxor;
+
+namespace Cadenza.Web.Player.Players;
 
 internal class TrackingPlayer : IUtilityPlayer
 {
     private readonly IPlayTracker _tracker;
-    private readonly ICurrentTrackStore _store;
+    private readonly IState<CurrentTrackState> _currentTrackState;
 
-    public TrackingPlayer(IPlayTracker tracker, ICurrentTrackStore store)
+    public TrackingPlayer(IPlayTracker tracker, IState<CurrentTrackState> currentTrackState)
     {
         _tracker = tracker;
-        _store = store;
+        _currentTrackState = currentTrackState;
     }
 
     public async Task OnPlay(TrackProgress progress)
@@ -33,7 +36,7 @@ internal class TrackingPlayer : IUtilityPlayer
 
     private async Task RecordPlay(TrackProgress progress)
     {
-        var currentTrack = await CurrentTrack();
+        var currentTrack = _currentTrackState.Value.Track;
 
         if (currentTrack == null)
             return;
@@ -46,7 +49,7 @@ internal class TrackingPlayer : IUtilityPlayer
 
     private async Task UpdateNowPlaying(TrackProgress progress)
     {
-        var currentTrack = await CurrentTrack();
+        var currentTrack = _currentTrackState.Value.Track;
 
         if (currentTrack == null)
             return;
@@ -58,10 +61,5 @@ internal class TrackingPlayer : IUtilityPlayer
     {
         return progress.SecondsPlayed >= 4 * 60
             || progress.PercentagePlayed >= 50;
-    }
-
-    private async Task<TrackFull> CurrentTrack()
-    {
-        return await _store.GetCurrentTrack();
     }
 }

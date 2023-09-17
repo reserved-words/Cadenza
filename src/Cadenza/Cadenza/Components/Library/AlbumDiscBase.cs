@@ -1,6 +1,5 @@
 ﻿using Cadenza.State.Actions;
 using Cadenza.State.Store;
-using Cadenza.Web.Common.Interfaces.Store;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
 
@@ -13,9 +12,6 @@ public class AlbumDiscBase : FluxorComponent
 
     [Inject]
     public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public ICurrentTrackStore Store { get; set; }
 
     [Inject]
     public IState<PlayStatusState> PlayStatusState { get; set; }
@@ -46,10 +42,9 @@ public class AlbumDiscBase : FluxorComponent
         }
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
-        var currentTrackId = await Store.GetCurrentTrackId();
-        UpdateCurrentTrack(currentTrackId);
+        UpdateCurrentTrack(PlayStatusState.Value.Track?.Id);
     }
 
     protected Task OnDoubleClick(AlbumTrack track)
