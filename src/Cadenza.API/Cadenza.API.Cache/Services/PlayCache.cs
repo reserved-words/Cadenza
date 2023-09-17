@@ -14,7 +14,8 @@ internal class PlayCache : IPlayCache
             Title = track.Title,
             ArtistId = track.ArtistId,
             AlbumId = track.AlbumId,
-            Source = track.Source
+            Source = track.Source,
+            Duration = track.DurationSeconds
         };
 
         _playTracks.Add(playTrack.Id, playTrack);

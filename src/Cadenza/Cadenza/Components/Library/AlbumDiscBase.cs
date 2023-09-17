@@ -32,6 +32,9 @@ public class AlbumDiscBase : FluxorComponent
         // TODO - make sure that this event is raised when a playlist finishes so that the currently playing track is set back to null
         // CHECK - FluxorComponent dispose method will sort unregistering this event listener
         PlayStatusState.StateChanged += PlayStatusState_StateChanged;
+        
+        // Needed when implementing FluxorComponent
+        base.OnInitialized();
     }
 
     private void PlayStatusState_StateChanged(object sender, EventArgs e)

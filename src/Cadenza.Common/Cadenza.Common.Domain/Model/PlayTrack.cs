@@ -8,4 +8,5 @@ public class PlayTrack
     public string Title { get; set; }
     public int ArtistId { get; set; }
     public int AlbumId { get; set; }
+    public int Duration { get; set; }
 }

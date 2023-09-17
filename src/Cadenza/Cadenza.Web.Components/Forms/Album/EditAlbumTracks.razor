@@ -35,7 +35,7 @@
 
 @code {
     [Inject]
-    public IState<CurrentTrackState> CurrentTrackState { get; set; }
+    public IState<PlaylistTrackState> PlaylistTrackState { get; set; }
 
     [Inject]
     public IDialogService DialogService { get; set; }
@@ -54,11 +54,13 @@
     protected override void OnInitialized()
     {
         Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
+        // Needed when implementing FluxorComponent
+        base.OnInitialized();
     }
 
     protected async Task OnRemoveTrack(AlbumTrack track)
     {
-        var currentTrackId = CurrentTrackState.Value.Track.Track.Id;
+        var currentTrackId = PlaylistTrackState.Value.CurrentTrack.Id;
 
         if (currentTrackId == track.TrackId)
         {

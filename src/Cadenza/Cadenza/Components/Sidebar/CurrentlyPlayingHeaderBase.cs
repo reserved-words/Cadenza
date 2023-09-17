@@ -1,10 +1,11 @@
 ﻿using Cadenza.State.Store;
 using Cadenza.Web.Common.Interfaces.View;
 using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Sidebar;
 
-public class CurrentlyPlayingHeaderBase : ComponentBase
+public class CurrentlyPlayingHeaderBase : FluxorComponent
 {
     [Inject]
     public IState<PlaylistState> PlaylistState { get; set; }

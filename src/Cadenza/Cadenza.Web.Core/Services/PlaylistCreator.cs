@@ -63,7 +63,8 @@ internal class PlaylistCreator : IPlaylistCreator
             Source = track.Track.Source,
             ArtistId = track.Artist.Id,
             AlbumId = track.Album.Id,
-            Title = track.Track.Title
+            Title = track.Track.Title,
+            Duration = track.Track.DurationSeconds
         };
 
         var tracks = new List<PlayTrack> { playTrack };

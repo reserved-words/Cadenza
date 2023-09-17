@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.State.Actions;
+﻿using Cadenza.State.Actions;
 using Cadenza.State.Store;
 
 namespace Cadenza.State.Reducers;
@@ -16,11 +15,5 @@ public static class PlaylistReducers
     };
 
     [ReducerMethod(typeof(PlaylistStopRequest))]
-    public static PlaylistState ReducePlaylistStopRequest(PlaylistState state) => state with
-    {
-        IsLoading = false,
-        Id = null,
-        Type = PlaylistType.All,
-        Name = null
-    };
+    public static PlaylistState ReducePlaylistStopRequest(PlaylistState state) => PlaylistState.Init();
 }

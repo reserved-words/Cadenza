@@ -1,4 +1,8 @@
-﻿<ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
+﻿
+@if (Grouping != null)
+{
+    <ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
+}
 
 @code {
     [Inject]

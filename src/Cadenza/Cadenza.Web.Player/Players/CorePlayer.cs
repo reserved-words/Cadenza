@@ -1,17 +1,18 @@
 ﻿using Cadenza.State.Store;
 using Fluxor;
+using System.Text.Json;
 
 namespace Cadenza.Web.Player.Players;
 
 internal class CorePlayer : IPlayer
 {
-    private readonly IState<CurrentTrackState> _currentTrackState;
+    private readonly IState<PlaylistTrackState> _playlistTrackState;
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly List<IUtilityPlayer> _utilityPlayers;
 
-    public CorePlayer(IState<CurrentTrackState> currentTrackState, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
+    public CorePlayer(IState<PlaylistTrackState> playlistTrackState, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
     {
-        _currentTrackState = currentTrackState;
+        _playlistTrackState = playlistTrackState;
         _sourcePlayers = sourcePlayers.ToList();
         _utilityPlayers = utilityPlayers.ToList();
     }
@@ -21,7 +22,7 @@ internal class CorePlayer : IPlayer
         var service = GetCurrentSourcePlayer(track.Source);
         await service.Play(track.IdFromSource);
 
-        var duration = _currentTrackState.Value.Track.Track.DurationSeconds;
+        var duration = track.Duration;
         var progress = new TrackProgress(0, duration);
 
         await RunUtilities(p => p.OnPlay(progress));
@@ -51,7 +52,7 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var duration = _currentTrackState.Value.Track.Track.DurationSeconds;
+            var duration = _playlistTrackState.Value.CurrentTrack.Duration;
             progress = new TrackProgress(duration, duration);
         }
 
@@ -60,7 +61,7 @@ internal class CorePlayer : IPlayer
 
     private ISourcePlayer GetCurrentSourcePlayer(LibrarySource? source = null)
     {
-        var currentSource = source ?? _currentTrackState.Value.Track?.Track.Source;
+        var currentSource = source ?? _playlistTrackState.Value.CurrentTrack?.Source;
 
         if (currentSource == null)
             return null;

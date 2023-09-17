@@ -7,9 +7,14 @@ namespace Cadenza.State.Reducers;
 public static class PlaylistQueueReducers
 {
     [ReducerMethod]
-    public static PlaylistQueueState ReducePlaylistQueueUpdateAction(PlaylistQueueState state, PlaylistQueueUpdateRequest action)
+    public static PlaylistQueueState ReducePlaylistQueueUpdateRequest(PlaylistQueueState state, PlaylistQueueUpdateRequest action)
     {
         // Note this doesn't take into consideration starting on a specific track - find where that comes in in original code
+
+        if (action.Definition == null)
+        {
+            return PlaylistQueueState.Init();
+        }
 
         var allTracks = action.Definition.Tracks.ToList();
         var toPlay = PopulateToPlay(allTracks);

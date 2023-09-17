@@ -5,5 +5,5 @@ namespace Cadenza.State.Store;
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record PlaylistState(bool IsLoading, string Id, PlaylistType Type, string Name) 
 {
-    private static PlaylistState Init() => new PlaylistState(false, null, PlaylistType.All, "Nothing");
+    public static PlaylistState Init() => new PlaylistState(false, null, PlaylistType.All, "Nothing");
 }

@@ -13,10 +13,11 @@ public class RecentPlayHistoryEffects
         _history = history;
     }
 
-    [EffectMethod(typeof(FetchRecentPlayHistoryAction))]
+    [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
     public async Task HandleFetchRecentPlayHistoryAction(IDispatcher dispatcher)
     {
+        await Task.Delay(2000);
         var result = await _history.GetRecentTracks(20, 1); 
-        dispatcher.Dispatch(new FetchRecentPlayHistoryResultAction(result.ToList()));
+        dispatcher.Dispatch(new FetchRecentPlayHistoryAction(result.ToList()));
     }
 }

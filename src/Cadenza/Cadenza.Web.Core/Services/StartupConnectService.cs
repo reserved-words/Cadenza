@@ -5,21 +5,16 @@ namespace Cadenza.Web.Core.Services;
 
 internal class StartupConnectService : IStartupTaskService
 {
-    private readonly IAppStore _storeSetter;
     private readonly IEnumerable<IConnector> _connectors;
 
-    public StartupConnectService(IAppStore storeSetter, IEnumerable<IConnector> connectors)
+    public StartupConnectService(IEnumerable<IConnector> connectors)
     {
-        _storeSetter = storeSetter;
         _connectors = connectors;
     }
 
     public TaskGroup GetStartupTasks()
     {
-        var taskGroup = new TaskGroup
-        {
-            PreTask = ClearSessionData
-        };
+        var taskGroup = new TaskGroup();
 
         foreach (var builder in _connectors)
         {
@@ -27,11 +22,5 @@ internal class StartupConnectService : IStartupTaskService
         }
 
         return taskGroup;
-    }
-
-    private async Task ClearSessionData()
-    {
-        await _storeSetter.Clear(StoreKey.CurrentTrackSource);
-        await _storeSetter.Clear(StoreKey.CurrentTrack);
     }
 }
