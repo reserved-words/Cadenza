@@ -23,7 +23,7 @@ public class CurrentTrackEffects
     [EffectMethod]
     public Task HandleUpdateCurrentTrackAction(UpdateCurrentTrackAction action, IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new PlayerPlayRequest(action.FullTrack.Track));
+        dispatcher.Dispatch(new PlayerPlayRequest(action.FullTrack));
         return Task.CompletedTask;
     }
 }

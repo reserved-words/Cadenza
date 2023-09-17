@@ -23,9 +23,9 @@ public static class _Startup
     {
         return services
             .AddTransient<IUtilityPlayer, TimingPlayer>()
-            .AddSingleton<TrackTimer>()
+            .AddScoped<TrackTimer>()
             .AddTransient<ITrackTimerController>(sp => sp.GetRequiredService<TrackTimer>())
-            .AddTransient<IPlayer, CorePlayer>()
-            .AddTransient<IUtilityPlayer, TrackingPlayer>();
+            .AddTransient<IPlayer, CorePlayer>();
+            //.AddTransient<IUtilityPlayer, TrackingPlayer>();
     }
 }

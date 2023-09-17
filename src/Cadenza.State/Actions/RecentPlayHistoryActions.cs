@@ -1,8 +1,10 @@
 ﻿using Cadenza.Common.Domain.Model.History;
+using Cadenza.Common.Domain.Model.Track;
+using Cadenza.Web.Common.Enums;
 
 namespace Cadenza.State.Actions;
 
-public record UpdateRecentPlayHistoryRequest();
+public record UpdateRecentPlayHistoryRequest(PlayStatus Status, TrackFull Track, int SecondsPlayed);
 
 public record UpdateRecentPlayHistoryResult();
 

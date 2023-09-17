@@ -27,26 +27,28 @@ internal class CorePlayer : IPlayer
         await RunUtilities(p => p.OnPlay(progress));
     }
 
-    public async Task Pause()
+    public async Task<int> Pause()
     {
         var service = GetCurrentSourcePlayer();
         var progress = await service.Pause();
         await RunUtilities(p => p.OnPause(progress));
+        return progress.SecondsPlayed;
     }
 
-    public async Task Resume()
+    public async Task<int> Resume()
     {
         var service = GetCurrentSourcePlayer();
         var progress = await service.Resume();
         await RunUtilities(p => p.OnResume(progress));
+        return progress.SecondsPlayed;
     }
 
-    public async Task Stop()
+    public async Task<int> Stop()
     {
         var service = GetCurrentSourcePlayer();
 
         if (service == null)
-            return;
+            return 0;
 
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
@@ -56,6 +58,7 @@ internal class CorePlayer : IPlayer
         }
 
         await RunUtilities(p => p.OnStop(progress));
+        return progress.SecondsPlayed;
     }
 
     private ISourcePlayer GetCurrentSourcePlayer(LibrarySource? source = null)

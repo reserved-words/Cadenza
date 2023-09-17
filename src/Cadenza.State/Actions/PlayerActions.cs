@@ -2,7 +2,7 @@
 
 namespace Cadenza.State.Actions;
 
-public record PlayerPlayRequest(Track Track);
+public record PlayerPlayRequest(TrackFull Track);
 public record PlayerPauseRequest();
 public record PlayerResumeRequest();
 public record PlayerStopRequest();
