@@ -1,100 +1,89 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
-using Cadenza.Web.Common.Interfaces.Store;
+﻿//using Cadenza.Web.Common.Interfaces.Play;
+//using Cadenza.Web.Common.Interfaces.Store;
+//using Fluxor;
 
-namespace Cadenza.Web.Core.Coordinators;
+//namespace Cadenza.Web.Core.Coordinators;
 
-internal class PlayCoordinator : IPlayCoordinator
-{
-    private readonly ICurrentTrackStore _store;
-    private readonly IMessenger _messenger;
+//internal class PlayCoordinator : IPlayCoordinator
+//{
+//    private readonly ICurrentTrackStore _store;
+//    private readonly IMessenger _messenger;
+//    private readonly IDispatcher _dispatcher;
 
-    public PlayCoordinator(ICurrentTrackStore store, IMessenger messenger)
-    {
-        _store = store;
-        _messenger = messenger;
+//    public PlayCoordinator(ICurrentTrackStore store, IMessenger messenger, IDispatcher dispatcher)
+//    {
+//        _store = store;
+//        _messenger = messenger;
 
-        _messenger.Subscribe<SkipNextTrackEventArgs>(OnSkipNext);
-        _messenger.Subscribe<SkipPreviousTrackEventArgs>(OnSkipPrevious);
-        _messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
-        _messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved);
-    }
+//        _messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
+//        _messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved);
+//        _dispatcher = dispatcher;
+//    }
 
-    private IPlaylist _currentPlaylist;
 
-    public async Task Play(PlaylistDefinition playlistDefinition)
-    {
-        _currentPlaylist = new Playlist(playlistDefinition);
+//    public async Task StopCurrentPlaylist()
+//    {
+//        await StopTrack();
+//        await StopPlaylist();
+//        await _messenger.Send(this, new PlaylistLoadingEventArgs());
+//    }
 
-        for (var i = 0; i < playlistDefinition.StartIndex; i++)
-        {
-            await _currentPlaylist.MoveNext();
-        }
+//    private async Task PlayTrack()
+//    {
+////        await _store.SetCurrentTrack(_currentPlaylist.Current.Id);
 
-        await _messenger.Send(this, new PlaylistStartedEventArgs { Playlist = _currentPlaylist.Id });
-        await PlayTrack();
-    }
+// //       _dispatcher.Dispatch(new FetchCurrentTrackAction())
 
-    public async Task StopCurrentPlaylist()
-    {
-        await StopTrack();
-        await StopPlaylist();
-        await _messenger.Send(this, new PlaylistLoadingEventArgs());
-    }
+//        await _messenger.Send(this, new StartTrackEventArgs
+//        {
+//            CurrentTrack = _currentPlaylist.Current,
+//            IsLastTrack = _currentPlaylist.CurrentIsLast
+//        });
+//    }
 
-    private async Task PlayTrack()
-    {
-        await _store.SetCurrentTrack(_currentPlaylist.Current.Id);
+//    private async Task StopTrack()
+//    {
+//        await _messenger.Send(this, new StopTrackEventArgs());
+//    }
 
-        await _messenger.Send(this, new StartTrackEventArgs
-        {
-            CurrentTrack = _currentPlaylist.Current,
-            IsLastTrack = _currentPlaylist.CurrentIsLast
-        });
-    }
+//    private async Task OnSkipNext (object sender, SkipNextTrackEventArgs args)
+//    {
+//        await StopTrack();
 
-    private async Task StopTrack()
-    {
-        await _messenger.Send(this, new StopTrackEventArgs());
-    }
+//        if (_currentPlaylist.CurrentIsLast)
+//        {
+//            await StopPlaylist();
+//            return;
+//        }
 
-    private async Task OnSkipNext (object sender, SkipNextTrackEventArgs args)
-    {
-        await StopTrack();
+//        await _currentPlaylist.MoveNext();
+//        await PlayTrack();
+//    }
 
-        if (_currentPlaylist.CurrentIsLast)
-        {
-            await StopPlaylist();
-            return;
-        }
+//    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
+//    {
+//        await OnSkipNext(this, null);
+//    }
 
-        await _currentPlaylist.MoveNext();
-        await PlayTrack();
-    }
+//    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
+//    {
+//        _currentPlaylist?.RemoveTrack(args.TrackId);
+//        return Task.CompletedTask;
+//    }
 
-    private async Task OnTrackFinished(object sender, TrackFinishedEventArgs args)
-    {
-        await OnSkipNext(this, null);
-    }
+//    private async Task OnSkipPrevious(object sender, SkipPreviousTrackEventArgs args)
+//    {
+//        await StopTrack();
+//        await _currentPlaylist.MovePrevious();
+//        await PlayTrack();
+//    }
 
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
-    {
-        _currentPlaylist?.RemoveTrack(args.TrackId);
-        return Task.CompletedTask;
-    }
+//    private async Task StopPlaylist()
+//    {
+//        if (_currentPlaylist == null)
+//            return;
 
-    private async Task OnSkipPrevious(object sender, SkipPreviousTrackEventArgs args)
-    {
-        await StopTrack();
-        await _currentPlaylist.MovePrevious();
-        await PlayTrack();
-    }
-
-    private async Task StopPlaylist()
-    {
-        if (_currentPlaylist == null)
-            return;
-
-        await _messenger.Send(this, new PlaylistFinishedEventArgs { Playlist = _currentPlaylist.Id });
-        _currentPlaylist = null;
-    }
-}
+//        await _messenger.Send(this, new PlaylistFinishedEventArgs { Playlist = _currentPlaylist.Id });
+//        _currentPlaylist = null;
+//    }
+//}

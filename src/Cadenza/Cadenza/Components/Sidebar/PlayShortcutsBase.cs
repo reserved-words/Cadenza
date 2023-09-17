@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
+﻿using Cadenza.State.Actions;
+using Fluxor;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -11,7 +12,7 @@ public class PlayShortcutsBase : ComponentBase
     public IAdminRepository AdminRepository { get; set; }
 
     [Inject]
-    public IItemPlayer Player { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Inject]
     public IMessenger Messenger { get; set; }
@@ -26,7 +27,9 @@ public class PlayShortcutsBase : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
-        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
+
+        //TODO - what happens when playlist finishes
+        //Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
 
         Groupings = await AdminRepository.GetGroupingOptions();
     }
@@ -50,29 +53,35 @@ public class PlayShortcutsBase : ComponentBase
         await UpdateRecentlyPlayedItems();
     }
 
-    private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
+    // TODO: Update recently played items when playlist changes (could do on start and end if needed)
+
+    //private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
+    //{
+    //    await UpdateRecentlyPlayedItems();
+    //}
+
+    protected Task PlayLibrary()
     {
-        await UpdateRecentlyPlayedItems();
+        Dispatcher.Dispatch(new PlayAllRequest());
+        return Task.CompletedTask;
     }
 
-    protected async Task PlayLibrary()
+    protected Task PlayGrouping(Grouping grouping)
     {
-        await Player.PlayAll();
+        Dispatcher.Dispatch(new PlayGroupingRequest(grouping));
+        return Task.CompletedTask;
     }
 
-    protected async Task PlayGrouping(Grouping grouping)
+    protected Task PlayRecentAlbum(RecentAlbum album)
     {
-        await Player.PlayGrouping(grouping);
+        Dispatcher.Dispatch(new PlayAlbumRequest(album.Id, 0));
+        return Task.CompletedTask;
     }
 
-    protected async Task PlayRecentAlbum(RecentAlbum album)
+    protected Task PlayRecentTag(string tag)
     {
-        await Player.PlayAlbum(album.Id);
-    }
-
-    protected async Task PlayRecentTag(string tag)
-    {
-        await Player.PlayTag(tag);
+        Dispatcher.Dispatch(new PlayTagRequest(tag));
+        return Task.CompletedTask;
     }
 
     private async Task UpdateRecentlyPlayedItems()

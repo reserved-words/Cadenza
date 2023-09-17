@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Core.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
-internal interface IPlaylistCreator
+public interface IPlaylistCreator
 {
     Task<PlaylistDefinition> CreateAlbumPlaylist(int id, int startTrackId);
     Task<PlaylistDefinition> CreateArtistPlaylist(int id);

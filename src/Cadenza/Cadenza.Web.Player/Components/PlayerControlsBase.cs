@@ -1,14 +1,14 @@
-﻿namespace Cadenza.Web.Player.Components;
+﻿using Cadenza.State.Actions;
+using Fluxor;
+
+namespace Cadenza.Web.Player.Components;
 
 public class PlayerControlsBase : ComponentBase
 {
-    [Inject] public IMessenger Messenger { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public bool IsTrackPopulated { get; set; }
     [Parameter] public bool IsLastTrack { get; set; }
-
-    [Parameter] public Func<Task> OnPause { get; set; }
-    [Parameter] public Func<Task> OnResume { get; set; }
 
     protected bool CanPause { get; set; }
     protected bool CanPlay { get; set; }
@@ -22,27 +22,39 @@ public class PlayerControlsBase : ComponentBase
         CanPause = IsTrackPopulated;
     }
 
-    protected async Task Pause()
+    protected void Pause()
     {
         CanPlay = true;
         CanPause = false;
-        await OnPause();
+        OnPause();
     }
 
-    protected async Task Resume()
+    protected void Resume()
     {
         CanPlay = false;
         CanPause = true;
-        await OnResume();
+        OnResume();
     }
 
-    public async Task SkipNext()
+    public void SkipNext()
     {
-        await Messenger.Send(this, new SkipNextTrackEventArgs());
+        Dispatcher.Dispatch(new PlaylistQueueMoveNextRequest());
     }
 
-    public async Task SkipPrevious()
+    public void SkipPrevious()
     {
-        await Messenger.Send(this, new SkipPreviousTrackEventArgs());
+        Dispatcher.Dispatch(new PlaylistQueueMovePreviousRequest());
+    }
+
+
+
+    protected void OnPause()
+    {
+        Dispatcher.Dispatch(new PlayerPauseRequest());
+    }
+
+    protected void OnResume()
+    {
+        Dispatcher.Dispatch(new PlayerResumeRequest());
     }
 }

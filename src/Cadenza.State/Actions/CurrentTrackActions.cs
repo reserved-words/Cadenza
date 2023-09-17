@@ -2,6 +2,6 @@
 
 namespace Cadenza.State.Actions;
 
-public record FetchCurrentTrackAction(int TrackId);
+public record UpdateCurrentTrackRequest(int TrackId);
 
-public record FetchCurrentTrackResultAction(TrackFull Result);
+public record UpdateCurrentTrackAction(TrackFull Result);

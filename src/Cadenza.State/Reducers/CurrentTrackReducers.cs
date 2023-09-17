@@ -5,14 +5,14 @@ namespace Cadenza.State.Reducers;
 
 public static class CurrentTrackReducers
 {
-    [ReducerMethod(typeof(FetchCurrentTrackAction))]
+    [ReducerMethod(typeof(UpdateCurrentTrackRequest))]
     public static CurrentTrackState ReduceFetchCurrentTrackAction(CurrentTrackState state) => state with
     {
         IsLoading = true
     };
 
     [ReducerMethod]
-    public static CurrentTrackState ReduceFetchCurrentTrackResultAction(CurrentTrackState state, FetchCurrentTrackResultAction action) => state with
+    public static CurrentTrackState ReduceFetchCurrentTrackResultAction(CurrentTrackState state, UpdateCurrentTrackAction action) => state with
     {
         IsLoading = false,
         Track = action.Result

@@ -1,88 +1,85 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿//namespace Cadenza.Web.Core.Services;
 
-internal class Playlist : IPlaylist
-{
-    private Stack<PlayTrack> _played;
-    private Stack<PlayTrack> _toPlay;
-    private readonly List<PlayTrack> _allTracks;
+//internal class Playlist : IPlaylist
+//{
+//    private Stack<PlayTrack> _played;
+//    private Stack<PlayTrack> _toPlay;
 
-    private PlayTrack _playing;
+//    private PlayTrack _playing;
 
-    public PlayTrack Current => _playing;
+//    public PlayTrack Current => _playing;
 
-    public Playlist(PlaylistDefinition def)
-    {
-        Id = def.Id;
-        _allTracks = def.Tracks.ToList();
+//    public Playlist(PlaylistDefinition def)
+//    {
+//        Id = def.Id;
+//        var allTracks = def.Tracks.ToList();
 
-        PopulateToPlay(_allTracks);
-        PopulatePlayed();
+//        PopulateToPlay(allTracks);
+//        PopulatePlayed();
 
-        _playing = _toPlay.Pop();
-    }
+//        _playing = _toPlay.Pop();
+//    }
 
-    public bool CurrentIsLast => _toPlay.Count == 0;
+//    public bool CurrentIsLast => _toPlay.Count == 0;
 
-    public PlaylistId Id { get; }
+//    public PlaylistId Id { get; }
 
-    public Task<PlayTrack> MoveNext()
-    {
-        _played.Push(_playing);
+//    public PlayTrack MoveNext()
+//    {
+//        _played.Push(_playing);
 
-        _playing = _toPlay.Count == 0
-            ? null
-            : _toPlay.Pop();
+//        _playing = _toPlay.Count == 0
+//            ? null
+//            : _toPlay.Pop();
 
-        return Task.FromResult(_playing);
-    }
+//        return _playing;
+//    }
 
-    public Task<PlayTrack> MovePrevious()
-    {
-        if (_played.Count > 0)
-        {
-            if (_playing != null)
-            {
-                _toPlay.Push(_playing);
-            }
-            _playing = _played.Pop();
-        }
+//    public PlayTrack MovePrevious()
+//    {
+//        if (_played.Count > 0)
+//        {
+//            if (_playing != null)
+//            {
+//                _toPlay.Push(_playing);
+//            }
+//            _playing = _played.Pop();
+//        }
 
-        return Task.FromResult(_playing);
-    }
+//        return _playing;
+//    }
 
-    public void RemoveTrack(int trackId)
-    {
-        var track = _allTracks.SingleOrDefault(t => t.Id == trackId);
-        if (track == null)
-            return;
+//    public void RemoveTrack(int trackId)
+//    {
+//        var playedTracks = new List<PlayTrack>(_played);
+//        var playedTrack = playedTracks.FirstOrDefault(t => t.Id == trackId);
 
-        _allTracks.Remove(track);
+//        if (playedTrack != null)
+//        {
+//            playedTracks.Remove(playedTrack);
+//            PopulatePlayed(playedTracks);
+//        }
 
-        if (_played.Contains(track))
-        {
-            var playedTracks = new List<PlayTrack>(_played);
-            playedTracks.Remove(track);
-            PopulatePlayed(playedTracks);
-        }
+//        var toPlayTracks = new List<PlayTrack>(_toPlay);
+//        var toPlayTrack = toPlayTracks.FirstOrDefault(t => t.Id == trackId);
 
-        if (_toPlay.Contains(track))
-        {
-            var toPlayTracks = new List<PlayTrack>(_toPlay);
-            toPlayTracks.Remove(track);
-            PopulateToPlay(toPlayTracks);
-        }
-    }
+//        if (toPlayTrack != null)
+//        {
+//            toPlayTracks.Remove(toPlayTrack);
+//            PopulateToPlay(toPlayTracks);
+//        }
+//    }
 
-    private void PopulatePlayed(List<PlayTrack> played = null)
-    {
-        _played = played == null 
-            ? new Stack<PlayTrack>()
-            : new Stack<PlayTrack>(played);
-    }
+//    //private void PopulatePlayed(List<PlayTrack> played = null)
+//    //{
+//    //    _played = played == null 
+//    //        ? new Stack<PlayTrack>()
+//    //        : new Stack<PlayTrack>(played);
+//    //}
 
-    private void PopulateToPlay(List<PlayTrack> toPlay)
-    {
-        toPlay.Reverse();
-        _toPlay = new Stack<PlayTrack>(toPlay);
-    }
-}
+//    //private void PopulateToPlay(List<PlayTrack> toPlay)
+//    //{
+//    //    toPlay.Reverse();
+//    //    _toPlay = new Stack<PlayTrack>(toPlay);
+//    //}
+//}

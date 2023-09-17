@@ -1,4 +1,5 @@
-﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@using Cadenza.State.Actions;
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
@@ -12,14 +13,15 @@
     public IDialogService DialogService { get; set; }
 
     [Inject]
-    public IItemPlayer Player { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public TrackInfo Track { get; set; }
 
-    protected async Task OnPlay()
+    protected Task OnPlay()
     {
-        await Player.PlayTrack(Track.Id);
+        Dispatcher.Dispatch(new PlayTrackRequest(Track.Id));
+        return Task.CompletedTask;
     }
 
     protected async Task OnEdit()

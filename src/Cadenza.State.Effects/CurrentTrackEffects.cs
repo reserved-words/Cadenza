@@ -14,9 +14,9 @@ public class CurrentTrackEffects
     }
 
     [EffectMethod]
-    public async Task HandleFetchCurrentTrackAction(FetchCurrentTrackAction action, IDispatcher dispatcher)
+    public async Task HandleFetchCurrentTrackAction(UpdateCurrentTrackRequest action, IDispatcher dispatcher)
     {
         var result = await _repository.GetTrack(action.TrackId);
-        dispatcher.Dispatch(new FetchCurrentTrackResultAction(result));
+        dispatcher.Dispatch(new UpdateCurrentTrackAction(result));
     }
 }

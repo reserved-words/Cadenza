@@ -1,7 +1,7 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Play;
+﻿//namespace Cadenza.Web.Common.Interfaces.Play;
 
-public interface IPlayCoordinator
-{
-    Task StopCurrentPlaylist();
-    Task Play(PlaylistDefinition playlistDefinition);
-}
+//public interface IPlayCoordinator
+//{
+//    Task StopCurrentPlaylist();
+//    Task Play(PlaylistDefinition playlistDefinition);
+//}
