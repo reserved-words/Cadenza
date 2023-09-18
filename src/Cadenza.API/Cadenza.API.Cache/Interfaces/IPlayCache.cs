@@ -4,7 +4,6 @@ internal interface IPlayCache
 {
     void CacheTrack(TrackInfo track, ArtistInfo artist, AlbumInfo album);
     void Clear();
-    List<PlayTrack> GetAll();
-    List<PlayTrack> GetTag(string id);
-    PlayTrack GetTrack(int id);
+    List<int> GetAll();
+    List<int> GetTag(string id);
 }

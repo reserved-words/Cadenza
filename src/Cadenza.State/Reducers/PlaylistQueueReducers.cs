@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Domain.Model.History;
 using Cadenza.State.Actions;
 using Cadenza.State.Store;
 
@@ -36,7 +37,7 @@ public static class PlaylistQueueReducers
         state.Played.Push(state.CurrentTrack);
 
         var playing = state.ToPlay.Count == 0
-            ? null
+            ? 0
             : state.ToPlay.Pop();
 
         return state with
@@ -53,7 +54,7 @@ public static class PlaylistQueueReducers
 
         if (state.Played.Count > 0)
         {
-            if (playing != null)
+            if (playing != 0)
             {
                 state.ToPlay.Push(playing);
             }
@@ -71,37 +72,27 @@ public static class PlaylistQueueReducers
     [ReducerMethod]
     public static PlaylistQueueState ReducePlaylistQueueRemoveTrackRequest(PlaylistQueueState state, PlaylistQueueRemoveTrackRequest action)
     {
-        var playedTracks = new List<PlayTrack>(state.Played);
-        var playedTrack = playedTracks.FirstOrDefault(t => t.Id == action.TrackId);
+        var playedTracks = new List<int>(state.Played);
+        playedTracks.RemoveAll(t => t == action.TrackId);
+        PopulatePlayed(playedTracks);
 
-        if (playedTrack != null)
-        {
-            playedTracks.Remove(playedTrack);
-            PopulatePlayed(playedTracks);
-        }
-
-        var toPlayTracks = new List<PlayTrack>(state.ToPlay);
-        var toPlayTrack = toPlayTracks.FirstOrDefault(t => t.Id == action.TrackId);
-
-        if (toPlayTrack != null)
-        {
-            toPlayTracks.Remove(toPlayTrack);
-            PopulateToPlay(toPlayTracks);
-        }
+        var toPlayTracks = new List<int>(state.ToPlay);
+        toPlayTracks.RemoveAll(t => t == action.TrackId);
+        PopulateToPlay(toPlayTracks);
 
         return state;
     }
 
-    private static Stack<PlayTrack> PopulatePlayed(List<PlayTrack> played = null)
+    private static Stack<int> PopulatePlayed(List<int> played = null)
     {
         return played == null
-            ? new Stack<PlayTrack>()
-            : new Stack<PlayTrack>(played);
+            ? new Stack<int>()
+            : new Stack<int>(played);
     }
 
-    private static Stack<PlayTrack> PopulateToPlay(List<PlayTrack> toPlay)
+    private static Stack<int> PopulateToPlay(List<int> toPlay)
     {
         toPlay.Reverse();
-        return new Stack<PlayTrack>(toPlay);
+        return new Stack<int>(toPlay);
     }
 }

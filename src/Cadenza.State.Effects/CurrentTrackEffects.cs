@@ -16,14 +16,24 @@ public class CurrentTrackEffects
     [EffectMethod]
     public async Task HandleUpdateCurrentTrackRequest(FetchFullTrackRequest action, IDispatcher dispatcher)
     {
-        var fullTrack = await _repository.GetTrack(action.PlayTrack.Id);
-        dispatcher.Dispatch(new UpdateCurrentTrackAction(action.PlayTrack, fullTrack, action.IsLastTrackInPlaylist));
+        var fullTrack = action.TrackId == 0 
+            ? null 
+            : await _repository.GetTrack(action.TrackId);
+
+        var isLast = fullTrack == null
+            ? false
+            : action.IsLastTrackInPlaylist;
+
+        dispatcher.Dispatch(new UpdateCurrentTrackAction(action.TrackId, fullTrack, isLast));
     }
 
     [EffectMethod]
     public Task HandleUpdateCurrentTrackAction(UpdateCurrentTrackAction action, IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new PlayerPlayRequest(action.FullTrack));
+        if (action.FullTrack != null)
+        {
+            dispatcher.Dispatch(new PlayerPlayRequest(action.FullTrack));
+        }
         return Task.CompletedTask;
     }
 }

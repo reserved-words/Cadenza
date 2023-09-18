@@ -1,10 +1,9 @@
-﻿using Cadenza.Common.Domain.Model;
-using Cadenza.Web.Common.Enums;
+﻿using Cadenza.Web.Common.Enums;
 
 namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlayStatusState(PlayStatus Status, PlayTrack Track) 
+public record PlayStatusState(PlayStatus Status, int TrackId) 
 {
-    private static PlayStatusState Init() => new PlayStatusState(PlayStatus.Stopped, null);
+    private static PlayStatusState Init() => new PlayStatusState(PlayStatus.Stopped, 0);
 }

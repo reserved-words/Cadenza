@@ -17,7 +17,9 @@ public class TrackTabBase : ComponentBase
 
     private async Task UpdateTrack()
     {
-        Model = await Repository.GetTrack(Id);
+        Model = Id == 0 
+            ? null
+            : await Repository.GetTrack(Id);
 
         StateHasChanged();
     }

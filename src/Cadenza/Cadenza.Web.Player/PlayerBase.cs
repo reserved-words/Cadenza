@@ -9,14 +9,11 @@ public class PlayerBase : FluxorComponent
     [Inject]
     public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Inject]
-    public IState<PlaylistQueueState> PlaylistQueueState { get; set; }
-
     public bool Loading => CurrentTrackState.Value.IsLoading;
 
-    protected PlayTrack Track => PlaylistQueueState.Value.CurrentTrack;
+    //protected PlayTrack Track => PlaylistQueueState.Value.CurrentTrack;
 
-    protected bool IsLastTrack => PlaylistQueueState.Value.IsCurrentTrackLast;
+    protected bool IsLastTrack => CurrentTrackState.Value.IsLastInPlaylist;
 
     protected TrackFull Model => CurrentTrackState.Value.FullTrack;
 

@@ -2,11 +2,11 @@
 
 public interface IPlaylist
 {
-    PlayTrack MoveNext();
-    PlayTrack MovePrevious();
+    int MoveNext();
+    int MovePrevious();
     void RemoveTrack(int trackId);
 
     PlaylistId Id { get; }
-    PlayTrack Current { get; }
+    int Current { get; }
     bool CurrentIsLast { get; }
 }
