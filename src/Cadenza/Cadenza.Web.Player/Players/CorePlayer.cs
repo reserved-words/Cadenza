@@ -53,7 +53,7 @@ internal class CorePlayer : IPlayer
         var progress = await service.Stop();
         if (progress.TotalSeconds == -1)
         {
-            var duration = _currentTrackState.Value.FullTrack.Track.DurationSeconds;
+            var duration = _currentTrackState.Value.FullTrack.Duration;
             progress = new TrackProgress(duration, duration);
         }
 
@@ -63,7 +63,7 @@ internal class CorePlayer : IPlayer
 
     private ISourcePlayer GetCurrentSourcePlayer(LibrarySource? source = null)
     {
-        var currentSource = source ?? _currentTrackState.Value.FullTrack?.Track.Source;
+        var currentSource = source ?? _currentTrackState.Value.FullTrack?.Source;
 
         if (currentSource == null)
             return null;

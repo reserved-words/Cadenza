@@ -60,7 +60,7 @@
 
     protected async Task OnRemoveTrack(AlbumTrack track)
     {
-        var currentTrackId = CurrentTrackState.Value.FullTrack.Track.Id;
+        var currentTrackId = CurrentTrackState.Value.FullTrack.Id;
 
         if (currentTrackId == track.TrackId)
         {

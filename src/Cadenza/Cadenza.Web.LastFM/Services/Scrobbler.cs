@@ -43,7 +43,7 @@ internal class Scrobbler : IPlayTracker
             Title = track.Track.Title,
             AlbumTitle = track.Album.Title,
             AlbumArtist = track.Album.ArtistName,
-            Duration = duration ?? track.Track.DurationSeconds
+            Duration = duration ?? track.Duration
         };
     }
 }

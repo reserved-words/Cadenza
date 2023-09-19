@@ -22,7 +22,7 @@ public class RecentPlayHistoryEffects
     [EffectMethod]
     public async Task HandleUpdateRecentPlayHistoryRequest(UpdateRecentPlayHistoryRequest action, IDispatcher dispatcher)
     {
-        var progress = new TrackProgress(action.SecondsPlayed, action.Track.Track.DurationSeconds);
+        var progress = new TrackProgress(action.SecondsPlayed, action.Track.Duration);
         
         if (action.Status == PlayStatus.Playing)
         {

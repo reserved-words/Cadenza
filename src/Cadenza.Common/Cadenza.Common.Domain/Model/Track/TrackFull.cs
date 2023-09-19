@@ -7,4 +7,9 @@ public class TrackFull
     public AlbumInfo Album { get; set; } = new();
     public ArtistInfo AlbumArtist { get; set; } = new();
     public AlbumTrackLink AlbumTrack { get; set; } = new();
+
+    public int Id => Track.Id;
+    public LibrarySource Source => Track.Source;
+    public string IdFromSource => Track.IdFromSource;
+    public int Duration => Track.DurationSeconds;
 }
