@@ -1,8 +1,4 @@
-﻿using Cadenza.State.Actions;
-using Cadenza.Web.Common.Interfaces;
-using Fluxor;
-
-namespace Cadenza.State.Effects;
+﻿namespace Cadenza.State.Effects;
 
 public class PlayerEffects
 {

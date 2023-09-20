@@ -1,10 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
-using Cadenza.State.Actions;
-using Cadenza.Web.Common.Enums;
-using Fluxor;
-using System;
-
-namespace Cadenza.State.Effects;
+﻿namespace Cadenza.State.Effects;
 
 public class PlayStatusEffects
 {

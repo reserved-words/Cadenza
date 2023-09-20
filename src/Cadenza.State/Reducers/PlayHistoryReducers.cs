@@ -1,8 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.History;
-using Cadenza.State.Actions;
-using Cadenza.State.Store;
-
-namespace Cadenza.State.Reducers;
+﻿namespace Cadenza.State.Reducers;
 
 public static class PlayHistoryReducers
 {

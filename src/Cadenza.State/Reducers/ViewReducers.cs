@@ -1,9 +1,4 @@
-﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
-using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Common.Model;
-
-namespace Cadenza.State.Reducers;
+﻿namespace Cadenza.State.Reducers;
 
 public static class ViewReducers
 {

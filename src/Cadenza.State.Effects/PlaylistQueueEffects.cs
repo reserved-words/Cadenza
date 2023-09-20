@@ -1,8 +1,4 @@
-﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
-using Fluxor;
-
-namespace Cadenza.State.Effects;
+﻿namespace Cadenza.State.Effects;
 
 public class PlaylistQueueEffects
 {

@@ -1,7 +1,4 @@
-﻿using Cadenza.State.Actions;
-using Fluxor;
-
-namespace Cadenza.State.Effects;
+﻿namespace Cadenza.State.Effects;
 
 public class TrackEndedEffects
 {
