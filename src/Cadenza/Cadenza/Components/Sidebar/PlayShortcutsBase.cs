@@ -1,9 +1,11 @@
 ﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
 using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Sidebar;
 
-public class PlayShortcutsBase : ComponentBase
+public class PlayShortcutsBase : FluxorComponent
 {
     [Parameter]
     public bool IsAppLoaded { get;set;}
@@ -14,8 +16,8 @@ public class PlayShortcutsBase : ComponentBase
     [Inject]
     public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    //[Inject]
+    //public IState<ConnectorState> ConnectorState { get; set; }
 
     [Inject]
     public IHistoryFetcher History { get; set; }
@@ -26,12 +28,19 @@ public class PlayShortcutsBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
+        //ConnectorState.StateChanged += ConnectorState_StateChanged;
 
         //TODO - what happens when playlist finishes
         //Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
 
         Groupings = await AdminRepository.GetGroupingOptions();
+
+        await base.OnInitializedAsync();
+    }
+
+    private void ConnectorState_StateChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     protected override async Task OnParametersSetAsync()
@@ -42,16 +51,16 @@ public class PlayShortcutsBase : ComponentBase
         }
     }
 
-    private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
-    {
-        if (e.Connector != Connector.Database)
-            return;
+    //private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
+    //{
+    //    if (e.Connector != Connector.Database)
+    //        return;
 
-        if (e.Status != ConnectorStatus.Connected)
-            return;
+    //    if (e.Status != ConnectorStatus.Connected)
+    //        return;
 
-        await UpdateRecentlyPlayedItems();
-    }
+    //    await UpdateRecentlyPlayedItems();
+    //}
 
     // TODO: Update recently played items when playlist changes (could do on start and end if needed)
 

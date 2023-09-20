@@ -6,8 +6,8 @@ public class SubTask
     public string Title { get; set; }
     public TaskCheckStep CheckStep { get; set; }
     public List<TaskStep> Steps { get; set; } = new List<TaskStep>();
-    public Func<Exception, Task> OnError { get; set; }
-    public Func<Task> OnCompleted { get; set; }
+    public Action<Exception> OnError { get; set; }
+    public Action OnCompleted { get; set; }
 
     public void AddStep(string caption, Func<object, CancellationToken, Task<object>> task)
     {

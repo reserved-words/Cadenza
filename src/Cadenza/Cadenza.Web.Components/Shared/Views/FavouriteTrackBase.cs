@@ -1,5 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
+﻿using Cadenza.State.Store;
 using Cadenza.Web.Common.Interfaces.Favourites;
+using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Views;
 
@@ -12,7 +13,7 @@ public class FavouriteTrackBase : ComponentBase
     public IFavouritesController FavouritesController { get; set; }
 
     [Inject]
-    public IConnectionService ConnectorService { get; set; }
+    public IState<ConnectorState> ConnectorState { get; set; }
 
     [Parameter]
     public string Artist { get; set; }
@@ -29,7 +30,7 @@ public class FavouriteTrackBase : ComponentBase
     {
         IsEnabled = false;
 
-        var status = ConnectorService.GetStatus(Connector.LastFm);
+        var status = ConnectorState.Value.Connectors[Connector.LastFm];
 
         if (status != ConnectorStatus.Connected)
             return;

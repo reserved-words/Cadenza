@@ -9,6 +9,10 @@ namespace Cadenza.State.Effects;
 
 public class RecentPlayHistoryEffects
 {
+    private const int MaxItems = 15;
+    private const int MinMinutesPlayed = 4;
+    private const int MinPercentagePlayed = 50;
+
     private readonly IHistory _history;
     private readonly IPlayTracker _tracker;
 
@@ -49,7 +53,7 @@ public class RecentPlayHistoryEffects
     [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
     public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
     {
-        var result = await _history.GetRecentTracks(20, 1); 
+        var result = await _history.GetRecentTracks(MaxItems, 1); 
         dispatcher.Dispatch(new FetchRecentPlayHistoryResult(result.ToList()));
     }
 
@@ -74,7 +78,7 @@ public class RecentPlayHistoryEffects
 
     private static bool PlayedEnough(TrackProgress progress)
     {
-        return progress.SecondsPlayed >= 4 * 60
-            || progress.PercentagePlayed >= 50;
+        return progress.SecondsPlayed >= MinMinutesPlayed * 60
+            || progress.PercentagePlayed >= MinPercentagePlayed;
     }
 }

@@ -3,8 +3,9 @@
 <HistoryCard Title="Top Artists"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top artists..."
-             Items="@Model"
-             GetItems="@GetItems">
+             Items="@Items"
+             Period="@Period"
+             UpdateItems="@UpdateItems">
     <RowTemplate>
         <MudTd Class="td-int">
             @context.Rank

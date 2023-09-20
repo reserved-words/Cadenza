@@ -1,6 +1,7 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
+﻿using Cadenza.State.Actions;
 using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Common.Interfaces.Store;
+using Fluxor;
 
 namespace Cadenza.Web.LastFM.Services;
 
@@ -9,16 +10,16 @@ internal class LastFmConnector : IConnector
     private readonly IAppStore _store;
     private readonly IOptions<LastFmApiSettings> _settings;
     private readonly INavigation _navigation;
-    private readonly IConnectionCoordinator _connectorController;
+    private readonly IDispatcher _dispatcher;
     private readonly IAuthoriser _authoriser;
 
     public LastFmConnector(IAppStore store, IOptions<LastFmApiSettings> settings,
-        INavigation navigation, IConnectionCoordinator connectorController, IAuthoriser lastFmAuthoriser)
+        INavigation navigation, IDispatcher dispatcher, IAuthoriser lastFmAuthoriser)
     {
         _store = store;
         _settings = settings;
         _navigation = navigation;
-        _connectorController = connectorController;
+        _dispatcher = dispatcher;
         _authoriser = lastFmAuthoriser;
     }
 
@@ -33,8 +34,8 @@ internal class LastFmConnector : IConnector
             Title = "Connect to Last.FM",
             CheckStep = new TaskCheckStep { Caption = "Checking if Last.FM already connected", Task = IsTaskNeeded },
             Steps = new List<TaskStep>(),
-            OnError = (ex) => _connectorController.SetStatus(Connector.LastFm, ConnectorStatus.Errored, ex.Message),
-            OnCompleted = () => _connectorController.SetStatus(Connector.LastFm, ConnectorStatus.Connected)
+            OnError = (ex) => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.LastFm, ConnectorStatus.Errored, ex)),
+            OnCompleted = () => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.LastFm, ConnectorStatus.Connected, null))
         };
 
         subTask.AddSteps(

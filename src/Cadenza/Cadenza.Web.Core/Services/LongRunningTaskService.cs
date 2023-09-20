@@ -92,7 +92,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
                 if (!isTaskNeeded)
                 {
                     Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
-                    await task.OnCompleted();
+                    task.OnCompleted();
                     return;
                 }
             }
@@ -108,7 +108,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
             Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
             if (task.OnCompleted != null)
             {
-                await task.OnCompleted();
+                task.OnCompleted();
             }
         }
         catch (OperationCanceledException)
@@ -121,7 +121,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
             Update(task.Id, ex.Message, TaskState.Errored, CancellationToken.None);
             if (task.OnError != null)
             {
-                await task.OnError(ex);
+                task.OnError(ex);
             }
             throw;
         }

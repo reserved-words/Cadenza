@@ -1,19 +1,20 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
+﻿using Cadenza.State.Actions;
 using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Source.Local.Interfaces;
+using Fluxor;
 
 namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalSourceConnector : IConnector
 {
-    private readonly IConnectionCoordinator _connectorController;
+    private readonly IDispatcher _dispatcher;
     private readonly ILocalHttpHelper _httpHelper;
     private readonly IOptions<LocalApiSettings> _apiSettings;
 
-    public LocalSourceConnector(IConnectionCoordinator connectorController, IOptions<LocalApiSettings> apiSettings, ILocalHttpHelper httpHelper)
+    public LocalSourceConnector(IDispatcher dispatcher, IOptions<LocalApiSettings> apiSettings, ILocalHttpHelper httpHelper)
     {
         _apiSettings = apiSettings;
-        _connectorController = connectorController;
+        _dispatcher = dispatcher;
         _httpHelper = httpHelper;
     }
 
@@ -24,8 +25,8 @@ internal class LocalSourceConnector : IConnector
             Id = "Local",
             Title = "Connect to Local Library",
             Steps = new List<TaskStep>(),
-            OnError = (ex) => _connectorController.SetStatus(Connector.Local, ConnectorStatus.Errored, ex.Message),
-            OnCompleted = () => _connectorController.SetStatus(Connector.Local, ConnectorStatus.Connected)
+            OnError = (ex) => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Local, ConnectorStatus.Errored, ex)),
+            OnCompleted = () => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Local, ConnectorStatus.Connected, null))
         };
 
         subTask.AddStep("Checking connection", Connect);

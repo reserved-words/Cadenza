@@ -1,10 +1,11 @@
-﻿<AppCardHeader>
+﻿
+<AppCardHeader>
 
     <MainContent>
         <MudText Typo="@Typo.h6">@Title</MudText>
         @if (ShowPeriodOption)
         {
-            <MudText Typo="@Typo.body1">@Period.Value.GetDisplayName()</MudText>
+            <MudText Typo="@Typo.body1">@Period.GetDisplayName()</MudText>
         }
     </MainContent>
 
@@ -14,11 +15,11 @@
             <MudMenu Icon="@Icons.Material.Filled.Settings"
                      Class="mt-auto"
                      Size="@Size.Medium"
-                     Direction="@Direction.Left">
-
+                     AnchorOrigin="@Origin.TopLeft"
+                     TransformOrigin="@Origin.BottomRight">
                 @foreach (var period in Enum.GetValues<HistoryPeriod>())
                 {
-                    <MudMenuItem OnClick="@(() => Update(period))">@period.GetDisplayName()</MudMenuItem>
+                    <MudMenuItem OnClick="@(() => OnUpdate(period))">@period.GetDisplayName()</MudMenuItem>
                 }
             </MudMenu>
         }
@@ -29,20 +30,11 @@
 @typeparam T
 
 @code {
-    public HistoryPeriod? Period { get; set; } = HistoryPeriod.Week;
+    [Parameter] public HistoryPeriod Period { get; set; }
 
-    [Parameter]
-    public string Title { get; set; }
+    [Parameter] public string Title { get; set; }
 
-    [Parameter]
-    public bool ShowPeriodOption { get; set; } = true;
+    [Parameter] public bool ShowPeriodOption { get; set; } = true;
 
-    [Parameter]
-    public Func<HistoryPeriod, Task> OnUpdate { get; set; }
-
-    protected async Task Update(HistoryPeriod period)
-    {
-        await OnUpdate(period);
-        Period = period;
-    }
+    [Parameter] public Action<HistoryPeriod> OnUpdate { get; set; }
 }

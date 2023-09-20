@@ -1,20 +1,21 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
+﻿using Cadenza.State.Actions;
 using Cadenza.Web.Common.Interfaces.Searchbar;
 using Cadenza.Web.Common.Interfaces.Startup;
+using Fluxor;
 
 namespace Cadenza.Web.Database.Services;
 
 internal class DatabaseConnector : IConnector
 {
-    private readonly IConnectionCoordinator _connectorController;
+    private readonly IDispatcher _dispatcher;
     private readonly IApiHttpHelper _http;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
     private readonly ISearchCoordinator _searchCoordinator;
 
-    public DatabaseConnector(IConnectionCoordinator connectorController, IApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
+    public DatabaseConnector(IDispatcher dispatcher, IApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
     {
         _apiSettings = apiSettings;
-        _connectorController = connectorController;
+        _dispatcher = dispatcher;
         _http = http;
         _searchCoordinator = searchCoordinator;
     }
@@ -26,8 +27,8 @@ internal class DatabaseConnector : IConnector
             Id = "Database",
             Title = "Connect to Database",
             Steps = new List<TaskStep>(),
-            OnError = (ex) => _connectorController.SetStatus(Connector.Database, ConnectorStatus.Errored, ex.Message),
-            OnCompleted = () => _connectorController.SetStatus(Connector.Database, ConnectorStatus.Connected)
+            OnError = (ex) => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Database, ConnectorStatus.Errored, ex)),
+            OnCompleted = () => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Database, ConnectorStatus.Connected, null))
         };
 
         subTask.AddStep("Checking connection", Connect);
