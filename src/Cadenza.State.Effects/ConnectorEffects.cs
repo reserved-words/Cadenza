@@ -34,13 +34,21 @@ public class ConnectorEffects
     [EffectMethod]
     public Task HandleConnectorStatusUpdatedAction(ConnectorStatusUpdatedAction action, IDispatcher dispatcher)
     {
-        if (action.Connector == Connector.LastFm && action.Status == ConnectorStatus.Connected)
+        if (action.Status != ConnectorStatus.Connected)
+            return Task.CompletedTask;
+
+        if (action.Connector == Connector.LastFm)
         {
             dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
             dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(HistoryPeriod.Week));
             dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(HistoryPeriod.Week));
             dispatcher.Dispatch(new FetchPlayHistoryTracksRequest(HistoryPeriod.Week));
         }
+        else if (action.Connector == Connector.Database)
+        {
+            dispatcher.Dispatch(new SearchItemsUpdateRequest());
+        }
+
         return Task.CompletedTask;
     }
 }

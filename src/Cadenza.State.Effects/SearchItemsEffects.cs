@@ -1,18 +1,25 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+﻿using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Interfaces.Repositories;
+using Cadenza.State.Actions;
+using Cadenza.Web.Common.Interfaces;
+using Fluxor;
 
-namespace Cadenza.Web.Core.Services;
+namespace Cadenza.State.Effects;
 
-internal class SearchSyncService : ISearchSyncService
+public class SearchItemsEffects
 {
     private readonly ISearchRepository _repository;
 
-    public SearchSyncService(ISearchRepository repository)
+    public SearchItemsEffects(ISearchRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<List<PlayerItem>> GetSearchItems()
+    [EffectMethod]
+    public async Task HandleSearchItemsUpdateRequest(SearchItemsUpdateRequest action, IDispatcher dispatcher)
     {
+        // Do these all at the same time
+
         var items = new List<PlayerItem>();
 
         var tracks = await _repository.GetTracks();
@@ -33,6 +40,6 @@ internal class SearchSyncService : ISearchSyncService
         var tags = await _repository.GetTags();
         items.AddRange(tags);
 
-        return items;
+        dispatcher.Dispatch(new SearchItemsUpdatedAction(items));
     }
 }

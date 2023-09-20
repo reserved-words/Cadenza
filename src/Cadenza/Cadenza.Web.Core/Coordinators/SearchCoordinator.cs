@@ -1,18 +1,16 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
+﻿namespace Cadenza.Web.Core.Coordinators;
 
-namespace Cadenza.Web.Core.Coordinators;
-
-internal class SearchCoordinator : ISearchCoordinator, ISearchCache
+internal class SearchCoordinator
 {
     private readonly IMessenger _messenger;
-    private readonly ISearchSyncService _syncService;
 
 
-    public SearchCoordinator(IMessenger messenger, ISearchSyncService syncService)
+    public SearchCoordinator(IMessenger messenger)
     {
         _messenger = messenger;
-        _syncService = syncService;
 
+        // Leaving these events here so that build breaks when I remove these event args - 
+        // Need to sort doing via state
         SubscribeToUpdateEvent<ArtistUpdatedEventArgs>();
         SubscribeToUpdateEvent<AlbumUpdatedEventArgs>();
         SubscribeToUpdateEvent<TrackUpdatedEventArgs>();
@@ -25,17 +23,7 @@ internal class SearchCoordinator : ISearchCoordinator, ISearchCache
     {
         // For now repopulate all items whenever anything is updated
         // Could narrow this down to only repopulating the relevant items
-        _messenger.Subscribe<T>(async (s, e) => await Populate());
-    }
-
-    public async Task Populate()
-    {
-        await _messenger.Send(this, new SearchUpdateStartedEventArgs());
-
-        Items.Clear();
-        Items = await _syncService.GetSearchItems();
-
-        await _messenger.Send(this, new SearchUpdateCompletedEventArgs());
+        // _messenger.Subscribe<T>(async (s, e) => await Populate());
     }
 }
 

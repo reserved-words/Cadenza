@@ -1,5 +1,4 @@
 ﻿using Cadenza.State.Actions;
-using Cadenza.Web.Common.Interfaces.Searchbar;
 using Cadenza.Web.Common.Interfaces.Startup;
 using Fluxor;
 
@@ -10,14 +9,12 @@ internal class DatabaseConnector : IConnector
     private readonly IDispatcher _dispatcher;
     private readonly IApiHttpHelper _http;
     private readonly IOptions<DatabaseApiSettings> _apiSettings;
-    private readonly ISearchCoordinator _searchCoordinator;
 
-    public DatabaseConnector(IDispatcher dispatcher, IApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings, ISearchCoordinator searchCoordinator)
+    public DatabaseConnector(IDispatcher dispatcher, IApiHttpHelper http, IOptions<DatabaseApiSettings> apiSettings)
     {
         _apiSettings = apiSettings;
         _dispatcher = dispatcher;
         _http = http;
-        _searchCoordinator = searchCoordinator;
     }
 
     public SubTask GetConnectionTask()
@@ -33,7 +30,6 @@ internal class DatabaseConnector : IConnector
 
         subTask.AddStep("Checking connection", Connect);
         subTask.AddStep("Populating library", Populate);
-        subTask.AddStep("Populating search items", () => _searchCoordinator.Populate());
 
         return subTask;
     }

@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\Connections\" />
     <Folder Include="Interfaces\Play\" />
+    <Folder Include="Interfaces\Searchbar\" />
     <Folder Include="Interfaces\View\" />
   </ItemGroup>
 
