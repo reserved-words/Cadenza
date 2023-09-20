@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.State.Actions;
+
 @if (Grouping != null)
 {
     <ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
@@ -6,7 +7,7 @@
 
 @code {
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public Grouping Grouping { get; set; }
@@ -14,8 +15,8 @@
     [Parameter]
     public Typo Typo { get; set; } = Typo.body1;
 
-    private async Task View()
+    private void View()
     {
-        await Viewer.ViewGrouping(Grouping);
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Grouping, Grouping.Id.ToString(), Grouping.Name));
     }
 }

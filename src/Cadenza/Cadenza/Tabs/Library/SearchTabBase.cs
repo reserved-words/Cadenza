@@ -1,5 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.Web.Common.Interfaces.Searchbar;
+using Fluxor;
 
 namespace Cadenza.Tabs.Library;
 
@@ -14,7 +15,7 @@ public class SearchTabBase : ComponentBase
     public IMessenger Messenger { get; set; }
 
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     protected readonly Dictionary<string, PlayerItemType?> ItemTypes = new Dictionary<string, PlayerItemType?>();
 
@@ -63,8 +64,8 @@ public class SearchTabBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    protected async Task OnViewItem(PlayerItem item)
+    protected void OnViewItem(PlayerItem item)
     {
-        await Viewer.ViewSearchResult(item);
+        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
     }
 }

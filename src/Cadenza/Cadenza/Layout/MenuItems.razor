@@ -1,4 +1,8 @@
-﻿@using Cadenza.Web.Common.Interfaces.Startup
+﻿@inherits FluxorComponent
+
+@using Cadenza.State.Actions;
+@using Cadenza.State.Store;
+@using Cadenza.Web.Common.Interfaces.Startup
 
 @if (IncludeHomeTab)
 {
@@ -50,51 +54,24 @@
 <Search />
 
 @code {
-    [Parameter]
-    public bool IncludeHomeTab { get; set; }
+    [Parameter] public bool IncludeHomeTab { get; set; }
+    [Parameter] public bool IncludeSearchTab { get; set; }
+    [Parameter] public bool ShowLabels { get; set; }
+    [Parameter] public Size IconSize { get; set; }
 
-    [Parameter]
-    public bool IncludeSearchTab { get; set; }
+    [Inject] public IMessenger Messenger { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
 
-    [Parameter]
-    public bool ShowLabels { get; set; }
-
-    [Parameter]
-    public Size IconSize { get; set; }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private Tab ActiveTab;
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
-    }
-
-    protected override void OnParametersSet()
-    {
-        ActiveTab = IncludeHomeTab ? Tab.Home : Tab.History;
-        StateHasChanged();
-    }
+    private Tab ActiveTab => ViewState.Value.Tab;
 
     private string MenuItemClass(Tab tab)
     {
         return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
     }
 
-    private async Task OnViewItem(object sender, ViewItemEventArgs args)
+    private void UpdateActiveTab(Tab tab)
     {
-        if (ActiveTab != Tab.Library)
-        {
-            await UpdateActiveTab(Tab.Library);
-        }
-    }
-
-    private async Task UpdateActiveTab(Tab tab)
-    {
-        await Messenger.Send(this, new ViewTabEventArgs(tab));
-        ActiveTab = tab;
-        StateHasChanged();
+        Dispatcher.Dispatch(new ViewTabRequest(tab));
     }
 }

@@ -1,4 +1,8 @@
 ﻿@page "/"
+
+@inherits FluxorComponent
+
+@using Cadenza.State.Store;
 @using Cadenza.Web.Common.Interfaces.Startup;
 @using Cadenza.Web.Core.Coordinators;
 
@@ -47,23 +51,24 @@
 
 @code {
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public StartupCoordinator StartupCoordinator { get; set; }
-
-    [Inject]
-    public IStartupService StartupService { get; set; }
-
-    [Inject]
-    public NavigationManager Navigation { get; set; }
+    [Inject] public IMessenger Messenger { get; set; }
+    [Inject] public StartupCoordinator StartupCoordinator { get; set; }
+    [Inject] public IStartupService StartupService { get; set; }
+    [Inject] public NavigationManager Navigation { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
 
     MudTabs tabs;
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<ViewTabEventArgs>(OnViewTab);
+        ViewState.StateChanged += ViewState_StateChanged;
+
+        base.OnInitialized();
+    }
+
+    private void ViewState_StateChanged(object sender, EventArgs args)
+    {
+        tabs.ActivatePanel(ViewState.Value.Tab);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -72,11 +77,5 @@
         {
             await StartupService.Startup();
         }
-    }
-
-    private Task OnViewTab(object sender, ViewTabEventArgs args)
-    {
-        tabs.ActivatePanel(args.Tab);
-        return Task.CompletedTask;
     }
 }

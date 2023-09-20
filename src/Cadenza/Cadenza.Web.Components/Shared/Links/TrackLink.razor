@@ -1,9 +1,10 @@
-﻿
+﻿@using Cadenza.State.Actions;
+
 <ActionLink Typo="@Typo" Text="@Title" OnClick="@View" Class="@Class"></ActionLink>
 
 @code {
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public int Id { get; set; }
@@ -17,8 +18,8 @@
     [Parameter]
     public string Class { get; set; }
 
-    private async Task View()
+    private void View()
     {
-        await Viewer.ViewTrack(Id, Title);
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Track, Id.ToString(), Title));
     }
 }

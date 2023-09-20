@@ -1,5 +1,6 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.Web.Common.Interfaces.Searchbar;
+using Fluxor;
 
 namespace Cadenza.Components.Sidebar;
 
@@ -12,7 +13,7 @@ public class SearchBase : ComponentBase
     public IMessenger Messenger { get; set; }
 
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     protected bool IsLoading { get; set; }
 
@@ -27,7 +28,7 @@ public class SearchBase : ComponentBase
 
             if (_result != null)
             {
-                Viewer.ViewSearchResult(Result);
+                Dispatcher.Dispatch(new ViewItemRequest(Result.Type, Result.Id, Result.Name));
             }
 
             _result = null;

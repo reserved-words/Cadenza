@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Fluxor;
 
 namespace Cadenza.Tabs.Library;
 
@@ -10,7 +11,7 @@ public class TagTabBase : ComponentBase
     public ITagRepository Repository { get; set; }
 
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public string Id { get; set; }
@@ -50,9 +51,9 @@ public class TagTabBase : ComponentBase
         return !filterType.HasValue || item.Type == filterType;
     }
 
-    protected async Task OnViewItem(PlayerItem item)
+    protected void OnViewItem(PlayerItem item)
     {
-        await Viewer.ViewSearchResult(item);
+        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
     }
 
     private void AddFilterType(PlayerItemType type)

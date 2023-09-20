@@ -1,5 +1,6 @@
-﻿using Cadenza.State.Store;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Cadenza.Web.Common.Model;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
 
@@ -7,11 +8,8 @@ namespace Cadenza.Components.Sidebar;
 
 public class CurrentlyPlayingHeaderBase : FluxorComponent
 {
-    [Inject]
-    public IState<PlaylistState> PlaylistState { get; set; }
-
-    [Inject]
-    public IItemViewer Viewer { get; set; }
+    [Inject] public IState<PlaylistState> PlaylistState { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
     public string PlaylistName => PlaylistState.Value.Name;
 
@@ -19,12 +17,17 @@ public class CurrentlyPlayingHeaderBase : FluxorComponent
 
     public string Icon => GetIcon();
 
-    protected async Task OnView()
+    protected void OnView()
     {
         if (PlaylistState.Value.Id == null)
             return;
 
-        await Viewer.ViewPlaying(new PlaylistId(PlaylistState.Value.Id, PlaylistState.Value.Type, PlaylistState.Value.Name));
+        var type = PlaylistState.Value.Type.GetItemType();
+
+        if (!type.HasValue)
+            return;
+
+        Dispatcher.Dispatch(new ViewItemRequest(type.Value, PlaylistState.Value.Id, PlaylistState.Value.Name));
     }
 
     private string GetIcon()

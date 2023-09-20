@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Fluxor;
 
 namespace Cadenza.Web.Player.Components;
 
@@ -8,7 +9,7 @@ public class CurrentTrackArtworkBase : ComponentBase
     public IArtworkFetcher ArtworkFetcher { get; set; }
 
     [Inject]
-    public IItemViewer ItemViewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public TrackFull Model { get; set; }
@@ -28,8 +29,8 @@ public class CurrentTrackArtworkBase : ComponentBase
         StateHasChanged();
     }
 
-    protected async Task OnViewAlbum()
+    protected void OnViewAlbum()
     {
-        await ItemViewer.ViewAlbum(Model.Album.Id, Model.Album.Title);
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Album, Model.Album.Id.ToString(), Model.Album.Title));
     }
 }

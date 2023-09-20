@@ -2,7 +2,6 @@
 using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.Common.Interfaces.Updates;
-using Cadenza.Web.Common.Interfaces.View;
 using Cadenza.Web.Core.Coordinators;
 using Cadenza.Web.Core.Utilities;
 
@@ -20,7 +19,6 @@ public static class Startup
         services
             .AddTransient<IAppStore, Store>()
             .AddTransient<IImageFinder, ImageFinder>()
-            .AddTransient<IItemViewer, ItemViewer>()
             .AddTransient<ILongRunningTaskService, LongRunningTaskService>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<ISearchSyncService, SearchSyncService>()
@@ -43,11 +41,9 @@ public static class Startup
             .AddSingleton<SearchCoordinator>()
             .AddSingleton<StartupCoordinator>()
             .AddSingleton<UpdatesCoordinator>()
-            .AddSingleton<ViewCoordinator>()
             .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>())
             .AddTransient<ISearchCoordinator>(sp => sp.GetRequiredService<SearchCoordinator>())
             .AddTransient<IUpdatesCoordinator>(sp => sp.GetRequiredService<UpdatesCoordinator>())
-            .AddTransient<IViewCoordinator>(sp => sp.GetRequiredService<ViewCoordinator>())
             .AddTransient<ISearchCache>(sp => sp.GetRequiredService<SearchCoordinator>());
     }
 }
