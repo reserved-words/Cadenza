@@ -63,7 +63,28 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<ViewState> ViewState { get; set; }
 
-    private Tab ActiveTab => ViewState.Value.Tab;
+    private Tab ActiveTab { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ViewState.StateChanged += ViewState_StateChanged;
+
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        ActiveTab = IncludeHomeTab ? Tab.Home : Tab.History;
+
+        base.OnParametersSet();
+    }
+
+    private void ViewState_StateChanged(object sender, EventArgs args)
+    {
+        ActiveTab = ViewState.Value.Tab == Tab.Home && !IncludeHomeTab
+            ? Tab.History
+            : ViewState.Value.Tab;
+    }
 
     private string MenuItemClass(Tab tab)
     {
