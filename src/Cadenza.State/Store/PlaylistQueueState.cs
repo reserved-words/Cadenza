@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record PlaylistQueueState(bool IsLoading, Stack<int> Played, Stack<int> ToPlay, int CurrentTrack)

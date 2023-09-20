@@ -28,7 +28,7 @@ public class CurrentTrackProgressBase : FluxorComponent
 
     private void CurrentTrackState_StateChanged(object sender, EventArgs e)
     {
-        if (CurrentTrackState.Value.FullTrack == null)
+        if (CurrentTrackState.Value.Track == null)
         {
             SecondsPlayed = 0;
             SecondsRemaining = 0;

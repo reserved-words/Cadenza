@@ -15,7 +15,7 @@ public class PlayerBase : FluxorComponent
 
     protected bool IsLastTrack => CurrentTrackState.Value.IsLastInPlaylist;
 
-    protected TrackFull Model => CurrentTrackState.Value.FullTrack;
+    protected TrackFull Model => CurrentTrackState.Value.Track;
 
     protected bool Empty => Model == null && !Loading;
 }

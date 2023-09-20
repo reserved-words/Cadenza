@@ -15,7 +15,7 @@ public static class CurrentTrackReducers
     public static CurrentTrackState ReduceFetchCurrentTrackResultAction(CurrentTrackState state, UpdateCurrentTrackAction action) => state with
     {
         IsLoading = false,
-        FullTrack = action.FullTrack,
+        Track = action.FullTrack,
         IsLastInPlaylist = action.IsLastTrackInPlaylist
     };
 }

@@ -1,7 +1,6 @@
 ﻿using Cadenza.State.Actions;
 using Cadenza.Web.Common.Interfaces;
 using Fluxor;
-using System;
 
 namespace Cadenza.State.Effects;
 
@@ -15,33 +14,33 @@ public class PlayerEffects
     }
 
     [EffectMethod]
-    public async Task HandlePlayerPlayAction(PlayerPlayRequest action, IDispatcher dispatcher)
+    public async Task HandlePlayerPlayRequest(PlayerPlayRequest action, IDispatcher dispatcher)
     {
         await _player.Play(action.Track.Track);
-        dispatcher.Dispatch(new PlayStatusPlayingAction());
+        dispatcher.Dispatch(new PlayStatusPlayingAction(action.Track));
     }
 
 
     [EffectMethod]
-    public async Task HandlePlayerPauseAction(PlayerPauseRequest action, IDispatcher dispatcher)
+    public async Task HandlePlayerPauseRequest(PlayerPauseRequest action, IDispatcher dispatcher)
     {
-        var secondsPlayed = await _player.Pause();
-        dispatcher.Dispatch(new PlayStatusPausedAction(secondsPlayed));
+        var secondsPlayed = await _player.Pause(action.Track.Track);
+        dispatcher.Dispatch(new PlayStatusPausedAction(action.Track, secondsPlayed));
     }
 
 
     [EffectMethod]
-    public async Task HandlePlayerResumeAction(PlayerResumeRequest action, IDispatcher dispatcher)
+    public async Task HandlePlayerResumeRequest(PlayerResumeRequest action, IDispatcher dispatcher)
     {
-        var secondsPlayed = await _player.Resume();
-        dispatcher.Dispatch(new PlayStatusResumedAction(secondsPlayed));
+        var secondsPlayed = await _player.Resume(action.Track.Track);
+        dispatcher.Dispatch(new PlayStatusResumedAction(action.Track, secondsPlayed));
     }
 
 
     [EffectMethod]
-    public async Task HandlePlayerStopAction(PlayerStopRequest action, IDispatcher dispatcher)
+    public async Task HandlePlayerStopRequest(PlayerStopRequest action, IDispatcher dispatcher)
     {
-        var secondsPlayed = await _player.Stop();
-        dispatcher.Dispatch(new PlayStatusStoppedAction(secondsPlayed));
+        var secondsPlayed = await _player.Stop(action.Track.Track);
+        dispatcher.Dispatch(new PlayStatusStoppedAction(action.Track, secondsPlayed));
     }
 }

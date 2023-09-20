@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Domain.Model.History;
-using Cadenza.State.Actions;
+﻿using Cadenza.State.Actions;
 using Cadenza.State.Store;
 
 namespace Cadenza.State.Reducers;

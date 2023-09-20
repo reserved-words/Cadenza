@@ -2,7 +2,7 @@
 public interface IPlayer
 {
     Task Play(Track track);
-    Task<int> Pause();
-    Task<int> Resume();
-    Task<int> Stop();
+    Task<int> Pause(Track track);
+    Task<int> Resume(Track track);
+    Task<int> Stop(Track track);
 }

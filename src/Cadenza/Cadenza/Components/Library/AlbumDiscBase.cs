@@ -69,7 +69,7 @@ public class AlbumDiscBase : FluxorComponent
 
     private void UpdateCurrentTrack()
     {
-        var currentTrackId = CurrentTrackState.Value.FullTrack?.Id;
+        var currentTrackId = CurrentTrackState.Value.Track?.Id;
 
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
         var isNewCurrentTrackOnDisc = currentTrackId != null && Model.Tracks.Any(t => t.TrackId == currentTrackId);

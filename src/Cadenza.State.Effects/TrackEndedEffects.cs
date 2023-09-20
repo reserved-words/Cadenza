@@ -14,7 +14,7 @@ public class TrackEndedEffects
         }
         else
         {
-            dispatcher.Dispatch(new PlaylistQueueMoveNextRequest());
+            dispatcher.Dispatch(new PlaylistMoveNextRequest());
         }
         return Task.CompletedTask;
     }

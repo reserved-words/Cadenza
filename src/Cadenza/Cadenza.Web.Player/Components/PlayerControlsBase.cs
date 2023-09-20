@@ -8,6 +8,8 @@ public class PlayerControlsBase : ComponentBase
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
+
     [Parameter] public bool IsTrackPopulated { get; set; }
     [Parameter] public bool IsLastTrack { get; set; }
 
@@ -39,23 +41,27 @@ public class PlayerControlsBase : ComponentBase
 
     public void SkipNext()
     {
-        Dispatcher.Dispatch(new PlaylistQueueMoveNextRequest());
+        // TODO: Change this to a PlayerControls action
+        Dispatcher.Dispatch(new PlaylistMoveNextRequest());
     }
 
     public void SkipPrevious()
     {
-        Dispatcher.Dispatch(new PlaylistQueueMovePreviousRequest());
+        // TODO: Change this to a PlayerControls action
+        Dispatcher.Dispatch(new PlaylistMovePreviousRequest());
     }
 
 
 
     protected void OnPause()
     {
-        Dispatcher.Dispatch(new PlayerPauseRequest());
+        // TODO: Note for now have to use current track state here - change this so that this is a PlayerControlsRequest and handler of that sorts getting current track
+        Dispatcher.Dispatch(new PlayerPauseRequest(CurrentTrackState.Value.Track));
     }
 
     protected void OnResume()
     {
-        Dispatcher.Dispatch(new PlayerResumeRequest());
+        // TODO: Note for now have to use current track state here - change this so that this is a PlayerControlsRequest and handler of that sorts getting current track
+        Dispatcher.Dispatch(new PlayerResumeRequest(CurrentTrackState.Value.Track));
     }
 }
