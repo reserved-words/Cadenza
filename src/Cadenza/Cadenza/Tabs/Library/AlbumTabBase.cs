@@ -1,27 +1,24 @@
-﻿using System.Reflection;
+﻿using Fluxor;
 
 namespace Cadenza.Tabs.Library;
 
-public class AlbumTabBase : ComponentBase
+public class AlbumTabBase : FluxorComponent
 {
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    [Inject] public IMessenger Messenger { get; set; }
+    [Inject] public IAlbumRepository Repository { get; set; }
+    [Inject] public IState<TrackRemovalState> TrackRemovalState { get; set; }
 
-    [Inject]
-    public IAlbumRepository Repository { get; set; }
-
-    [Parameter]
-    public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
 
     public AlbumInfo Album { get; set; }
 
     public List<Disc> Discs { get; set; } = new();
 
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
-
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
+        TrackRemovalState.StateChanged += TrackRemovalState_StateChanged;
+
+        base.OnInitialized();
     }
 
     protected override async Task OnParametersSetAsync()
@@ -29,19 +26,15 @@ public class AlbumTabBase : ComponentBase
         await UpdateAlbum();
     }
 
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
+    private void TrackRemovalState_StateChanged(object sender, EventArgs e)
     {
-        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == args.TrackId));
+        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId));
         if (disc == null)
-            return Task.CompletedTask;
+            return;
 
-        var trackOnDisc = disc.Tracks.SingleOrDefault(t => t.TrackId == args.TrackId);
-        if (trackOnDisc == null)
-            return Task.CompletedTask;
-
-        disc.Tracks.Remove(trackOnDisc);
+        var track = disc.Tracks.Single(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId);
+        disc.Tracks.Remove(track);
         StateHasChanged();
-        return Task.CompletedTask;
     }
 
     private async Task UpdateAlbum()
@@ -53,13 +46,5 @@ public class AlbumTabBase : ComponentBase
         Discs = tracks.GroupByDisc();
 
         StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
-        }
     }
 }

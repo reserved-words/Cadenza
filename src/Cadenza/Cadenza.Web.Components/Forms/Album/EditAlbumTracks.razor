@@ -34,34 +34,37 @@
 </EditCard>
 
 @code {
-    [Inject]
-    public IState<CurrentTrackState> CurrentTrackState { get; set; }
-
-    [Inject]
-    public IDialogService DialogService { get; set; }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public INotificationService Notification { get; set; }
+    [Inject] public IDialogService DialogService { get; set; }
+    [Inject] public INotificationService Notification { get; set; }
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
+    [Inject] public IState<TrackRemovalState> TrackRemovalState { get; set; }
 
     [Parameter]
     public List<AlbumTrack> Model { get; set; }
 
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
-
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
-        // Needed when implementing FluxorComponent
+        TrackRemovalState.StateChanged += TrackRemovalState_StateChanged;
+
         base.OnInitialized();
+    }
+
+    private void TrackRemovalState_StateChanged(object sender, EventArgs args)
+    {
+        if (TrackRemovalState.Value.Error != null)
+            return;
+
+        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId);
+        if (trackOnDisc == null)
+            return;
+
+        Model.Remove(trackOnDisc);
+        StateHasChanged();
     }
 
     protected async Task OnRemoveTrack(AlbumTrack track)
     {
-        var currentTrackId = CurrentTrackState.Value.Track.Id;
-
+        var currentTrackId = CurrentTrackState.Value.Track?.Id;
         if (currentTrackId == track.TrackId)
         {
             Notification.Error("Track cannot be removed while currently playing");
@@ -69,31 +72,12 @@
         }
 
         var trackToRemove = new TrackToRemove
-            {
-                Id = track.TrackId,
-                Title = track.Title,
-                ArtistName = track.ArtistName
-            };
+        {
+            Id = track.TrackId,
+            Title = track.Title,
+            ArtistName = track.ArtistName
+        };
 
         await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", false);
-    }
-
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
-    {
-        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == args.TrackId);
-        if (trackOnDisc == null)
-            return Task.CompletedTask;
-
-        Model.Remove(trackOnDisc);
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
-        }
     }
 }

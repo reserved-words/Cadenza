@@ -1,6 +1,8 @@
-﻿namespace Cadenza.Web.Components.Forms;
+﻿using Fluxor.Blazor.Web.Components;
 
-public class FormBase<T> : ComponentBase
+namespace Cadenza.Web.Components.Forms;
+
+public class FormBase<T> : FluxorComponent
 {
     [Parameter]
     public T Model { get; set; }

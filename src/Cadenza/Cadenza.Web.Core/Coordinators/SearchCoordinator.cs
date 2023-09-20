@@ -14,7 +14,6 @@ internal class SearchCoordinator
         SubscribeToUpdateEvent<ArtistUpdatedEventArgs>();
         SubscribeToUpdateEvent<AlbumUpdatedEventArgs>();
         SubscribeToUpdateEvent<TrackUpdatedEventArgs>();
-        SubscribeToUpdateEvent<TrackRemovedEventArgs>();
     }
 
     public List<PlayerItem> Items { get; set; } = new();
