@@ -1,5 +1,4 @@
 ﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
 using Fluxor;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -9,14 +8,10 @@ namespace Cadenza.Web.Player.Players;
 internal class TrackTimer : ITrackTimerController
 {
     private readonly IDispatcher _dispatcher;
-    private readonly IMessenger _messenger;
-    private readonly IState<CurrentTrackState> _currentTrackState;
 
-    public TrackTimer(IMessenger messenger, IDispatcher dispatcher, IState<CurrentTrackState> currentTrackState)
+    public TrackTimer(IDispatcher dispatcher)
     {
-        _messenger = messenger;
         _dispatcher = dispatcher;
-        _currentTrackState = currentTrackState;
     }
 
     private CurrentTrackTimer _current;
@@ -24,7 +19,7 @@ internal class TrackTimer : ITrackTimerController
     public void OnPlay(int totalSeconds)
     {
         _current = new CurrentTrackTimer(totalSeconds, OnTrackProgressed);
-        UpdateProgress(_current.TotalSeconds, 0);
+        _dispatcher.Dispatch(new PlayProgressResetAction(_current.TotalSeconds));
         _current.Start(0);
     }
 
@@ -45,19 +40,7 @@ internal class TrackTimer : ITrackTimerController
 
     private void OnTrackProgressed(object sender, ElapsedEventArgs e)
     {
-        UpdateProgress(_current.TotalSeconds, _current.ProgressSeconds);
-    }
-
-    private async void UpdateProgress(int totalSeconds, int progressSeconds)
-    {
-        if (progressSeconds > totalSeconds)
-        {
-            _dispatcher.Dispatch(new TrackEndedAction(_currentTrackState.Value.IsLastInPlaylist));
-        }
-        else
-        {
-            await _messenger.Send(this, new TrackProgressedEventArgs(totalSeconds, progressSeconds));
-        }
+        _dispatcher.Dispatch(new PlayProgressIncrementAction());
     }
 
     internal class CurrentTrackTimer : IDisposable
