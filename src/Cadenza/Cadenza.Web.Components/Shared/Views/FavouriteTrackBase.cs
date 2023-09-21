@@ -6,23 +6,13 @@ namespace Cadenza.Web.Components.Shared.Views;
 
 public class FavouriteTrackBase : ComponentBase
 {
-    [Inject]
-    public IFavouritesMessenger Favourites { get; set; }
+    [Inject] public IFavouritesMessenger Favourites { get; set; }
+    [Inject] public IFavouritesController FavouritesController { get; set; }
+    [Inject] public IState<ConnectorState> ConnectorState { get; set; }
 
-    [Inject]
-    public IFavouritesController FavouritesController { get; set; }
-
-    [Inject]
-    public IState<ConnectorState> ConnectorState { get; set; }
-
-    [Parameter]
-    public string Artist { get; set; }
-
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
-    public bool? IsFavourite { get; set; }
+    [Parameter] public string Artist { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool? IsFavourite { get; set; }
 
     public bool IsEnabled { get; set; }
 
@@ -30,12 +20,13 @@ public class FavouriteTrackBase : ComponentBase
     {
         IsEnabled = false;
 
-        var status = ConnectorState.Value.Connectors[Connector.LastFm];
-
-        if (status != ConnectorStatus.Connected)
+        if (Artist == null || Title == null)
             return;
 
-        if (Artist == null || Title == null)
+        if (!ConnectorState.Value.Connectors.TryGetValue(Connector.LastFm, out ConnectorStatus status))
+            return;
+
+        if (status != ConnectorStatus.Connected)
             return;
 
         IsEnabled = true;

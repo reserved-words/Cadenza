@@ -51,10 +51,10 @@
 
 @code {
 
+    [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IMessenger Messenger { get; set; }
-    [Inject] public StartupCoordinator StartupCoordinator { get; set; }
-    [Inject] public IStartupService StartupService { get; set; }
     [Inject] public NavigationManager Navigation { get; set; }
+    [Inject] public IState<ApplicationState> ApplicationState { get; set; }
     [Inject] public IState<ViewState> ViewState { get; set; }
 
     MudTabs tabs;
@@ -71,11 +71,11 @@
         tabs.ActivatePanel(ViewState.Value.Tab);
     }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
-        if (!StartupCoordinator.StartedUp)
+        if (!ApplicationState.Value.StartedUp)
         {
-            await StartupService.Startup();
+            Dispatcher.Dispatch(new ApplicationStartRequest());
         }
     }
 }

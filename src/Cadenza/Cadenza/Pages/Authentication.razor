@@ -1,4 +1,7 @@
 ﻿@page "/authentication/{action}"
+
+@inherits FluxorComponent
+
 @using Cadenza.Web.Common.Interfaces.Startup;
 @using Cadenza.Web.Core.Coordinators;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
@@ -23,14 +26,9 @@
 @code {
 
 
-    [Inject]
-    public IStartupService StartupService { get; set; }
-
-    [Inject]
-    public StartupCoordinator StartupCoordinator { get; set; }
-
-    [Inject]
-    public IOptions<AuthenticationSettings> AuthSettings { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ApplicationState> ApplicationState { get; set; }
+    [Inject] public IOptions<AuthenticationSettings> AuthSettings { get; set; }
 
     [Parameter] public string Action { get; set; }
 
@@ -38,13 +36,25 @@
 
     protected string LogOutUrl => GetLogOutUrl();
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInitialized()
+    {
+        ApplicationState.StateChanged += ApplicationState_StateChanged;
+
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
     {
         if (Action == "login-callback")
         {
-            var success = await StartupService.Startup();
-            StartupCoordinator.StartedUp = true;
-            StartupCoordinator.Success = success;
+            Dispatcher.Dispatch(new ApplicationStartRequest());
+        }
+    }
+
+    private void ApplicationState_StateChanged(object sender, EventArgs e)
+    {
+        if (ApplicationState.Value.StartedUp && ApplicationState.Value.Success)
+        {
             Navigation.NavigateTo("/");
         }
     }
