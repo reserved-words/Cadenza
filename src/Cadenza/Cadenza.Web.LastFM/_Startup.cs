@@ -13,9 +13,6 @@ global using Cadenza.Web.LastFM.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 
-using Cadenza.Web.Common.Interfaces.Favourites;
-using Cadenza.Web.Common.Interfaces.Startup;
-
 namespace Cadenza.Web.LastFM;
 
 public static class _Startup

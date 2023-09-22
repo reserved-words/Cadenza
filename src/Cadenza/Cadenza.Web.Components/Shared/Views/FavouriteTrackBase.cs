@@ -1,5 +1,4 @@
 ﻿using Cadenza.State.Store;
-using Cadenza.Web.Common.Interfaces.Favourites;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Views;

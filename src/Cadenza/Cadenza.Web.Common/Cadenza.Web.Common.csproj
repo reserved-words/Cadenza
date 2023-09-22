@@ -10,11 +10,4 @@
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\Connections\" />
-    <Folder Include="Interfaces\Play\" />
-    <Folder Include="Interfaces\Searchbar\" />
-    <Folder Include="Interfaces\View\" />
-  </ItemGroup>
-
 </Project>

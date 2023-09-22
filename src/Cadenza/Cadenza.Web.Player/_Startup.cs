@@ -6,7 +6,6 @@ global using Cadenza.Common.Domain.Model.Track;
 
 global using Cadenza.Web.Common.Events;
 global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.Web.Common.Interfaces.Player;
 
 global using Cadenza.Web.Player.Players;
 

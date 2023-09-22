@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Startup;
-using Cadenza.Web.Common.Interfaces.Store;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class StartupConnectService : IStartupTaskService
 {

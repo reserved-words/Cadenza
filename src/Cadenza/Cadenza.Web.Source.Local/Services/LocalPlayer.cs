@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Player;
-
-namespace Cadenza.Web.Source.Local.Services;
+﻿namespace Cadenza.Web.Source.Local.Services;
 
 internal class LocalPlayer : ISourcePlayer
 {

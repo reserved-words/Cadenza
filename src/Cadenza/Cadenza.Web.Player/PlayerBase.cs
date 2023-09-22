@@ -11,8 +11,6 @@ public class PlayerBase : FluxorComponent
 
     public bool Loading => CurrentTrackState.Value.IsLoading;
 
-    //protected PlayTrack Track => PlaylistQueueState.Value.CurrentTrack;
-
     protected bool IsLastTrack => CurrentTrackState.Value.IsLastInPlaylist;
 
     protected TrackFull Model => CurrentTrackState.Value.Track;

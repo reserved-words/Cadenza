@@ -83,7 +83,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Common.Utilities.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.State", "Cadenza.State\Cadenza.State.csproj", "{7D284221-D79E-463C-B08B-B6C2EBAF92C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.State.Effects", "Cadenza.State.Effects\Cadenza.State.Effects.csproj", "{256332AE-4543-4446-91F4-2879D0C87B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.State.Effects", "Cadenza.State.Effects\Cadenza.State.Effects.csproj", "{256332AE-4543-4446-91F4-2879D0C87B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

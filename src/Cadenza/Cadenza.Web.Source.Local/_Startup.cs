@@ -8,8 +8,6 @@ global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-using Cadenza.Web.Common.Interfaces.Player;
-using Cadenza.Web.Common.Interfaces.Startup;
 using Cadenza.Web.Source.Local.Interfaces;
 
 namespace Cadenza.Web.Source.Local;

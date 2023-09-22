@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Favourites;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IFavouritesController
 {

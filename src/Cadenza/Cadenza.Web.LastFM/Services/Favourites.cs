@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Favourites;
-using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.Web.Common.Interfaces.Store;
 
 namespace Cadenza.Web.LastFM.Services;
 

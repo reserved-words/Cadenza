@@ -1,12 +1,9 @@
-﻿using Fluxor;
-
-namespace Cadenza.Tabs.Library;
+﻿namespace Cadenza.Tabs.Library;
 
 public class AlbumTabBase : FluxorComponent
 {
     [Inject] public IMessenger Messenger { get; set; }
     [Inject] public IAlbumRepository Repository { get; set; }
-    [Inject] public IState<TrackRemovalState> TrackRemovalState { get; set; }
 
     [Parameter] public int Id { get; set; }
 
@@ -16,8 +13,7 @@ public class AlbumTabBase : FluxorComponent
 
     protected override void OnInitialized()
     {
-        TrackRemovalState.StateChanged += TrackRemovalState_StateChanged;
-
+        SubscribeToAction<TrackRemovedAction>(OnTrackRemoved);
         base.OnInitialized();
     }
 
@@ -26,13 +22,13 @@ public class AlbumTabBase : FluxorComponent
         await UpdateAlbum();
     }
 
-    private void TrackRemovalState_StateChanged(object sender, EventArgs e)
+    private void OnTrackRemoved(TrackRemovedAction action)
     {
-        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId));
+        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == action.TrackId));
         if (disc == null)
             return;
 
-        var track = disc.Tracks.Single(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId);
+        var track = disc.Tracks.Single(t => t.TrackId == action.TrackId);
         disc.Tracks.Remove(track);
         StateHasChanged();
     }

@@ -14,19 +14,6 @@ public class SubTask
         Steps.Add(new TaskStep { Caption = caption, Task = task });
     }
 
-    public void AddStep<T>(string caption, Func<CancellationToken, Task<T>> task)
-    {
-        Steps.Add(new TaskStep
-        {
-            Caption = caption,
-            Task = new Func<object, CancellationToken, Task<object>>(async (o, ct) =>
-            {
-                await task(ct);
-                return true;
-            })
-        });
-    }
-
     public void AddStep(string caption, Func<Task> task)
     {
         Steps.Add(new TaskStep
@@ -37,20 +24,6 @@ public class SubTask
                 await task();
                 return true;
             })
-        });
-    }
-
-    public void AddSteps<T>(string fetchCaption, string processCaption, Func<CancellationToken, Task<T>> fetchTask, Func<T, CancellationToken, Task> processTask) where T : class
-    {
-        AddStep(fetchCaption, async (r, ct) =>
-        {
-            var result = await fetchTask(ct);
-            return result;
-        });
-        AddStep(processCaption, async (r, ct) =>
-        {
-            await processTask(r as T, ct);
-            return true;
         });
     }
 

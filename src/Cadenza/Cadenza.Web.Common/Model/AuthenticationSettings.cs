@@ -6,5 +6,4 @@ public class AuthenticationSettings
     public string ClientId { get; set; }
     public string Audience { get; set; }
     public string LogoutRedirect { get; set; }
-    public AuthenticationScopes Scopes { get; set; }
 }

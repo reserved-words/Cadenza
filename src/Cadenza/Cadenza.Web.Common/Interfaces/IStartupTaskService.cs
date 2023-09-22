@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Interfaces.Startup;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IStartupTaskService
 {

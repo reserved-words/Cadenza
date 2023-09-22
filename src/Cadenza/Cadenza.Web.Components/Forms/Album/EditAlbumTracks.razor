@@ -1,5 +1,6 @@
 ﻿@inherits FluxorComponent
 
+@using Cadenza.State.Actions;
 @using Cadenza.State.Store;
 @using Cadenza.Web.Common.Interfaces.Store
 @using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
@@ -37,32 +38,16 @@
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public INotificationService Notification { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
-    [Inject] public IState<TrackRemovalState> TrackRemovalState { get; set; }
 
-    [Parameter]
-    public List<AlbumTrack> Model { get; set; }
+    [Parameter] public List<AlbumTrack> Model { get; set; }
 
     protected override void OnInitialized()
     {
-        TrackRemovalState.StateChanged += TrackRemovalState_StateChanged;
-
+        SubscribeToAction<TrackRemovedAction>(OnTrackRemoved);
         base.OnInitialized();
     }
 
-    private void TrackRemovalState_StateChanged(object sender, EventArgs args)
-    {
-        if (TrackRemovalState.Value.Error != null)
-            return;
-
-        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == TrackRemovalState.Value.LastTrackRemovedId);
-        if (trackOnDisc == null)
-            return;
-
-        Model.Remove(trackOnDisc);
-        StateHasChanged();
-    }
-
-    protected async Task OnRemoveTrack(AlbumTrack track)
+    private async Task OnRemoveTrack(AlbumTrack track)
     {
         var currentTrackId = CurrentTrackState.Value.Track?.Id;
         if (currentTrackId == track.TrackId)
@@ -79,5 +64,15 @@
         };
 
         await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", false);
+    }
+
+    private void OnTrackRemoved(TrackRemovedAction action)
+    {
+        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == action.TrackId);
+        if (trackOnDisc == null)
+            return;
+
+        Model.Remove(trackOnDisc);
+        StateHasChanged();
     }
 }

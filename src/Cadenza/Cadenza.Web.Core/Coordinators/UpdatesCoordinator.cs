@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Updates;
-
-namespace Cadenza.Web.Core.Coordinators;
+﻿namespace Cadenza.Web.Core.Coordinators;
 
 internal class UpdatesCoordinator : IUpdatesCoordinator
 {

@@ -10,24 +10,18 @@ public class TrackRemovalEffects
     }
 
     [EffectMethod]
-    public async Task HandleTrackRemovedAction(TrackRemovalRequest action, IDispatcher dispatcher)
+    public async Task HandleTrackRemovalRequest(TrackRemovalRequest action, IDispatcher dispatcher)
     {
         try
         {
             await _repository.RemoveTrack(action.TrackId);
-            dispatcher.Dispatch(new TrackRemovedAction(action.TrackId, null));
+            dispatcher.Dispatch(new TrackRemovedAction(action.TrackId));
+            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.TrackRemoval, action.TrackId));
         }
         catch (Exception ex)
         {
-            dispatcher.Dispatch(new TrackRemovedAction(action.TrackId, ex.Message));
+            dispatcher.Dispatch(new TrackRemovalFailedAction(action.TrackId));
+            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.TrackRemoval, action.TrackId, ex.Message, ex.StackTrace));
         }
-    }
-
-    [EffectMethod(typeof(TrackRemovedAction))]
-    public Task HandleTrackRemovedAction(IDispatcher dispatcher)
-    {
-        // Reload all search items - overkill really but leave for now
-        dispatcher.Dispatch(new SearchItemsUpdateRequest());
-        return Task.CompletedTask;
     }
 }
