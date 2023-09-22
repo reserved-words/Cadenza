@@ -5,14 +5,7 @@ public class TrackEndedEffects
     [EffectMethod]
     public Task HandleTrackEndedAction_PlaylistUpdate(TrackEndedAction action, IDispatcher dispatcher)
     {
-        if (action.IsLastTrackInPlaylist)
-        {
-            dispatcher.Dispatch(new PlaylistStopRequest());
-        }
-        else
-        {
-            dispatcher.Dispatch(new PlaylistMoveNextRequest());
-        }
+        dispatcher.Dispatch(new PlayerControlsNextRequest());
         return Task.CompletedTask;
     }
 

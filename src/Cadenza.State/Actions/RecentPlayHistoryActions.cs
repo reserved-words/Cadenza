@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.History;
-using Cadenza.Common.Domain.Model.Track;
-using Cadenza.Web.Common.Enums;
+﻿using Cadenza.Common.Domain.Model.Track;
 
 namespace Cadenza.State.Actions;
 

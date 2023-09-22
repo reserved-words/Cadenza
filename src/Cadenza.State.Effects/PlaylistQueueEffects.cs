@@ -12,24 +12,24 @@ public class PlaylistQueueEffects
     [EffectMethod(typeof(PlaylistQueueUpdateRequest))]
     public Task HandlePlaylistQueueUpdateRequest(IDispatcher dispatcher)
     {
-        return DispatchUpdatePlaylistTrackAction(dispatcher);
+        return DispatchFetchTrackRequest(dispatcher);
     }
 
     [EffectMethod(typeof(PlaylistQueueMoveNextRequest))]
     public Task HandlePlaylistQueueMoveNextRequest(IDispatcher dispatcher)
     {
-        return DispatchUpdatePlaylistTrackAction(dispatcher);
+        return DispatchFetchTrackRequest(dispatcher);
     }
 
     [EffectMethod(typeof(PlaylistQueueMovePreviousRequest))]
     public Task HandlePlaylistQueueMovePreviousRequest(IDispatcher dispatcher)
     {
-        return DispatchUpdatePlaylistTrackAction(dispatcher);
+        return DispatchFetchTrackRequest(dispatcher);
     }
 
-    private Task DispatchUpdatePlaylistTrackAction(IDispatcher dispatcher)
+    private Task DispatchFetchTrackRequest(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new FetchFullTrackRequest(_state.Value.CurrentTrack, _state.Value.IsCurrentTrackLast));
+        dispatcher.Dispatch(new FetchTrackRequest(_state.Value.CurrentTrack, _state.Value.IsCurrentTrackLast));
         return Task.CompletedTask;
     }
 }

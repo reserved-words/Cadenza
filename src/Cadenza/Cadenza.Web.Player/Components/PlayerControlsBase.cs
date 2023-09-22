@@ -1,5 +1,4 @@
 ﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
 using Fluxor;
 
 namespace Cadenza.Web.Player.Components;
@@ -7,8 +6,6 @@ namespace Cadenza.Web.Player.Components;
 public class PlayerControlsBase : ComponentBase
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
-
-    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
     [Parameter] public bool IsTrackPopulated { get; set; }
     [Parameter] public bool IsLastTrack { get; set; }
@@ -41,27 +38,21 @@ public class PlayerControlsBase : ComponentBase
 
     public void SkipNext()
     {
-        // TODO: Change this to a PlayerControls action
-        Dispatcher.Dispatch(new PlaylistMoveNextRequest());
+        Dispatcher.Dispatch(new PlayerControlsNextRequest());
     }
 
     public void SkipPrevious()
     {
-        // TODO: Change this to a PlayerControls action
-        Dispatcher.Dispatch(new PlaylistMovePreviousRequest());
+        Dispatcher.Dispatch(new PlayerControlsPreviousRequest());
     }
-
-
 
     protected void OnPause()
     {
-        // TODO: Note for now have to use current track state here - change this so that this is a PlayerControlsRequest and handler of that sorts getting current track
-        Dispatcher.Dispatch(new PlayerPauseRequest(CurrentTrackState.Value.Track));
+        Dispatcher.Dispatch(new PlayerControlsPauseRequest());
     }
 
     protected void OnResume()
     {
-        // TODO: Note for now have to use current track state here - change this so that this is a PlayerControlsRequest and handler of that sorts getting current track
-        Dispatcher.Dispatch(new PlayerResumeRequest(CurrentTrackState.Value.Track));
+        Dispatcher.Dispatch(new PlayerControlsResumeRequest());
     }
 }

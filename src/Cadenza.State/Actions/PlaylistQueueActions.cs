@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Model;
-
-namespace Cadenza.State.Actions;
+﻿namespace Cadenza.State.Actions;
 
 public record PlaylistQueueUpdateRequest(PlaylistDefinition Definition);
 public record PlaylistQueueMoveNextRequest();

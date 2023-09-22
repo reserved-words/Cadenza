@@ -2,7 +2,7 @@
 
 public static class CurrentTrackReducers
 {
-    [ReducerMethod(typeof(FetchFullTrackRequest))]
+    [ReducerMethod(typeof(FetchTrackRequest))]
     public static CurrentTrackState ReduceFetchCurrentTrackAction(CurrentTrackState state) => state with
     {
         IsLoading = true

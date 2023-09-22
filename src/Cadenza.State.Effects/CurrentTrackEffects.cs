@@ -10,7 +10,7 @@ public class CurrentTrackEffects
     }
 
     [EffectMethod]
-    public async Task HandleUpdateCurrentTrackRequest(FetchFullTrackRequest action, IDispatcher dispatcher)
+    public async Task HandleFetchTrackRequest(FetchTrackRequest action, IDispatcher dispatcher)
     {
         var fullTrack = action.TrackId == 0 
             ? null 
