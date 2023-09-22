@@ -6,74 +6,52 @@ namespace Cadenza.Web.Player.Players;
 internal class CorePlayer : IPlayer
 {
     private readonly List<ISourcePlayer> _sourcePlayers;
-    private readonly List<IUtilityPlayer> _utilityPlayers;
+    private readonly IState<CurrentTrackState> _currentTrackState;
 
-    public CorePlayer(IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
+    public CorePlayer(IEnumerable<ISourcePlayer> sourcePlayers, IState<CurrentTrackState> currentTrackState)
     {
         _sourcePlayers = sourcePlayers.ToList();
-        _utilityPlayers = utilityPlayers.ToList();
+        _currentTrackState = currentTrackState;
     }
 
-    public async Task Play(Track track)
+    public async Task Play()
     {
-        var service = GetSourcePlayer(track);
-        await service.Play(track.IdFromSource);
-
-        var duration = track.DurationSeconds;
-        var progress = new TrackProgress(0, duration);
-
-        await RunUtilities(p => p.OnPlay(progress));
+        var service = GetSourcePlayer();
+        await service.Play(_currentTrackState.Value.Track.IdFromSource);
     }
 
-    public async Task<int> Pause(Track track)
+    public async Task<int> Pause()
     {
-        var service = GetSourcePlayer(track);
+        var service = GetSourcePlayer();
         var progress = await service.Pause();
-        await RunUtilities(p => p.OnPause(progress));
         return progress.SecondsPlayed;
     }
 
-    public async Task<int> Resume(Track track)
+    public async Task<int> Resume()
     {
-        var service = GetSourcePlayer(track);
+        var service = GetSourcePlayer();
         var progress = await service.Resume();
-        await RunUtilities(p => p.OnResume(progress));
         return progress.SecondsPlayed;
     }
 
-    public async Task<int> Stop(Track track)
+    public async Task<int> Stop()
     {
-        var service = GetSourcePlayer(track);
+        var service = GetSourcePlayer();
 
         if (service == null)
             return 0;
 
         var progress = await service.Stop();
-        if (progress.TotalSeconds == -1)
-        {
-            var duration = track.DurationSeconds;
-            progress = new TrackProgress(duration, duration);
-        }
-
-        await RunUtilities(p => p.OnStop(progress));
         return progress.SecondsPlayed;
     }
 
-    private ISourcePlayer GetSourcePlayer(Track track)
+    private ISourcePlayer GetSourcePlayer()
     {
-        var source =track?.Source;
+        var source = _currentTrackState.Value.Track?.Source;
 
         if (source == null)
             return null;
 
         return _sourcePlayers.Single(p => p.Source == source.Value);
-    }
-
-    private async Task RunUtilities(Func<IUtilityPlayer, Task> action)
-    {
-        foreach (var player in _utilityPlayers)
-        {
-            await action(player);
-        }
     }
 }
