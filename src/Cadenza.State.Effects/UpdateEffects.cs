@@ -2,11 +2,13 @@
 
 public class UpdateEffects
 {
-    private INotificationService _notificationService;
+    private readonly INotificationService _notificationService;
+    private readonly IState<ViewState> _viewState;
 
-    public UpdateEffects(INotificationService notificationService)
+    public UpdateEffects(INotificationService notificationService, IState<ViewState> viewState)
     {
         _notificationService = notificationService;
+        _viewState = viewState;
     }
 
     [EffectMethod]
@@ -29,9 +31,6 @@ public class UpdateEffects
     {
         _notificationService.Success("Update succeeded");
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
-
-        // Depending on item type do other updates?
-        
         return Task.CompletedTask;
     }
 }

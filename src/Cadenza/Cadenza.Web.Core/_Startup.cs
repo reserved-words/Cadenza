@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Core.Coordinators;
 using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
@@ -33,8 +32,6 @@ public static class Startup
     {
         return services
             .AddSingleton<Messenger>()
-            .AddSingleton<UpdatesCoordinator>()
-            .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>())
-            .AddTransient<IUpdatesCoordinator>(sp => sp.GetRequiredService<UpdatesCoordinator>());
+            .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>());
     }
 }

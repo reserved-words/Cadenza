@@ -1,56 +1,11 @@
-﻿namespace Cadenza.Tabs.Library;
+﻿using Fluxor;
 
-public class GroupingTabBase : ComponentBase, IDisposable
+namespace Cadenza.Tabs.Library;
+
+public class GroupingTabBase : FluxorComponent
 {
-    [Inject]
-    public IArtistRepository Repository { get; set; }
+    [Inject] public IState<ViewGroupingState> ViewGroupingState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Parameter]
-    public Grouping Grouping { get; set; }
-
-    public List<string> Genres { get; set; } = new();
-
-    private Dictionary<string, List<Artist>> _artistsByGenre = new();
-
-    private Guid _updateSubscriptionId = Guid.Empty;
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated, out _updateSubscriptionId);
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await UpdateGrouping();
-    }
-
-    private async Task UpdateGrouping()
-    {
-        var artists = await Repository.GetArtistsByGrouping(Grouping.Id);
-        _artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
-        Genres = _artistsByGenre.Keys.ToList();
-        StateHasChanged();
-    }
-
-    private async Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs e)
-    {
-        var isGroupingUpdated = e.Update.IsUpdated(ItemProperty.Grouping);
-        var isGenreUpdated = e.Update.IsUpdated(ItemProperty.Genre);
-
-        if (!isGroupingUpdated && !isGenreUpdated)
-            return;
-
-        await UpdateGrouping();
-    }
-
-    public void Dispose()
-    {
-        if (_updateSubscriptionId == Guid.Empty)
-            return;
-
-        Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
-    }
+    public Grouping Grouping => ViewGroupingState.Value.Grouping;
+    public List<string> Genres => ViewGroupingState.Value.Genres;
 }

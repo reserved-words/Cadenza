@@ -1,34 +1,12 @@
-﻿namespace Cadenza.Tabs.Library;
+﻿using Fluxor;
 
-public class ArtistTabBase : ComponentBase
+namespace Cadenza.Tabs.Library;
+
+public class ArtistTabBase : FluxorComponent
 {
-    [Inject]
-    public IArtistRepository Repository { get; set; }
+    [Inject] public IState<ViewArtistState> ViewArtistState { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
+    public ArtistInfo Artist => ViewArtistState.Value.Artist;
 
-    public ArtistInfo Artist { get; set; }
-
-    public List<ArtistReleaseGroup> Releases { get; set; } = new();
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await UpdateArtist();
-    }
-
-    private async Task UpdateArtist()
-    {
-        Artist = await Repository.GetArtist(Id);
-
-        var albumsByArtist = await Repository.GetAlbums(Id);
-
-        var albumsFeaturingArtist = await Repository.GetAlbumsFeaturingArtist(Id);
-
-        Releases = albumsByArtist
-            .GroupByReleaseType()
-            .AddAlbumsFeaturingArtist(albumsFeaturingArtist);
-
-        StateHasChanged();
-    }
+    public List<ArtistReleaseGroup> Releases => ViewArtistState.Value.Releases;
 }

@@ -1,38 +1,24 @@
 ﻿namespace Cadenza.Components.ViewBases;
 
-public class ArtistViewBase : ComponentBase, IDisposable
+public class ArtistViewBase : FluxorComponent
 {
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Parameter]
-    public ArtistInfo Model { get; set; } = new();
-
-    private Guid _updateSubscriptionId = Guid.Empty;
-
-    public void Dispose()
-    {
-        if (_updateSubscriptionId == Guid.Empty)
-            return;
-
-        Messenger.Unsubscribe<ArtistUpdatedEventArgs>(_updateSubscriptionId);
-        _updateSubscriptionId = Guid.Empty;
-    }
+    [Parameter] public ArtistInfo Model { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<ArtistUpdatedEventArgs>(OnArtistUpdated, out _updateSubscriptionId);
+        SubscribeToAction<ArtistUpdatedAction>(OnArtistUpdated);
+        base.OnInitialized();
     }
 
-    private Task OnArtistUpdated(object sender, ArtistUpdatedEventArgs args)
+    private void OnArtistUpdated(ArtistUpdatedAction action)
     {
-        if (Model != null && Model.Id == args.Update.Id)
-        {
-            args.Update.ApplyUpdates(Model);
-            StateHasChanged();
-        }
+        if (Model == null)
+            return;
 
-        return Task.CompletedTask;
+        if (Model.Id != action.ArtistId)
+            return;
+
+        action.Update.ApplyUpdates(Model);
+        StateHasChanged();
     }
 }

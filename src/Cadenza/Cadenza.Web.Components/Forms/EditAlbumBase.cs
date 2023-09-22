@@ -8,9 +8,6 @@ public class EditAlbumBase : FormBase<AlbumInfo>
     [Inject]
     public IUpdateRepository UpdateRepository { get; set; }
 
-    [Inject]
-    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
-
     public AlbumUpdate Update { get; set; }
 
     public AlbumInfo EditableItem => Update.UpdatedItem;
@@ -34,7 +31,7 @@ public class EditAlbumBase : FormBase<AlbumInfo>
 
             await UpdateRepository.UpdateAlbum(Update);
             Alert.Success("Album updated");
-            await UpdatesCoordinator.UpdateAlbum(Update);
+            // await UpdatesCoordinator.UpdateAlbum(Update);
             Submit();
         }
         catch (Exception ex)

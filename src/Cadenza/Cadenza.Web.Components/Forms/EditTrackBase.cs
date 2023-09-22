@@ -8,9 +8,6 @@ public class EditTrackBase : FormBase<TrackInfo>
     [Inject]
     public IUpdateRepository UpdateRepository { get; set; }
 
-    [Inject]
-    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
-
     public TrackUpdate Update { get; set; }
 
     public TrackInfo EditableItem => Update.UpdatedItem;
@@ -34,7 +31,7 @@ public class EditTrackBase : FormBase<TrackInfo>
 
             await UpdateRepository.UpdateTrack(Update);
             Alert.Success("Track updated");
-            await UpdatesCoordinator.UpdateTrack(Update);
+            // await UpdatesCoordinator.UpdateTrack(Update);
             Submit();
         }
         catch (Exception ex)
