@@ -1,26 +1,11 @@
-﻿namespace Cadenza.Tabs.Library;
+﻿using Fluxor;
 
-public class TrackTabBase : ComponentBase
+namespace Cadenza.Tabs.Library;
+
+public class TrackTabBase : FluxorComponent
 {
-    [Inject]
-    public ITrackRepository Repository { get; set; }
+    [Inject] public IState<ViewTrackState> ViewTrackState { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
-
-    public TrackFull Model { get; set; } = new();
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await UpdateTrack();
-    }
-
-    private async Task UpdateTrack()
-    {
-        Model = Id == 0 
-            ? null
-            : await Repository.GetTrack(Id);
-
-        StateHasChanged();
-    }
+    public bool Loading => ViewTrackState.Value.IsLoading;
+    public TrackFull Model => ViewTrackState.Value.Track;
 }
