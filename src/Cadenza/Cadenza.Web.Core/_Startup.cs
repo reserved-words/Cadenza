@@ -9,8 +9,7 @@ public static class Startup
     {
         services
             .AddStartupServices()
-            .AddUtilities()
-            .AddCoordinators();
+            .AddUtilities();
 
         services
             .AddTransient<IAppStore, Store>()
@@ -26,12 +25,5 @@ public static class Startup
     {
         return services
             .AddTransient<IStartupTaskService, StartupConnectService>();
-    }
-
-    private static IServiceCollection AddCoordinators(this IServiceCollection services)
-    {
-        return services
-            .AddSingleton<Messenger>()
-            .AddTransient<IMessenger>(sp => sp.GetRequiredService<Messenger>());
     }
 }
