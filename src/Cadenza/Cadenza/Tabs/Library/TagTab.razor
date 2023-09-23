@@ -1,39 +1,42 @@
 ﻿@inherits TagTabBase
 
-<TabGrid>
+@if (!Loading)
+{
+    <TabGrid>
 
-    <TabGridColumn md="3">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+        <TabGridColumn md="3">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
 
-            <ItemCard Type="@PlayerItemType.Tag" Heading="@Id" Tags="@null">
-                <ChildContent>
-                    <MudSelect Label="Filter by type"
-                               @bind-Value="FilterType"
-                               For="@(() => FilterType)"
-                               T="@string">
-                        @foreach (var type in FilterTypes.Keys)
-                        {
-                            <MudSelectItem Value="@type">@type</MudSelectItem>
-                        }
-                    </MudSelect>
-                </ChildContent>
-                <Toolbar>
-                    <TagToolbar Tag="@Id" />
-                </Toolbar>
-            </ItemCard>
+                <ItemCard Type="@PlayerItemType.Tag" Heading="@Tag" Tags="@null">
+                    <ChildContent>
+                        <MudSelect Label="Filter by type"
+                        @bind-Value="FilterType"
+                                   For="@(() => FilterType)"
+                                   T="@string">
+                            @foreach (var type in FilterTypes.Keys)
+                            {
+                                <MudSelectItem Value="@type">@type</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </ChildContent>
+                    <Toolbar>
+                        <TagToolbar Tag="@Tag" />
+                    </Toolbar>
+                </ItemCard>
 
-        </TabGridRow>
+            </TabGridRow>
 
-    </TabGridColumn>
+        </TabGridColumn>
 
-    <TabGridColumn md="9">
-        <TabGridRow RowHeight="@RowHeight.Full">
-            <AppCardScrollContainer>
-                <ChildContent>
-                    <TagResultTable Items="@Items" OnViewItem="@OnViewItem" OnFilter="OnFilter" />
-                </ChildContent>
-            </AppCardScrollContainer>
-        </TabGridRow>
-    </TabGridColumn>
+        <TabGridColumn md="9">
+            <TabGridRow RowHeight="@RowHeight.Full">
+                <AppCardScrollContainer>
+                    <ChildContent>
+                        <TagResultTable Items="@Items" OnViewItem="@OnViewItem" OnFilter="OnFilter" />
+                    </ChildContent>
+                </AppCardScrollContainer>
+            </TabGridRow>
+        </TabGridColumn>
 
-</TabGrid>
+    </TabGrid>
+}

@@ -1,22 +1,13 @@
-﻿using Cadenza.State.Actions;
-using Fluxor;
+﻿using Fluxor;
 
 namespace Cadenza.Tabs.Library;
 
-public class TagTabBase : ComponentBase
+public class TagTabBase : FluxorComponent
 {
     private const string AllTypes = "All";
 
-    [Inject]
-    public ITagRepository Repository { get; set; }
-
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
-    protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ViewTagState> ViewTagState { get; set; }
 
     public TagTabBase()
     {
@@ -27,23 +18,12 @@ public class TagTabBase : ComponentBase
         FilterType = AllTypes;
     }
 
-    public List<PlayerItem> Items { get; set; } = new();
+    public bool Loading => ViewTagState.Value.IsLoading;
+    public string Tag => ViewTagState.Value.Tag;
+    public List<PlayerItem> Items => ViewTagState.Value.Items;
+
+    protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
     protected string FilterType { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await UpdateTag();
-    }
-
-    private async Task UpdateTag()
-    {
-        Items = (await Repository.GetTag(Id))
-            .OrderBy(i => i.Type)
-            .ThenBy(i => i.Name)
-            .ToList();
-
-        StateHasChanged();
-    }
 
     protected bool OnFilter(PlayerItem item)
     {

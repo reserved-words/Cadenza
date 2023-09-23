@@ -32,6 +32,10 @@ public class ViewEffects
         {
             dispatcher.Dispatch(new FetchViewGroupingRequest(new Grouping(int.Parse(action.Id), action.Name)));
         }
+        else if (action.Type == PlayerItemType.Tag)
+        {
+            dispatcher.Dispatch(new FetchViewTagRequest(action.Id));
+        }
     }
 
     private void ClearOtherItems(ViewItemRequest action, IDispatcher dispatcher)
@@ -55,6 +59,10 @@ public class ViewEffects
         if (action.Type != PlayerItemType.Grouping)
         {
             dispatcher.Dispatch(new FetchViewGroupingResult(null, null));
+        }
+        if (action.Type != PlayerItemType.Tag)
+        {
+            dispatcher.Dispatch(new FetchViewTagResult(null, null));
         }
     }
 }
