@@ -1,16 +1,15 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
+using Fluxor;
 
 namespace Cadenza.Web.Core.Services;
 
 internal class LongRunningTaskService : ILongRunningTaskService
 {
-    private readonly IDebugLogger _logger;
-    private readonly IMessenger _messenger;
+    private readonly IDispatcher _dispatcher;
 
-    public LongRunningTaskService(IMessenger messenger, IDebugLogger logger)
+    public LongRunningTaskService(IDispatcher dispatcher)
     {
-        _messenger = messenger;
-        _logger = logger;
+        _dispatcher = dispatcher;
     }
 
     public async Task RunTasks(TaskGroup taskGroup, CancellationToken cancellationToken)
@@ -32,28 +31,28 @@ internal class LongRunningTaskService : ILongRunningTaskService
                 tasks.Add(PerformTask(task, cancellationToken));
             }
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Task.WhenAll(tasks).ContinueWith(async parentTask =>
+            await Task.WhenAll(tasks).ContinueWith(parentTask =>
             {
                 if (parentTask.IsCanceled)
                 {
-                    await _logger.LogInfo("Parent task cancelled");
+                    Console.WriteLine("Parent task cancelled");
                     Update(TaskState.Cancelling, CancellationToken.None);
                     Update(TaskState.Cancelled, CancellationToken.None);
                 }
                 else if (!tasks.Any(t => t.IsFaulted))
                 {
-                    await _logger.LogInfo("All tasks succeeded");
+                    Console.WriteLine("All tasks succeeded");
                     Update(TaskState.Completed, CancellationToken.None);
                 }
                 else
                 {
-                    await _logger.LogInfo("At least one task faulted");
+                    Console.WriteLine("At least one task faulted");
                     foreach (var task in tasks.Where(t => t.IsFaulted))
                     {
                         foreach (var ex in task.Exception.InnerExceptions)
                         {
-                            await _logger.LogError(ex);
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine(ex.StackTrace);
                         }
                     }
 
@@ -67,7 +66,6 @@ internal class LongRunningTaskService : ILongRunningTaskService
                     }
                 }
             }, cancellationToken);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
         catch (OperationCanceledException)
         {
@@ -127,29 +125,15 @@ internal class LongRunningTaskService : ILongRunningTaskService
         }
     }
 
-    private async Task Update(string message, TaskState state)
-    {
-        await _messenger.Send(this, new TaskGroupProgressEventArgs { Message = message, State = state });
-    }
-
-    private async Task Update(string id, string message, TaskState state)
-    {
-        await _messenger.Send(this, new SubTaskProgressEventArgs { Id = id, Message = message, State = state });
-    }
-
     private void Update(TaskState state, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        Update(state.GetDisplayName(), state);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        _dispatcher.Dispatch(new TaskGroupProgressedAction(state.GetDisplayName(), state));
     }
 
     private void Update(string id, string message, TaskState state, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        Update(id, message, state);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        _dispatcher.Dispatch(new SubTaskProgressedAction(id, message, state));
     }
 }

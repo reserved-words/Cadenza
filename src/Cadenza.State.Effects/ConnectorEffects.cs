@@ -2,20 +2,16 @@
 
 public class ConnectorEffects
 {
-    private readonly IDebugLogger _logger;
-
-    public ConnectorEffects(IDebugLogger logger)
-    {
-        _logger = logger;
-    }
-
     [EffectMethod]
-    public async Task HandleConnectorStatusUpdateRequest_Error(ConnectorStatusUpdateRequest action, IDispatcher dispatcher)
+    public Task HandleConnectorStatusUpdateRequest_Error(ConnectorStatusUpdateRequest action, IDispatcher dispatcher)
     {
         if (action.Error != null)
         {
-            await _logger.LogError(action.Error);
+            Console.WriteLine(action.Error.Message);
+            Console.WriteLine(action.Error.StackTrace);
         }
+
+        return Task.CompletedTask;
     }
 
     [EffectMethod]

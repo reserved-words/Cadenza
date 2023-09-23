@@ -2,11 +2,9 @@
 
 namespace Cadenza.Web.Components.Shared.Dialogs
 {
-
     public class ProgressDialogBase : DialogBase
     {
         [Inject] public ILongRunningTaskService Service { get; set; }
-        [Inject] public IMessenger Messenger { get; set; }
 
         [Parameter] public Func<TaskGroup> TaskGroupFactory { get; set; }
         [Parameter] public bool AutoStart { get; set; }
@@ -31,8 +29,9 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected override void OnInitialized()
         {
-            Messenger.Subscribe<TaskGroupProgressEventArgs>(OnTaskGroupProgressChanged, out _taskGroupProgressSubscriptionId);
-            Messenger.Subscribe<SubTaskProgressEventArgs>(OnSubTaskProgressChanged, out _subTaskProgressSubscriptionId);
+            SubscribeToAction<TaskGroupProgressedAction>(OnTaskGroupProgressed);
+            SubscribeToAction<SubTaskProgressedAction>(OnSubTaskProgressed);
+            base.OnInitialized();
         }
 
         protected override async Task OnParametersSetAsync()
@@ -46,25 +45,23 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             }
         }
 
-        private Task OnTaskGroupProgressChanged(object sender, TaskGroupProgressEventArgs e)
+        private void OnTaskGroupProgressed(TaskGroupProgressedAction action)
         {
-            ProgressMessage = e.Message;
-            State = e.State;
+            ProgressMessage = action.Message;
+            State = action.State;
             StateHasChanged();
             if (State == TaskState.Completed)
             {
                 OnClose();
             }
-            return Task.CompletedTask;
         }
 
-        private Task OnSubTaskProgressChanged(object sender, SubTaskProgressEventArgs e)
+        private void OnSubTaskProgressed(SubTaskProgressedAction action)
         {
-            var task = SubTasks[e.Id];
-            task.Message = e.Message;
-            task.State = e.State;
+            var task = SubTasks[action.Id];
+            task.Message = action.Message;
+            task.State = action.State;
             StateHasChanged();
-            return Task.CompletedTask;
         }
 
         protected async Task OnStart()
@@ -93,8 +90,6 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected void OnClose()
         {
-            Messenger.Unsubscribe<TaskGroupProgressEventArgs>(_taskGroupProgressSubscriptionId);
-            Messenger.Unsubscribe<SubTaskProgressEventArgs>(_subTaskProgressSubscriptionId);
             Submit();
         }
     }
