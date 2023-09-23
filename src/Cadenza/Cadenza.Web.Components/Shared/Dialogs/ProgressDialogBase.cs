@@ -5,20 +5,12 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
     public class ProgressDialogBase : DialogBase
     {
-        [Inject]
-        public ILongRunningTaskService Service { get; set; }
+        [Inject] public ILongRunningTaskService Service { get; set; }
+        [Inject] public IMessenger Messenger { get; set; }
 
-        [Inject]
-        public IMessenger Messenger { get; set; }
-
-        [Parameter]
-        public Func<TaskGroup> TaskGroupFactory { get; set; }
-
-        [Parameter]
-        public bool AutoStart { get; set; }
-
-        [Parameter]
-        public string StartPromptText { get; set; }
+        [Parameter] public Func<TaskGroup> TaskGroupFactory { get; set; }
+        [Parameter] public bool AutoStart { get; set; }
+        [Parameter] public string StartPromptText { get; set; }
 
         public bool Started => State.Started();
         public bool InProgress => State.InProgress();

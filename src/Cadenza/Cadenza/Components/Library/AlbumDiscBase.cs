@@ -1,37 +1,20 @@
-﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
-using Fluxor;
-using Fluxor.Blazor.Web.Components;
-
+﻿using Fluxor;
 namespace Cadenza.Components.Library;
 
 public class AlbumDiscBase : FluxorComponent
 {
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IState<CurrentTrackState> CurrentTrackState { get; set; }
-
-    [Parameter]
-    public Disc Model { get; set; } = new();
-
-    [Parameter]
-    public int AlbumId { get; set; }
-
-    [Parameter]
-    public int AlbumArtistId { get; set; }
+    [Parameter] public Disc Model { get; set; } = new();
+    [Parameter] public int AlbumId { get; set; }
+    [Parameter] public int AlbumArtistId { get; set; }
 
     protected int? CurrentTrackId { get; set; }
 
     protected override void OnInitialized()
     {
         CurrentTrackState.StateChanged += CurrentTrackState_StateChanged;
-        
-        // Needed when implementing FluxorComponent
         base.OnInitialized();
     }
 

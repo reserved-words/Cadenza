@@ -50,8 +50,6 @@
 @code {
 
     [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IMessenger Messenger { get; set; }
-    [Inject] public NavigationManager Navigation { get; set; }
     [Inject] public IState<ApplicationState> ApplicationState { get; set; }
     [Inject] public IState<ViewState> ViewState { get; set; }
 
@@ -60,7 +58,6 @@
     protected override void OnInitialized()
     {
         ViewState.StateChanged += ViewState_StateChanged;
-
         base.OnInitialized();
     }
 
