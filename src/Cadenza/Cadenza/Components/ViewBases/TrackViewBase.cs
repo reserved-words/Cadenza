@@ -1,37 +1,21 @@
 ﻿namespace Cadenza.Components.ViewBases;
 
-public class TrackViewBase : ComponentBase, IDisposable
+public class TrackViewBase : FluxorComponent
 {
-    [Parameter]
-    public TrackInfo Model { get; set; } = new();
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private Guid _updateSubscriptionId = Guid.Empty;
-
-    public void Dispose()
-    {
-        if (_updateSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackUpdatedEventArgs>(_updateSubscriptionId);
-            _updateSubscriptionId = Guid.Empty;
-        }
-    }
+    [Parameter] public TrackInfo Model { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackUpdatedEventArgs>(OnTrackUpdated, out _updateSubscriptionId);
+        SubscribeToAction<TrackUpdatedAction>(OnTrackUpdated);
+        base.OnInitialized();
     }
 
-    private Task OnTrackUpdated(object sender, TrackUpdatedEventArgs args)
+    private void OnTrackUpdated(TrackUpdatedAction action)
     {
-        if (args.Update.Id == Model.Id)
+        if (action.Update.Id == Model.Id)
         {
-            args.Update.ApplyUpdates(Model);
+            action.Update.ApplyUpdates(Model);
             StateHasChanged();
         }
-
-        return Task.CompletedTask;
     }
 }

@@ -16,6 +16,7 @@ public class EditArtistBase : FormBase<ArtistInfo>
     {
         SubscribeToAction<ArtistUpdatedAction>(OnArtistUpdated);
         Groupings = await AdminRepository.GetGroupingOptions();
+        await base.OnInitializedAsync();
     }
 
     protected override void OnParametersSet()

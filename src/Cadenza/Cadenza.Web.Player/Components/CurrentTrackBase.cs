@@ -1,42 +1,47 @@
-﻿namespace Cadenza.Web.Player.Components;
+﻿using Cadenza.State.Actions;
+using Fluxor.Blazor.Web.Components;
 
-public class CurrentTrackBase : ComponentBase
+namespace Cadenza.Web.Player.Components;
+
+public class CurrentTrackBase : FluxorComponent
 {
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Parameter]
-    public bool Empty { get; set; }
-
-    [Parameter]
-    public bool Loading { get; set; }
-
-    [Parameter]
-    public TrackFull Model { get; set; }
+    [Parameter] public bool Empty { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public TrackFull Model { get; set; }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<AlbumUpdatedEventArgs>(OnAlbumUpdated);
-        Messenger.Subscribe<TrackUpdatedEventArgs>(OnTrackUpdated);
+        SubscribeToAction<AlbumUpdatedAction>(OnAlbumUpdated);
+        SubscribeToAction<ArtistUpdatedAction>(OnArtistUpdated);
+        SubscribeToAction<TrackUpdatedAction>(OnTrackUpdated);
+        base.OnInitialized();
     }
 
-    private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
+    private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
-        if (Model == null || args.Update.Id != Model.Album.Id)
-            return Task.CompletedTask;
+        if (Model == null || action.Update.Id != Model.Album.Id)
+            return;
 
-        args.Update.ApplyUpdates(Model.Album);
+        action.Update.ApplyUpdates(Model.Album);
         StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task OnTrackUpdated(object sender, TrackUpdatedEventArgs args)
+    private void OnArtistUpdated(ArtistUpdatedAction action)
     {
-        if (Model == null || args.Update.Id != Model.Id)
-            return Task.CompletedTask;
+        if (Model == null || action.Update.Id != Model.Artist.Id)
+            return;
 
-        args.Update.ApplyUpdates(Model.Track);
+        action.Update.ApplyUpdates(Model.Artist);
         StateHasChanged();
-        return Task.CompletedTask;
+    }
+
+    private void OnTrackUpdated(TrackUpdatedAction action)
+    {
+        if (Model == null || action.Update.Id != Model.Id)
+            return;
+
+        action.Update.ApplyUpdates(Model.Track);
+        StateHasChanged();
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace Cadenza.State.Effects;
 
-public class ArtistUpdateEffects
+public class UpdateArtistEffects
 {
     private readonly IUpdateRepository _repository;
 
-    public ArtistUpdateEffects(IUpdateRepository repository)
+    public UpdateArtistEffects(IUpdateRepository repository)
     {
         _repository = repository;
     }
