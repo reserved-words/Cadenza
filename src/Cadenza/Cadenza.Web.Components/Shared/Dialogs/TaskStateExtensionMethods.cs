@@ -9,9 +9,7 @@
 
         public static bool InProgress(this TaskState state)
         {
-            return state == TaskState.Starting
-                || state == TaskState.Running
-                || state == TaskState.Completing;
+            return state == TaskState.Running;
         }
 
         public static bool Ended(this TaskState state)

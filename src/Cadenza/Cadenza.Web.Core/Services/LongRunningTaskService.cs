@@ -16,12 +16,6 @@ internal class LongRunningTaskService : ILongRunningTaskService
     {
         try
         {
-            if (taskGroup.PreTask != null)
-            {
-                Update(TaskState.Starting);
-                await taskGroup.PreTask();
-            }
-
             Update(TaskState.Running);
 
             var tasks = new List<Task>();
