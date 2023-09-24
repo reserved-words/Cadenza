@@ -4,7 +4,6 @@
 {
     <MudDialog>
         <DialogContent>
-            <MudText Typo=@Typo.body1>@ProgressMessage</MudText>
             <MudProgressLinear Indeterminate="@InProgress"
                                Value="@(Ended ? 100 : 0)"
                                Color="@Color.Primary" />

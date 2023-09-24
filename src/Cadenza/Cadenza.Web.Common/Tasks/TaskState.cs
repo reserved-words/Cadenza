@@ -3,10 +3,7 @@
 public enum TaskState
 {
     None,
-
     Running,
     Completed,
-    Errored,
-    [Display(Name = "Completed with errors")]
-    CompletedWithErrors
+    Errored
 }

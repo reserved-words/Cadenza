@@ -14,14 +14,12 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         public bool AtLeastOneTaskErrored => SubTasks.Any(t => t.Value.State == TaskState.Errored);
 
-        public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
 
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
 
         protected override void OnInitialized()
         {
-            SubscribeToAction<TaskGroupProgressedAction>(OnTaskGroupProgressed);
             SubscribeToAction<SubTaskProgressedAction>(OnSubTaskProgressed);
             base.OnInitialized();
         }
@@ -34,23 +32,23 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             await OnStart();
         }
 
-        private void OnTaskGroupProgressed(TaskGroupProgressedAction action)
-        {
-            ProgressMessage = action.Message;
-            State = action.State;
-            StateHasChanged();
-            if (State == TaskState.Completed)
-            {
-                OnClose();
-            }
-        }
-
         private void OnSubTaskProgressed(SubTaskProgressedAction action)
         {
             var task = SubTasks[action.Id];
             task.Message = action.Message;
             task.State = action.State;
             StateHasChanged();
+
+            State = SubTasks.Values.Any(t => !t.Ended)
+                ? TaskState.Running
+                : SubTasks.Values.Any(t => t.Errored)
+                ? TaskState.Errored
+                : TaskState.Completed;
+
+            if (State == TaskState.Completed)
+            {
+                OnClose();
+            }
         }
 
         protected async Task OnStart()

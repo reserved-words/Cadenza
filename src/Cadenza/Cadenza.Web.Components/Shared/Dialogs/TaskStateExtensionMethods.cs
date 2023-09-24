@@ -15,8 +15,7 @@
         public static bool Ended(this TaskState state)
         {
             return state == TaskState.Errored
-                || state == TaskState.Completed
-                || state == TaskState.CompletedWithErrors;
+                || state == TaskState.Completed;
         }
     }
 }

@@ -14,51 +14,28 @@ internal class LongRunningTaskService : ILongRunningTaskService
 
     public async Task RunTasks(List<SubTask> subtasks)
     {
-        try
+        var tasks = new List<Task>();
+
+        foreach (var task in subtasks)
         {
-            Update(TaskState.Running);
+            tasks.Add(PerformTask(task));
+        }
 
-            var tasks = new List<Task>();
-
-            foreach (var task in subtasks)
+        await Task.WhenAll(tasks).ContinueWith(parentTask =>
+        {
+            if (tasks.Any(t => t.IsFaulted))
             {
-                tasks.Add(PerformTask(task));
+                Console.WriteLine("At least one task faulted");
+                foreach (var task in tasks.Where(t => t.IsFaulted))
+                {
+                    foreach (var ex in task.Exception.InnerExceptions)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.StackTrace);
+                    }
+                }
             }
-
-            await Task.WhenAll(tasks).ContinueWith(parentTask =>
-            {
-                if (!tasks.Any(t => t.IsFaulted))
-                {
-                    Console.WriteLine("All tasks succeeded");
-                    Update(TaskState.Completed);
-                }
-                else
-                {
-                    Console.WriteLine("At least one task faulted");
-                    foreach (var task in tasks.Where(t => t.IsFaulted))
-                    {
-                        foreach (var ex in task.Exception.InnerExceptions)
-                        {
-                            Console.WriteLine(ex.Message);
-                            Console.WriteLine(ex.StackTrace);
-                        }
-                    }
-
-                    if (tasks.All(t => t.IsFaulted))
-                    {
-                        Update(TaskState.Errored);
-                    }
-                    else
-                    {
-                        Update(TaskState.CompletedWithErrors);
-                    }
-                }
-            });
-        }
-        catch (Exception)
-        {
-            Update(TaskState.Errored);
-        }
+        });
     }
 
     private async Task PerformTask(SubTask task)
@@ -99,11 +76,6 @@ internal class LongRunningTaskService : ILongRunningTaskService
             }
             throw;
         }
-    }
-
-    private void Update(TaskState state)
-    {
-        _dispatcher.Dispatch(new TaskGroupProgressedAction(state.GetDisplayName(), state));
     }
 
     private void Update(string id, string message, TaskState state)
