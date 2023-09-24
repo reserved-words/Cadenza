@@ -47,7 +47,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
                 var isTaskNeeded = await task.CheckStep.Task();
                 if (!isTaskNeeded)
                 {
-                    Update(task.Id, "Completed", TaskState.Completed);
+                    Update(task.Connector, "Completed", TaskState.Completed);
                     task.OnCompleted();
                     return;
                 }
@@ -57,11 +57,11 @@ internal class LongRunningTaskService : ILongRunningTaskService
 
             foreach (var step in task.Steps)
             {
-                Update(task.Id, step.Caption, TaskState.Running);
+                Update(task.Connector, step.Caption, TaskState.Running);
                 result = await step.Task(result);
             }
 
-            Update(task.Id, "Completed", TaskState.Completed);
+            Update(task.Connector, "Completed", TaskState.Completed);
             if (task.OnCompleted != null)
             {
                 task.OnCompleted();
@@ -69,7 +69,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
         }
         catch (Exception ex)
         {
-            Update(task.Id, ex.Message, TaskState.Errored);
+            Update(task.Connector, ex.Message, TaskState.Errored);
             if (task.OnError != null)
             {
                 task.OnError(ex);
@@ -78,8 +78,8 @@ internal class LongRunningTaskService : ILongRunningTaskService
         }
     }
 
-    private void Update(string id, string message, TaskState state)
+    private void Update(Connector connector, string message, TaskState state)
     {
-        _dispatcher.Dispatch(new SubTaskProgressedAction(id, message, state));
+        _dispatcher.Dispatch(new SubTaskProgressedAction(connector, message, state));
     }
 }

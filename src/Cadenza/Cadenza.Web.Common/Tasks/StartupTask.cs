@@ -2,7 +2,7 @@
 
 public class StartupTask
 {
-    public string Id { get; set; }
+    public Connector Connector { get; set; }
     public string Title { get; set; }
     public TaskCheckStep CheckStep { get; set; }
     public List<TaskStep> Steps { get; set; } = new List<TaskStep>();

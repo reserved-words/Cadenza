@@ -20,7 +20,7 @@ internal class DatabaseConnector : IConnector
     {
         var subTask = new StartupTask
         {
-            Id = "Database",
+            Connector = Connector.Database,
             Title = "Connect to Database",
             Steps = new List<TaskStep>(),
             OnError = (ex) => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Database, ConnectorStatus.Errored, ex)),

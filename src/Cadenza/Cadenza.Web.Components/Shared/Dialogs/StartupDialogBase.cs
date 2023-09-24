@@ -15,7 +15,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         public bool AtLeastOneTaskErrored => SubTasks.Any(t => t.Value.State == TaskState.Errored);
 
-        public Dictionary<string, StartupTaskProgress> SubTasks { get; set; } = new Dictionary<string, StartupTaskProgress>();
+        public Dictionary<Connector, StartupTaskProgress> SubTasks { get; set; } = new Dictionary<Connector, StartupTaskProgress>();
 
         protected override void OnInitialized()
         {
@@ -33,7 +33,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         private void OnSubTaskProgressed(SubTaskProgressedAction action)
         {
-            var task = SubTasks[action.Id];
+            var task = SubTasks[action.Connector];
             task.Message = action.Message;
             task.State = action.State;
             StateHasChanged();
@@ -47,7 +47,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
         protected async Task OnStart()
         {
             SubTasks = Tasks
-                .ToDictionary(t => t.Id, t => new StartupTaskProgress
+                .ToDictionary(t => t.Connector, t => new StartupTaskProgress
                 {
                     Title = t.Title,
                     State = TaskState.None,

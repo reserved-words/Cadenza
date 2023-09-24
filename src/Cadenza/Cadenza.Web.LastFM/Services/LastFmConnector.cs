@@ -29,7 +29,7 @@ internal class LastFmConnector : IConnector
 
         var subTask = new StartupTask
         {
-            Id = "LastFM",
+            Connector = Connector.LastFm,
             Title = "Connect to Last.FM",
             CheckStep = new TaskCheckStep { Caption = "Checking if Last.FM already connected", Task = IsTaskNeeded },
             Steps = new List<TaskStep>(),

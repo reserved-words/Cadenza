@@ -21,7 +21,7 @@ internal class LocalSourceConnector : IConnector
     {
         var subTask = new StartupTask
         {
-            Id = "Local",
+            Connector = Connector.Local,
             Title = "Connect to Local Library",
             Steps = new List<TaskStep>(),
             OnError = (ex) => _dispatcher.Dispatch(new ConnectorStatusUpdateRequest(Connector.Local, ConnectorStatus.Errored, ex)),
