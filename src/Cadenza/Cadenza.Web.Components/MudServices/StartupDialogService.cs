@@ -9,11 +9,11 @@ internal class StartupDialogService : IStartupDialogService
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run(List<StartupTask> tasks)
+    public async Task<bool> Run()
     {
         var dialogParameters = new DialogParameters
         {
-            { nameof(StartupDialog.Tasks), tasks }
+            //{ nameof(StartupDialog.Tasks), tasks }
         };
 
         var dialogReference = _dialogService.Show<StartupDialog>("Starting application", dialogParameters, new DialogOptions

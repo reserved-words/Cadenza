@@ -26,7 +26,6 @@ public static class Startup
     {
         return services
             .AddApiRepositories()
-            .AddTransient<IConnector, DatabaseConnector>()
             .AddTransient<IApiHttpHelper, ApiHttpHelper>();
     }
 

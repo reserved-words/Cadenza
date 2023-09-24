@@ -3,20 +3,17 @@
 public class ApplicationEffects
 {
     private readonly IStartupDialogService _dialogService;
-    private readonly IStartupTaskService _connectService;
 
-    public ApplicationEffects(IStartupDialogService dialogService, IStartupTaskService connectService)
+    public ApplicationEffects(IStartupDialogService dialogService)
     {
         _dialogService = dialogService;
-        _connectService = connectService;
     }
 
 
-    [EffectMethod]
-    public async Task HandleApplicationStartRequest(ApplicationStartRequest action, IDispatcher dispatcher)
+    [EffectMethod(typeof(ApplicationStartRequest))]
+    public async Task HandleApplicationStartRequest(IDispatcher dispatcher)
     {
-        var tasks = _connectService.GetStartupTasks();
-        var success = await _dialogService.Run(tasks);
+        var success = await _dialogService.Run();
         dispatcher.Dispatch(new ApplicationStartedAction(success));
     }
 }

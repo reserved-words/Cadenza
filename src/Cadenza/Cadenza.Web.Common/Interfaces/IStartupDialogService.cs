@@ -2,5 +2,5 @@
 
 public interface IStartupDialogService
 {
-    Task<bool> Run(List<StartupTask> tasks);
+    Task<bool> Run();
 }

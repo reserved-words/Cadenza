@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-using Cadenza.Web.Source.Local.Interfaces;
+﻿using Cadenza.Web.Source.Local.Interfaces;
 using Cadenza.Web.Source.Local.Settings;
 using Microsoft.Extensions.Options;
 
@@ -29,10 +28,4 @@ public class LocalSourceConnectionEffects
             dispatcher.Dispatch(new LocalSourceConnectionErroredAction());
         }
     }
-
-    //[EffectMethod(typeof(LocalSourceConnectedAction))]
-    //public Task HandleLocalSourceConnectedAction(IDispatcher dispatcher)
-    //{
-    //    return Task.CompletedTask;
-    //}
 }

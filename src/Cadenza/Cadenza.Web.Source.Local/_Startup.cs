@@ -23,7 +23,6 @@ public static class Startup
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
                 sp.GetRequiredService<IUrl>(),
                 sp.GetRequiredService<IBase64Encoder>()))
-            .AddTransient<IConnector, LocalSourceConnector>()
             .AddTransient<ILocalHttpHelper, LocalHttpHelper>();
     }
 }

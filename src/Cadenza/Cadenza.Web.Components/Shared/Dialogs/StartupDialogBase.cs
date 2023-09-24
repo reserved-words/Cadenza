@@ -1,17 +1,15 @@
-﻿using Cadenza.State.Store;
-using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Dialogs
 {
     public class StartupDialogBase : DialogBase
     {
-        [Inject] public ILongRunningTaskService Service { get; set; }
+        [Inject] public IDispatcher Dispatcher { get; set; }
         [Inject] public IState<DatabaseConnectionState> DatabaseConnectionState { get; set; }
         [Inject] public IState<LocalSourceConnectionState> LocalSourceConnectionState { get; set; }
         [Inject] public IState<LastFmConnectionState> LastFmConnectionState { get; set; }
-
-        [Parameter] public List<StartupTask> Tasks { get; set; }
 
         public bool InProgress => SubTasks.Values.Any(t => t.State == TaskState.Running);
         public bool Ended => SubTasks.Values.All(t => t.State == TaskState.Completed || t.State == TaskState.Errored);
@@ -23,8 +21,14 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected bool Started;
 
+        private readonly List<StartupTask> _tasks = new List<StartupTask>();
+
         protected override void OnInitialized()
         {
+            _tasks.Add(new StartupTask(Connector.LastFm, "Connect to Last.FM", new LastFmConnectRequest()));
+            _tasks.Add(new StartupTask(Connector.Local, "Connect to Local Library", new LocalSourceConnectRequest()));
+            _tasks.Add(new StartupTask(Connector.Database, "Connect to Database", new DatabaseConnectRequest()));
+
             DatabaseConnectionState.StateChanged += DatabaseConnectionState_StateChanged;
             LastFmConnectionState.StateChanged += LastFmConnectionState_StateChanged;
             LocalSourceConnectionState.StateChanged += LocalSourceConnectionState_StateChanged;
@@ -47,12 +51,12 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             OnSubTaskProgressed(Connector.Local, LocalSourceConnectionState.Value.State, LocalSourceConnectionState.Value.Message);
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
             if (Started)
                 return;
 
-            await OnStart();
+            Start();
         }
 
         private void OnSubTaskProgressed(Connector connector, TaskState state, string message)
@@ -68,9 +72,9 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             }
         }
 
-        protected async Task OnStart()
+        protected void Start()
         {
-            SubTasks = Tasks
+            SubTasks = _tasks
                 .ToDictionary(t => t.Connector, t => new StartupTaskProgress
                 {
                     Title = t.Title,
@@ -80,7 +84,11 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
             Started = true;
 
-            await Service.RunTasks(Tasks);
+            foreach (var task in _tasks)
+            {
+                // Any nice way to do these async?
+                Dispatcher.Dispatch(task.InitialAction);
+            }
         }
 
         protected void OnClose()
