@@ -40,7 +40,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
             if (Ended && !Errored)
             {
-               // OnClose();
+                OnClose();
             }
         }
 
