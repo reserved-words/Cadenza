@@ -9,14 +9,14 @@ internal class MudProgressDialogService : IProgressDialogService
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run(Func<TaskGroup> taskGroupFactory, string title)
+    public async Task<bool> Run(Func<List<SubTask>> taskFactory)
     {
         var dialogParameters = new DialogParameters
         {
-            { nameof(ProgressDialog.TaskGroupFactory), taskGroupFactory }
+            { nameof(ProgressDialog.TaskFactory), taskFactory }
         };
 
-        var dialogReference = _dialogService.Show<ProgressDialog>(title, dialogParameters, new DialogOptions
+        var dialogReference = _dialogService.Show<ProgressDialog>("Starting application", dialogParameters, new DialogOptions
         {
             DisableBackdropClick = true,
             MaxWidth = MaxWidth.Small,

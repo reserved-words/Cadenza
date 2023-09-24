@@ -2,5 +2,5 @@
 
 public interface ILongRunningTaskService
 {
-    Task RunTasks(TaskGroup taskGroup);
+    Task RunTasks(List<SubTask> tasks);
 }

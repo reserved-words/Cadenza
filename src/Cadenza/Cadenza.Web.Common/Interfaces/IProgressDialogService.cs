@@ -2,5 +2,5 @@
 
 public interface IProgressDialogService
 {
-    Task<bool> Run(Func<TaskGroup> taskGroupFactory, string title);
+    Task<bool> Run(Func<List<SubTask>> taskFactory);
 }

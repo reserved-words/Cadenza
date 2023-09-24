@@ -9,15 +9,15 @@ internal class StartupConnectService : IStartupTaskService
         _connectors = connectors;
     }
 
-    public TaskGroup GetStartupTasks()
+    public List<SubTask> GetStartupTasks()
     {
-        var taskGroup = new TaskGroup();
+        var tasks = new List<SubTask>();
 
         foreach (var builder in _connectors)
         {
-            taskGroup.Tasks.Add(builder.GetConnectionTask());
+            tasks.Add(builder.GetConnectionTask());
         }
 
-        return taskGroup;
+        return tasks;
     }
 }

@@ -6,7 +6,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
     {
         [Inject] public ILongRunningTaskService Service { get; set; }
 
-        [Parameter] public Func<TaskGroup> TaskGroupFactory { get; set; }
+        [Parameter] public Func<List<SubTask>> TaskFactory { get; set; }
 
         public bool Started => State.Started();
         public bool InProgress => State.InProgress();
@@ -55,9 +55,9 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected async Task OnStart()
         {
-            var taskGroup = TaskGroupFactory();
+            var tasks = TaskFactory();
 
-            SubTasks = taskGroup.Tasks
+            SubTasks = tasks
                 .ToDictionary(t => t.Id, t => new SubTaskProgress
                 {
                     Title = t.Title,
@@ -65,7 +65,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
                     Message = ""
                 });
 
-            await Service.RunTasks(taskGroup);
+            await Service.RunTasks(tasks);
         }
 
         protected void OnClose()

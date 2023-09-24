@@ -15,7 +15,7 @@ public class ApplicationEffects
     [EffectMethod]
     public async Task HandleApplicationStartRequest(ApplicationStartRequest action, IDispatcher dispatcher)
     {
-        var success = await _dialogService.Run(() => _connectService.GetStartupTasks(), "Connecting Services");
+        var success = await _dialogService.Run(() => _connectService.GetStartupTasks());
         dispatcher.Dispatch(new ApplicationStartedAction(success));
     }
 }

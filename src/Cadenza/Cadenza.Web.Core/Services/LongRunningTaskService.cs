@@ -12,7 +12,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
         _dispatcher = dispatcher;
     }
 
-    public async Task RunTasks(TaskGroup taskGroup)
+    public async Task RunTasks(List<SubTask> subtasks)
     {
         try
         {
@@ -20,7 +20,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
 
             var tasks = new List<Task>();
 
-            foreach (var task in taskGroup.Tasks)
+            foreach (var task in subtasks)
             {
                 tasks.Add(PerformTask(task));
             }
