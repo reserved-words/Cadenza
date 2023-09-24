@@ -1,9 +1,10 @@
-﻿using Cadenza.Web.Common.Tasks;
+﻿using Cadenza.State.Interfaces;
+using Cadenza.Web.Common.Tasks;
 
 namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record LocalSourceConnectionState(TaskState State, string Message)
+public record LocalSourceConnectionState(string Title, TaskState State, string Message) : IConnectionState
 {
-    private static LocalSourceConnectionState Init() => new LocalSourceConnectionState(TaskState.None, null);
+    private static LocalSourceConnectionState Init() => new LocalSourceConnectionState(null, TaskState.None, null);
 }

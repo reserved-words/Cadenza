@@ -1,9 +1,10 @@
-﻿using Cadenza.Web.Common.Tasks;
+﻿using Cadenza.State.Interfaces;
+using Cadenza.Web.Common.Tasks;
 
 namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record DatabaseConnectionState(TaskState State, string Message)
+public record DatabaseConnectionState(string Title, TaskState State, string Message) : IConnectionState
 {
-    private static DatabaseConnectionState Init() => new DatabaseConnectionState(TaskState.None, null);
+    private static DatabaseConnectionState Init() => new DatabaseConnectionState(null, TaskState.None, null);
 }

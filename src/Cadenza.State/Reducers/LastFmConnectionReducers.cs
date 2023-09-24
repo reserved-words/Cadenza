@@ -9,6 +9,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
+            Title = "Connect to Last.FM",
             State = TaskState.Running,
             Message = "Connecting"
         };

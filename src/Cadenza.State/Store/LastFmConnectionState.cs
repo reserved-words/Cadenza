@@ -1,9 +1,10 @@
-﻿using Cadenza.Web.Common.Tasks;
+﻿using Cadenza.State.Interfaces;
+using Cadenza.Web.Common.Tasks;
 
 namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record LastFmConnectionState(TaskState State, string Message, string SessionKey)
+public record LastFmConnectionState(string Title, TaskState State, string Message, string SessionKey) : IConnectionState
 {
-    private static LastFmConnectionState Init() => new LastFmConnectionState(TaskState.None, null, null);
+    private static LastFmConnectionState Init() => new LastFmConnectionState(null, TaskState.None, null, null);
 }

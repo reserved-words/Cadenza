@@ -4,10 +4,9 @@
 {
     <MudDialog>
         <DialogContent>
-            @foreach (var task in SubTasks.Values)
-            {
-                <StartupProgressView Task="@task" />
-            }
+            <StartupProgressView ConnectionState="@LastFmConnectionState.Value" />
+            <StartupProgressView ConnectionState="@DatabaseConnectionState.Value" />
+            <StartupProgressView ConnectionState="@LocalSourceConnectionState.Value" />
         </DialogContent>
     </MudDialog>
 }

@@ -9,6 +9,7 @@ public static class DatabaseConnectionReducers
     {
         return state with
         {
+            Title = "Connect to Database",
             State = TaskState.Running,
             Message = "Connecting"
         };

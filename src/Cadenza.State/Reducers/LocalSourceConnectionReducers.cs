@@ -9,8 +9,9 @@ public static class LocalSourceConnectionReducers
     {
         return state with
         {
+            Title = "Connect to Local Library",
             State = TaskState.Running,
-            Message = "Populating"
+            Message = "Connecting"
         };
     }
 
