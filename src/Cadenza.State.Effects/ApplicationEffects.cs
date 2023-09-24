@@ -2,10 +2,10 @@
 
 public class ApplicationEffects
 {
-    private readonly IProgressDialogService _dialogService;
+    private readonly IStartupDialogService _dialogService;
     private readonly IStartupTaskService _connectService;
 
-    public ApplicationEffects(IProgressDialogService dialogService, IStartupTaskService connectService)
+    public ApplicationEffects(IStartupDialogService dialogService, IStartupTaskService connectService)
     {
         _dialogService = dialogService;
         _connectService = connectService;
@@ -15,7 +15,8 @@ public class ApplicationEffects
     [EffectMethod]
     public async Task HandleApplicationStartRequest(ApplicationStartRequest action, IDispatcher dispatcher)
     {
-        var success = await _dialogService.Run(() => _connectService.GetStartupTasks());
+        var tasks = _connectService.GetStartupTasks();
+        var success = await _dialogService.Run(tasks);
         dispatcher.Dispatch(new ApplicationStartedAction(success));
     }
 }

@@ -17,9 +17,9 @@ internal class LocalSourceConnector : IConnector
         _httpHelper = httpHelper;
     }
 
-    public SubTask GetConnectionTask()
+    public StartupTask GetConnectionTask()
     {
-        var subTask = new SubTask
+        var subTask = new StartupTask
         {
             Id = "Local",
             Title = "Connect to Local Library",

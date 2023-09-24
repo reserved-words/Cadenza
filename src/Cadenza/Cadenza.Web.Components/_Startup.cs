@@ -24,7 +24,7 @@ public static class Startup
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             })
             .AddTransient<IDialogService, MudDialogService>()
-            .AddTransient<IProgressDialogService, MudProgressDialogService>()
+            .AddTransient<IStartupDialogService, StartupDialogService>()
             .AddTransient<INotificationService, MudNotificationService>();
     }
 }

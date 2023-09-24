@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Common.Tasks;
 
-public class SubTask
+public class StartupTask
 {
     public string Id { get; set; }
     public string Title { get; set; }

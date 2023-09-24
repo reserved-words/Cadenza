@@ -22,12 +22,12 @@ internal class LastFmConnector : IConnector
         _authoriser = lastFmAuthoriser;
     }
 
-    public SubTask GetConnectionTask()
+    public StartupTask GetConnectionTask()
     {
         // TODO: Handle if session key has been revoked - if so need to start Last.FM connection process again
         // (or for now as long as relevant error message displayed could just clear the session key and user can retry)
 
-        var subTask = new SubTask
+        var subTask = new StartupTask
         {
             Id = "LastFM",
             Title = "Connect to Last.FM",

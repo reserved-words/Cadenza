@@ -1,22 +1,22 @@
 ﻿namespace Cadenza.Web.Components.MudServices;
 
-internal class MudProgressDialogService : IProgressDialogService
+internal class StartupDialogService : IStartupDialogService
 {
     private readonly IDialogService _dialogService;
 
-    public MudProgressDialogService(IDialogService dialogService)
+    public StartupDialogService(IDialogService dialogService)
     {
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run(Func<List<SubTask>> taskFactory)
+    public async Task<bool> Run(List<StartupTask> tasks)
     {
         var dialogParameters = new DialogParameters
         {
-            { nameof(ProgressDialog.TaskFactory), taskFactory }
+            { nameof(StartupDialog.Tasks), tasks }
         };
 
-        var dialogReference = _dialogService.Show<ProgressDialog>("Starting application", dialogParameters, new DialogOptions
+        var dialogReference = _dialogService.Show<StartupDialog>("Starting application", dialogParameters, new DialogOptions
         {
             DisableBackdropClick = true,
             MaxWidth = MaxWidth.Small,

@@ -12,7 +12,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
         _dispatcher = dispatcher;
     }
 
-    public async Task RunTasks(List<SubTask> subtasks)
+    public async Task RunTasks(List<StartupTask> subtasks)
     {
         var tasks = new List<Task>();
 
@@ -38,7 +38,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
         });
     }
 
-    private async Task PerformTask(SubTask task)
+    private async Task PerformTask(StartupTask task)
     {
         try
         {

@@ -2,5 +2,5 @@
 
 public interface IConnector
 {
-    SubTask GetConnectionTask();
+    StartupTask GetConnectionTask();
 }

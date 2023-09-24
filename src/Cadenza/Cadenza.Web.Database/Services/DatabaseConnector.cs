@@ -16,9 +16,9 @@ internal class DatabaseConnector : IConnector
         _http = http;
     }
 
-    public SubTask GetConnectionTask()
+    public StartupTask GetConnectionTask()
     {
-        var subTask = new SubTask
+        var subTask = new StartupTask
         {
             Id = "Database",
             Title = "Connect to Database",

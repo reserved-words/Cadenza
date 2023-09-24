@@ -2,5 +2,5 @@
 
 public interface IStartupTaskService
 {
-    List<SubTask> GetStartupTasks();
+    List<StartupTask> GetStartupTasks();
 }

@@ -2,11 +2,11 @@
 
 namespace Cadenza.Web.Components.Shared.Dialogs
 {
-    public class ProgressDialogBase : DialogBase
+    public class StartupDialogBase : DialogBase
     {
         [Inject] public ILongRunningTaskService Service { get; set; }
 
-        [Parameter] public Func<List<SubTask>> TaskFactory { get; set; }
+        [Parameter] public List<StartupTask> Tasks { get; set; }
 
         public bool Started => SubTasks.Values.Any(t => t.State != TaskState.None);
         public bool InProgress => SubTasks.Values.Any(t => t.State == TaskState.Running);
@@ -15,7 +15,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         public bool AtLeastOneTaskErrored => SubTasks.Any(t => t.Value.State == TaskState.Errored);
 
-        public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
+        public Dictionary<string, StartupTaskProgress> SubTasks { get; set; } = new Dictionary<string, StartupTaskProgress>();
 
         protected override void OnInitialized()
         {
@@ -46,17 +46,15 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected async Task OnStart()
         {
-            var tasks = TaskFactory();
-
-            SubTasks = tasks
-                .ToDictionary(t => t.Id, t => new SubTaskProgress
+            SubTasks = Tasks
+                .ToDictionary(t => t.Id, t => new StartupTaskProgress
                 {
                     Title = t.Title,
                     State = TaskState.None,
                     Message = ""
                 });
 
-            await Service.RunTasks(tasks);
+            await Service.RunTasks(Tasks);
         }
 
         protected void OnClose()

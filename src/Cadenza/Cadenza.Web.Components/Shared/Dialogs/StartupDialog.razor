@@ -1,4 +1,4 @@
-﻿@inherits ProgressDialogBase
+﻿@inherits StartupDialogBase
 
 @if (Started)
 {
@@ -6,7 +6,7 @@
         <DialogContent>
             @foreach (var task in SubTasks.Values)
             {
-                <TaskProgressView Task="@task" />
+                <StartupProgressView Task="@task" />
             }
         </DialogContent>
     </MudDialog>

@@ -9,9 +9,9 @@ internal class StartupConnectService : IStartupTaskService
         _connectors = connectors;
     }
 
-    public List<SubTask> GetStartupTasks()
+    public List<StartupTask> GetStartupTasks()
     {
-        var tasks = new List<SubTask>();
+        var tasks = new List<StartupTask>();
 
         foreach (var builder in _connectors)
         {
