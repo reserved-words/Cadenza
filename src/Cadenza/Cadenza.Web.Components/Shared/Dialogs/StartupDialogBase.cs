@@ -8,7 +8,6 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         [Parameter] public List<StartupTask> Tasks { get; set; }
 
-        public bool Started => SubTasks.Values.Any(t => t.State != TaskState.None);
         public bool InProgress => SubTasks.Values.Any(t => t.State == TaskState.Running);
         public bool Ended => SubTasks.Values.All(t => t.State == TaskState.Completed || t.State == TaskState.Errored);
         public bool Errored => SubTasks.Values.Any(t => t.State == TaskState.Errored);
@@ -17,9 +16,11 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         public Dictionary<Connector, StartupTaskProgress> SubTasks { get; set; } = new Dictionary<Connector, StartupTaskProgress>();
 
+        protected bool Started;
+
         protected override void OnInitialized()
         {
-            SubscribeToAction<SubTaskProgressedAction>(OnSubTaskProgressed);
+            SubscribeToAction<StartupTaskProgressAction>(OnSubTaskProgressed);
             base.OnInitialized();
         }
 
@@ -31,7 +32,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             await OnStart();
         }
 
-        private void OnSubTaskProgressed(SubTaskProgressedAction action)
+        private void OnSubTaskProgressed(StartupTaskProgressAction action)
         {
             var task = SubTasks[action.Connector];
             task.Message = action.Message;
@@ -40,7 +41,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
             if (Ended && !Errored)
             {
-                OnClose();
+               // OnClose();
             }
         }
 
@@ -50,9 +51,11 @@ namespace Cadenza.Web.Components.Shared.Dialogs
                 .ToDictionary(t => t.Connector, t => new StartupTaskProgress
                 {
                     Title = t.Title,
-                    State = TaskState.None,
+                    State = TaskState.Running,
                     Message = ""
                 });
+
+            Started = true;
 
             await Service.RunTasks(Tasks);
         }

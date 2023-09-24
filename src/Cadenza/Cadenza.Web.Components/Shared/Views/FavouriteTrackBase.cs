@@ -1,13 +1,9 @@
-﻿using Cadenza.State.Store;
-using Fluxor;
-
-namespace Cadenza.Web.Components.Shared.Views;
+﻿namespace Cadenza.Web.Components.Shared.Views;
 
 public class FavouriteTrackBase : ComponentBase
 {
     [Inject] public IFavouritesMessenger Favourites { get; set; }
     [Inject] public IFavouritesController FavouritesController { get; set; }
-    [Inject] public IState<ConnectorState> ConnectorState { get; set; }
 
     [Parameter] public string Artist { get; set; }
     [Parameter] public string Title { get; set; }
@@ -20,12 +16,6 @@ public class FavouriteTrackBase : ComponentBase
         IsEnabled = false;
 
         if (Artist == null || Title == null)
-            return;
-
-        if (!ConnectorState.Value.Connectors.TryGetValue(Connector.LastFm, out ConnectorStatus status))
-            return;
-
-        if (status != ConnectorStatus.Connected)
             return;
 
         IsEnabled = true;

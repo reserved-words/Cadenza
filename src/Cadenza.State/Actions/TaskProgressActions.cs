@@ -2,4 +2,4 @@
 
 namespace Cadenza.Web.Common.Events;
 
-public record SubTaskProgressedAction(Connector Connector, string Message, TaskState State);
+public record StartupTaskProgressAction(Connector Connector, string Message, TaskState State);
