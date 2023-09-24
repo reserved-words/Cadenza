@@ -8,13 +8,12 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         [Parameter] public Func<List<SubTask>> TaskFactory { get; set; }
 
-        public bool Started => State.Started();
-        public bool InProgress => State.InProgress();
-        public bool Ended => State.Ended();
+        public bool Started => SubTasks.Values.Any(t => t.State != TaskState.None);
+        public bool InProgress => SubTasks.Values.Any(t => t.State == TaskState.Running);
+        public bool Ended => SubTasks.Values.All(t => t.State == TaskState.Completed || t.State == TaskState.Errored);
+        public bool Errored => SubTasks.Values.Any(t => t.State == TaskState.Errored);
 
         public bool AtLeastOneTaskErrored => SubTasks.Any(t => t.Value.State == TaskState.Errored);
-
-        public TaskState State { get; set; }
 
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
 
@@ -39,15 +38,9 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             task.State = action.State;
             StateHasChanged();
 
-            State = SubTasks.Values.Any(t => !t.Ended)
-                ? TaskState.Running
-                : SubTasks.Values.Any(t => t.Errored)
-                ? TaskState.Errored
-                : TaskState.Completed;
-
-            if (State == TaskState.Completed)
+            if (Ended && !Errored)
             {
-                OnClose();
+               // OnClose();
             }
         }
 

@@ -4,19 +4,9 @@
 {
     <MudDialog>
         <DialogContent>
-            <MudProgressLinear Indeterminate="@InProgress"
-                               Value="@(Ended ? 100 : 0)"
-                               Color="@Color.Primary" />
-
             @foreach (var task in SubTasks.Values)
             {
-                <MudContainer Class="mx-0 my-2 pa-0">
-                    <MudText Typo=@Typo.body1>@task.Title</MudText>
-                    <MudText Typo=@Typo.body2>@task.Message</MudText>
-                    <MudProgressLinear Indeterminate="@(task.InProgress)"
-                                       Value="@(task.Ended ? 100 : 0)"
-                                       Color="@(task.Errored ? Color.Error : task.Ended ? Color.Success : Color.Info)" />
-                </MudContainer>
+                <TaskProgressView Task="@task" />
             }
         </DialogContent>
     </MudDialog>

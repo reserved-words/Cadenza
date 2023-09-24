@@ -1,0 +1,19 @@
+﻿
+<MudContainer Class="mx-0 my-2 pa-0">
+    <MudText Typo=@Typo.body1>@Task.Title</MudText>
+    <MudText Typo=@Typo.body2>@Task.Message</MudText>
+    <MudProgressLinear Indeterminate="@Indeterminate"
+                       Value="@Progress"
+                       Color="@Color" />
+</MudContainer>
+
+@code 
+{
+    [Parameter] public SubTaskProgress Task { get; set; }
+
+    private string Title => Task.Title;
+    private string Message => Task.Message;
+    private bool Indeterminate => Task.State == TaskState.Running;
+    private int Progress => Task.State == TaskState.Errored || Task.State == TaskState.Completed ? 100 : 0;
+    private Color Color => Task.State == TaskState.Errored ? Color.Error : Task.State == TaskState.Completed ? Color.Success : Color.Info;
+}
