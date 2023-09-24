@@ -18,7 +18,6 @@ global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
 
-global using Cadenza.Web.Common.Events;
 global using Cadenza.Web.Common.Extensions;
 
 global using Cadenza.Common.Domain.Model.Album;
@@ -28,9 +27,7 @@ global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Domain.Model;
 
 global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Extensions;
 global using Cadenza.Common.Domain.Model.Artist;
-global using Cadenza.Common.Interfaces.Repositories;
 
 global using Cadenza.State.Actions;
 global using Cadenza.State.Store;

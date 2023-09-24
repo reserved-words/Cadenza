@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-using Cadenza.Web.Common.Tasks;
+﻿using Cadenza.Web.Common.Tasks;
 using Cadenza.Web.Source.Local.Interfaces;
 using Cadenza.Web.Source.Local.Settings;
 using Microsoft.Extensions.Options;
@@ -20,7 +19,6 @@ public class LocalSourceConnectionEffects
     [EffectMethod(typeof(LocalSourceConnectRequest))]
     public async Task HandleLocalSourceConnectRequest(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.Local, "Connecting", TaskState.Running));
         try
         {
             await _httpHelper.Get(_apiSettings.Value.Endpoints.Connect);
@@ -28,14 +26,13 @@ public class LocalSourceConnectionEffects
         }
         catch (Exception) // TODO: Error handling
         {
-            dispatcher.Dispatch(new StartupTaskProgressAction(Connector.Local, "Failed to connect", TaskState.Errored));
+            dispatcher.Dispatch(new LocalSourceConnectionErroredAction());
         }
     }
 
-    [EffectMethod(typeof(LocalSourceConnectedAction))]
-    public Task HandleLocalSourceConnectedAction(IDispatcher dispatcher)
-    {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.Local, "Connection succeedeed", TaskState.Completed));
-        return Task.CompletedTask;
-    }
+    //[EffectMethod(typeof(LocalSourceConnectedAction))]
+    //public Task HandleLocalSourceConnectedAction(IDispatcher dispatcher)
+    //{
+    //    return Task.CompletedTask;
+    //}
 }

@@ -13,7 +13,6 @@ global using Cadenza.Common.Domain.Model.Track;
 global using Cadenza.Common.Domain.Model.Update;
 
 global using Cadenza.Web.Common.Enums;
-global using Cadenza.Web.Common.Events;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Tasks;
 

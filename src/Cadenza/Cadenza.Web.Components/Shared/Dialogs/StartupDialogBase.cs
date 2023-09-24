@@ -1,10 +1,15 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.State.Store;
+using Cadenza.Web.Common.Interfaces.Store;
+using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Dialogs
 {
     public class StartupDialogBase : DialogBase
     {
         [Inject] public ILongRunningTaskService Service { get; set; }
+        [Inject] public IState<DatabaseConnectionState> DatabaseConnectionState { get; set; }
+        [Inject] public IState<LocalSourceConnectionState> LocalSourceConnectionState { get; set; }
+        [Inject] public IState<LastFmConnectionState> LastFmConnectionState { get; set; }
 
         [Parameter] public List<StartupTask> Tasks { get; set; }
 
@@ -20,8 +25,26 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected override void OnInitialized()
         {
-            SubscribeToAction<StartupTaskProgressAction>(OnSubTaskProgressed);
+            DatabaseConnectionState.StateChanged += DatabaseConnectionState_StateChanged;
+            LastFmConnectionState.StateChanged += LastFmConnectionState_StateChanged;
+            LocalSourceConnectionState.StateChanged += LocalSourceConnectionState_StateChanged;
+
             base.OnInitialized();
+        }
+
+        private void DatabaseConnectionState_StateChanged(object sender, EventArgs e)
+        {
+            OnSubTaskProgressed(Connector.Database, DatabaseConnectionState.Value.State, DatabaseConnectionState.Value.Message);
+        }
+
+        private void LastFmConnectionState_StateChanged(object sender, EventArgs e)
+        {
+            OnSubTaskProgressed(Connector.LastFm, LastFmConnectionState.Value.State, LastFmConnectionState.Value.Message);
+        }
+
+        private void LocalSourceConnectionState_StateChanged(object sender, EventArgs e)
+        {
+            OnSubTaskProgressed(Connector.Local, LocalSourceConnectionState.Value.State, LocalSourceConnectionState.Value.Message);
         }
 
         protected override async Task OnParametersSetAsync()
@@ -32,16 +55,16 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             await OnStart();
         }
 
-        private void OnSubTaskProgressed(StartupTaskProgressAction action)
+        private void OnSubTaskProgressed(Connector connector, TaskState state, string message)
         {
-            var task = SubTasks[action.Connector];
-            task.Message = action.Message;
-            task.State = action.State;
+            var task = SubTasks[connector];
+            task.Message = message;
+            task.State = state;
             StateHasChanged();
 
             if (Ended && !Errored)
             {
-               // OnClose();
+                OnClose();
             }
         }
 

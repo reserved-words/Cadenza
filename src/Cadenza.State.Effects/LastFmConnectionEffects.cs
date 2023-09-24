@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Events;
-using Cadenza.Web.Common.Interfaces.Store;
+﻿using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.Common.Tasks;
 using Cadenza.Web.LastFM.Interfaces;
 using Cadenza.Web.LastFM.Settings;
@@ -28,7 +27,6 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmConnectRequest))]
     public async Task HandleLastFmConnectRequest(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Checking if session key already exists", TaskState.Running));
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
         if (sessionKey != null && !string.IsNullOrEmpty(sessionKey.Value) && !sessionKey.IsExpired)
         {
@@ -45,9 +43,7 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmFetchTokenRequest))]
     public async Task HandleLastFmFetchTokenRequest(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Fetching token URL", TaskState.Running));
         var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Navigating to token URL", TaskState.Running));
         await _navigation.OpenNewTab(authUrl);
         dispatcher.Dispatch(new LastFmFetchSessionKeyRequest());
     }
@@ -55,7 +51,6 @@ public class LastFmConnectionEffects
     [EffectMethod]
     public async Task HandleLastFmFetchTokenResult(LastFmFetchTokenResult action, IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Saving token", TaskState.Running));
         await _store.SetValue(StoreKey.LastFmToken, action.Token);
         // No point dispatching any actions here if this happens in a new tab?
         // Could do in same tab - any reason not to?
@@ -65,7 +60,6 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmFetchSessionKeyRequest))]
     public async Task HandleLastFmFetchSessionKeyRequest(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Awaiting token", TaskState.Running));
         var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60);
 
         if (token == null)
@@ -73,7 +67,6 @@ public class LastFmConnectionEffects
 
         await _store.Clear(StoreKey.LastFmToken);
 
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Fetching session key", TaskState.Running));
         var sessionKey = await _authoriser.CreateSession(token.Value);
 
         dispatcher.Dispatch(new LastFmFetchSessionKeyResult(sessionKey));
@@ -82,7 +75,6 @@ public class LastFmConnectionEffects
     [EffectMethod]
     public async Task HandleLastFmFetchSessionKeyResult(LastFmFetchSessionKeyResult action, IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Saving session key", TaskState.Running));
         await _store.SetValue(StoreKey.LastFmSessionKey, action.SessionKey);
         dispatcher.Dispatch(new LastFmConnectedAction());
     }
@@ -90,12 +82,10 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmConnectedAction))]
     public Task HandleLastFmConnectedAction(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Fetching Last.FM data", TaskState.Running));
         dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
         dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(HistoryPeriod.Week));
         dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(HistoryPeriod.Week));
         dispatcher.Dispatch(new FetchPlayHistoryTracksRequest(HistoryPeriod.Week));
-        dispatcher.Dispatch(new StartupTaskProgressAction(Connector.LastFm, "Connection succeeded", TaskState.Completed));
         return Task.CompletedTask;
     }
 }
