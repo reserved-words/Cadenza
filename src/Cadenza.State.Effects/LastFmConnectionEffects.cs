@@ -30,7 +30,7 @@ public class LastFmConnectionEffects
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
         if (sessionKey != null && !string.IsNullOrEmpty(sessionKey.Value) && !sessionKey.IsExpired)
         {
-            dispatcher.Dispatch(new LastFmConnectedAction());
+            dispatcher.Dispatch(new LastFmFetchSessionKeyResult(sessionKey.Value));
         }
         else
         {
@@ -65,8 +65,6 @@ public class LastFmConnectionEffects
         if (token == null)
             throw new Exception("No token received - need to authenticate on Last.FM website");
 
-        await _store.Clear(StoreKey.LastFmToken);
-
         var sessionKey = await _authoriser.CreateSession(token.Value);
 
         dispatcher.Dispatch(new LastFmFetchSessionKeyResult(sessionKey));
@@ -75,6 +73,7 @@ public class LastFmConnectionEffects
     [EffectMethod]
     public async Task HandleLastFmFetchSessionKeyResult(LastFmFetchSessionKeyResult action, IDispatcher dispatcher)
     {
+        await _store.Clear(StoreKey.LastFmToken);
         await _store.SetValue(StoreKey.LastFmSessionKey, action.SessionKey);
         dispatcher.Dispatch(new LastFmConnectedAction());
     }

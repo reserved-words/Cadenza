@@ -44,13 +44,14 @@ public static class LastFmConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(LastFmFetchSessionKeyResult))]
-    public static LastFmConnectionState ReduceLastFmFetchSessionKeyResult(LastFmConnectionState state)
+    [ReducerMethod]
+    public static LastFmConnectionState ReduceLastFmFetchSessionKeyResult(LastFmConnectionState state, LastFmFetchSessionKeyResult action)
     {
         return state with
         {
             State = TaskState.Running,
-            Message = "Saving session key"
+            Message = "Saving session key",
+            SessionKey = action.SessionKey
         };
     }
 
