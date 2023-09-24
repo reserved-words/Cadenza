@@ -12,37 +12,31 @@ internal class LongRunningTaskService : ILongRunningTaskService
         _dispatcher = dispatcher;
     }
 
-    public async Task RunTasks(TaskGroup taskGroup, CancellationToken cancellationToken)
+    public async Task RunTasks(TaskGroup taskGroup)
     {
         try
         {
             if (taskGroup.PreTask != null)
             {
-                Update(TaskState.Starting, cancellationToken);
+                Update(TaskState.Starting);
                 await taskGroup.PreTask();
             }
 
-            Update(TaskState.Running, cancellationToken);
+            Update(TaskState.Running);
 
             var tasks = new List<Task>();
 
             foreach (var task in taskGroup.Tasks)
             {
-                tasks.Add(PerformTask(task, cancellationToken));
+                tasks.Add(PerformTask(task));
             }
 
             await Task.WhenAll(tasks).ContinueWith(parentTask =>
             {
-                if (parentTask.IsCanceled)
-                {
-                    Console.WriteLine("Parent task cancelled");
-                    Update(TaskState.Cancelling, CancellationToken.None);
-                    Update(TaskState.Cancelled, CancellationToken.None);
-                }
-                else if (!tasks.Any(t => t.IsFaulted))
+                if (!tasks.Any(t => t.IsFaulted))
                 {
                     Console.WriteLine("All tasks succeeded");
-                    Update(TaskState.Completed, CancellationToken.None);
+                    Update(TaskState.Completed);
                 }
                 else
                 {
@@ -58,29 +52,22 @@ internal class LongRunningTaskService : ILongRunningTaskService
 
                     if (tasks.All(t => t.IsFaulted))
                     {
-                        Update(TaskState.Errored, CancellationToken.None);
+                        Update(TaskState.Errored);
                     }
                     else
                     {
-                        Update(TaskState.CompletedWithErrors, CancellationToken.None);
+                        Update(TaskState.CompletedWithErrors);
                     }
                 }
-            }, cancellationToken);
-        }
-        catch (OperationCanceledException)
-        {
-            Update(TaskState.Cancelling, CancellationToken.None);
-            // Add any cancellation tasks
-            Update(TaskState.Cancelled, CancellationToken.None);
+            });
         }
         catch (Exception)
         {
-            // Add any cancellation tasks
-            Update(TaskState.Errored, CancellationToken.None);
+            Update(TaskState.Errored);
         }
     }
 
-    private async Task PerformTask(SubTask task, CancellationToken cancellationToken)
+    private async Task PerformTask(SubTask task)
     {
         try
         {
@@ -89,7 +76,7 @@ internal class LongRunningTaskService : ILongRunningTaskService
                 var isTaskNeeded = await task.CheckStep.Task();
                 if (!isTaskNeeded)
                 {
-                    Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
+                    Update(task.Id, "Completed", TaskState.Completed);
                     task.OnCompleted();
                     return;
                 }
@@ -99,24 +86,19 @@ internal class LongRunningTaskService : ILongRunningTaskService
 
             foreach (var step in task.Steps)
             {
-                Update(task.Id, step.Caption, TaskState.Running, cancellationToken);
-                result = await step.Task(result, cancellationToken);
+                Update(task.Id, step.Caption, TaskState.Running);
+                result = await step.Task(result);
             }
 
-            Update(task.Id, "Completed", TaskState.Completed, CancellationToken.None);
+            Update(task.Id, "Completed", TaskState.Completed);
             if (task.OnCompleted != null)
             {
                 task.OnCompleted();
             }
         }
-        catch (OperationCanceledException)
-        {
-            Update(task.Id, "Cancelled", TaskState.Cancelled, CancellationToken.None);
-            throw;
-        }
         catch (Exception ex)
         {
-            Update(task.Id, ex.Message, TaskState.Errored, CancellationToken.None);
+            Update(task.Id, ex.Message, TaskState.Errored);
             if (task.OnError != null)
             {
                 task.OnError(ex);
@@ -125,15 +107,13 @@ internal class LongRunningTaskService : ILongRunningTaskService
         }
     }
 
-    private void Update(TaskState state, CancellationToken cancellationToken)
+    private void Update(TaskState state)
     {
-        cancellationToken.ThrowIfCancellationRequested();
         _dispatcher.Dispatch(new TaskGroupProgressedAction(state.GetDisplayName(), state));
     }
 
-    private void Update(string id, string message, TaskState state, CancellationToken cancellationToken)
+    private void Update(string id, string message, TaskState state)
     {
-        cancellationToken.ThrowIfCancellationRequested();
         _dispatcher.Dispatch(new SubTaskProgressedAction(id, message, state));
     }
 }

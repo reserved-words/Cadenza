@@ -40,9 +40,9 @@ internal class LastFmConnector : IConnector
         subTask.AddSteps(
             "Getting auth URL",
             "Saving session key",
-            (ct) => GetAuthUrl(),
-            (sk, ct) => CreateSession(sk),
-            ("Authenticating", (url, ct) => Authorise(url, ct)));
+            () => GetAuthUrl(),
+            (sk) => CreateSession(sk),
+            ("Authenticating", (url) => Authorise(url)));
 
         return subTask;
     }
@@ -70,11 +70,11 @@ internal class LastFmConnector : IConnector
         return await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
     }
 
-    private async Task<string> Authorise(string authUrl, CancellationToken cancellationToken)
+    private async Task<string> Authorise(string authUrl)
     {
         await NavigateToNewTab(authUrl);
 
-        var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60, cancellationToken);
+        var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60);
 
         if (token == null)
             throw new Exception("No token received - need to authenticate on Last.FM website");

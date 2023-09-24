@@ -7,8 +7,6 @@ namespace Cadenza.Web.Components.Shared.Dialogs
         [Inject] public ILongRunningTaskService Service { get; set; }
 
         [Parameter] public Func<TaskGroup> TaskGroupFactory { get; set; }
-        [Parameter] public bool AutoStart { get; set; }
-        [Parameter] public string StartPromptText { get; set; }
 
         public bool Started => State.Started();
         public bool InProgress => State.InProgress();
@@ -19,13 +17,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
         public string ProgressMessage { get; set; }
         public TaskState State { get; set; }
 
-        private Guid _taskGroupProgressSubscriptionId = Guid.Empty;
-        private Guid _subTaskProgressSubscriptionId = Guid.Empty;
-
         public Dictionary<string, SubTaskProgress> SubTasks { get; set; } = new Dictionary<string, SubTaskProgress>();
-
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
 
         protected override void OnInitialized()
         {
@@ -39,10 +31,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             if (Started)
                 return;
 
-            if (AutoStart)
-            {
-                await OnStart();
-            }
+            await OnStart();
         }
 
         private void OnTaskGroupProgressed(TaskGroupProgressedAction action)
@@ -76,16 +65,7 @@ namespace Cadenza.Web.Components.Shared.Dialogs
                     Message = ""
                 });
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
-            await Service.RunTasks(taskGroup, _cancellationToken);
-        }
-
-        protected void OnCancel()
-        {
-            State = TaskState.Cancelling;
-            ProgressMessage = "Cancelling";
-            _cancellationTokenSource.Cancel();
+            await Service.RunTasks(taskGroup);
         }
 
         protected void OnClose()

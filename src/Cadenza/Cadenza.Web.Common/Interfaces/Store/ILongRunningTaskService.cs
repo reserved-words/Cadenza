@@ -2,5 +2,5 @@
 
 public interface ILongRunningTaskService
 {
-    Task RunTasks(TaskGroup taskGroup, CancellationToken cancellationToken);
+    Task RunTasks(TaskGroup taskGroup);
 }

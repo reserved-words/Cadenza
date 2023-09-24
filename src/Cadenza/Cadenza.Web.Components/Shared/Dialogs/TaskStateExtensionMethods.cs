@@ -11,14 +11,12 @@
         {
             return state == TaskState.Starting
                 || state == TaskState.Running
-                || state == TaskState.Completing
-                || state == TaskState.Cancelling;
+                || state == TaskState.Completing;
         }
 
         public static bool Ended(this TaskState state)
         {
-            return state == TaskState.Cancelled
-                || state == TaskState.Errored
+            return state == TaskState.Errored
                 || state == TaskState.Completed
                 || state == TaskState.CompletedWithErrors;
         }

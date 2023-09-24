@@ -7,9 +7,7 @@ public enum TaskState
     Starting,
     Running,
     Completing,
-    Cancelling,
 
-    Cancelled,
     Completed,
     Errored,
     [Display(Name = "Completed with errors")]

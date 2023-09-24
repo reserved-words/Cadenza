@@ -2,20 +2,18 @@
 
 internal class MudProgressDialogService : IProgressDialogService
 {
-    private readonly MudBlazor.IDialogService _dialogService;
+    private readonly IDialogService _dialogService;
 
-    public MudProgressDialogService(MudBlazor.IDialogService dialogService)
+    public MudProgressDialogService(IDialogService dialogService)
     {
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run(Func<TaskGroup> taskGroupFactory, string title, bool autoStart, string startPromptText = null)
+    public async Task<bool> Run(Func<TaskGroup> taskGroupFactory, string title)
     {
         var dialogParameters = new DialogParameters
         {
-            { nameof(ProgressDialog.TaskGroupFactory), taskGroupFactory },
-            { nameof(ProgressDialog.AutoStart), autoStart },
-            { nameof(ProgressDialog.StartPromptText), startPromptText }
+            { nameof(ProgressDialog.TaskGroupFactory), taskGroupFactory }
         };
 
         var dialogReference = _dialogService.Show<ProgressDialog>(title, dialogParameters, new DialogOptions

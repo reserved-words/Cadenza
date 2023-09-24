@@ -13,16 +13,16 @@ internal class Store : IAppStore
         _converter = converter;
     }
 
-    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds, CancellationToken cancellationToken)
+    public async Task<StoredValue<T>> AwaitValue<T>(StoreKey storeKey, int timeoutSeconds)
     {
         var startTime = DateTime.Now;
         var endTime = startTime.AddSeconds(timeoutSeconds);
 
         var token = await GetValue<T>(storeKey);
 
-        while (token == null && DateTime.Now < endTime && !cancellationToken.IsCancellationRequested)
+        while (token == null && DateTime.Now < endTime)
         {
-            await Task.Delay(500, cancellationToken);
+            await Task.Delay(500);
             token = await GetValue<T>(storeKey);
         }
 

@@ -9,7 +9,7 @@ public class SubTask
     public Action<Exception> OnError { get; set; }
     public Action OnCompleted { get; set; }
 
-    public void AddStep(string caption, Func<object, CancellationToken, Task<object>> task)
+    public void AddStep(string caption, Func<object, Task<object>> task)
     {
         Steps.Add(new TaskStep { Caption = caption, Task = task });
     }
@@ -19,7 +19,7 @@ public class SubTask
         Steps.Add(new TaskStep
         {
             Caption = caption,
-            Task = new Func<object, CancellationToken, Task<object>>(async (o, ct) =>
+            Task = new Func<object, Task<object>>(async (o) =>
             {
                 await task();
                 return true;
@@ -30,26 +30,26 @@ public class SubTask
     public void AddSteps(
         string firstStep,
         string lastStep,
-        Func<CancellationToken, Task<string>> firstTask,
-        Func<string, CancellationToken, Task> lastTask,
-        params (string Caption, Func<string, CancellationToken, Task<string>> Task)[] intermediateSteps)
+        Func<Task<string>> firstTask,
+        Func<string, Task> lastTask,
+        params (string Caption, Func<string, Task<string>> Task)[] intermediateSteps)
     {
-        AddStep(firstStep, async (o1, ct) =>
+        AddStep(firstStep, async (o1) =>
         {
-            return await firstTask(ct);
+            return await firstTask();
         });
 
         foreach (var step in intermediateSteps)
         {
-            AddStep(step.Caption, async (o, ct) =>
+            AddStep(step.Caption, async (o) =>
             {
-                return await step.Task((string)o, ct);
+                return await step.Task((string)o);
             });
         }
 
-        AddStep(lastStep, async (o3, ct) =>
+        AddStep(lastStep, async (o3) =>
         {
-            await lastTask((string)o3, ct);
+            await lastTask((string)o3);
             return null;
         });
     }
