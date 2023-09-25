@@ -1,9 +1,13 @@
 ﻿@using Cadenza.State.Interfaces;
 @using Cadenza.State.Store;
 
+@inherits FluxorComponent
+
+@typeparam T where T : IConnectionState
+
 <MudContainer Class="mx-0 my-2 pa-0">
-    <MudText Typo=@Typo.body1>@ConnectionState.Title</MudText>
-    <MudText Typo=@Typo.body2>@ConnectionState.Message</MudText>
+    <MudText Typo=@Typo.body1>@Title</MudText>
+    <MudText Typo=@Typo.body2>@Message</MudText>
     <MudProgressLinear Indeterminate="@Indeterminate"
                        Value="@Progress"
                        Color="@Color" />
@@ -11,18 +15,34 @@
 
 @code 
 {
-    [Parameter] public IConnectionState ConnectionState { get; set; }
+    [Inject] public IState<T> ConnectionState { get; set; }
 
-    private bool Indeterminate => ConnectionState.State == TaskState.Running;
+    protected override void OnInitialized()
+    {
+        ConnectionState.StateChanged += ConnectionState_StateChanged;
+        base.OnInitialized();
+    }
+
+    private void ConnectionState_StateChanged(object sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
+
+
+    private TaskState State => ConnectionState.Value.State;
+    private string Title => ConnectionState.Value.Title;
+    private string Message => ConnectionState.Value.Message;
+
+    private bool Indeterminate => State == TaskState.Running;
     
-    private int Progress => ConnectionState.State == TaskState.Errored 
-        || ConnectionState.State == TaskState.Completed 
+    private int Progress => State == TaskState.Errored
+        || State == TaskState.Completed
             ? 100 
             : 0;
 
-    private Color Color => ConnectionState.State == TaskState.Errored 
+    private Color Color => State == TaskState.Errored
         ? Color.Error 
-        : ConnectionState.State == TaskState.Completed 
+        : State == TaskState.Completed
         ? Color.Success 
         : Color.Info;
 }

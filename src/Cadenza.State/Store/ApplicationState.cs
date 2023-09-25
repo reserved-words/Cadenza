@@ -1,7 +1,7 @@
 ﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record ApplicationState(bool StartedUp, bool Success)
+public record ApplicationState(bool Started)
 {
-    private static ApplicationState Init() => new ApplicationState(false, true);
+    private static ApplicationState Init() => new ApplicationState(false);
 }

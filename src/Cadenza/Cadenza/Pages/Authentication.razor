@@ -25,7 +25,6 @@
 
 
     [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IState<ApplicationState> ApplicationState { get; set; }
     [Inject] public IOptions<AuthenticationSettings> AuthSettings { get; set; }
 
     [Parameter] public string Action { get; set; }
@@ -36,8 +35,7 @@
 
     protected override void OnInitialized()
     {
-        ApplicationState.StateChanged += ApplicationState_StateChanged;
-
+        SubscribeToAction<ApplicationStartedAction>(OnApplicationStarted);
         base.OnInitialized();
     }
 
@@ -49,12 +47,9 @@
         }
     }
 
-    private void ApplicationState_StateChanged(object sender, EventArgs e)
+    private void OnApplicationStarted(ApplicationStartedAction action)
     {
-        if (ApplicationState.Value.StartedUp && ApplicationState.Value.Success)
-        {
-            Navigation.NavigateTo("/");
-        }
+        Navigation.NavigateTo("/");
     }
 
     private string GetLogOutUrl()

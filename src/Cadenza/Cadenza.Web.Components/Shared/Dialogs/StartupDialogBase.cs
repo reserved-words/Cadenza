@@ -1,5 +1,4 @@
 ﻿using Cadenza.State.Actions;
-using Cadenza.State.Store;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Dialogs
@@ -7,9 +6,6 @@ namespace Cadenza.Web.Components.Shared.Dialogs
     public class StartupDialogBase : DialogBase
     {
         [Inject] public IDispatcher Dispatcher { get; set; }
-        [Inject] public IState<DatabaseConnectionState> DatabaseConnectionState { get; set; }
-        [Inject] public IState<LocalSourceConnectionState> LocalSourceConnectionState { get; set; }
-        [Inject] public IState<LastFmConnectionState> LastFmConnectionState { get; set; }
 
         protected bool Started;
 
@@ -17,21 +13,21 @@ namespace Cadenza.Web.Components.Shared.Dialogs
 
         protected override void OnInitialized()
         {
-            AddConnector(Connector.LastFm, new LastFmConnectRequest(), LastFmConnectionState);
-            AddConnector(Connector.Database, new DatabaseConnectRequest(), DatabaseConnectionState);
-            AddConnector(Connector.Local, new LocalSourceConnectRequest(), LocalSourceConnectionState);
+            SubscribeToAction<ApplicationStartedAction>(OnApplicationStarted);
+            AddConnector(Connector.LastFm, new LastFmConnectRequest());
+            AddConnector(Connector.Database, new DatabaseConnectRequest());
+            AddConnector(Connector.Local, new LocalSourceConnectRequest());
             base.OnInitialized();
         }
 
-        private void AddConnector<T>(Connector connector, object initialAction, IState<T> state)
+        private void AddConnector(Connector connector, object initialAction)
         {
             _tasks.Add(new StartupTask(connector, initialAction));
-            state.StateChanged += OnConnectorStateChanged;
         }
 
-        private void OnConnectorStateChanged(object sender, EventArgs e)
+        private void OnApplicationStarted(ApplicationStartedAction action)
         {
-            OnSubTaskProgressed();
+            Submit();
         }
 
         protected override void OnParametersSet()
@@ -44,18 +40,6 @@ namespace Cadenza.Web.Components.Shared.Dialogs
             foreach (var task in _tasks)
             {
                 Dispatcher.Dispatch(task.InitialAction);
-            }
-        }
-
-        private void OnSubTaskProgressed()
-        {
-            StateHasChanged();
-
-            if (DatabaseConnectionState.Value.State == TaskState.Completed
-                && LastFmConnectionState.Value.State == TaskState.Completed
-                && LocalSourceConnectionState.Value.State == TaskState.Completed)
-            {
-                // Submit();
             }
         }
     }

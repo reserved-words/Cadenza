@@ -2,13 +2,12 @@
 
 public static class ApplicationReducers
 {
-    [ReducerMethod]
-    public static ApplicationState ReduceApplicationStartedAction(ApplicationState state, ApplicationStartedAction action) 
+    [ReducerMethod(typeof(ApplicationStartedAction))]
+    public static ApplicationState ReduceApplicationStartedAction(ApplicationState state) 
     {
         return state with
         {
-            StartedUp = true,
-            Success = action.Success
+            Started = true
         };
     }
 }

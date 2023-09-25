@@ -68,7 +68,7 @@
 
     protected override void OnParametersSet()
     {
-        if (!ApplicationState.Value.StartedUp)
+        if (!ApplicationState.Value.Started)
         {
             Dispatcher.Dispatch(new ApplicationStartRequest());
         }
