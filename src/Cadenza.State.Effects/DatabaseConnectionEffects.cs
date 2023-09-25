@@ -18,7 +18,6 @@ public class DatabaseConnectionEffects
     [EffectMethod(typeof(DatabaseConnectRequest))]
     public async Task HandleDatabaseConnectRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         try
         {
             var connectionUrl = _apiSettings.Value.Endpoints.Connect;
@@ -34,7 +33,6 @@ public class DatabaseConnectionEffects
     [EffectMethod(typeof(DatabasePopulateRequest))]
     public async Task HandleDatabasePopulateRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         try
         {
             var populateUrl = _apiSettings.Value.Endpoints.Populate;

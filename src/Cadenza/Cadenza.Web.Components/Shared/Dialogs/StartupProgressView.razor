@@ -16,19 +16,6 @@
 {
     [Inject] public IState<T> ConnectionState { get; set; }
 
-    [Parameter] public T TState { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ConnectionState.StateChanged += ConnectionState_StateChanged;
-        base.OnInitialized();
-    }
-
-    private void ConnectionState_StateChanged(object sender, EventArgs e)
-    {
-        StateHasChanged();
-    }
-
     private TaskState State => ConnectionState.Value.State;
     private string Title => ConnectionState.Value.Title;
     private string Message => ConnectionState.Value.Message;

@@ -18,7 +18,6 @@ public class LocalSourceConnectionEffects
     [EffectMethod(typeof(LocalSourceConnectRequest))]
     public async Task HandleLocalSourceConnectRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         try
         {
             await _httpHelper.Get(_apiSettings.Value.Endpoints.Connect);

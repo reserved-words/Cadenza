@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Common.Tasks;
 using Cadenza.Web.LastFM.Interfaces;
 using Cadenza.Web.LastFM.Settings;
 using Microsoft.Extensions.Options;
@@ -27,7 +26,6 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmConnectRequest))]
     public async Task HandleLastFmConnectRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         var sessionKey = await _store.GetValue<string>(StoreKey.LastFmSessionKey);
         if (sessionKey != null && !string.IsNullOrEmpty(sessionKey.Value) && !sessionKey.IsExpired)
         {
@@ -44,7 +42,6 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmFetchTokenRequest))]
     public async Task HandleLastFmFetchTokenRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
         await _navigation.OpenNewTab(authUrl);
         dispatcher.Dispatch(new LastFmFetchSessionKeyRequest());
@@ -63,7 +60,6 @@ public class LastFmConnectionEffects
     [EffectMethod(typeof(LastFmFetchSessionKeyRequest))]
     public async Task HandleLastFmFetchSessionKeyRequest(IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60);
 
         if (token == null)
@@ -77,7 +73,6 @@ public class LastFmConnectionEffects
     [EffectMethod]
     public async Task HandleLastFmFetchSessionKeyResult(LastFmFetchSessionKeyResult action, IDispatcher dispatcher)
     {
-        await Task.Delay(5000);
         await _store.Clear(StoreKey.LastFmToken);
         await _store.SetValue(StoreKey.LastFmSessionKey, action.SessionKey);
         dispatcher.Dispatch(new LastFmConnectedAction());

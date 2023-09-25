@@ -1,5 +1,3 @@
-﻿using Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Model;
 
-namespace Cadenza.Web.Common.Model;
-
-public record ConnectionStartupParameter(IConnectionState State, object ConnectRequest);
+public record ConnectionStartupParameter(object ConnectRequest);
