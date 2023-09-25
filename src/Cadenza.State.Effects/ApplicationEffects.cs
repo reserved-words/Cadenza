@@ -22,7 +22,14 @@ public class ApplicationEffects
     [EffectMethod(typeof(ApplicationStartRequest))]
     public async Task HandleApplicationStartRequest(IDispatcher dispatcher)
     {
-        await _dialogService.Run();
+        var connections = new List<ConnectionStartupParameter>
+        {
+            new ConnectionStartupParameter(DatabaseConnectionState.Init(), new DatabaseConnectRequest()),
+            new ConnectionStartupParameter(LocalSourceConnectionState.Init(), new LocalSourceConnectRequest()),
+            new ConnectionStartupParameter(LastFmConnectionState.Init(), new LastFmConnectRequest())
+        };
+
+        await _dialogService.Run(connections);
     }
 
     [EffectMethod(typeof(DatabaseConnectedAction))]

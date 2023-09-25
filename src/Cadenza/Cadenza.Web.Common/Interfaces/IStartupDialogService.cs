@@ -2,5 +2,5 @@
 
 public interface IStartupDialogService
 {
-    Task<bool> Run();
+    Task<bool> Run(List<ConnectionStartupParameter> connections);
 }

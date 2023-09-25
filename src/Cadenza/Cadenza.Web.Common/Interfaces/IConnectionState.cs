@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.State.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IConnectionState
 {

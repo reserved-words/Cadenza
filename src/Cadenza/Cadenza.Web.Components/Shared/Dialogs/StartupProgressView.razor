@@ -1,5 +1,4 @@
-﻿@using Cadenza.State.Interfaces;
-@using Cadenza.State.Store;
+﻿@using Cadenza.State.Store;
 
 @inherits FluxorComponent
 
@@ -17,6 +16,8 @@
 {
     [Inject] public IState<T> ConnectionState { get; set; }
 
+    [Parameter] public T TState { get; set; }
+
     protected override void OnInitialized()
     {
         ConnectionState.StateChanged += ConnectionState_StateChanged;
@@ -27,7 +28,6 @@
     {
         StateHasChanged();
     }
-
 
     private TaskState State => ConnectionState.Value.State;
     private string Title => ConnectionState.Value.Title;

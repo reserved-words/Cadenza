@@ -2,13 +2,14 @@
 
 @inherits StartupDialogBase
 
-@if (Started)
-{
-    <MudDialog>
-        <DialogContent>
-            <StartupProgressView T="@LastFmConnectionState" />
-            <StartupProgressView T="@DatabaseConnectionState" />
-            <StartupProgressView T="@LocalSourceConnectionState" />
-        </DialogContent>
-    </MudDialog>
-}
+<MudDialog>
+    <DialogContent>
+        @* @foreach (var connection in Connections)
+        {
+            <StartupProgressView TState="@connection.State" />
+        } *@
+        <StartupProgressView T="@LastFmConnectionState" />
+        <StartupProgressView T="@DatabaseConnectionState" />
+        <StartupProgressView T="@LocalSourceConnectionState" />
+    </DialogContent>
+</MudDialog>

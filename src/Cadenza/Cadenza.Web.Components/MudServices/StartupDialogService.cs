@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.MudServices;
+﻿using Cadenza.Web.Common.Model;
+
+namespace Cadenza.Web.Components.MudServices;
 
 internal class StartupDialogService : IStartupDialogService
 {
@@ -9,11 +11,11 @@ internal class StartupDialogService : IStartupDialogService
         _dialogService = dialogService;
     }
 
-    public async Task<bool> Run()
+    public async Task<bool> Run(List<ConnectionStartupParameter> connections)
     {
         var dialogParameters = new DialogParameters
         {
-            //{ nameof(StartupDialog.Tasks), tasks }
+            { nameof(StartupDialog.Connections), connections }
         };
 
         var dialogReference = _dialogService.Show<StartupDialog>("Starting application", dialogParameters, new DialogOptions

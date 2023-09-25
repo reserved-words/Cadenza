@@ -1,4 +1,5 @@
 ﻿using Cadenza.State.Actions;
+using Cadenza.Web.Common.Model;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Shared.Dialogs
@@ -7,40 +8,27 @@ namespace Cadenza.Web.Components.Shared.Dialogs
     {
         [Inject] public IDispatcher Dispatcher { get; set; }
 
-        protected bool Started;
+        [Parameter] public List<ConnectionStartupParameter> Connections { get; set; } = new();
 
-        private readonly List<StartupTask> _tasks = new();
 
         protected override void OnInitialized()
         {
             SubscribeToAction<ApplicationStartedAction>(OnApplicationStarted);
-            AddConnector(Connector.LastFm, new LastFmConnectRequest());
-            AddConnector(Connector.Database, new DatabaseConnectRequest());
-            AddConnector(Connector.Local, new LocalSourceConnectRequest());
             base.OnInitialized();
         }
 
-        private void AddConnector(Connector connector, object initialAction)
+        protected override void OnParametersSet()
         {
-            _tasks.Add(new StartupTask(connector, initialAction));
+            foreach (var connection in Connections)
+            {
+                Dispatcher.Dispatch(connection.ConnectRequest);
+            }
+            base.OnParametersSet();
         }
 
         private void OnApplicationStarted(ApplicationStartedAction action)
         {
             Submit();
-        }
-
-        protected override void OnParametersSet()
-        {
-            if (Started)
-                return;
-
-            Started = true;
-
-            foreach (var task in _tasks)
-            {
-                Dispatcher.Dispatch(task.InitialAction);
-            }
         }
     }
 }
