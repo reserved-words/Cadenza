@@ -52,9 +52,9 @@ public class ApplicationEffects
 
     private Task CheckIfAllConnected(IDispatcher dispatcher)
     {
-        if (_databaseConnectionState.Value.State == TaskState.Completed
-            && _lastFmConnectionState.Value.State == TaskState.Completed
-            && _localSourceConnectionState.Value.State == TaskState.Completed)
+        if (_databaseConnectionState.Value.State == ConnectionState.Connected
+            && _lastFmConnectionState.Value.State == ConnectionState.Connected
+            && _localSourceConnectionState.Value.State == ConnectionState.Connected)
         {
             dispatcher.Dispatch(new ApplicationStartedAction());
         }

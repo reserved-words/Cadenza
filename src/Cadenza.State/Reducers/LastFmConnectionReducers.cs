@@ -10,7 +10,7 @@ public static class LastFmConnectionReducers
         return state with
         {
             Title = "Connect to Last.FM",
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Connecting"
         };
     }
@@ -20,7 +20,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Fetching auth token"
         };
     }
@@ -30,7 +30,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Saving auth token"
         };
     }
@@ -40,7 +40,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Fetching session key"
         };
     }
@@ -50,7 +50,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Saving session key",
             SessionKey = action.SessionKey
         };
@@ -61,7 +61,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Errored,
+            State = ConnectionState.Failed,
             Message = "Errored"
         };
     }
@@ -71,7 +71,7 @@ public static class LastFmConnectionReducers
     {
         return state with
         {
-            State = TaskState.Completed,
+            State = ConnectionState.Connected,
             Message = "Connected"
         };
     }

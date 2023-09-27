@@ -10,7 +10,7 @@ public static class DatabaseConnectionReducers
         return state with
         {
             Title = "Connect to Database",
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Connecting"
         };
     }
@@ -20,7 +20,7 @@ public static class DatabaseConnectionReducers
     {
         return state with
         {
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Populating"
         };
     }
@@ -30,7 +30,7 @@ public static class DatabaseConnectionReducers
     {
         return state with
         {
-            State = TaskState.Errored,
+            State = ConnectionState.Failed,
             Message = "Errored"
         };
     }
@@ -40,7 +40,7 @@ public static class DatabaseConnectionReducers
     {
         return state with
         {
-            State = TaskState.Completed,
+            State = ConnectionState.Connected,
             Message = "Connected"
         };
     }

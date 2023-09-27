@@ -10,7 +10,7 @@ public static class LocalSourceConnectionReducers
         return state with
         {
             Title = "Connect to Local Library",
-            State = TaskState.Running,
+            State = ConnectionState.Connecting,
             Message = "Connecting"
         };
     }
@@ -20,7 +20,7 @@ public static class LocalSourceConnectionReducers
     {
         return state with
         {
-            State = TaskState.Errored,
+            State = ConnectionState.Failed,
             Message = "Errored"
         };
     }
@@ -30,7 +30,7 @@ public static class LocalSourceConnectionReducers
     {
         return state with
         {
-            State = TaskState.Completed,
+            State = ConnectionState.Connected,
             Message = "Connected"
         };
     }

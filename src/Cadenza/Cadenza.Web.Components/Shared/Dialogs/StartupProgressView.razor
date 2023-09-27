@@ -17,19 +17,19 @@
 
     private string Title => $"Connecting to {Connector}";
 
-    private TaskState State { get; set; }
+    private ConnectionState State { get; set; }
     private string Message { get; set; }
 
-    private bool Indeterminate => State == TaskState.Running;
+    private bool Indeterminate => State == ConnectionState.Connecting;
 
-    private int Progress => State == TaskState.Errored
-        || State == TaskState.Completed
+    private int Progress => State == ConnectionState.Failed
+        || State == ConnectionState.Connected
             ? 100
             : 0;
 
-    private Color Color => State == TaskState.Errored
+    private Color Color => State == ConnectionState.Failed
         ? Color.Error
-        : State == TaskState.Completed
+        : State == ConnectionState.Connected
         ? Color.Success
         : Color.Info;
 
