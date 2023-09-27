@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Core.Utilities;
+﻿using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
 
@@ -11,7 +10,6 @@ public static class Startup
             .AddUtilities();
 
         services
-            .AddTransient<IAppStore, Store>()
             .AddTransient<IImageFinder, ImageFinder>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
             .AddTransient<IUrl, Url>();
