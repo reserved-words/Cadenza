@@ -13,12 +13,9 @@
 
 @code 
 {
-    [Parameter] public Connector Connector { get; set; }
-
-    private string Title => $"Connecting to {Connector}";
-
-    private ConnectionState State { get; set; }
-    private string Message { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public ConnectionState State { get; set; }
+    [Parameter] public string Message { get; set; }
 
     private bool Indeterminate => State == ConnectionState.Connecting;
 
@@ -32,21 +29,4 @@
         : State == ConnectionState.Connected
         ? Color.Success
         : Color.Info;
-
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<ApplicationStartupProgressAction>(OnApplicationStartupProgress);
-        base.OnInitialized();
-    }
-
-    private void OnApplicationStartupProgress(ApplicationStartupProgressAction action)
-    {
-        if (Connector != action.Connector)
-            return;
-
-        State = action.State;
-        Message = action.Message;
-
-        StateHasChanged();
-    }
 }

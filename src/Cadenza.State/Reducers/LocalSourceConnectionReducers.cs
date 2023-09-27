@@ -15,13 +15,13 @@ public static class LocalSourceConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(LocalSourceConnectionErroredAction))]
-    public static LocalSourceConnectionState ReduceLocalSourceConnectionErroredAction(LocalSourceConnectionState state)
+    [ReducerMethod(typeof(LocalSourceConnectionFailedAction))]
+    public static LocalSourceConnectionState ReduceLocalSourceConnectionFailedAction(LocalSourceConnectionState state)
     {
         return state with
         {
             State = ConnectionState.Failed,
-            Message = "Errored"
+            Message = "Failed - see error log for details"
         };
     }
 

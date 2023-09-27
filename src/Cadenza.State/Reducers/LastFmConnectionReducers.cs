@@ -56,13 +56,13 @@ public static class LastFmConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(LastFmConnectionErroredAction))]
+    [ReducerMethod(typeof(LastFmConnectionFailedAction))]
     public static LastFmConnectionState ReduceLastFmConnectionErroredAction(LastFmConnectionState state)
     {
         return state with
         {
             State = ConnectionState.Failed,
-            Message = "Errored"
+            Message = "Failed - see error log for details"
         };
     }
 

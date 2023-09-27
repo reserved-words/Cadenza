@@ -1,6 +1,7 @@
 ﻿using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.LastFM.Interfaces;
 using Cadenza.Web.LastFM.Settings;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.State.Effects;
@@ -12,17 +13,18 @@ public class LastFmConnectionEffects
     private readonly IAuthoriser _authoriser;
     private readonly IOptions<LastFmApiSettings> _settings;
     private readonly INavigation _navigation;
+    private readonly ILogger<LastFmConnectionEffects> _logger;
 
-    public LastFmConnectionEffects(IAppStore store, IAuthoriser authoriser, IOptions<LastFmApiSettings> settings, INavigation navigation, IState<LastFmConnectionState> state)
+    public LastFmConnectionEffects(IAppStore store, IAuthoriser authoriser, IOptions<LastFmApiSettings> settings, INavigation navigation, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
     {
         _store = store;
         _authoriser = authoriser;
         _settings = settings;
         _navigation = navigation;
         _state = state;
+        _logger = logger;
     }
 
-    // TODO: Error handling
     // TODO: Handle expired session key / token - both if know expired and if error due to expired?
 
     [EffectMethod(typeof(LastFmConnectRequest))]
@@ -46,9 +48,17 @@ public class LastFmConnectionEffects
     public async Task HandleLastFmFetchTokenRequest(IDispatcher dispatcher)
     {
         DispatchProgressAction(dispatcher);
-        var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
-        await _navigation.OpenNewTab(authUrl);
-        dispatcher.Dispatch(new LastFmFetchSessionKeyRequest());
+        try
+        {
+            var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
+            await _navigation.OpenNewTab(authUrl);
+            dispatcher.Dispatch(new LastFmFetchSessionKeyRequest());
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to fetch Last.FM token");
+            dispatcher.Dispatch(new LastFmConnectionFailedAction());
+        }
     }
 
     [EffectMethod]
@@ -66,14 +76,22 @@ public class LastFmConnectionEffects
     public async Task HandleLastFmFetchSessionKeyRequest(IDispatcher dispatcher)
     {
         DispatchProgressAction(dispatcher);
-        var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60);
+        try
+        {
+            var token = await _store.AwaitValue<string>(StoreKey.LastFmToken, 60);
 
-        if (token == null)
-            throw new Exception("No token received - need to authenticate on Last.FM website");
+            if (token == null)
+                throw new Exception("No token received - need to authenticate on Last.FM website");
 
-        var sessionKey = await _authoriser.CreateSession(token.Value);
+            var sessionKey = await _authoriser.CreateSession(token.Value);
 
-        dispatcher.Dispatch(new LastFmFetchSessionKeyResult(sessionKey));
+            dispatcher.Dispatch(new LastFmFetchSessionKeyResult(sessionKey));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to fetch session key");
+            dispatcher.Dispatch(new LastFmConnectionFailedAction());
+        }
     }
 
     [EffectMethod]
@@ -83,6 +101,13 @@ public class LastFmConnectionEffects
         await _store.Clear(StoreKey.LastFmToken);
         await _store.SetValue(StoreKey.LastFmSessionKey, action.SessionKey);
         dispatcher.Dispatch(new LastFmConnectedAction());
+    }
+
+    [EffectMethod(typeof(LastFmConnectionFailedAction))]
+    public Task HandleLastFmConnectionFailedAction(IDispatcher dispatcher)
+    {
+        DispatchProgressAction(dispatcher);
+        return Task.CompletedTask;
     }
 
     [EffectMethod(typeof(LastFmConnectedAction))]
@@ -98,6 +123,6 @@ public class LastFmConnectionEffects
 
     private void DispatchProgressAction(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new ApplicationStartupProgressAction(Connector.LastFm, _state.Value.State, _state.Value.Message));
+        dispatcher.Dispatch(new ApplicationStartupProgressAction(ConnectionType.LastFm, _state.Value.State, _state.Value.Message));
     }
 }

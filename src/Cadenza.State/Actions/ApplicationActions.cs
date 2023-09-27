@@ -4,4 +4,4 @@ namespace Cadenza.State.Actions;
 
 public record ApplicationStartRequest();
 public record ApplicationStartedAction();
-public record ApplicationStartupProgressAction(Connector Connector, ConnectionState State, string Message);
+public record ApplicationStartupProgressAction(ConnectionType ConnectionType, ConnectionState State, string Message);

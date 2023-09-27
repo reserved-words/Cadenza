@@ -25,13 +25,13 @@ public static class DatabaseConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(DatabaseConnectionErroredAction))]
+    [ReducerMethod(typeof(DatabaseConnectionFailedAction))]
     public static DatabaseConnectionState ReduceDatabaseConnectionErroredAction(DatabaseConnectionState state)
     {
         return state with
         {
             State = ConnectionState.Failed,
-            Message = "Errored"
+            Message = "Failed - see error log for details"
         };
     }
 
