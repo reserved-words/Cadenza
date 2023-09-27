@@ -24,9 +24,9 @@ public class ApplicationEffects
     {
         var connections = new List<ConnectionStartupParameter>
         {
-            new ConnectionStartupParameter(new DatabaseConnectRequest()),
-            new ConnectionStartupParameter(new LocalSourceConnectRequest()),
-            new ConnectionStartupParameter(new LastFmConnectRequest())
+            new ConnectionStartupParameter(Connector.Database, new DatabaseConnectRequest()),
+            new ConnectionStartupParameter(Connector.Local, new LocalSourceConnectRequest()),
+            new ConnectionStartupParameter(Connector.LastFm, new LastFmConnectRequest())
         };
 
         await _dialogService.Run(connections);

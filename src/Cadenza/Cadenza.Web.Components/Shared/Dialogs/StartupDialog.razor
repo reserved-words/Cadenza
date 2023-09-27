@@ -4,10 +4,9 @@
 
 <MudDialog>
     <DialogContent>
-        @* TODO: Find a way to get this from parameter so that the view doesn't need to know which connectors are involved *@
-        @* The connector list should only be defined in one place - currently it's both here and in ApplicationEffects *@
-        <StartupProgressView T="@LastFmConnectionState" />
-        <StartupProgressView T="@DatabaseConnectionState" />
-        <StartupProgressView T="@LocalSourceConnectionState" />
+        @foreach (var connection in Connections)
+        {
+            <StartupProgressView Connector="@connection.Connector" />
+        }
     </DialogContent>
 </MudDialog>
