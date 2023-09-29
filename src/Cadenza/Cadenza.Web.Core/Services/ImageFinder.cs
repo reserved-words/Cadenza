@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Artist;
+﻿using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.Web.Core.Services;
 

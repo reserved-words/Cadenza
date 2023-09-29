@@ -2,7 +2,7 @@
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Library;
 
 global using Cadenza.Web.Common.Interfaces;
 

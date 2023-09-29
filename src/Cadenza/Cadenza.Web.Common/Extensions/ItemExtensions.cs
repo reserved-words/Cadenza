@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Common.Extensions;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Web.Common.Extensions;
 
 public static class ItemExtensions
 {

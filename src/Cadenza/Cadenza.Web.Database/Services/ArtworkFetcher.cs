@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Web.Database.Services;
 
 internal class ArtworkFetcher : IArtworkFetcher
 {

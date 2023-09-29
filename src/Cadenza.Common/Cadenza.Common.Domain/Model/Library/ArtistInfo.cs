@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model.Artist;
+﻿namespace Cadenza.Common.Domain.Model.Library;
 
 public class ArtistInfo : Artist
 {

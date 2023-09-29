@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model.Track;
+﻿namespace Cadenza.Common.Domain.Model.Library;
 
 public class Track
 {

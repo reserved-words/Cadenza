@@ -1,5 +1,6 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
+using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper

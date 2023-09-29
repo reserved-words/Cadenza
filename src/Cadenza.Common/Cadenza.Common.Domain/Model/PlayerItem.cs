@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Common.Domain.Model;
 
 public class PlayerItem
 {

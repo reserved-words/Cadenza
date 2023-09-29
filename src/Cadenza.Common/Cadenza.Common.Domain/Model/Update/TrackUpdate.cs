@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model.Update;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Common.Domain.Model.Update;
 
 public class TrackUpdate : ItemUpdate<TrackInfo>
 {

@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Album;
-using Cadenza.Common.Domain.Model.Artist;
+﻿using Cadenza.Common.Domain.Model.Library;
 using Cadenza.Common.Domain.Model.Results;
 using Cadenza.Web.Info.Interfaces;
 using Cadenza.Web.Info.Settings;

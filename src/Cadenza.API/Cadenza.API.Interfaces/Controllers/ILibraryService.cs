@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Interfaces.Controllers;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ILibraryService
 {

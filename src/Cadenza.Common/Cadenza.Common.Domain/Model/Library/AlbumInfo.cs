@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model.Album;
+﻿namespace Cadenza.Common.Domain.Model.Library;
 
 public class AlbumInfo : Album
 {

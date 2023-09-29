@@ -1,4 +1,6 @@
-﻿namespace Cadenza.State.Effects;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.State.Effects;
 
 public class PlayStatusEffects
 {

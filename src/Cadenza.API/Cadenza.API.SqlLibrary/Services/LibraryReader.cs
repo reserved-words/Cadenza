@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
+using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.SqlLibrary.Services;
 

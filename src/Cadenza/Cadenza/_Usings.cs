@@ -20,14 +20,11 @@ global using Microsoft.JSInterop;
 
 global using Cadenza.Web.Common.Extensions;
 
-global using Cadenza.Common.Domain.Model.Album;
 global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.Track;
-global using Cadenza.Common.Domain.Model.Updates;
+global using Cadenza.Common.Domain.Model.Library;
 global using Cadenza.Common.Domain.Model;
 
 global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.Artist;
 
 global using Cadenza.State.Actions;
 global using Cadenza.State.Store;

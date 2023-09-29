@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Components.ViewBases;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Components.ViewBases;
 
 public class ArtistViewBase : FluxorComponent
 {

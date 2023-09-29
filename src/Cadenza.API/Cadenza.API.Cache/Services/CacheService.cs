@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Cache.Services;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Cache.Services;
 
 internal class CacheService : ICacheService
 {

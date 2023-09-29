@@ -9,7 +9,7 @@ global using Cadenza.Web.Common.Model;
 
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Domain.Model.Track;
+global using Cadenza.Common.Domain.Model.Library;
 
 global using Cadenza.Common.Interfaces.Repositories;
 

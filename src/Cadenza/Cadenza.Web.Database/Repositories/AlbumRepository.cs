@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Repositories;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Web.Database.Repositories;
 
 internal class AlbumRepository : IAlbumRepository
 {

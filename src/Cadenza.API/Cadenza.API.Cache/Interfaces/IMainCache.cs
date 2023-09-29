@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Cache.Interfaces;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Cache.Interfaces;
 
 internal interface IMainCache
 {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

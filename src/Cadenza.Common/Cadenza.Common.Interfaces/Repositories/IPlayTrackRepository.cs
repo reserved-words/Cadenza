@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.Common.Interfaces.Repositories;
+﻿namespace Cadenza.Common.Interfaces.Repositories;
 
 public interface IPlayTrackRepository
 {

@@ -1,4 +1,5 @@
-﻿using Cadenza.State.Store;
+﻿using Cadenza.Common.Domain.Model.Library;
+using Cadenza.State.Store;
 using Fluxor;
 
 namespace Cadenza.Web.LastFM.Services;
