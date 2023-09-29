@@ -2,10 +2,10 @@
 
 public interface IPlayTrackService
 {
-    Task<List<PlayTrack>> GetPlayTracks();
-    Task<List<PlayTrack>> GetPlayTracksByAlbum(int id);
-    Task<List<PlayTrack>> GetPlayTracksByArtist(int id);
-    Task<List<PlayTrack>> GetPlayTracksByGenre(string id);
-    Task<List<PlayTrack>> GetPlayTracksByGrouping(int id);
-    Task<List<PlayTrack>> GetPlayTracksByTag(string id);
+    Task<List<int>> GetPlayTracks();
+    Task<List<int>> GetPlayTracksByAlbum(int id);
+    Task<List<int>> GetPlayTracksByArtist(int id);
+    Task<List<int>> GetPlayTracksByGenre(string id);
+    Task<List<int>> GetPlayTracksByGrouping(int id);
+    Task<List<int>> GetPlayTracksByTag(string id);
 }

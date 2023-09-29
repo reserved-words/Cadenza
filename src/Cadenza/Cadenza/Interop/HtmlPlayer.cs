@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Player;
-
-namespace Cadenza.Interop;
+﻿namespace Cadenza.Interop;
 
 internal class HtmlPlayer : IAudioPlayer
 {

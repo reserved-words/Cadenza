@@ -1,32 +1,29 @@
 ﻿
 @if (Item.Type == PlayerItemType.Album)
 {
-    <AlbumTab Id="@int.Parse(Item.Id)" />
+    <AlbumTab />
 }
 else if (Item.Type == PlayerItemType.Artist)
 {
-    <ArtistTab Id="@int.Parse(Item.Id)" />
+    <ArtistTab />
 }
 else if (Item.Type == PlayerItemType.Genre)
 {
-    <GenreTab Id="@Item.Id" />
+    <GenreTab />
 }
 else if (Item.Type == PlayerItemType.Grouping)
 {
-    <GroupingTab Grouping="@ItemAsGrouping" />
+    <GroupingTab />
 }
 else if (Item.Type == PlayerItemType.Tag)
 {
-    <TagTab Id="@Item.Id" />
+    <TagTab />
 }
 else if (Item.Type == PlayerItemType.Track)
 {
-    <TrackTab Id="@int.Parse(Item.Id)" />
+    <TrackTab />
 }
 
 @code {
-    [Parameter]
-    public ViewItem Item { get; set; }
-
-    private Grouping ItemAsGrouping => new Grouping(int.Parse(Item.Id), Item.Name);
+    [Parameter] public ViewItem Item { get; set; }
 }

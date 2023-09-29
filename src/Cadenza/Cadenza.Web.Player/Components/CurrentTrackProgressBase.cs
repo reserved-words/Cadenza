@@ -1,37 +1,14 @@
-﻿namespace Cadenza.Web.Player.Components;
+﻿using Cadenza.State.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
-public class CurrentTrackProgressBase : ComponentBase
+namespace Cadenza.Web.Player.Components;
+
+public class CurrentTrackProgressBase : FluxorComponent
 {
-    [Inject]
-    internal IMessenger Messenger { get; set; }
+    [Inject] private IState<PlayProgressState> PlayProgressState { get; set; }
 
-    public double Progress { get; set; }
-
-    public int SecondsPlayed { get; set; }
-
-    public int SecondsRemaining { get; set; }
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<TrackFinishedEventArgs>(OnTrackFinished);
-        Messenger.Subscribe<TrackProgressedEventArgs>(OnTrackProgressed);
-    }
-
-    private Task OnTrackFinished(object sender, TrackFinishedEventArgs e)
-    {
-        SecondsPlayed = 0;
-        SecondsRemaining = 0;
-        Progress = 0;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnTrackProgressed(object sender, TrackProgressedEventArgs e)
-    {
-        SecondsPlayed = e.SecondsPlayed;
-        SecondsRemaining = e.SecondsPlayed - e.TotalSeconds;
-        Progress = e.ProgressPercentage;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
+    public double Progress => PlayProgressState.Value.Progress;
+    public int SecondsPlayed => PlayProgressState.Value.SecondsPlayed;
+    public int SecondsRemaining => PlayProgressState.Value.SecondsRemaining;
 }

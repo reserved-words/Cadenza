@@ -1,6 +1,8 @@
-﻿namespace Cadenza.Web.Components.Shared.Dialogs;
+﻿using Fluxor.Blazor.Web.Components;
 
-public class DialogBase : ComponentBase
+namespace Cadenza.Web.Components.Shared.Dialogs;
+
+public class DialogBase : FluxorComponent
 {
     [CascadingParameter] protected MudDialogInstance MudDialog { get; set; }
 

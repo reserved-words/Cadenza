@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Track;
+﻿using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.Common.Interfaces.Repositories;
 

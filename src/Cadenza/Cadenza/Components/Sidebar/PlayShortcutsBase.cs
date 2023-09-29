@@ -1,8 +1,11 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Sidebar;
 
-public class PlayShortcutsBase : ComponentBase
+public class PlayShortcutsBase : FluxorComponent
 {
     [Parameter]
     public bool IsAppLoaded { get;set;}
@@ -11,10 +14,10 @@ public class PlayShortcutsBase : ComponentBase
     public IAdminRepository AdminRepository { get; set; }
 
     [Inject]
-    public IItemPlayer Player { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    //[Inject]
+    //public IState<ConnectorState> ConnectorState { get; set; }
 
     [Inject]
     public IHistoryFetcher History { get; set; }
@@ -25,10 +28,19 @@ public class PlayShortcutsBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Messenger.Subscribe<ConnectorEventArgs>(OnConnectorStatusChanged);
-        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
+        //ConnectorState.StateChanged += ConnectorState_StateChanged;
+
+        //TODO - what happens when playlist finishes
+        //Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
 
         Groupings = await AdminRepository.GetGroupingOptions();
+
+        await base.OnInitializedAsync();
+    }
+
+    private void ConnectorState_StateChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     protected override async Task OnParametersSetAsync()
@@ -39,40 +51,46 @@ public class PlayShortcutsBase : ComponentBase
         }
     }
 
-    private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
+    //private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
+    //{
+    //    if (e.Connector != Connector.Database)
+    //        return;
+
+    //    if (e.Status != ConnectorStatus.Connected)
+    //        return;
+
+    //    await UpdateRecentlyPlayedItems();
+    //}
+
+    // TODO: Update recently played items when playlist changes (could do on start and end if needed)
+
+    //private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
+    //{
+    //    await UpdateRecentlyPlayedItems();
+    //}
+
+    protected Task PlayLibrary()
     {
-        if (e.Connector != Connector.Database)
-            return;
-
-        if (e.Status != ConnectorStatus.Connected)
-            return;
-
-        await UpdateRecentlyPlayedItems();
+        Dispatcher.Dispatch(new PlayAllRequest());
+        return Task.CompletedTask;
     }
 
-    private async Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
+    protected Task PlayGrouping(Grouping grouping)
     {
-        await UpdateRecentlyPlayedItems();
+        Dispatcher.Dispatch(new PlayGroupingRequest(grouping));
+        return Task.CompletedTask;
     }
 
-    protected async Task PlayLibrary()
+    protected Task PlayRecentAlbum(RecentAlbum album)
     {
-        await Player.PlayAll();
+        Dispatcher.Dispatch(new PlayAlbumRequest(album.Id, 0));
+        return Task.CompletedTask;
     }
 
-    protected async Task PlayGrouping(Grouping grouping)
+    protected Task PlayRecentTag(string tag)
     {
-        await Player.PlayGrouping(grouping);
-    }
-
-    protected async Task PlayRecentAlbum(RecentAlbum album)
-    {
-        await Player.PlayAlbum(album.Id);
-    }
-
-    protected async Task PlayRecentTag(string tag)
-    {
-        await Player.PlayTag(tag);
+        Dispatcher.Dispatch(new PlayTagRequest(tag));
+        return Task.CompletedTask;
     }
 
     private async Task UpdateRecentlyPlayedItems()

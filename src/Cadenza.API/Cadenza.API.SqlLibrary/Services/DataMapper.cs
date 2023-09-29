@@ -1,5 +1,6 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
+using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
@@ -91,9 +92,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AlbumInfo MapAlbum(GetAlbumData album, List<GetDiscData> discs)
+    public AlbumDetails MapAlbum(GetAlbumData album, List<GetDiscData> discs)
     {
-        return new AlbumInfo
+        return new AlbumDetails
         {
             Id = album.Id,
             ArtistId = album.ArtistId,
@@ -118,9 +119,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public ArtistInfo MapArtist(GetArtistData artist)
+    public ArtistDetails MapArtist(GetArtistData artist)
     {
-        return new ArtistInfo
+        return new ArtistDetails
         {
             Id = artist.Id,
             Name = artist.Name,
@@ -133,9 +134,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public TrackInfo MapTrack(GetTrackData track)
+    public TrackDetails MapTrack(GetTrackData track)
     {
-        return new TrackInfo
+        return new TrackDetails
         {
             Source = track.SourceId,
             Id = track.Id,

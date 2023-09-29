@@ -1,26 +1,29 @@
 ﻿@inherits AlbumTabBase
 
-<TabGrid>
+@if (!Loading)
+{
+    <TabGrid>
 
-    <TabGridColumn sm="4" md="3">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <AlbumDetail Model="@Album">
-                <Toolbar>
-                    <AlbumToolbar Album="@Album" />
-                </Toolbar>
-            </AlbumDetail>
-        </TabGridRow>
-    </TabGridColumn>
+        <TabGridColumn sm="4" md="3">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <AlbumDetail Model="@Album">
+                    <Toolbar>
+                        <AlbumToolbar Album="@Album" />
+                    </Toolbar>
+                </AlbumDetail>
+            </TabGridRow>
+        </TabGridColumn>
 
-    <TabGridColumn sm="8" md="9">
-        <TabGridRow RowHeight="@RowHeight.Full">
+        <TabGridColumn sm="8" md="9">
+            <TabGridRow RowHeight="@RowHeight.Full">
 
-            <MudDivider Class="xs-only" />
-            <AlbumTracks Album="@Album"
-                         Discs="@Discs" />
+                <MudDivider Class="xs-only" />
+                <AlbumTracks Album="@Album"
+                             Discs="@Discs" />
 
-        </TabGridRow>
+            </TabGridRow>
 
-    </TabGridColumn>
+        </TabGridColumn>
 
-</TabGrid>
+    </TabGrid>
+}

@@ -1,13 +1,15 @@
-﻿namespace Cadenza.API.Cache.Services;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Cache.Services;
 
 internal class MainCache : IMainCache
 {
-    private readonly Dictionary<int, TrackInfo> _tracks = new();
-    private readonly Dictionary<int, AlbumInfo> _albums = new();
-    private readonly Dictionary<int, ArtistInfo> _artists = new();
+    private readonly Dictionary<int, TrackDetails> _tracks = new();
+    private readonly Dictionary<int, AlbumDetails> _albums = new();
+    private readonly Dictionary<int, ArtistDetails> _artists = new();
     private readonly Dictionary<int, AlbumTrackLink> _albumTracks = new();
 
-    public void CacheAlbum(AlbumInfo album)
+    public void CacheAlbum(AlbumDetails album)
     {
         _albums.Cache(album.Id, album);
     }
@@ -17,13 +19,13 @@ internal class MainCache : IMainCache
         _albumTracks.Cache(albumTrack.TrackId, albumTrack);
     }
 
-    public void CacheArtist(ArtistInfo artist)
+    public void CacheArtist(ArtistDetails artist)
     {
         _artists.Cache(artist.Id, artist);
 
     }
 
-    public void CacheTrack(TrackInfo track)
+    public void CacheTrack(TrackDetails track)
     {
         _tracks.Cache(track.Id, track);
     }
@@ -36,7 +38,7 @@ internal class MainCache : IMainCache
         _tracks.Clear();
     }
 
-    public AlbumInfo GetAlbum(int id)
+    public AlbumDetails GetAlbum(int id)
     {
         return _albums.GetValue(id);
     }
@@ -48,10 +50,10 @@ internal class MainCache : IMainCache
 
     public List<Artist> GetAllArtists()
     {
-        return _artists.GetAllValues<int, ArtistInfo, Artist>();
+        return _artists.GetAllValues<int, ArtistDetails, Artist>();
     }
 
-    public ArtistInfo GetArtist(int id)
+    public ArtistDetails GetArtist(int id)
     {
         return _artists.GetValue(id);
     }
@@ -71,7 +73,7 @@ internal class MainCache : IMainCache
         };
     }
 
-    public TrackInfo GetTrack(int id)
+    public TrackDetails GetTrack(int id)
     {
         return _tracks.GetValue(id);
     }

@@ -41,8 +41,8 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var playlistId = new PlaylistId(id.ToString(), PlaylistType.Album, $"{album.Title} ({album.ArtistName})");
 
-        var startTrack = tracks.SingleOrDefault(t => t.Id == startTrackId);
-        var startIndex = startTrack != null ? tracks.IndexOf(startTrack) : 0;
+        var startTrackPosition = tracks.IndexOf(startTrackId);
+        var startIndex = startTrackPosition >= 0 ? startTrackPosition : 0;
 
         return new PlaylistDefinition
         {
@@ -56,17 +56,7 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var track = await _trackRepository.GetTrack(id);
 
-        var playTrack = new PlayTrack
-        {
-            Id = id,
-            IdFromSource = track.Track.IdFromSource,
-            Source = track.Track.Source,
-            ArtistId = track.Artist.Id,
-            AlbumId = track.Album.Id,
-            Title = track.Track.Title
-        };
-
-        var tracks = new List<PlayTrack> { playTrack };
+        var tracks = new List<int> { id };
 
         var playlistId = new PlaylistId(id.ToString(), PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
 
@@ -77,7 +67,7 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateLibraryPlaylist(string first = null)
+    public async Task<PlaylistDefinition> CreateLibraryPlaylist()
     {
         var tracks = await _repository.PlayAll();
 

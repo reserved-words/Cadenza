@@ -1,20 +1,16 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Sidebar;
 
-public class SearchBase : ComponentBase
+public class SearchBase : FluxorComponent
 {
-    [Inject]
-    public ISearchCache Cache { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<SearchItemsState> SearchItemsState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IItemViewer Viewer { get; set; }
-
-    protected bool IsLoading { get; set; }
+    protected bool IsLoading => SearchItemsState.Value.IsLoading;
 
     private PlayerItem _result;
 
@@ -27,31 +23,11 @@ public class SearchBase : ComponentBase
 
             if (_result != null)
             {
-                Viewer.ViewSearchResult(Result);
+                Dispatcher.Dispatch(new ViewItemRequest(Result.Type, Result.Id, Result.Name));
             }
 
             _result = null;
         }
-    }
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<SearchUpdateStartedEventArgs>(OnCacheUpdateStarted);
-        Messenger.Subscribe<SearchUpdateCompletedEventArgs>(OnCacheUpdateCompleted);
-    }
-
-    private Task OnCacheUpdateCompleted(object sender, SearchUpdateCompletedEventArgs e)
-    {
-        IsLoading = false;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnCacheUpdateStarted(object sender, SearchUpdateStartedEventArgs e)
-    {
-        IsLoading = true;
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
     protected Task<IEnumerable<PlayerItem>> Search(string value)
@@ -59,7 +35,7 @@ public class SearchBase : ComponentBase
         if (value.IsCommon())
             return null;
 
-        var results = Cache.Items
+        var results = SearchItemsState.Value.Items
             .Where(x => x.Name != null && x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase))
             .OrderBy(x => x.Type)
             .ThenBy(x => x.Name)

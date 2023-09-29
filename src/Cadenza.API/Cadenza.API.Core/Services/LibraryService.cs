@@ -1,4 +1,5 @@
 ﻿using Cadenza.API.Interfaces;
+using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.Core.Services;
 
@@ -13,7 +14,7 @@ internal class LibraryService : ILibraryService
         _populater = populater;
     }
 
-    public async Task<AlbumInfo> Album(int id)
+    public async Task<AlbumDetails> Album(int id)
     {
         await PopulateCache();
         return await _cache.Albums.GetAlbum(id);
@@ -31,7 +32,7 @@ internal class LibraryService : ILibraryService
         return await _cache.Albums.GetAlbumTracks(id);
     }
 
-    public async Task<ArtistInfo> Artist(int id)
+    public async Task<ArtistDetails> Artist(int id)
     {
         await PopulateCache();
         return await _cache.Artists.GetArtist(id);

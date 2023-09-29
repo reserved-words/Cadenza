@@ -1,5 +1,9 @@
-﻿@using Cadenza.Web.Common.Interfaces.Store;
-@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@inherits FluxorComponent
+
+@using Cadenza.State.Actions;
+@using Cadenza.State.Store;
+@using Cadenza.Web.Common.Interfaces.Store
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <EditCard>
 
@@ -31,32 +35,21 @@
 </EditCard>
 
 @code {
-    [Inject]
-    public ICurrentTrackStore Store { get; set; }
+    [Inject] public IDialogService DialogService { get; set; }
+    [Inject] public INotificationService Notification { get; set; }
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Inject]
-    public IDialogService DialogService { get; set; }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public INotificationService Notification { get; set; }
-
-    [Parameter]
-    public List<AlbumTrack> Model { get; set; }
-
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
+    [Parameter] public List<AlbumTrack> Model { get; set; }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
+        SubscribeToAction<TrackRemovedAction>(OnTrackRemoved);
+        base.OnInitialized();
     }
 
-    protected async Task OnRemoveTrack(AlbumTrack track)
+    private async Task OnRemoveTrack(AlbumTrack track)
     {
-        var currentTrackId = await Store.GetCurrentTrackId();
-
+        var currentTrackId = CurrentTrackState.Value.Track?.Id;
         if (currentTrackId == track.TrackId)
         {
             Notification.Error("Track cannot be removed while currently playing");
@@ -64,31 +57,22 @@
         }
 
         var trackToRemove = new TrackToRemove
-            {
-                Id = track.TrackId,
-                Title = track.Title,
-                ArtistName = track.ArtistName
-            };
+        {
+            Id = track.TrackId,
+            Title = track.Title,
+            ArtistName = track.ArtistName
+        };
 
         await DialogService.DisplayForm<RemoveTrack, TrackToRemove>(trackToRemove, "Remove Track", false);
     }
 
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
+    private void OnTrackRemoved(TrackRemovedAction action)
     {
-        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == args.TrackId);
+        var trackOnDisc = Model.SingleOrDefault(t => t.TrackId == action.TrackId);
         if (trackOnDisc == null)
-            return Task.CompletedTask;
+            return;
 
         Model.Remove(trackOnDisc);
         StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
-        }
     }
 }

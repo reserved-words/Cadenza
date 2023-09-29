@@ -49,5 +49,5 @@
     public PlayerItem Model { get; set; }
 
     [Parameter]
-    public Func<PlayerItem, Task> OnViewItem { get; set; }
+    public Action<PlayerItem> OnViewItem { get; set; }
 }

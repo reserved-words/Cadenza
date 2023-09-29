@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Web.Database.Services;
 
 internal class ArtworkFetcher : IArtworkFetcher
 {
@@ -14,7 +16,7 @@ internal class ArtworkFetcher : IArtworkFetcher
         _settings = settings.Value;
     }
 
-    public string GetArtistImageSrc(ArtistInfo artist)
+    public string GetArtistImageSrc(ArtistDetails artist)
     {
         if (artist == null || artist.Id == 0)
             return ArtworkPlaceholderUrl;

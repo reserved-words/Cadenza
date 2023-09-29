@@ -1,12 +1,21 @@
-﻿namespace Cadenza.Components.History;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Fluxor.Blazor.Web.Components;
+using Fluxor;
 
-public class HistoryAlbumsBase : HistoryDisplayBase<PlayedAlbum>
+namespace Cadenza.Components.History;
+
+public class HistoryAlbumsBase : FluxorComponent
 {
-    [Parameter]
-    public int MaxItems { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<PlayHistoryAlbumsState> PlayHistoryAlbumsState { get; set; }
 
-    protected override async Task<List<PlayedAlbum>> GetItems(HistoryPeriod period)
+    protected List<PlayedAlbum> Items => PlayHistoryAlbumsState.Value.Items;
+    protected bool IsLoading => PlayHistoryAlbumsState.Value.IsLoading;
+    protected HistoryPeriod Period => PlayHistoryAlbumsState.Value.Period;
+
+    protected void UpdateItems(HistoryPeriod period)
     {
-        return (await History.GetPlayedAlbums(period, MaxItems, 1)).ToList();
+        Dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(period));
     }
 }

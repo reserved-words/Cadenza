@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Updates;
-
-namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Services;
 
 internal class UpdateRepository : IUpdateRepository
 {

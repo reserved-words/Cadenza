@@ -18,22 +18,18 @@ global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
 
-global using Cadenza.Web.Common.Enums;
-global using Cadenza.Web.Common.Events;
 global using Cadenza.Web.Common.Extensions;
 
-global using Cadenza.Common.Domain.Model.Album;
 global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.Track;
-global using Cadenza.Common.Domain.Model.Updates;
+global using Cadenza.Common.Domain.Model.Library;
 global using Cadenza.Common.Domain.Model;
 
 global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Extensions;
-global using Cadenza.Common.Domain.Model.Artist;
-global using Cadenza.Common.Interfaces.Repositories;
-global using Cadenza.Web.Components.Interfaces;
+
+global using Cadenza.State.Actions;
+global using Cadenza.State.Store;
+
 global using MudBlazor;
 
-global using Cadenza.Tabs;
-global using Cadenza.Tabs.Library;
+global using Fluxor.Blazor.Web.Components;
+

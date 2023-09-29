@@ -1,37 +1,32 @@
-﻿using Cadenza.Web.Common.Model;
+﻿using Cadenza.State.Actions;
+using Cadenza.Web.Common.Model;
+using Fluxor;
+using TrackRemovalRequest = Cadenza.State.Actions.TrackRemovalRequest;
 
 namespace Cadenza.Web.Components.Forms;
 
 public class RemoveTrackBase : FormBase<TrackToRemove>
 {
-    [Inject]
-    public INotificationService Alert { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IUpdateRepository UpdateRepository { get; set; }
-
-    [Inject]
-    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
-
-    protected async Task OnSubmit()
+    protected void OnSubmit()
     {
-        try
-        {
-            await UpdateRepository.RemoveTrack(Model.Id);
-            Alert.Success("Track removed");
-            await UpdatesCoordinator.RemoveTrack(Model.Id);
-            Submit();
-        }
-        catch (Exception ex)
-        {
-            // Log error
-            Alert.Error("Error removing track: " + ex.Message);
-            Alert.Error("Error removing track: " + ex.StackTrace);
-        }
+        SubscribeToAction<TrackRemovedAction>(OnTrackRemoved);
+        SubscribeToAction<TrackRemovalFailedAction>(OnTrackRemovalFailed);
+        Dispatcher.Dispatch(new TrackRemovalRequest(Model.Id));
     }
 
     protected void OnCancel()
     {
         Cancel();
+    }
+
+    private void OnTrackRemoved(TrackRemovedAction action)
+    {
+        Submit();
+    }
+    private void OnTrackRemovalFailed(TrackRemovalFailedAction action)
+    {
+        Submit();
     }
 }

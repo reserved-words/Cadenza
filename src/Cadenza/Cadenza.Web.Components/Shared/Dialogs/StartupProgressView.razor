@@ -1,0 +1,33 @@
+﻿@using Cadenza.State.Actions;
+@using Cadenza.State.Store;
+    using Cadenza.Web.Common.Enums;
+
+@inherits FluxorComponent
+
+<MudContainer Class="mx-0 my-2 pa-0">
+    <MudText Typo=@Typo.body1>@Title</MudText>
+    <MudText Typo=@Typo.body2>@Message</MudText>
+    <MudProgressLinear Indeterminate="@Indeterminate"
+                       Value="@Progress"
+                       Color="@Color" />
+</MudContainer>
+
+@code 
+{
+    [Parameter] public string Title { get; set; }
+    [Parameter] public ConnectionState State { get; set; }
+    [Parameter] public string Message { get; set; }
+
+    private bool Indeterminate => State == ConnectionState.Connecting;
+
+    private int Progress => State == ConnectionState.Failed
+        || State == ConnectionState.Connected
+            ? 100
+            : 0;
+
+    private Color Color => State == ConnectionState.Failed
+        ? Color.Error
+        : State == ConnectionState.Connected
+        ? Color.Success
+        : Color.Info;
+}

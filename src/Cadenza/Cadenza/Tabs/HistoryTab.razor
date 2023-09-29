@@ -13,16 +13,16 @@
                          PanelClass="pa-0"
                          Class="full-width">
                     <MudTabPanel Text="Recent">
-                        <HistoryRecent MaxItems="10" />
+                        <HistoryRecent />
                     </MudTabPanel>
                     <MudTabPanel Text="Artists">
-                        <HistoryArtists MaxItems="10" />
+                        <HistoryArtists />
                     </MudTabPanel>
                     <MudTabPanel Text="Albums">
-                        <HistoryAlbums MaxItems="10" />
+                        <HistoryAlbums />
                     </MudTabPanel>
                     <MudTabPanel Text="Tracks">
-                        <HistoryTracks MaxItems="10" />
+                        <HistoryTracks />
                     </MudTabPanel>
                 </MudTabs>
             </TabGridRow>
@@ -34,7 +34,7 @@
 
         <TabGridColumn md="4">
             <TabGridRow RowHeight="@RowHeight.Full">
-                <HistoryRecent MaxItems="15" />
+                <HistoryRecent />
             </TabGridRow>
         </TabGridColumn>
 
@@ -44,19 +44,19 @@
                 <SubGrid>
                     <SubGridColumn md="6">
                         <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <HistoryArtists MaxItems="5" />
+                            <HistoryArtists />
                         </SubGridRow>
                     </SubGridColumn>
                     <SubGridColumn md="6">
                         <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <HistoryTracks MaxItems="5" />
+                            <HistoryTracks />
                         </SubGridRow>
                     </SubGridColumn>
                 </SubGrid>
 
             </TabGridRow>
             <TabGridRow RowHeight="@RowHeight.Fixed">
-                <HistoryAlbums MaxItems="5" />
+                <HistoryAlbums />
             </TabGridRow>
         </TabGridColumn>
 

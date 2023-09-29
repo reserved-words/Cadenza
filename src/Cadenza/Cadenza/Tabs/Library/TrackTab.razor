@@ -1,16 +1,19 @@
 ﻿@inherits TrackTabBase
 
-<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-    <TrackTabResponsive Breakpoint="Breakpoint.Xs"
-                        Model="@Model" />
-</MudHidden>
+@if (!Loading)
+{
+    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+        <TrackTabResponsive Breakpoint="Breakpoint.Xs"
+                            Model="@Model" />
+    </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
-    <TrackTabResponsive Breakpoint="Breakpoint.Sm" 
-                        Model="@Model" />
-</MudHidden>
+    <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+        <TrackTabResponsive Breakpoint="Breakpoint.Sm"
+                            Model="@Model" />
+    </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-    <TrackTabResponsive Breakpoint="Breakpoint.MdAndUp" 
-                        Model="@Model" />
-</MudHidden>
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <TrackTabResponsive Breakpoint="Breakpoint.MdAndUp"
+                            Model="@Model" />
+    </MudHidden>
+}

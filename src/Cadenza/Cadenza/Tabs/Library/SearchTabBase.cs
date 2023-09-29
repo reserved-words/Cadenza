@@ -1,5 +1,7 @@
-﻿using Cadenza.Web.Common.Interfaces.Searchbar;
-using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Tabs.Library;
 
@@ -7,14 +9,9 @@ public class SearchTabBase : ComponentBase
 {
     private const string AllTypes = "All";
 
-    [Inject]
-    public ISearchCache Cache { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<SearchItemsState> SearchItemsState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public IItemViewer Viewer { get; set; }
 
     protected readonly Dictionary<string, PlayerItemType?> ItemTypes = new Dictionary<string, PlayerItemType?>();
 
@@ -52,7 +49,7 @@ public class SearchTabBase : ComponentBase
         if (string.IsNullOrWhiteSpace(SearchText) && !searchType.HasValue)
             return Task.CompletedTask; // Add error message
 
-        Results = Cache.Items
+        Results = SearchItemsState.Value.Items
             .Where(x => (!searchType.HasValue || x.Type == searchType.Value)
                 && !string.IsNullOrWhiteSpace(x.Name)    
                 && (string.IsNullOrWhiteSpace(SearchText) || x.Name.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase)))
@@ -63,8 +60,8 @@ public class SearchTabBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    protected async Task OnViewItem(PlayerItem item)
+    protected void OnViewItem(PlayerItem item)
     {
-        await Viewer.ViewSearchResult(item);
+        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
     }
 }

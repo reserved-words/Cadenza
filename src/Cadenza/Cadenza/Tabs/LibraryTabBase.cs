@@ -1,21 +1,10 @@
-﻿namespace Cadenza.Tabs;
+﻿using Fluxor;
 
-public class LibraryTabBase : ComponentBase
+namespace Cadenza.Tabs;
+
+public class LibraryTabBase : FluxorComponent
 {
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
 
-    protected ViewItem? CurrentItem = null;
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
-    }
-
-    private Task OnViewItem(object sender, ViewItemEventArgs e)
-    {
-        CurrentItem = e.Item;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
+    protected ViewItem? CurrentItem => ViewState.Value.Item;
 }

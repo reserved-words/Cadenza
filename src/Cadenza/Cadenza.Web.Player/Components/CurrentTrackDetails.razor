@@ -5,7 +5,7 @@
 @code
 {
     [Parameter]
-    public TrackInfo Model { get; set; }
+    public TrackDetails Model { get; set; }
 
     public int ArtistId => Model?.ArtistId ?? 0;
     public string ArtistName => Model?.ArtistName ?? "Artist Name";

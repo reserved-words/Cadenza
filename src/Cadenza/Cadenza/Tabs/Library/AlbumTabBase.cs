@@ -1,65 +1,30 @@
-﻿using System.Reflection;
+﻿using Cadenza.Common.Domain.Model.Library;
+using Fluxor;
 
 namespace Cadenza.Tabs.Library;
 
-public class AlbumTabBase : ComponentBase
+public class AlbumTabBase : FluxorComponent
 {
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    [Inject] public IState<ViewAlbumState> ViewAlbumState { get; set; }
 
-    [Inject]
-    public IAlbumRepository Repository { get; set; }
-
-    [Parameter]
-    public int Id { get; set; }
-
-    public AlbumInfo Album { get; set; }
-
-    public List<Disc> Discs { get; set; } = new();
-
-    private Guid _trackRemovedSubscriptionId = Guid.Empty;
+    public bool Loading => ViewAlbumState.Value.IsLoading;
+    public AlbumDetails Album => ViewAlbumState.Value.Album;
+    public List<Disc> Discs => ViewAlbumState.Value.Discs;
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<TrackRemovedEventArgs>(OnTrackRemoved, out _trackRemovedSubscriptionId);
+        SubscribeToAction<TrackRemovedAction>(OnTrackRemoved);
+        base.OnInitialized();
     }
 
-    protected override async Task OnParametersSetAsync()
+    private void OnTrackRemoved(TrackRemovedAction action)
     {
-        await UpdateAlbum();
-    }
-
-    private Task OnTrackRemoved(object sender, TrackRemovedEventArgs args)
-    {
-        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == args.TrackId));
+        var disc = Discs.SingleOrDefault(d => d.Tracks.Any(t => t.TrackId == action.TrackId));
         if (disc == null)
-            return Task.CompletedTask;
+            return;
 
-        var trackOnDisc = disc.Tracks.SingleOrDefault(t => t.TrackId == args.TrackId);
-        if (trackOnDisc == null)
-            return Task.CompletedTask;
-
-        disc.Tracks.Remove(trackOnDisc);
+        var track = disc.Tracks.Single(t => t.TrackId == action.TrackId);
+        disc.Tracks.Remove(track);
         StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private async Task UpdateAlbum()
-    {
-        Album = await Repository.GetAlbum(Id);
-
-        var tracks = await Repository.GetAlbumTracks(Id);
-
-        Discs = tracks.GroupByDisc();
-
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        if (_trackRemovedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<TrackRemovedEventArgs>(_trackRemovedSubscriptionId);
-        }
     }
 }

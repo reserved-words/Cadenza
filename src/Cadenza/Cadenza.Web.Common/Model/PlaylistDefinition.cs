@@ -3,6 +3,6 @@
 public class PlaylistDefinition
 {
     public PlaylistId Id { get; set; }
-    public List<PlayTrack> Tracks { get; set; }
+    public List<int> Tracks { get; set; }
     public int StartIndex { get; set; }
 }

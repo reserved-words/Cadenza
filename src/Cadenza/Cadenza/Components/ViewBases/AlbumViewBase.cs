@@ -1,37 +1,23 @@
-﻿namespace Cadenza.Components.ViewBases;
+﻿using Cadenza.Common.Domain.Model.Library;
 
-public class AlbumViewBase : ComponentBase, IDisposable
+namespace Cadenza.Components.ViewBases;
+
+public class AlbumViewBase : FluxorComponent
 {
-    [Parameter]
-    public AlbumInfo Model { get; set; } = new();
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private Guid _updateSubscriptionId = Guid.Empty;
-
-    public void Dispose()
-    {
-        if (_updateSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<AlbumUpdatedEventArgs>(_updateSubscriptionId);
-            _updateSubscriptionId = Guid.Empty;
-        }
-    }
+    [Parameter] public AlbumDetails Model { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<AlbumUpdatedEventArgs>(OnAlbumUpdated, out _updateSubscriptionId);
+        SubscribeToAction<AlbumUpdatedAction>(OnAlbumUpdated);
+        base.OnInitialized();
     }
 
-    private Task OnAlbumUpdated(object sender, AlbumUpdatedEventArgs args)
+    private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
-        if (Model != null && Model.Id == args.Update.Id)
+        if (Model != null && Model.Id == action.Update.Id)
         {
-            args.Update.ApplyUpdates(Model);
+            action.Update.ApplyUpdates(Model);
             StateHasChanged();
         }
-
-        return Task.CompletedTask;
     }
 }

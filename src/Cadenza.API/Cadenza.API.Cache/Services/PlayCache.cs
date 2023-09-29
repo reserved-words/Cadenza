@@ -1,24 +1,16 @@
-﻿namespace Cadenza.API.Cache.Services;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.API.Cache.Services;
 
 internal class PlayCache : IPlayCache
 {
-    private readonly Dictionary<int, PlayTrack> _playTracks = new();
-    private readonly Dictionary<string, List<PlayTrack>> _tagPlayTracks = new();
+    private readonly List<int> _playTracks = new();
+    private readonly Dictionary<string, List<int>> _tagPlayTracks = new();
 
-    public void CacheTrack(TrackInfo track, ArtistInfo artist, AlbumInfo album)
+    public void CacheTrack(TrackDetails track, ArtistDetails artist, AlbumDetails album)
     {
-        var playTrack = new PlayTrack
-        {
-            Id = track.Id,
-            IdFromSource = track.IdFromSource,
-            Title = track.Title,
-            ArtistId = track.ArtistId,
-            AlbumId = track.AlbumId,
-            Source = track.Source
-        };
-
-        _playTracks.Add(playTrack.Id, playTrack);
-        _tagPlayTracks.Cache(track, artist, album, playTrack);
+         _playTracks.Add(track.Id);
+        _tagPlayTracks.Cache(track, artist, album, track.Id);
     }
 
     public void Clear()
@@ -27,17 +19,12 @@ internal class PlayCache : IPlayCache
         _tagPlayTracks.Clear();
     }
 
-    public PlayTrack GetTrack(int id)
+    public List<int> GetAll()
     {
-        return _playTracks[id];
+        return _playTracks;
     }
 
-    public List<PlayTrack> GetAll()
-    {
-        return _playTracks.Values.ToList();
-    }
-
-    public List<PlayTrack> GetTag(string id)
+    public List<int> GetTag(string id)
     {
         return _tagPlayTracks[id];
     }

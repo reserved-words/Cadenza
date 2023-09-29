@@ -1,68 +1,15 @@
-﻿using Cadenza.Web.Common.Interfaces.Connections;
+﻿using Cadenza.State.Store;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.History;
 
-public class HistoryRecentBase : ComponentBase
+public class HistoryRecentBase : FluxorComponent
 {
     [Inject]
-    public IConnectionService ConnectorService { get; set; }
+    public IState<RecentPlayHistoryState> RecentPlayHistoryState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    public List<RecentTrack> Model => RecentPlayHistoryState.Value.Tracks;
 
-    [Inject]
-    public IHistory History { get; set; }
-
-    [Parameter]
-    public int MaxItems { get; set; }
-
-    public List<RecentTrack> Model { get; set; }
-
-    public bool IsLoading { get; set; } = true;
-
-    protected override void OnInitialized()
-    {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusUpdated);
-    }
-
-    private async Task OnPlayStatusUpdated(object sender, PlayStatusEventArgs e)
-    {
-        await Task.Delay(1000).ContinueWith(async t =>
-        {
-            var status = ConnectorService.GetStatus(Connector.LastFm);
-            await LoadData(status);
-            StateHasChanged();
-        });
-    }
-
-    private async Task OnConnectorStatusChanged(object sender, ConnectorEventArgs e)
-    {
-        if (e.Connector != Connector.LastFm)
-            return;
-
-        await LoadData(e.Status);
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        var status = ConnectorService.GetStatus(Connector.LastFm);
-        await LoadData(status);
-    }
-
-    private async Task LoadData(ConnectorStatus status)
-    {
-        if (status == ConnectorStatus.Errored || status == ConnectorStatus.Disabled)
-        {
-            IsLoading = false;
-            return;
-        }
-
-        IsLoading = true;
-
-        if (status == ConnectorStatus.Loading)
-            return;
-
-        Model = (await History.GetRecentTracks(MaxItems, 1)).ToList();
-        IsLoading = false;
-    }
+    public bool IsLoading => RecentPlayHistoryState.Value.Tracks == null;
 }

@@ -1,25 +1,28 @@
 ﻿@inherits ArtistTabBase
 
-<TabGrid>
+@if (!Loading)
+{
+    <TabGrid>
 
-    <TabGridColumn sm="4" md="3">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <ArtistDetail Model="@Artist">
-                <Toolbar>
-                    <ArtistToolbar Artist="@Artist" />
-                </Toolbar>
-            </ArtistDetail>
-        </TabGridRow>
+        <TabGridColumn sm="4" md="3">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <ArtistDetail Model="@Artist">
+                    <Toolbar>
+                        <ArtistToolbar Artist="@Artist" />
+                    </Toolbar>
+                </ArtistDetail>
+            </TabGridRow>
 
-    </TabGridColumn>
+        </TabGridColumn>
 
-    <TabGridColumn sm="8" md="9">
-        <TabGridRow RowHeight="@RowHeight.Full">
+        <TabGridColumn sm="8" md="9">
+            <TabGridRow RowHeight="@RowHeight.Full">
 
-            <MudDivider Class="xs-only" />
-            <ArtistReleases Releases="@Releases" />
+                <MudDivider Class="xs-only" />
+                <ArtistReleases Releases="@Releases" />
 
-        </TabGridRow>
-    </TabGridColumn>
+            </TabGridRow>
+        </TabGridColumn>
 
-</TabGrid>
+    </TabGrid>
+}

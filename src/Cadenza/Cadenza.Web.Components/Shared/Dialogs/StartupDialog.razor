@@ -1,0 +1,14 @@
+﻿@using Cadenza.State.Store;
+
+@inherits StartupDialogBase
+
+<MudDialog>
+    <DialogContent>
+        @foreach (var connection in ConnectionStates.Values)
+        {
+            <StartupProgressView Title="@connection.Title" 
+                                 State="@connection.State" 
+                                 Message="@connection.Message" />
+        }
+    </DialogContent>
+</MudDialog>

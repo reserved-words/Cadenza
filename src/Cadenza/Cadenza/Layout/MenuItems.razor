@@ -1,4 +1,7 @@
-﻿@using Cadenza.Web.Common.Interfaces.Startup
+﻿@inherits FluxorComponent
+
+@using Cadenza.State.Actions;
+@using Cadenza.State.Store;
 
 @if (IncludeHomeTab)
 {
@@ -50,32 +53,33 @@
 <Search />
 
 @code {
-    [Parameter]
-    public bool IncludeHomeTab { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
 
-    [Parameter]
-    public bool IncludeSearchTab { get; set; }
+    [Parameter] public bool IncludeHomeTab { get; set; }
+    [Parameter] public bool IncludeSearchTab { get; set; }
+    [Parameter] public bool ShowLabels { get; set; }
+    [Parameter] public Size IconSize { get; set; }
 
-    [Parameter]
-    public bool ShowLabels { get; set; }
-
-    [Parameter]
-    public Size IconSize { get; set; }
-
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    private Tab ActiveTab;
+    private Tab ActiveTab { get; set; }
 
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<ViewItemEventArgs>(OnViewItem);
+        ViewState.StateChanged += ViewState_StateChanged;
+        base.OnInitialized();
     }
 
     protected override void OnParametersSet()
     {
         ActiveTab = IncludeHomeTab ? Tab.Home : Tab.History;
-        StateHasChanged();
+        base.OnParametersSet();
+    }
+
+    private void ViewState_StateChanged(object sender, EventArgs args)
+    {
+        ActiveTab = ViewState.Value.Tab == Tab.Home && !IncludeHomeTab
+            ? Tab.History
+            : ViewState.Value.Tab;
     }
 
     private string MenuItemClass(Tab tab)
@@ -83,18 +87,8 @@
         return "cdz-menu " + (ActiveTab == tab ? "cdz-menu-active" : "");
     }
 
-    private async Task OnViewItem(object sender, ViewItemEventArgs args)
+    private void UpdateActiveTab(Tab tab)
     {
-        if (ActiveTab != Tab.Library)
-        {
-            await UpdateActiveTab(Tab.Library);
-        }
-    }
-
-    private async Task UpdateActiveTab(Tab tab)
-    {
-        await Messenger.Send(this, new ViewTabEventArgs(tab));
-        ActiveTab = tab;
-        StateHasChanged();
+        Dispatcher.Dispatch(new ViewTabRequest(tab));
     }
 }

@@ -1,85 +1,57 @@
-﻿namespace Cadenza.Web.Player.Players;
+﻿using Cadenza.State.Store;
+using Fluxor;
+
+namespace Cadenza.Web.Player.Players;
 
 internal class CorePlayer : IPlayer
 {
-    private readonly ICurrentTrackStore _store;
     private readonly List<ISourcePlayer> _sourcePlayers;
-    private readonly List<IUtilityPlayer> _utilityPlayers;
+    private readonly IState<CurrentTrackState> _currentTrackState;
 
-    public CorePlayer(ICurrentTrackStore store, IEnumerable<ISourcePlayer> sourcePlayers, IEnumerable<IUtilityPlayer> utilityPlayers)
+    public CorePlayer(IEnumerable<ISourcePlayer> sourcePlayers, IState<CurrentTrackState> currentTrackState)
     {
-        _store = store;
         _sourcePlayers = sourcePlayers.ToList();
-        _utilityPlayers = utilityPlayers.ToList();
+        _currentTrackState = currentTrackState;
     }
 
-    public async Task Play(PlayTrack track)
+    public async Task Play()
     {
-        var service = await GetCurrentSourcePlayer(track.Source);
-        await service.Play(track.IdFromSource);
-
-        var fullTrack = await GetCurrentTrack();
-        var progress = new TrackProgress(0, fullTrack.Track.DurationSeconds);
-
-        await RunUtilities(p => p.OnPlay(progress));
+        var service = GetSourcePlayer();
+        await service.Play(_currentTrackState.Value.Track.IdFromSource);
     }
 
-    public async Task Pause()
+    public async Task<int> Pause()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetSourcePlayer();
         var progress = await service.Pause();
-        await RunUtilities(p => p.OnPause(progress));
+        return progress.SecondsPlayed;
     }
 
-    public async Task Resume()
+    public async Task<int> Resume()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetSourcePlayer();
         var progress = await service.Resume();
-        await RunUtilities(p => p.OnResume(progress));
+        return progress.SecondsPlayed;
     }
 
-    public async Task Stop()
+    public async Task<int> Stop()
     {
-        var service = await GetCurrentSourcePlayer();
+        var service = GetSourcePlayer();
 
         if (service == null)
-            return;
+            return 0;
 
         var progress = await service.Stop();
-        if (progress.TotalSeconds == -1)
-        {
-            var track = await _store.GetCurrentTrack();
-            progress = new TrackProgress(track.Track.DurationSeconds, track.Track.DurationSeconds);
-        }
-
-        await RunUtilities(p => p.OnStop(progress));
+        return progress.SecondsPlayed;
     }
 
-    private async Task<ISourcePlayer> GetCurrentSourcePlayer(LibrarySource? source = null)
+    private ISourcePlayer GetSourcePlayer()
     {
-        var currentSource = source ?? await GetCurrentSource();
+        var source = _currentTrackState.Value.Track?.Source;
 
-        if (!currentSource.HasValue)
+        if (source == null)
             return null;
 
-        return _sourcePlayers.Single(p => p.Source == currentSource.Value);
-    }
-
-    private async Task RunUtilities(Func<IUtilityPlayer, Task> action)
-    {
-        foreach (var player in _utilityPlayers)
-        {
-            await action(player);
-        }
-    }
-
-    private async Task<LibrarySource?> GetCurrentSource()
-    {
-        return await _store.GetCurrentSource();
-    }
-
-    private async Task<TrackFull> GetCurrentTrack()
-    {
-        return await _store.GetCurrentTrack();
+        return _sourcePlayers.Single(p => p.Source == source.Value);
     }
 }

@@ -1,65 +1,41 @@
-﻿using Cadenza.Web.Common.Interfaces.View;
+﻿using Cadenza.State.Actions;
+using Cadenza.State.Store;
+using Cadenza.Web.Common.Model;
+using Fluxor;
+using Fluxor.Blazor.Web.Components;
 
 namespace Cadenza.Components.Sidebar;
 
-public class CurrentlyPlayingHeaderBase : ComponentBase
+public class CurrentlyPlayingHeaderBase : FluxorComponent
 {
-    [Inject]
-    public IMessenger Messenger { get; set; }
+    [Inject] public IState<PlaylistState> PlaylistState { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IItemViewer Viewer { get; set; }
+    public string PlaylistName => PlaylistState.Value.Name;
 
-    public string PlaylistName => _playlist?.Name ?? "Nothing";
-
-    public bool ShowViewLink => _playlist.HasValue && _playlist.Value.Type != PlaylistType.All;
+    public bool ShowViewLink => PlaylistState.Value.Type != PlaylistType.All;
 
     public string Icon => GetIcon();
 
-    private PlaylistId? _playlist = null;
-
-    protected override void OnInitialized()
+    protected void OnView()
     {
-        Messenger.Subscribe<PlaylistLoadingEventArgs>(OnPlaylistLoading);
-        Messenger.Subscribe<PlaylistStartedEventArgs>(OnPlaylistStarted);
-        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished);
-    }
-
-    private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs e)
-    {
-        _playlist = null;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnPlaylistLoading(object sender, PlaylistLoadingEventArgs e)
-    {
-        _playlist = null;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    private Task OnPlaylistStarted(object sender, PlaylistStartedEventArgs e)
-    {
-        _playlist = e.Playlist;
-        StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    protected async Task OnView()
-    {
-        if (!_playlist.HasValue)
+        if (PlaylistState.Value.Id == null)
             return;
 
-        await Viewer.ViewPlaying(_playlist.Value);
+        var type = PlaylistState.Value.Type.GetItemType();
+
+        if (!type.HasValue)
+            return;
+
+        Dispatcher.Dispatch(new ViewItemRequest(type.Value, PlaylistState.Value.Id, PlaylistState.Value.Name));
     }
 
     private string GetIcon()
     {
-        if (!_playlist.HasValue)
+        if (PlaylistState.Value.Id == null)
             return null;
 
-        var itemType = _playlist.Value.Type.GetItemType();
+        var itemType = PlaylistState.Value.Type.GetItemType();
 
         if (!itemType.HasValue)
             return Icons.Material.Filled.Shuffle;

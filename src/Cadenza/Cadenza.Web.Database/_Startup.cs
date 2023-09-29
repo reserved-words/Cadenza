@@ -1,24 +1,17 @@
 ﻿global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Domain.Model.Album;
-global using Cadenza.Common.Domain.Model.Artist;
-global using Cadenza.Common.Domain.Model.Track;
-global using Cadenza.Common.Domain.Model.Update;
+global using Cadenza.Common.Domain.Model.Library;
 global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Interfaces.Repositories;
 global using Cadenza.Common.Interfaces.Utilities;
-global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
-global using Cadenza.Web.Common.Tasks;
 global using Cadenza.Web.Database.Interfaces;
 global using Cadenza.Web.Database.Repositories;
 global using Cadenza.Web.Database.Services;
 global using Cadenza.Web.Database.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-using Cadenza.Web.Common.Interfaces.Startup;
-using Cadenza.Web.Common.Interfaces.Updates;
 
 namespace Cadenza.Web.Database;
 
@@ -28,7 +21,6 @@ public static class Startup
     {
         return services
             .AddApiRepositories()
-            .AddTransient<IConnector, DatabaseConnector>()
             .AddTransient<IApiHttpHelper, ApiHttpHelper>();
     }
 

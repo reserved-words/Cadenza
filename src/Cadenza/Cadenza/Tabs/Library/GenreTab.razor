@@ -1,24 +1,27 @@
 ﻿@inherits GenreTabBase
 
-<TabGrid>
+@if (!Loading)
+{
+    <TabGrid>
 
-    <TabGridColumn sm="4" md="3">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-            <GenreDetail Id="@Id">
-                <Toolbar>
-                    <GenreToolbar Genre="@Id" />
-                </Toolbar>
-            </GenreDetail>
-        </TabGridRow>
-    </TabGridColumn>
+        <TabGridColumn sm="4" md="3">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <GenreDetail Id="@Genre">
+                    <Toolbar>
+                        <GenreToolbar Genre="@Genre" />
+                    </Toolbar>
+                </GenreDetail>
+            </TabGridRow>
+        </TabGridColumn>
 
-    <TabGridColumn sm="8" md="9">
-        <TabGridRow RowHeight="@RowHeight.Full">
+        <TabGridColumn sm="8" md="9">
+            <TabGridRow RowHeight="@RowHeight.Full">
 
-            <MudDivider Class="xs-only" />
-            <GenreArtists Artists="@Artists" />
+                <MudDivider Class="xs-only" />
+                <GenreArtists Artists="@Artists" />
 
-        </TabGridRow>
-    </TabGridColumn>
+            </TabGridRow>
+        </TabGridColumn>
 
-</TabGrid>
+    </TabGrid>
+}

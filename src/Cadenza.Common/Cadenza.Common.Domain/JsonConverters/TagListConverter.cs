@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Cadenza.Common.Domain.Model;
+using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.Common.Domain.JsonConverters;
 

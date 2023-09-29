@@ -1,48 +1,44 @@
-﻿namespace Cadenza.Web.Components.Forms;
+﻿using Cadenza.Common.Domain.Model.Library;
+using Cadenza.Common.Domain.Model.Updates;
+using Cadenza.State.Actions;
+using Fluxor;
 
-public class EditTrackBase : FormBase<TrackInfo>
+namespace Cadenza.Web.Components.Forms;
+
+public class EditTrackBase : FormBase<Cadenza.Common.Domain.Model.Library.TrackDetails>
 {
-    [Inject]
-    public INotificationService Alert { get; set; }
-
-    [Inject]
-    public IUpdateRepository UpdateRepository { get; set; }
-
-    [Inject]
-    public IUpdatesCoordinator UpdatesCoordinator { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
     public TrackUpdate Update { get; set; }
+    public Cadenza.Common.Domain.Model.Library.TrackDetails EditableItem => Update.UpdatedItem;
 
-    public TrackInfo EditableItem => Update.UpdatedItem;
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<TrackUpdatedAction>(OnTrackUpdated);
+        base.OnInitialized();
+    }
 
     protected override void OnParametersSet()
     {
         Update = new TrackUpdate(Model);
     }
 
-    protected async Task OnSubmit()
+    protected void OnSubmit()
     {
-        try
-        {
-            Update.ConfirmUpdates();
+        Update.ConfirmUpdates();
 
-            if (!Update.Updates.Any())
-            {
-                Cancel();
-                return;
-            }
-
-            await UpdateRepository.UpdateTrack(Update);
-            Alert.Success("Track updated");
-            await UpdatesCoordinator.UpdateTrack(Update);
-            Submit();
-        }
-        catch (Exception ex)
+        if (!Update.Updates.Any())
         {
-            // Log error
-            Alert.Error("Error updating track: " + ex.Message);
-            Alert.Error("Error updating track: " + ex.StackTrace);
+            Cancel();
+            return;
         }
+
+        Dispatcher.Dispatch(new TrackUpdateRequest(Model.Id, Update));
+    }
+
+    private void OnTrackUpdated(TrackUpdatedAction action)
+    {
+        Submit();
     }
 
     protected void OnCancel()

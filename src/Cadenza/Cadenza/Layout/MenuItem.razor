@@ -28,10 +28,10 @@ else
     public string Class { get; set; }
 
     [Parameter]
-    public Func<Tab, Task> OnClickItem { get; set; }
+    public Action<Tab> OnClickItem { get; set; }
 
-    private async Task OnClick()
+    private void OnClick()
     {
-        await OnClickItem(Tab);
+        OnClickItem(Tab);
     }
 }

@@ -2,7 +2,7 @@
 
 internal class Shuffler : IShuffler
 {
-    public List<T> Shuffle<T>(List<T> items, T first = null) where T : class
+    public List<int> Shuffle(List<int> items, int? first = null)
     {
         var shuffledItems = GetShuffledItems(items);
         SetFirst(shuffledItems, first);
@@ -23,13 +23,13 @@ internal class Shuffler : IShuffler
         return items;
     }
 
-    private static void SetFirst<T>(List<T> items, T first)
+    private static void SetFirst(List<int> items, int? first)
     {
         if (first == null)
             return;
 
-        items.Remove(first);
-        items.Insert(0, first);
+        items.Remove(first.Value);
+        items.Insert(0, first.Value);
     }
 
     public static class ThreadSafeRandom

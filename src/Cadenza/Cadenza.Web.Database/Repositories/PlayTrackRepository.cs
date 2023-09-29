@@ -11,33 +11,33 @@ internal class PlayTrackRepository : IPlayTrackRepository
         _apiHelper = apiHelper;
     }
 
-    public async Task<List<PlayTrack>> PlayAll()
+    public async Task<List<int>> PlayAll()
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayTracks);
+        return await _apiHelper.Get<List<int>>(_settings.PlayTracks);
     }
 
-    public async Task<List<PlayTrack>> PlayAlbum(int id)
+    public async Task<List<int>> PlayAlbum(int id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayAlbum, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayAlbum, id);
     }
 
-    public async Task<List<PlayTrack>> PlayArtist(int id)
+    public async Task<List<int>> PlayArtist(int id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayArtist, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayArtist, id);
     }
 
-    public async Task<List<PlayTrack>> PlayGenre(string id)
+    public async Task<List<int>> PlayGenre(string id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGenre, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayGenre, id);
     }
 
-    public async Task<List<PlayTrack>> PlayGrouping(int id)
+    public async Task<List<int>> PlayGrouping(int id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayGrouping, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayGrouping, id);
     }
 
-    public async Task<List<PlayTrack>> PlayTag(string id)
+    public async Task<List<int>> PlayTag(string id)
     {
-        return await _apiHelper.Get<List<PlayTrack>>(_settings.PlayTag, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayTag, id);
     }
 }

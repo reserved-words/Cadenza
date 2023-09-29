@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.State.Actions;
+
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
         <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
@@ -7,13 +8,14 @@
 
 @code {
     [Inject]
-    public IItemPlayer Player { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public string Tag { get; set; }
 
-    protected async Task OnPlay()
+    protected Task OnPlay()
     {
-        await Player.PlayTag(Tag);
+        Dispatcher.Dispatch(new PlayTagRequest(Tag));
+        return Task.CompletedTask;
     }
 }

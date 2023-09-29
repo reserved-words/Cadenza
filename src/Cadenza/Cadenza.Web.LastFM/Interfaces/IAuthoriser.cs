@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.LastFM.Interfaces;
 
-internal interface IAuthoriser
+public interface IAuthoriser
 {
     Task<string> GetAuthUrl(string redirectUri);
     Task<string> CreateSession(string token);

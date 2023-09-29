@@ -1,48 +1,38 @@
-﻿using Cadenza.Web.Common.Interfaces.Play;
-using Cadenza.Web.Common.Interfaces.Store;
-
+﻿using Cadenza.Common.Domain.Model.Library;
+using Fluxor;
 namespace Cadenza.Components.Library;
 
-public class AlbumDiscBase : ComponentBase
+public class AlbumDiscBase : FluxorComponent
 {
-    [Inject]
-    public IItemPlayer ItemPlayer { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Inject]
-    public IMessenger Messenger { get; set; }
-
-    [Inject]
-    public ICurrentTrackStore Store { get; set; }
-
-    [Parameter]
-    public Disc Model { get; set; } = new();
-
-    [Parameter]
-    public int AlbumId { get; set; }
-
-    [Parameter]
-    public int AlbumArtistId { get; set; }
+    [Parameter] public Disc Model { get; set; } = new();
+    [Parameter] public int AlbumId { get; set; }
+    [Parameter] public int AlbumArtistId { get; set; }
 
     protected int? CurrentTrackId { get; set; }
 
-    private Guid _playlistFinishedSubscriptionId = Guid.Empty;
-    private Guid _playStatusUpdatedSubscriptionId = Guid.Empty;
-
     protected override void OnInitialized()
     {
-        Messenger.Subscribe<PlayStatusEventArgs>(OnPlayStatusChanged, out _playStatusUpdatedSubscriptionId);
-        Messenger.Subscribe<PlaylistFinishedEventArgs>(OnPlaylistFinished, out _playlistFinishedSubscriptionId);
+        CurrentTrackState.StateChanged += CurrentTrackState_StateChanged;
+        base.OnInitialized();
     }
 
-    protected override async Task OnParametersSetAsync()
+    private void CurrentTrackState_StateChanged(object sender, EventArgs e)
     {
-        var currentTrackId = await Store.GetCurrentTrackId();
-        UpdateCurrentTrack(currentTrackId);
+        UpdateCurrentTrack();
     }
 
-    protected async Task OnDoubleClick(AlbumTrack track)
+    protected override void OnParametersSet()
     {
-        await ItemPlayer.PlayAlbum(AlbumId, track.TrackId);
+        UpdateCurrentTrack();
+    }
+
+    protected Task OnDoubleClick(AlbumTrack track)
+    {
+        Dispatcher.Dispatch(new PlayAlbumRequest(AlbumId, track.TrackId));
+        return Task.CompletedTask;
     }
 
     protected string CellClass(AlbumTrack track, bool isInt)
@@ -61,24 +51,10 @@ public class AlbumDiscBase : ComponentBase
         return track.ArtistId == AlbumArtistId;
     }
 
-    private Task OnPlaylistFinished(object sender, PlaylistFinishedEventArgs args)
+    private void UpdateCurrentTrack()
     {
-        UpdateCurrentTrack(null);
-        return Task.CompletedTask;
-    }
+        var currentTrackId = CurrentTrackState.Value.Track?.Id;
 
-    private Task OnPlayStatusChanged(object sender, PlayStatusEventArgs args)
-    {
-        if (args.Status == PlayStatus.Playing)
-        {
-            UpdateCurrentTrack(args.Track?.Id);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    private void UpdateCurrentTrack(int? currentTrackId)
-    {
         var isOldCurrentTrackOnDisc = CurrentTrackId != null;
         var isNewCurrentTrackOnDisc = currentTrackId != null && Model.Tracks.Any(t => t.TrackId == currentTrackId);
 
@@ -88,18 +64,5 @@ public class AlbumDiscBase : ComponentBase
 
         if (isNewCurrentTrackOnDisc || isOldCurrentTrackOnDisc)
             StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        if (_playStatusUpdatedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<PlayStatusEventArgs>(_playStatusUpdatedSubscriptionId);
-        }
-
-        if (_playlistFinishedSubscriptionId != Guid.Empty)
-        {
-            Messenger.Unsubscribe<PlaylistFinishedEventArgs>(_playlistFinishedSubscriptionId);
-        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Cadenza.Web.Common.Model;
 
-public struct PlaylistId
+public class PlaylistId
 {
-    public PlaylistId(string id, PlaylistType type, string name) : this()
+    public PlaylistId(string id, PlaylistType type, string name)
     {
         Id = id;
         Type = type;

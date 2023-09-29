@@ -1,13 +1,6 @@
-﻿namespace Cadenza.Web.Common.Extensions;
+﻿using Cadenza.Common.Domain.Model.Library;
 
-public static class SearchExtensions
-{
-    public static bool IsCommon(this string searchTerm)
-    {
-        return searchTerm.Equals("the", StringComparison.InvariantCultureIgnoreCase)
-            || searchTerm.Equals("the ", StringComparison.InvariantCultureIgnoreCase);
-    }
-}
+namespace Cadenza.Web.Common.Extensions;
 
 public static class ItemExtensions
 {
@@ -28,7 +21,7 @@ public static class ItemExtensions
     public static List<ArtistReleaseGroup> GroupByReleaseType(this List<Album> albums)
     {
         return albums
-            .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
+            .GroupBy(a => a.ReleaseType.GetGroup())
             .OrderBy(g => g.Key)
             .Select(r => new ArtistReleaseGroup
             {
@@ -68,7 +61,7 @@ public static class ItemExtensions
         };
     }
 
-    public static string Location(this ArtistInfo artist)
+    public static string Location(this ArtistDetails artist)
     {
         if (artist == null)
             return "";
@@ -76,13 +69,13 @@ public static class ItemExtensions
         return AsList(artist.City, artist.State, artist.Country);
     }
 
-    public static string DiscPosition(this AlbumInfo album, AlbumTrackLink albumTrack)
+    public static string DiscPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
     {
         var discCount = album.DiscCount == 0 ? 1 : album.DiscCount;
         return $"Disc {albumTrack.DiscNo} of {discCount}";
     }
 
-    public static string TrackPosition(this AlbumInfo album, AlbumTrackLink albumTrack)
+    public static string TrackPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
     {
         var trackCountIndex = albumTrack.DiscNo <= 0 ? 0 : albumTrack.DiscNo - 1;
 

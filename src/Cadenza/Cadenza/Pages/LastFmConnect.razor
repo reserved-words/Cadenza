@@ -6,29 +6,16 @@
 
 @code 
 {
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-
-    [Inject]
-    public IAppStore Store { get; set; }
-
-    [Inject]
-    public IJSRuntime JSRuntime { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
 
     private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnParametersSet()
     {
         if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("token", out var token))
         {
-            await Store.SetValue(StoreKey.LastFmToken, token.SingleOrDefault());
+            Dispatcher.Dispatch(new LastFmFetchTokenResult(token));
         }
-
-        await CloseTab();
-    }
-
-    public async Task CloseTab()
-    {
-        await JSRuntime.InvokeAsync<object>("close");
     }
 }

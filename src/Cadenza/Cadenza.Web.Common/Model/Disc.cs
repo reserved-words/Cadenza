@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Common.Model;
+﻿using Cadenza.Common.Domain.Model.Library;
+
+namespace Cadenza.Web.Common.Model;
 
 public class Disc
 {

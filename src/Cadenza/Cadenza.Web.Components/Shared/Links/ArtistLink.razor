@@ -1,9 +1,10 @@
-﻿
+﻿@using Cadenza.State.Actions;
+
 <ActionLink Typo="@Typo" Text="@Name" OnClick="@View"></ActionLink>
 
 @code {
     [Inject]
-    public IItemViewer Viewer { get; set; }
+    public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
     public int Id { get; set; }
@@ -14,8 +15,8 @@
     [Parameter]
     public Typo Typo { get; set; } = Typo.body1;
 
-    private async Task View()
+    private void View()
     {
-        await Viewer.ViewArtist(Id, Name);
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Artist, Id.ToString(), Name));
     }
 }
