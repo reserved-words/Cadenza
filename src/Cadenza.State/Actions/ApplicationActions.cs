@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.State.Actions;
+﻿namespace Cadenza.State.Actions;
 
 public record ApplicationStartRequest();
 public record ApplicationStartedAction();

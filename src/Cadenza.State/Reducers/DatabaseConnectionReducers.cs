@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.State.Reducers;
+﻿namespace Cadenza.State.Reducers;
 
 public static class DatabaseConnectionReducers
 {

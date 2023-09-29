@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.State.Effects;
+﻿namespace Cadenza.State.Effects;
 
 public class ApplicationEffects
 {

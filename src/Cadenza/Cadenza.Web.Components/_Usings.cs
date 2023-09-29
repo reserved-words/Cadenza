@@ -11,7 +11,6 @@ global using Cadenza.Common.Domain.Model.Updates;
 
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.Web.Common.Tasks;
 
 global using Cadenza.Web.Components.MudServices;
 global using Cadenza.Web.Components.Shared.Dialogs;

@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Tasks;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record LastFmConnectionState(string Title, ConnectionState State, string Message, string SessionKey)

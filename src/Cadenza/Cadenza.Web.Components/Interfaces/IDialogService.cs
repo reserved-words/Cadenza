@@ -9,6 +9,6 @@ public interface IDialogService
         where TModel : class;
 
     Task Display<TView, TModel>(TModel model, string title, bool fullWidth = true)
-        where TView : ViewBase<TModel>
+        where TView : DialogViewBase<TModel>
         where TModel : class;
 }

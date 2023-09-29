@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Common.Tasks;
+﻿namespace Cadenza.Web.Common.Enums;
 
 public enum ConnectionState
 {

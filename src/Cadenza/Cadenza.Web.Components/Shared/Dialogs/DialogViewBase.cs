@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Components.Shared.Dialogs;
 
-public class ViewBase<T> : ComponentBase
+public class DialogViewBase<T> : ComponentBase
 {
     [Parameter]
     public T Model { get; set; }

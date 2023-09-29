@@ -13,12 +13,12 @@ internal class MudDialogService : IDialogService
     }
 
     public Task Display<TView, TModel>(TModel model, string title, bool fullWidth = true)
-        where TView : ViewBase<TModel>
+        where TView : DialogViewBase<TModel>
         where TModel : class
     {
         var parameters = new DialogParameters
         {
-            { nameof(ViewBase<TModel>.Model), model }
+            { nameof(DialogViewBase<TModel>.Model), model }
         };
         _mudService.Show<TView>(title, parameters, new DialogOptions
         {
