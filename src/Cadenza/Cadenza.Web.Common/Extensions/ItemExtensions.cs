@@ -19,7 +19,7 @@ public static class ItemExtensions
     public static List<ArtistReleaseGroup> GroupByReleaseType(this List<Album> albums)
     {
         return albums
-            .GroupBy(a => a.ReleaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group)
+            .GroupBy(a => a.ReleaseType.GetGroup())
             .OrderBy(g => g.Key)
             .Select(r => new ArtistReleaseGroup
             {

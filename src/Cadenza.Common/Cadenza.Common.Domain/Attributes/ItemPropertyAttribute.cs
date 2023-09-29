@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Attributes;
 
-public class ItemPropertyAttribute : Attribute
+internal class ItemPropertyAttribute : Attribute
 {
     public ItemPropertyAttribute(ItemProperty property)
     {

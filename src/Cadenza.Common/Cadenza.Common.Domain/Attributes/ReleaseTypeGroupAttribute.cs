@@ -1,7 +1,7 @@
 ﻿namespace Cadenza.Common.Domain.Attributes;
 
 [AttributeUsage(AttributeTargets.Field)]
-public class ReleaseTypeGroupAttribute : Attribute
+internal class ReleaseTypeGroupAttribute : Attribute
 {
     public ReleaseTypeGroupAttribute(ReleaseTypeGroup group)
     {
