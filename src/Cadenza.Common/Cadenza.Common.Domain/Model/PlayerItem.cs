@@ -32,7 +32,7 @@ public class SearchableAlbum : PlayerItem
     public SearchableAlbum(string id, string title, string artist)
         : base(PlayerItemType.Album, id, title, artist, null, null) { }
 
-    public SearchableAlbum(AlbumInfo album)
+    public SearchableAlbum(AlbumDetails album)
         : this(album.Id.ToString(), album.Title, album.ArtistName) { }
 }
 
@@ -41,7 +41,7 @@ public class SearchableArtist : PlayerItem
     public SearchableArtist(string id, string name)
         : base(PlayerItemType.Artist, id, name, null, null, null) { }
 
-    public SearchableArtist(ArtistInfo artist)
+    public SearchableArtist(ArtistDetails artist)
         : this(artist.Id.ToString(), artist.Name) { }
 }
 
@@ -56,7 +56,7 @@ public class SearchableTrack : PlayerItem
     public SearchableTrack(string id, string title, string artist, string album, string albumArtist)
         : base(PlayerItemType.Track, id, title, artist, album, album + (albumArtist == artist ? "" : $" ({albumArtist})")) { }
 
-    public SearchableTrack(TrackInfo track, AlbumInfo album)
+    public SearchableTrack(TrackDetails track, AlbumDetails album)
         : this(track.Id.ToString(), track.Title, track.ArtistName, album.Title, album.ArtistName) { }
 }
 

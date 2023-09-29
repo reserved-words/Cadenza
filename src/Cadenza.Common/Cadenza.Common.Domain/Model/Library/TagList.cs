@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Common.Domain.Model.Library;
 
 public class TagList
 {
@@ -14,7 +14,7 @@ public class TagList
 
     public TagList(string tags)
     {
-        if (tags != null) 
+        if (tags != null)
         {
             _tags = tags?.Split(Separator).ToList();
         }
@@ -65,7 +65,7 @@ public class TagList
         if (obj is not TagList list)
             return false;
 
-        return Tags.ToString() == list.ToString(); 
+        return Tags.ToString() == list.ToString();
     }
 
     public override int GetHashCode()

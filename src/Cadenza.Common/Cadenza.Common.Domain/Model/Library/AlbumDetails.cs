@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Model.Library;
 
-public class AlbumInfo : Album
+public class AlbumDetails : Album
 {
     public int DiscCount { get; set; }
 

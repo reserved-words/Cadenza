@@ -2,10 +2,10 @@
 
 public class TrackFull
 {
-    public TrackInfo Track { get; set; } = new();
-    public ArtistInfo Artist { get; set; } = new();
-    public AlbumInfo Album { get; set; } = new();
-    public ArtistInfo AlbumArtist { get; set; } = new();
+    public TrackDetails Track { get; set; } = new();
+    public ArtistDetails Artist { get; set; } = new();
+    public AlbumDetails Album { get; set; } = new();
+    public ArtistDetails AlbumArtist { get; set; } = new();
     public AlbumTrackLink AlbumTrack { get; set; } = new();
 
     public int Id => Track.Id;

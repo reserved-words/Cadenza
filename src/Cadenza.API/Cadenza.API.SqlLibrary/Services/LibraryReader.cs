@@ -1,5 +1,4 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
@@ -22,8 +21,8 @@ internal class LibraryReader : ILibraryReader
         var library = new FullLibrary
         {
             Artists = artists,
-            Albums = new List<AlbumInfo>(),
-            Tracks = new List<TrackInfo>(),
+            Albums = new List<AlbumDetails>(),
+            Tracks = new List<TrackDetails>(),
             AlbumTracks = new List<AlbumTrackLink>()
         };
 

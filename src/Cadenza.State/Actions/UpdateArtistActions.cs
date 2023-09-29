@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Update;
+﻿using Cadenza.Common.Domain.Model.Updates;
 
 namespace Cadenza.State.Actions;
 

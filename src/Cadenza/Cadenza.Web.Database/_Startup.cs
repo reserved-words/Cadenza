@@ -1,7 +1,6 @@
 ﻿global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Domain.Model.Library;
-global using Cadenza.Common.Domain.Model.Update;
 global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Interfaces.Repositories;
 global using Cadenza.Common.Interfaces.Utilities;

@@ -1,12 +1,12 @@
 ﻿using Cadenza.Common.Domain.Model.Library;
 
-namespace Cadenza.Common.Domain.Model.Update;
+namespace Cadenza.Common.Domain.Model.Updates;
 
-public class TrackUpdate : ItemUpdate<TrackInfo>
+public class TrackUpdate : ItemUpdate<TrackDetails>
 {
     public TrackUpdate()
         : base() { }
 
-    public TrackUpdate(TrackInfo track)
+    public TrackUpdate(TrackDetails track)
         : base(LibraryItemType.Track, track.Id, track) { }
 }

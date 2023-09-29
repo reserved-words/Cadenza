@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Model.Library;
 
-public class TrackInfo : Track
+public class TrackDetails : Track
 {
     [ItemProperty(ItemProperty.TrackYear)]
     public string Year { get; set; }

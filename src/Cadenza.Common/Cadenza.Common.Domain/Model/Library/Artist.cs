@@ -3,9 +3,6 @@
 public class Artist
 {
     public int Id { get; set; }
-
-    //[ItemProperty(ItemProperty.Artist)]
-
     public string Name { get; set; }
 
     [ItemProperty(ItemProperty.Grouping)]

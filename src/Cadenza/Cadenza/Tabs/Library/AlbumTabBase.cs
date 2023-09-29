@@ -8,7 +8,7 @@ public class AlbumTabBase : FluxorComponent
     [Inject] public IState<ViewAlbumState> ViewAlbumState { get; set; }
 
     public bool Loading => ViewAlbumState.Value.IsLoading;
-    public AlbumInfo Album => ViewAlbumState.Value.Album;
+    public AlbumDetails Album => ViewAlbumState.Value.Album;
     public List<Disc> Discs => ViewAlbumState.Value.Discs;
 
     protected override void OnInitialized()

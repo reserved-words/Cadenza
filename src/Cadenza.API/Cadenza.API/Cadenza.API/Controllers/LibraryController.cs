@@ -14,7 +14,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album/{id}")]
-    public async Task<AlbumInfo> Album(int id)
+    public async Task<AlbumDetails> Album(int id)
     {
         return await _service.Album(id);
     }
@@ -26,7 +26,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Artist/{id}")]
-    public async Task<ArtistInfo> Artist(int id)
+    public async Task<ArtistDetails> Artist(int id)
     {
         return await _service.Artist(id);
     }

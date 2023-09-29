@@ -42,7 +42,7 @@ public static class Extensions
         return track.DurationSeconds.Duration();
     }
 
-    public static string Duration(this TrackInfo track)
+    public static string Duration(this TrackDetails track)
     {
         return track.DurationSeconds.Duration();
     }

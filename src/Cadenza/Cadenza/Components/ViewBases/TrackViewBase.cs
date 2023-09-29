@@ -4,7 +4,7 @@ namespace Cadenza.Components.ViewBases;
 
 public class TrackViewBase : FluxorComponent
 {
-    [Parameter] public TrackInfo Model { get; set; } = new();
+    [Parameter] public TrackDetails Model { get; set; } = new();
 
     protected override void OnInitialized()
     {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class CacheService : ICacheService
 {
@@ -60,7 +58,7 @@ internal class CacheService : ICacheService
         return Task.CompletedTask;
     }
 
-    public Task<AlbumInfo> GetAlbum(int id)
+    public Task<AlbumDetails> GetAlbum(int id)
     {
         var result = _mainCache.GetAlbum(id);
         return Task.FromResult(result);
@@ -90,7 +88,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<ArtistInfo> GetArtist(int id)
+    public Task<ArtistDetails> GetArtist(int id)
     {
         var result = _mainCache.GetArtist(id);
         return Task.FromResult(result);

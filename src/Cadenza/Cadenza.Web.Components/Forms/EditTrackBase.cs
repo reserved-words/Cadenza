@@ -1,15 +1,16 @@
 ﻿using Cadenza.Common.Domain.Model.Library;
+using Cadenza.Common.Domain.Model.Updates;
 using Cadenza.State.Actions;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Forms;
 
-public class EditTrackBase : FormBase<TrackInfo>
+public class EditTrackBase : FormBase<Cadenza.Common.Domain.Model.Library.TrackDetails>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     public TrackUpdate Update { get; set; }
-    public TrackInfo EditableItem => Update.UpdatedItem;
+    public Cadenza.Common.Domain.Model.Library.TrackDetails EditableItem => Update.UpdatedItem;
 
     protected override void OnInitialized()
     {

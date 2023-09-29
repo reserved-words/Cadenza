@@ -1,6 +1,5 @@
 ﻿@using Cadenza.State.Actions;
 @using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
-    using Cadenza.Common.Domain.Model.Core;
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
@@ -17,7 +16,7 @@
     public IDispatcher Dispatcher { get; set; }
 
     [Parameter]
-    public TrackInfo Track { get; set; }
+    public TrackDetails Track { get; set; }
 
     protected Task OnPlay()
     {
@@ -27,6 +26,6 @@
 
     protected async Task OnEdit()
     {
-        await DialogService.DisplayForm<EditTrack, TrackInfo>(Track, "Edit Track");
+        await DialogService.DisplayForm<EditTrack, TrackDetails>(Track, "Edit Track");
     }
 }

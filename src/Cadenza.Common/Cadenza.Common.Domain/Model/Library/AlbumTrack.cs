@@ -7,7 +7,7 @@ public class AlbumTrack
 
     }
 
-    public AlbumTrack(TrackInfo track, AlbumTrackLink albumTrack)
+    public AlbumTrack(TrackDetails track, AlbumTrackLink albumTrack)
     {
         TrackId = track.Id;
         Title = track.Title;

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.Domain.Model.Library;
 
-public class ArtistInfo : Artist
+public class ArtistDetails : Artist
 {
     [ItemProperty(ItemProperty.City)]
     public string City { get; set; }

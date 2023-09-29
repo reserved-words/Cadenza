@@ -10,8 +10,8 @@ internal interface IDataMapper
     NewDiscData MapDisc(SyncTrack track, int albumId);
     NewTrackData MapTrack(SyncTrack track, int artistId, int discId);
 
-    ArtistInfo MapArtist(GetArtistData artist);
-    AlbumInfo MapAlbum(GetAlbumData album, List<GetDiscData> discs);
+    ArtistDetails MapArtist(GetArtistData artist);
+    AlbumDetails MapAlbum(GetAlbumData album, List<GetDiscData> discs);
     AlbumTrackLink MapAlbumTrack(GetTrackData track);
-    TrackInfo MapTrack(GetTrackData track);
+    TrackDetails MapTrack(GetTrackData track);
 }

@@ -1,17 +1,17 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿using Cadenza.Common.Domain.Model.Updates;
 using Cadenza.State.Actions;
 using Fluxor;
 
 namespace Cadenza.Web.Components.Forms;
 
-public class EditArtistBase : FormBase<ArtistInfo>
+public class EditArtistBase : FormBase<Cadenza.Common.Domain.Model.Library.ArtistDetails>
 {
     [Inject] public IAdminRepository AdminRepository { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     public ArtistUpdate Update { get; set; }
     public List<Grouping> Groupings { get; set; } = new List<Grouping>();
-    public ArtistInfo EditableItem => Update.UpdatedItem;
+    public Cadenza.Common.Domain.Model.Library.ArtistDetails EditableItem => Update.UpdatedItem;
 
     protected override async Task OnInitializedAsync()
     {

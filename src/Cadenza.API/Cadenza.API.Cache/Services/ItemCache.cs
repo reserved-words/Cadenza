@@ -7,14 +7,14 @@ internal class ItemCache : IItemCache
     private readonly Dictionary<PlayerItemType, List<PlayerItem>> _items = new();
     private readonly Dictionary<string, List<PlayerItem>> _tags = new();
 
-    public void CacheAlbum(AlbumInfo album)
+    public void CacheAlbum(AlbumDetails album)
     {
         var item = new SearchableAlbum(album);
         _items.Cache(PlayerItemType.Album, item);
         _tags.Cache(album.Tags, item);
     }
 
-    public void CacheArtist(ArtistInfo artist)
+    public void CacheArtist(ArtistDetails artist)
     {
         var item = new SearchableArtist(artist);
         _items.Cache(PlayerItemType.Artist, item);
@@ -23,7 +23,7 @@ internal class ItemCache : IItemCache
         _tags.Cache(artist.Tags, item);
     }
 
-    public void CacheTrack(TrackInfo track, AlbumInfo album)
+    public void CacheTrack(TrackDetails track, AlbumDetails album)
     {
         var item = new SearchableTrack(track, album);
         _items.Cache(PlayerItemType.Track, item);

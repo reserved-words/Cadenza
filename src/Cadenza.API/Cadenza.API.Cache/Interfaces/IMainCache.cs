@@ -4,15 +4,15 @@ namespace Cadenza.API.Cache.Interfaces;
 
 internal interface IMainCache
 {
-    void CacheAlbum(AlbumInfo album);
+    void CacheAlbum(AlbumDetails album);
     void CacheAlbumTrack(AlbumTrackLink albumTracks);
-    void CacheArtist(ArtistInfo album);
-    void CacheTrack(TrackInfo track);
+    void CacheArtist(ArtistDetails album);
+    void CacheTrack(TrackDetails track);
     void Clear();
-    AlbumInfo GetAlbum(int id);
+    AlbumDetails GetAlbum(int id);
     AlbumTrackLink GetAlbumTrack(int trackId);
     List<Artist> GetAllArtists();
-    ArtistInfo GetArtist(int id);
-    TrackInfo GetTrack(int id);
+    ArtistDetails GetArtist(int id);
+    TrackDetails GetTrack(int id);
     TrackFull GetFullTrack(int id);
 }

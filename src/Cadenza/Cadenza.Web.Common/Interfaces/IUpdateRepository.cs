@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿using Cadenza.Common.Domain.Model.Updates;
+
+namespace Cadenza.Web.Common.Interfaces;
 
 public interface IUpdateRepository
 {

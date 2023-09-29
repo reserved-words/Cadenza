@@ -4,7 +4,7 @@ namespace Cadenza.Components.ViewBases;
 
 public class AlbumViewBase : FluxorComponent
 {
-    [Parameter] public AlbumInfo Model { get; set; } = new();
+    [Parameter] public AlbumDetails Model { get; set; } = new();
 
     protected override void OnInitialized()
     {

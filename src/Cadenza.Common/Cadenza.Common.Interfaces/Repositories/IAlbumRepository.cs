@@ -4,6 +4,6 @@ namespace Cadenza.Common.Interfaces.Repositories;
 
 public interface IAlbumRepository
 {
-    Task<AlbumInfo> GetAlbum(int id);
+    Task<AlbumDetails> GetAlbum(int id);
     Task<List<AlbumTrack>> GetAlbumTracks(int albumId);
 }

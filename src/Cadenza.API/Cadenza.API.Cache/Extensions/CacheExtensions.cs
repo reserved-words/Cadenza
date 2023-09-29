@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Extensions;
+﻿namespace Cadenza.API.Cache.Extensions;
 
 internal static class CacheExtensions
 {
@@ -12,7 +10,7 @@ internal static class CacheExtensions
         }
     }
 
-    public static void Cache(this Dictionary<string, List<int>> dictionary, TrackInfo track, ArtistInfo artist, AlbumInfo album, int trackId)
+    public static void Cache(this Dictionary<string, List<int>> dictionary, TrackDetails track, ArtistDetails artist, AlbumDetails album, int trackId)
     {
         var tags = track.Tags.Tags
             .Concat(artist.Tags.Tags)

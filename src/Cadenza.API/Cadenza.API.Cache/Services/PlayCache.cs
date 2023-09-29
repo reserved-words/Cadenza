@@ -7,7 +7,7 @@ internal class PlayCache : IPlayCache
     private readonly List<int> _playTracks = new();
     private readonly Dictionary<string, List<int>> _tagPlayTracks = new();
 
-    public void CacheTrack(TrackInfo track, ArtistInfo artist, AlbumInfo album)
+    public void CacheTrack(TrackDetails track, ArtistDetails artist, AlbumDetails album)
     {
          _playTracks.Add(track.Id);
         _tagPlayTracks.Cache(track, artist, album, track.Id);

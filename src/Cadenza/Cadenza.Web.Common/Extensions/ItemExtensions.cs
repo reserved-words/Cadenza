@@ -61,7 +61,7 @@ public static class ItemExtensions
         };
     }
 
-    public static string Location(this ArtistInfo artist)
+    public static string Location(this ArtistDetails artist)
     {
         if (artist == null)
             return "";
@@ -69,13 +69,13 @@ public static class ItemExtensions
         return AsList(artist.City, artist.State, artist.Country);
     }
 
-    public static string DiscPosition(this AlbumInfo album, AlbumTrackLink albumTrack)
+    public static string DiscPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
     {
         var discCount = album.DiscCount == 0 ? 1 : album.DiscCount;
         return $"Disc {albumTrack.DiscNo} of {discCount}";
     }
 
-    public static string TrackPosition(this AlbumInfo album, AlbumTrackLink albumTrack)
+    public static string TrackPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
     {
         var trackCountIndex = albumTrack.DiscNo <= 0 ? 0 : albumTrack.DiscNo - 1;
 

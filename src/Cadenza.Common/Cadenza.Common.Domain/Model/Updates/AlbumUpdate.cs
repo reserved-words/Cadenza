@@ -1,12 +1,12 @@
 ﻿using Cadenza.Common.Domain.Model.Library;
 
-namespace Cadenza.Common.Domain.Model.Update;
+namespace Cadenza.Common.Domain.Model.Updates;
 
-public class AlbumUpdate : ItemUpdate<AlbumInfo>
+public class AlbumUpdate : ItemUpdate<AlbumDetails>
 {
     public AlbumUpdate()
         : base() { }
 
-    public AlbumUpdate(AlbumInfo album)
+    public AlbumUpdate(AlbumDetails album)
         : base(LibraryItemType.Album, album.Id, album) { }
 }

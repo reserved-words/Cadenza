@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
+﻿using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.State.Store;
 
