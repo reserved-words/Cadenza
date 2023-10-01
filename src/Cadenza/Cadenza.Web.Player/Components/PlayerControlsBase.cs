@@ -26,14 +26,14 @@ public class PlayerControlsBase : ComponentBase
     {
         CanPlay = true;
         CanPause = false;
-        OnPause();
+        Dispatcher.Dispatch(new PlayerControlsPauseRequest());
     }
 
     protected void Resume()
     {
         CanPlay = false;
         CanPause = true;
-        OnResume();
+        Dispatcher.Dispatch(new PlayerControlsResumeRequest());
     }
 
     public void SkipNext()
@@ -44,15 +44,5 @@ public class PlayerControlsBase : ComponentBase
     public void SkipPrevious()
     {
         Dispatcher.Dispatch(new PlayerControlsPreviousRequest());
-    }
-
-    protected void OnPause()
-    {
-        Dispatcher.Dispatch(new PlayerControlsPauseRequest());
-    }
-
-    protected void OnResume()
-    {
-        Dispatcher.Dispatch(new PlayerControlsResumeRequest());
     }
 }
