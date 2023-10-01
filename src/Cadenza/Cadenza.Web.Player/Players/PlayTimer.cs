@@ -14,6 +14,7 @@ internal class PlayTimer : IPlayTimer, IDisposable
     public PlayTimer(IDispatcher dispatcher)
     {
         _dispatcher = dispatcher;
+        _timer.Elapsed += OnTimerElapsed;
     }
 
     public void OnPlay(int totalSeconds)
@@ -39,14 +40,12 @@ internal class PlayTimer : IPlayTimer, IDisposable
 
     private void StartTimer()
     {
-        _timer.Elapsed += OnTimerElapsed;
         _timer.Start();
     }
 
     private void StopTimer()
     {
         _timer.Stop();
-        _timer.Elapsed -= OnTimerElapsed;
     }
 
     private void OnTimerElapsed(object sender, ElapsedEventArgs e)

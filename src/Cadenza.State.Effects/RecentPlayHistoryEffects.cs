@@ -20,6 +20,9 @@ public class RecentPlayHistoryEffects
     [EffectMethod]
     public async Task HandleUpdateRecentPlayHistoryRequest(UpdateRecentPlayHistoryRequest action, IDispatcher dispatcher)
     {
+        if (action.Track == null)
+            return;
+
         var progress = new TrackProgress(action.SecondsPlayed, action.Track.Duration);
         
         if (action.Status == PlayStatus.Playing)

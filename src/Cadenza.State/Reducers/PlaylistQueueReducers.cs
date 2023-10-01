@@ -5,29 +5,32 @@ public static class PlaylistQueueReducers
     [ReducerMethod]
     public static PlaylistQueueState ReducePlaylistQueueUpdateRequest(PlaylistQueueState state, PlaylistQueueUpdateRequest action)
     {
-        // Note this doesn't take into consideration starting on a specific track - find where that comes in in original code
-
         if (action.Definition == null)
         {
             return PlaylistQueueState.Init();
         }
 
         var allTracks = action.Definition.Tracks.ToList();
-        var toPlay = PopulateToPlay(allTracks);
-        var played = PopulatePlayed();
-        var playing = toPlay.Pop();
+
+        var tracksToPlay = allTracks.Skip(action.Definition.StartIndex).ToList();
+        var playedTracks = allTracks.Take(action.Definition.StartIndex).ToList();
+
+        var toPlayStack = PopulateToPlay(tracksToPlay);
+        var playedStack = PopulatePlayed(playedTracks);
+
+        var playing = toPlayStack.Pop();
 
         return state with
         {
             IsLoading = false,
-            Played = played,
-            ToPlay = toPlay,
+            Played = playedStack,
+            ToPlay = toPlayStack,
             CurrentTrack = playing
         };
     }
 
-    [ReducerMethod]
-    public static PlaylistQueueState ReducePlaylistQueueMoveNextRequest(PlaylistQueueState state, PlaylistQueueMoveNextRequest action)
+    [ReducerMethod(typeof(PlaylistQueueMoveNextRequest))]
+    public static PlaylistQueueState ReducePlaylistQueueMoveNextRequest(PlaylistQueueState state)
     {
         state.Played.Push(state.CurrentTrack);
 
@@ -42,8 +45,8 @@ public static class PlaylistQueueReducers
         };
     }
 
-    [ReducerMethod]
-    public static PlaylistQueueState ReducePlaylistQueueMovePreviousRequest(PlaylistQueueState state, PlaylistQueueMovePreviousRequest action)
+    [ReducerMethod(typeof(PlaylistQueueMovePreviousRequest))]
+    public static PlaylistQueueState ReducePlaylistQueueMovePreviousRequest(PlaylistQueueState state)
     {
         var playing = state.CurrentTrack;
 
@@ -78,11 +81,9 @@ public static class PlaylistQueueReducers
         return state;
     }
 
-    private static Stack<int> PopulatePlayed(List<int> played = null)
+    private static Stack<int> PopulatePlayed(List<int> played)
     {
-        return played == null
-            ? new Stack<int>()
-            : new Stack<int>(played);
+        return new Stack<int>(played);
     }
 
     private static Stack<int> PopulateToPlay(List<int> toPlay)
