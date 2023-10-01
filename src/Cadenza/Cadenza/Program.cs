@@ -22,7 +22,13 @@ public class Program
         var effectsAssembly = typeof(RecentPlayHistoryEffects).Assembly;
         builder.Services
             .AddFluxor(options => options.ScanAssemblies(currentAssembly, stateAssembly, effectsAssembly)
-            .AddMiddleware<LoggingMiddleware>());
+            //.AddMiddleware<LoggingMiddleware>()
+        );
+
+        //builder.Logging.AddFilter((category, level) =>
+        //{
+        //    return category == null || !category.Contains("System.Net.Http.HttpClient");
+        //});
 
         builder.Services.RegisterDependencies(builder.Configuration);
 
