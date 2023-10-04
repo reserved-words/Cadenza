@@ -3,12 +3,14 @@
 AS
 BEGIN
 
-	SELECT TOP (@MaxItems)
-		[Tag]
+	SELECT 
+		PLT.[Tag]
 	FROM
-		[History].[vw_PlayedTags]
+		[History].[vw_PlayedTags] PLT
+	INNER JOIN 
+		[Library].[vw_UsedTags] UST ON UST.[Tag] = PLT.[Tag]
 	ORDER BY
-		[PlayedAt] DESC
+		PLT.[PlayedAt] DESC
 
 END
 
