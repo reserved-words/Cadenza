@@ -22,7 +22,7 @@ public static class _Startup
             .AddTransient<IFavouritesMessenger, Favourites>()
             .AddTransient<IFavouritesController, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IHistory, History>()
+            .AddTransient<IPlayHistory, History>()
             .AddTransient<ILastFmHttpHelper, LastFmHttpHelper>();
     }
 }

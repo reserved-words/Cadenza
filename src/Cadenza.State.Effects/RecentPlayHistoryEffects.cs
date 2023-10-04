@@ -8,10 +8,10 @@ public class RecentPlayHistoryEffects
     private const int MinMinutesPlayed = 4;
     private const int MinPercentagePlayed = 50;
 
-    private readonly IHistory _history;
+    private readonly IPlayHistory _history;
     private readonly IPlayTracker _tracker;
 
-    public RecentPlayHistoryEffects(IHistory history, IPlayTracker tracker)
+    public RecentPlayHistoryEffects(IPlayHistory history, IPlayTracker tracker)
     {
         _history = history;
         _tracker = tracker;
@@ -20,9 +20,6 @@ public class RecentPlayHistoryEffects
     [EffectMethod]
     public async Task HandleUpdateRecentPlayHistoryRequest(UpdateRecentPlayHistoryRequest action, IDispatcher dispatcher)
     {
-        if (action.Track == null)
-            return;
-
         var progress = new TrackProgress(action.SecondsPlayed, action.Track.Duration);
         
         if (action.Status == PlayStatus.Playing)

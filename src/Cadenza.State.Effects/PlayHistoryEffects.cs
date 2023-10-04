@@ -4,9 +4,9 @@ public class PlayHistoryEffects
 {
     private const int MaxItems = 5;
 
-    private readonly IHistory _history;
+    private readonly IPlayHistory _history;
 
-    public PlayHistoryEffects(IHistory history)
+    public PlayHistoryEffects(IPlayHistory history)
     {
         _history = history;
     }

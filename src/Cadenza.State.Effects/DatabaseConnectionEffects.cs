@@ -66,6 +66,9 @@ public class DatabaseConnectionEffects
     {
         DispatchProgressAction(dispatcher);
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
+        dispatcher.Dispatch(new FetchGroupingsRequest());
+        dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsRequest());
+        dispatcher.Dispatch(new FetchPlaylistHistoryTagsRequest());
         return Task.CompletedTask;
     }
 

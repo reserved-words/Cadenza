@@ -168,6 +168,7 @@
     <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
     <Build Include="Stored Procedures\Admin\GetGroupings.sql" />
     <None Include="SeedData\Groupings.sql" />
+    <Build Include="Views\Library\vw_UsedTags.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

@@ -14,6 +14,7 @@ public class PlaylistEffects
     {
         dispatcher.Dispatch(new PlayerStopRequest(_currentTrackState.Value.Track));
         dispatcher.Dispatch(new PlaylistQueueUpdateRequest(action.Definition));
+        dispatcher.Dispatch(new LogPlayedItemRequest(action.Definition.Id));
         return Task.CompletedTask;
     }
 

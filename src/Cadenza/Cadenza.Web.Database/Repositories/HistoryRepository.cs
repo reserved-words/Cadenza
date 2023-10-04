@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Database.Repositories;
 
-internal class HistoryRepository : IHistoryLogger, IHistoryFetcher
+internal class HistoryRepository : IPlaylistHistory
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
