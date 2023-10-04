@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Common.Interfaces;
 
-public interface IHistory
+public interface IPlayHistory
 {
     Task<List<PlayedAlbum>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1);
     Task<List<PlayedArtist>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1);

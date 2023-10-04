@@ -38,7 +38,6 @@ public static class Startup
             .AddTransient<ITagRepository, TagRepository>()
             .AddTransient<ITrackRepository, TrackRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>()
-            .AddTransient<IHistoryLogger, HistoryRepository>()
-            .AddTransient<IHistoryFetcher, HistoryRepository>();
+            .AddTransient<IPlaylistHistory, HistoryRepository>();
     }
 }

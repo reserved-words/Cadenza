@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.LastFM.Services;
 
-internal class History : IHistory
+internal class History : IPlayHistory
 {
     private readonly IUrl _url;
     private readonly ILastFmHttpHelper _http;
