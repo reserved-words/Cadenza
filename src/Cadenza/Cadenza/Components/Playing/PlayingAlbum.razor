@@ -22,11 +22,8 @@
 </ItemCard>
 
 @code {
-    [Parameter]
-    public AlbumTrackLink AlbumTrack { get; set; } = new();
-
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
+    [Parameter] public AlbumTrackLink AlbumTrack { get; set; } = new();
+    [Parameter] public Breakpoint Breakpoint { get; set; }
 
     private bool ShowHeader => Breakpoint != Breakpoint.Xs;
 }

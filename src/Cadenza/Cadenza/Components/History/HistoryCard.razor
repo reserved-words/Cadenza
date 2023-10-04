@@ -40,27 +40,12 @@ else if (Items != null)
 @typeparam T
 
 @code {
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
-    public bool ShowPeriodOption { get; set; } = true;
-
-    [Parameter]
-    public bool IsLoading { get; set; }
-
-    [Parameter]
-    public string LoadingCaption { get; set; }
-
-    [Parameter]
-    public List<T> Items { get; set; }
-
-    [Parameter]
-    public HistoryPeriod Period { get; set; }
-
-    [Parameter]
-    public RenderFragment<T> RowTemplate { get; set; }
-
-    [Parameter]
-    public Action<HistoryPeriod> UpdateItems { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool ShowPeriodOption { get; set; } = true;
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public string LoadingCaption { get; set; }
+    [Parameter] public List<T> Items { get; set; }
+    [Parameter] public HistoryPeriod Period { get; set; }
+    [Parameter] public RenderFragment<T> RowTemplate { get; set; }
+    [Parameter] public Action<HistoryPeriod> UpdateItems { get; set; }
 }

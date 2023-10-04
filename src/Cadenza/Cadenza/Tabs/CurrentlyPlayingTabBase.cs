@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-using Fluxor;
+﻿using Fluxor;
 
 namespace Cadenza.Tabs;
 

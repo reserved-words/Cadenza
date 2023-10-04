@@ -17,8 +17,7 @@
 </AppCardScrollContainer>
 
 @code {
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
+    [Parameter] public Breakpoint Breakpoint { get; set; }
 
     private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
 

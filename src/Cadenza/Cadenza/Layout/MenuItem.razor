@@ -8,27 +8,13 @@ else
 }
 
 @code {
-
-    [Parameter]
-    public string Icon { get; set; }
-
-    [Parameter]
-    public Size IconSize { get; set; }
-
-    [Parameter]
-    public string Label { get; set; }
-
-    [Parameter]
-    public bool ShowLabel { get; set; }
-
-    [Parameter]
-    public Tab Tab { get; set; }
-
-    [Parameter]
-    public string Class { get; set; }
-
-    [Parameter]
-    public Action<Tab> OnClickItem { get; set; }
+    [Parameter] public string Icon { get; set; }
+    [Parameter] public Size IconSize { get; set; }
+    [Parameter] public string Label { get; set; }
+    [Parameter] public bool ShowLabel { get; set; }
+    [Parameter] public Tab Tab { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public Action<Tab> OnClickItem { get; set; }
 
     private void OnClick()
     {

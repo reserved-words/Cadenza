@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+
 namespace Cadenza.Components.Library;
 
 public class AlbumDiscBase : FluxorComponent

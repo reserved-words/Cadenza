@@ -45,9 +45,6 @@
 </MudHidden>
 
 @code {
-    [Parameter]
-    public PlayerItem Model { get; set; }
-
-    [Parameter]
-    public Action<PlayerItem> OnViewItem { get; set; }
+    [Parameter] public PlayerItem Model { get; set; }
+    [Parameter] public Action<PlayerItem> OnViewItem { get; set; }
 }

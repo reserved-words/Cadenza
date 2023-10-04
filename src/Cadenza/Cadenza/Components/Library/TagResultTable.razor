@@ -12,12 +12,7 @@
 </AppTable>
 
 @code {
-    [Parameter]
-    public List<PlayerItem> Items { get; set; }
-
-    [Parameter]
-    public Action<PlayerItem> OnViewItem { get; set; }
-
-    [Parameter]
-    public Func<PlayerItem, bool> OnFilter { get; set; }
+    [Parameter] public List<PlayerItem> Items { get; set; }
+    [Parameter] public Action<PlayerItem> OnViewItem { get; set; }
+    [Parameter] public Func<PlayerItem, bool> OnFilter { get; set; }
 }
