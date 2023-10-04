@@ -1,6 +1,7 @@
-﻿@using Cadenza.Common.Interfaces.Repositories;
+﻿@inherits EditAlbumBase
+
+@using Cadenza.Common.Interfaces.Repositories;
 @using Cadenza.Web.Components.Forms.Album
-@inherits EditAlbumBase
 
 <AppDialog Cancel="OnCancel"
            CancelCaption="Cancel"
@@ -32,8 +33,7 @@
 
 @code {
 
-    [Inject]
-    public IAlbumRepository Repository { get; set; }
+    [Inject] public IAlbumRepository Repository { get; set; }
 
     private List<AlbumTrack> AlbumTracks { get; set; } = new();
 

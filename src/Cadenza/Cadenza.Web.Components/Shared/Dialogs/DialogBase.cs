@@ -1,6 +1,4 @@
-﻿using Fluxor.Blazor.Web.Components;
-
-namespace Cadenza.Web.Components.Shared.Dialogs;
+﻿namespace Cadenza.Web.Components.Shared.Dialogs;
 
 public class DialogBase : FluxorComponent
 {

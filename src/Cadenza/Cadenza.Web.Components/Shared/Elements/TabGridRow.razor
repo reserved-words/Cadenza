@@ -4,11 +4,8 @@
 </div>
 
 @code {
-    [Parameter]
-    public RowHeight RowHeight { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Parameter] public RowHeight RowHeight { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
     public string RowStyle => RowHeight == RowHeight.Fixed
         ? "flex-grow: 0;"

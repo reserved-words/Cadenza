@@ -16,11 +16,9 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public TrackDetails Model { get; set; }
+    [Inject] public INavigation Navigation { get; set; }
 
-    [Inject]
-    public INavigation Navigation { get; set; }
+    [Parameter] public TrackDetails Model { get; set; }
 
     private const string SearchUrl = "https://www.google.com/search?q=%22{0}%22+%22{1}%22+lyrics";
 

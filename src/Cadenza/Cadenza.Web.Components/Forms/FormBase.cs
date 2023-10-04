@@ -4,8 +4,7 @@ namespace Cadenza.Web.Components.Forms;
 
 public class FormBase<T> : FluxorComponent
 {
-    [Parameter]
-    public T Model { get; set; }
+    [Parameter] public T Model { get; set; }
 
     [CascadingParameter] protected MudDialogInstance MudDialog { get; set; }
 

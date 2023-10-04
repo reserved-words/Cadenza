@@ -5,11 +5,9 @@
 }
 
 @code {
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
 
-    [Parameter]
-    public ArtistDetails Model { get; set; }
+    [Parameter] public ArtistDetails Model { get; set; }
 
     public string ImageSrc { get; private set; }
 

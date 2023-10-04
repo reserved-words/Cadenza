@@ -1,7 +1,4 @@
-﻿using Cadenza.State.Actions;
-using Fluxor;
-
-namespace Cadenza.Web.Player.Components;
+﻿namespace Cadenza.Web.Player.Components;
 
 public class PlayerControlsBase : ComponentBase
 {

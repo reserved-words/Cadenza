@@ -1,19 +1,11 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-using Cadenza.State.Actions;
-using Fluxor;
-
-namespace Cadenza.Web.Player.Components;
+﻿namespace Cadenza.Web.Player.Components;
 
 public class CurrentTrackArtworkBase : ComponentBase
 {
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
-
-    [Parameter]
-    public TrackFull Model { get; set; }
+    [Parameter] public TrackFull Model { get; set; }
 
     public string AlbumDisplay { get; private set; }
 

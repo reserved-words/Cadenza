@@ -1,8 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-using Cadenza.State.Actions;
-using Fluxor.Blazor.Web.Components;
-
-namespace Cadenza.Web.Player.Components;
+﻿namespace Cadenza.Web.Player.Components;
 
 public class CurrentTrackBase : FluxorComponent
 {

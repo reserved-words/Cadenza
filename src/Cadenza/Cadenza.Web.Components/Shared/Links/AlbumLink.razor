@@ -3,17 +3,11 @@
 <ActionLink Typo="@Typo" Text="@Title" OnClick="@View"></ActionLink>
 
 @code {
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter]
-    public int Id { get; set; }
-
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
-    public Typo Typo { get; set; } = Typo.body1;
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public Typo Typo { get; set; } = Typo.body1;
 
     private void View()
     {

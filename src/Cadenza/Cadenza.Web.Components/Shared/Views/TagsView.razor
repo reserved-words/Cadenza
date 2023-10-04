@@ -14,11 +14,9 @@ else
 
 
 @code {
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter]
-    public TagList Model { get; set; }
+    [Parameter] public TagList Model { get; set; }
 
     private void OnViewTag(string id)
     {

@@ -32,26 +32,13 @@
 
 
 @code {
-    [Parameter]
-    public PlayerItemType Type { get; set; }
-
-    [Parameter]
-    public bool ShowHeader { get; set; } = true;
-
-    [Parameter]
-    public string Heading { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public TagList Tags { get; set; }
-
-    [Parameter]
-    public RenderFragment Toolbar { get; set; }
-
-    [Parameter]
-    public Breakpoint Breakpoint { get; set; }
+    [Parameter] public PlayerItemType Type { get; set; }
+    [Parameter] public bool ShowHeader { get; set; } = true;
+    [Parameter] public string Heading { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public TagList Tags { get; set; }
+    [Parameter] public RenderFragment Toolbar { get; set; }
+    [Parameter] public Breakpoint Breakpoint { get; set; }
 
     private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
 

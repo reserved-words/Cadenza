@@ -19,12 +19,7 @@
 </MudCard>
 
 @code {
-    [Parameter]
-    public int Elevation { get; set; } = 2;
-
-    [Parameter]
-    public RenderFragment HeaderContent { get; set; }
-    
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Parameter] public int Elevation { get; set; } = 2;
+    [Parameter] public RenderFragment HeaderContent { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 }

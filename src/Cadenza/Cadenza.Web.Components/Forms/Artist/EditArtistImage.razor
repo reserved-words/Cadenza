@@ -27,20 +27,12 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public ArtistDetails Model { get; set; }
+    [Inject] public IImageFinder ImageFinder { get; set; }
+    [Inject] public INavigation Navigation { get; set; }
+    [Inject] public INotificationService Alert { get; set; }
+    [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
 
-    [Inject]
-    public IImageFinder ImageFinder { get; set; }
-
-    [Inject]
-    public INavigation Navigation { get; set; }
-
-    [Inject]
-    public INotificationService Alert { get; set; }
-
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Parameter] public ArtistDetails Model { get; set; }
 
     private string ImageUrl { get; set; }
 

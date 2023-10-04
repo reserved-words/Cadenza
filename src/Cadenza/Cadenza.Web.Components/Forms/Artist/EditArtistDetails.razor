@@ -33,9 +33,6 @@
 <EditTagsCard Model="@Model.Tags" />
 
 @code {
-    [Parameter]
-    public ArtistDetails Model { get; set; }
-
-    [Parameter]
-    public List<Grouping> Groupings { get; set; }
+    [Parameter] public ArtistDetails Model { get; set; }
+    [Parameter] public List<Grouping> Groupings { get; set; }
 }
