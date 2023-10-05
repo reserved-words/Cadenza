@@ -29,7 +29,7 @@
 
 @code {
     [Inject] public IImageFinder ImageFinder { get; set; }
-    [Inject] public INavigation Navigation { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public INotificationService Alert { get; set; }
     [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
 
@@ -67,10 +67,10 @@
         }
     }
 
-    protected async Task OnSearch()
+    protected void OnSearch()
     {
         var searchUrl = ImageFinder.GetSearchUrl(Model);
-        await Navigation.OpenNewTab(searchUrl);
+        Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 
     protected async Task OnUpdateUrl()

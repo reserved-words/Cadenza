@@ -14,15 +14,13 @@ public class LastFmConnectionEffects
     private readonly IStore _store;
     private readonly IAuthoriser _authoriser;
     private readonly IOptions<LastFmApiSettings> _settings;
-    private readonly INavigation _navigation;
     private readonly ILogger<LastFmConnectionEffects> _logger;
 
-    public LastFmConnectionEffects(IStore store, IAuthoriser authoriser, IOptions<LastFmApiSettings> settings, INavigation navigation, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
+    public LastFmConnectionEffects(IStore store, IAuthoriser authoriser, IOptions<LastFmApiSettings> settings, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
     {
         _store = store;
         _authoriser = authoriser;
         _settings = settings;
-        _navigation = navigation;
         _state = state;
         _logger = logger;
     }
@@ -49,7 +47,7 @@ public class LastFmConnectionEffects
         try
         {
             var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
-            await _navigation.NavigateTo(authUrl);
+            dispatcher.Dispatch(new NavigationRequest(authUrl, false));
         }
         catch (Exception ex)
         {
@@ -89,7 +87,7 @@ public class LastFmConnectionEffects
         await _store.SetValue(LastFmSessionKey, action.SessionKey);
         if (action.Reload)
         {
-            await _navigation.NavigateTo("/");
+            dispatcher.Dispatch(new NavigationRequest("/", false));
         }
         else
         {

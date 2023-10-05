@@ -16,7 +16,7 @@
 </EditCard>
 
 @code {
-    [Inject] public INavigation Navigation { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public TrackDetails Model { get; set; }
 
@@ -45,9 +45,9 @@
         return Task.CompletedTask;
     }
 
-    protected async Task OnSearch()
+    protected void OnSearch()
     {
         var searchUrl = GetSearchUrl();
-        await Navigation.OpenNewTab(searchUrl);
+        Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 }
