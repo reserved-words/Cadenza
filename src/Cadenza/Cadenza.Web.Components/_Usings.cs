@@ -21,3 +21,8 @@ global using Cadenza.Web.Components.Shared.Dialogs;
 
 global using Fluxor;
 global using Fluxor.Blazor.Web.Components;
+
+global using Cadenza.Web.Components.Main.ViewBases;
+global using Cadenza.Common.Domain.Model.History;
+global using Cadenza.Common.Domain.Model;
+global using Cadenza.Web.Common.Extensions;

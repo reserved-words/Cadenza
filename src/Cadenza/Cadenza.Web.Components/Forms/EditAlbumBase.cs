@@ -1,6 +1,4 @@
-﻿using Fluxor;
-
-namespace Cadenza.Web.Components.Forms;
+﻿namespace Cadenza.Web.Components.Forms;
 
 public class EditAlbumBase : FormBase<AlbumDetails>
 {
