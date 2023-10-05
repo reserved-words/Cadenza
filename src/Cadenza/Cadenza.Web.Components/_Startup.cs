@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Components.Players;
-using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components;
 
@@ -27,12 +26,5 @@ public static class Startup
             .AddTransient<IDialogService, MudDialogService>()
             .AddTransient<IStartupDialogService, StartupDialogService>()
             .AddTransient<INotificationService, MudNotificationService>();
-    }
-
-    public static IServiceCollection AddPlayerComponent(this IServiceCollection services)
-    {
-        return services
-            .AddScoped<IPlayTimer, PlayTimer>()
-            .AddScoped<IPlayer, CorePlayer>();
     }
 }

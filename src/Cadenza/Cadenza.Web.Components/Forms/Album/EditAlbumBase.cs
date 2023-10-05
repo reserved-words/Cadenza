@@ -1,23 +1,21 @@
-﻿using Fluxor;
+﻿namespace Cadenza.Web.Components.Forms.Album;
 
-namespace Cadenza.Web.Components.Forms;
-
-public class EditTrackBase : FormBase<TrackDetails>
+public class EditAlbumBase : FormBase<AlbumDetails>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public TrackUpdate Update { get; set; }
-    public TrackDetails EditableItem => Update.UpdatedItem;
+    public AlbumUpdate Update { get; set; }
+    public AlbumDetails EditableItem => Update.UpdatedItem;
 
     protected override void OnInitialized()
     {
-        SubscribeToAction<TrackUpdatedAction>(OnTrackUpdated);
+        SubscribeToAction<AlbumUpdatedAction>(OnAlbumUpdated);
         base.OnInitialized();
     }
 
     protected override void OnParametersSet()
     {
-        Update = new TrackUpdate(Model);
+        Update = new AlbumUpdate(Model);
     }
 
     protected void OnSubmit()
@@ -30,10 +28,10 @@ public class EditTrackBase : FormBase<TrackDetails>
             return;
         }
 
-        Dispatcher.Dispatch(new TrackUpdateRequest(Model.Id, Update));
+        Dispatcher.Dispatch(new AlbumUpdateRequest(Model.Id, Update));
     }
 
-    private void OnTrackUpdated(TrackUpdatedAction action)
+    private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
         Submit();
     }

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Components.Players;
+﻿namespace Cadenza.Web.Player;
 
 internal class CorePlayer : IPlayer
 {

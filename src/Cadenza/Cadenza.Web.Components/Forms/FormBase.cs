@@ -1,6 +1,4 @@
-﻿using Fluxor.Blazor.Web.Components;
-
-namespace Cadenza.Web.Components.Forms;
+﻿namespace Cadenza.Web.Components.Forms;
 
 public class FormBase<T> : FluxorComponent
 {

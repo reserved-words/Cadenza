@@ -1,6 +1,6 @@
 ﻿using TrackRemovalRequest = Cadenza.State.Actions.TrackRemovalRequest;
 
-namespace Cadenza.Web.Components.Forms;
+namespace Cadenza.Web.Components.Forms.Album;
 
 public class RemoveTrackBase : FormBase<TrackToRemove>
 {

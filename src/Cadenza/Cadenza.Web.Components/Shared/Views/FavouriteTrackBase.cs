@@ -1,9 +1,8 @@
 ﻿namespace Cadenza.Web.Components.Shared.Views;
 
-public class FavouriteTrackBase : ComponentBase
+public class FavouriteTrackBase : FluxorComponent
 {
-    [Inject] public IFavouritesMessenger Favourites { get; set; }
-    [Inject] public IFavouritesController FavouritesController { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public string Artist { get; set; }
     [Parameter] public string Title { get; set; }
@@ -11,7 +10,30 @@ public class FavouriteTrackBase : ComponentBase
 
     public bool IsEnabled { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<IsFavouriteResultAction>(OnIsFavouriteResult);
+        SubscribeToAction<FavouriteStatusChangedAction>(OnFavouriteStatusChanged);
+        base.OnInitialized();
+    }
+
+    private void OnFavouriteStatusChanged(FavouriteStatusChangedAction action)
+    {
+        if (action.Artist != Artist || action.Title != Title)
+            return;
+
+        IsFavourite = action.IsFavourite;
+    }
+
+    private void OnIsFavouriteResult(IsFavouriteResultAction action)
+    {
+        if (action.Artist != Artist || action.Title != Title)
+            return;
+
+        IsFavourite = action.Result;
+    }
+
+    protected override void OnParametersSet()
     {
         IsEnabled = false;
 
@@ -23,21 +45,19 @@ public class FavouriteTrackBase : ComponentBase
         if (!IsFavourite.HasValue)
         {
             IsFavourite = false;
-            IsFavourite = await Favourites.IsFavourite(Artist, Title);
+            Dispatcher.Dispatch(new IsFavouriteRequest(Artist, Title));
         }
-
-        StateHasChanged();
     }
 
-    public async Task Favourite()
+    public void Favourite()
     {
-        await FavouritesController.Favourite(Artist, Title);
+        Dispatcher.Dispatch(new FavouriteRequest(Artist, Title));
         IsFavourite = true;
     }
 
-    public async Task Unfavourite()
+    public void Unfavourite()
     {
-        await FavouritesController.Unfavourite(Artist, Title);
+        Dispatcher.Dispatch(new UnfavouriteRequest(Artist, Title));
         IsFavourite = false;
     }
 }

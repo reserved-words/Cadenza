@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Cadenza.Web.Components.Forms;
+namespace Cadenza.Web.Components.Forms.Shared;
 
 public class TagsEditorBase : ComponentBase
 {
-    private const string RegexPattern = @"^[0-9a-zß-ÿ\-]*$"; 
-    
+    private const string RegexPattern = @"^[0-9a-zß-ÿ\-]*$";
+
     [Parameter] public TagList Model { get; set; } = new TagList();
 
     protected DefaultFocus DefaultFocus { get; set; }
