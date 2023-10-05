@@ -29,7 +29,6 @@
 @code {
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public INotificationService Alert { get; set; }
     [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
 
     [Parameter] public ArtistDetails Model { get; set; }
@@ -62,7 +61,7 @@
         }
         catch (Exception ex)
         {
-            Alert.Error(ex.Message);
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
             return;
         }
     }

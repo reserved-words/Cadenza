@@ -36,7 +36,7 @@
 
 @code {
     [Inject] public IDialogService DialogService { get; set; }
-    [Inject] public INotificationService Notification { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
     [Parameter] public List<AlbumTrack> Model { get; set; }
@@ -52,7 +52,7 @@
         var currentTrackId = CurrentTrackState.Value.Track?.Id;
         if (currentTrackId == track.TrackId)
         {
-            Notification.Error("Track cannot be removed while currently playing");
+            Dispatcher.Dispatch(new NotificationErrorRequest("Track cannot be removed while currently playing", null, null));
             return;
         }
 
