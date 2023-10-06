@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Repositories;
-
-namespace Cadenza.API.Interfaces;
+﻿namespace Cadenza.API.Interfaces;
 
 public interface ILibraryCache
 {

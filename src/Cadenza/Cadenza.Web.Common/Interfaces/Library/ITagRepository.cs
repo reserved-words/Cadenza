@@ -1,6 +1,6 @@
 ﻿using Cadenza.Common.Domain.Model;
 
-namespace Cadenza.Common.Interfaces.Repositories;
+namespace Cadenza.Web.Common.Interfaces.Library;
 
 public interface ITagRepository
 {

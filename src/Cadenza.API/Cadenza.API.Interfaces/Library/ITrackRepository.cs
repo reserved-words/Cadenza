@@ -1,6 +1,6 @@
 ﻿using Cadenza.Common.Domain.Model.Library;
 
-namespace Cadenza.Common.Interfaces.Repositories;
+namespace Cadenza.API.Interfaces.Library;
 
 public interface ITrackRepository
 {

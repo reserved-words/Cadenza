@@ -1,9 +1,10 @@
 ﻿global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.Domain.Model.Library;
-global using Cadenza.Common.Interfaces.Repositories;
 global using Microsoft.Extensions.DependencyInjection;
+
 global using Cadenza.API.Interfaces;
+global using Cadenza.API.Interfaces.Library;
 
 global using Cadenza.API.Cache.Extensions;
 global using Cadenza.API.Cache.Interfaces;
