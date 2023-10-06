@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Services;
 
 internal class ArtworkFetcher : IArtworkFetcher
 {
@@ -8,46 +6,25 @@ internal class ArtworkFetcher : IArtworkFetcher
 
     private readonly DatabaseApiSettings _settings;
 
-    private readonly Dictionary<int, string> _updateAlbumArtwork = new();
-    private readonly Dictionary<int, string> _updatedArtistImages = new ();
-
     public ArtworkFetcher(IOptions<DatabaseApiSettings> settings)
     {
         _settings = settings.Value;
     }
 
-    public string GetArtistImageSrc(ArtistDetails artist)
+    public string GetArtistImageSrc(int? artistId)
     {
-        if (artist == null || artist.Id == 0)
+        if (artistId == null || artistId == 0)
             return ArtworkPlaceholderUrl;
 
-        if (artist.ImageBase64 != null)
-        {
-            _updatedArtistImages.Remove(artist.Id);
-            _updatedArtistImages.Add(artist.Id, artist.ImageBase64);
-        }
-
-        if (_updatedArtistImages.TryGetValue(artist.Id, out var imageSrc))
-            return imageSrc;
-
-        return GetUrl(_settings.Endpoints.ArtistImage, artist.Id);
+        return GetUrl(_settings.Endpoints.ArtistImage, artistId.Value);
     }
 
-    public string GetAlbumArtworkSrc(Album album)
+    public string GetAlbumArtworkSrc(int? albumId)
     {
-        if (album == null || album.Id == 0)
+        if (albumId == null || albumId == 0)
             return ArtworkPlaceholderUrl;
 
-        if (album.ArtworkBase64 != null)
-        {
-            _updateAlbumArtwork.Remove(album.Id);
-            _updateAlbumArtwork.Add(album.Id, album.ArtworkBase64);
-        }
-
-        if (_updateAlbumArtwork.TryGetValue(album.Id, out var imageSrc))
-            return imageSrc;
-
-        return GetUrl(_settings.Endpoints.AlbumArtwork, album.Id);
+        return GetUrl(_settings.Endpoints.AlbumArtwork, albumId.Value);
     }
 
     private string GetUrl(string endpoint, int id)

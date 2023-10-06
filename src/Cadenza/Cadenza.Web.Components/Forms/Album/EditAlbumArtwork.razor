@@ -1,4 +1,6 @@
 ﻿
+@inherits FluxorComponent
+
 <EditCard>
     <MudContainer Class="mt-3 d-flex flex-column align-center">
 
@@ -30,7 +32,6 @@
 @code {
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
 
     [Parameter] public AlbumDetails Model { get; set; }
 
@@ -38,9 +39,23 @@
 
     private string OriginalArtworkSrc { get; set; }
 
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
+        base.OnInitialized();
+    }
+
     protected override void OnParametersSet()
     {
-        OriginalArtworkSrc = ArtworkFetcher.GetAlbumArtworkSrc(Model);
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+    }
+
+    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
+    {
+        if (action.AlbumId != Model.Id)
+            return;
+
+        OriginalArtworkSrc = action.Result;
     }
 
     protected async Task OnLoad()

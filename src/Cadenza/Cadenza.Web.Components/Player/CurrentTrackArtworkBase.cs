@@ -1,15 +1,19 @@
 ﻿namespace Cadenza.Web.Components.Player;
 
-public class CurrentTrackArtworkBase : ComponentBase
+public class CurrentTrackArtworkBase : FluxorComponent
 {
-    [Inject] public IArtworkFetcher ArtworkFetcher { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public TrackFull Model { get; set; }
 
     public string AlbumDisplay { get; private set; }
-
     public string ArtworkUrl { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
+        base.OnInitialized();
+    }
 
     protected override void OnParametersSet()
     {
@@ -17,9 +21,22 @@ public class CurrentTrackArtworkBase : ComponentBase
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        ArtworkUrl = ArtworkFetcher.GetAlbumArtworkSrc(Model?.Album);
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album));
+    }
 
-        StateHasChanged();
+    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
+    {
+        if (Model == null)
+        {
+            if (action.AlbumId == 0)
+            {
+                ArtworkUrl = action.Result;
+            }
+        }
+        else if (action.AlbumId == Model.Album.Id)
+        {
+            ArtworkUrl = action.Result;
+        }
     }
 
     protected void OnViewAlbum()
