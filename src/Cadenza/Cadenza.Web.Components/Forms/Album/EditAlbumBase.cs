@@ -3,9 +3,11 @@
 public class EditAlbumBase : FormBase<AlbumDetails>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<EditableAlbumState> State { get; set; }
 
     public AlbumUpdate Update { get; set; }
     public AlbumDetails EditableItem => Update.UpdatedItem;
+    public List<AlbumTrack> AlbumTracks => State.Value.Tracks;
 
     protected override void OnInitialized()
     {
@@ -15,6 +17,7 @@ public class EditAlbumBase : FormBase<AlbumDetails>
 
     protected override void OnParametersSet()
     {
+        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
         Update = new AlbumUpdate(Model);
     }
 
@@ -33,11 +36,13 @@ public class EditAlbumBase : FormBase<AlbumDetails>
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
+        Dispatcher.Dispatch(new ResetEditableAlbumTracksRequest());
         Submit();
     }
 
     protected void OnCancel()
     {
+        Dispatcher.Dispatch(new ResetEditableAlbumTracksRequest());
         Cancel();
     }
 }

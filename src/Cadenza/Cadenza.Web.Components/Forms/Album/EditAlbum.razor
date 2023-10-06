@@ -1,6 +1,5 @@
 ﻿@inherits EditAlbumBase
 
-@using Cadenza.Common.Interfaces.Repositories;
 @using Cadenza.Web.Components.Forms.Album
 
 <AppDialog Cancel="OnCancel"
@@ -30,15 +29,3 @@
 
     </ChildContent>
 </AppDialog>
-
-@code {
-
-    [Inject] public IAlbumRepository Repository { get; set; }
-
-    private List<AlbumTrack> AlbumTracks { get; set; } = new();
-
-    protected override async Task OnParametersSetAsync()
-    {
-        AlbumTracks = await Repository.GetAlbumTracks(Model.Id);
-    }
-}
