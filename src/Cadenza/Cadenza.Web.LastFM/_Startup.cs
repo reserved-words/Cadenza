@@ -19,8 +19,7 @@ public static class _Startup
     {
         return services
             .AddTransient<IPlayTracker, Scrobbler>()
-            .AddTransient<IFavouritesMessenger, Favourites>()
-            .AddTransient<IFavouritesController, Favourites>()
+            .AddTransient<IFavouritesService, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IPlayHistory, History>()
             .AddTransient<ILastFmHttpHelper, LastFmHttpHelper>();

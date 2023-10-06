@@ -1,4 +1,5 @@
-﻿@using Cadenza.State.Actions;
+﻿
+@inherits FluxorComponent
 
 @if (Model != null)
 {
@@ -6,25 +7,33 @@
 }
 
 @code {
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
-
-    [Parameter]
-    public Album Model { get; set; }
+    [Parameter] public Album Model { get; set; }
 
     public string ArtworkSrc { get; private set; }
 
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
-        ArtworkSrc = ArtworkFetcher.GetAlbumArtworkSrc(Model);
+        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
+        base.OnInitialized();
     }
 
-    public Task Play()
+    protected override void OnParametersSet()
+    {
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+    }
+
+    public void Play()
     {
         Dispatcher.Dispatch(new PlayAlbumRequest(Model.Id, 0));
-        return Task.CompletedTask;
+    }
+
+    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
+    {
+        if (action.AlbumId != Model.Id)
+            return;
+
+        ArtworkSrc = action.Result;
     }
 }

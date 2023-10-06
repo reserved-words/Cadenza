@@ -1,27 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.21" />
-    <PackageReference Include="MudBlazor" Version="6.0.16" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Interfaces\Cadenza.Common.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Cadenza.State\Cadenza.State.csproj" />
+    <ProjectReference Include="..\Cadenza.State\Cadenza.State.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
   </ItemGroup>
 
 </Project>

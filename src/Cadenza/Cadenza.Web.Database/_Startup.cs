@@ -27,7 +27,7 @@ public static class Startup
     private static IServiceCollection AddApiRepositories(this IServiceCollection services)
     {
         services
-            .AddSingleton<IArtworkFetcher, ArtworkFetcher>();
+            .AddTransient<IArtworkFetcher, ArtworkFetcher>();
 
         return services
             .AddTransient<IAdminRepository, AdminRepository>()

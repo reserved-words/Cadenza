@@ -1,4 +1,6 @@
 ﻿
+@inherits FluxorComponent
+
 <EditCard>
     <MudContainer Class="mt-3 d-flex flex-column align-center">
         @if (Model.ImageBase64 != null)
@@ -27,34 +29,38 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public ArtistDetails Model { get; set; }
+    [Inject] public IImageFinder ImageFinder { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IImageFinder ImageFinder { get; set; }
-
-    [Inject]
-    public INavigation Navigation { get; set; }
-
-    [Inject]
-    public INotificationService Alert { get; set; }
-
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Parameter] public ArtistDetails Model { get; set; }
 
     private string ImageUrl { get; set; }
 
     private string OriginalImageSrc { get; set; }
 
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
-        OriginalImageSrc = ArtworkFetcher.GetArtistImageSrc(Model);
+        SubscribeToAction<FetchArtistImageResultAction>(OnArtistImageFetched);
+        base.OnInitialized();
     }
 
-    protected async Task OnSearch(SearchSource source)
+    protected override void OnParametersSet()
+    {
+        Dispatcher.Dispatch(new FetchArtistImageRequest(Model));
+    }
+
+    private void OnArtistImageFetched(FetchArtistImageResultAction action)
+    {
+        if (action.ArtistId != Model.Id)
+            return;
+
+        OriginalImageSrc = action.Result;
+    }
+
+    protected void OnSearch(SearchSource source)
     {
         var searchUrl = ImageFinder.GetSearchUrl(Model, source);
-        await Navigation.OpenNewTab(searchUrl);
+        Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 
     protected async Task OnUpdateUrl()
@@ -70,7 +76,7 @@
         }
         catch (Exception ex)
         {
-            Alert.Error(ex.Message);
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
             return;
         }
     }

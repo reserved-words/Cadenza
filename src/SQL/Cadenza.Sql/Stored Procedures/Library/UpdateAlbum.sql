@@ -21,6 +21,7 @@ BEGIN
 			[ArtistId] = @ArtistId
 			AND [Title] = @Title
 			AND [ReleaseTypeId] = @ReleaseTypeId
+			AND [Id] != @Id
 	)
 		THROW 51000, 'An album already exists with the same artist, title and release type', 1;
 

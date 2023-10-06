@@ -1,5 +1,4 @@
-﻿@using Cadenza.State.Actions;
-@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
@@ -9,14 +8,10 @@
 </MudPaper>
 
 @code {
-    [Inject]
-    public IDialogService DialogService { get; set; }
+    [Inject] public IDialogService DialogService { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IDispatcher Dispatcher { get; set; }
-
-    [Parameter]
-    public TrackDetails Track { get; set; }
+    [Parameter] public TrackDetails Track { get; set; }
 
     protected Task OnPlay()
     {

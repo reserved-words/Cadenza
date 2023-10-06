@@ -1,0 +1,85 @@
+﻿
+<AppTable Items="@Model.Tracks"
+          OnRowDoubleClick="@OnDoubleClick">
+    <RowTemplate>
+        <MudTd Class="@CellClass(context, true)">@context.TrackNo</MudTd>
+        <MudTd Class="@CellClass(context, false)">
+            @if (IsPlaying(context))
+            {
+                <CurrentlyPlayingIcon Class="mr-2 inline" />
+            }
+            <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" Class="inline" />
+        </MudTd>
+        <MudTd Class="@CellClass(context, false)">
+            @if (!IsTrackArtistSameAsAlbumArtist(context))
+            {
+                <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
+            }
+        </MudTd>
+        <MudTd Class="@CellClass(context, true)">@context.Duration()</MudTd>
+    </RowTemplate>
+</AppTable>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
+
+    [Parameter] public Disc Model { get; set; } = new();
+    [Parameter] public int AlbumId { get; set; }
+    [Parameter] public int AlbumArtistId { get; set; }
+
+    protected int? CurrentTrackId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CurrentTrackState.StateChanged += CurrentTrackState_StateChanged;
+        base.OnInitialized();
+    }
+
+    private void CurrentTrackState_StateChanged(object sender, EventArgs e)
+    {
+        UpdateCurrentTrack();
+    }
+
+    protected override void OnParametersSet()
+    {
+        UpdateCurrentTrack();
+    }
+
+    protected Task OnDoubleClick(AlbumTrack track)
+    {
+        Dispatcher.Dispatch(new PlayAlbumRequest(AlbumId, track.TrackId));
+        return Task.CompletedTask;
+    }
+
+    protected string CellClass(AlbumTrack track, bool isInt)
+    {
+        return (isInt ? "td-int " : "")
+            + (track.TrackId == CurrentTrackId ? "td-highlight" : "");
+    }
+
+    protected bool IsPlaying(AlbumTrack track)
+    {
+        return track.TrackId == CurrentTrackId;
+    }
+
+    protected bool IsTrackArtistSameAsAlbumArtist(AlbumTrack track)
+    {
+        return track.ArtistId == AlbumArtistId;
+    }
+
+    private void UpdateCurrentTrack()
+    {
+        var currentTrackId = CurrentTrackState.Value.Track?.Id;
+
+        var isOldCurrentTrackOnDisc = CurrentTrackId != null;
+        var isNewCurrentTrackOnDisc = currentTrackId != null && Model.Tracks.Any(t => t.TrackId == currentTrackId);
+
+        CurrentTrackId = isNewCurrentTrackOnDisc
+            ? currentTrackId
+            : null;
+
+        if (isNewCurrentTrackOnDisc || isOldCurrentTrackOnDisc)
+            StateHasChanged();
+    }
+}

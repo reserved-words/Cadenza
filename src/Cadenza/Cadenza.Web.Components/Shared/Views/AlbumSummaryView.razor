@@ -1,4 +1,5 @@
-﻿@if (Model != null)
+﻿
+@if (Model != null)
 {
     <MudStack Spacing="0">
         <AlbumLink Typo="@Typo.body1" Id="@Model.Id" Title="@Model.Title"></AlbumLink>
@@ -8,6 +9,5 @@
 }
 
 @code {
-    [Parameter]
-    public Album Model { get; set; }
+    [Parameter] public Album Model { get; set; }
 }

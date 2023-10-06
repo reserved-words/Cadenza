@@ -1,0 +1,11 @@
+﻿
+<AppCard>
+    <HeaderContent>
+        <ItemCardHeader Type="@PlayerItemType.Genre" Heading="@Id" Toolbar="@Toolbar" />
+    </HeaderContent>
+</AppCard>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    [Parameter] public RenderFragment Toolbar { get; set; }
+}

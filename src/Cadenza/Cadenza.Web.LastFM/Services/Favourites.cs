@@ -3,7 +3,7 @@ using Fluxor;
 
 namespace Cadenza.Web.LastFM.Services;
 
-internal class Favourites : IFavouritesMessenger, IFavouritesController
+internal class Favourites : IFavouritesService
 {
     private readonly IUrl _url;
     private readonly ILastFmHttpHelper _http;

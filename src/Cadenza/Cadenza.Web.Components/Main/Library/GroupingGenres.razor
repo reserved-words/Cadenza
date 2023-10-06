@@ -1,0 +1,17 @@
+﻿
+<AppCardScrollContainer>
+    <ChildContent>
+        <AppTable T="@string"
+                  Items="@Genres">
+            <RowTemplate>
+                <MudTd>
+                    <GenreLink Typo="@Typo.body1" Genre="@context" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter] public List<string> Genres { get; set; } = new();
+}

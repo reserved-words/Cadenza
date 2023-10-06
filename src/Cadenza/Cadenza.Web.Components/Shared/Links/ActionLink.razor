@@ -12,20 +12,11 @@
 
 
 @code {
-    [Parameter]
-    public Typo Typo { get; set; }
-
-    [Parameter]
-    public string Text { get; set; }
-
-    [Parameter]
-    public string Icon { get; set; }
-
-    [Parameter]
-    public string Class { get; set; }
-
-    [Parameter]
-    public Action OnClick { get; set; }
+    [Parameter] public Typo Typo { get; set; }
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string Icon { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public Action OnClick { get; set; }
 
     private string IconClass => "mr-2 " + Class;
 }

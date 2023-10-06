@@ -1,18 +1,15 @@
-﻿global using Microsoft.AspNetCore.Components;
-global using Microsoft.Extensions.DependencyInjection;
+﻿global using Cadenza.Web.Common.Interfaces;
+global using Cadenza.State.Actions;
+global using Cadenza.State.Store;
+global using Fluxor;
 
-global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.Library;
-
-global using Cadenza.Web.Common.Interfaces;
-
-global using Cadenza.Web.Player.Players;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cadenza.Web.Player;
 
-public static class _Startup
+public static class Startup
 {
-    public static IServiceCollection AddPlayerComponent(this IServiceCollection services)
+    public static IServiceCollection AddPlayer(this IServiceCollection services)
     {
         return services
             .AddScoped<IPlayTimer, PlayTimer>()

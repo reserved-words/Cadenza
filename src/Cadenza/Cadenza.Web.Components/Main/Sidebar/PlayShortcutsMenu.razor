@@ -1,0 +1,15 @@
+﻿<MudMenu FullWidth="true"
+         EndIcon="@Icons.Filled.KeyboardArrowRight"
+         Label="@Label"
+         Variant="Variant.Filled"
+         ActivationEvent="@MouseEvent.LeftClick"
+         Size="@Size.Large"
+         AnchorOrigin="@Origin.BottomRight"
+         TransformOrigin="@Origin.BottomLeft">
+    @ChildContent
+</MudMenu>
+
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

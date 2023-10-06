@@ -2,8 +2,7 @@
 
 public class DialogViewBase<T> : ComponentBase
 {
-    [Parameter]
-    public T Model { get; set; }
+    [Parameter] public T Model { get; set; }
 
     [CascadingParameter] protected MudDialogInstance MudDialog { get; set; }
 

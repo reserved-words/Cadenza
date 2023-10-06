@@ -17,29 +17,14 @@
 @typeparam T
 
 @code {
-    [Parameter]
-    public List<T> Items { get; set; }
-
-    [Parameter]
-    public RenderFragment<T> RowTemplate { get; set; }
-
-    [Parameter]
-    public T SelectedItem { get; set; }
-
-    [Parameter]
-    public Func<T, bool> Filter { get; set; } = (t) => true;
-
-    [Parameter]
-    public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
-
-    [Parameter]
-    public Func<T, Task> OnRowDoubleClick { get; set; }
-
-    [Parameter]
-    public RenderFragment PagerContent { get; set; }
-
-    [Parameter]
-    public int RowsPerPage { get; set; }
+    [Parameter] public List<T> Items { get; set; }
+    [Parameter] public RenderFragment<T> RowTemplate { get; set; }
+    [Parameter] public T SelectedItem { get; set; }
+    [Parameter] public Func<T, bool> Filter { get; set; } = (t) => true;
+    [Parameter] public EventCallback<TableRowClickEventArgs<T>> OnRowClick { get; set; } = EventCallback<TableRowClickEventArgs<T>>.Empty;
+    [Parameter] public Func<T, Task> OnRowDoubleClick { get; set; }
+    [Parameter] public RenderFragment PagerContent { get; set; }
+    [Parameter] public int RowsPerPage { get; set; }
 
     public async Task OnDoubleClick(MouseEventArgs args)
     {

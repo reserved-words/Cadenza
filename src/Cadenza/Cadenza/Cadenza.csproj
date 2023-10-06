@@ -31,8 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
-    <ProjectReference Include="..\..\Cadenza.State.Effects\Cadenza.State.Effects.csproj" />
-    <ProjectReference Include="..\..\Cadenza.State\Cadenza.State.csproj" />
+    <ProjectReference Include="..\Cadenza.State.Actions\Cadenza.State.Actions.csproj" />
+    <ProjectReference Include="..\Cadenza.State\Cadenza.State.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />

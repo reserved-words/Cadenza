@@ -1,0 +1,26 @@
+﻿@inherits EditTrackBase
+
+@using Cadenza.Web.Components.Forms.Track
+
+<AppDialog Cancel="OnCancel"
+           CancelCaption="Cancel"
+           Submit="OnSubmit"
+           SubmitCaption="OK"
+           FullHeight="true">
+    <ChildContent>
+        <EditForm Model="@EditableItem">
+
+            <DataAnnotationsValidator />
+
+            <MudTabs Elevation="3">
+                <MudTabPanel Text="Details">
+                    <EditTrackDetails Model="@EditableItem" />
+                </MudTabPanel>
+                <MudTabPanel Text="Lyrics">
+                    <EditTrackLyrics Model="@EditableItem" />
+                </MudTabPanel>
+            </MudTabs>
+
+        </EditForm>
+    </ChildContent>
+</AppDialog>

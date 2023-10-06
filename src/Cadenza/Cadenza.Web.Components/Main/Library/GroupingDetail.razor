@@ -1,0 +1,11 @@
+﻿
+<AppCard>
+    <HeaderContent>
+        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Grouping.Name" Toolbar="@Toolbar" />
+    </HeaderContent>
+</AppCard>
+
+@code {
+    [Parameter] public Grouping Grouping { get; set; }
+    [Parameter] public RenderFragment Toolbar { get; set; }
+}

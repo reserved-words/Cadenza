@@ -1,4 +1,6 @@
 ﻿
+@inherits FluxorComponent
+
 <EditCard>
     <MudContainer Class="mt-3 d-flex flex-column align-center">
 
@@ -28,28 +30,32 @@
 </EditCard>
 
 @code {
-    [Parameter]
-    public AlbumDetails Model { get; set; }
+    [Inject] public IImageFinder ImageFinder { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Inject]
-    public IImageFinder ImageFinder { get; set; }
-
-    [Inject]
-    public INavigation Navigation { get; set; }
-
-    [Inject]
-    public INotificationService Alert { get; set; }
-
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Parameter] public AlbumDetails Model { get; set; }
 
     private string ArtworkUrl { get; set; }
 
     private string OriginalArtworkSrc { get; set; }
 
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
+        base.OnInitialized();
+    }
+
     protected override void OnParametersSet()
     {
-        OriginalArtworkSrc = ArtworkFetcher.GetAlbumArtworkSrc(Model);
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+    }
+
+    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
+    {
+        if (action.AlbumId != Model.Id)
+            return;
+
+        OriginalArtworkSrc = action.Result;
     }
 
     protected async Task OnLoad()
@@ -69,16 +75,14 @@
         }
         catch (Exception ex)
         {
-            // Log error
-            Alert.Error("Error loading artwork: " + ex.Message);
-            Alert.Error("Error loading artwork: " + ex.StackTrace);
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
         }
     }
 
-    protected async Task OnSearch()
+    protected void OnSearch()
     {
         var searchUrl = ImageFinder.GetSearchUrl(Model);
-        await Navigation.OpenNewTab(searchUrl);
+        Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 
     protected async Task OnUpdateUrl()
@@ -94,7 +98,7 @@
         }
         catch (Exception ex)
         {
-            Alert.Error(ex.Message);
+            Dispatcher.Dispatch(new NotificationErrorRequest(ex.Message, null, null));
             return;
         }
     }

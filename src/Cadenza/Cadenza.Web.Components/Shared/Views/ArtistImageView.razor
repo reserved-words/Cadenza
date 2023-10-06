@@ -1,20 +1,34 @@
 ﻿
+@inherits FluxorComponent
+
 @if (Model != null)
 {
     <img class="artist-image" src="@ImageSrc" />
 }
 
 @code {
-    [Inject]
-    public IArtworkFetcher ArtworkFetcher { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter]
-    public ArtistDetails Model { get; set; }
+    [Parameter] public ArtistDetails Model { get; set; }
 
     public string ImageSrc { get; private set; }
 
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchArtistImageResultAction>(OnArtistImageFetched);
+        base.OnInitialized();
+    }
+
     protected override void OnParametersSet()
     {
-        ImageSrc = ArtworkFetcher.GetArtistImageSrc(Model);
+        Dispatcher.Dispatch(new FetchArtistImageRequest(Model));
+    }
+
+    private void OnArtistImageFetched(FetchArtistImageResultAction action)
+    {
+        if (action.ArtistId != Model.Id)
+            return;
+
+        ImageSrc = action.Result;
     }
 }

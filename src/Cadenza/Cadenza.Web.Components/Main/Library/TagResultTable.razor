@@ -1,0 +1,18 @@
+﻿
+<AppTable T="@PlayerItem"
+          Items="@Items"
+          Filter="@OnFilter"
+          RowsPerPage="15">
+    <RowTemplate>
+        <TagResultRowTemplate Model="@context" OnViewItem="@OnViewItem" />
+    </RowTemplate>
+    <PagerContent >
+        <MudTablePager HideRowsPerPage="true" />
+    </PagerContent>
+</AppTable>
+
+@code {
+    [Parameter] public List<PlayerItem> Items { get; set; }
+    [Parameter] public Action<PlayerItem> OnViewItem { get; set; }
+    [Parameter] public Func<PlayerItem, bool> OnFilter { get; set; }
+}

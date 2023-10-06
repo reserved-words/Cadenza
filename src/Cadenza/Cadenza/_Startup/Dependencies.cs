@@ -17,7 +17,7 @@ public static class Dependencies
 
         return services
             .AddDatabase()
-            .AddPlayerComponent()
+            .AddPlayer()
             .AddCoreServices()
             .AddInteropServices()
             .AddUtilities()
