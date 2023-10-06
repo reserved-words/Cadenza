@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.Utilities.Services;
+﻿using Cadenza.Common.Utilities.Interfaces;
+
+namespace Cadenza.Common.Utilities.Services;
 
 internal class NameComparer : INameComparer
 {

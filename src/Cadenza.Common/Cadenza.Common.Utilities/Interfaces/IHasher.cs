@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Interfaces.Utilities;
+﻿namespace Cadenza.Common.Utilities.Interfaces;
 
 public interface IHasher
 {

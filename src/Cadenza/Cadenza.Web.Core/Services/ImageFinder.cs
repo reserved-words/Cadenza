@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Domain.Model.Library;
+using Cadenza.Common.Utilities.Interfaces;
 
 namespace Cadenza.Web.Core.Services;
 

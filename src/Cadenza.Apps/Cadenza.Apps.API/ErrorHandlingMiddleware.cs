@@ -1,5 +1,5 @@
 ﻿using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Interfaces.Utilities;
+using Cadenza.Common.Utilities.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;

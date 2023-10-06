@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Interfaces;
+﻿using Cadenza.Common.Utilities.Interfaces;
+
+namespace Cadenza.Web.Database.Interfaces;
 
 public interface IApiHttpHelper : IHttpHelper
 {

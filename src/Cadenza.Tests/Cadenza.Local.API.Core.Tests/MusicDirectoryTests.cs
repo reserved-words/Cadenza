@@ -1,5 +1,5 @@
 ﻿using Cadenza.Common.Domain.Model;
-using Cadenza.Common.Interfaces.Utilities;
+using Cadenza.Common.Utilities.Interfaces;
 using Cadenza.Local.API.Core.Services;
 using Cadenza.Local.API.Core.Settings;
 using Microsoft.Extensions.Options;

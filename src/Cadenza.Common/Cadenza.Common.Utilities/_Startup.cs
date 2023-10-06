@@ -1,11 +1,11 @@
 ﻿global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Interfaces.Utilities;
 global using Cadenza.Common.Utilities.Services;
 global using Microsoft.Extensions.DependencyInjection;
+using Cadenza.Common.Utilities.Interfaces;
 using System.Runtime.CompilerServices;
 using FileAccess = Cadenza.Common.Utilities.Services.FileAccess;
 
-[assembly:InternalsVisibleTo("Cadenza.Common.Utilities.Tests")]
+[assembly: InternalsVisibleTo("Cadenza.Common.Utilities.Tests")]
 [assembly: InternalsVisibleTo("TestConsoleApp")]
 
 namespace Cadenza.Common.Utilities;

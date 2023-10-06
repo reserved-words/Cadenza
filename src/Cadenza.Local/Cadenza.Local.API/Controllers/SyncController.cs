@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Utilities.Interfaces;
 
 namespace Cadenza.Local.API.Controllers;
 

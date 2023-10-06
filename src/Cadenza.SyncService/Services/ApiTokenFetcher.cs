@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 

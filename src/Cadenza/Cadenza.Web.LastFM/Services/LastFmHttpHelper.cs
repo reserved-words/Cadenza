@@ -1,4 +1,5 @@
-﻿using Cadenza.Common.Utilities.Services;
+﻿using Cadenza.Common.Utilities.Interfaces;
+using Cadenza.Common.Utilities.Services;
 
 namespace Cadenza.Web.LastFM.Services;
 

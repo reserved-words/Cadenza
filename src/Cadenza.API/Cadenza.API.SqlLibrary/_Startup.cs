@@ -2,7 +2,7 @@
 global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Domain.Enums;
 global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Interfaces.Utilities;
+global using Cadenza.Common.Utilities.Interfaces;
 global using Cadenza.Common.Domain.Model.Updates;
 
 using Cadenza.API.Interfaces.Repositories;

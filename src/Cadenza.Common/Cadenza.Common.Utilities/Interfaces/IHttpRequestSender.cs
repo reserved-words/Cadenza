@@ -1,6 +1,6 @@
 ﻿using Cadenza.Common.Domain.Enums;
 
-namespace Cadenza.Common.Interfaces.Utilities;
+namespace Cadenza.Common.Utilities.Interfaces;
 
 public interface IHttpRequestSender
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Cadenza.Common.Utilities.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Cadenza.Local.SyncService.Services;
 

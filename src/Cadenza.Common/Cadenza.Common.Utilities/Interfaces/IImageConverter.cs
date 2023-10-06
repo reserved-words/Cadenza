@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.Common.Interfaces.Utilities;
+﻿namespace Cadenza.Common.Utilities.Interfaces;
 
 public interface IImageConverter
 {

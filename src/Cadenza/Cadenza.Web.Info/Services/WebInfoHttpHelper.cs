@@ -1,5 +1,5 @@
 ﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Interfaces.Utilities;
+using Cadenza.Common.Utilities.Interfaces;
 using Cadenza.Common.Utilities.Services;
 using Cadenza.Web.Info.Interfaces;
 

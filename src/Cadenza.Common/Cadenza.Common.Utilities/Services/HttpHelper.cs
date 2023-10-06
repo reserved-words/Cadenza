@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Domain.Enums;
+using Cadenza.Common.Utilities.Interfaces;
 using System.Net.Http.Json;
 
 namespace Cadenza.Common.Utilities.Services;
