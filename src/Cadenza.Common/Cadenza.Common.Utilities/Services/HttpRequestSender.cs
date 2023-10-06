@@ -1,5 +1,5 @@
 ﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Domain.Exceptions;
+using Cadenza.Common.Utilities.Exceptions;
 using Cadenza.Common.Utilities.Interfaces;
 
 namespace Cadenza.Common.Utilities.Services;

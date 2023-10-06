@@ -6,11 +6,11 @@ namespace Cadenza.SyncService.Services;
 internal class SyncHttpHelper : ISyncHttpHelper
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IJsonConverter _jsonConverter;
+    private readonly IJsonService _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
     private readonly IApiTokenFetcher _tokenFetcher;
 
-    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IJsonConverter jsonConverter, IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
+    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IJsonService jsonConverter, IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
     {
         _httpClientFactory = httpClientFactory;
         _jsonConverter = jsonConverter;

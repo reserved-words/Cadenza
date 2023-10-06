@@ -2,9 +2,9 @@
 
 internal class CommentProcessor : ICommentProcessor
 {
-    private readonly IJsonConverter _jsonConverter;
+    private readonly IJsonService _jsonConverter;
 
-    public CommentProcessor(IJsonConverter jsonConverter)
+    public CommentProcessor(IJsonService jsonConverter)
     {
         _jsonConverter = jsonConverter;
     }

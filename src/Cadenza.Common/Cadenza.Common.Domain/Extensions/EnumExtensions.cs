@@ -20,4 +20,9 @@ public static class EnumExtensions
     {
         return en.GetAttribute<DisplayAttribute>()?.Name ?? en.ToString();
     }
+
+    public static ReleaseTypeGroup GetGroup(this ReleaseType releaseType)
+    {
+        return releaseType.GetAttribute<ReleaseTypeGroupAttribute>().Group;
+    }
 }

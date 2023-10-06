@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Extensions;
+﻿namespace Cadenza.Local.API.Files.Extensions;
 
 public static class StringExtensions
 {

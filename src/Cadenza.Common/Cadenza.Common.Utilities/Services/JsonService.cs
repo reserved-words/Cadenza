@@ -1,10 +1,10 @@
-﻿using Cadenza.Common.Domain.JsonConverters;
-using Cadenza.Common.Utilities.Interfaces;
+﻿using Cadenza.Common.Utilities.Interfaces;
+using Cadenza.Common.Utilities.Json;
 using System.Text.Json;
 
 namespace Cadenza.Common.Utilities.Services;
 
-internal class JsonConverter : IJsonConverter
+internal class JsonService : IJsonService
 {
     public string Serialize<T>(T item)
     {

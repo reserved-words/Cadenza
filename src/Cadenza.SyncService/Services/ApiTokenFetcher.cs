@@ -8,10 +8,10 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 {
     private readonly AuthSettings _settings;
     private readonly IApiTokenCache _cache;
-    private readonly IJsonConverter _jsonConverter;
+    private readonly IJsonService _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
 
-    public ApiTokenFetcher(IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
+    public ApiTokenFetcher(IJsonService jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
     {
         _jsonConverter = jsonConverter;
         _settings = settings.Value;

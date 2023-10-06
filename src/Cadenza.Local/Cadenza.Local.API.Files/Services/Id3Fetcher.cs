@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Domain.Model.Sync;
+using Cadenza.Local.API.Files.Extensions;
 
 namespace Cadenza.Local.API.Files.Services;
 

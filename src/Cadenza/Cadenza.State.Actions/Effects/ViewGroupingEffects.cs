@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Extensions;
-
-namespace Cadenza.State.Actions.Effects;
+﻿namespace Cadenza.State.Actions.Effects;
 
 public class ViewGroupingEffects
 {
@@ -15,8 +13,16 @@ public class ViewGroupingEffects
     public async Task HandleFetchViewGroupingRequest(FetchViewGroupingRequest action, IDispatcher dispatcher)
     {
         var artists = await _repository.GetArtistsByGrouping(action.Grouping.Id);
-        var artistsByGenre = artists.ToGroupedDictionary(a => a.Genre ?? "None");
+        var artistsByGenre = ToGroupedDictionary(artists, a => a.Genre ?? "None");
         var genres = artistsByGenre.Keys.ToList();
         dispatcher.Dispatch(new FetchViewGroupingResult(action.Grouping, genres));
+    }
+
+    private static Dictionary<TKey, List<TValue>> ToGroupedDictionary<TKey, TValue>(List<TValue> items, Func<TValue, TKey> getKey)
+    {
+        return items
+            .OrderBy(i => getKey(i))
+            .GroupBy(i => getKey(i))
+            .ToDictionary(g => g.Key, g => g.ToList());
     }
 }

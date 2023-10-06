@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cadenza.Common.Domain.JsonConverters;
+namespace Cadenza.Common.Utilities.Json;
 
 public static class JsonSerialization
 {

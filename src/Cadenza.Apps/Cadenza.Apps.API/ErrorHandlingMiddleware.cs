@@ -31,7 +31,7 @@ public class ErrorHandlingMiddleware
             var response = context.Response;
             response.StatusCode = (int)HttpStatusCode.InternalServerError;
             response.ContentType = "application/json";
-            var jsonConverter = context.RequestServices.GetRequiredService<IJsonConverter>();
+            var jsonConverter = context.RequestServices.GetRequiredService<IJsonService>();
             var result = jsonConverter.Serialize(new ApiError { Message = error?.Message });
             await response.WriteAsync(result);
         }

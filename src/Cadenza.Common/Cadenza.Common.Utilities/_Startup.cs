@@ -19,7 +19,7 @@ public static class _Startup
             .AddTransient<IFileAccess, FileAccess>()
             .AddTransient<IHasher, Hasher>()
             .AddTransient<IImageConverter, ImageConverter>()
-            .AddTransient<IJsonConverter, JsonConverter>()
+            .AddTransient<IJsonService, JsonService>()
             .AddTransient<IHttpRequestSender, HttpRequestSender>()
             .AddTransient<INameComparer, NameComparer>()
             .AddTransient<IShuffler, Shuffler>();

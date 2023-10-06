@@ -2,15 +2,15 @@
 using Cadenza.Common.Utilities.Interfaces;
 using System.Net.Http.Json;
 
-namespace Cadenza.Common.Utilities.Services;
+namespace Cadenza.Common.Utilities.Http;
 
 public abstract class HttpHelper : IHttpHelper
 {
     private readonly HttpClientName _httpClientName;
     private readonly IHttpRequestSender _requestSender;
-    private readonly IJsonConverter _jsonConverter;
+    private readonly IJsonService _jsonConverter;
 
-    public HttpHelper(HttpClientName httpClientName, IJsonConverter jsonConverter, IHttpRequestSender requestSender)
+    public HttpHelper(HttpClientName httpClientName, IJsonService jsonConverter, IHttpRequestSender requestSender)
     {
         _httpClientName = httpClientName;
         _jsonConverter = jsonConverter;

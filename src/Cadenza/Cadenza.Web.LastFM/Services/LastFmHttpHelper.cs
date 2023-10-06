@@ -1,11 +1,10 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-using Cadenza.Common.Utilities.Services;
+﻿using Cadenza.Common.Utilities.Http;
 
 namespace Cadenza.Web.LastFM.Services;
 
 public class LastFmHttpHelper : HttpHelper, ILastFmHttpHelper
 {
-    public LastFmHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender) 
+    public LastFmHttpHelper(IJsonService jsonConverter, IHttpRequestSender sender) 
         : base(HttpClientName.Database, jsonConverter, sender)
     {
     }

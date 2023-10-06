@@ -1,11 +1,11 @@
 ﻿using System.Net;
 
-namespace Cadenza.Common.Domain.Exceptions;
+namespace Cadenza.Common.Utilities.Exceptions;
 
 public class HttpException : Exception
 {
     public HttpException(Uri requestUri, HttpStatusCode statusCode, string responseContent)
-        :base($"HTTP request exception - {statusCode}")
+        : base($"HTTP request exception - {statusCode}")
     {
         RequestUri = requestUri;
         StatusCode = statusCode;

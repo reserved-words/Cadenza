@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.JsonConverters;
+﻿using Cadenza.Common.Utilities.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.Apps.API.Extensions;

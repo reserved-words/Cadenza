@@ -2,9 +2,9 @@
 using System.Text.Json.Serialization;
 using Cadenza.Common.Domain.Model.Library;
 
-namespace Cadenza.Common.Domain.JsonConverters;
+namespace Cadenza.Common.Utilities.Json;
 
-public class TagListConverter : JsonConverter<TagList>
+internal class TagListConverter : JsonConverter<TagList>
 {
     public override TagList Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
