@@ -2,4 +2,4 @@
 
 public record FetchViewGenreRequest(string Genre);
 
-public record FetchViewGenreResult(string Genre, List<ArtistVM> Artists);
+public record FetchViewGenreResult(string Genre, IReadOnlyCollection<ArtistVM> Artists);

@@ -2,4 +2,4 @@
 
 public record FetchViewArtistRequest(int ArtistId);
 
-public record FetchViewArtistResult(ArtistDetailsVM Artist, List<ArtistReleaseGroupVM> Releases);
+public record FetchViewArtistResult(ArtistDetailsVM Artist, IReadOnlyCollection<ArtistReleaseGroupVM> Releases);

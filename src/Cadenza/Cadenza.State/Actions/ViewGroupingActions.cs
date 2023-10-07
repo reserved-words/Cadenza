@@ -2,4 +2,4 @@
 
 public record FetchViewGroupingRequest(GroupingVM Grouping);
 
-public record FetchViewGroupingResult(GroupingVM Grouping, List<string> Genres);
+public record FetchViewGroupingResult(GroupingVM Grouping, IReadOnlyCollection<string> Genres);
