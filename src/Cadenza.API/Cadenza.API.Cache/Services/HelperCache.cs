@@ -1,40 +1,38 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class HelperCache : IHelperCache
 {
-    private readonly Dictionary<int, List<AlbumDetails>> _albumsByArtist = new();
-    private readonly Dictionary<int, List<AlbumDetails>> _albumsFeaturingArtist = new();
+    private readonly Dictionary<int, List<AlbumDetailsDTO>> _albumsByArtist = new();
+    private readonly Dictionary<int, List<AlbumDetailsDTO>> _albumsFeaturingArtist = new();
 
-    private readonly Dictionary<string, List<ArtistDetails>> _artistsByGenre = new();
-    private readonly Dictionary<int, List<ArtistDetails>> _artistsByGrouping = new();
+    private readonly Dictionary<string, List<ArtistDetailsDTO>> _artistsByGenre = new();
+    private readonly Dictionary<int, List<ArtistDetailsDTO>> _artistsByGrouping = new();
 
-    private readonly Dictionary<int, List<(TrackDetails Track, AlbumTrackLink AlbumTrack)>> _tracksByAlbum = new();
-    private readonly Dictionary<int, List<TrackDetails>> _tracksByArtist = new();
+    private readonly Dictionary<int, List<(TrackDetailsDTO Track, AlbumTrackLinkDTO AlbumTrack)>> _tracksByAlbum = new();
+    private readonly Dictionary<int, List<TrackDetailsDTO>> _tracksByArtist = new();
 
-    public void CacheAlbum(AlbumDetails album)
+    public void CacheAlbum(AlbumDetailsDTO album)
     {
         _albumsByArtist.Cache(album.ArtistId, album);
     }
 
-    public void CacheAlbumFeaturingArtist(int artistId, AlbumDetails album)
+    public void CacheAlbumFeaturingArtist(int artistId, AlbumDetailsDTO album)
     {
         _albumsFeaturingArtist.Cache(artistId, album);
     }
 
-    public void CacheAlbumTrack(AlbumTrackLink albumTrack, TrackDetails track)
+    public void CacheAlbumTrack(AlbumTrackLinkDTO albumTrack, TrackDetailsDTO track)
     {
         _tracksByAlbum.Cache(albumTrack.AlbumId, (track, albumTrack));
     }
 
-    public void CacheArtist(ArtistDetails artist)
+    public void CacheArtist(ArtistDetailsDTO artist)
     {
         _artistsByGrouping.Cache(artist.Grouping.Id, artist);
         _artistsByGenre.Cache(artist.Genre, artist);
     }
 
-    public void CacheTrack(TrackDetails track)
+    public void CacheTrack(TrackDetailsDTO track)
     {
         _tracksByArtist.Cache(track.ArtistId, track);
     }
@@ -49,38 +47,38 @@ internal class HelperCache : IHelperCache
         _tracksByArtist.Clear();
     }
 
-    public List<Album> GetAlbumsByArtist(int id)
+    public List<AlbumDTO> GetAlbumsByArtist(int id)
     {
-        return _albumsByArtist.GetList<int, AlbumDetails, Album>(id);
+        return _albumsByArtist.GetList<int, AlbumDetailsDTO, AlbumDTO>(id);
     }
 
-    public List<Album> GetAlbumsFeaturingArtist(int id)
+    public List<AlbumDTO> GetAlbumsFeaturingArtist(int id)
     {
-        return _albumsFeaturingArtist.GetList<int, AlbumDetails, Album>(id);
+        return _albumsFeaturingArtist.GetList<int, AlbumDetailsDTO, AlbumDTO>(id);
     }
 
-    public List<Artist> GetArtistsByGenre(string id)
+    public List<ArtistDTO> GetArtistsByGenre(string id)
     {
-        return _artistsByGenre.GetList<string, ArtistDetails, Artist>(id);
+        return _artistsByGenre.GetList<string, ArtistDetailsDTO, ArtistDTO>(id);
     }
 
-    public List<Artist> GetArtistsByGrouping(int id)
+    public List<ArtistDTO> GetArtistsByGrouping(int id)
     {
-        return _artistsByGrouping.GetList<int, ArtistDetails, Artist>(id);
+        return _artistsByGrouping.GetList<int, ArtistDetailsDTO, ArtistDTO>(id);
     }
 
-    public List<Track> GetArtistTracks(int id)
+    public List<TrackDTO> GetArtistTracks(int id)
     {
-        return _tracksByArtist.GetList<int, TrackDetails, Track>(id);
+        return _tracksByArtist.GetList<int, TrackDetailsDTO, TrackDTO>(id);
     }
 
-    public List<AlbumTrack> GetAlbumTracks(int id)
+    public List<AlbumTrackDTO> GetAlbumTracks(int id)
     {
-        var result = new List<AlbumTrack>();
+        var result = new List<AlbumTrackDTO>();
 
         foreach (var track in _tracksByAlbum[id])
         {
-            result.Add(new AlbumTrack(track.Track, track.AlbumTrack));
+            result.Add(new AlbumTrackDTO(track.Track, track.AlbumTrack));
         }
 
         return result;

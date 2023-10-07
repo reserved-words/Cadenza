@@ -4,7 +4,7 @@ public class CurrentTrackArtworkBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public TrackFull Model { get; set; }
+    [Parameter] public TrackFullVM Model { get; set; }
 
     public string AlbumDisplay { get; private set; }
     public string ArtworkUrl { get; private set; }

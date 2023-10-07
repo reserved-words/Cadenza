@@ -1,13 +1,13 @@
 ﻿namespace Cadenza.Web.Components.Forms.Album;
 
-public class EditAlbumBase : FormBase<AlbumDetails>
+public class EditAlbumBase : FormBase<AlbumDetailsVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<EditableAlbumState> State { get; set; }
 
-    public AlbumUpdate Update { get; set; }
-    public AlbumDetails EditableItem => Update.UpdatedItem;
-    public List<AlbumTrack> AlbumTracks => State.Value.Tracks;
+    public AlbumUpdateVM Update { get; set; }
+    public AlbumDetailsVM EditableItem => Update.UpdatedItem;
+    public List<AlbumTrackVM> AlbumTracks => State.Value.Tracks;
 
     protected override void OnInitialized()
     {
@@ -18,7 +18,7 @@ public class EditAlbumBase : FormBase<AlbumDetails>
     protected override void OnParametersSet()
     {
         Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
-        Update = new AlbumUpdate(Model);
+        Update = new AlbumUpdateVM(Model);
     }
 
     protected void OnSubmit()

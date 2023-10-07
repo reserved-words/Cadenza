@@ -8,5 +8,5 @@ internal interface ICacheService :
     ITagRepository, 
     IPlayTrackRepository
 {
-    Task Populate(FullLibrary library);
+    Task Populate(FullLibraryDTO library);
 }

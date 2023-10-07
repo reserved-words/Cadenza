@@ -4,16 +4,19 @@ internal class TagRepository : ITagRepository
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
+    private readonly IViewModelMapper _mapper;
 
-    public TagRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
+    public TagRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper, IViewModelMapper mapper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;
+        _mapper = mapper;
     }
 
-    public async Task<List<PlayerItem>> GetTag(string id)
+    public async Task<List<PlayerItemVM>> GetTag(string id)
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.Tag, id);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.Tag, id);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
 }

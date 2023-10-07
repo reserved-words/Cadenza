@@ -1,6 +1,6 @@
 ﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Domain.Model.Library;
+global using Cadenza.Common.DTO;
+
 global using Microsoft.Extensions.DependencyInjection;
 
 global using Cadenza.API.Interfaces;

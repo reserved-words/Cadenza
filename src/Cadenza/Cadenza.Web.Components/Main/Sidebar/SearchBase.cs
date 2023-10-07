@@ -7,9 +7,9 @@ public class SearchBase : FluxorComponent
 
     protected bool IsLoading => SearchItemsState.Value.IsLoading;
 
-    private PlayerItem _result;
+    private PlayerItemVM _result;
 
-    protected PlayerItem Result
+    protected PlayerItemVM Result
     {
         get { return _result; }
         set
@@ -25,7 +25,7 @@ public class SearchBase : FluxorComponent
         }
     }
 
-    protected Task<IEnumerable<PlayerItem>> Search(string value)
+    protected Task<IEnumerable<PlayerItemVM>> Search(string value)
     {
         if (value.IsCommon())
             return null;

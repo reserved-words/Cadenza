@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record EditableAlbumState(bool IsLoading, List<AlbumTrack> Tracks)
+public record EditableAlbumState(bool IsLoading, List<AlbumTrackVM> Tracks)
 {
-    private static EditableAlbumState Init() => new EditableAlbumState(false, new List<AlbumTrack>());
+    private static EditableAlbumState Init() => new EditableAlbumState(false, new List<AlbumTrackVM>());
 }

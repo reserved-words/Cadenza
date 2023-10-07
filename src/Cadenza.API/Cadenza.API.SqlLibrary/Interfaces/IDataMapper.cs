@@ -1,17 +1,16 @@
 ﻿using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Domain.Model.Library;
 
 namespace Cadenza.API.SqlLibrary.Interfaces;
 internal interface IDataMapper
 {
-    NewArtistData MapTrackArtist(SyncTrack track);
-    NewArtistData MapAlbumArtist(SyncTrack track);
-    NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId);
-    NewDiscData MapDisc(SyncTrack track, int albumId);
-    NewTrackData MapTrack(SyncTrack track, int artistId, int discId);
+    NewArtistData MapTrackArtist(SyncTrackDTO track);
+    NewArtistData MapAlbumArtist(SyncTrackDTO track);
+    NewAlbumData MapAlbum(SyncTrackDTO track, LibrarySource source, int artistId);
+    NewDiscData MapDisc(SyncTrackDTO track, int albumId);
+    NewTrackData MapTrack(SyncTrackDTO track, int artistId, int discId);
 
-    ArtistDetails MapArtist(GetArtistData artist);
-    AlbumDetails MapAlbum(GetAlbumData album, List<GetDiscData> discs);
-    AlbumTrackLink MapAlbumTrack(GetTrackData track);
-    TrackDetails MapTrack(GetTrackData track);
+    ArtistDetailsDTO MapArtist(GetArtistData artist);
+    AlbumDetailsDTO MapAlbum(GetAlbumData album, List<GetDiscData> discs);
+    AlbumTrackLinkDTO MapAlbumTrack(GetTrackData track);
+    TrackDetailsDTO MapTrack(GetTrackData track);
 }

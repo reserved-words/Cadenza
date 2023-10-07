@@ -2,7 +2,7 @@
 
 public class TrackViewBase : FluxorComponent
 {
-    [Parameter] public TrackDetails Model { get; set; } = new();
+    [Parameter] public TrackDetailsVM Model { get; set; } = new();
 
     protected override void OnInitialized()
     {

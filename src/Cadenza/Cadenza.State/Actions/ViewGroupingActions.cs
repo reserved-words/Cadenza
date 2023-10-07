@@ -1,7 +1,5 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿namespace Cadenza.State.Actions;
 
-namespace Cadenza.State.Actions;
+public record FetchViewGroupingRequest(GroupingVM Grouping);
 
-public record FetchViewGroupingRequest(Grouping Grouping);
-
-public record FetchViewGroupingResult(Grouping Grouping, List<string> Genres);
+public record FetchViewGroupingResult(GroupingVM Grouping, List<string> Genres);

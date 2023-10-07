@@ -1,13 +1,11 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.API.Interfaces.Library;
+﻿namespace Cadenza.API.Interfaces.Library;
 
 public interface ISearchRepository
 {
-    Task<List<PlayerItem>> GetSearchAlbums();
-    Task<List<PlayerItem>> GetArtists();
-    Task<List<PlayerItem>> GetGenres();
-    Task<List<PlayerItem>> GetGroupings();
-    Task<List<PlayerItem>> GetTags();
-    Task<List<PlayerItem>> GetTracks();
+    Task<List<PlayerItemDTO>> GetSearchAlbums();
+    Task<List<PlayerItemDTO>> GetArtists();
+    Task<List<PlayerItemDTO>> GetGenres();
+    Task<List<PlayerItemDTO>> GetGroupings();
+    Task<List<PlayerItemDTO>> GetTags();
+    Task<List<PlayerItemDTO>> GetTracks();
 }

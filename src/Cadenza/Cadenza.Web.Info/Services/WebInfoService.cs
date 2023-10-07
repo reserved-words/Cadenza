@@ -1,5 +1,5 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-using Cadenza.Common.Domain.Model.Results;
+﻿using Cadenza.Common.Domain.Model.Results;
+using Cadenza.Web.Common.ViewModels;
 using Cadenza.Web.Info.Interfaces;
 using Cadenza.Web.Info.Settings;
 using Microsoft.Extensions.Options;
@@ -19,14 +19,14 @@ internal class WebInfoService : IWebInfoService
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task<string> GetAlbumArtworkUrl(Album album)
+    public async Task<string> GetAlbumArtworkUrl(AlbumVM album)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AlbumArtworkUrl, ("artist", album.ArtistName), ("title", album.Title));
         var result = await _httpHelper.Get<AlbumArtworkResult>(url);
         return result.Url;
     }
 
-    public async Task<string> GetArtistImageUrl(Artist artist)
+    public async Task<string> GetArtistImageUrl(ArtistVM artist)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.ArtistImageUrl, ("name", artist.Name));
         var result = await _httpHelper.Get<ArtistImageResult>(url);

@@ -2,13 +2,13 @@
 
 public interface IUpdateRepository
 {
-    Task AddUpdateRequest(ItemUpdateRequest update);
-    Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
-    Task MarkUpdateDone(ItemUpdateRequest request);
-    Task MarkUpdateErrored(ItemUpdateRequest request);
+    Task AddUpdateRequest(ItemUpdateRequestDTO update);
+    Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source);
+    Task MarkUpdateDone(ItemUpdateRequestDTO request);
+    Task MarkUpdateErrored(ItemUpdateRequestDTO request);
 
-    Task AddRemovalRequest(TrackRemovalRequest request);
-    Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source);
+    Task AddRemovalRequest(TrackRemovalRequestDTO request);
+    Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source);
     Task MarkRemovalDone(int requestId);
     Task MarkRemovalErrored(int requestId);
 }

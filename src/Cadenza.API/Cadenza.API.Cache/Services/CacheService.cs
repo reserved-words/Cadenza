@@ -15,7 +15,7 @@ internal class CacheService : ICacheService
         _helperCache = helperCache;
     }
 
-    public Task Populate(FullLibrary library)
+    public Task Populate(FullLibraryDTO library)
     {
         _helperCache.Clear();
         _itemCache.Clear();
@@ -58,102 +58,102 @@ internal class CacheService : ICacheService
         return Task.CompletedTask;
     }
 
-    public Task<AlbumDetails> GetAlbum(int id)
+    public Task<AlbumDetailsDTO> GetAlbum(int id)
     {
         var result = _mainCache.GetAlbum(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<AlbumTrack>> GetAlbumTracks(int id)
+    public Task<List<AlbumTrackDTO>> GetAlbumTracks(int id)
     {
         var result = _helperCache.GetAlbumTracks(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<Album>> GetAlbums(int artistId)
+    public Task<List<AlbumDTO>> GetAlbums(int artistId)
     {
         var result = _helperCache.GetAlbumsByArtist(artistId);
         return Task.FromResult(result);
     }
 
-    public Task<List<Album>> GetAlbumsFeaturingArtist(int artistId)
+    public Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId)
     {
         var result = _helperCache.GetAlbumsFeaturingArtist(artistId);
         return Task.FromResult(result);
     }
 
-    public Task<List<Artist>> GetAllArtists()
+    public Task<List<ArtistDTO>> GetAllArtists()
     {
         var result = _mainCache.GetAllArtists();
         return Task.FromResult(result);
     }
 
-    public Task<ArtistDetails> GetArtist(int id)
+    public Task<ArtistDetailsDTO> GetArtist(int id)
     {
         var result = _mainCache.GetArtist(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<Artist>> GetArtistsByGenre(string id)
+    public Task<List<ArtistDTO>> GetArtistsByGenre(string id)
     {
         var result = _helperCache.GetArtistsByGenre(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<Artist>> GetArtistsByGrouping(int id)
+    public Task<List<ArtistDTO>> GetArtistsByGrouping(int id)
     {
         var result = _helperCache.GetArtistsByGrouping(id);
         return Task.FromResult(result);
     }
 
-    public Task<List<Track>> GetArtistTracks(int artistId)
+    public Task<List<TrackDTO>> GetArtistTracks(int artistId)
     {
         var result = _helperCache.GetArtistTracks(artistId);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetSearchAlbums()
+    public Task<List<PlayerItemDTO>> GetSearchAlbums()
     {
         var result = _itemCache.GetItems(PlayerItemType.Album);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetArtists()
+    public Task<List<PlayerItemDTO>> GetArtists()
     {
         var result = _itemCache.GetItems(PlayerItemType.Artist);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetTags()
+    public Task<List<PlayerItemDTO>> GetTags()
     {
         var result = _itemCache.GetTags();
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetTracks()
+    public Task<List<PlayerItemDTO>> GetTracks()
     {
         var result = _itemCache.GetItems(PlayerItemType.Track);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetGenres()
+    public Task<List<PlayerItemDTO>> GetGenres()
     {
         var result = _itemCache.GetItems(PlayerItemType.Genre);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetGroupings()
+    public Task<List<PlayerItemDTO>> GetGroupings()
     {
         var result = _itemCache.GetItems(PlayerItemType.Grouping);
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItem>> GetTag(string id)
+    public Task<List<PlayerItemDTO>> GetTag(string id)
     {
         var result = _itemCache.GetTag(id);
         return Task.FromResult(result);
     }
-    public Task<TrackFull> GetTrack(int id)
+    public Task<TrackFullDTO> GetTrack(int id)
     {
         var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);
@@ -211,7 +211,7 @@ internal class CacheService : ICacheService
         return _helperCache.GetArtistTracks(id).Select(t => t.Id).ToList();
     }
 
-    private void CacheAlbumTracks(IGrouping<int, AlbumTrackLink> albumTracks)
+    private void CacheAlbumTracks(IGrouping<int, AlbumTrackLinkDTO> albumTracks)
     {
         var album = _mainCache.GetAlbum(albumTracks.Key);
 

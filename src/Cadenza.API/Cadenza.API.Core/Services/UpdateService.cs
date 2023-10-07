@@ -1,6 +1,4 @@
-﻿using Cadenza.API.Interfaces;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class UpdateService : IUpdateService
 {
@@ -15,28 +13,28 @@ internal class UpdateService : IUpdateService
         _cachePopulater = cachePopulater;
     }
 
-    public async Task RemoveTrack(TrackRemovalRequest request)
+    public async Task RemoveTrack(TrackRemovalRequestDTO request)
     {
         await _updateRepository.AddRemovalRequest(request);
         await _musicRepository.RemoveTrack(request.TrackId);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateTrack(ItemUpdateRequest request)
+    public async Task UpdateTrack(ItemUpdateRequestDTO request)
     {
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateTrack(request);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateAlbum(ItemUpdateRequest request)
+    public async Task UpdateAlbum(ItemUpdateRequestDTO request)
     {
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateAlbum(request);
         await _cachePopulater.Populate(false);
     }
 
-    public async Task UpdateArtist(ItemUpdateRequest request)
+    public async Task UpdateArtist(ItemUpdateRequestDTO request)
     {
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateArtist(request);

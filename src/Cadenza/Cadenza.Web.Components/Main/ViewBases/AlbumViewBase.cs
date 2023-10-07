@@ -2,7 +2,7 @@
 
 public class AlbumViewBase : FluxorComponent
 {
-    [Parameter] public AlbumDetails Model { get; set; } = new();
+    [Parameter] public AlbumDetailsVM Model { get; set; } = new();
 
     protected override void OnInitialized()
     {

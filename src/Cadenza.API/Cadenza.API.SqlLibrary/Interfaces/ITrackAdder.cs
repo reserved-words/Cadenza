@@ -2,5 +2,5 @@
 
 internal interface ITrackAdder
 {
-    Task AddTrack(LibrarySource source, SyncTrack track);
+    Task AddTrack(LibrarySource source, SyncTrackDTO track);
 }

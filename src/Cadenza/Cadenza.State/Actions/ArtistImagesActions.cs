@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿namespace Cadenza.State.Actions;
 
-namespace Cadenza.State.Actions;
-
-public record FetchArtistImageRequest(ArtistDetails Artist);
+public record FetchArtistImageRequest(ArtistDetailsVM Artist);
 public record FetchArtistImageResultAction(int ArtistId, string Result);

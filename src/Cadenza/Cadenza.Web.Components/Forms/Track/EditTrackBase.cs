@@ -1,13 +1,11 @@
-﻿using Fluxor;
+﻿namespace Cadenza.Web.Components.Forms.Track;
 
-namespace Cadenza.Web.Components.Forms.Track;
-
-public class EditTrackBase : FormBase<TrackDetails>
+public class EditTrackBase : FormBase<TrackDetailsVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public TrackUpdate Update { get; set; }
-    public TrackDetails EditableItem => Update.UpdatedItem;
+    public TrackUpdateVM Update { get; set; }
+    public TrackDetailsVM EditableItem => Update.UpdatedItem;
 
     protected override void OnInitialized()
     {
@@ -17,7 +15,7 @@ public class EditTrackBase : FormBase<TrackDetails>
 
     protected override void OnParametersSet()
     {
-        Update = new TrackUpdate(Model);
+        Update = new TrackUpdateVM(Model);
     }
 
     protected void OnSubmit()

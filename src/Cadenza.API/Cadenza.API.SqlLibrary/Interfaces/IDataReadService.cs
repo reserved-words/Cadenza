@@ -29,5 +29,5 @@ internal interface IDataReadService
     Task<string> GetTrackIdFromSource(int trackId);
     Task<List<string>> GetArtistTrackSourceIds(int artistId);
 
-    Task<List<Grouping>> GetGroupings();
+    Task<List<GroupingDTO>> GetGroupings();
 }

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,67 +12,67 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album/{id}")]
-    public async Task<AlbumDetails> Album(int id)
+    public async Task<AlbumDetailsDTO> Album(int id)
     {
         return await _service.Album(id);
     }
 
     [HttpGet("Album/Tracks/{id}")]
-    public async Task<List<AlbumTrack>> AlbumTracks(int id)
+    public async Task<List<AlbumTrackDTO>> AlbumTracks(int id)
     {
         return await _service.AlbumTracks(id);
     }
 
     [HttpGet("Artist/{id}")]
-    public async Task<ArtistDetails> Artist(int id)
+    public async Task<ArtistDetailsDTO> Artist(int id)
     {
         return await _service.Artist(id);
     }
 
     [HttpGet("Artist/Albums/{id}")]
-    public async Task<List<Album>> ArtistAlbums(int id)
+    public async Task<List<AlbumDTO>> ArtistAlbums(int id)
     {
         return await _service.ArtistAlbums(id);
     }
 
     [HttpGet("Artist/AlbumsFeaturing/{id}")]
-    public async Task<List<Album>> AlbumsFeaturingArtist(int id)
+    public async Task<List<AlbumDTO>> AlbumsFeaturingArtist(int id)
     {
         return await _service.AlbumsFeaturingArtist(id);
     }
 
     [HttpGet("Artist/Tracks/{id}")]
-    public async Task<List<Track>> ArtistTracks(int id)
+    public async Task<List<TrackDTO>> ArtistTracks(int id)
     {
         return await _service.ArtistTracks(id);
     }
 
     [HttpGet("Artists")]
-    public async Task<List<Artist>> Artists()
+    public async Task<List<ArtistDTO>> Artists()
     {
         return await _service.Artists();
     }
 
     [HttpGet("Artists/Genre/{id}")]
-    public async Task<List<Artist>> GenreArtists(string id)
+    public async Task<List<ArtistDTO>> GenreArtists(string id)
     {
         return await _service.GenreArtists(id);
     }
 
     [HttpGet("Artists/Grouping/{id}")]
-    public async Task<List<Artist>> GroupingArtists(int id)
+    public async Task<List<ArtistDTO>> GroupingArtists(int id)
     {
         return await _service.GroupingArtists(id);
     }
 
     [HttpGet("Tag/{id}")]
-    public async Task<List<PlayerItem>> Tag(string id)
+    public async Task<List<PlayerItemDTO>> Tag(string id)
     {
         return await _service.Tag(id);
     }
 
     [HttpGet("Track/{id}")]
-    public async Task<TrackFull> Track(int id)
+    public async Task<TrackFullDTO> Track(int id)
     {
         return await _service.Track(id);
     }

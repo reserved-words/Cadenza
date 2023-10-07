@@ -11,7 +11,7 @@ internal class SyncService : ISyncService
         _updateRepository = updateRepository;
     }
 
-    public async Task AddTrack(LibrarySource source, SyncTrack track)
+    public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
     {
         await _musicRepository.AddTrack(source, track);
     }
@@ -31,38 +31,38 @@ internal class SyncService : ISyncService
         return await _musicRepository.GetArtistTrackSourceIds(artistId);
     }
 
-    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    public async Task<SyncSourceTrackDTO> GetTrackIdFromSource(int trackId)
     {
         var idFromSource = await _musicRepository.GetTrackIdFromSource(trackId);
-        return new SyncSourceTrack { IdFromSource = idFromSource };
+        return new SyncSourceTrackDTO { IdFromSource = idFromSource };
     }
 
-    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
     {
         return await _updateRepository.GetUpdateRequests(source);
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequestDTO request)
     {
         await _updateRepository.MarkUpdateErrored(request);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
     {
         await _updateRepository.MarkUpdateDone(request);
     }
 
-    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         return await _updateRepository.GetRemovalRequests(source);
     }
 
-    public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
+    public async Task MarkRemovalErrored(SyncTrackRemovalRequestDTO request)
     {
         await _updateRepository.MarkRemovalErrored(request.RequestId);
     }
 
-    public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
+    public async Task MarkRemovalDone(SyncTrackRemovalRequestDTO request)
     {
         await _updateRepository.MarkRemovalDone(request.RequestId);
     }

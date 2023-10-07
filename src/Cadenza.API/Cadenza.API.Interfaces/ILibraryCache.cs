@@ -11,5 +11,5 @@ public interface ILibraryCache
 
     bool IsPopulated { get; }
 
-    Task Populate(FullLibrary library);
+    Task Populate(FullLibraryDTO library);
 }

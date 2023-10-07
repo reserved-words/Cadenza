@@ -1,8 +1,6 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿namespace Cadenza.State.Actions;
 
-namespace Cadenza.State.Actions;
-
-public record PlayerPlayRequest(TrackFull Track);
-public record PlayerPauseRequest(TrackFull Track);
-public record PlayerResumeRequest(TrackFull Track);
-public record PlayerStopRequest(TrackFull Track);
+public record PlayerPlayRequest(TrackFullVM Track);
+public record PlayerPauseRequest(TrackFullVM Track);
+public record PlayerResumeRequest(TrackFullVM Track);
+public record PlayerStopRequest(TrackFullVM Track);

@@ -1,8 +1,6 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿namespace Cadenza.State.Actions;
 
-namespace Cadenza.State.Actions;
-
-public record UpdateRecentPlayHistoryRequest(PlayStatus Status, TrackFull Track, int SecondsPlayed);
+public record UpdateRecentPlayHistoryRequest(PlayStatus Status, TrackFullVM Track, int SecondsPlayed);
 
 public record UpdateRecentPlayHistoryResult();
 

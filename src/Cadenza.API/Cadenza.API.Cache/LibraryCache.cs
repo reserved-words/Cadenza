@@ -23,7 +23,7 @@ internal class LibraryCache : ILibraryCache
 
     public bool IsPopulated { get; private set; } = false;
 
-    public async Task Populate(FullLibrary library)
+    public async Task Populate(FullLibraryDTO library)
     {
         await _cache.Populate(library);
         IsPopulated = true;

@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary.Services;
+﻿namespace Cadenza.API.SqlLibrary.Services;
 
 internal class LibraryReader : ILibraryReader
 {
@@ -13,17 +11,17 @@ internal class LibraryReader : ILibraryReader
         _readService = readService;
     }
 
-    public async Task<FullLibrary> Get()
+    public async Task<FullLibraryDTO> Get()
     {
         var artistsData = await _readService.GetArtists();
         var artists = artistsData.Select(a => _mapper.MapArtist(a)).ToList();
 
-        var library = new FullLibrary
+        var library = new FullLibraryDTO
         {
             Artists = artists,
-            Albums = new List<AlbumDetails>(),
-            Tracks = new List<TrackDetails>(),
-            AlbumTracks = new List<AlbumTrackLink>()
+            Albums = new List<AlbumDetailsDTO>(),
+            Tracks = new List<TrackDetailsDTO>(),
+            AlbumTracks = new List<AlbumTrackLinkDTO>()
         };
 
         foreach (var src in Enum.GetValues<LibrarySource>())
@@ -72,7 +70,7 @@ internal class LibraryReader : ILibraryReader
         return _readService.GetTrackIdFromSource(trackId);
     }
 
-    private async Task AddSource(FullLibrary library, LibrarySource source)
+    private async Task AddSource(FullLibraryDTO library, LibrarySource source)
     {
         var albumsData = await _readService.GetAlbums(source);
         var discsData = await _readService.GetDiscs(source);

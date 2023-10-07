@@ -1,5 +1,5 @@
 ﻿
-<AppTable T="@PlayerItem"
+<AppTable T="@PlayerItemVM"
           Items="@Items"
           Filter="@OnFilter"
           RowsPerPage="15">
@@ -12,7 +12,7 @@
 </AppTable>
 
 @code {
-    [Parameter] public List<PlayerItem> Items { get; set; }
-    [Parameter] public Action<PlayerItem> OnViewItem { get; set; }
-    [Parameter] public Func<PlayerItem, bool> OnFilter { get; set; }
+    [Parameter] public List<PlayerItemVM>Items { get; set; }
+    [Parameter] public Action<PlayerItemVM>OnViewItem { get; set; }
+    [Parameter] public Func<PlayerItemVM, bool> OnFilter { get; set; }
 }

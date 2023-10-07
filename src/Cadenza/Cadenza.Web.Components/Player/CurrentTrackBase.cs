@@ -4,7 +4,7 @@ public class CurrentTrackBase : FluxorComponent
 {
     [Parameter] public bool Empty { get; set; }
     [Parameter] public bool Loading { get; set; }
-    [Parameter] public TrackFull Model { get; set; }
+    [Parameter] public TrackFullVM Model { get; set; }
 
     protected override void OnInitialized()
     {

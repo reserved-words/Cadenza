@@ -23,7 +23,7 @@ internal class SyncService : ISyncService
             .ToList();
     }
 
-    public async Task<SyncTrack> GetTrack(string id)
+    public async Task<SyncTrackDTO> GetTrack(string id)
     {
         var filepath = _filepathParser.GetFilepathFromId(id);
         var data = await _musicLibrary.GetFileData(id, filepath);
@@ -36,7 +36,7 @@ internal class SyncService : ISyncService
         await _musicDirectory.RemoveFile(filepath);
     }
 
-    public async Task UpdateTracks(MultiTrackUpdates updates)
+    public async Task UpdateTracks(MultiTrackUpdatesDTO updates)
     {
         foreach (var id in updates.TrackIds)
         {

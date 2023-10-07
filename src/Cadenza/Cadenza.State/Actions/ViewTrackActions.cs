@@ -1,7 +1,5 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Actions;
+﻿namespace Cadenza.State.Actions;
 
 public record FetchViewTrackRequest(int TrackId);
 
-public record FetchViewTrackResult(TrackFull Track);
+public record FetchViewTrackResult(TrackFullVM Track);

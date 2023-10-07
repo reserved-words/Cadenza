@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record ViewAlbumState(bool IsLoading, AlbumDetails Album, List<Disc> Discs) 
+public record ViewAlbumState(bool IsLoading, AlbumDetailsVM Album, List<DiscVM> Discs) 
 {
     private static ViewAlbumState Init() => new ViewAlbumState(true, null, null);
 }

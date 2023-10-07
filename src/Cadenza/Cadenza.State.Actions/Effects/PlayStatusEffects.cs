@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Actions.Effects;
+﻿namespace Cadenza.State.Actions.Effects;
 
 public class PlayStatusEffects
 {
@@ -28,7 +26,7 @@ public class PlayStatusEffects
         return RequestUpdateRecentPlayHistory(dispatcher, PlayStatus.Stopped, action.Track, action.SecondsPlayed);
     }
 
-    private Task RequestUpdateRecentPlayHistory(IDispatcher dispatcher, PlayStatus playStatus, TrackFull track, int secondsPlayed)
+    private Task RequestUpdateRecentPlayHistory(IDispatcher dispatcher, PlayStatus playStatus, TrackFullVM track, int secondsPlayed)
     {
         dispatcher.Dispatch(new UpdateRecentPlayHistoryRequest(playStatus, track, secondsPlayed));
         return Task.CompletedTask;

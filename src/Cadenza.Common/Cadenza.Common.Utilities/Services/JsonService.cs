@@ -1,5 +1,5 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-using Cadenza.Common.Utilities.Json;
+﻿using Cadenza.Common.DTO.Serialization;
+using Cadenza.Common.Utilities.Interfaces;
 using System.Text.Json;
 
 namespace Cadenza.Common.Utilities.Services;

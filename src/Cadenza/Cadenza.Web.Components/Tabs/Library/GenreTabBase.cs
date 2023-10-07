@@ -7,5 +7,5 @@ public class GenreTabBase : FluxorComponent
 
     public bool Loading => ViewGenreState.Value.IsLoading;
     public string Genre => ViewGenreState.Value.Genre;
-    public List<Artist> Artists => ViewGenreState.Value.Artists;
+    public List<ArtistVM> Artists => ViewGenreState.Value.Artists;
 }

@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record GroupingsState(bool IsLoading, List<Grouping> Groupings)
+public record GroupingsState(bool IsLoading, List<GroupingVM> Groupings)
 {
-    private static GroupingsState Init() => new GroupingsState(false, new List<Grouping>());
+    private static GroupingsState Init() => new GroupingsState(false, new List<GroupingVM>());
 }

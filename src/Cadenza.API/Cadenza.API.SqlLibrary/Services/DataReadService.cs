@@ -124,9 +124,10 @@ internal class DataReadService : IDataReadService
         return await _dbAccess.Query<GetDiscData>(GetDiscsProcedure, parameters);
     }
 
-    public async Task<List<Grouping>> GetGroupings()
+    public async Task<List<GroupingDTO>> GetGroupings()
     {
-        return await _dbAccess.Query<Grouping>(GetGroupingsProcedure);
+        // should be using Data model not DTO here
+        return await _dbAccess.Query<GroupingDTO>(GetGroupingsProcedure);
     }
 
     public async Task<List<RecentAlbumData>> GetRecentAlbums(int maxItems)

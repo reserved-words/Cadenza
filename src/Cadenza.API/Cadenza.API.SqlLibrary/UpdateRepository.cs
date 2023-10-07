@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Interfaces.Repositories;
-using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.API.SqlLibrary;
 
 internal class UpdateRepository : IUpdateRepository
 {
@@ -14,22 +11,22 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task AddRemovalRequest(TrackRemovalRequest request)
+    public async Task AddRemovalRequest(TrackRemovalRequestDTO request)
     {
         await _updater.QueueRemoval(request);
     }
 
-    public async Task AddUpdateRequest(ItemUpdateRequest request)
+    public async Task AddUpdateRequest(ItemUpdateRequestDTO request)
     {
         await _updater.QueueUpdates(request);
     }
 
-    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         return await _reader.GetRemovalRequests(source);
     }
 
-    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
     {
         return await _reader.GetUpdateRequests(source);
     }
@@ -44,12 +41,12 @@ internal class UpdateRepository : IUpdateRepository
         await _updater.MarkRemovalErrored(requestId);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
     {
         await _updater.MarkUpdateDone(request);
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequestDTO request)
     {
         await _updater.MarkUpdateErrored(request);
     }

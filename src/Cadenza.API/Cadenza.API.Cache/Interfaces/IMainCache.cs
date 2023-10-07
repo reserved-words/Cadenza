@@ -1,18 +1,16 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Interfaces;
+﻿namespace Cadenza.API.Cache.Interfaces;
 
 internal interface IMainCache
 {
-    void CacheAlbum(AlbumDetails album);
-    void CacheAlbumTrack(AlbumTrackLink albumTracks);
-    void CacheArtist(ArtistDetails album);
-    void CacheTrack(TrackDetails track);
+    void CacheAlbum(AlbumDetailsDTO album);
+    void CacheAlbumTrack(AlbumTrackLinkDTO albumTracks);
+    void CacheArtist(ArtistDetailsDTO album);
+    void CacheTrack(TrackDetailsDTO track);
     void Clear();
-    AlbumDetails GetAlbum(int id);
-    AlbumTrackLink GetAlbumTrack(int trackId);
-    List<Artist> GetAllArtists();
-    ArtistDetails GetArtist(int id);
-    TrackDetails GetTrack(int id);
-    TrackFull GetFullTrack(int id);
+    AlbumDetailsDTO GetAlbum(int id);
+    AlbumTrackLinkDTO GetAlbumTrack(int trackId);
+    List<ArtistDTO> GetAllArtists();
+    ArtistDetailsDTO GetArtist(int id);
+    TrackDetailsDTO GetTrack(int id);
+    TrackFullDTO GetFullTrack(int id);
 }

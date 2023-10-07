@@ -11,7 +11,7 @@
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public AlbumDetails Album { get; set; }
+    [Parameter] public AlbumDetailsVM Album { get; set; }
 
     protected Task OnPlay()
     {
@@ -21,6 +21,6 @@
 
     protected async Task OnEdit()
     {
-        await DialogService.DisplayForm<EditAlbum, AlbumDetails>(Album, "Edit Album");
+        await DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album");
     }
 }

@@ -1,15 +1,13 @@
-﻿using Fluxor;
+﻿namespace Cadenza.Web.Components.Forms.Artist;
 
-namespace Cadenza.Web.Components.Forms.Artist;
-
-public class EditArtistBase : FormBase<ArtistDetails>
+public class EditArtistBase : FormBase<ArtistDetailsVM>
 {
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public ArtistUpdate Update { get; set; }
-    public List<Grouping> Groupings => GroupingsState.Value.Groupings;
-    public ArtistDetails EditableItem => Update.UpdatedItem;
+    public ArtistUpdateVM Update { get; set; }
+    public List<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+    public ArtistDetailsVM EditableItem => Update.UpdatedItem;
 
     protected override async Task OnInitializedAsync()
     {
@@ -19,7 +17,7 @@ public class EditArtistBase : FormBase<ArtistDetails>
 
     protected override void OnParametersSet()
     {
-        Update = new ArtistUpdate(Model);
+        Update = new ArtistUpdateVM(Model);
     }
 
     protected void OnSubmit()

@@ -4,45 +4,54 @@ internal class SearchRepository : ISearchRepository
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
+    private readonly IViewModelMapper _mapper;
 
-    public SearchRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
+    public SearchRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper, IViewModelMapper mapper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;
+        _mapper = mapper;
     }
 
-    public async Task<List<PlayerItem>> GetSearchAlbums()
+    public async Task<List<PlayerItemVM>> GetSearchAlbums()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchAlbums);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchAlbums);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetArtists()
+    public async Task<List<PlayerItemVM>> GetArtists()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchArtists);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchArtists);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetGenres()
+    public async Task<List<PlayerItemVM>> GetGenres()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchGenres);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchGenres);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetGroupings()
+    public async Task<List<PlayerItemVM>> GetGroupings()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchGroupings);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchGroupings);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetSearchPlaylists()
+    public async Task<List<PlayerItemVM>> GetSearchPlaylists()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchPlaylists);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchPlaylists);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetTags()
+    public async Task<List<PlayerItemVM>> GetTags()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchTags);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchTags);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItem>> GetTracks()
+    public async Task<List<PlayerItemVM>> GetTracks()
     {
-        return await _apiHelper.Get<List<PlayerItem>>(_settings.SearchTracks);
+        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchTracks);
+        return items.Select(i => _mapper.Map(i)).ToList();
     }
 }

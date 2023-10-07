@@ -15,7 +15,7 @@ internal class LibraryUpdater : ILibraryUpdater
         _imageConverter = imageConverter;
     }
 
-    public async Task UpdateAlbum(ItemUpdateRequest request)
+    public async Task UpdateAlbum(ItemUpdateRequestDTO request)
     {
         var album = await _readService.GetAlbum(request.Id);
 
@@ -48,7 +48,7 @@ internal class LibraryUpdater : ILibraryUpdater
         await _updateService.UpdateAlbum(album);
     }
 
-    public async Task UpdateArtist(ItemUpdateRequest request)
+    public async Task UpdateArtist(ItemUpdateRequestDTO request)
     {
         var artist = await _readService.GetArtist(request.Id);
 
@@ -89,7 +89,7 @@ internal class LibraryUpdater : ILibraryUpdater
         await _updateService.UpdateArtist(artist);
     }
 
-    public async Task UpdateTrack(ItemUpdateRequest request)
+    public async Task UpdateTrack(ItemUpdateRequestDTO request)
     {
         var track = await _readService.GetTrack(request.Id);
 

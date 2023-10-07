@@ -2,11 +2,11 @@
 
 public interface IArtistRepository
 {
-    Task<List<Artist>> GetAllArtists();
-    Task<ArtistDetails> GetArtist(int id);
-    Task<List<Album>> GetAlbums(int artistId);
-    Task<List<Album>> GetAlbumsFeaturingArtist(int artistId);
-    Task<List<Artist>> GetArtistsByGenre(string id);
-    Task<List<Artist>> GetArtistsByGrouping(int id);
-    Task<List<Track>> GetArtistTracks(int id);
+    Task<List<ArtistDTO>> GetAllArtists();
+    Task<ArtistDetailsDTO> GetArtist(int id);
+    Task<List<AlbumDTO>> GetAlbums(int artistId);
+    Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId);
+    Task<List<ArtistDTO>> GetArtistsByGenre(string id);
+    Task<List<ArtistDTO>> GetArtistsByGrouping(int id);
+    Task<List<TrackDTO>> GetArtistTracks(int id);
 }

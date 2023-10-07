@@ -13,37 +13,37 @@ internal class SearchService : ISearchService
         _populater = populater;
     }
 
-    public async Task<List<PlayerItem>> GetSearchAlbums()
+    public async Task<List<PlayerItemDTO>> GetSearchAlbums()
     {
         await PopulateCache();
         return await _cache.Search.GetSearchAlbums();
     }
 
-    public async Task<List<PlayerItem>> GetSearchArtists()
+    public async Task<List<PlayerItemDTO>> GetSearchArtists()
     {
         await PopulateCache();
         return await _cache.Search.GetArtists();
     }
 
-    public async Task<List<PlayerItem>> GetSearchGenres()
+    public async Task<List<PlayerItemDTO>> GetSearchGenres()
     {
         await PopulateCache();
         return await _cache.Search.GetGenres();
     }
 
-    public async Task<List<PlayerItem>> GetSearchGroupings()
+    public async Task<List<PlayerItemDTO>> GetSearchGroupings()
     {
         await PopulateCache();
         return await _cache.Search.GetGroupings();
     }
 
-    public async Task<List<PlayerItem>> GetSearchTags()
+    public async Task<List<PlayerItemDTO>> GetSearchTags()
     {
         await PopulateCache();
         return await _cache.Search.GetTags();
     }
 
-    public async Task<List<PlayerItem>> GetSearchTracks()
+    public async Task<List<PlayerItemDTO>> GetSearchTracks()
     {
         await PopulateCache();
         return await _cache.Search.GetTracks();

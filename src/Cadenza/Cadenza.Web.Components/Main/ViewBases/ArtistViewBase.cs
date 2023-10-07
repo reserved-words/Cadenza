@@ -2,7 +2,7 @@
 
 public class ArtistViewBase : FluxorComponent
 {
-    [Parameter] public ArtistDetails Model { get; set; } = new();
+    [Parameter] public ArtistDetailsVM Model { get; set; } = new();
 
     protected override void OnInitialized()
     {

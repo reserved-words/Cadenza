@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IWebInfoService
 {
-    Task<string> GetAlbumArtworkUrl(Album album);
-    Task<string> GetArtistImageUrl(Artist artist);
+    Task<string> GetAlbumArtworkUrl(AlbumVM album);
+    Task<string> GetArtistImageUrl(ArtistVM artist);
 }

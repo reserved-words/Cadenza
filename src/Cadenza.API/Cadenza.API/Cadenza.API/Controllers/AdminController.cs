@@ -12,7 +12,7 @@ public class AdminController : ControllerBase
     }
 
     [HttpGet("GroupingOptions")]
-    public async Task<List<Grouping>> GroupingOptions()
+    public async Task<List<GroupingDTO>> GroupingOptions()
     {
         return await _service.GetGroupings();
     }

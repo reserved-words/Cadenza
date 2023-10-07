@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.State.Actions.Effects;
+﻿namespace Cadenza.State.Actions.Effects;
 
 public class RecentPlayHistoryEffects
 {
@@ -55,7 +53,7 @@ public class RecentPlayHistoryEffects
         dispatcher.Dispatch(new FetchRecentPlayHistoryResult(result.ToList()));
     }
 
-    private async Task RecordPlay(TrackFull track, TrackProgress progress)
+    private async Task RecordPlay(TrackFullVM track, TrackProgress progress)
     {
         if (track == null)
             return;
@@ -66,7 +64,7 @@ public class RecentPlayHistoryEffects
         await _tracker.RecordPlay(track, DateTime.Now);
     }
 
-    private async Task UpdateNowPlaying(TrackFull track, int secondsRemaining)
+    private async Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining)
     {
         if (track == null)
             return;

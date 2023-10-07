@@ -1,31 +1,29 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class MainCache : IMainCache
 {
-    private readonly Dictionary<int, TrackDetails> _tracks = new();
-    private readonly Dictionary<int, AlbumDetails> _albums = new();
-    private readonly Dictionary<int, ArtistDetails> _artists = new();
-    private readonly Dictionary<int, AlbumTrackLink> _albumTracks = new();
+    private readonly Dictionary<int, TrackDetailsDTO> _tracks = new();
+    private readonly Dictionary<int, AlbumDetailsDTO> _albums = new();
+    private readonly Dictionary<int, ArtistDetailsDTO> _artists = new();
+    private readonly Dictionary<int, AlbumTrackLinkDTO> _albumTracks = new();
 
-    public void CacheAlbum(AlbumDetails album)
+    public void CacheAlbum(AlbumDetailsDTO album)
     {
         _albums.Cache(album.Id, album);
     }
 
-    public void CacheAlbumTrack(AlbumTrackLink albumTrack)
+    public void CacheAlbumTrack(AlbumTrackLinkDTO albumTrack)
     {
         _albumTracks.Cache(albumTrack.TrackId, albumTrack);
     }
 
-    public void CacheArtist(ArtistDetails artist)
+    public void CacheArtist(ArtistDetailsDTO artist)
     {
         _artists.Cache(artist.Id, artist);
 
     }
 
-    public void CacheTrack(TrackDetails track)
+    public void CacheTrack(TrackDetailsDTO track)
     {
         _tracks.Cache(track.Id, track);
     }
@@ -38,32 +36,32 @@ internal class MainCache : IMainCache
         _tracks.Clear();
     }
 
-    public AlbumDetails GetAlbum(int id)
+    public AlbumDetailsDTO GetAlbum(int id)
     {
         return _albums.GetValue(id);
     }
 
-    public AlbumTrackLink GetAlbumTrack(int trackId)
+    public AlbumTrackLinkDTO GetAlbumTrack(int trackId)
     {
         return _albumTracks.GetValue(trackId);
     }
 
-    public List<Artist> GetAllArtists()
+    public List<ArtistDTO> GetAllArtists()
     {
-        return _artists.GetAllValues<int, ArtistDetails, Artist>();
+        return _artists.GetAllValues<int, ArtistDetailsDTO, ArtistDTO>();
     }
 
-    public ArtistDetails GetArtist(int id)
+    public ArtistDetailsDTO GetArtist(int id)
     {
         return _artists.GetValue(id);
     }
 
-    public TrackFull GetFullTrack(int id)
+    public TrackFullDTO GetFullTrack(int id)
     {
         var track = GetTrack(id);
         var album = GetAlbum(track.AlbumId);
 
-        return new TrackFull
+        return new TrackFullDTO
         {
             Track = track,
             Album = album,
@@ -73,7 +71,7 @@ internal class MainCache : IMainCache
         };
     }
 
-    public TrackDetails GetTrack(int id)
+    public TrackDetailsDTO GetTrack(int id)
     {
         return _tracks.GetValue(id);
     }

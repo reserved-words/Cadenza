@@ -6,7 +6,7 @@ public class TagsEditorBase : ComponentBase
 {
     private const string RegexPattern = @"^[0-9a-zß-ÿ\-]*$";
 
-    [Parameter] public TagList Model { get; set; } = new TagList();
+    [Parameter] public TagListVM Model { get; set; } = new TagListVM();
 
     protected DefaultFocus DefaultFocus { get; set; }
 

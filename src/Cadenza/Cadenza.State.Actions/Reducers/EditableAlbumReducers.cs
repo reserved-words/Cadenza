@@ -8,7 +8,7 @@ public static class EditableAlbumReducers
         return state with
         {
             IsLoading = true,
-            Tracks = new List<AlbumTrack>()
+            Tracks = new List<AlbumTrackVM>()
         };
     }
 
@@ -28,7 +28,7 @@ public static class EditableAlbumReducers
         return state with
         {
             IsLoading = false,
-            Tracks = new List<AlbumTrack>()
+            Tracks = new List<AlbumTrackVM>()
         };
     }
 }

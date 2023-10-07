@@ -2,7 +2,7 @@
 
 internal interface ILibraryReader
 {
-    Task<FullLibrary> Get();
+    Task<FullLibraryDTO> Get();
     Task<List<string>> GetAllTracks(LibrarySource source);
     Task<ArtworkImage> GetAlbumArtwork(int id);
     Task<ArtworkImage> GetArtistImage(int id);

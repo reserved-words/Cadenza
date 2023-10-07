@@ -1,10 +1,11 @@
 global using Cadenza.Common.Domain.Model.Sync;
-global using Cadenza.Common.Domain.Model.Updates;
 global using Cadenza.Common.Utilities;
 global using Cadenza.Local.API.Common.Controllers;
 global using Cadenza.Local.API.Core;
 global using Cadenza.Local.API.Core.Settings;
 global using Cadenza.Local.API.Files;
+global using Cadenza.Common.DTO;
+global using Cadenza.Common.Utilities.Interfaces;
 global using Microsoft.AspNetCore.Mvc;
 
 using Cadenza.Apps;

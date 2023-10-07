@@ -12,10 +12,10 @@ internal class QueueReader : IQueueReader
         _readService = readService;
     }
 
-    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         var requests = await _readService.GetTrackRemovals(source);
-        return requests.Select(r => new SyncTrackRemovalRequest
+        return requests.Select(r => new SyncTrackRemovalRequestDTO
         {
             RequestId = r.RequestId,
             TrackIdFromSource = r.TrackIdFromSource
@@ -23,7 +23,7 @@ internal class QueueReader : IQueueReader
         .ToList();
     }
 
-    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
     {
         var artistUpdates = await _readService.GetArtistUpdates(source);
         var albumUpdates = await _readService.GetAlbumUpdates(source);
@@ -35,14 +35,14 @@ internal class QueueReader : IQueueReader
             .ToList();
     }
 
-    private List<ItemUpdateRequest> ConvertAlbumUpdateRequests(List<AlbumUpdateData> data)
+    private List<ItemUpdateRequestDTO> ConvertAlbumUpdateRequests(List<AlbumUpdateData> data)
     {
         return data.GroupBy(d => d.AlbumId)
-            .Select(a => new ItemUpdateRequest
+            .Select(a => new ItemUpdateRequestDTO
             {
                 Type = LibraryItemType.Album,
                 Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdate
+                Updates = a.Select(u => new PropertyUpdateDTO
                 {
                     Id = u.Id,
                     Property = Enum.Parse<ItemProperty>(u.PropertyName),
@@ -53,14 +53,14 @@ internal class QueueReader : IQueueReader
             .ToList();
     }
 
-    private List<ItemUpdateRequest> ConvertArtistUpdateRequests(List<ArtistUpdateData> data)
+    private List<ItemUpdateRequestDTO> ConvertArtistUpdateRequests(List<ArtistUpdateData> data)
     {
         return data.GroupBy(d => d.ArtistId)
-            .Select(a => new ItemUpdateRequest
+            .Select(a => new ItemUpdateRequestDTO
             {
                 Type = LibraryItemType.Artist,
                 Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdate
+                Updates = a.Select(u => new PropertyUpdateDTO
                 {
                     Id = u.Id,
                     Property = Enum.Parse<ItemProperty>(u.PropertyName),
@@ -71,14 +71,14 @@ internal class QueueReader : IQueueReader
             .ToList();
     }
 
-    private List<ItemUpdateRequest> ConvertTrackUpdateRequests(List<TrackUpdateData> data)
+    private List<ItemUpdateRequestDTO> ConvertTrackUpdateRequests(List<TrackUpdateData> data)
     {
         return data.GroupBy(d => d.TrackId)
-            .Select(a => new ItemUpdateRequest
+            .Select(a => new ItemUpdateRequestDTO
             {
                 Type = LibraryItemType.Track,
                 Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdate
+                Updates = a.Select(u => new PropertyUpdateDTO
                 {
                     Id = u.Id,
                     Property = Enum.Parse<ItemProperty>(u.PropertyName),

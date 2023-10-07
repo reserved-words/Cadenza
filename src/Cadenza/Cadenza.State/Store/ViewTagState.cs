@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.State.Store;
+﻿namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record ViewTagState(bool IsLoading, string Tag, List<PlayerItem> Items) 
+public record ViewTagState(bool IsLoading, string Tag, List<PlayerItemVM> Items) 
 {
     private static ViewTagState Init() => new ViewTagState(true, null, null);
 }
