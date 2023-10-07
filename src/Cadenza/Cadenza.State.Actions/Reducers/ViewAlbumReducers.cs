@@ -52,7 +52,7 @@ public static class ViewAlbumReducers
     [ReducerMethod]
     public static ViewAlbumState ReduceAlbumUpdatedAction(ViewAlbumState state, AlbumUpdatedAction action)
     {
-        if (state.Album == null || state.Album.Id == action.UpdatedAlbum.Id)
+        if (state.Album == null || state.Album.Id != action.UpdatedAlbum.Id)
             return state;
 
         return state with { Album = action.UpdatedAlbum };
