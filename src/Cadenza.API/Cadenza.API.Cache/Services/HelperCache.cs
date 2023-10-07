@@ -78,7 +78,16 @@ internal class HelperCache : IHelperCache
 
         foreach (var track in _tracksByAlbum[id])
         {
-            result.Add(new AlbumTrackDTO(track.Track, track.AlbumTrack));
+            result.Add(new AlbumTrackDTO 
+            {
+                TrackId = track.Track.Id,
+                Title = track.Track.Title,
+                ArtistId = track.Track.ArtistId,
+                ArtistName = track.Track.ArtistName,
+                DurationSeconds = track.Track.DurationSeconds,
+                DiscNo = track.AlbumTrack.DiscNo,
+                TrackNo = track.AlbumTrack.TrackNo
+            });
         }
 
         return result;

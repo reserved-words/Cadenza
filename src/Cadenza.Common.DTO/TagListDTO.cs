@@ -20,39 +20,12 @@ public class TagListDTO
         }
     }
 
-    public TagListDTO(ICollection<string> tags)
-    {
-        if (tags != null)
-        {
-            _tags = new List<string>(tags);
-        }
-    }
-
     public TagListDTO(TagListDTO tagList)
     {
         if (tagList != null)
         {
             _tags = new List<string>(tagList.Tags);
         }
-    }
-
-    public void Add(string tag)
-    {
-        if (string.IsNullOrWhiteSpace(tag))
-            return;
-
-        tag = tag.Replace(Separator, "");
-
-        if (!Tags.Contains(tag))
-        {
-            _tags.Add(tag);
-            _tags.Sort();
-        }
-    }
-
-    public void Remove(string tag)
-    {
-        _tags.Remove(tag);
     }
 
     public override string ToString()

@@ -4,8 +4,8 @@ public class AlbumDetailsDTO : AlbumDTO
 {
     public int DiscCount { get; set; }
 
-    public List<int> TrackCounts { get; set; } = new List<int>();
+    public List<int> TrackCounts { get; set; }
 
     [ItemProperty(ItemProperty.AlbumTags)]
-    public TagListDTO Tags { get; set; } = new TagListDTO();
+    public TagListDTO Tags { get; set; }
 }

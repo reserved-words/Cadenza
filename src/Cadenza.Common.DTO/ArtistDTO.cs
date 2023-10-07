@@ -10,6 +10,4 @@ public class ArtistDTO
 
     [ItemProperty(ItemProperty.Genre)]
     public string Genre { get; set; }
-
-    public override string ToString() => Name;
 }

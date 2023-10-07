@@ -13,8 +13,6 @@ public class AlbumDTO
     [ItemProperty(ItemProperty.ReleaseType)]
     public ReleaseType ReleaseType { get; set; }
 
-    public override string ToString() => $"{ArtistName} - {Title}";
-
     [ItemProperty(ItemProperty.ReleaseYear)]
     public string Year { get; set; }
 

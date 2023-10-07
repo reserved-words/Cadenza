@@ -2,22 +2,6 @@
 
 public class AlbumTrackDTO
 {
-    public AlbumTrackDTO()
-    {
-
-    }
-
-    public AlbumTrackDTO(TrackDetailsDTO track, AlbumTrackLinkDTO albumTrack)
-    {
-        TrackId = track.Id;
-        Title = track.Title;
-        ArtistId = track.ArtistId;
-        ArtistName = track.ArtistName;
-        DurationSeconds = track.DurationSeconds;
-        DiscNo = albumTrack.DiscNo;
-        TrackNo = albumTrack.TrackNo;
-    }
-
     public int TrackId { get; set; }
     public string Title { get; set; }
     public int ArtistId { get; set; }
