@@ -14,20 +14,8 @@ public class UpdateArtistEffects
     {
         try
         {
-            await _repository.UpdateArtist(action.Update);
-
-            var updatedArtist = action.OriginalArtist with
-            {
-                Grouping = action.Update.Grouping,
-                Genre = action.Update.Genre,
-                ImageBase64 = action.Update.ImageBase64,
-                Country = action.Update.Country,
-                State = action.Update.State,
-                City = action.Update.City,
-                Tags = new ReadOnlyCollection<string>(action.Update.Tags.ToList())
-            };
-
-            dispatcher.Dispatch(new ArtistUpdatedAction(updatedArtist));
+            await _repository.UpdateArtist(action.OriginalArtist, action.UpdatedArtist);
+            dispatcher.Dispatch(new ArtistUpdatedAction(action.UpdatedArtist));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Artist, action.OriginalArtist.Id));
         }
         catch (Exception ex)

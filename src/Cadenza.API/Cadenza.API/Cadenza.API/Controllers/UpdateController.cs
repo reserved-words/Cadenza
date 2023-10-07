@@ -20,21 +20,18 @@ public class UpdateController : ControllerBase
     [HttpPost("UpdateTrack")]
     public async Task UpdateTrack([FromBody] UpdateTrackDTO request)
     {
-        throw new NotImplementedException();
-//        await _service.UpdateTrack(request);
+        await _service.UpdateTrack(request);
     }
 
     [HttpPost("UpdateArtist")]
     public async Task UpdateArtist([FromBody] UpdateArtistDTO request)
     {
-        throw new NotImplementedException();
-//        await _service.UpdateArtist(request);
+        await _service.UpdateArtist(request);
     }
 
     [HttpPost("UpdateAlbum")]
     public async Task UpdateAlbum([FromBody] UpdateAlbumDTO request)
     {
-        throw new NotImplementedException();
-//        await _service.UpdateAlbum(request);
+        await _service.UpdateAlbum(request);
     }
 }

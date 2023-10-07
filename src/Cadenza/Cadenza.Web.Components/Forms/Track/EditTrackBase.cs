@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Forms.Track;
+﻿using System.Collections.ObjectModel;
+using System;
+
+namespace Cadenza.Web.Components.Forms.Track;
 
 public class EditTrackBase : FormBase<TrackDetailsVM>
 {
@@ -32,7 +35,15 @@ public class EditTrackBase : FormBase<TrackDetailsVM>
 
     protected void OnSubmit()
     {
-        Dispatcher.Dispatch(new TrackUpdateRequest(Model, EditableItem));
+        var updatedTrack = Model with
+        {
+            Title = EditableItem.Title,
+            Year = EditableItem.Year,
+            Lyrics = EditableItem.Lyrics,
+            Tags = new ReadOnlyCollection<string>(EditableItem.Tags.ToList())
+        };
+
+        Dispatcher.Dispatch(new TrackUpdateRequest(Model, updatedTrack));
     }
 
     private void OnTrackUpdated(TrackUpdatedAction action)

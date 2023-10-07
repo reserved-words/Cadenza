@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Forms.Album;
+﻿using System.Collections.ObjectModel;
+using System;
+
+namespace Cadenza.Web.Components.Forms.Album;
 
 public class EditAlbumBase : FormBase<AlbumDetailsVM>
 {
@@ -37,7 +40,16 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
 
     protected void OnSubmit()
     {
-        Dispatcher.Dispatch(new AlbumUpdateRequest(Model, EditableItem));
+        var updatedAlbum = Model with
+        {
+            Title = EditableItem.Title,
+            ReleaseType = EditableItem.ReleaseType,
+            Year = EditableItem.Year,
+            ArtworkBase64 = EditableItem.ArtworkBase64,
+            Tags = new ReadOnlyCollection<string>(EditableItem.Tags.ToList())
+        };
+
+        Dispatcher.Dispatch(new AlbumUpdateRequest(Model, updatedAlbum));
     }
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)

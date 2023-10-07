@@ -14,18 +14,8 @@ public class AlbumUpdateEffects
     {
         try
         {
-            await _repository.UpdateAlbum(action.Update);
-
-            var updatedAlbum = action.OriginalAlbum with
-            {
-                Title = action.Update.Title,
-                ReleaseType = action.Update.ReleaseType,
-                Year = action.Update.Year,
-                ArtworkBase64 = action.Update.ArtworkBase64,
-                Tags = new ReadOnlyCollection<string>(action.Update.Tags.ToList())
-            };
-
-            dispatcher.Dispatch(new AlbumUpdatedAction(updatedAlbum));
+            await _repository.UpdateAlbum(action.OriginalAlbum, action.UpdatedAlbum);
+            dispatcher.Dispatch(new AlbumUpdatedAction(action.UpdatedAlbum));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.OriginalAlbum.Id));
         }
         catch (Exception ex)

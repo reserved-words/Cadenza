@@ -20,6 +20,14 @@ public class TagListDTO
         }
     }
 
+    public TagListDTO(ICollection<string> tags)
+    {
+        if (tags != null)
+        {
+            _tags = new List<string>(tags);
+        }
+    }
+
     public TagListDTO(TagListDTO tagList)
     {
         if (tagList != null)

@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Forms.Artist;
+﻿using System.Collections.ObjectModel;
+using System;
+
+namespace Cadenza.Web.Components.Forms.Artist;
 
 public class EditArtistBase : FormBase<ArtistDetailsVM>
 {
@@ -29,10 +32,20 @@ public class EditArtistBase : FormBase<ArtistDetailsVM>
         SubscribeToAction<ArtistUpdatedAction>(OnArtistUpdated);
         await base.OnInitializedAsync();
     }
-
     protected void OnSubmit()
     {
-       Dispatcher.Dispatch(new ArtistUpdateRequest(Model, EditableItem));
+        var updatedArtist = Model with
+        {
+            Grouping = EditableItem.Grouping,
+            Genre = EditableItem.Genre,
+            ImageBase64 = EditableItem.ImageBase64,
+            Country = EditableItem.Country,
+            State = EditableItem.State,
+            City = EditableItem.City,
+            Tags = new ReadOnlyCollection<string>(EditableItem.Tags.ToList())
+        };
+
+        Dispatcher.Dispatch(new ArtistUpdateRequest(Model, updatedArtist));
     }
 
     private void OnArtistUpdated(ArtistUpdatedAction action)
