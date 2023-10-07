@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System;
 
 namespace Cadenza.Web.Components.Forms.Track;
 
@@ -7,11 +6,11 @@ public class EditTrackBase : FormBase<TrackDetailsVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public EditableTrack EditableItem => GetEditableItem();
+    public EditableTrack EditableItem { get; set; }
 
-    private EditableTrack GetEditableItem()
+    protected override void OnParametersSet()
     {
-        return new EditableTrack
+        EditableItem = new EditableTrack
         {
             Id = Model.Id,
             ArtistId = Model.ArtistId,

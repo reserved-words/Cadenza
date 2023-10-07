@@ -31,6 +31,9 @@ internal class UpdateService : IUpdateService
             Updates = GetUpdates(dto.OriginalTrack, dto.UpdatedTrack)
         };
 
+        if (!request.Updates.Any())
+            return;
+
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateTrack(request);
         await _cachePopulater.Populate(false);
@@ -45,6 +48,9 @@ internal class UpdateService : IUpdateService
             Updates = GetUpdates(dto.OriginalAlbum, dto.UpdatedAlbum)
         };
 
+        if (!request.Updates.Any())
+            return;
+
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateAlbum(request);
         await _cachePopulater.Populate(false);
@@ -58,6 +64,9 @@ internal class UpdateService : IUpdateService
             Type = LibraryItemType.Artist,
             Updates = GetUpdates(dto.OriginalArtist, dto.UpdatedArtist)
         };
+
+        if (!request.Updates.Any())
+            return;
 
         await _updateRepository.AddUpdateRequest(request);
         await _musicRepository.UpdateArtist(request);

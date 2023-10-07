@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System;
 
 namespace Cadenza.Web.Components.Forms.Album;
 
@@ -8,11 +7,11 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<EditableAlbumState> State { get; set; }
 
-    public EditableAlbum EditableItem => GetEditableItem();
+    protected EditableAlbum EditableItem { get; set; }
 
-    private EditableAlbum GetEditableItem()
+    protected override void OnParametersSet()
     {
-        return new EditableAlbum
+        EditableItem = new EditableAlbum
         {
             Id = Model.Id,
             ArtistId = Model.ArtistId,
@@ -23,6 +22,8 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
             ArtworkBase64 = Model.ArtworkBase64,
             Tags = Model.Tags.ToList()
         };
+
+        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
     }
 
     public List<AlbumTrackVM> AlbumTracks => State.Value.Tracks.ToList();
@@ -31,11 +32,6 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
     {
         SubscribeToAction<AlbumUpdatedAction>(OnAlbumUpdated);
         base.OnInitialized();
-    }
-
-    protected override void OnParametersSet()
-    {
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
     }
 
     protected void OnSubmit()

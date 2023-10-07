@@ -102,7 +102,7 @@ internal class DataMapper : IDataMapper
             Year = album.Year,
             DiscCount = album.DiscCount,
             TrackCounts = discs.Select(d => d.TrackCount).ToList(),
-            Tags = new TagListDTO(album.TagList)
+            Tags = album.TagList?.Split("|").ToList() ?? new List<string>()
         };
     }
 
@@ -128,7 +128,7 @@ internal class DataMapper : IDataMapper
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
-            Tags = new TagListDTO(artist.TagList)
+            Tags = artist.TagList?.Split("|").ToList() ?? new List<string>()
         };
     }
 
@@ -146,7 +146,7 @@ internal class DataMapper : IDataMapper
             DurationSeconds = track.DurationSeconds,
             Year = track.Year,
             Lyrics = track.Lyrics,
-            Tags = new TagListDTO(track.TagList)
+            Tags = track.TagList?.Split("|").ToList() ?? new List<string>()
         };
     }
 

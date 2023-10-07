@@ -82,8 +82,8 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         return new GroupingDTO(dto.Id, dto.Name);
     }
 
-    private TagListDTO Map(IReadOnlyCollection<string> vm)
+    private List<string> Map(IReadOnlyCollection<string> vm)
     {
-        return new TagListDTO(vm.ToList());
+        return vm.ToList();
     }
 }

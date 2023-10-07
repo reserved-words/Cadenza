@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System;
 
 namespace Cadenza.Web.Components.Forms.Artist;
 
@@ -8,12 +7,12 @@ public class EditArtistBase : FormBase<ArtistDetailsVM>
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
-    public EditableArtist EditableItem => GetEditableItem();
+    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+    protected EditableArtist EditableItem { get; set; }
 
-    private EditableArtist GetEditableItem()
+    protected override void OnParametersSet()
     {
-        return new EditableArtist
+        EditableItem = new EditableArtist
         {
             Id = Model.Id,
             Name = Model.Name,

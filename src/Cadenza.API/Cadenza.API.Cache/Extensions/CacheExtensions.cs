@@ -12,9 +12,9 @@ internal static class CacheExtensions
 
     public static void Cache(this Dictionary<string, List<int>> dictionary, TrackDetailsDTO track, ArtistDetailsDTO artist, AlbumDetailsDTO album, int trackId)
     {
-        var tags = track.Tags.Tags
-            .Concat(artist.Tags.Tags)
-            .Concat(album.Tags.Tags)
+        var tags = track.Tags
+            .Concat(artist.Tags)
+            .Concat(album.Tags)
             .Distinct();
 
         foreach (var tag in tags)
@@ -60,9 +60,9 @@ internal static class CacheExtensions
         list.Add(value);
     }
 
-    public static void Cache(this Dictionary<string, List<PlayerItemDTO>> dictionary, TagListDTO tags, PlayerItemDTO item)
+    public static void Cache(this Dictionary<string, List<PlayerItemDTO>> dictionary, List<string> tags, PlayerItemDTO item)
     {
-        foreach (var tag in tags.Tags)
+        foreach (var tag in tags)
         {
             dictionary.Cache(tag, item);
         }

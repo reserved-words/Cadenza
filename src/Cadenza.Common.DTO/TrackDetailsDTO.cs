@@ -9,5 +9,5 @@ public class TrackDetailsDTO : TrackDTO
     public string Lyrics { get; set; }
 
     [ItemProperty(ItemProperty.TrackTags)]
-    public TagListDTO Tags { get; set; } = new TagListDTO();
+    public List<string> Tags { get; set; }
 }

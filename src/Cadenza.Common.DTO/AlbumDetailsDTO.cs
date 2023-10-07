@@ -7,5 +7,5 @@ public class AlbumDetailsDTO : AlbumDTO
     public List<int> TrackCounts { get; set; }
 
     [ItemProperty(ItemProperty.AlbumTags)]
-    public TagListDTO Tags { get; set; }
+    public List<string> Tags { get; set; }
 }
