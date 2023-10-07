@@ -12,9 +12,9 @@ internal static class CacheExtensions
 
     public static void Cache(this Dictionary<string, List<int>> dictionary, TrackDetailsDTO track, ArtistDetailsDTO artist, AlbumDetailsDTO album, int trackId)
     {
-        var tags = track.Tags
-            .Concat(artist.Tags)
-            .Concat(album.Tags)
+        var tags = track.Tags.Tags
+            .Concat(artist.Tags.Tags)
+            .Concat(album.Tags.Tags)
             .Distinct();
 
         foreach (var tag in tags)

@@ -9,7 +9,7 @@ internal class ItemCache : IItemCache
     {
         var item = new SearchableAlbum(album);
         _items.Cache(PlayerItemType.Album, item);
-        _tags.Cache(album.Tags, item);
+        _tags.Cache(album.Tags.Tags, item);
     }
 
     public void CacheArtist(ArtistDetailsDTO artist)
@@ -18,14 +18,14 @@ internal class ItemCache : IItemCache
         _items.Cache(PlayerItemType.Artist, item);
         _items.Cache(PlayerItemType.Grouping, artist.Grouping.Id.ToString(), () => new SearchableGrouping(artist.Grouping));
         _items.Cache(PlayerItemType.Genre, artist.Genre, () => new SearchableGenre(artist.Genre));
-        _tags.Cache(artist.Tags, item);
+        _tags.Cache(artist.Tags.Tags, item);
     }
 
     public void CacheTrack(TrackDetailsDTO track, AlbumDetailsDTO album)
     {
         var item = new SearchableTrack(track, album);
         _items.Cache(PlayerItemType.Track, item);
-        _tags.Cache(track.Tags, item);
+        _tags.Cache(track.Tags.Tags, item);
     }
 
     public void Clear()

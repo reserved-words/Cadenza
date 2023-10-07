@@ -137,9 +137,9 @@ internal class ViewModelMapper : IViewModelMapper
         return new GroupingVM(dto.Id, dto.Name);
     }
 
-    private IReadOnlyCollection<string> Map(List<string> dto)
+    private IReadOnlyCollection<string> Map(TagsDTO dto)
     {
-        return new ReadOnlyCollection<string>(dto.ToList());
+        return new ReadOnlyCollection<string>(dto.Tags);
     }
 
     public RecentAlbumVM Map(RecentAlbumDTO dto)

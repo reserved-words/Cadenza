@@ -15,5 +15,5 @@ public class ArtistDetailsDTO : ArtistDTO
     public string ImageBase64 { get; set; }
 
     [ItemProperty(ItemProperty.ArtistTags)]
-    public List<string> Tags { get; set; }
+    public TagsDTO Tags { get; set; }
 }
