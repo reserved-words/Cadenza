@@ -6,5 +6,5 @@ public class GroupingTabBase : FluxorComponent
 
     public bool Loading => ViewGroupingState.Value.IsLoading;
     public GroupingVM Grouping => ViewGroupingState.Value.Grouping;
-    public List<string> Genres => ViewGroupingState.Value.Genres;
+    public IReadOnlyCollection<string> Genres => ViewGroupingState.Value.Genres;
 }

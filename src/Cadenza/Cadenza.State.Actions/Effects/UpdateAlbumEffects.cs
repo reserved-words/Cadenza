@@ -25,13 +25,13 @@ public class AlbumUpdateEffects
                 Tags = new ReadOnlyCollection<string>(action.Update.Tags.ToList())
             };
 
-            dispatcher.Dispatch(new AlbumUpdatedAction(action.AlbumId, updatedAlbum));
-            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.AlbumId));
+            dispatcher.Dispatch(new AlbumUpdatedAction(updatedAlbum));
+            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.OriginalAlbum.Id));
         }
         catch (Exception ex)
         {
-            dispatcher.Dispatch(new AlbumUpdateFailedAction(action.AlbumId));
-            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Album, action.AlbumId, ex.Message, ex.StackTrace));
+            dispatcher.Dispatch(new AlbumUpdateFailedAction(action.OriginalAlbum.Id));
+            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Album, action.OriginalAlbum.Id, ex.Message, ex.StackTrace));
         }
     }
 }

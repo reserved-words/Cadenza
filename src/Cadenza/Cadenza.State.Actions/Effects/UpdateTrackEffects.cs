@@ -24,13 +24,13 @@ public class TrackUpdateEffects
                 Tags = new ReadOnlyCollection<string>(action.Update.Tags.ToList())
             };
 
-            dispatcher.Dispatch(new TrackUpdatedAction(action.TrackId, updatedTrack));
-            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Track, action.TrackId));
+            dispatcher.Dispatch(new TrackUpdatedAction(updatedTrack));
+            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Track, action.OriginalTrack.Id));
         }
         catch (Exception ex)
         {
-            dispatcher.Dispatch(new TrackUpdateFailedAction(action.TrackId));
-            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Track, action.TrackId, ex.Message, ex.StackTrace));
+            dispatcher.Dispatch(new TrackUpdateFailedAction(action.OriginalTrack.Id));
+            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Track, action.OriginalTrack.Id, ex.Message, ex.StackTrace));
         }
     }
 }

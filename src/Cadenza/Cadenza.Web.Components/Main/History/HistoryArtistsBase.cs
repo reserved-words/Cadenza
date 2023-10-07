@@ -5,7 +5,7 @@ public class HistoryArtistsBase : FluxorComponent
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<PlayHistoryArtistsState> PlayHistoryArtistsState { get; set; }
 
-    protected List<PlayedArtistVM> Items => PlayHistoryArtistsState.Value.Items;
+    protected IReadOnlyCollection<PlayedArtistVM> Items => PlayHistoryArtistsState.Value.Items;
     protected bool IsLoading => PlayHistoryArtistsState.Value.IsLoading;
     protected HistoryPeriod Period => PlayHistoryArtistsState.Value.Period;
 

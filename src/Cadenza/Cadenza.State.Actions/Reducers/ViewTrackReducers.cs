@@ -18,7 +18,7 @@ public static class ViewTrackReducers
     [ReducerMethod]
     public static ViewTrackState ReduceTrackUpdatedAction(ViewTrackState state, TrackUpdatedAction action) 
     {
-        if (state.Track == null || state.Track.Id == action.TrackId)
+        if (state.Track == null || state.Track.Id == action.UpdatedTrack.Id)
             return state;
 
         var track = state.Track with { Track = action.UpdatedTrack };

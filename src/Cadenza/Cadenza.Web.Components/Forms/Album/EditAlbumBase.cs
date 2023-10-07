@@ -5,7 +5,6 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<EditableAlbumState> State { get; set; }
 
-    //public AlbumUpdateVM Update { get; set; }
     public EditableAlbum EditableItem => GetEditableItem();
 
     private EditableAlbum GetEditableItem()
@@ -34,22 +33,11 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
     protected override void OnParametersSet()
     {
         Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
-        //Update = new AlbumUpdateVM(Model);
     }
 
     protected void OnSubmit()
     {
-        // TO DO
-
-        //Update.ConfirmUpdates();
-
-        //if (!Update.Updates.Any())
-        //{
-        //    Cancel();
-        //    return;
-        //}
-
-        // Dispatcher.Dispatch(new AlbumUpdateRequest(Model.Id, Update));
+        Dispatcher.Dispatch(new AlbumUpdateRequest(Model, EditableItem));
     }
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)

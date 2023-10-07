@@ -24,5 +24,5 @@
 }
 
 @code {
-    [Parameter] public List<ArtistReleaseGroupVM> Releases { get; set; } = new();
+    [Parameter] public IReadOnlyCollection<ArtistReleaseGroupVM> Releases { get; set; }
 }

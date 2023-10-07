@@ -1,13 +1,15 @@
-﻿namespace Cadenza.State.Store;
+﻿using System.Collections.ObjectModel;
+
+namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlaylistHistoryAlbumsState(bool IsLoading, List<RecentAlbumVM> Items) 
+public record PlaylistHistoryAlbumsState(bool IsLoading, IReadOnlyCollection<RecentAlbumVM> Items) 
 {
-    private static PlaylistHistoryAlbumsState Init() => new PlaylistHistoryAlbumsState(true, new List<RecentAlbumVM>());
+    private static PlaylistHistoryAlbumsState Init() => new PlaylistHistoryAlbumsState(true, new ReadOnlyCollection<RecentAlbumVM>(new List<RecentAlbumVM>()));
 }
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlaylistHistoryTagsState(bool IsLoading, List<string> Items)
+public record PlaylistHistoryTagsState(bool IsLoading, IReadOnlyCollection<string> Items)
 {
-    private static PlaylistHistoryTagsState Init() => new PlaylistHistoryTagsState(true, new List<string>());
+    private static PlaylistHistoryTagsState Init() => new PlaylistHistoryTagsState(true, new ReadOnlyCollection<string>(new List<string>()));
 }

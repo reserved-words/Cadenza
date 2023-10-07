@@ -34,5 +34,5 @@
 
 @code {
     [Parameter] public EditableArtist Model { get; set; }
-    [Parameter] public List<GroupingVM> Groupings { get; set; }
+    [Parameter] public IReadOnlyCollection<GroupingVM> Groupings { get; set; }
 }

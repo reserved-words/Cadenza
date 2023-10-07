@@ -12,7 +12,7 @@
 </AppTable>
 
 @code {
-    [Parameter] public List<PlayerItemVM>Items { get; set; }
-    [Parameter] public Action<PlayerItemVM>OnViewItem { get; set; }
+    [Parameter] public IReadOnlyCollection<PlayerItemVM> Items { get; set; }
+    [Parameter] public Action<PlayerItemVM> OnViewItem { get; set; }
     [Parameter] public Func<PlayerItemVM, bool> OnFilter { get; set; }
 }

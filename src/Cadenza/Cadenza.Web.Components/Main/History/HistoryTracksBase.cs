@@ -5,7 +5,7 @@ public class HistoryTracksBase : FluxorComponent
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<PlayHistoryTracksState> PlayHistoryTracksState { get; set; }
 
-    protected List<PlayedTrackVM> Items => PlayHistoryTracksState.Value.Items;
+    protected IReadOnlyCollection<PlayedTrackVM> Items => PlayHistoryTracksState.Value.Items;
     protected bool IsLoading => PlayHistoryTracksState.Value.IsLoading;
     protected HistoryPeriod Period => PlayHistoryTracksState.Value.Period;
 

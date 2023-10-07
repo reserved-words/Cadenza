@@ -6,5 +6,5 @@ public class ArtistTabBase : FluxorComponent
 
     public bool Loading => ViewArtistState.Value.IsLoading;
     public ArtistDetailsVM Artist => ViewArtistState.Value.Artist;
-    public List<ArtistReleaseGroupVM> Releases => ViewArtistState.Value.Releases;
+    public IReadOnlyCollection<ArtistReleaseGroupVM> Releases => ViewArtistState.Value.Releases;
 }

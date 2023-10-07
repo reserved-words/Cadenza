@@ -7,9 +7,9 @@ public class PlayShortcutsBase : FluxorComponent
     [Inject] public IState<PlaylistHistoryAlbumsState> AlbumHistoryState { get; set; }
     [Inject] public IState<PlaylistHistoryTagsState> TagHistoryState { get; set; }
 
-    protected List<GroupingVM> Groupings => GroupingsState.Value.Groupings;
-    protected List<RecentAlbumVM> RecentAlbums => AlbumHistoryState.Value.Items;
-    protected List<string> RecentTags => TagHistoryState.Value.Items;
+    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+    protected IReadOnlyCollection<RecentAlbumVM> RecentAlbums => AlbumHistoryState.Value.Items;
+    protected IReadOnlyCollection<string> RecentTags => TagHistoryState.Value.Items;
 
     protected Task PlayLibrary()
     {

@@ -5,8 +5,7 @@ public class EditArtistBase : FormBase<ArtistDetailsVM>
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    // public ArtistUpdateVM Update { get; set; }
-    public List<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+    public IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
     public EditableArtist EditableItem => GetEditableItem();
 
     private EditableArtist GetEditableItem()
@@ -31,24 +30,9 @@ public class EditArtistBase : FormBase<ArtistDetailsVM>
         await base.OnInitializedAsync();
     }
 
-    protected override void OnParametersSet()
-    {
-        // Update = new ArtistUpdateVM(Model);
-    }
-
     protected void OnSubmit()
     {
-        // TO DO
-
-        //Update.ConfirmUpdates();
-
-        //if (!Update.Updates.Any())
-        //{
-        //    Cancel();
-        //    return;
-        //}
-
-       // Dispatcher.Dispatch(new ArtistUpdateRequest(Model.Id, Update));
+       Dispatcher.Dispatch(new ArtistUpdateRequest(Model, EditableItem));
     }
 
     private void OnArtistUpdated(ArtistUpdatedAction action)

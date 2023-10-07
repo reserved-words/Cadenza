@@ -1,5 +1,4 @@
-﻿using Fluxor;
-namespace Cadenza.Web.Components.Tabs.Library;
+﻿namespace Cadenza.Web.Components.Tabs.Library;
 
 public class GenreTabBase : FluxorComponent
 {
@@ -7,5 +6,5 @@ public class GenreTabBase : FluxorComponent
 
     public bool Loading => ViewGenreState.Value.IsLoading;
     public string Genre => ViewGenreState.Value.Genre;
-    public List<ArtistVM> Artists => ViewGenreState.Value.Artists;
+    public IReadOnlyCollection<ArtistVM> Artists => ViewGenreState.Value.Artists;
 }

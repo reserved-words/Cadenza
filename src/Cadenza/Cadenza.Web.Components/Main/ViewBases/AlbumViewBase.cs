@@ -12,7 +12,7 @@ public class AlbumViewBase : FluxorComponent
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
-        if (Model != null && Model.Id == action.AlbumId)
+        if (Model != null && Model.Id == action.UpdatedAlbum.Id)
         {
             Model = action.UpdatedAlbum;
             StateHasChanged();

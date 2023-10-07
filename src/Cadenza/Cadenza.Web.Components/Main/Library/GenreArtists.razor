@@ -13,5 +13,5 @@
 </AppCardScrollContainer>
 
 @code {
-    [Parameter] public List<ArtistVM> Artists { get; set; } = new();
+    [Parameter] public IReadOnlyCollection<ArtistVM> Artists { get; set; }
 }
