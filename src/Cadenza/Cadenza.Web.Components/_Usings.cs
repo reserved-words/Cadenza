@@ -13,7 +13,7 @@ global using Cadenza.State.Store;
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
-global using Cadenza.Web.Common.ViewModels;
+global using Cadenza.State.Model;
 
 global using Cadenza.Web.Components.MudServices;
 global using Cadenza.Web.Components.Shared.Dialogs;

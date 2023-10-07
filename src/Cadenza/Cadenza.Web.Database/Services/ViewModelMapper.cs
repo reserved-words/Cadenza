@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿using System.Collections.ObjectModel;
+
+namespace Cadenza.Web.Database.Services;
 
 internal class ViewModelMapper : IViewModelMapper
 {
@@ -92,15 +94,7 @@ internal class ViewModelMapper : IViewModelMapper
 
     public PlayerItemVM Map(PlayerItemDTO dto)
     {
-        return new PlayerItemVM
-        {
-            Id = dto.Id,
-            Album = dto.Album,
-            AlbumDisplay = dto.AlbumDisplay,
-            Artist = dto.Artist,
-            Name = dto.Name,
-            Type = dto.Type
-        };
+        return new PlayerItemVM(dto.Type, dto.Id, dto.Name, dto.Artist, dto.Album, dto.AlbumDisplay);
     }
 
     public TrackFullVM Map(TrackFullDTO dto)
@@ -135,13 +129,7 @@ internal class ViewModelMapper : IViewModelMapper
 
     private AlbumTrackLinkVM Map(AlbumTrackLinkDTO dto)
     {
-        return new AlbumTrackLinkVM
-        {
-            AlbumId = dto.AlbumId,
-            DiscNo = dto.DiscNo,
-            TrackId = dto.TrackId,
-            TrackNo = dto.TrackNo
-        };
+        return new AlbumTrackLinkVM(dto.AlbumId, dto.TrackId, dto.DiscNo, dto.TrackNo);
     }
 
     public GroupingVM Map(GroupingDTO dto)
@@ -149,18 +137,13 @@ internal class ViewModelMapper : IViewModelMapper
         return new GroupingVM(dto.Id, dto.Name);
     }
 
-    private TagListVM Map(TagListDTO dto)
+    private IReadOnlyCollection<string> Map(TagListDTO dto)
     {
-        return new TagListVM(dto.ToString());
+        return new ReadOnlyCollection<string>(dto.Tags.ToList());
     }
 
     public RecentAlbumVM Map(RecentAlbumDTO dto)
     {
-        return new RecentAlbumVM
-        {
-            ArtistName = dto.ArtistName,
-            Id = dto.Id,
-            Title = dto.Title
-        };
+        return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName);
     }
 }

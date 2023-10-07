@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModels;
-
-namespace Cadenza.Web.Common.Interfaces.Library;
+﻿namespace Cadenza.Web.Common.Interfaces.Library;
 
 public interface IArtistRepository
 {

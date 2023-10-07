@@ -11,7 +11,7 @@ global using Cadenza.Web.Database.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using Cadenza.Web.Common.Interfaces.Library;
-global using Cadenza.Web.Common.ViewModels;
+global using Cadenza.State.Model;
 
 namespace Cadenza.Web.Database;
 

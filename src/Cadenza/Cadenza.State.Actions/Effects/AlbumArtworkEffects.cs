@@ -16,27 +16,27 @@ public class AlbumArtworkEffects
     {
         string result;
 
-        if (action.Album == null)
+        if (action.Id == 0)
         {
             result = _artworkFetcher.GetAlbumArtworkSrc(null);
             dispatcher.Dispatch(new FetchAlbumArtworkResultAction(0, result));
             return Task.CompletedTask;
         }
         
-        if (action.Album.ArtworkBase64 != null)
+        if (action.ArtworkBase64 != null)
         {
-            result = action.Album.ArtworkBase64;
+            result = action.ArtworkBase64;
         }
-        else if (_state.Value.Images.TryGetValue(action.Album.Id, out string artwork))
+        else if (_state.Value.Images.TryGetValue(action.Id, out string artwork))
         {
             result = artwork;
         }
         else
         {
-            result = _artworkFetcher.GetAlbumArtworkSrc(action.Album.Id);
+            result = _artworkFetcher.GetAlbumArtworkSrc(action.Id);
         }
 
-        dispatcher.Dispatch(new FetchAlbumArtworkResultAction(action.Album.Id, result));
+        dispatcher.Dispatch(new FetchAlbumArtworkResultAction(action.Id, result));
         return Task.CompletedTask;
     }
 }

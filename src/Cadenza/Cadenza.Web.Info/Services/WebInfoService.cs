@@ -1,5 +1,4 @@
 ﻿using Cadenza.Common.DTO;
-using Cadenza.Web.Common.ViewModels;
 using Cadenza.Web.Info.Interfaces;
 using Cadenza.Web.Info.Settings;
 using Microsoft.Extensions.Options;
@@ -19,16 +18,16 @@ internal class WebInfoService : IWebInfoService
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task<string> GetAlbumArtworkUrl(AlbumVM album)
+    public async Task<string> GetAlbumArtworkUrl(string artist, string title)
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AlbumArtworkUrl, ("artist", album.ArtistName), ("title", album.Title));
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AlbumArtworkUrl, ("artist", artist), ("title", title));
         var result = await _httpHelper.Get<AlbumArtworkDTO>(url);
         return result.Url;
     }
 
-    public async Task<string> GetArtistImageUrl(ArtistVM artist)
+    public async Task<string> GetArtistImageUrl(string name)
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.ArtistImageUrl, ("name", artist.Name));
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.ArtistImageUrl, ("name", name));
         var result = await _httpHelper.Get<ArtistImageDTO>(url);
         return result.Url;
     }

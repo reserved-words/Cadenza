@@ -17,7 +17,7 @@
 @typeparam T
 
 @code {
-    [Parameter] public List<T> Items { get; set; }
+    [Parameter] public IReadOnlyCollection<T> Items { get; set; }
     [Parameter] public RenderFragment<T> RowTemplate { get; set; }
     [Parameter] public T SelectedItem { get; set; }
     [Parameter] public Func<T, bool> Filter { get; set; } = (t) => true;

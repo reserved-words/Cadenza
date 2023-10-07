@@ -1,18 +1,20 @@
-﻿namespace Cadenza.Web.Common.Extensions;
+﻿using System.Collections.ObjectModel;
+
+namespace Cadenza.Web.Common.Extensions;
 
 public static class ItemExtensions
 {
+    private static IReadOnlyCollection<T> ToReadOnlyList<T>(this IEnumerable<T> items)
+    {
+        return new ReadOnlyCollection<T>(items.ToList());
+    }
+
     public static List<DiscVM> GroupByDisc(this List<AlbumTrackVM> tracks)
     {
         return tracks
             .GroupBy(t => t.DiscNo)
             .OrderBy(g => g.Key)
-            .Select(r => new DiscVM
-            {
-                DiscNo = r.Key,
-                Tracks = r.OrderBy(a => a.TrackNo)
-                    .ToList()
-            })
+            .Select(r => new DiscVM(r.Key, r.OrderBy(a => a.TrackNo).ToReadOnlyList()))
             .ToList();
     }
 
@@ -21,13 +23,9 @@ public static class ItemExtensions
         return albums
             .GroupBy(a => a.ReleaseType.GetGroup())
             .OrderBy(g => g.Key)
-            .Select(r => new ArtistReleaseGroupVM
-            {
-                Group = r.Key,
-                Albums = r.OrderBy(a => a.ReleaseType)
-                    .ThenBy(a => a.Year)
-                    .ToList()
-            })
+            .Select(r => new ArtistReleaseGroupVM(r.Key,r.OrderBy(a => a.ReleaseType)
+                .ThenBy(a => a.Year)
+                .ToReadOnlyList()))
             .ToList();
     }
 
@@ -35,11 +33,7 @@ public static class ItemExtensions
     {
         if (byOtherArtists.Any())
         {
-            groupedAlbums.Add(new ArtistReleaseGroupVM
-            {
-                Group = ReleaseTypeGroup.ByOtherArtists,
-                Albums = byOtherArtists
-            });
+            groupedAlbums.Add(new ArtistReleaseGroupVM(ReleaseTypeGroup.ByOtherArtists, byOtherArtists));
         }
 
         return groupedAlbums;

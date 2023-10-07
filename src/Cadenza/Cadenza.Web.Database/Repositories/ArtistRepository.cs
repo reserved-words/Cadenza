@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModels;
-
-namespace Cadenza.Web.Database.Repositories;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class ArtistRepository : IArtistRepository
 {

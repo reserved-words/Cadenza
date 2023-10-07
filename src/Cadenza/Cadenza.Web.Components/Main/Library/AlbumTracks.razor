@@ -24,8 +24,8 @@
 }
 
 @code {
-    [Parameter] public AlbumDetailsVM Album { get; set; } = new();
-    [Parameter] public List<DiscVM> Discs { get; set; } = new();
+    [Parameter] public AlbumDetailsVM Album { get; set; }
+    [Parameter] public IReadOnlyCollection<DiscVM> Discs { get; set; }
 
     private int ActivePanelIndex { get; set; }
 

@@ -21,7 +21,7 @@ public class CurrentTrackArtworkBase : FluxorComponent
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album));
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album.Id ?? 0, Model?.Album.ArtworkBase64));
     }
 
     private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)

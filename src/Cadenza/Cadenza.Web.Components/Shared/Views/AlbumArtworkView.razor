@@ -21,7 +21,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
     }
 
     public void Play()

@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModels;
-
-namespace Cadenza.Web.Core.Services;
+﻿namespace Cadenza.Web.Core.Services;
 
 internal class ImageFinder : IImageFinder
 {
@@ -39,21 +37,21 @@ internal class ImageFinder : IImageFinder
         }
     }
 
-    public string GetSearchUrl(AlbumDetailsVM model)
+    public string GetAlbumArtworkSearchUrl(string artist, string title)
     {
-        var artist = HttpUtility.UrlEncode(model.ArtistName);
-        var title = HttpUtility.UrlEncode(model.Title);
-        return string.Format(AlbumSearchUrl, artist, title);
+        var searchArtist = HttpUtility.UrlEncode(artist);
+        var searchTitle = HttpUtility.UrlEncode(title);
+        return string.Format(AlbumSearchUrl, searchArtist, searchTitle);
     }
 
-    public string GetSearchUrl(ArtistDetailsVM model, SearchSource source)
+    public string GetArtistImageSearchUrl(string name, SearchSource source)
     {
-        var name = HttpUtility.UrlEncode(model.Name);
-        return string.Format(ArtistSearchUrl, name, source.GetDisplayName());
+        var searchName = HttpUtility.UrlEncode(name);
+        return string.Format(ArtistSearchUrl, searchName, source.GetDisplayName());
     }
 
-    public async Task<string> GetUrl(AlbumDetailsVM model)
+    public async Task<string> GetAlbumArtworkUrl(string artist, string title)
     {
-        return await _webInfoService.GetAlbumArtworkUrl(model);
+        return await _webInfoService.GetAlbumArtworkUrl(artist, title);
     }
 }

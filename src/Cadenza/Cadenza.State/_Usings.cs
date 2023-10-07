@@ -2,4 +2,4 @@
 
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Model;
-global using Cadenza.Web.Common.ViewModels;
+global using Cadenza.State.Model;

@@ -2,6 +2,6 @@
 
 public interface IWebInfoService
 {
-    Task<string> GetAlbumArtworkUrl(AlbumVM album);
-    Task<string> GetArtistImageUrl(ArtistVM artist);
+    Task<string> GetAlbumArtworkUrl(string artist, string title);
+    Task<string> GetArtistImageUrl(string name);
 }

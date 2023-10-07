@@ -6,7 +6,7 @@ public class TagListDTO
 
     private readonly List<string> _tags = new List<string>();
 
-    public IReadOnlyList<string> Tags => _tags;
+    public ICollection<string> Tags => _tags;
 
     public TagListDTO()
     {

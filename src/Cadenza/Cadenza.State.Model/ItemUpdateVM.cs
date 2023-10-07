@@ -1,15 +1,7 @@
-﻿using Cadenza.Common.Domain.Attributes;
+﻿namespace Cadenza.State.Model;
 
-namespace Cadenza.Web.Common.ViewModels;
-
-public class ItemUpdateVM<TInterface> where TInterface : new()
+public record ItemUpdateVM<TInterface> where TInterface : new()
 {
-    public ItemUpdateVM()
-    {
-        OriginalItem = new();
-        UpdatedItem = new();
-    }
-
     public ItemUpdateVM(LibraryItemType type, int id, TInterface originalItem)
     {
         Id = id;
@@ -19,15 +11,15 @@ public class ItemUpdateVM<TInterface> where TInterface : new()
         CopyValues(originalItem, UpdatedItem);
     }
 
-    public int Id { get; set; }
+    public int Id { get; }
 
-    public LibraryItemType Type { get; set; }
+    public LibraryItemType Type { get; }
 
-    public TInterface OriginalItem { get; set; }
+    public TInterface OriginalItem { get; }
 
-    public TInterface UpdatedItem { get; set; }
+    public TInterface UpdatedItem { get; }
 
-    public List<PropertyUpdateVM> Updates { get; set; } = new();
+    public List<PropertyUpdateVM> Updates { get; } = new();
 
     public void ApplyUpdates(TInterface item)
     {
@@ -36,7 +28,7 @@ public class ItemUpdateVM<TInterface> where TInterface : new()
 
     public void ConfirmUpdates()
     {
-        Updates = GetUpdates();
+        // Updates = GetUpdates();
     }
 
     public bool IsUpdated(ItemProperty property)
@@ -52,18 +44,18 @@ public class ItemUpdateVM<TInterface> where TInterface : new()
 
     private static void CopyValues(TInterface sourceItem, TInterface targetItem)
     {
-        var properties = typeof(TInterface).GetProperties();
+        //var properties = typeof(TInterface).GetProperties();
 
-        foreach (var property in properties)
-        {
-            var originalValue = property.GetValue(sourceItem);
+        //foreach (var property in properties)
+        //{
+        //    var originalValue = property.GetValue(sourceItem);
 
-            var updateValue = originalValue is TagListVM tagList
-                ? new TagListVM(tagList)
-                : originalValue;
+        //    var updateValue = originalValue is TagListVM tagList
+        //        ? new TagListVM(tagList)
+        //        : originalValue;
 
-            property.SetValue(targetItem, updateValue);
-        }
+        //    property.SetValue(targetItem, updateValue);
+        //}
     }
 
     private List<PropertyUpdateVM> GetUpdates()
@@ -87,12 +79,12 @@ public class ItemUpdateVM<TInterface> where TInterface : new()
             if (AreEqual(originalValue, updatedValue))
                 continue;
 
-            updates.Add(new PropertyUpdateVM
-            {
-                Property = itemProperty.Property,
-                OriginalValue = originalValue,
-                UpdatedValue = updatedValue
-            });
+            //updates.Add(new PropertyUpdateVM
+            //{
+            //    Property = itemProperty.Property,
+            //    OriginalValue = originalValue,
+            //    UpdatedValue = updatedValue
+            //});
         }
 
         return updates;

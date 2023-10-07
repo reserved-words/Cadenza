@@ -21,7 +21,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchArtistImageRequest(Model));
+        Dispatcher.Dispatch(new FetchArtistImageRequest(Model.Id, Model.ImageBase64));
     }
 
     private void OnArtistImageFetched(FetchArtistImageResultAction action)

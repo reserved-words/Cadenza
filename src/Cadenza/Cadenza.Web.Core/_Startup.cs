@@ -8,7 +8,7 @@ global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Core.Services;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Web;
-global using Cadenza.Web.Common.ViewModels;
+global using Cadenza.State.Model;
 
 using Cadenza.Common.Utilities;
 using Cadenza.Web.Core.Utilities;

@@ -9,7 +9,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 
 global using Cadenza.State.Store;
-global using Cadenza.Web.Common.ViewModels;
+global using Cadenza.State.Model;
 global using Fluxor;
 
 

@@ -2,27 +2,27 @@
 <EditCard>
     <MudTextField Label="Title"
                   @bind-Value="Model.Title" />
-        <MudTextField Label="Artist"
-                      ReadOnly="true"
-                      Disabled="true"
-                      @bind-Value="Model.ArtistName" />
-        <MudSelect Label="Release Type"
-                   @bind-Value="Model.ReleaseType"
-                   For="@(() => Model.ReleaseType)">
-            @foreach (var type in Enum.GetValues<ReleaseType>())
-            {
-                <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
-            }
-        </MudSelect>
-        <MudTextField MaxLength="4"
-                      Label="Release Year"
-                      @bind-Value="Model.Year"
-                      For="@(() => Model.Year)"
-                      Mask="@(new PatternMask("0000"))" />
+    <MudTextField Label="Artist"
+                  ReadOnly="true"
+                  Disabled="true"
+                  Value="Model.ArtistName" />
+    <MudSelect Label="Release Type"
+               @bind-Value="Model.ReleaseType"
+               For="@(() => Model.ReleaseType)">
+        @foreach (var type in Enum.GetValues<ReleaseType>())
+        {
+            <MudSelectItem Value="@type">@type.GetDisplayName()</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField MaxLength="4"
+                  Label="Release Year"
+                  @bind-Value="Model.Year"
+                  For="@(() => Model.Year)"
+                  Mask="@(new PatternMask("0000"))" />
 </EditCard>
 
 <EditTagsCard Model="@Model.Tags" />
 
 @code {
-    [Parameter] public AlbumDetailsVM Model { get; set; }
+    [Parameter] public EditableAlbum Model { get; set; }
 }

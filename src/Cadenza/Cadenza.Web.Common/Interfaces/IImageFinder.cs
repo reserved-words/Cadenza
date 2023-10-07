@@ -3,7 +3,7 @@
 public interface IImageFinder
 {
     Task<string> GetBase64ArtworkSource(string url);
-    string GetSearchUrl(AlbumDetailsVM model);
-    string GetSearchUrl(ArtistDetailsVM model, SearchSource source);
-    Task<string> GetUrl(AlbumDetailsVM model);
+    string GetAlbumArtworkSearchUrl(string artist, string title);
+    string GetArtistImageSearchUrl(string name, SearchSource source);
+    Task<string> GetAlbumArtworkUrl(string artist, string title);
 }

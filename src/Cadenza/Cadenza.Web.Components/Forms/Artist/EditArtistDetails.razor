@@ -3,7 +3,7 @@
     <MudTextField Label="Name"
                   ReadOnly="true"
                   Disabled="true"
-                  @bind-Value="Model.Name" />
+                  Value="Model.Name" />
     <MudSelect Label="Grouping"
                @bind-Value="Model.Grouping"
                For="@(() => Model.Grouping)">
@@ -33,6 +33,6 @@
 <EditTagsCard Model="@Model.Tags" />
 
 @code {
-    [Parameter] public ArtistDetailsVM Model { get; set; }
+    [Parameter] public EditableArtist Model { get; set; }
     [Parameter] public List<GroupingVM> Groupings { get; set; }
 }

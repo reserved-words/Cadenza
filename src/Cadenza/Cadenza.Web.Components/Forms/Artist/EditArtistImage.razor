@@ -32,7 +32,7 @@
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public ArtistDetailsVM Model { get; set; }
+    [Parameter] public EditableArtist Model { get; set; }
 
     private string ImageUrl { get; set; }
 
@@ -46,7 +46,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchArtistImageRequest(Model));
+        Dispatcher.Dispatch(new FetchArtistImageRequest(Model.Id, Model.ImageBase64));
     }
 
     private void OnArtistImageFetched(FetchArtistImageResultAction action)
@@ -59,7 +59,7 @@
 
     protected void OnSearch(SearchSource source)
     {
-        var searchUrl = ImageFinder.GetSearchUrl(Model, source);
+        var searchUrl = ImageFinder.GetArtistImageSearchUrl(Model.Name, source);
         Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 

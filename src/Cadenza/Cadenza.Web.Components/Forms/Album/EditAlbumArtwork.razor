@@ -33,7 +33,7 @@
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public AlbumDetailsVM Model { get; set; }
+    [Parameter] public EditableAlbum Model { get; set; }
 
     private string ArtworkUrl { get; set; }
 
@@ -47,7 +47,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
     }
 
     private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
@@ -62,7 +62,7 @@
     {
         try
         {
-            var artworkUrl = await ImageFinder.GetUrl(Model);
+            var artworkUrl = await ImageFinder.GetAlbumArtworkUrl(Model.ArtistName, Model.Title);
 
             if (string.IsNullOrWhiteSpace(artworkUrl))
             {
@@ -81,7 +81,7 @@
 
     protected void OnSearch()
     {
-        var searchUrl = ImageFinder.GetSearchUrl(Model);
+        var searchUrl = ImageFinder.GetAlbumArtworkSearchUrl(Model.ArtistName, Model.Title);
         Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
     }
 

@@ -27,7 +27,7 @@
 @typeparam T
 
 @code {
-    [Parameter] public List<T> Items { get; set; }
+    [Parameter] public IReadOnlyCollection<T> Items { get; set; }
     [Parameter] public RenderFragment<T> ImageTemplate { get; set; }
     [Parameter] public RenderFragment<T> CaptionTemplate { get; set; }
     [Parameter] public RenderFragment<T> ActionsTemplate { get; set; }
