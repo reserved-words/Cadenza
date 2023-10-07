@@ -153,4 +153,14 @@ internal class ViewModelMapper : IViewModelMapper
     {
         return new TagListVM(dto.ToString());
     }
+
+    public RecentAlbumVM Map(RecentAlbumDTO dto)
+    {
+        return new RecentAlbumVM
+        {
+            ArtistName = dto.ArtistName,
+            Id = dto.Id,
+            Title = dto.Title
+        };
+    }
 }

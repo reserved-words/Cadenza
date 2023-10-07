@@ -11,4 +11,5 @@ internal interface IViewModelMapper
     PlayerItemVM Map(PlayerItemDTO dto);
     TrackFullVM Map(TrackFullDTO dto);
     GroupingVM Map(GroupingDTO dto);
+    RecentAlbumVM Map(RecentAlbumDTO dto);
 }

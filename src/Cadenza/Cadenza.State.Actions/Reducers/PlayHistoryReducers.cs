@@ -7,7 +7,7 @@ public static class PlayHistoryReducers
     {
         IsLoading = true,
         Period = action.Period,
-        Items = new List<PlayedAlbum>()
+        Items = new List<PlayedAlbumVM>()
     };
 
     [ReducerMethod]
@@ -23,7 +23,7 @@ public static class PlayHistoryReducers
     {
         IsLoading = true,
         Period = action.Period,
-        Items = new List<PlayedArtist>()
+        Items = new List<PlayedArtistVM>()
     };
 
     [ReducerMethod]
@@ -39,7 +39,7 @@ public static class PlayHistoryReducers
     {
         IsLoading = true,
         Period = action.Period,
-        Items = new List<PlayedTrack>()
+        Items = new List<PlayedTrackVM>()
     };
 
     [ReducerMethod]

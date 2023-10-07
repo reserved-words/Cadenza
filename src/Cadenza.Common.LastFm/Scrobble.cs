@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model.LastFm;
+﻿namespace Cadenza.Common.LastFm;
 
-public class LFM_Scrobble
+public class Scrobble
 {
     public string SessionKey { get; set; }
     public DateTime Timestamp { get; set; }

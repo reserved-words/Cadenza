@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model.History;
+﻿namespace Cadenza.Common.DTO;
 
-public class PlayedArtist
+public class PlayedArtistDTO
 {
     public string Name { get; set; }
     public string ImageUrl { get; set; }

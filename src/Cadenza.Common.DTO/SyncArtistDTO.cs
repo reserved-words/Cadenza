@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.DTO;
 
-public class SyncArtist
+public class SyncArtistDTO
 {
     public string Name { get; set; }
     public string Grouping { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model.History;
+﻿namespace Cadenza.Common.DTO;
 
-public class RecentTrack
+public class RecentTrackDTO
 {
     public string Title { get; set; }
     public string Artist { get; set; }

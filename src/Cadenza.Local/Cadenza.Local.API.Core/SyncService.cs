@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Sync;
-
-namespace Cadenza.Local.API.Core;
+﻿namespace Cadenza.Local.API.Core;
 
 internal class SyncService : ISyncService
 {

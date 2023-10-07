@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.DTO;
 
-public class SyncAlbum
+public class SyncAlbumDTO
 {
     public string ArtistName { get; set; }
     public string Title { get; set; }

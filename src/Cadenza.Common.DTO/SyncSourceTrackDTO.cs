@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.DTO;
 
-public class SyncSourceTrack
+public class SyncSourceTrackDTO
 {
     public string IdFromSource { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.LastFM.Services;
+﻿using Cadenza.Common.LastFm;
+
+namespace Cadenza.Web.LastFM.Services;
 
 internal class Scrobbler : IPlayTracker
 {
@@ -29,11 +31,11 @@ internal class Scrobbler : IPlayTracker
         await _http.Post(url, scrobble);
     }
 
-    private LFM_Scrobble GetScrobble(TrackFullVM track, int? duration, DateTime? timestamp)
+    private Scrobble GetScrobble(TrackFullVM track, int? duration, DateTime? timestamp)
     {
         var sessionKey = _lastFmConnectionState.Value.SessionKey;
 
-        return new LFM_Scrobble
+        return new Scrobble
         {
             SessionKey = sessionKey,
             Timestamp = timestamp ?? DateTime.Now,

@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Sync;
-using Cadenza.Common.DTO;
+﻿using Cadenza.Common.DTO;
 
 namespace Cadenza.Local.API.Common.Interfaces;
 

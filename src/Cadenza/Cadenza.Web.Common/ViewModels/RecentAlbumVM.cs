@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Web.Common.ViewModels;
 
-public class RecentAlbum
+public class RecentAlbumVM
 {
     public int Id { get; set; }
     public string Title { get; set; }

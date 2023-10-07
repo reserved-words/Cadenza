@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.State.Actions.Reducers;
+﻿namespace Cadenza.State.Actions.Reducers;
 
 public static class PlaylistHistoryReducers
 {
@@ -8,7 +6,7 @@ public static class PlaylistHistoryReducers
     public static PlaylistHistoryAlbumsState ReduceFetchPlaylistHistoryAlbumsRequest(PlaylistHistoryAlbumsState state, FetchPlaylistHistoryAlbumsRequest action) => state with
     {
         IsLoading = true,
-        Items = new List<RecentAlbum>()
+        Items = new List<RecentAlbumVM>()
     };
 
     [ReducerMethod]

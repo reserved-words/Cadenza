@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Sync;
-using Cadenza.Common.DTO;
-
-namespace Cadenza.Local.API.Files;
+﻿namespace Cadenza.Local.API.Files;
 
 internal class MusicService : IMusicFilesService
 {

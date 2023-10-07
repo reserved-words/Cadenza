@@ -15,7 +15,7 @@
             _urlService = urlService;
         }
 
-        public async Task<List<RecentTrack>> GetRecentTracks(int limit, int page = 1)
+        public async Task<List<RecentTrackDTO>> GetRecentTracks(int limit, int page = 1)
         {
             var url = _config.Value.ApiBaseUrl;
             url = _urlService.SetMethod(url, "user.getRecentTracks");
@@ -31,7 +31,7 @@
                     {
                         var nowPlaying = _parser.GetBool(t, "nowplaying", true);
 
-                        return new RecentTrack
+                        return new RecentTrackDTO
                         {
                             Title = _parser.Get(t, "name"),
                             Artist = _parser.Get(t, "artist", "name"),
@@ -47,7 +47,7 @@
                     .ToList());
         }
 
-        public async Task<List<PlayedTrack>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
+        public async Task<List<PlayedTrackDTO>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
         {
             var url = _config.Value.ApiBaseUrl;
             url = _urlService.SetMethod(url, "user.getTopTracks");
@@ -59,7 +59,7 @@
             return await _client.Get(url, xml => xml
                     .Element("toptracks")
                     .Elements("track")
-                    .Select(t => new PlayedTrack
+                    .Select(t => new PlayedTrackDTO
                     {
                         Title = _parser.Get(t, "name"),
                         Artist = _parser.Get(t, "artist", "name"),
@@ -70,7 +70,7 @@
                     .ToList());
         }
 
-        public async Task<List<PlayedAlbum>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
+        public async Task<List<PlayedAlbumDTO>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
         {
             var url = _config.Value.ApiBaseUrl;
             url = _urlService.SetMethod(url, "user.getTopAlbums");
@@ -82,7 +82,7 @@
             return await _client.Get(url, xml => xml
                 .Element("topalbums")
                 .Elements("album")
-                .Select(t => new PlayedAlbum
+                .Select(t => new PlayedAlbumDTO
                 {
                     Title = _parser.Get(t, "name"),
                     Artist = _parser.Get(t, "artist", "name"),
@@ -93,7 +93,7 @@
                 .ToList());
         }
 
-        public async Task<List<PlayedArtist>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
+        public async Task<List<PlayedArtistDTO>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
         {
             var url = _config.Value.ApiBaseUrl;
             url = _urlService.SetMethod(url, "user.getTopArtists");
@@ -105,7 +105,7 @@
             return await _client.Get(url, xml => xml
                 .Element("topartists")
                 .Elements("artist")
-                .Select(t => new PlayedArtist
+                .Select(t => new PlayedArtistDTO
                 {
                     Name = _parser.Get(t, "name"),
                     ImageUrl = _parser.GetImage(t),

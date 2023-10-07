@@ -3,19 +3,19 @@
 namespace Cadenza.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlayHistoryAlbumsState(bool IsLoading, List<PlayedAlbum> Items, HistoryPeriod Period) 
+public record PlayHistoryAlbumsState(bool IsLoading, List<PlayedAlbumVM> Items, HistoryPeriod Period) 
 {
     private static PlayHistoryAlbumsState Init() => new PlayHistoryAlbumsState(true, null, HistoryPeriod.Week);
 }
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlayHistoryArtistsState(bool IsLoading, List<PlayedArtist> Items, HistoryPeriod Period)
+public record PlayHistoryArtistsState(bool IsLoading, List<PlayedArtistVM> Items, HistoryPeriod Period)
 {
     private static PlayHistoryArtistsState Init() => new PlayHistoryArtistsState(true, null, HistoryPeriod.Week);
 }
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record PlayHistoryTracksState(bool IsLoading, List<PlayedTrack> Items, HistoryPeriod Period)
+public record PlayHistoryTracksState(bool IsLoading, List<PlayedTrackVM> Items, HistoryPeriod Period)
 {
     private static PlayHistoryTracksState Init() => new PlayHistoryTracksState(true, null, HistoryPeriod.Week);
 }

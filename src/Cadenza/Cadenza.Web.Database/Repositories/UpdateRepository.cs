@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class UpdateRepository : IUpdateRepository
 {
@@ -25,36 +25,18 @@ internal class UpdateRepository : IUpdateRepository
     public async Task UpdateAlbum(AlbumUpdateVM update)
     {
         var dto = _mapper.Map(update);
-        //var data = new ItemUpdateRequestDTO
-        //{
-        //    Id = update.Id,
-        //    Type = update.Type,
-        //    Updates = update.Updates
-        //};
         await _http.Post(_settings.Endpoints.UpdateAlbum, dto);
     }
 
     public async Task UpdateArtist(ArtistUpdateVM update)
     {
         var dto = _mapper.Map(update);
-        //var data = new ItemUpdateRequestDTO
-        //{
-        //    Id = update.Id,
-        //    Type = update.Type,
-        //    Updates = update.Updates
-        //};
         await _http.Post(_settings.Endpoints.UpdateArtist, dto);
     }
 
     public async Task UpdateTrack(TrackUpdateVM update)
     {
         var dto = _mapper.Map(update);
-        //var data = new ItemUpdateRequestDTO
-        //{
-        //    Id = update.Id,
-        //    Type = update.Type,
-        //    Updates = update.Updates
-        //};
         await _http.Post(_settings.Endpoints.UpdateTrack, dto);
     }
 }

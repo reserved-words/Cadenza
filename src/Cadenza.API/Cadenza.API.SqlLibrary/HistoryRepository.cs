@@ -14,11 +14,11 @@ internal class HistoryRepository : IHistoryRepository
         _readService = readService;
     }
 
-    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         var data = await _readService.GetRecentAlbums(maxItems);
 
-        return data.Select(d => new RecentAlbum
+        return data.Select(d => new RecentAlbumDTO
         {
             Id = d.AlbumId,
             Title = d.AlbumTitle,

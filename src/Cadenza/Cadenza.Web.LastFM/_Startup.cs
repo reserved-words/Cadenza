@@ -1,6 +1,4 @@
 ﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.LastFm;
 global using Cadenza.Common.Utilities.Interfaces;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;

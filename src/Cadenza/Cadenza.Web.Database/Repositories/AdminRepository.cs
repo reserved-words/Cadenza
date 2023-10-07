@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Database.Services;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class AdminRepository : IAdminRepository
 {

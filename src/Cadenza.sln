@@ -85,6 +85,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Player", "Caden
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Common.DTO", "Cadenza.Common.DTO\Cadenza.Common.DTO.csproj", "{5C64A1C2-F0DD-4EDD-98C2-1F2A7E176747}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Common.LastFm", "Cadenza.Common.LastFm\Cadenza.Common.LastFm.csproj", "{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{5C64A1C2-F0DD-4EDD-98C2-1F2A7E176747}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C64A1C2-F0DD-4EDD-98C2-1F2A7E176747}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C64A1C2-F0DD-4EDD-98C2-1F2A7E176747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,6 +268,7 @@ Global
 		{20AED76A-486D-4BE3-819B-73B288C9E4AB} = {1D87E2CA-5053-4DB2-ABBB-D933C9C71435}
 		{4A4715C2-CBD5-461A-96F6-5C744541557D} = {1D87E2CA-5053-4DB2-ABBB-D933C9C71435}
 		{5C64A1C2-F0DD-4EDD-98C2-1F2A7E176747} = {6854655D-1895-45C9-B100-5161B8F9C14C}
+		{A6F43A0B-CDEB-4824-A1D3-9DC298FA18BB} = {6854655D-1895-45C9-B100-5161B8F9C14C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC17F3E1-56B9-47E8-83C4-C7358F820CD1}

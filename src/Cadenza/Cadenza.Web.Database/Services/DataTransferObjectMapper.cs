@@ -4,16 +4,42 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
     public ItemUpdateRequestDTO Map(AlbumUpdateVM vm)
     {
-        throw new NotImplementedException();
+        return new ItemUpdateRequestDTO
+        {
+            Id = vm.Id,
+            Type = vm.Type,
+            Updates = vm.Updates.Select(u => Map(u)).ToList()
+        };
     }
 
     public ItemUpdateRequestDTO Map(ArtistUpdateVM vm)
     {
-        throw new NotImplementedException();
+        return new ItemUpdateRequestDTO
+        {
+            Id = vm.Id,
+            Type = vm.Type,
+            Updates = vm.Updates.Select(u => Map(u)).ToList()
+        };
     }
 
     public ItemUpdateRequestDTO Map(TrackUpdateVM vm)
     {
-        throw new NotImplementedException();
+        return new ItemUpdateRequestDTO
+        {
+            Id = vm.Id,
+            Type = vm.Type,
+            Updates = vm.Updates.Select(u => Map(u)).ToList()
+        };
+    }
+
+    private PropertyUpdateDTO Map(PropertyUpdateVM vm)
+    {
+        return new PropertyUpdateDTO 
+        { 
+            Id = vm.Id,
+            Property = vm.Property,
+            OriginalValue = vm.OriginalValue, 
+            UpdatedValue = vm.UpdatedValue 
+        };
     }
 }

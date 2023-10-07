@@ -1,5 +1,4 @@
-﻿using Cadenza.State.Store;
-using Fluxor;
+﻿using Cadenza.Common.LastFm;
 
 namespace Cadenza.Web.LastFM.Services;
 
@@ -26,23 +25,23 @@ internal class Favourites : IFavouritesService
 
     public async Task Favourite(string artist, string title)
     {
-        var track = GetTrack(artist, title);
+        var track = GetFavouriteTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Favourite);
         await _http.Post(url, track);
     }
 
     public async Task Unfavourite(string artist, string title)
     {
-        var track = GetTrack(artist, title);
+        var track = GetFavouriteTrack(artist, title);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Unfavourite);
         await _http.Post(url, track);
     }
 
-    private LFM_Track GetTrack(string artist, string title)
+    private FavouriteTrack GetFavouriteTrack(string artist, string title)
     {
         var sessionKey = _lastFmConnectionState.Value.SessionKey;
 
-        return new LFM_Track
+        return new FavouriteTrack
         {
             SessionKey = sessionKey,
             Artist = artist,

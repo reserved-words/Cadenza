@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Results;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,13 +12,13 @@ public class WebInfoController : ControllerBase
     }
 
     [HttpGet("AlbumArtworkUrl")]
-    public async Task<AlbumArtworkResult> AlbumArtworkUrl(string artist, string title)
+    public async Task<AlbumArtworkDTO> AlbumArtworkUrl(string artist, string title)
     {
         return await _service.AlbumArtworkUrl(artist, title);
     }
 
     [HttpGet("ArtistImageUrl")]
-    public async Task<ArtistImageResult> ArtistImageUrl(string name)
+    public async Task<ArtistImageDTO> ArtistImageUrl(string name)
     {
         return await _service.ArtistImageUrl(name);
     }

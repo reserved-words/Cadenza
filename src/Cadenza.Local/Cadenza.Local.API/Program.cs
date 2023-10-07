@@ -1,4 +1,3 @@
-global using Cadenza.Common.Domain.Model.Sync;
 global using Cadenza.Common.Utilities;
 global using Cadenza.Local.API.Common.Controllers;
 global using Cadenza.Local.API.Core;

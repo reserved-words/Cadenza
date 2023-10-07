@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Common.DTO;
 
-public class SyncTrack
+public class SyncTrackDTO
 {
     public string IdFromSource { get; set; }
     public string Title { get; set; }
@@ -11,6 +11,6 @@ public class SyncTrack
     public int DiscNo { get; set; }
     public int TrackNo { get; set; }
 
-    public SyncArtist Artist { get; set; }
-    public SyncAlbum Album { get; set; }
+    public SyncArtistDTO Artist { get; set; }
+    public SyncAlbumDTO Album { get; set; }
 }

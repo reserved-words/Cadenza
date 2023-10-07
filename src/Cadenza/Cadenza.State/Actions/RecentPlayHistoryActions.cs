@@ -6,4 +6,4 @@ public record UpdateRecentPlayHistoryResult();
 
 public record FetchRecentPlayHistoryRequest();
 
-public record FetchRecentPlayHistoryResult(List<RecentTrack> Result);
+public record FetchRecentPlayHistoryResult(List<RecentTrackVM> Result);
