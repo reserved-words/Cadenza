@@ -48,4 +48,13 @@ public static class ViewAlbumReducers
             Discs = new ReadOnlyCollection<DiscVM>(updatedDiscs)
         };
     }
+
+    [ReducerMethod]
+    public static ViewAlbumState ReduceAlbumUpdatedAction(ViewAlbumState state, AlbumUpdatedAction action)
+    {
+        if (state.Album == null || state.Album.Id == action.AlbumId)
+            return state;
+
+        return state with { Album = action.UpdatedAlbum };
+    }
 }

@@ -3,7 +3,7 @@
 public interface IUpdateRepository
 {
     Task RemoveTrack(int trackId);
-    Task UpdateAlbum(AlbumUpdateVM albumUpdate);
-    Task UpdateArtist(ArtistUpdateVM artistUpdate);
-    Task UpdateTrack(TrackUpdateVM trackUpdate);
+    Task UpdateAlbum(EditableAlbum album);
+    Task UpdateArtist(EditableArtist artist);
+    Task UpdateTrack(EditableTrack track);
 }

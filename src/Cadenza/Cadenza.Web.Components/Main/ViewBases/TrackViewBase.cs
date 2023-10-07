@@ -2,20 +2,5 @@
 
 public class TrackViewBase : FluxorComponent
 {
-    [Parameter] public TrackDetailsVM Model { get; set; } = new();
-
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<TrackUpdatedAction>(OnTrackUpdated);
-        base.OnInitialized();
-    }
-
-    private void OnTrackUpdated(TrackUpdatedAction action)
-    {
-        if (action.Update.Id == Model.Id)
-        {
-            action.Update.ApplyUpdates(Model);
-            StateHasChanged();
-        }
-    }
+    [Parameter] public TrackDetailsVM Model { get; set; }
 }

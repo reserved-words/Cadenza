@@ -2,7 +2,7 @@
 
 internal interface IDataTransferObjectMapper
 {
-    ItemUpdateRequestDTO Map(AlbumUpdateVM vm);
-    ItemUpdateRequestDTO Map(ArtistUpdateVM vm);
-    ItemUpdateRequestDTO Map(TrackUpdateVM vm);
+    UpdateAlbumDTO Map(EditableAlbum vm);
+    UpdateArtistDTO Map(EditableArtist vm);
+    UpdateTrackDTO Map(EditableTrack vm);
 }

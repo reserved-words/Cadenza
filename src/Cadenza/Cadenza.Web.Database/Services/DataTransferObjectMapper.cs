@@ -2,44 +2,43 @@
 
 internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
-    public ItemUpdateRequestDTO Map(AlbumUpdateVM vm)
+    public UpdateAlbumDTO Map(EditableAlbum vm)
     {
-        return new ItemUpdateRequestDTO
+        return new UpdateAlbumDTO
         {
             Id = vm.Id,
-            Type = vm.Type,
-            Updates = vm.Updates.Select(u => Map(u)).ToList()
+            Title = vm.Title,
+            ReleaseType = vm.ReleaseType,
+            Year = vm.Year,
+            ArtworkBase64 = vm.ArtworkBase64,
+            Tags = vm.Tags
         };
     }
 
-    public ItemUpdateRequestDTO Map(ArtistUpdateVM vm)
+    public UpdateArtistDTO Map(EditableArtist vm)
     {
-        return new ItemUpdateRequestDTO
+        return new UpdateArtistDTO
         {
             Id = vm.Id,
-            Type = vm.Type,
-            Updates = vm.Updates.Select(u => Map(u)).ToList()
+            GroupingId = vm.Grouping.Id,
+            Genre = vm.Genre,
+            ImageBase64 = vm.ImageBase64,
+            Country = vm.Country,
+            State = vm.State,
+            City = vm.City,
+            Tags = vm.Tags
         };
     }
 
-    public ItemUpdateRequestDTO Map(TrackUpdateVM vm)
+    public UpdateTrackDTO Map(EditableTrack vm)
     {
-        return new ItemUpdateRequestDTO
+        return new UpdateTrackDTO
         {
             Id = vm.Id,
-            Type = vm.Type,
-            Updates = vm.Updates.Select(u => Map(u)).ToList()
-        };
-    }
-
-    private PropertyUpdateDTO Map(PropertyUpdateVM vm)
-    {
-        return new PropertyUpdateDTO 
-        { 
-            Id = vm.Id,
-            Property = vm.Property,
-            OriginalValue = vm.OriginalValue, 
-            UpdatedValue = vm.UpdatedValue 
+            Title = vm.Title,
+            Year = vm.Year,
+            Lyrics = vm.Lyrics,
+            Tags = vm.Tags
         };
     }
 }

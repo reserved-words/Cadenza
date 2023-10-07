@@ -15,7 +15,16 @@ public class TrackUpdateEffects
         try
         {
             await _repository.UpdateTrack(action.Update);
-            dispatcher.Dispatch(new TrackUpdatedAction(action.TrackId, action.Update));
+
+            var updatedTrack = action.OriginalTrack with
+            {
+                Title = action.Update.Title,
+                Year = action.Update.Year,
+                Lyrics = action.Update.Lyrics,
+                Tags = new ReadOnlyCollection<string>(action.Update.Tags.ToList())
+            };
+
+            dispatcher.Dispatch(new TrackUpdatedAction(action.TrackId, updatedTrack));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Track, action.TrackId));
         }
         catch (Exception ex)

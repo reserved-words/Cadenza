@@ -15,4 +15,13 @@ public static class ViewArtistReducers
         Artist = action.Artist,
         Releases = action.Releases
     };
+
+    [ReducerMethod]
+    public static ViewArtistState ReduceArtistUpdatedAction(ViewArtistState state, ArtistUpdatedAction action)
+    {
+        if (state.Artist == null || state.Artist.Id == action.ArtistId)
+            return state;
+
+        return state with { Artist = action.UpdatedArtist };
+    }
 }

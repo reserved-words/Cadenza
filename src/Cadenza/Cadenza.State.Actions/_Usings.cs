@@ -10,3 +10,5 @@ global using Cadenza.State.Model;
 global using Cadenza.Common.Domain.Enums;
 
 global using Cadenza.Web.Common.Interfaces.Library;
+
+global using System.Collections.ObjectModel;

@@ -22,21 +22,21 @@ internal class UpdateRepository : IUpdateRepository
         await _http.Delete(_settings.Endpoints.RemoveTrack, data);
     }
 
-    public async Task UpdateAlbum(AlbumUpdateVM update)
+    public async Task UpdateAlbum(EditableAlbum album)
     {
-        var dto = _mapper.Map(update);
+        var dto = _mapper.Map(album);
         await _http.Post(_settings.Endpoints.UpdateAlbum, dto);
     }
 
-    public async Task UpdateArtist(ArtistUpdateVM update)
+    public async Task UpdateArtist(EditableArtist artist)
     {
-        var dto = _mapper.Map(update);
+        var dto = _mapper.Map(artist);
         await _http.Post(_settings.Endpoints.UpdateArtist, dto);
     }
 
-    public async Task UpdateTrack(TrackUpdateVM update)
+    public async Task UpdateTrack(EditableTrack track)
     {
-        var dto = _mapper.Map(update);
+        var dto = _mapper.Map(track);
         await _http.Post(_settings.Endpoints.UpdateTrack, dto);
     }
 }
