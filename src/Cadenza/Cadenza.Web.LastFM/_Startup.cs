@@ -8,8 +8,8 @@ global using Cadenza.Web.LastFM.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 
-global using Cadenza.State.Store;
-global using Cadenza.State.Model;
+global using Cadenza.Web.State.Store;
+global using Cadenza.Web.Model;
 global using Fluxor;
 
 

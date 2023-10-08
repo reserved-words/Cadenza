@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Main.ViewBases;
+﻿using Cadenza.Web.Model;
+using Cadenza.Web.State.Actions;
+
+namespace Cadenza.Web.Components.Main.ViewBases;
 
 public class AlbumViewBase : FluxorComponent
 {

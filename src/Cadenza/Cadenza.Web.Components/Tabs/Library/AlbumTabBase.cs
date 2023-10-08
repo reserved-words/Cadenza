@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Tabs.Library;
+﻿using Cadenza.Web.Model;
+using Cadenza.Web.State.Store;
+
+namespace Cadenza.Web.Components.Tabs.Library;
 
 public class AlbumTabBase : FluxorComponent
 {

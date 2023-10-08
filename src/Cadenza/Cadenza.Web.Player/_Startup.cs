@@ -1,6 +1,5 @@
 ﻿global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.State.Actions;
-global using Cadenza.State.Store;
+global using Cadenza.Web.State.Actions;
 global using Fluxor;
 
 using Microsoft.Extensions.DependencyInjection;

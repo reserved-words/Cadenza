@@ -1,4 +1,5 @@
-﻿namespace Cadenza.Web.Components.Main.Sidebar;
+﻿
+namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class PlayShortcutsBase : FluxorComponent
 {

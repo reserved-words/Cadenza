@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Tabs;
+﻿using Cadenza.Web.Model;
+using Cadenza.Web.State.Store;
+
+namespace Cadenza.Web.Components.Tabs;
 
 public class CurrentlyPlayingTabBase : FluxorComponent
 {

@@ -1,5 +1,4 @@
 ﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model;
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.Utilities.Interfaces;
 global using Cadenza.Web.Common.Interfaces;
@@ -11,7 +10,7 @@ global using Cadenza.Web.Database.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using Cadenza.Web.Common.Interfaces.Library;
-global using Cadenza.State.Model;
+global using Cadenza.Web.Model;
 
 namespace Cadenza.Web.Database;
 

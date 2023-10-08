@@ -1,7 +1,7 @@
 namespace Cadenza;
 
-using Cadenza.State.Actions.Effects;
-using Cadenza.State.Store;
+using Cadenza.Web.Actions.Effects;
+using Cadenza.Web.State.Store;
 using Fluxor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

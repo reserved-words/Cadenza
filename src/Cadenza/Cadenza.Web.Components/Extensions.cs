@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components;
+﻿using Cadenza.Web.Model;
+
+namespace Cadenza.Web.Components;
 
 public static class Extensions
 {

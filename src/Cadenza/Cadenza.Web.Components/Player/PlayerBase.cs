@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Player;
+﻿using Cadenza.Web.Model;
+using Cadenza.Web.State.Store;
+
+namespace Cadenza.Web.Components.Player;
 
 public class PlayerBase : FluxorComponent
 {

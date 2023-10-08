@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Web.Components.Main.History;
+﻿using Cadenza.Web.Model;
+using Cadenza.Web.State.Store;
+
+namespace Cadenza.Web.Components.Main.History;
 
 public class HistoryAlbumsBase : FluxorComponent
 {

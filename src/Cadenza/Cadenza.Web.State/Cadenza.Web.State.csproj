@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fluxor" Version="5.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Web.Model\Cadenza.Web.Model.csproj" />
+  </ItemGroup>
+
+</Project>

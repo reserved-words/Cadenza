@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Player;
+﻿using Cadenza.Web.Model;
+
+namespace Cadenza.Web.Components.Player;
 
 public class CurrentTrackBase : FluxorComponent
 {

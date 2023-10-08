@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Shared.Views;
+﻿using Cadenza.Web.State.Actions;
+
+namespace Cadenza.Web.Components.Shared.Views;
 
 public class FavouriteTrackBase : FluxorComponent
 {

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cadenza.State\Cadenza.State.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
   </ItemGroup>
 
 </Project>
