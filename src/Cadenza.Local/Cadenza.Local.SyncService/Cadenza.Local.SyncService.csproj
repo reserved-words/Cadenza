@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps.WindowsService\Cadenza.Apps.WindowsService.csproj" />
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.FileAccess\Cadenza.Local.FileAccess.csproj" />
   </ItemGroup>
 
 </Project>

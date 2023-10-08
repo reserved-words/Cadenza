@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
     <ProjectReference Include="..\Cadenza.Local.API.Common\Cadenza.Local.API.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Local.FileAccess\Cadenza.Local.FileAccess.csproj" />
   </ItemGroup>
 
 </Project>

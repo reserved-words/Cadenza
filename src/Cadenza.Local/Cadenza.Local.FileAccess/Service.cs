@@ -1,8 +1,6 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
+﻿namespace Cadenza.Local.FileAccess;
 
-namespace Cadenza.Common.Utilities.Services;
-
-internal class FileAccess : IFileAccess
+internal class Service : IFileAccess
 {
     public void DeleteFile(string path)
     {

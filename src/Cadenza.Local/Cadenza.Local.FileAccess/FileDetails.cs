@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Local.FileAccess;
 
 public class FileDetails
 {
