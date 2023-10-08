@@ -12,12 +12,12 @@ public class AlbumDTO
     [ItemProperty(ItemProperty.AlbumTitle)]
     public string Title { get; set; }
 
-    [ItemProperty(ItemProperty.ReleaseType)]
+    [ItemProperty(ItemProperty.AlbumReleaseType)]
     public ReleaseType ReleaseType { get; set; }
 
-    [ItemProperty(ItemProperty.ReleaseYear)]
+    [ItemProperty(ItemProperty.AlbumReleaseYear)]
     public string Year { get; set; }
 
-    [ItemProperty(ItemProperty.Artwork)]
+    [ItemProperty(ItemProperty.AlbumArtwork)]
     public string ArtworkBase64 { get; set; }
 }

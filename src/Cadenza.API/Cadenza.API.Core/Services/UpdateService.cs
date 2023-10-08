@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.DTO.Attributes;
-using Cadenza.Common.Enums;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class UpdateService : IUpdateService
 {

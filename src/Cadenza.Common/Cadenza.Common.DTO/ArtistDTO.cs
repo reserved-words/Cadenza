@@ -5,9 +5,9 @@ public class ArtistDTO
     public int Id { get; set; }
     public string Name { get; set; }
 
-    [ItemProperty(ItemProperty.Grouping)]
+    [ItemProperty(ItemProperty.ArtistGrouping)]
     public GroupingDTO Grouping { get; set; }
 
-    [ItemProperty(ItemProperty.Genre)]
+    [ItemProperty(ItemProperty.ArtistGenre)]
     public string Genre { get; set; }
 }

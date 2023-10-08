@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Http\Cadenza.Common.Http.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.LastFm\Cadenza.Common.LastFm.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />

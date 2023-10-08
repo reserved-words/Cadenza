@@ -30,15 +30,15 @@ internal class LibraryUpdater : ILibraryUpdater
                 case ItemProperty.AlbumTitle:
                     album.Title = update.UpdatedValue;
                     break;
-                case ItemProperty.Artwork:
+                case ItemProperty.AlbumArtwork:
                     var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
                     album.ArtworkMimeType = image.MimeType;
                     album.ArtworkContent = image.Bytes;
                     break;
-                case ItemProperty.ReleaseType:
+                case ItemProperty.AlbumReleaseType:
                     album.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
                     break;
-                case ItemProperty.ReleaseYear:
+                case ItemProperty.AlbumReleaseYear:
                     album.Year = update.UpdatedValue;
                     break;
                 default:
@@ -65,21 +65,21 @@ internal class LibraryUpdater : ILibraryUpdater
                 case ItemProperty.ArtistTags:
                     artist.TagList = update.UpdatedValue;
                     break;
-                case ItemProperty.City:
+                case ItemProperty.ArtistCity:
                     artist.City = update.UpdatedValue;
                     break;
-                case ItemProperty.Country:
+                case ItemProperty.ArtistCountry:
                     artist.Country = update.UpdatedValue;
                     break;
-                case ItemProperty.Genre:
+                case ItemProperty.ArtistGenre:
                     artist.Genre = update.UpdatedValue;
                     break;
-                case ItemProperty.Grouping:
+                case ItemProperty.ArtistGrouping:
                     var groupings = await _readService.GetGroupings();
                     var grouping = groupings.Single(g => g.Name == update.UpdatedValue);
                     artist.GroupingId = grouping.Id;
                     break;
-                case ItemProperty.State:
+                case ItemProperty.ArtistState:
                     artist.State = update.UpdatedValue;
                     break;
                 default:
@@ -98,7 +98,7 @@ internal class LibraryUpdater : ILibraryUpdater
         {
             switch (update.Property)
             {
-                case ItemProperty.Lyrics:
+                case ItemProperty.TrackLyrics:
                     track.Lyrics = update.UpdatedValue;
                     break;
                 case ItemProperty.TrackTags:

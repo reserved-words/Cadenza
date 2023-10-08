@@ -44,31 +44,31 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.ArtistImage:
                 trackData.Artist.Image = _imageConverter.GetImageFromBase64Url(value);
                 break;
-            case ItemProperty.Artwork:
+            case ItemProperty.AlbumArtwork:
                 trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
                 break;
-            case ItemProperty.City:
+            case ItemProperty.ArtistCity:
                 commentData.City = value;
                 break;
-            case ItemProperty.Country:
+            case ItemProperty.ArtistCountry:
                 commentData.Country = value;
                 break;
-            case ItemProperty.Genre:
+            case ItemProperty.ArtistGenre:
                 trackData.Artist.Genre = value;
                 break;
-            case ItemProperty.Grouping:
+            case ItemProperty.ArtistGrouping:
                 trackData.Artist.Grouping = value;
                 break;
-            case ItemProperty.Lyrics:
+            case ItemProperty.TrackLyrics:
                 trackData.Track.Lyrics = value;
                 break;
-            case ItemProperty.ReleaseType:
+            case ItemProperty.AlbumReleaseType:
                 trackData.Album.ReleaseType = value;
                 break;
-            case ItemProperty.ReleaseYear:
+            case ItemProperty.AlbumReleaseYear:
                 trackData.Album.Year = value;
                 break;
-            case ItemProperty.State:
+            case ItemProperty.ArtistState:
                 commentData.State = value;
                 break;
             case ItemProperty.TrackTags:

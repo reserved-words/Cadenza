@@ -4,13 +4,13 @@ namespace Cadenza.Common.DTO;
 
 public class ArtistDetailsDTO : ArtistDTO
 {
-    [ItemProperty(ItemProperty.City)]
+    [ItemProperty(ItemProperty.ArtistCity)]
     public string City { get; set; }
 
-    [ItemProperty(ItemProperty.State)]
+    [ItemProperty(ItemProperty.ArtistState)]
     public string State { get; set; }
 
-    [ItemProperty(ItemProperty.Country)]
+    [ItemProperty(ItemProperty.ArtistCountry)]
     public string Country { get; set; }
 
     [ItemProperty(ItemProperty.ArtistImage)]

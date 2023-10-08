@@ -2,7 +2,7 @@
 
 public enum LibraryItemType
 {
-    Artist,
     Album,
+    Artist,
     Track
 }

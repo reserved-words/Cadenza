@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class SyncService : ISyncService
 {
