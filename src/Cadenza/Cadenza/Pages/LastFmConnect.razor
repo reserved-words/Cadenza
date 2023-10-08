@@ -9,13 +9,14 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public NavigationManager NavigationManager { get; set; }
 
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public string token { get; set; }
+
     private Uri CurrentUri => NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
 
     protected override void OnParametersSet()
     {
-        if (QueryHelpers.ParseQuery(CurrentUri.Query).TryGetValue("token", out var token))
-        {
-            Dispatcher.Dispatch(new LastFmFetchTokenResult(token));
-        }
+        Dispatcher.Dispatch(new LastFmFetchTokenResult(token));
     }
 }
