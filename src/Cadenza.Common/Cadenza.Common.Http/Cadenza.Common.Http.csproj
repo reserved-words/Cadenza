@@ -10,8 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
+	</ItemGroup>
 
 </Project>
