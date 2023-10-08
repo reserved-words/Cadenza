@@ -1,7 +1,6 @@
 ﻿using Cadenza.HttpMessageHandlers;
 using Cadenza.Web.Common.Interfaces.Store;
 using Cadenza.Web.Info;
-using Cadenza.Web.Player;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace Cadenza._Startup;

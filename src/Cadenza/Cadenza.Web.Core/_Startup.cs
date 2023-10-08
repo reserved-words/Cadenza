@@ -9,9 +9,14 @@ global using Cadenza.Web.Core.Services;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Web;
 global using Cadenza.Web.Model;
+global using Cadenza.Web.State.Store;
+global using Cadenza.Web.State.Actions;
+
+global using Fluxor;
 
 using Cadenza.Common.Utilities;
 using Cadenza.Web.Core.Utilities;
+using Cadenza.Web.Core.Player;
 
 namespace Cadenza.Web.Core;
 
@@ -28,5 +33,12 @@ public static class Startup
             .AddTransient<IUrl, Url>();
 
         return services;
+    }
+
+    public static IServiceCollection AddPlayer(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<IPlayTimer, PlayTimer>()
+            .AddScoped<IPlayer, CorePlayer>();
     }
 }

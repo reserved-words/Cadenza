@@ -1,7 +1,7 @@
 ﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Cadenza.Web.Player;
+namespace Cadenza.Web.Core.Player;
 
 internal class PlayTimer : IPlayTimer, IDisposable
 {
