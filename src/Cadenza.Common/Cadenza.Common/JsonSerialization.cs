@@ -1,18 +1,12 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cadenza.Common.Utilities.Serialization;
+namespace Cadenza.Common;
 
 public static class JsonSerialization
 {
-    private static readonly ICollection<JsonConverter> _converters;
-
     static JsonSerialization()
     {
-        _converters = new List<JsonConverter>
-        {
-           new JsonStringEnumConverter()
-        };
         Options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         SetOptions(Options);
     }
@@ -23,9 +17,6 @@ public static class JsonSerialization
     {
         options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         options.WriteIndented = true;
-        foreach (var converter in _converters)
-        {
-            options.Converters.Add(converter);
-        }
+        options.Converters.Add(new JsonStringEnumConverter());
     }
 }

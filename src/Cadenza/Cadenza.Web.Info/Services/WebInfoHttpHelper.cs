@@ -1,14 +1,12 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Utilities.Http;
-using Cadenza.Common.Utilities.Interfaces;
+﻿using Cadenza.Common.Http;
 using Cadenza.Web.Info.Interfaces;
 
 namespace Cadenza.Web.Info.Services;
 
 internal class WebInfoHttpHelper : HttpHelper, IWebInfoHttpHelper
 {
-    public WebInfoHttpHelper(IJsonService jsonConverter, IHttpRequestSender sender)
-            : base(HttpClientName.Database, jsonConverter, sender)
+    public WebInfoHttpHelper(IHttpRequestSender sender)
+            : base(HttpClientName.Database, sender)
     {
     }
 }

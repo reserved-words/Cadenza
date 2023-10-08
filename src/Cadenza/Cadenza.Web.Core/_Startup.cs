@@ -1,5 +1,5 @@
-﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Extensions;
+﻿global using Cadenza.Common.Enums;
+global using Cadenza.Common.Extensions;
 global using Cadenza.Common.Utilities.Interfaces;
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
@@ -10,6 +10,7 @@ global using System.Web;
 global using Cadenza.Web.Model;
 global using Cadenza.Web.State.Store;
 global using Cadenza.Web.State.Actions;
+global using Cadenza.Common.Http;
 
 global using Fluxor;
 

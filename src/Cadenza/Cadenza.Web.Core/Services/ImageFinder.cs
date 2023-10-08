@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Extensions;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class ImageFinder : IImageFinder
 {

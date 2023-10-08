@@ -1,4 +1,6 @@
-﻿namespace Cadenza.SyncService.Interfaces;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.SyncService.Interfaces;
 
 internal interface ISourceRepository
 {

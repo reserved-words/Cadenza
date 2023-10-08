@@ -1,8 +1,8 @@
 ﻿using Cadenza.Apps.API.Model;
-using Cadenza.Common.Utilities.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Text.Json;
 
 namespace Cadenza.Apps.API;
 
@@ -31,8 +31,8 @@ public class ErrorHandlingMiddleware
             var response = context.Response;
             response.StatusCode = (int)HttpStatusCode.InternalServerError;
             response.ContentType = "application/json";
-            var jsonConverter = context.RequestServices.GetRequiredService<IJsonService>();
-            var result = jsonConverter.Serialize(new ApiError { Message = error?.Message });
+            var apiError = new ApiError { Message = error?.Message };
+            var result = JsonSerializer.Serialize(apiError);
             await response.WriteAsync(result);
         }
     }

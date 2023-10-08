@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Main.History;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.Web.Components.Main.History;
 
 public class HistoryTracksBase : FluxorComponent
 {

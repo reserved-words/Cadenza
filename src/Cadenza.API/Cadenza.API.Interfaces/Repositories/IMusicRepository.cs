@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Interfaces.Repositories;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.Interfaces.Repositories;
 
 public interface IMusicRepository
 {

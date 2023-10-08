@@ -9,6 +9,8 @@ global using Microsoft.AspNetCore.Mvc;
 
 using Cadenza.Apps;
 using Cadenza.Apps.API;
+using Cadenza.Local.FileAccess;
+using Cadenza.Common;
 
 const string AuthConfigSectionName = "LocalApiAuthentication";
 
@@ -17,12 +19,13 @@ var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection servi
     services
         .AddUtilities()
         .AddMusicService()
-        .AddCoreServices();
+        .AddCoreServices()
+        .AddFileAccess();
 
     services
         .ConfigureSettings<MusicLibrarySettings>(configuration, "MusicLibrary")
         .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
-});
+}, JsonSerialization.SetOptions);
 
 var app = API.CreateApp(builder, AuthConfigSectionName);
 

@@ -1,6 +1,7 @@
-﻿global using Cadenza.Common.Domain.Model;
+﻿global using Cadenza.Common.Model;
 global using Cadenza.Common.Utilities.Services;
 global using Microsoft.Extensions.DependencyInjection;
+
 using Cadenza.Common.Utilities.Interfaces;
 using System.Runtime.CompilerServices;
 
@@ -16,13 +17,6 @@ public static class _Startup
         return services
             .AddTransient<IBase64Encoder, Base64Encoder>()
             .AddTransient<IImageConverter, ImageConverter>()
-            .AddTransient<IJsonService, JsonService>()
-            .AddTransient<IHttpRequestSender, HttpRequestSender>()
             .AddTransient<INameComparer, NameComparer>();
-    }
-
-    public static IServiceCollection AddDefaultHttpHelper(this IServiceCollection services)
-    {
-        return services.AddTransient<IHttpHelper, DefaultHttpHelper>();
     }
 }

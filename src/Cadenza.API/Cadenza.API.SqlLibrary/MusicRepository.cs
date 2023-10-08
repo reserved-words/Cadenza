@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.SqlLibrary;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.SqlLibrary;
 
 internal class MusicRepository : IMusicRepository
 {

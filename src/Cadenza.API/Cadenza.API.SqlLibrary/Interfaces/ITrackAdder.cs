@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.SqlLibrary.Interfaces;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.SqlLibrary.Interfaces;
 
 internal interface ITrackAdder
 {

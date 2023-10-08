@@ -5,7 +5,7 @@ global using System.Web;
 global using MudBlazor;
 global using MudBlazor.Services;
 
-global using Cadenza.Common.Domain.Enums;
+global using Cadenza.Common.Enums;
 
 global using Cadenza.Web.State.Store;
 global using Cadenza.Web.State.Actions;

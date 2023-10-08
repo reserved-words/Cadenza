@@ -1,4 +1,5 @@
-﻿using Cadenza.Common.Domain.Attributes;
+﻿using Cadenza.Common.DTO.Attributes;
+using Cadenza.Common.Enums;
 
 namespace Cadenza.API.Core.Services;
 

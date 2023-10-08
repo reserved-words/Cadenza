@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Interfaces.LastFm;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.Interfaces.LastFm;
 
 public interface IHistory
 {

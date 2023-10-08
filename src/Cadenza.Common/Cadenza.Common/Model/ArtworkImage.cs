@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Common.Model;
 
 public class ArtworkImage
 {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Cache.Extensions;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.Cache.Extensions;
 
 internal static class CacheExtensions
 {

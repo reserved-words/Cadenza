@@ -1,15 +1,15 @@
-﻿using Cadenza.Common.Utilities.Serialization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Cadenza.Apps.API.Extensions;
 
 internal static class Json
 {
-    internal static WebApplicationBuilder ConfigureJsonConverter(this WebApplicationBuilder builder)
+    internal static WebApplicationBuilder ConfigureJsonSerialization(this WebApplicationBuilder builder, Action<JsonSerializerOptions> setOptions)
     {
         builder.Services.Configure<JsonOptions>(options =>
         {
-            JsonSerialization.SetOptions(options.JsonSerializerOptions);
+            setOptions(options.JsonSerializerOptions);
         });
 
         return builder;

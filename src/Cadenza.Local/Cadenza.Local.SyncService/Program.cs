@@ -6,6 +6,7 @@ var builder = Service.CreateBuilder(args, services =>
 
     services
         .AddUtilities()
+        .AddFileAccess()
         .AddTransient<IService, PlayedFilesService>();
 
     services

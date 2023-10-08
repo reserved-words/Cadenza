@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Model;
+﻿using Cadenza.Common.Enums;
+using Cadenza.Web.Model;
 using Cadenza.Web.State.Store;
 using Fluxor;
 

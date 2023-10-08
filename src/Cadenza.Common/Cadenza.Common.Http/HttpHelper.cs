@@ -1,19 +1,15 @@
-﻿using Cadenza.Common.Domain.Enums;
-using Cadenza.Common.Utilities.Interfaces;
-using System.Net.Http.Json;
+﻿using Cadenza.Common.Model;
 
-namespace Cadenza.Common.Utilities.Http;
+namespace Cadenza.Common.Http;
 
 public abstract class HttpHelper : IHttpHelper
 {
     private readonly HttpClientName _httpClientName;
     private readonly IHttpRequestSender _requestSender;
-    private readonly IJsonService _jsonConverter;
 
-    public HttpHelper(HttpClientName httpClientName, IJsonService jsonConverter, IHttpRequestSender requestSender)
+    public HttpHelper(HttpClientName httpClientName, IHttpRequestSender requestSender)
     {
         _httpClientName = httpClientName;
-        _jsonConverter = jsonConverter;
         _requestSender = requestSender;
     }
 
@@ -23,7 +19,7 @@ public abstract class HttpHelper : IHttpHelper
 
         if (data != null)
         {
-            request.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         await Send(request);
@@ -33,8 +29,7 @@ public abstract class HttpHelper : IHttpHelper
     {
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         var response = await Send(request);
-        var content = await response.Content.ReadAsStringAsync();
-        return _jsonConverter.Deserialize<T>(content);
+        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
     }
 
     public async Task<string> Get(string url)
@@ -75,7 +70,7 @@ public abstract class HttpHelper : IHttpHelper
 
         if (data != null)
         {
-            request.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         await Send(request);
@@ -87,7 +82,7 @@ public abstract class HttpHelper : IHttpHelper
 
         if (data != null)
         {
-            request.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         await Send(request);

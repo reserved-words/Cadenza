@@ -1,6 +1,7 @@
-﻿global using Cadenza.Common.Domain.Enums;
+﻿global using Cadenza.Common.Enums;
 global using Cadenza.Common.DTO;
-global using Cadenza.Common.Utilities.Interfaces;
+global using Cadenza.Common.Http;
+
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Database.Interfaces;

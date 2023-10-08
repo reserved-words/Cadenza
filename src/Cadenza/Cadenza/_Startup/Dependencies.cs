@@ -1,4 +1,5 @@
-﻿using Cadenza.HttpMessageHandlers;
+﻿using Cadenza.Common.Http;
+using Cadenza.HttpMessageHandlers;
 using Cadenza.Web.Info;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
@@ -8,12 +9,18 @@ public static class Dependencies
 {
     public static IServiceCollection RegisterDependencies(this IServiceCollection services, IConfiguration configuration)
     {
+        //services.Configure<JsonOptions>(options =>
+        //{
+        //    JsonSerialization.SetOptions(options.JsonSerializerOptions);
+        //});
+
         services
             .RegisterExternalHttpHelper()
             .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
             .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "DatabaseApi:BaseUrl");
 
         return services
+            .AddHttpHelper()
             .AddDatabase()
             .AddPlayer()
             .AddCoreServices()

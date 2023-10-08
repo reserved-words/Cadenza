@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Cadenza.Common.Utilities.Exceptions;
+namespace Cadenza.Common.Http;
 
 public class HttpException : Exception
 {

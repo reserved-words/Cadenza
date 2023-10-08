@@ -3,7 +3,8 @@
     var configuration = services.RegisterConfiguration();
 
     services
-        .AddHttpClient();
+        .AddHttpClient()
+        .AddHttpHelper();
 
     services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
          .CreateClient());

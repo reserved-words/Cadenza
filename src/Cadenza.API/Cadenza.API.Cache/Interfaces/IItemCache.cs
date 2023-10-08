@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Cache.Interfaces;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.API.Cache.Interfaces;
 
 internal interface IItemCache
 {

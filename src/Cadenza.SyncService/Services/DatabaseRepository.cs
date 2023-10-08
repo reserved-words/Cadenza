@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Common.Enums;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.SyncService.Services;
 

@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Extensions;
+﻿using Cadenza.Common.Extensions;
 using Cadenza.Web.State.Actions;
 
 namespace Cadenza.Web.Components.Shared.Dialogs

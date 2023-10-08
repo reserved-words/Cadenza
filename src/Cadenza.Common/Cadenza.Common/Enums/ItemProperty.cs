@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Enums;
+﻿namespace Cadenza.Common.Enums;
 
 public enum ItemProperty
 {

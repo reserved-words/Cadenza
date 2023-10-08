@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Utilities.Exceptions;
+﻿using Cadenza.Common.Http;
 
 namespace Cadenza.API.LastFM;
 

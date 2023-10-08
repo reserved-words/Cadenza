@@ -17,5 +17,3 @@ global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
-
-global using Cadenza.Common.Domain.Enums;

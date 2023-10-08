@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Common.Domain.Enums;
+namespace Cadenza.Common.Enums;
 
 public enum HistoryPeriod
 {

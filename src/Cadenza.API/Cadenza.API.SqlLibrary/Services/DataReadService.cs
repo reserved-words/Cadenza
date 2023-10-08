@@ -1,5 +1,6 @@
 ﻿using Cadenza.API.SqlLibrary.Interfaces;
 using Cadenza.API.SqlLibrary.Model;
+using Cadenza.Common.Enums;
 using Dapper;
 
 namespace Cadenza.API.SqlLibrary.Services;

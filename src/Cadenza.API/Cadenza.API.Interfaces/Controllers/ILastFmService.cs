@@ -1,4 +1,5 @@
-﻿using Cadenza.Common.LastFm;
+﻿using Cadenza.Common.Enums;
+using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Interfaces.Controllers;
 

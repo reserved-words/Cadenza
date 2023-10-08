@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Core.Services;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.Web.Core.Services;
 
 internal class PlaylistCreator : IPlaylistCreator
 {

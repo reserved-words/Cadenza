@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.DTO;
+﻿using Cadenza.Common.Enums;
+
+namespace Cadenza.Common.DTO;
 
 public class AlbumDTO
 {

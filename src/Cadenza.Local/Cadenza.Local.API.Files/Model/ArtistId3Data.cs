@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
-
-namespace Cadenza.Local.API.Files.Model;
+﻿namespace Cadenza.Local.API.Files.Model;
 
 internal class ArtistId3Data
 {

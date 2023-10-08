@@ -1,19 +1,16 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Services;
 
 internal class SyncHttpHelper : ISyncHttpHelper
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IJsonService _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
     private readonly IApiTokenFetcher _tokenFetcher;
 
-    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IJsonService jsonConverter, IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
+    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
     {
         _httpClientFactory = httpClientFactory;
-        _jsonConverter = jsonConverter;
         _httpRequestSender = httpRequestSender;
         _tokenFetcher = tokenFetcher;
     }
@@ -38,8 +35,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
 
         var response = await _httpRequestSender.TrySendRequest(request);
 
-        var content = await response.Content.ReadAsStringAsync();
-        return _jsonConverter.Deserialize<T>(content);
+        return await response.Content.ReadFromJsonAsync<T>();
     }
 
     public async Task Post<T>(string url, T data)

@@ -1,12 +1,14 @@
-﻿global using Cadenza.Common.Domain.Enums;
+﻿global using Cadenza.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
+global using Cadenza.Common.Http;
+global using Cadenza.Web.Source.Local.Interfaces;
+
 using Cadenza.Common.Utilities.Interfaces;
-using Cadenza.Web.Source.Local.Interfaces;
 
 namespace Cadenza.Web.Source.Local;
 
