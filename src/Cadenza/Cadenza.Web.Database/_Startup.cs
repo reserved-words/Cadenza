@@ -20,7 +20,8 @@ public static class Startup
             .AddMappers()
             .AddApiRepositories()
             .AddTransient<IWebInfoService, WebInfoService>()
-            .AddTransient<IApiHttpHelper, ApiHttpHelper>();
+            .AddTransient<IApiHttpHelper, ApiHttpHelper>()
+            .AddTransient<IApiConnector, ApiConnector>();
     }
 
     private static IServiceCollection AddMappers(this IServiceCollection services)

@@ -1,21 +1,16 @@
-﻿using Cadenza.Web.Source.Local.Interfaces;
-using Cadenza.Web.Source.Local.Settings;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Cadenza.Web.Actions.Effects;
 
 public class LocalSourceConnectionEffects
 {
-    private readonly ILocalHttpHelper _httpHelper;
-    private readonly IOptions<LocalApiSettings> _apiSettings;
+    private readonly ILocalSourceConnector _connector;
     private readonly IState<LocalSourceConnectionState> _state;
     private readonly ILogger<LocalSourceConnectionEffects> _logger;
 
-    public LocalSourceConnectionEffects(ILocalHttpHelper httpHelper, IOptions<LocalApiSettings> apiSettings, IState<LocalSourceConnectionState> state, ILogger<LocalSourceConnectionEffects> logger)
+    public LocalSourceConnectionEffects(ILocalSourceConnector connector, IState<LocalSourceConnectionState> state, ILogger<LocalSourceConnectionEffects> logger)
     {
-        _httpHelper = httpHelper;
-        _apiSettings = apiSettings;
+        _connector = connector;
         _state = state;
         _logger = logger;
     }
@@ -26,7 +21,7 @@ public class LocalSourceConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            await _httpHelper.Get(_apiSettings.Value.Endpoints.Connect);
+            await _connector.Connect();
             dispatcher.Dispatch(new LocalSourceConnectedAction());
         }
         catch (Exception ex)

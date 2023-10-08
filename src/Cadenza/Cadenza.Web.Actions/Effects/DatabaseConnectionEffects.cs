@@ -1,23 +1,18 @@
-﻿using Cadenza.Web.Database.Interfaces;
-using Cadenza.Web.Database.Settings;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Cadenza.Web.Actions.Effects;
 
 public class DatabaseConnectionEffects
 {
+    private readonly IApiConnector _connector;
     private readonly IState<DatabaseConnectionState> _state;
-    private readonly IApiHttpHelper _httpHelper;
-    private readonly IOptions<DatabaseApiSettings> _apiSettings;
     private readonly ILogger<DatabaseConnectionEffects> _logger;
 
-    public DatabaseConnectionEffects(IApiHttpHelper httpHelper, IOptions<DatabaseApiSettings> apiSettings, IState<DatabaseConnectionState> state, ILogger<DatabaseConnectionEffects> logger)
+    public DatabaseConnectionEffects(IState<DatabaseConnectionState> state, ILogger<DatabaseConnectionEffects> logger, IApiConnector connector)
     {
-        _httpHelper = httpHelper;
-        _apiSettings = apiSettings;
         _state = state;
         _logger = logger;
+        _connector = connector;
     }
 
     [EffectMethod(typeof(DatabaseConnectRequest))]
@@ -26,8 +21,7 @@ public class DatabaseConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            var connectionUrl = _apiSettings.Value.Endpoints.Connect;
-            await _httpHelper.Get(connectionUrl);
+            await _connector.Connect();
             dispatcher.Dispatch(new DatabasePopulateRequest());
         }
         catch (Exception ex)
@@ -43,8 +37,7 @@ public class DatabaseConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            var populateUrl = _apiSettings.Value.Endpoints.Populate;
-            await _httpHelper.Post(populateUrl);
+            await _connector.Populate();
             dispatcher.Dispatch(new DatabaseConnectedAction());
         }
         catch (Exception ex)
