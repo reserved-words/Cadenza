@@ -1,7 +1,6 @@
 ﻿using Cadenza.Common.Http;
 using Cadenza.HttpMessageHandlers;
 using Cadenza.Web.Common.Enums;
-using Cadenza.Web.Info;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace Cadenza._Startup;
@@ -23,8 +22,7 @@ public static class Dependencies
             .AddUtilities()
             .AddComponents()
             .AddLocalSource<HtmlPlayer>()
-            .AddLastFm()
-            .AddWebInfo();
+            .AddLastFm();
     }
 
     private static IServiceCollection RegisterExternalHttpHelper(this IServiceCollection services)

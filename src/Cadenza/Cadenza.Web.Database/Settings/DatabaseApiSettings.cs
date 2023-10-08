@@ -57,6 +57,9 @@ public class DatabaseApiEndpoints
     public string Track { get; set; }
     public string Album { get; set; }
     public string AlbumTracks { get; set; }
+
+    public string AlbumArtworkUrl { get; set; }
+    public string ArtistImageUrl { get; set; }
 }
 
 

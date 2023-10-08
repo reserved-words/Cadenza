@@ -1,6 +1,5 @@
 ﻿global using Cadenza.Common.Enums;
 global using Cadenza.Common.DTO;
-global using Cadenza.Common.Http;
 
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
@@ -22,6 +21,7 @@ public static class Startup
         return services
             .AddMappers()
             .AddApiRepositories()
+            .AddTransient<IWebInfoService, WebInfoService>()
             .AddTransient<IApiHttpHelper, ApiHttpHelper>();
     }
 

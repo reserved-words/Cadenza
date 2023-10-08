@@ -1,17 +1,12 @@
-﻿using Cadenza.Common.DTO;
-using Cadenza.Web.Info.Interfaces;
-using Cadenza.Web.Info.Settings;
-using Microsoft.Extensions.Options;
-
-namespace Cadenza.Web.Info.Services;
+﻿namespace Cadenza.Web.Database.Services;
 
 internal class WebInfoService : IWebInfoService
 {
     private readonly IUrl _url;
-    private readonly IWebInfoHttpHelper _httpHelper;
-    private readonly InfoApiSettings _apiSettings;
+    private readonly IApiHttpHelper _httpHelper;
+    private readonly DatabaseApiSettings _apiSettings;
 
-    public WebInfoService(IUrl url, IWebInfoHttpHelper httpHelper, IOptions<InfoApiSettings> apiSettings)
+    public WebInfoService(IUrl url, IApiHttpHelper httpHelper, IOptions<DatabaseApiSettings> apiSettings)
     {
         _url = url;
         _httpHelper = httpHelper;

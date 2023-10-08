@@ -2,11 +2,11 @@
 
 [Route("api/[controller]")]
 [ApiController]
-public class WebInfoController : ControllerBase
+public class WebController : ControllerBase
 {
     private readonly IWebInfoService _service;
 
-    public WebInfoController(IWebInfoService service)
+    public WebController(IWebInfoService service)
     {
         _service = service;
     }
