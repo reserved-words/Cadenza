@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Extensions;
+using Cadenza.Common.Http.Interfaces;
 
 namespace Cadenza.Web.Core.Services;
 

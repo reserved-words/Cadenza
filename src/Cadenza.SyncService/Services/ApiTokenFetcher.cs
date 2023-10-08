@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Common.Http.Interfaces;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Services;

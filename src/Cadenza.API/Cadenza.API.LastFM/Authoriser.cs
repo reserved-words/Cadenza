@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Http;
+﻿using Cadenza.Common.Http.Interfaces;
 
 namespace Cadenza.API.LastFM;
 

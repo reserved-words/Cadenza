@@ -24,8 +24,7 @@ var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection servi
         .AddSqlLibrary()
         .AddLastFM()
         .AddUtilities()
-        .AddHttpHelper()
-        .AddDefaultHttpHelper();
+        .AddHttpHelper();
 
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")

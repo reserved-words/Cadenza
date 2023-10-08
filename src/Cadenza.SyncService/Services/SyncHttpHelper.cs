@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using Cadenza.Common.Http.Interfaces;
 
 namespace Cadenza.SyncService.Services;
 

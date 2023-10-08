@@ -1,9 +1,11 @@
-﻿namespace Cadenza.Common.Http;
+﻿using Cadenza.Common.Http.Interfaces;
+
+namespace Cadenza.Common.Http.Services;
 
 internal class DefaultHttpHelper : HttpHelper
 {
     public DefaultHttpHelper(IHttpRequestSender sender)
-        : base(HttpClientName.Default, sender)
+        : base(sender)
     {
     }
 }

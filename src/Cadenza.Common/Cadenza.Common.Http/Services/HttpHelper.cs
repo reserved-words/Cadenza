@@ -1,13 +1,13 @@
-﻿using Cadenza.Common.Model;
+﻿using Cadenza.Common.Http.Interfaces;
 
-namespace Cadenza.Common.Http;
+namespace Cadenza.Common.Http.Services;
 
 public abstract class HttpHelper : IHttpHelper
 {
-    private readonly HttpClientName _httpClientName;
+    private readonly string _httpClientName;
     private readonly IHttpRequestSender _requestSender;
 
-    public HttpHelper(HttpClientName httpClientName, IHttpRequestSender requestSender)
+    public HttpHelper(IHttpRequestSender requestSender, string httpClientName = null)
     {
         _httpClientName = httpClientName;
         _requestSender = requestSender;

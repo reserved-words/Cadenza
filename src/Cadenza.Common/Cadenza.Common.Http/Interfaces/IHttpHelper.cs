@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Model;
-
-namespace Cadenza.Common.Http;
+﻿namespace Cadenza.Common.Http.Interfaces;
 
 public interface IHttpHelper
 {

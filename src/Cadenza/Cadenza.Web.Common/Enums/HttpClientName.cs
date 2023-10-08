@@ -1,8 +1,7 @@
-﻿namespace Cadenza.Common.Http;
+﻿namespace Cadenza.Web.Common.Enums;
 
 public enum HttpClientName
 {
     Database,
-    Default,
     Local
 }

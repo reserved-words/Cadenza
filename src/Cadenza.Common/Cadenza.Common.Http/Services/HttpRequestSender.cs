@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Common.Http;
+﻿using Cadenza.Common.Http.Interfaces;
+
+namespace Cadenza.Common.Http.Services;
 
 internal class HttpRequestSender : IHttpRequestSender
 {
@@ -9,9 +11,9 @@ internal class HttpRequestSender : IHttpRequestSender
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<HttpResponseMessage> TrySendRequest(HttpRequestMessage request, HttpClientName httpClientName = HttpClientName.Default)
+    public async Task<HttpResponseMessage> TrySendRequest(HttpRequestMessage request, string httpClientName = null)
     {
-        var httpClient = _httpClientFactory.CreateClient(httpClientName.ToString());
+        var httpClient = _httpClientFactory.CreateClient(httpClientName ?? HttpClientDefault.Name);
         var response = await httpClient.SendAsync(request);
         await ValidateResponse(response);
         return response;

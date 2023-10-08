@@ -1,5 +1,6 @@
 ﻿using Cadenza.Common.Http;
 using Cadenza.HttpMessageHandlers;
+using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Info;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
@@ -9,18 +10,12 @@ public static class Dependencies
 {
     public static IServiceCollection RegisterDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.Configure<JsonOptions>(options =>
-        //{
-        //    JsonSerialization.SetOptions(options.JsonSerializerOptions);
-        //});
-
         services
             .RegisterExternalHttpHelper()
             .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
             .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "DatabaseApi:BaseUrl");
 
         return services
-            .AddHttpHelper()
             .AddDatabase()
             .AddPlayer()
             .AddCoreServices()
@@ -34,12 +29,12 @@ public static class Dependencies
 
     private static IServiceCollection RegisterExternalHttpHelper(this IServiceCollection services)
     {
-        services.AddHttpClient(HttpClientName.Default.ToString());
+        services.AddHttpClient(HttpClientDefault.Name);
 
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-          .CreateClient(HttpClientName.Default.ToString()));
+          .CreateClient(HttpClientDefault.Name));
 
-        services.AddDefaultHttpHelper();
+        services.AddHttpHelper();
 
         return services;
     }
