@@ -3,7 +3,6 @@ global using Cadenza.Common.Domain.Extensions;
 global using Cadenza.Common.Utilities.Interfaces;
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
-global using Cadenza.Web.Common.Interfaces.Library;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Core.Services;
 global using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +29,7 @@ public static class Startup
         services
             .AddTransient<IImageFinder, ImageFinder>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>()
+            .AddTransient<IShuffler, Shuffler>()
             .AddTransient<IUrl, Url>();
 
         return services;

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Domain.Model;
+﻿namespace Cadenza.Apps.API.Model;
 
 public class ApiError
 {

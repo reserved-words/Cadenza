@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cadenza.Common.DTO.Serialization;
+namespace Cadenza.Common.Utilities.Serialization;
 
 public static class JsonSerialization
 {
@@ -11,7 +11,6 @@ public static class JsonSerialization
     {
         _converters = new List<JsonConverter>
         {
-           //new TagListConverter(),
            new JsonStringEnumConverter()
         };
         Options = new JsonSerializerOptions(JsonSerializerDefaults.Web);

@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.DTO.Serialization;
+﻿using Cadenza.Common.Utilities.Serialization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadenza.Apps.API.Extensions;

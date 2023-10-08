@@ -33,6 +33,7 @@ public static class Startup
             .AddTransient<ISigner, Signer>()
             .AddTransient<IApiClient, ApiClient>()
             .AddTransient<IAuthorisedApiClient, AuthorisedApiClient>()
+            .AddTransient<IHasher, Hasher>()
             .AddTransient<IParser, Parser>()
             .AddTransient<IResponseReader, ResponseReader>()
             .AddTransient<IUrlService, UrlService>();

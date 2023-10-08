@@ -4,7 +4,7 @@ using Cadenza.Web.State.Actions;
 using Cadenza.Web.State.Store;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using IStore = Cadenza.Web.Common.Interfaces.Store.IStore;
+using IStore = Cadenza.Web.Common.Interfaces.IStore;
 
 namespace Cadenza.Web.Actions.Effects;
 

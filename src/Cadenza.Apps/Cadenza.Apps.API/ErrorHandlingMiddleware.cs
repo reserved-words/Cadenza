@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model;
+﻿using Cadenza.Apps.API.Model;
 using Cadenza.Common.Utilities.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

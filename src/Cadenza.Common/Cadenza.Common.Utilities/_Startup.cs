@@ -17,12 +17,10 @@ public static class _Startup
         return services
             .AddTransient<IBase64Encoder, Base64Encoder>()
             .AddTransient<IFileAccess, FileAccess>()
-            .AddTransient<IHasher, Hasher>()
             .AddTransient<IImageConverter, ImageConverter>()
             .AddTransient<IJsonService, JsonService>()
             .AddTransient<IHttpRequestSender, HttpRequestSender>()
-            .AddTransient<INameComparer, NameComparer>()
-            .AddTransient<IShuffler, Shuffler>();
+            .AddTransient<INameComparer, NameComparer>();
     }
 
     public static IServiceCollection AddDefaultHttpHelper(this IServiceCollection services)

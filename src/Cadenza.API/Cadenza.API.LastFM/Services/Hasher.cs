@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Cadenza.Common.Utilities.Services;
+namespace Cadenza.API.LastFM.Services;
 
 internal class Hasher : IHasher
 {

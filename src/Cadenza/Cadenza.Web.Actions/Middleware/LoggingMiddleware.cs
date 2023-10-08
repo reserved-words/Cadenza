@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using IStore = Fluxor.IStore;
 
 namespace Cadenza.Web.Actions.Middleware;
 public class LoggingMiddleware : Fluxor.Middleware

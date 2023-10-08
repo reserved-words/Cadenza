@@ -9,6 +9,4 @@ global using Cadenza.Web.Model;
 
 global using Cadenza.Common.Domain.Enums;
 
-global using Cadenza.Web.Common.Interfaces.Library;
-
 global using System.Collections.ObjectModel;

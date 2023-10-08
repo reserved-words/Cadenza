@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Interfaces.Store;
-
-namespace Cadenza.Interop;
+﻿namespace Cadenza.Interop;
 
 public class StoreInterop : IStore
 {
