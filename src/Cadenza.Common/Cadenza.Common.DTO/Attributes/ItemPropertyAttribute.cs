@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.Common.DTO.Attributes;
+﻿namespace Cadenza.Common.DTO.Attributes;
 
 public class ItemPropertyAttribute : Attribute
 {

@@ -1,8 +1,6 @@
-﻿using Cadenza.Common.Enums;
-using Cadenza.Web.LastFM.Interfaces;
+﻿using Cadenza.Web.LastFM.Interfaces;
 using Cadenza.Web.LastFM.Settings;
 using Cadenza.Web.State.Actions;
-using Cadenza.Web.State.Store;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using IStore = Cadenza.Web.Common.Interfaces.IStore;

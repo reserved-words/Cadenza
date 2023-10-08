@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-
-namespace Cadenza.Web.Core.Utilities;
+﻿namespace Cadenza.Web.Core.Utilities;
 
 internal class Shuffler : IShuffler
 {

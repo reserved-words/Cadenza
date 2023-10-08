@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Common.Attributes;
+﻿namespace Cadenza.Common.Enums.Attributes;
 
 [AttributeUsage(AttributeTargets.Field)]
 internal class ReleaseTypeGroupAttribute : Attribute

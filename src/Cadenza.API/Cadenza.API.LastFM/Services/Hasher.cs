@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace Cadenza.API.LastFM.Services;

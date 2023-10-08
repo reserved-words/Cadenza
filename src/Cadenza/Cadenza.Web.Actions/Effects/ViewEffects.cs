@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Enums;
-using Cadenza.Web.State.Actions;
+﻿using Cadenza.Web.State.Actions;
 
 namespace Cadenza.Web.Actions.Effects;
 

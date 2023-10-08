@@ -5,7 +5,6 @@ global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-global using Cadenza.Common.Http;
 global using Cadenza.Web.Source.Local.Interfaces;
 
 using Cadenza.Common.Utilities.Interfaces;

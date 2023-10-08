@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Model;
-using Cadenza.Common.Utilities.Interfaces;
+﻿using Cadenza.Common.Utilities.Interfaces;
 using System.Text.RegularExpressions;
 
 namespace Cadenza.Common.Utilities.Services;

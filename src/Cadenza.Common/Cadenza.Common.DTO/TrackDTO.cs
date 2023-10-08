@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.Common.DTO;
+﻿namespace Cadenza.Common.DTO;
 
 public class TrackDTO
 {

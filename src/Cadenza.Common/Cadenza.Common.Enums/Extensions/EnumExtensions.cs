@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cadenza.Common.Extensions;
+namespace Cadenza.Common.Enums.Extensions;
 
 public static class EnumExtensions
 {

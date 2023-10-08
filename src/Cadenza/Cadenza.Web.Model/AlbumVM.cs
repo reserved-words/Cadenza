@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.Web.Model;
+﻿namespace Cadenza.Web.Model;
 
 public record AlbumVM
 {

@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Model;
-
-namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Controllers;
 
 public interface IImageService
 {
