@@ -1,8 +1,4 @@
-﻿using Cadenza.Web.Model;
-using Cadenza.Web.State.Store;
-using Fluxor;
-
-namespace Cadenza.Web.Components.Tabs.Library;
+﻿namespace Cadenza.Web.Components.Tabs.Library;
 
 public class TagTabBase : FluxorComponent
 {
@@ -22,7 +18,7 @@ public class TagTabBase : FluxorComponent
 
     public bool Loading => ViewTagState.Value.IsLoading;
     public string Tag => ViewTagState.Value.Tag;
-    public IReadOnlyCollection<PlayerItemVM>Items => ViewTagState.Value.Items;
+    public IReadOnlyCollection<PlayerItemVM> Items => ViewTagState.Value.Items;
 
     protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
     protected string FilterType { get; set; }

@@ -7,7 +7,7 @@ public class TagsDTO
 
     public TagsDTO() { }
 
-    public TagsDTO(string tags) 
+    public TagsDTO(string tags)
     {
         Tags = tags?.Split(Separator).ToList() ?? new List<string>();
     }

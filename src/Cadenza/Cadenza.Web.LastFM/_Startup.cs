@@ -1,16 +1,14 @@
 ﻿global using Cadenza.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
-global using Cadenza.Common.Http;
 global using Cadenza.Web.LastFM.Interfaces;
 global using Cadenza.Web.LastFM.Services;
 global using Cadenza.Web.LastFM.Settings;
+global using Cadenza.Web.Model;
+global using Cadenza.Web.State.Store;
+global using Fluxor;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-
-global using Cadenza.Web.State.Store;
-global using Cadenza.Web.Model;
-global using Fluxor;
 
 
 namespace Cadenza.Web.LastFM;

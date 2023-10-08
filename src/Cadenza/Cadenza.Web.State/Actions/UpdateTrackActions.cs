@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.State.Actions;
+﻿namespace Cadenza.Web.State.Actions;
 
 public record TrackUpdateRequest(TrackDetailsVM OriginalTrack, TrackDetailsVM UpdatedTrack);
 public record TrackUpdatedAction(TrackDetailsVM UpdatedTrack);

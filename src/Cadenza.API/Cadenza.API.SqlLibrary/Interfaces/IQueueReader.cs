@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.SqlLibrary.Interfaces;
+﻿namespace Cadenza.API.SqlLibrary.Interfaces;
 
 internal interface IQueueReader
 {

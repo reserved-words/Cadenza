@@ -5,12 +5,10 @@ global using Cadenza.API.LastFM;
 global using Cadenza.API.LastFM.Settings;
 global using Cadenza.Apps;
 global using Cadenza.Apps.API;
+global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Cadenza.Common.Utilities;
 global using Microsoft.AspNetCore.Mvc;
-global using Cadenza.Common.DTO;
-
-
 using Cadenza.API.SqlLibrary;
 using Cadenza.Common;
 

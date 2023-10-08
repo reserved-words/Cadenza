@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Model;
-using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Components.Tabs.Library;
+﻿namespace Cadenza.Web.Components.Tabs.Library;
 
 public class TrackTabBase : FluxorComponent
 {

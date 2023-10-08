@@ -7,7 +7,7 @@ internal class PlayCache : IPlayCache
 
     public void CacheTrack(TrackDetailsDTO track, ArtistDetailsDTO artist, AlbumDetailsDTO album)
     {
-         _playTracks.Add(track.Id);
+        _playTracks.Add(track.Id);
         _tagPlayTracks.Cache(track, artist, album, track.Id);
     }
 

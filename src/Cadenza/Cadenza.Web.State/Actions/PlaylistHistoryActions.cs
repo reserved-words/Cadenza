@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.State.Actions;
+﻿namespace Cadenza.Web.State.Actions;
 
 public record LogPlayedItemRequest(PlaylistId Playlist);
 public record LogPlayedItemCompletedAction(PlaylistId Playlist);

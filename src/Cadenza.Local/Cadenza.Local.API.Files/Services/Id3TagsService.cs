@@ -130,7 +130,7 @@ internal class Id3TagsService : IId3TagsService
         f.Tag.Pictures = null;
 
         var pictures = new List<IPicture>();
-        
+
         if (data.Album.Artwork != null)
         {
             pictures.Add(CreatePicture(data.Album.Artwork, PictureType.FrontCover));

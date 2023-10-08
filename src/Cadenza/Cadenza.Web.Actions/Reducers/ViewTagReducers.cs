@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.State.Actions;
-using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Actions.Reducers;
+﻿namespace Cadenza.Web.Actions.Reducers;
 
 public static class ViewTagReducers
 {

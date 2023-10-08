@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.State.Actions;
-
-namespace Cadenza.Web.Actions.Effects;
+﻿namespace Cadenza.Web.Actions.Effects;
 internal class PlayItemEffects
 {
     private readonly IPlaylistCreator _playlistCreator;

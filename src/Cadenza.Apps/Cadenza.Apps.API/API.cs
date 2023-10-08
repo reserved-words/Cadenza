@@ -9,7 +9,7 @@ namespace Cadenza.Apps.API;
 public static class API
 {
     public static WebApplicationBuilder CreateBuilder(
-        string authConfigSectionName, 
+        string authConfigSectionName,
         Action<IServiceCollection, IConfiguration> registerDependencies,
         Action<JsonSerializerOptions> setJsonOptions)
     {

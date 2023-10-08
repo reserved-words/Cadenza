@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.SqlLibrary.Model;
+﻿namespace Cadenza.API.SqlLibrary.Model;
 
 internal class GetTrackData : TrackDataBase
 {

@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.State.Actions;
-using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Actions.Effects;
+﻿namespace Cadenza.Web.Actions.Effects;
 
 public class PlayerControlsEffects
 {

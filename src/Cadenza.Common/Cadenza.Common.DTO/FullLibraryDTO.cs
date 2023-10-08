@@ -4,7 +4,7 @@ public class FullLibraryDTO
 {
     public List<ArtistDetailsDTO> Artists { get; set; }
 
-    public List<TrackDetailsDTO> Tracks { get; set; } 
+    public List<TrackDetailsDTO> Tracks { get; set; }
 
     public List<AlbumDetailsDTO> Albums { get; set; }
 

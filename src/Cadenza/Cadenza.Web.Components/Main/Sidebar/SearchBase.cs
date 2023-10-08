@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Model;
-using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Components.Main.Sidebar;
+﻿namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class SearchBase : FluxorComponent
 {

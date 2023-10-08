@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Enums;
-using Cadenza.Common.Model;
-
-namespace Cadenza.API.SqlLibrary.Interfaces;
+﻿namespace Cadenza.API.SqlLibrary.Interfaces;
 
 internal interface ILibraryReader
 {

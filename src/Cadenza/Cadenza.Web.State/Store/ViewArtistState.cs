@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.State.Store;
+﻿namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record ViewArtistState(bool IsLoading, ArtistDetailsVM Artist, IReadOnlyCollection<ArtistReleaseGroupVM> Releases)

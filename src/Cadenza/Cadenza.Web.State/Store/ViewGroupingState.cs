@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.State.Store;
+﻿namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record ViewGroupingState(bool IsLoading, GroupingVM Grouping, IReadOnlyCollection<string> Genres)

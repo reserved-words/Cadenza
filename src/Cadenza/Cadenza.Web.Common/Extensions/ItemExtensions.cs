@@ -23,7 +23,7 @@ public static class ItemExtensions
         return albums
             .GroupBy(a => a.ReleaseType.GetGroup())
             .OrderBy(g => g.Key)
-            .Select(r => new ArtistReleaseGroupVM(r.Key,r.OrderBy(a => a.ReleaseType)
+            .Select(r => new ArtistReleaseGroupVM(r.Key, r.OrderBy(a => a.ReleaseType)
                 .ThenBy(a => a.Year)
                 .ToReadOnlyList()))
             .ToList();

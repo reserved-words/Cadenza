@@ -1,5 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.API.SqlLibrary.Model;
+﻿using Cadenza.API.SqlLibrary.Model;
 using Dapper;
 using System.Data;
 
@@ -11,7 +10,7 @@ internal class DataInsertService : IDataInsertService
     private const string AddAlbumProcedure = "[Library].[AddAlbum]";
     private const string AddDiscProcedure = "[Library].[AddDisc]";
     private const string AddTrackProcedure = "[Library].[AddTrack]";
-    
+
     private const string AddAlbumUpdateProcedure = "[Queue].[AddAlbumUpdate]";
     private const string AddArtistUpdateProcedure = "[Queue].[AddArtistUpdate]";
     private const string AddTrackUpdateProcedure = "[Queue].[AddTrackUpdate]";

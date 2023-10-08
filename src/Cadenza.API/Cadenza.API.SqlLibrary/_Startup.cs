@@ -1,10 +1,9 @@
-﻿global using Cadenza.Common.Enums;
-global using Cadenza.Common.Model;
-global using Cadenza.Common.Utilities.Interfaces;
-global using Cadenza.API.Interfaces.Repositories;
+﻿global using Cadenza.API.Interfaces.Repositories;
 global using Cadenza.API.SqlLibrary.Interfaces;
 global using Cadenza.Common.DTO;
-
+global using Cadenza.Common.Enums;
+global using Cadenza.Common.Model;
+global using Cadenza.Common.Utilities.Interfaces;
 using Cadenza.API.SqlLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
 

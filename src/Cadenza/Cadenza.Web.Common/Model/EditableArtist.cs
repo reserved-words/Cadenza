@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.Common.Model;
+﻿namespace Cadenza.Web.Common.Model;
 
 public class EditableArtist
 {

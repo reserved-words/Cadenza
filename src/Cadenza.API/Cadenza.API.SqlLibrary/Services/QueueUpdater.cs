@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Enums;
+﻿using Cadenza.API.SqlLibrary.Model;
 
 namespace Cadenza.API.SqlLibrary.Services;
 

@@ -1,7 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.Common.Enums;
-
-namespace Cadenza.API.SqlLibrary.Services;
+﻿namespace Cadenza.API.SqlLibrary.Services;
 
 internal class LibraryUpdater : ILibraryUpdater
 {

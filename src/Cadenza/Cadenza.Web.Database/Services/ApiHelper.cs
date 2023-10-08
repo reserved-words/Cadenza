@@ -7,7 +7,7 @@ namespace Cadenza.Web.Database.Services;
 internal class ApiHttpHelper : HttpHelper, IApiHttpHelper
 {
     public ApiHttpHelper(IHttpRequestSender sender)
-        :base(sender, HttpClientName.Database.ToString())
+        : base(sender, HttpClientName.Database.ToString())
     {
     }
 

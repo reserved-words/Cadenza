@@ -1,6 +1,5 @@
-﻿global using Cadenza.Common.Enums;
-global using Cadenza.Common.DTO;
-
+﻿global using Cadenza.Common.DTO;
+global using Cadenza.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Database.Interfaces;
@@ -8,7 +7,6 @@ global using Cadenza.Web.Database.Repositories;
 global using Cadenza.Web.Database.Services;
 global using Cadenza.Web.Database.Settings;
 global using Cadenza.Web.Model;
-
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 

@@ -37,7 +37,7 @@ public static class Dependencies
         return services;
     }
 
-    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl) 
+    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl)
         where THandler : AuthorizationMessageHandler
     {
         services

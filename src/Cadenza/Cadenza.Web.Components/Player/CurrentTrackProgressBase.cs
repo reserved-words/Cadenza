@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Components.Player;
+﻿namespace Cadenza.Web.Components.Player;
 
 public class CurrentTrackProgressBase : FluxorComponent
 {

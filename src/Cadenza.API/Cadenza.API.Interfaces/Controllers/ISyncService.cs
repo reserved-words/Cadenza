@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ISyncService
 {

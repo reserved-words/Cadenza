@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Utilities.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace Cadenza.Local.API.Controllers;
 

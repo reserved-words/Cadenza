@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.API.SqlLibrary;
 
 internal class UpdateRepository : IUpdateRepository
 {

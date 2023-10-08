@@ -14,7 +14,7 @@ public class Program
         builder.RegisterComponents();
 
         builder.RegisterConfiguration();
-        
+
         var currentAssembly = typeof(Program).Assembly;
         var stateAssembly = typeof(PlayStatusState).Assembly;
         var effectsAssembly = typeof(RecentPlayHistoryEffects).Assembly;

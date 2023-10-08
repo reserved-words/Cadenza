@@ -1,5 +1,4 @@
 ﻿using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Enums;
 
 namespace Cadenza.API.SqlLibrary.Interfaces;
 

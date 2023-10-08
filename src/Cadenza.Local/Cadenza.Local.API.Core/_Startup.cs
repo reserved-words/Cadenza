@@ -1,11 +1,10 @@
-﻿global using Cadenza.Local.API.Common.Controllers;
+﻿global using Cadenza.Common.DTO;
+global using Cadenza.Local.API.Common.Controllers;
 global using Cadenza.Local.API.Common.Interfaces;
 global using Cadenza.Local.API.Core.Interfaces;
 global using Cadenza.Local.API.Core.Services;
 global using Cadenza.Local.API.Core.Settings;
 global using Cadenza.Local.FileAccess;
-global using Cadenza.Common.DTO;
-
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 

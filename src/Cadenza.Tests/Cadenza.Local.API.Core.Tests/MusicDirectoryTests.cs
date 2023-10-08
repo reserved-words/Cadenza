@@ -10,7 +10,7 @@ public class MusicDirectoryTests
 {
     private const string MusicDirectory = "C:\\Music";
     private const string RemovedDirectory = "\\\\Test\\C$\\Removed";
-    
+
     private readonly IFileAccess _mockFileAccess = Substitute.For<IFileAccess>();
     private readonly IOptions<MusicLibrarySettings> _mockSettingsOptions = Substitute.For<IOptions<MusicLibrarySettings>>();
 
@@ -22,15 +22,15 @@ public class MusicDirectoryTests
     [SetUp]
     public void SetUp()
     {
-        var settings = new MusicLibrarySettings 
-        { 
-            Directory = MusicDirectory, 
+        var settings = new MusicLibrarySettings
+        {
+            Directory = MusicDirectory,
             FileExtensions = _fileExtensions,
             RemovedDirectory = RemovedDirectory
         };
         _mockSettingsOptions.Value.Returns(settings);
     }
-    
+
     [Test]
     public async Task GetAllFiles_ReturnsAllFiles()
     {

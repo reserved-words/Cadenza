@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Model;
-using System.Collections.ObjectModel;
-
-namespace Cadenza.Web.State.Store;
+﻿namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record PlaylistHistoryAlbumsState(bool IsLoading, IReadOnlyCollection<RecentAlbumVM> Items)

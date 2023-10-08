@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.State.Actions;
+﻿namespace Cadenza.Web.State.Actions;
 
 public record UpdateRecentPlayHistoryRequest(PlayStatus Status, TrackFullVM Track, int SecondsPlayed);
 

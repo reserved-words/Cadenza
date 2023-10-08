@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.State.Store;
-
-namespace Cadenza.Web.Components.Tabs;
+﻿namespace Cadenza.Web.Components.Tabs;
 
 public class LibraryTabBase : FluxorComponent
 {

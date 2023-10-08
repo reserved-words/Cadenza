@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Model;
-
-namespace Cadenza.Web.Components.Main.ViewBases;
+﻿namespace Cadenza.Web.Components.Main.ViewBases;
 
 public class TrackViewBase : FluxorComponent
 {

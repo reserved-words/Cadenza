@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Enums;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class ItemCache : IItemCache
 {

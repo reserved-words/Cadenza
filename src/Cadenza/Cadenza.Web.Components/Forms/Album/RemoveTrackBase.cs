@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.State.Actions;
-using TrackRemovalRequest = Cadenza.Web.State.Actions.TrackRemovalRequest;
+﻿using TrackRemovalRequest = Cadenza.Web.State.Actions.TrackRemovalRequest;
 
 namespace Cadenza.Web.Components.Forms.Album;
 
