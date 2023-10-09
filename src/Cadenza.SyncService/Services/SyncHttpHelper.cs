@@ -1,17 +1,16 @@
-﻿using Cadenza.Common.Http.Interfaces;
+﻿using Cadenza.Common;
+using Cadenza.Common.Http.Interfaces;
 using System.Net.Http.Json;
 
 namespace Cadenza.SyncService.Services;
 
 internal class SyncHttpHelper : ISyncHttpHelper
 {
-    private readonly IHttpClientFactory _httpClientFactory;
     private readonly IHttpRequestSender _httpRequestSender;
     private readonly IApiTokenFetcher _tokenFetcher;
 
-    public SyncHttpHelper(IHttpClientFactory httpClientFactory, IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
+    public SyncHttpHelper(IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
     {
-        _httpClientFactory = httpClientFactory;
         _httpRequestSender = httpRequestSender;
         _tokenFetcher = tokenFetcher;
     }
@@ -23,7 +22,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
 
         if (data != null)
         {
-            request.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         await _httpRequestSender.TrySendRequest(request);
@@ -36,7 +35,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
 
         var response = await _httpRequestSender.TrySendRequest(request);
 
-        return await response.Content.ReadFromJsonAsync<T>();
+        return await response.Content.ReadFromJsonAsync<T>(JsonSerialization.Options);
     }
 
     public async Task Post<T>(string url, T data)
@@ -46,7 +45,7 @@ internal class SyncHttpHelper : ISyncHttpHelper
 
         if (data != null)
         {
-            request.Content = JsonContent.Create(data);
+            request.Content = JsonContent.Create(data, options: JsonSerialization.Options);
         }
 
         await _httpRequestSender.TrySendRequest(request);

@@ -4,7 +4,7 @@ INSERT INTO @TrackProperties ([Id], [Name])
 VALUES 
 	(1, 'TrackTitle'),
 	(2, 'TrackYear'),
-	(3, 'Lyrics'),
+	(3, 'TrackLyrics'),
 	(4, 'TrackTags')
 
 DECLARE @TrackPropertyId INT,
