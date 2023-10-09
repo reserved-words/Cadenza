@@ -2,11 +2,11 @@
 DECLARE @ArtistProperties TABLE ([Id] INT, [Name] NVARCHAR(50))
 INSERT INTO @ArtistProperties ([Id], [Name])
 VALUES 
-	(1, 'Grouping'),
-	(2, 'Genre'),
-	(3, 'Country'),
-	(4, 'State'),
-	(5, 'City'),
+	(1, 'ArtistGrouping'),
+	(2, 'ArtistGenre'),
+	(3, 'ArtistCountry'),
+	(4, 'ArtistState'),
+	(5, 'ArtistCity'),
 	(6, 'ArtistImage'),
 	(7, 'ArtistTags')
 

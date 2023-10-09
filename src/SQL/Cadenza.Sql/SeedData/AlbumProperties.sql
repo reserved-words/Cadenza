@@ -2,9 +2,9 @@
 DECLARE @AlbumProperties TABLE ([Id] INT, [Name] NVARCHAR(50))
 INSERT INTO @AlbumProperties ([Id], [Name])
 VALUES 
-	(1, 'ReleaseType'),
-	(2, 'ReleaseYear'),
-	(3, 'Artwork'),
+	(1, 'AlbumReleaseType'),
+	(2, 'AlbumReleaseYear'),
+	(3, 'AlbumArtwork'),
 	(4, 'AlbumTags'),
 	(5, 'AlbumTitle')
 
