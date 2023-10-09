@@ -17,4 +17,9 @@ $(function () {
         showOnHover($(this), false);
     });
 
+    $('body').on('mousedown', function (e) {
+        if (e.detail > 1) {
+            e.preventDefault();
+        }
+    });
 });
