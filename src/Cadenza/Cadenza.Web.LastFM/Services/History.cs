@@ -13,27 +13,27 @@ internal class History : IPlayHistory
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task<List<PlayedAlbum>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<PlayedAlbumVM>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopAlbums, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedAlbum>>(url);
+        return await _http.Get<List<PlayedAlbumVM>>(url);
     }
 
-    public async Task<List<PlayedArtist>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<PlayedArtistVM>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopArtists, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedArtist>>(url);
+        return await _http.Get<List<PlayedArtistVM>>(url);
     }
 
-    public async Task<List<PlayedTrack>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<PlayedTrackVM>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopTracks, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedTrack>>(url);
+        return await _http.Get<List<PlayedTrackVM>>(url);
     }
 
-    public async Task<List<RecentTrack>> GetRecentTracks(int limit, int page = 1)
+    public async Task<List<RecentTrackVM>> GetRecentTracks(int limit, int page = 1)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.RecentTracks, ("limit", limit), ("page", page));
-        return await _http.Get<List<RecentTrack>>(url);
+        return await _http.Get<List<RecentTrackVM>>(url);
     }
 }

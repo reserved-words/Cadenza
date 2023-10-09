@@ -1,5 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.API.SqlLibrary.Model;
+﻿using Cadenza.API.SqlLibrary.Model;
 
 namespace Cadenza.API.SqlLibrary.Services;
 
@@ -24,7 +23,7 @@ internal class QueueUpdater : IQueueUpdater
         await _updateService.MarkRemovalErrored(requestId);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
     {
         Func<int, Task> markAsDone = request.Type switch
         {
@@ -40,7 +39,7 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequestDTO request)
     {
         Func<int, Task> markAsErrored = request.Type switch
         {
@@ -56,14 +55,14 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
-    public async Task QueueRemoval(TrackRemovalRequest request)
+    public async Task QueueRemoval(TrackRemovalRequestDTO request)
     {
         await _insertionService.AddTrackRemoval(request.TrackId);
     }
 
-    public async Task QueueUpdates(ItemUpdateRequest request)
+    public async Task QueueUpdates(ItemUpdateRequestDTO request)
     {
-        Func<ItemUpdateRequest, PropertyUpdate, Task> queue = request.Type switch
+        Func<ItemUpdateRequestDTO, PropertyUpdateDTO, Task> queue = request.Type switch
         {
             LibraryItemType.Artist => QueueArtistUpdate,
             LibraryItemType.Album => QueueAlbumUpdate,
@@ -77,7 +76,7 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
-    private async Task QueueArtistUpdate(ItemUpdateRequest request, PropertyUpdate update)
+    private async Task QueueArtistUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
         var artistUpdate = new NewArtistUpdateData
         {
@@ -90,7 +89,7 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddArtistUpdate(artistUpdate);
     }
 
-    private async Task QueueAlbumUpdate(ItemUpdateRequest request, PropertyUpdate update)
+    private async Task QueueAlbumUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
         var albumUpdate = new NewAlbumUpdateData
         {
@@ -103,7 +102,7 @@ internal class QueueUpdater : IQueueUpdater
         await _insertionService.AddAlbumUpdate(albumUpdate);
     }
 
-    private async Task QueueTrackUpdate(ItemUpdateRequest request, PropertyUpdate update)
+    private async Task QueueTrackUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
         var trackUpdate = new NewTrackUpdateData
         {

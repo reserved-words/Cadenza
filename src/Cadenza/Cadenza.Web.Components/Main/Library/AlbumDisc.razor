@@ -24,7 +24,7 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Parameter] public Disc Model { get; set; } = new();
+    [Parameter] public DiscVM Model { get; set; }
     [Parameter] public int AlbumId { get; set; }
     [Parameter] public int AlbumArtistId { get; set; }
 
@@ -46,24 +46,24 @@
         UpdateCurrentTrack();
     }
 
-    protected Task OnDoubleClick(AlbumTrack track)
+    protected Task OnDoubleClick(AlbumTrackVM track)
     {
         Dispatcher.Dispatch(new PlayAlbumRequest(AlbumId, track.TrackId));
         return Task.CompletedTask;
     }
 
-    protected string CellClass(AlbumTrack track, bool isInt)
+    protected string CellClass(AlbumTrackVM track, bool isInt)
     {
         return (isInt ? "td-int " : "")
             + (track.TrackId == CurrentTrackId ? "td-highlight" : "");
     }
 
-    protected bool IsPlaying(AlbumTrack track)
+    protected bool IsPlaying(AlbumTrackVM track)
     {
         return track.TrackId == CurrentTrackId;
     }
 
-    protected bool IsTrackArtistSameAsAlbumArtist(AlbumTrack track)
+    protected bool IsTrackArtistSameAsAlbumArtist(AlbumTrackVM track)
     {
         return track.ArtistId == AlbumArtistId;
     }

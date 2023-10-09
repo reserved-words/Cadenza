@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Interfaces\Cadenza.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
     <ProjectReference Include="..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
   </ItemGroup>
 

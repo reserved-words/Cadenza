@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-using Cadenza.State.Store;
-using Fluxor;
+﻿using Cadenza.Common.LastFm;
 
 namespace Cadenza.Web.LastFM.Services;
 
@@ -19,25 +17,25 @@ internal class Scrobbler : IPlayTracker
         _lastFmConnectionState = lastFmConnectionState;
     }
 
-    public async Task RecordPlay(TrackFull track, DateTime timestamp)
+    public async Task RecordPlay(TrackFullVM track, DateTime timestamp)
     {
         var scrobble = GetScrobble(track, null, timestamp);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Scrobble);
         await _http.Post(url, scrobble);
     }
 
-    public async Task UpdateNowPlaying(TrackFull track, int duration)
+    public async Task UpdateNowPlaying(TrackFullVM track, int duration)
     {
         var scrobble = GetScrobble(track, duration, null);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.UpdateNowPlaying);
         await _http.Post(url, scrobble);
     }
 
-    private LFM_Scrobble GetScrobble(TrackFull track, int? duration, DateTime? timestamp)
+    private Scrobble GetScrobble(TrackFullVM track, int? duration, DateTime? timestamp)
     {
         var sessionKey = _lastFmConnectionState.Value.SessionKey;
 
-        return new LFM_Scrobble
+        return new Scrobble
         {
             SessionKey = sessionKey,
             Timestamp = timestamp ?? DateTime.Now,

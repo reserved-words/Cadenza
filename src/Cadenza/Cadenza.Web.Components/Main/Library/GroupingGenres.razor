@@ -13,5 +13,5 @@
 </AppCardScrollContainer>
 
 @code {
-    [Parameter] public List<string> Genres { get; set; } = new();
+    [Parameter] public IReadOnlyCollection<string> Genres { get; set; }
 }

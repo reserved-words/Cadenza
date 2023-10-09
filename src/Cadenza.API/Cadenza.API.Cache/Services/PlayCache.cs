@@ -1,15 +1,13 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class PlayCache : IPlayCache
 {
     private readonly List<int> _playTracks = new();
     private readonly Dictionary<string, List<int>> _tagPlayTracks = new();
 
-    public void CacheTrack(TrackDetails track, ArtistDetails artist, AlbumDetails album)
+    public void CacheTrack(TrackDetailsDTO track, ArtistDetailsDTO artist, AlbumDetailsDTO album)
     {
-         _playTracks.Add(track.Id);
+        _playTracks.Add(track.Id);
         _tagPlayTracks.Cache(track, artist, album, track.Id);
     }
 

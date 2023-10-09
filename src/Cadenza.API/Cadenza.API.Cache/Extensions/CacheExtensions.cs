@@ -10,7 +10,7 @@ internal static class CacheExtensions
         }
     }
 
-    public static void Cache(this Dictionary<string, List<int>> dictionary, TrackDetails track, ArtistDetails artist, AlbumDetails album, int trackId)
+    public static void Cache(this Dictionary<string, List<int>> dictionary, TrackDetailsDTO track, ArtistDetailsDTO artist, AlbumDetailsDTO album, int trackId)
     {
         var tags = track.Tags.Tags
             .Concat(artist.Tags.Tags)
@@ -60,15 +60,15 @@ internal static class CacheExtensions
         list.Add(value);
     }
 
-    public static void Cache(this Dictionary<string, List<PlayerItem>> dictionary, TagList tags, PlayerItem item)
+    public static void Cache(this Dictionary<string, List<PlayerItemDTO>> dictionary, List<string> tags, PlayerItemDTO item)
     {
-        foreach (var tag in tags.Tags)
+        foreach (var tag in tags)
         {
             dictionary.Cache(tag, item);
         }
     }
 
-    public static void Cache<T1, T2>(this Dictionary<T1, List<T2>> dictionary, T1 key, string id, Func<T2> create) where T2 : PlayerItem
+    public static void Cache<T1, T2>(this Dictionary<T1, List<T2>> dictionary, T1 key, string id, Func<T2> create) where T2 : PlayerItemDTO
     {
         if (!dictionary.TryGetValue(key, out var list))
         {

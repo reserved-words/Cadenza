@@ -4,7 +4,7 @@ public class CurrentTrackArtworkBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public TrackFull Model { get; set; }
+    [Parameter] public TrackFullVM Model { get; set; }
 
     public string AlbumDisplay { get; private set; }
     public string ArtworkUrl { get; private set; }
@@ -21,7 +21,7 @@ public class CurrentTrackArtworkBase : FluxorComponent
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album));
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album.Id ?? 0, Model?.Album.ArtworkBase64));
     }
 
     private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)

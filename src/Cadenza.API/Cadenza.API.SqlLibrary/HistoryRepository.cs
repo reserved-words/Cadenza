@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Interfaces.Repositories;
-using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.API.SqlLibrary;
 
 internal class HistoryRepository : IHistoryRepository
 {
@@ -14,11 +11,11 @@ internal class HistoryRepository : IHistoryRepository
         _readService = readService;
     }
 
-    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         var data = await _readService.GetRecentAlbums(maxItems);
 
-        return data.Select(d => new RecentAlbum
+        return data.Select(d => new RecentAlbumDTO
         {
             Id = d.AlbumId,
             Title = d.AlbumTitle,

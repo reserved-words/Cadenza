@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
-    <ProjectReference Include="..\Cadenza.Common.Interfaces\Cadenza.Common.Interfaces.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.csproj" />
   </ItemGroup>
 
 </Project>

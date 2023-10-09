@@ -2,7 +2,7 @@
 
 internal interface ILibraryUpdater
 {
-    Task UpdateAlbum(ItemUpdateRequest request);
-    Task UpdateArtist(ItemUpdateRequest request);
-    Task UpdateTrack(ItemUpdateRequest request);
+    Task UpdateAlbum(ItemUpdateRequestDTO request);
+    Task UpdateArtist(ItemUpdateRequestDTO request);
+    Task UpdateTrack(ItemUpdateRequestDTO request);
 }

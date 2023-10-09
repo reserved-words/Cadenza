@@ -1,7 +1,7 @@
 ﻿@inherits TagsEditorBase
 
 <MudChipSet AllClosable="true" OnClose="OnRemoveTag">
-    @foreach (var tag in Model.Tags)
+    @foreach (var tag in Model)
     {
         <MudChip Text="@tag" Size="@Size.Small"></MudChip>
     }

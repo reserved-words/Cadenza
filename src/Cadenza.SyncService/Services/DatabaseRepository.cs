@@ -13,7 +13,7 @@ internal class DatabaseRepository : IDatabaseRepository
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task AddTrack(LibrarySource source, SyncTrack track)
+    public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.AddTrack}/{source}";
         await _http.Post(url, track);
@@ -25,28 +25,28 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetRemovalRequests}/{source}";
-        return await _http.Get<List<SyncTrackRemovalRequest>>(url);
+        return await _http.Get<List<SyncTrackRemovalRequestDTO>>(url);
     }
 
-    public async Task MarkRemovalErrored(SyncTrackRemovalRequest request)
+    public async Task MarkRemovalErrored(SyncTrackRemovalRequestDTO request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalErrored}";
         await _http.Post(url, request);
     }
 
-    public async Task MarkRemovalDone(SyncTrackRemovalRequest request)
+    public async Task MarkRemovalDone(SyncTrackRemovalRequestDTO request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkRemovalDone}";
         await _http.Post(url, request);
     }
 
-    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    public async Task<SyncSourceTrackDTO> GetTrackIdFromSource(int trackId)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrackIdFromSource}/{trackId}";
-        return await _http.Get<SyncSourceTrack>(url);
+        return await _http.Get<SyncSourceTrackDTO>(url);
     }
 
     public async Task<List<string>> GetTracksByAlbum(int albumId)
@@ -61,19 +61,19 @@ internal class DatabaseRepository : IDatabaseRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetUpdateRequests}/{source}";
-        return await _http.Get<List<ItemUpdateRequest>>(url);
+        return await _http.Get<List<ItemUpdateRequestDTO>>(url);
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequest request)
+    public async Task MarkUpdateErrored(ItemUpdateRequestDTO request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateErrored}";
         await _http.Post(url, request);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequest request)
+    public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.MarkUpdateDone}";
         await _http.Post(url, request);

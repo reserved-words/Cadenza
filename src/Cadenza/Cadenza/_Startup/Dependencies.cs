@@ -1,7 +1,6 @@
-﻿using Cadenza.HttpMessageHandlers;
-using Cadenza.Web.Common.Interfaces.Store;
-using Cadenza.Web.Info;
-using Cadenza.Web.Player;
+﻿using Cadenza.Common.Http;
+using Cadenza.HttpMessageHandlers;
+using Cadenza.Web.Common.Enums;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace Cadenza._Startup;
@@ -23,23 +22,22 @@ public static class Dependencies
             .AddUtilities()
             .AddComponents()
             .AddLocalSource<HtmlPlayer>()
-            .AddLastFm()
-            .AddWebInfo();
+            .AddLastFm();
     }
 
     private static IServiceCollection RegisterExternalHttpHelper(this IServiceCollection services)
     {
-        services.AddHttpClient(HttpClientName.Default.ToString());
+        services.AddHttpClient(HttpClientDefault.Name);
 
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-          .CreateClient(HttpClientName.Default.ToString()));
+          .CreateClient(HttpClientDefault.Name));
 
-        services.AddDefaultHttpHelper();
+        services.AddHttpHelper();
 
         return services;
     }
 
-    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl) 
+    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl)
         where THandler : AuthorizationMessageHandler
     {
         services

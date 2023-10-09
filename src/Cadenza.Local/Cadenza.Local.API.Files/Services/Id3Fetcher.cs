@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Sync;
+﻿using Cadenza.Local.API.Files.Extensions;
 
 namespace Cadenza.Local.API.Files.Services;
 
@@ -13,7 +13,7 @@ internal class Id3Fetcher : IId3Fetcher
         _id3Service = id3Service;
     }
 
-    public SyncTrack GetFileData(string id, string filepath)
+    public SyncTrackDTO GetFileData(string id, string filepath)
     {
         var data = _id3Service.GetId3Data(filepath);
         var comment = _commentProcessor.GetData(data.Track.Comment);
@@ -25,9 +25,9 @@ internal class Id3Fetcher : IId3Fetcher
         return track;
     }
 
-    private SyncTrack ConvertTrack(string id, Id3Data data, CommentData comment)
+    private SyncTrackDTO ConvertTrack(string id, Id3Data data, CommentData comment)
     {
-        return new SyncTrack
+        return new SyncTrackDTO
         {
             IdFromSource = id,
             Title = data.Track.Title,
@@ -40,9 +40,9 @@ internal class Id3Fetcher : IId3Fetcher
         };
     }
 
-    private SyncAlbum ConvertAlbum(Id3Data data, CommentData comment)
+    private SyncAlbumDTO ConvertAlbum(Id3Data data, CommentData comment)
     {
-        var album = new SyncAlbum
+        var album = new SyncAlbumDTO
         {
             ArtistName = data.Album.ArtistName,
             Title = data.Album.Title,
@@ -67,11 +67,11 @@ internal class Id3Fetcher : IId3Fetcher
 
     }
 
-    private SyncArtist ConvertTrackArtist(Id3Data data)
+    private SyncArtistDTO ConvertTrackArtist(Id3Data data)
     {
         var commentData = _commentProcessor.GetData(data.Track.Comment);
 
-        return new SyncArtist
+        return new SyncArtistDTO
         {
             Name = data.Artist.Name,
             Grouping = data.Artist.Grouping,

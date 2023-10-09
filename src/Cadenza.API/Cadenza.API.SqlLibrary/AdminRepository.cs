@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Interfaces.Repositories;
-using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.API.SqlLibrary;
 
 internal class AdminRepository : IAdminRepository
 {
@@ -12,7 +9,7 @@ internal class AdminRepository : IAdminRepository
         _readService = readService;
     }
 
-    public async Task<List<Grouping>> GetGroupings()
+    public async Task<List<GroupingDTO>> GetGroupings()
     {
         return await _readService.GetGroupings();
     }

@@ -1,11 +1,13 @@
-﻿using Cadenza.Common.Utilities.Services;
+﻿using Cadenza.Common.Http.Interfaces;
+using Cadenza.Common.Http.Services;
+using Cadenza.Web.Common.Enums;
 
 namespace Cadenza.Web.Database.Services;
 
 internal class ApiHttpHelper : HttpHelper, IApiHttpHelper
 {
-    public ApiHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
-        :base(HttpClientName.Database, jsonConverter, sender)
+    public ApiHttpHelper(IHttpRequestSender sender)
+        : base(sender, HttpClientName.Database.ToString())
     {
     }
 

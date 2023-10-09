@@ -1,12 +1,13 @@
-﻿using Cadenza.Common.Utilities.Services;
-using Cadenza.Web.Source.Local.Interfaces;
+﻿using Cadenza.Common.Http.Interfaces;
+using Cadenza.Common.Http.Services;
+using Cadenza.Web.Common.Enums;
 
 namespace Cadenza.Web.Source.Local.Services;
 
 public class LocalHttpHelper : HttpHelper, ILocalHttpHelper
 {
-    public LocalHttpHelper(IJsonConverter jsonConverter, IHttpRequestSender sender)
-        : base(HttpClientName.Local, jsonConverter, sender)
+    public LocalHttpHelper(IHttpRequestSender sender)
+        : base(sender, HttpClientName.Local.ToString())
     {
     }
 }

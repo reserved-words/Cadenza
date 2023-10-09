@@ -1,18 +1,16 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Controllers;
 
 public interface ILibraryService
 {
-    Task<AlbumDetails> Album(int id);
-    Task<List<Album>> AlbumsFeaturingArtist(int id);
-    Task<List<AlbumTrack>> AlbumTracks(int id);
-    Task<ArtistDetails> Artist(int id);
-    Task<List<Album>> ArtistAlbums(int id);
-    Task<List<Track>> ArtistTracks(int id);
-    Task<List<Artist>> Artists();
-    Task<List<Artist>> GenreArtists(string id);
-    Task<List<Artist>> GroupingArtists(int id);
-    Task<List<PlayerItem>> Tag(string id);
-    Task<TrackFull> Track(int id);
+    Task<AlbumDetailsDTO> Album(int id);
+    Task<List<AlbumDTO>> AlbumsFeaturingArtist(int id);
+    Task<List<AlbumTrackDTO>> AlbumTracks(int id);
+    Task<ArtistDetailsDTO> Artist(int id);
+    Task<List<AlbumDTO>> ArtistAlbums(int id);
+    Task<List<TrackDTO>> ArtistTracks(int id);
+    Task<List<ArtistDTO>> Artists();
+    Task<List<ArtistDTO>> GenreArtists(string id);
+    Task<List<ArtistDTO>> GroupingArtists(int id);
+    Task<List<PlayerItemDTO>> Tag(string id);
+    Task<TrackFullDTO> Track(int id);
 }

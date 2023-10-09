@@ -1,50 +1,57 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.Web.Database.Repositories;
+﻿namespace Cadenza.Web.Database.Repositories;
 
 internal class ArtistRepository : IArtistRepository
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
+    private readonly IViewModelMapper _mapper;
 
-    public ArtistRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper)
+    public ArtistRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper, IViewModelMapper mapper)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;
+        _mapper = mapper;
     }
 
-    public async Task<List<Album>> GetAlbumsFeaturingArtist(int artistId)
+    public async Task<List<AlbumVM>> GetAlbumsFeaturingArtist(int artistId)
     {
-        return await _apiHelper.Get<List<Album>>(_settings.AlbumsFeaturingArtist, artistId);
+        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.AlbumsFeaturingArtist, artistId);
+        return albums.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<Artist>> GetAllArtists()
+    public async Task<List<ArtistVM>> GetAllArtists()
     {
-        return await _apiHelper.Get<List<Artist>>(_settings.AllArtists);
+        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.AllArtists);
+        return artists.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<Artist>> GetArtistsByGrouping(int id)
+    public async Task<List<ArtistVM>> GetArtistsByGrouping(int id)
     {
-        return await _apiHelper.Get<List<Artist>>(_settings.GroupingArtists, id);
+        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, id);
+        return artists.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<Artist>> GetArtistsByGenre(string id)
+    public async Task<List<ArtistVM>> GetArtistsByGenre(string id)
     {
-        return await _apiHelper.Get<List<Artist>>(_settings.GenreArtists, id);
+        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GenreArtists, id);
+        return artists.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<ArtistDetails> GetArtist(int id)
+    public async Task<ArtistDetailsVM> GetArtist(int id)
     {
-        return await _apiHelper.Get<ArtistDetails>(_settings.Artist, id);
+        var artist = await _apiHelper.Get<ArtistDetailsDTO>(_settings.Artist, id);
+        return _mapper.Map(artist);
     }
 
-    public async Task<List<Album>> GetAlbums(int id)
+    public async Task<List<AlbumVM>> GetAlbums(int id)
     {
-        return await _apiHelper.Get<List<Album>>(_settings.ArtistAlbums, id);
+        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.ArtistAlbums, id);
+        return albums.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<Track>> GetArtistTracks(int id)
+    public async Task<List<TrackVM>> GetArtistTracks(int id)
     {
-        return await _apiHelper.Get<List<Track>>(_settings.ArtistTracks, id);
+        var tracks = await _apiHelper.Get<List<TrackDTO>>(_settings.ArtistTracks, id);
+        return tracks.Select(t => _mapper.Map(t)).ToList();
     }
 }

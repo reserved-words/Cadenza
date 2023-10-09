@@ -9,7 +9,7 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public Album Model { get; set; }
+    [Parameter] public AlbumVM Model { get; set; }
 
     public string ArtworkSrc { get; private set; }
 
@@ -21,7 +21,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model));
+        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
     }
 
     public void Play()

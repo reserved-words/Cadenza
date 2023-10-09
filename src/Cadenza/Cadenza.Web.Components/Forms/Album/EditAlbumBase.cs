@@ -1,13 +1,32 @@
-﻿namespace Cadenza.Web.Components.Forms.Album;
+﻿using System.Collections.ObjectModel;
 
-public class EditAlbumBase : FormBase<AlbumDetails>
+namespace Cadenza.Web.Components.Forms.Album;
+
+public class EditAlbumBase : FormBase<AlbumDetailsVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<EditableAlbumState> State { get; set; }
 
-    public AlbumUpdate Update { get; set; }
-    public AlbumDetails EditableItem => Update.UpdatedItem;
-    public List<AlbumTrack> AlbumTracks => State.Value.Tracks;
+    protected EditableAlbum EditableItem { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        EditableItem = new EditableAlbum
+        {
+            Id = Model.Id,
+            ArtistId = Model.ArtistId,
+            ArtistName = Model.ArtistName,
+            Title = Model.Title,
+            ReleaseType = Model.ReleaseType,
+            Year = Model.Year,
+            ArtworkBase64 = Model.ArtworkBase64,
+            Tags = Model.Tags.ToList()
+        };
+
+        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
+    }
+
+    public List<AlbumTrackVM> AlbumTracks => State.Value.Tracks.ToList();
 
     protected override void OnInitialized()
     {
@@ -15,23 +34,18 @@ public class EditAlbumBase : FormBase<AlbumDetails>
         base.OnInitialized();
     }
 
-    protected override void OnParametersSet()
-    {
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
-        Update = new AlbumUpdate(Model);
-    }
-
     protected void OnSubmit()
     {
-        Update.ConfirmUpdates();
-
-        if (!Update.Updates.Any())
+        var updatedAlbum = Model with
         {
-            Cancel();
-            return;
-        }
+            Title = EditableItem.Title,
+            ReleaseType = EditableItem.ReleaseType,
+            Year = EditableItem.Year,
+            ArtworkBase64 = EditableItem.ArtworkBase64,
+            Tags = new ReadOnlyCollection<string>(EditableItem.Tags.ToList())
+        };
 
-        Dispatcher.Dispatch(new AlbumUpdateRequest(Model.Id, Update));
+        Dispatcher.Dispatch(new AlbumUpdateRequest(Model, updatedAlbum));
     }
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)

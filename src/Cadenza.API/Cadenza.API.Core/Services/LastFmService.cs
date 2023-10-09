@@ -1,4 +1,4 @@
-﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
+﻿using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Core.Services;
 
@@ -27,12 +27,12 @@ internal class LastFmService : ILastFmService
         return await _authoriser.CreateSession(token);
     }
 
-    public async Task RecordPlay(LFM_Scrobble scrobble)
+    public async Task RecordPlay(Scrobble scrobble)
     {
         await _scrobbler.RecordPlay(scrobble);
     }
 
-    public async Task UpdateNowPlaying(LFM_Scrobble scrobble)
+    public async Task UpdateNowPlaying(Scrobble scrobble)
     {
         await _scrobbler.UpdateNowPlaying(scrobble);
     }
@@ -42,32 +42,32 @@ internal class LastFmService : ILastFmService
         return await _favourites.IsFavourite(artist, title);
     }
 
-    public async Task Favourite(LFM_Track track)
+    public async Task Favourite(FavouriteTrack track)
     {
         await _favourites.Favourite(track);
     }
 
-    public async Task Unfavourite(LFM_Track track)
+    public async Task Unfavourite(FavouriteTrack track)
     {
         await _favourites.Unfavourite(track);
     }
 
-    public async Task<List<RecentTrack>> RecentTracks(int limit, int page)
+    public async Task<List<RecentTrackDTO>> RecentTracks(int limit, int page)
     {
         return await _history.GetRecentTracks(limit, page);
     }
 
-    public async Task<List<PlayedAlbum>> TopAlbums(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedAlbumDTO>> TopAlbums(HistoryPeriod period, int limit, int page)
     {
         return await _history.GetPlayedAlbums(period, limit, page);
     }
 
-    public async Task<List<PlayedArtist>> TopArtists(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedArtistDTO>> TopArtists(HistoryPeriod period, int limit, int page)
     {
         return await _history.GetPlayedArtists(period, limit, page);
     }
 
-    public async Task<List<PlayedTrack>> TopTracks(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedTrackDTO>> TopTracks(HistoryPeriod period, int limit, int page)
     {
         return await _history.GetPlayedTracks(period, limit, page);
     }

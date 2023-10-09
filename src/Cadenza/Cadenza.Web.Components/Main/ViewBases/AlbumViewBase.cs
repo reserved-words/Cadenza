@@ -2,7 +2,7 @@
 
 public class AlbumViewBase : FluxorComponent
 {
-    [Parameter] public AlbumDetails Model { get; set; } = new();
+    [Parameter] public AlbumDetailsVM Model { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -12,9 +12,9 @@ public class AlbumViewBase : FluxorComponent
 
     private void OnAlbumUpdated(AlbumUpdatedAction action)
     {
-        if (Model != null && Model.Id == action.Update.Id)
+        if (Model != null && Model.Id == action.UpdatedAlbum.Id)
         {
-            action.Update.ApplyUpdates(Model);
+            Model = action.UpdatedAlbum;
             StateHasChanged();
         }
     }

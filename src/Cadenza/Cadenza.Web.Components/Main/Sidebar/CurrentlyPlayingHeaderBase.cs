@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Components;
-using Fluxor;
-
-namespace Cadenza.Web.Components.Main.Sidebar;
+﻿namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class CurrentlyPlayingHeaderBase : FluxorComponent
 {

@@ -2,8 +2,8 @@
 
 public interface IUpdateService
 {
-    Task RemoveTrack(TrackRemovalRequest request);
-    Task UpdateTrack(ItemUpdateRequest updates);
-    Task UpdateAlbum(ItemUpdateRequest updates);
-    Task UpdateArtist(ItemUpdateRequest updates);
+    Task RemoveTrack(TrackRemovalRequestDTO request);
+    Task UpdateTrack(UpdateTrackDTO updates);
+    Task UpdateAlbum(UpdateAlbumDTO updates);
+    Task UpdateArtist(UpdateArtistDTO updates);
 }

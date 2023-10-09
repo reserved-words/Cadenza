@@ -1,5 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Dapper;
+﻿using Dapper;
 
 namespace Cadenza.API.SqlLibrary.Services;
 

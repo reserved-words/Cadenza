@@ -1,7 +1,7 @@
 ﻿
 <AppCardScrollContainer>
     <ChildContent>
-        <AppTable T="@Artist"
+        <AppTable T="@ArtistVM"
                   Items="@Artists">
             <RowTemplate>
                 <MudTd>
@@ -13,5 +13,5 @@
 </AppCardScrollContainer>
 
 @code {
-    [Parameter] public List<Artist> Artists { get; set; } = new();
+    [Parameter] public IReadOnlyCollection<ArtistVM> Artists { get; set; }
 }

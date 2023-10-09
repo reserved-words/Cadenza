@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Cadenza.Common.Utilities.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Cadenza.Common.Utilities.Services;
 
@@ -21,7 +22,7 @@ internal class ImageConverter : IImageConverter
 
     public ArtworkImage GetImageFromBase64Url(string base64Url)
     {
-        if (base64Url == null) 
+        if (base64Url == null)
             return null;
 
         var pattern = string.Format(RegexFormat, MimeTypePattern, Base64StringPattern);

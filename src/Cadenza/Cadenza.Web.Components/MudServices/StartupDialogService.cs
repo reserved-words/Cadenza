@@ -25,6 +25,6 @@ internal class StartupDialogService : IStartupDialogService
 
         var result = await dialogReference.Result;
 
-        return !result.Cancelled;
+        return !result.Canceled;
     }
 }

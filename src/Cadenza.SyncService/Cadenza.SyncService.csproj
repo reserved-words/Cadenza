@@ -20,7 +20,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps.WindowsService\Cadenza.Apps.WindowsService.csproj" />
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
-    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.DTO\Cadenza.Common.DTO.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Http\Cadenza.Common.Http.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
   </ItemGroup>
 

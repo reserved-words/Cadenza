@@ -2,5 +2,5 @@
 
 public interface IAdminService
 {
-    Task<List<Grouping>> GetGroupings();
+    Task<List<GroupingDTO>> GetGroupings();
 }

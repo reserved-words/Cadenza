@@ -1,33 +1,31 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Services;
+﻿namespace Cadenza.API.Cache.Services;
 
 internal class ItemCache : IItemCache
 {
-    private readonly Dictionary<PlayerItemType, List<PlayerItem>> _items = new();
-    private readonly Dictionary<string, List<PlayerItem>> _tags = new();
+    private readonly Dictionary<PlayerItemType, List<PlayerItemDTO>> _items = new();
+    private readonly Dictionary<string, List<PlayerItemDTO>> _tags = new();
 
-    public void CacheAlbum(AlbumDetails album)
+    public void CacheAlbum(AlbumDetailsDTO album)
     {
         var item = new SearchableAlbum(album);
         _items.Cache(PlayerItemType.Album, item);
-        _tags.Cache(album.Tags, item);
+        _tags.Cache(album.Tags.Tags, item);
     }
 
-    public void CacheArtist(ArtistDetails artist)
+    public void CacheArtist(ArtistDetailsDTO artist)
     {
         var item = new SearchableArtist(artist);
         _items.Cache(PlayerItemType.Artist, item);
         _items.Cache(PlayerItemType.Grouping, artist.Grouping.Id.ToString(), () => new SearchableGrouping(artist.Grouping));
         _items.Cache(PlayerItemType.Genre, artist.Genre, () => new SearchableGenre(artist.Genre));
-        _tags.Cache(artist.Tags, item);
+        _tags.Cache(artist.Tags.Tags, item);
     }
 
-    public void CacheTrack(TrackDetails track, AlbumDetails album)
+    public void CacheTrack(TrackDetailsDTO track, AlbumDetailsDTO album)
     {
         var item = new SearchableTrack(track, album);
         _items.Cache(PlayerItemType.Track, item);
-        _tags.Cache(track.Tags, item);
+        _tags.Cache(track.Tags.Tags, item);
     }
 
     public void Clear()
@@ -36,19 +34,19 @@ internal class ItemCache : IItemCache
         _tags.Clear();
     }
 
-    public List<PlayerItem> GetTag(string id)
+    public List<PlayerItemDTO> GetTag(string id)
     {
         return _tags[id];
     }
 
-    public List<PlayerItem> GetTags()
+    public List<PlayerItemDTO> GetTags()
     {
         return _tags.Keys
             .Select(t => new SearchableTag(t))
-            .OfType<PlayerItem>().ToList();
+            .OfType<PlayerItemDTO>().ToList();
     }
 
-    public List<PlayerItem> GetItems(PlayerItemType type)
+    public List<PlayerItemDTO> GetItems(PlayerItemType type)
     {
         return _items.GetValue(type);
     }

@@ -1,4 +1,4 @@
-﻿using LFM_Track = Cadenza.Common.Domain.Model.LastFm.LFM_Track;
+﻿using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Controllers;
 
@@ -26,13 +26,13 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("RecordPlay")]
-    public async Task RecordPlay(LFM_Scrobble scrobble)
+    public async Task RecordPlay(Scrobble scrobble)
     {
         await _service.RecordPlay(scrobble);
     }
 
     [HttpPost("UpdateNowPlaying")]
-    public async Task UpdateNowPlaying(LFM_Scrobble scrobble)
+    public async Task UpdateNowPlaying(Scrobble scrobble)
     {
         await _service.UpdateNowPlaying(scrobble);
     }
@@ -44,37 +44,37 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("Favourite")]
-    public async Task Favourite(LFM_Track track)
+    public async Task Favourite(FavouriteTrack track)
     {
         await _service.Favourite(track);
     }
 
     [HttpPost("Unfavourite")]
-    public async Task Unfavourite(LFM_Track track)
+    public async Task Unfavourite(FavouriteTrack track)
     {
         await _service.Unfavourite(track);
     }
 
     [HttpGet("RecentTracks")]
-    public async Task<List<RecentTrack>> RecentTracks(int limit, int page)
+    public async Task<List<RecentTrackDTO>> RecentTracks(int limit, int page)
     {
         return await _service.RecentTracks(limit, page);
     }
 
     [HttpGet("TopAlbums")]
-    public async Task<List<PlayedAlbum>> TopAlbums(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedAlbumDTO>> TopAlbums(HistoryPeriod period, int limit, int page)
     {
         return await _service.TopAlbums(period, limit, page);
     }
 
     [HttpGet("TopArtists")]
-    public async Task<List<PlayedArtist>> TopArtists(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedArtistDTO>> TopArtists(HistoryPeriod period, int limit, int page)
     {
         return await _service.TopArtists(period, limit, page);
     }
 
     [HttpGet("TopTracks")]
-    public async Task<List<PlayedTrack>> TopTracks(HistoryPeriod period, int limit, int page)
+    public async Task<List<PlayedTrackDTO>> TopTracks(HistoryPeriod period, int limit, int page)
     {
         return await _service.TopTracks(period, limit, page);
     }

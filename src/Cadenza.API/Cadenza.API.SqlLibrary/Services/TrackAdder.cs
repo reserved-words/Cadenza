@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary.Services;
+﻿namespace Cadenza.API.SqlLibrary.Services;
 
 internal class TrackAdder : ITrackAdder
 {
@@ -13,7 +11,7 @@ internal class TrackAdder : ITrackAdder
         _mapper = mapper;
     }
 
-    public async Task AddTrack(LibrarySource source, SyncTrack track)
+    public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
     {
         var trackArtistData = _mapper.MapTrackArtist(track);
         var trackArtistId = await _insertService.AddArtist(trackArtistData);

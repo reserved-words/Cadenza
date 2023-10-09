@@ -2,5 +2,5 @@
 
 public interface IAdminRepository
 {
-    Task<List<Grouping>> GetGroupings();
+    Task<List<GroupingDTO>> GetGroupings();
 }

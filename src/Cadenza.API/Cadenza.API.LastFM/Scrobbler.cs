@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.LastFM;
+﻿using Cadenza.Common.LastFm;
+
+namespace Cadenza.API.LastFM;
 
 internal class Scrobbler : IScrobbler
 {
@@ -9,7 +11,7 @@ internal class Scrobbler : IScrobbler
         _client = client;
     }
 
-    public async Task UpdateNowPlaying(LFM_Scrobble scrobble)
+    public async Task UpdateNowPlaying(Scrobble scrobble)
     {
         await _client.Post(scrobble.SessionKey, new Dictionary<string, string>
         {
@@ -22,7 +24,7 @@ internal class Scrobbler : IScrobbler
         });
     }
 
-    public async Task RecordPlay(LFM_Scrobble scrobble)
+    public async Task RecordPlay(Scrobble scrobble)
     {
         var scrobbleTime = scrobble.Timestamp.ToUniversalTime();
         var unixTimeStamp = scrobbleTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;

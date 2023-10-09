@@ -1,5 +1,4 @@
-﻿@using Cadenza.State.Actions;
-
+﻿
 @if (Grouping != null)
 {
     <ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
@@ -8,7 +7,7 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public Grouping Grouping { get; set; }
+    [Parameter] public GroupingVM Grouping { get; set; }
     [Parameter] public Typo Typo { get; set; } = Typo.body1;
 
     private void View()

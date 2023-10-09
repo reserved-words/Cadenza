@@ -34,7 +34,7 @@ internal class UpdateRequestsHandler : IService
         await ProcessArtistUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Artist).ToList());
     }
 
-    private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequest> requests)
+    private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} artist update requests to process");
 
@@ -47,7 +47,7 @@ internal class UpdateRequestsHandler : IService
         _logger.LogInformation("All artist update requests processed");
     }
 
-    private async Task ProcessAlbumUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequest> requests)
+    private async Task ProcessAlbumUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} album update requests to process");
 
@@ -60,7 +60,7 @@ internal class UpdateRequestsHandler : IService
         _logger.LogInformation("All album update requests processed");
     }
 
-    private async Task ProcessTrackUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequest> requests)
+    private async Task ProcessTrackUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} track update requests to process");
 
@@ -74,7 +74,7 @@ internal class UpdateRequestsHandler : IService
         _logger.LogInformation("All track update requests processed");
     }
 
-    private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, LibrarySource source, ItemUpdateRequest request)
+    private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, LibrarySource source, ItemUpdateRequestDTO request)
     {
         _logger.LogInformation($"Started processing update ID {request.Id}");
 
@@ -91,12 +91,12 @@ internal class UpdateRequestsHandler : IService
         }
     }
 
-    private async Task MarkErrored(ItemUpdateRequest request)
+    private async Task MarkErrored(ItemUpdateRequestDTO request)
     {
         await _database.MarkUpdateErrored(request);
     }
 
-    private async Task MarkUpdated(ItemUpdateRequest request)
+    private async Task MarkUpdated(ItemUpdateRequestDTO request)
     {
         await _database.MarkUpdateDone(request);
     }

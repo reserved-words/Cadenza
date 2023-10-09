@@ -3,7 +3,7 @@
     var configuration = services.RegisterConfiguration();
 
     services
-        .AddUtilities()
+        .AddFileAccess()
         .AddTransient<IService, PlayedFilesService>();
 
     services

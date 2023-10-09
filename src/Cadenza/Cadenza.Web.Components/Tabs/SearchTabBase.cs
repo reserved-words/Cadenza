@@ -25,7 +25,7 @@ public class SearchTabBase : ComponentBase
         OnClear();
     }
 
-    protected List<PlayerItem> Results { get; set; } = new List<PlayerItem>();
+    protected List<PlayerItemVM> Results { get; set; } = new List<PlayerItemVM>();
 
     protected string SearchText { get; set; }
     protected string SearchType { get; set; }
@@ -55,7 +55,7 @@ public class SearchTabBase : ComponentBase
         return Task.CompletedTask;
     }
 
-    protected void OnViewItem(PlayerItem item)
+    protected void OnViewItem(PlayerItemVM item)
     {
         Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
     }

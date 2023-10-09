@@ -9,7 +9,7 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public ArtistDetails Model { get; set; }
+    [Parameter] public ArtistDetailsVM Model { get; set; }
 
     public string ImageSrc { get; private set; }
 
@@ -21,7 +21,7 @@
 
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchArtistImageRequest(Model));
+        Dispatcher.Dispatch(new FetchArtistImageRequest(Model.Id, Model.ImageBase64));
     }
 
     private void OnArtistImageFetched(FetchArtistImageResultAction action)

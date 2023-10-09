@@ -45,6 +45,6 @@ internal class MudDialogService : IDialogService
             FullWidth = fullWidth
         });
         var result = await formReference.Result;
-        return (!result.Cancelled, result.Data as TModel);
+        return (!result.Canceled, result.Data as TModel);
     }
 }

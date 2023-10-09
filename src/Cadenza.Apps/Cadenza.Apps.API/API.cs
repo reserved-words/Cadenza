@@ -2,12 +2,16 @@
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 using Cadenza.Apps.API.Extensions;
+using System.Text.Json;
 
 namespace Cadenza.Apps.API;
 
 public static class API
 {
-    public static WebApplicationBuilder CreateBuilder(string authConfigSectionName, Action<IServiceCollection, IConfiguration> registerDependencies)
+    public static WebApplicationBuilder CreateBuilder(
+        string authConfigSectionName,
+        Action<IServiceCollection, IConfiguration> registerDependencies,
+        Action<JsonSerializerOptions> setJsonOptions)
     {
         var builder = WebApplication.CreateBuilder(Array.Empty<string>());
 
@@ -16,7 +20,7 @@ public static class API
             .RegisterDependencies(registerDependencies)
             .SetCorsPolicy()
             .RegisterDocumentation()
-            .ConfigureJsonConverter()
+            .ConfigureJsonSerialization(setJsonOptions)
             .ConfigureAuthentication(authConfigSectionName);
     }
 

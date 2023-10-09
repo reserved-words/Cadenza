@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Cadenza.Common.Utilities.Interfaces;
+using System.Text;
 
 namespace Cadenza.Common.Utilities.Services;
 

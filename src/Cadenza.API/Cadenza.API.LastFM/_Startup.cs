@@ -2,10 +2,9 @@
 global using Cadenza.API.LastFM.Interfaces;
 global using Cadenza.API.LastFM.Services;
 global using Cadenza.API.LastFM.Settings;
-global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.LastFm;
-global using Cadenza.Common.Interfaces.Utilities;
+global using Cadenza.Common.DTO;
+global using Cadenza.Common.Enums;
+global using Cadenza.Common.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Globalization;
@@ -34,6 +33,7 @@ public static class Startup
             .AddTransient<ISigner, Signer>()
             .AddTransient<IApiClient, ApiClient>()
             .AddTransient<IAuthorisedApiClient, AuthorisedApiClient>()
+            .AddTransient<IHasher, Hasher>()
             .AddTransient<IParser, Parser>()
             .AddTransient<IResponseReader, ResponseReader>()
             .AddTransient<IUrlService, UrlService>();

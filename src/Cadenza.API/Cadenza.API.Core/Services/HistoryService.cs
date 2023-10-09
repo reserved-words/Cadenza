@@ -9,7 +9,7 @@ internal class HistoryService : IHistoryService
         _repository = repository;
     }
 
-    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         return await _repository.GetRecentAlbums(maxItems);
     }

@@ -11,7 +11,7 @@
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public TrackDetails Track { get; set; }
+    [Parameter] public TrackDetailsVM Track { get; set; }
 
     protected Task OnPlay()
     {
@@ -21,6 +21,6 @@
 
     protected async Task OnEdit()
     {
-        await DialogService.DisplayForm<EditTrack, TrackDetails>(Track, "Edit Track");
+        await DialogService.DisplayForm<EditTrack, TrackDetailsVM>(Track, "Edit Track");
     }
 }

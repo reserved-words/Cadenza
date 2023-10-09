@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
-
-namespace Cadenza.Local.API.Controllers;
+﻿namespace Cadenza.Local.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -22,20 +20,20 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetTrack/{idBase64}")]
-    public async Task<SyncTrack> GetTrack(string idBase64)
+    public async Task<SyncTrackDTO> GetTrack(string idBase64)
     {
         var id = _base64Encoder.Decode(idBase64);
         return await _service.GetTrack(id);
     }
 
     [HttpPost("UpdateTracks")]
-    public async Task UpdateTracks([FromBody] MultiTrackUpdates updates)
+    public async Task UpdateTracks([FromBody] MultiTrackUpdatesDTO updates)
     {
         await _service.UpdateTracks(updates);
     }
 
     [HttpDelete("RemoveTrack")]
-    public async Task RemoveTracks([FromBody] SyncTrackRemovalRequest request)
+    public async Task RemoveTracks([FromBody] SyncTrackRemovalRequestDTO request)
     {
         await _service.RemoveTrack(request.TrackIdFromSource);
     }

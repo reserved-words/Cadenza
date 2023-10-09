@@ -12,7 +12,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpPost("AddTrack/{source}")]
-    public async Task AddTrack(LibrarySource source, [FromBody] SyncTrack track)
+    public async Task AddTrack(LibrarySource source, [FromBody] SyncTrackDTO track)
     {
         await _service.AddTrack(source, track);
     }
@@ -24,7 +24,7 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetTrackIdFromSource/{trackId}")]
-    public async Task<SyncSourceTrack> GetTrackIdFromSource(int trackId)
+    public async Task<SyncSourceTrackDTO> GetTrackIdFromSource(int trackId)
     {
         return await _service.GetTrackIdFromSource(trackId);
     }
@@ -42,37 +42,37 @@ public class SyncController : ControllerBase
     }
 
     [HttpGet("GetUpdateRequests/{source}")]
-    public async Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
     {
         return await _service.GetUpdateRequests(source);
     }
 
     [HttpPost("MarkUpdateErrored")]
-    public async Task MarkUpdateErrored([FromBody] ItemUpdateRequest request)
+    public async Task MarkUpdateErrored([FromBody] ItemUpdateRequestDTO request)
     {
         await _service.MarkUpdateErrored(request);
     }
 
     [HttpPost("MarkUpdateDone")]
-    public async Task MarkUpdateDone([FromBody] ItemUpdateRequest request)
+    public async Task MarkUpdateDone([FromBody] ItemUpdateRequestDTO request)
     {
         await _service.MarkUpdateDone(request);
     }
 
     [HttpGet("GetRemovalRequests/{source}")]
-    public async Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source)
+    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         return await _service.GetRemovalRequests(source);
     }
 
     [HttpPost("MarkRemovalErrored")]
-    public async Task MarkRemovalErrored([FromBody] SyncTrackRemovalRequest request)
+    public async Task MarkRemovalErrored([FromBody] SyncTrackRemovalRequestDTO request)
     {
         await _service.MarkRemovalErrored(request);
     }
 
     [HttpPost("MarkRemovalDone")]
-    public async Task MarkRemovalDone([FromBody] SyncTrackRemovalRequest request)
+    public async Task MarkRemovalDone([FromBody] SyncTrackRemovalRequestDTO request)
     {
         await _service.MarkRemovalDone(request);
     }

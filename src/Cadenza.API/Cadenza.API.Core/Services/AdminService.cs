@@ -9,7 +9,7 @@ internal class AdminService : IAdminService
         _repository = repository;
     }
 
-    public async Task<List<Grouping>> GetGroupings()
+    public async Task<List<GroupingDTO>> GetGroupings()
     {
         return await _repository.GetGroupings();
     }

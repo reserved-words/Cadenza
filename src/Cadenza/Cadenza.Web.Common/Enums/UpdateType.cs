@@ -2,7 +2,7 @@
 
 public enum UpdateType
 {
-    TrackRemoval, 
+    TrackRemoval,
     Track,
     Album,
     Artist

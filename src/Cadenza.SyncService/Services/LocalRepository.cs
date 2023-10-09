@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Utilities.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace Cadenza.SyncService.Services;
@@ -24,22 +24,22 @@ internal class LocalRepository : ISourceRepository
         return await _http.Get<List<string>>(url);
     }
 
-    public async Task<SyncTrack> GetTrack(string idFromSource)
+    public async Task<SyncTrackDTO> GetTrack(string idFromSource)
     {
         var idBase64 = _base64Encoder.Encode(idFromSource);
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.GetTrack}/{idBase64}";
-        return await _http.Get<SyncTrack>(url);
+        return await _http.Get<SyncTrackDTO>(url);
     }
 
-    public async Task RemoveTrack(SyncTrackRemovalRequest request)
+    public async Task RemoveTrack(SyncTrackRemovalRequestDTO request)
     {
         var url = $"{_apiSettings.BaseUrl}{_apiSettings.Endpoints.RemoveTrack}";
         await _http.Delete(url, request);
     }
 
-    public async Task UpdateTracks(List<string> trackIdsFromSource, List<PropertyUpdate> updates)
+    public async Task UpdateTracks(List<string> trackIdsFromSource, List<PropertyUpdateDTO> updates)
     {
-        var data = new MultiTrackUpdates
+        var data = new MultiTrackUpdatesDTO
         {
             TrackIds = trackIdsFromSource,
             Updates = updates

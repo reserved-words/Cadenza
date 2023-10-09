@@ -1,9 +1,7 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
 public interface IPlayTracker
 {
-    Task RecordPlay(TrackFull track, DateTime timestamp);
-    Task UpdateNowPlaying(TrackFull track, int duration);
+    Task RecordPlay(TrackFullVM track, DateTime timestamp);
+    Task UpdateNowPlaying(TrackFullVM track, int duration);
 }

@@ -1,13 +1,30 @@
-﻿using Fluxor;
+﻿using System.Collections.ObjectModel;
 
 namespace Cadenza.Web.Components.Forms.Track;
 
-public class EditTrackBase : FormBase<TrackDetails>
+public class EditTrackBase : FormBase<TrackDetailsVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    public TrackUpdate Update { get; set; }
-    public TrackDetails EditableItem => Update.UpdatedItem;
+    public EditableTrack EditableItem { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        EditableItem = new EditableTrack
+        {
+            Id = Model.Id,
+            ArtistId = Model.ArtistId,
+            ArtistName = Model.ArtistName,
+            Title = Model.Title,
+            Year = Model.Year,
+            AlbumId = Model.AlbumId,
+            DurationSeconds = Model.DurationSeconds,
+            IdFromSource = Model.IdFromSource,
+            Lyrics = Model.Lyrics,
+            Source = Model.Source,
+            Tags = Model.Tags.ToList()
+        };
+    }
 
     protected override void OnInitialized()
     {
@@ -15,22 +32,17 @@ public class EditTrackBase : FormBase<TrackDetails>
         base.OnInitialized();
     }
 
-    protected override void OnParametersSet()
-    {
-        Update = new TrackUpdate(Model);
-    }
-
     protected void OnSubmit()
     {
-        Update.ConfirmUpdates();
-
-        if (!Update.Updates.Any())
+        var updatedTrack = Model with
         {
-            Cancel();
-            return;
-        }
+            Title = EditableItem.Title,
+            Year = EditableItem.Year,
+            Lyrics = EditableItem.Lyrics,
+            Tags = new ReadOnlyCollection<string>(EditableItem.Tags.ToList())
+        };
 
-        Dispatcher.Dispatch(new TrackUpdateRequest(Model.Id, Update));
+        Dispatcher.Dispatch(new TrackUpdateRequest(Model, updatedTrack));
     }
 
     private void OnTrackUpdated(TrackUpdatedAction action)

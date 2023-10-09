@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.Interfaces.Utilities;
+﻿using Cadenza.Common.Http.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
@@ -8,12 +8,10 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 {
     private readonly AuthSettings _settings;
     private readonly IApiTokenCache _cache;
-    private readonly IJsonConverter _jsonConverter;
     private readonly IHttpRequestSender _httpRequestSender;
 
-    public ApiTokenFetcher(IJsonConverter jsonConverter, IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
+    public ApiTokenFetcher(IOptions<AuthSettings> settings, IHttpRequestSender httpRequestSender, IApiTokenCache cache)
     {
-        _jsonConverter = jsonConverter;
         _settings = settings.Value;
         _httpRequestSender = httpRequestSender;
         _cache = cache;
@@ -40,8 +38,7 @@ internal class ApiTokenFetcher : IApiTokenFetcher
 
         var response = await _httpRequestSender.TrySendRequest(request);
 
-        var content = await response.Content.ReadAsStringAsync();
-        var tokenResponse = _jsonConverter.Deserialize<TokenResponse>(content);
+        var tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
 
         _cache.CacheToken(tokenResponse);
 

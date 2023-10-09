@@ -12,7 +12,7 @@ public class HistoryController : ControllerBase
     }
 
     [HttpGet("GetRecentAlbums/{maxItems}")]
-    public async Task<List<RecentAlbum>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         return await _service.GetRecentAlbums(maxItems);
     }

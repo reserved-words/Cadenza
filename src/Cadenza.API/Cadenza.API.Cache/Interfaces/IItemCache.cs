@@ -1,14 +1,12 @@
-﻿using Cadenza.Common.Domain.Model.Library;
-
-namespace Cadenza.API.Cache.Interfaces;
+﻿namespace Cadenza.API.Cache.Interfaces;
 
 internal interface IItemCache
 {
-    void CacheAlbum(AlbumDetails album);
-    void CacheArtist(ArtistDetails artist);
-    void CacheTrack(TrackDetails track, AlbumDetails album);
+    void CacheAlbum(AlbumDetailsDTO album);
+    void CacheArtist(ArtistDetailsDTO artist);
+    void CacheTrack(TrackDetailsDTO track, AlbumDetailsDTO album);
     void Clear();
-    List<PlayerItem> GetTag(string id);
-    List<PlayerItem> GetTags();
-    List<PlayerItem> GetItems(PlayerItemType type);
+    List<PlayerItemDTO> GetTag(string id);
+    List<PlayerItemDTO> GetTags();
+    List<PlayerItemDTO> GetItems(PlayerItemType type);
 }

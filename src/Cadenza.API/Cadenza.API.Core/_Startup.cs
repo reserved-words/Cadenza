@@ -1,17 +1,16 @@
-﻿global using Cadenza.API.Interfaces.Controllers;
+﻿global using Cadenza.API.Interfaces;
+global using Cadenza.API.Interfaces.Controllers;
 global using Cadenza.API.Interfaces.LastFm;
 global using Cadenza.API.Interfaces.Repositories;
-global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Domain.Model;
-global using Cadenza.Common.Domain.Model.History;
-global using Cadenza.Common.Domain.Model.LastFm;
-global using Cadenza.Common.Domain.Model.Library;
-global using Cadenza.Common.Domain.Model.Sync;
-global using Cadenza.Common.Domain.Model.Updates;
+
+global using Cadenza.Common.DTO;
+global using Cadenza.Common.DTO.Attributes;
+global using Cadenza.Common.Enums;
+global using Cadenza.Common.Model;
 
 global using Microsoft.Extensions.DependencyInjection;
+
 using Cadenza.API.Core.Services;
-using Cadenza.API.Interfaces;
 
 namespace Cadenza.API.Core;
 

@@ -2,6 +2,6 @@
 
 internal interface IQueueReader
 {
-    Task<List<SyncTrackRemovalRequest>> GetRemovalRequests(LibrarySource source);
-    Task<List<ItemUpdateRequest>> GetUpdateRequests(LibrarySource source);
+    Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source);
+    Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source);
 }

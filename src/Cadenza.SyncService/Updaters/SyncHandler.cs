@@ -31,7 +31,7 @@ internal class SyncHandler : IService
         _logger.LogInformation("Finished syncing repositories");
     }
 
-    private async Task AddDbTracksThatAreInSource(ISourceRepository repository,List<string> dbTracks, List<string> sourceTracks)
+    private async Task AddDbTracksThatAreInSource(ISourceRepository repository, List<string> dbTracks, List<string> sourceTracks)
     {
         var addedTracks = sourceTracks.Except(dbTracks).ToList();
         _logger.LogInformation($"{addedTracks.Count} tracks to add");

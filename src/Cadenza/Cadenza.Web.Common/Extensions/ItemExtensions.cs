@@ -1,47 +1,39 @@
-﻿using Cadenza.Common.Domain.Model.Library;
+﻿using System.Collections.ObjectModel;
 
 namespace Cadenza.Web.Common.Extensions;
 
 public static class ItemExtensions
 {
-    public static List<Disc> GroupByDisc(this List<AlbumTrack> tracks)
+    private static IReadOnlyCollection<T> ToReadOnlyList<T>(this IEnumerable<T> items)
+    {
+        return new ReadOnlyCollection<T>(items.ToList());
+    }
+
+    public static List<DiscVM> GroupByDisc(this List<AlbumTrackVM> tracks)
     {
         return tracks
             .GroupBy(t => t.DiscNo)
             .OrderBy(g => g.Key)
-            .Select(r => new Disc
-            {
-                DiscNo = r.Key,
-                Tracks = r.OrderBy(a => a.TrackNo)
-                    .ToList()
-            })
+            .Select(r => new DiscVM(r.Key, r.OrderBy(a => a.TrackNo).ToReadOnlyList()))
             .ToList();
     }
 
-    public static List<ArtistReleaseGroup> GroupByReleaseType(this List<Album> albums)
+    public static List<ArtistReleaseGroupVM> GroupByReleaseType(this List<AlbumVM> albums)
     {
         return albums
             .GroupBy(a => a.ReleaseType.GetGroup())
             .OrderBy(g => g.Key)
-            .Select(r => new ArtistReleaseGroup
-            {
-                Group = r.Key,
-                Albums = r.OrderBy(a => a.ReleaseType)
-                    .ThenBy(a => a.Year)
-                    .ToList()
-            })
+            .Select(r => new ArtistReleaseGroupVM(r.Key, r.OrderBy(a => a.ReleaseType)
+                .ThenBy(a => a.Year)
+                .ToReadOnlyList()))
             .ToList();
     }
 
-    public static List<ArtistReleaseGroup> AddAlbumsFeaturingArtist(this List<ArtistReleaseGroup> groupedAlbums, List<Album> byOtherArtists)
+    public static List<ArtistReleaseGroupVM> AddAlbumsFeaturingArtist(this List<ArtistReleaseGroupVM> groupedAlbums, List<AlbumVM> byOtherArtists)
     {
         if (byOtherArtists.Any())
         {
-            groupedAlbums.Add(new ArtistReleaseGroup
-            {
-                Group = ReleaseTypeGroup.ByOtherArtists,
-                Albums = byOtherArtists
-            });
+            groupedAlbums.Add(new ArtistReleaseGroupVM(ReleaseTypeGroup.ByOtherArtists, byOtherArtists));
         }
 
         return groupedAlbums;
@@ -61,7 +53,7 @@ public static class ItemExtensions
         };
     }
 
-    public static string Location(this ArtistDetails artist)
+    public static string Location(this ArtistDetailsVM artist)
     {
         if (artist == null)
             return "";
@@ -69,13 +61,13 @@ public static class ItemExtensions
         return AsList(artist.City, artist.State, artist.Country);
     }
 
-    public static string DiscPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
+    public static string DiscPosition(this AlbumDetailsVM album, AlbumTrackLinkVM albumTrack)
     {
         var discCount = album.DiscCount == 0 ? 1 : album.DiscCount;
         return $"Disc {albumTrack.DiscNo} of {discCount}";
     }
 
-    public static string TrackPosition(this AlbumDetails album, AlbumTrackLink albumTrack)
+    public static string TrackPosition(this AlbumDetailsVM album, AlbumTrackLinkVM albumTrack)
     {
         var trackCountIndex = albumTrack.DiscNo <= 0 ? 0 : albumTrack.DiscNo - 1;
 

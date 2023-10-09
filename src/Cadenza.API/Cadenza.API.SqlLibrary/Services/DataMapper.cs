@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-using Cadenza.API.SqlLibrary.Model;
-using Cadenza.Common.Domain.Model.Library;
+﻿using Cadenza.API.SqlLibrary.Model;
 
 namespace Cadenza.API.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
@@ -14,7 +12,7 @@ internal class DataMapper : IDataMapper
         _nameComparer = nameComparer;
     }
 
-    public NewAlbumData MapAlbum(SyncTrack track, LibrarySource source, int artistId)
+    public NewAlbumData MapAlbum(SyncTrackDTO track, LibrarySource source, int artistId)
     {
         return new NewAlbumData
         {
@@ -30,7 +28,7 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public NewArtistData MapAlbumArtist(SyncTrack track)
+    public NewArtistData MapAlbumArtist(SyncTrackDTO track)
     {
         return new NewArtistData
         {
@@ -41,7 +39,7 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public NewDiscData MapDisc(SyncTrack track, int albumId)
+    public NewDiscData MapDisc(SyncTrackDTO track, int albumId)
     {
         var index = track.DiscNo;
         if (index <= 0)
@@ -59,7 +57,7 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public NewTrackData MapTrack(SyncTrack track, int artistId, int discId)
+    public NewTrackData MapTrack(SyncTrackDTO track, int artistId, int discId)
     {
         return new NewTrackData
         {
@@ -75,7 +73,7 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public NewArtistData MapTrackArtist(SyncTrack track)
+    public NewArtistData MapTrackArtist(SyncTrackDTO track)
     {
         return new NewArtistData
         {
@@ -92,9 +90,9 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public AlbumDetails MapAlbum(GetAlbumData album, List<GetDiscData> discs)
+    public AlbumDetailsDTO MapAlbum(GetAlbumData album, List<GetDiscData> discs)
     {
-        return new AlbumDetails
+        return new AlbumDetailsDTO
         {
             Id = album.Id,
             ArtistId = album.ArtistId,
@@ -104,13 +102,13 @@ internal class DataMapper : IDataMapper
             Year = album.Year,
             DiscCount = album.DiscCount,
             TrackCounts = discs.Select(d => d.TrackCount).ToList(),
-            Tags = new TagList(album.TagList)
+            Tags = new TagsDTO(album.TagList)
         };
     }
 
-    public AlbumTrackLink MapAlbumTrack(GetTrackData track)
+    public AlbumTrackLinkDTO MapAlbumTrack(GetTrackData track)
     {
-        return new AlbumTrackLink
+        return new AlbumTrackLinkDTO
         {
             TrackId = track.Id,
             AlbumId = track.AlbumId,
@@ -119,24 +117,24 @@ internal class DataMapper : IDataMapper
         };
     }
 
-    public ArtistDetails MapArtist(GetArtistData artist)
+    public ArtistDetailsDTO MapArtist(GetArtistData artist)
     {
-        return new ArtistDetails
+        return new ArtistDetailsDTO
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = new Grouping(artist.GroupingId, artist.GroupingName),
+            Grouping = new GroupingDTO(artist.GroupingId, artist.GroupingName),
             Genre = artist.Genre,
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
-            Tags = new TagList(artist.TagList)
+            Tags = new TagsDTO(artist.TagList)
         };
     }
 
-    public TrackDetails MapTrack(GetTrackData track)
+    public TrackDetailsDTO MapTrack(GetTrackData track)
     {
-        return new TrackDetails
+        return new TrackDetailsDTO
         {
             Source = track.SourceId,
             Id = track.Id,
@@ -148,7 +146,7 @@ internal class DataMapper : IDataMapper
             DurationSeconds = track.DurationSeconds,
             Year = track.Year,
             Lyrics = track.Lyrics,
-            Tags = new TagList(track.TagList)
+            Tags = new TagsDTO(track.TagList)
         };
     }
 

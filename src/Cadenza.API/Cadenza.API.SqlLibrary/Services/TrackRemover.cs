@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary.Services;
+﻿namespace Cadenza.API.SqlLibrary.Services;
 
 internal class TrackRemover : ITrackRemover
 {

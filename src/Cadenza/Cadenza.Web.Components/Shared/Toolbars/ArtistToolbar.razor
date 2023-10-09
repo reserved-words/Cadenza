@@ -11,7 +11,7 @@
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public ArtistDetails Artist { get; set; }
+    [Parameter] public ArtistDetailsVM Artist { get; set; }
 
     protected Task OnPlay()
     {
@@ -21,6 +21,6 @@
 
     protected async Task OnEdit()
     {
-        await DialogService.DisplayForm<EditArtist, ArtistDetails>(Artist, "Edit Artist");
+        await DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist");
     }
 }

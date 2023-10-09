@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Interfaces.Repositories;
-using Cadenza.API.SqlLibrary.Interfaces;
-
-namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.API.SqlLibrary;
 
 internal class MusicRepository : IMusicRepository
 {
@@ -18,12 +15,12 @@ internal class MusicRepository : IMusicRepository
         _libraryUpdater = libraryUpdater;
     }
 
-    public async Task AddTrack(LibrarySource source, SyncTrack track)
+    public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
     {
         await _trackAdder.AddTrack(source, track);
     }
 
-    public async Task<FullLibrary> Get()
+    public async Task<FullLibraryDTO> Get()
     {
         return await _libraryReader.Get();
     }
@@ -58,17 +55,17 @@ internal class MusicRepository : IMusicRepository
         await _trackRemover.RemoveTracks(idsFromSource);
     }
 
-    public async Task UpdateAlbum(ItemUpdateRequest request)
+    public async Task UpdateAlbum(ItemUpdateRequestDTO request)
     {
         await _libraryUpdater.UpdateAlbum(request);
     }
 
-    public async Task UpdateArtist(ItemUpdateRequest request)
+    public async Task UpdateArtist(ItemUpdateRequestDTO request)
     {
         await _libraryUpdater.UpdateArtist(request);
     }
 
-    public async Task UpdateTrack(ItemUpdateRequest request)
+    public async Task UpdateTrack(ItemUpdateRequestDTO request)
     {
         await _libraryUpdater.UpdateTrack(request);
     }

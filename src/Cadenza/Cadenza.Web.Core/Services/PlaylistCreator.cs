@@ -82,7 +82,7 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateGroupingPlaylist(Grouping grouping)
+    public async Task<PlaylistDefinition> CreateGroupingPlaylist(GroupingVM grouping)
     {
         var tracks = await _repository.PlayGrouping(grouping.Id);
 

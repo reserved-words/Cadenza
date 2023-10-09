@@ -1,8 +1,7 @@
-﻿@using Cadenza.State.Actions;
-
-@if (Model.Tags.Any())
+﻿
+@if (Model.Any())
 {
-    foreach (var tag in Model.Tags)
+    foreach (var tag in Model)
     {
         <MudChip Class="my-0" Color="Color.Primary" Size="@Size.Small" OnClick="@(() => OnViewTag(tag))">@tag</MudChip>
     }
@@ -16,7 +15,7 @@ else
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public TagList Model { get; set; }
+    [Parameter] public IReadOnlyCollection<string> Model { get; set; }
 
     private void OnViewTag(string id)
     {

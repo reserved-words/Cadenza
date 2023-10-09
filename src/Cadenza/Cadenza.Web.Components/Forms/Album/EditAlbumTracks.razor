@@ -1,8 +1,5 @@
 ﻿@inherits FluxorComponent
 
-@using Cadenza.State.Actions;
-@using Cadenza.State.Store;
-@using Cadenza.Web.Common.Interfaces.Store
 @using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <EditCard>
@@ -39,7 +36,7 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    [Parameter] public List<AlbumTrack> Model { get; set; }
+    [Parameter] public List<AlbumTrackVM> Model { get; set; }
 
     protected override void OnInitialized()
     {
@@ -47,7 +44,7 @@
         base.OnInitialized();
     }
 
-    private async Task OnRemoveTrack(AlbumTrack track)
+    private async Task OnRemoveTrack(AlbumTrackVM track)
     {
         var currentTrackId = CurrentTrackState.Value.Track?.Id;
         if (currentTrackId == track.TrackId)

@@ -2,7 +2,7 @@
 
 public interface IHistoryService
 {
-    Task<List<RecentAlbum>> GetRecentAlbums(int maxItems);
+    Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems);
     Task<List<string>> GetRecentTags(int maxItems);
     Task LogLibraryPlay();
     Task LogArtistPlay(int artistId);

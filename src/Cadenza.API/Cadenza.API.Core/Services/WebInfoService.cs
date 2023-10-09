@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.Domain.Model.Results;
-
-namespace Cadenza.API.Core.Services;
+﻿namespace Cadenza.API.Core.Services;
 
 internal class WebInfoService : IWebInfoService
 {
@@ -11,15 +9,15 @@ internal class WebInfoService : IWebInfoService
         _service = service;
     }
 
-    public async Task<AlbumArtworkResult> AlbumArtworkUrl(string artist, string title)
+    public async Task<AlbumArtworkDTO> AlbumArtworkUrl(string artist, string title)
     {
         var url = await _service.AlbumArtworkUrl(artist, title);
-        return new AlbumArtworkResult { Url = url };
+        return new AlbumArtworkDTO { Url = url };
     }
 
-    public Task<ArtistImageResult> ArtistImageUrl(string name)
+    public Task<ArtistImageDTO> ArtistImageUrl(string name)
     {
-        var result = new ArtistImageResult { Url = null };
+        var result = new ArtistImageDTO { Url = null };
         return Task.FromResult(result);
     }
 }

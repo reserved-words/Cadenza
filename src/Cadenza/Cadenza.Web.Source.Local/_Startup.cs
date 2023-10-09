@@ -1,12 +1,13 @@
-﻿global using Cadenza.Common.Domain.Enums;
-global using Cadenza.Common.Interfaces.Utilities;
+﻿global using Cadenza.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
+global using Cadenza.Web.Source.Local.Interfaces;
 global using Cadenza.Web.Source.Local.Services;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
-using Cadenza.Web.Source.Local.Interfaces;
+
+using Cadenza.Common.Utilities.Interfaces;
 
 namespace Cadenza.Web.Source.Local;
 
@@ -21,6 +22,7 @@ public static class Startup
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
                 sp.GetRequiredService<IUrl>(),
                 sp.GetRequiredService<IBase64Encoder>()))
-            .AddTransient<ILocalHttpHelper, LocalHttpHelper>();
+            .AddTransient<ILocalHttpHelper, LocalHttpHelper>()
+            .AddTransient<ILocalSourceConnector, Connector>();
     }
 }

@@ -21,25 +21,19 @@
 
   <ItemGroup>
     <PackageReference Include="Fluxor.Blazor.Web" Version="5.9.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.21" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.21" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.22" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Domain\Cadenza.Common.Domain.csproj" />
-    <ProjectReference Include="..\Cadenza.State.Actions\Cadenza.State.Actions.csproj" />
-    <ProjectReference Include="..\Cadenza.State\Cadenza.State.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Database\Cadenza.Web.Database.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Info\Cadenza.Web.Info.csproj" />
     <ProjectReference Include="..\Cadenza.Web.LastFM\Cadenza.Web.LastFM.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Player\Cadenza.Web.Player.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Source.Local\Cadenza.Web.Source.Local.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.LastFM.Services;
+﻿using Cadenza.Common.Http.Interfaces;
+
+namespace Cadenza.API.LastFM.Services;
 
 internal class ApiClient : IApiClient
 {

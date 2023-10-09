@@ -21,7 +21,7 @@ public static class Extensions
         return text?.Replace("\n", "<br />", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public static string DiscTrackNo(this AlbumTrack track)
+    public static string DiscTrackNo(this AlbumTrackVM track)
     {
         return $"{track.DiscNo}:{track.TrackNo}";
     }
@@ -35,12 +35,12 @@ public static class Extensions
             : duration.ToString(@"mm\:ss");
     }
 
-    public static string Duration(this AlbumTrack track)
+    public static string Duration(this AlbumTrackVM track)
     {
         return track.DurationSeconds.Duration();
     }
 
-    public static string Duration(this TrackDetails track)
+    public static string Duration(this TrackDetailsVM track)
     {
         return track.DurationSeconds.Duration();
     }
