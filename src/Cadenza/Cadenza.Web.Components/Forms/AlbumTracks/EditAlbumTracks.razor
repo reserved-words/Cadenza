@@ -1,0 +1,43 @@
+﻿@inherits EditAlbumTracksBase
+
+@using Cadenza.Web.Components.Forms.Album
+
+<AppDialog Submit="OnSubmit"
+           SubmitCaption="OK"
+           FullHeight="false">
+    <ChildContent>
+
+        <SubGrid>
+            <SubGridColumn sm="12">
+                <SubGridRow>
+                    <AppTable Items="@Tracks">
+                        <RowTemplate>
+                            <MudTd Class="td-int">@context.DiscNo</MudTd>
+                            <MudTd Class="td-int">@context.TrackNo</MudTd>
+
+                            <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                                <MudTd>
+                                    <MudText Typo="@Typo.body1">@context.Title</MudText>
+                                    <MudText Typo="@Typo.body2">@context.ArtistName</MudText>
+                                </MudTd>
+                            </MudHidden>
+
+                            <MudHidden Breakpoint="@Breakpoint.Xs" Invert="false">
+                                <MudTd>@context.Title</MudTd>
+                                <MudTd>@context.ArtistName</MudTd>
+                            </MudHidden>
+
+                            <MudTd Class="td-int">
+                                <MudIconButton Size="@Size.Small"
+                                               Icon="@Icons.Material.Filled.Delete"
+                                               Variant="@Variant.Outlined"
+                                               OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </AppTable>
+                </SubGridRow>
+            </SubGridColumn>
+        </SubGrid>
+
+    </ChildContent>
+</AppDialog>

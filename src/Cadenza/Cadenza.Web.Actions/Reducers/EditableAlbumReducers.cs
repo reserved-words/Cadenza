@@ -31,4 +31,21 @@ public static class EditableAlbumReducers
             Tracks = new List<AlbumTrackVM>()
         };
     }
+
+    [ReducerMethod]
+    public static EditableAlbumState ReduceTrackRemovedAction(EditableAlbumState state, TrackRemovedAction action)
+    {
+        var track = state.Tracks.SingleOrDefault(t => t.TrackId == action.TrackId);
+
+        if (track == null)
+            return state;
+
+        var updatedTracks = state.Tracks.ToList();
+        updatedTracks.Remove(track);
+
+        return state with
+        {
+            Tracks = new ReadOnlyCollection<AlbumTrackVM>(updatedTracks)
+        };
+    }
 }
