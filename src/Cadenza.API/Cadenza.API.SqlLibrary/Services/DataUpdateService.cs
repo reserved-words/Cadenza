@@ -8,7 +8,7 @@ internal class DataUpdateService : IDataUpdateService
     private const string UpdateAlbumProcedure = "[Library].[UpdateAlbum]";
     private const string UpdateArtistProcedure = "[Library].[UpdateArtist]";
     private const string UpdateTrackProcedure = "[Library].[UpdateTrack]";
-
+    
     private const string MarkAlbumUpdateDoneProcedure = "[Queue].[MarkAlbumUpdateDone]";
     private const string MarkArtistUpdateDoneProcedure = "[Queue].[MarkArtistUpdateDone]";
     private const string MarkTrackUpdateDoneProcedure = "[Queue].[MarkTrackUpdateDone]";

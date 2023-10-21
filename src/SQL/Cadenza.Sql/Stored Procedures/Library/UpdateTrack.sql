@@ -3,6 +3,7 @@
 	@IdFromSource NVARCHAR(500),
 	@ArtistId INT,
 	@DiscId INT,
+	@DiscIndex INT,
 	@TrackNo INT,
 	@Title NVARCHAR(500),
 	@DurationSeconds INT,
@@ -12,13 +13,13 @@
 AS
 BEGIN
 
+	EXECUTE [Library].[UpdateTrackDisc] @Id, @DiscIndex
 
 	UPDATE 
 		[Library].[Tracks]
 	SET
 		[IdFromSource] = @IdFromSource,
 		[ArtistId] = @ArtistId,
-		[DiscId] = @DiscId,
 		[TrackNo] = @TrackNo,
 		[Title] = @Title,
 		[DurationSeconds] = @DurationSeconds,

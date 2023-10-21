@@ -14,7 +14,7 @@ public enum ItemProperty
     ArtistImage,
     ArtistState,
     ArtistTags,
-    //TrackDiscNo,
+    TrackDiscNo,
     TrackLyrics,
     TrackNo,
     TrackTags,

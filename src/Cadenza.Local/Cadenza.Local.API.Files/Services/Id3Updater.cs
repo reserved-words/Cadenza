@@ -32,20 +32,20 @@ internal class Id3Updater : IId3Updater
     {
         switch (ItemProperty)
         {
+            case ItemProperty.AlbumArtwork:
+                trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
+                break;
+            case ItemProperty.AlbumReleaseType:
+                trackData.Album.ReleaseType = value;
+                break;
             case ItemProperty.AlbumTags:
                 commentData.AlbumTags = value;
                 break;
             case ItemProperty.AlbumTitle:
                 trackData.Album.Title = value;
                 break;
-            case ItemProperty.ArtistTags:
-                commentData.ArtistTags = value;
-                break;
-            case ItemProperty.ArtistImage:
-                trackData.Artist.Image = _imageConverter.GetImageFromBase64Url(value);
-                break;
-            case ItemProperty.AlbumArtwork:
-                trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
+            case ItemProperty.AlbumReleaseYear:
+                trackData.Album.Year = value;
                 break;
             case ItemProperty.ArtistCity:
                 commentData.City = value;
@@ -59,17 +59,20 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.ArtistGrouping:
                 trackData.Artist.Grouping = value;
                 break;
-            case ItemProperty.TrackLyrics:
-                trackData.Track.Lyrics = value;
-                break;
-            case ItemProperty.AlbumReleaseType:
-                trackData.Album.ReleaseType = value;
-                break;
-            case ItemProperty.AlbumReleaseYear:
-                trackData.Album.Year = value;
+            case ItemProperty.ArtistImage:
+                trackData.Artist.Image = _imageConverter.GetImageFromBase64Url(value);
                 break;
             case ItemProperty.ArtistState:
                 commentData.State = value;
+                break;
+            case ItemProperty.ArtistTags:
+                commentData.ArtistTags = value;
+                break;
+            case ItemProperty.TrackDiscNo:
+                trackData.Disc.DiscNo = int.Parse(value);
+                break;
+            case ItemProperty.TrackLyrics:
+                trackData.Track.Lyrics = value;
                 break;
             case ItemProperty.TrackNo:
                 trackData.Track.TrackNo = int.Parse(value);
