@@ -9,4 +9,5 @@ public record AlbumTrackVM
     public int DurationSeconds { get; init; }
     public int DiscNo { get; init; }
     public int TrackNo { get; init; }
+    public string IdFromSource { get; init; }
 }

@@ -9,4 +9,5 @@ public class AlbumTrackDTO
     public int DurationSeconds { get; set; }
     public int DiscNo { get; set; }
     public int TrackNo { get; set; }
+    public string IdFromSource { get; set; }
 }

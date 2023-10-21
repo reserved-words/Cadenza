@@ -32,7 +32,8 @@ internal class ViewModelMapper : IViewModelMapper
             DiscNo = dto.DiscNo,
             DurationSeconds = dto.DurationSeconds,
             TrackId = dto.TrackId,
-            TrackNo = dto.TrackNo
+            TrackNo = dto.TrackNo,
+            IdFromSource = dto.IdFromSource
         };
     }
 

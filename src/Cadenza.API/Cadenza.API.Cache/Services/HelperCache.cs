@@ -86,7 +86,8 @@ internal class HelperCache : IHelperCache
                 ArtistName = track.Track.ArtistName,
                 DurationSeconds = track.Track.DurationSeconds,
                 DiscNo = track.AlbumTrack.DiscNo,
-                TrackNo = track.AlbumTrack.TrackNo
+                TrackNo = track.AlbumTrack.TrackNo,
+                IdFromSource = track.Track.IdFromSource
             });
         }
 
