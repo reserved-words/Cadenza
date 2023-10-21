@@ -71,6 +71,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.ArtistState:
                 commentData.State = value;
                 break;
+            case ItemProperty.TrackNo:
+                trackData.Track.TrackNo = int.Parse(value);
+                break;
             case ItemProperty.TrackTags:
                 commentData.TrackTags = value;
                 break;

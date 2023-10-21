@@ -98,6 +98,9 @@ internal class LibraryUpdater : ILibraryUpdater
                 case ItemProperty.TrackLyrics:
                     track.Lyrics = update.UpdatedValue;
                     break;
+                case ItemProperty.TrackNo:
+                    track.TrackNo = int.Parse(update.UpdatedValue);
+                    break;
                 case ItemProperty.TrackTags:
                     track.TagList = update.UpdatedValue;
                     break;

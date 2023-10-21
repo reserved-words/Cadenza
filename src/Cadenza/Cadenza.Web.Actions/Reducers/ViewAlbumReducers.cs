@@ -24,7 +24,12 @@ public static class ViewAlbumReducers
 
         var discs = new Dictionary<int, List<AlbumTrackVM>>();
 
-        foreach (var track in action.UpdatedTracks)
+        var updatedTracks = action.UpdatedTracks
+            .OrderBy(t => t.DiscNo)
+            .ThenBy(t => t.TrackNo)
+            .ToList();
+
+        foreach (var track in updatedTracks)
         {
             if (!discs.ContainsKey(track.DiscNo))
             {
