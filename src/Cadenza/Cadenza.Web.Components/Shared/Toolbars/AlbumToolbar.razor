@@ -1,4 +1,5 @@
-﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
+﻿@using Cadenza.Web.Components.Interfaces;
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
@@ -24,11 +25,11 @@
 
     protected async Task OnEdit()
     {
-        await DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album");
+        await DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album", DialogWidth.Medium);
     }
 
     protected async Task OnEditTracks()
     {
-        await DialogService.DisplayForm<EditAlbumTracks, AlbumDetailsVM>(Album, "Edit Tracks");
+        await DialogService.DisplayForm<EditAlbumTracks, AlbumDetailsVM>(Album, "Edit Tracks", DialogWidth.Large);
     }
 }

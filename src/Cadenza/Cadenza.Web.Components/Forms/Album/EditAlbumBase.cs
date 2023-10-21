@@ -22,8 +22,6 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
             ArtworkBase64 = Model.ArtworkBase64,
             Tags = Model.Tags.ToList()
         };
-
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
     }
 
     public List<AlbumTrackVM> AlbumTracks => State.Value.Tracks.ToList();
