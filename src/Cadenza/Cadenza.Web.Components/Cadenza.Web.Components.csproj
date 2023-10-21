@@ -27,9 +27,6 @@
     <Content Update="Forms\AlbumTracks\EditAlbumTracks.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Forms\AlbumTracks\RemoveTrack.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
   </ItemGroup>
 
 </Project>

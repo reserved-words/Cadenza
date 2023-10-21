@@ -11,10 +11,10 @@ public class UpdateController : ControllerBase
         _service = service;
     }
 
-    [HttpDelete("RemoveTrack")]
-    public async Task RemoveTrack([FromBody] TrackRemovalRequestDTO request)
+    [HttpDelete("UpdateAlbumTracks")]
+    public async Task UpdateAlbumTracks([FromBody] UpdateAlbumTracksDTO request)
     {
-        await _service.RemoveTrack(request);
+        await _service.UpdateAlbumTracks(request);
     }
 
     [HttpPost("UpdateTrack")]

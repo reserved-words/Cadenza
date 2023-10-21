@@ -29,7 +29,12 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private AlbumDetailsDTO Map(AlbumDetailsVM vm)
+    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
+    {
+        return tracks.Select(t => Map(t)).ToList();
+    }
+
+    private static AlbumDetailsDTO Map(AlbumDetailsVM vm)
     {
         return new AlbumDetailsDTO
         {
@@ -46,7 +51,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private ArtistDetailsDTO Map(ArtistDetailsVM vm)
+    private static ArtistDetailsDTO Map(ArtistDetailsVM vm)
     {
         return new ArtistDetailsDTO
         {
@@ -62,7 +67,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private TrackDetailsDTO Map(TrackDetailsVM vm)
+    private static TrackDetailsDTO Map(TrackDetailsVM vm)
     {
         return new TrackDetailsDTO
         {
@@ -77,13 +82,28 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public GroupingDTO Map(GroupingVM dto)
+    public static GroupingDTO Map(GroupingVM dto)
     {
         return new GroupingDTO(dto.Id, dto.Name);
     }
 
-    private TagsDTO Map(IReadOnlyCollection<string> vm)
+    private static TagsDTO Map(IReadOnlyCollection<string> vm)
     {
         return new TagsDTO { Tags = vm.ToList() };
+    }
+
+    private static AlbumTrackDTO Map(AlbumTrackVM vm)
+    {
+        return new AlbumTrackDTO
+        {
+            ArtistId = vm.ArtistId,
+            ArtistName = vm.ArtistName,
+            Title = vm.Title,
+            DiscNo = vm.DiscNo,
+            DurationSeconds = vm.DurationSeconds,
+            TrackId = vm.TrackId,
+            TrackNo = vm.TrackNo,
+            IdFromSource = vm.IdFromSource
+        };
     }
 }

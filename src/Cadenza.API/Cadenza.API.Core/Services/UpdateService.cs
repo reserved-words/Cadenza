@@ -13,10 +13,34 @@ internal class UpdateService : IUpdateService
         _cachePopulater = cachePopulater;
     }
 
-    public async Task RemoveTrack(TrackRemovalRequestDTO request)
+    public async Task UpdateAlbumTracks(UpdateAlbumTracksDTO request)
     {
-        await _updateRepository.AddRemovalRequest(request);
-        await _musicRepository.RemoveTrack(request.TrackId);
+        foreach (var originalTrack in request.OriginalTracks)
+        {
+            var updatedTrack = request.UpdatedTracks.SingleOrDefault(t => t.TrackId == originalTrack.TrackId);
+
+            if (updatedTrack == null)
+            {
+                await _updateRepository.AddRemovalRequest(originalTrack.TrackId);
+                await _musicRepository.RemoveTrack(originalTrack.TrackId);
+            }
+            else
+            {
+                var trackUpdateRequest = new ItemUpdateRequestDTO
+                {
+                    Id = originalTrack.TrackId,
+                    Type = LibraryItemType.Track,
+                    Updates = GetUpdates(originalTrack, updatedTrack)
+                };
+
+                if (!trackUpdateRequest.Updates.Any())
+                    continue;
+
+                await _updateRepository.AddUpdateRequest(trackUpdateRequest);
+                await _musicRepository.UpdateTrack(trackUpdateRequest);
+            }
+        }
+
         await _cachePopulater.Populate(false);
     }
 

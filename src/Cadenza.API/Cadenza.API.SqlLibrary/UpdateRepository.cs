@@ -11,9 +11,9 @@ internal class UpdateRepository : IUpdateRepository
         _updater = updater;
     }
 
-    public async Task AddRemovalRequest(TrackRemovalRequestDTO request)
+    public async Task AddRemovalRequest(int trackId)
     {
-        await _updater.QueueRemoval(request);
+        await _updater.QueueRemoval(trackId);
     }
 
     public async Task AddUpdateRequest(ItemUpdateRequestDTO request)
