@@ -13,7 +13,7 @@ internal class UpdateRepository : IUpdateRepository
         _mapper = mapper;
     }
 
-    public async Task UpdateAlbumTracks(int albumId, IReadOnlyCollection<AlbumTrackVM> originalTracks, IReadOnlyCollection<AlbumTrackVM> updatedTracks)
+    public async Task UpdateAlbumTracks(int albumId, IReadOnlyCollection<AlbumDiscVM> originalTracks, IReadOnlyCollection<AlbumDiscVM> updatedTracks)
     {
         var dto = new UpdateAlbumTracksDTO
         {

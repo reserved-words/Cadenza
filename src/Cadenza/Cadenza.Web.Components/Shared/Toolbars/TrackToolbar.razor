@@ -16,14 +16,13 @@
 
     [Parameter] public TrackDetailsVM Track { get; set; }
 
-    protected Task OnPlay()
+    protected void OnPlay()
     {
         Dispatcher.Dispatch(new PlayTrackRequest(Track.Id));
-        return Task.CompletedTask;
     }
 
-    protected async Task OnEdit()
+    protected void OnEdit()
     {
-        await DialogService.DisplayForm<EditTrack, TrackDetailsVM>(Track, "Edit Track", DialogWidth.Medium);
+        DialogService.DisplayForm<EditTrack, TrackDetailsVM>(Track, "Edit Track", DialogWidth.Medium);
     }
 }

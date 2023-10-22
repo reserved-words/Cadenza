@@ -9,34 +9,68 @@
            FullHeight="false">
     <ChildContent>
 
-        <AppTable Items="@EditableItems">
-            <RowTemplate>
-                <MudTd>
-                    <MudNumericField MaxLength="1"
-                                     @bind-Value="context.DiscNo"
-                                     For="@(() => context.DiscNo)" />
+        @if (EditableItems != null)
+        {
+            <MudTabs>
+                @foreach (var disc in EditableItems)
+                {
+                    <MudTabPanel Text="@("Disc " + disc.DiscNo)">
 
-                </MudTd>
-                <MudTd>
-                    <MudNumericField MaxLength="3"
-                                     @bind-Value="context.TrackNo"
-                                     For="@(() => context.TrackNo)" />
-                </MudTd>
-                <MudTd>
-                    <MudTextField MaxLength="500"
-                                  @bind-Value="context.Title"
-                                  For="@(() => context.Title)" />
-                </MudTd>
-                <MudTd>@context.ArtistName</MudTd>
-                <MudTd>@context.IdFromSource</MudTd>
-                <MudTd Class="td-int">
-                    <MudIconButton Size="@Size.Small"
-                                   Icon="@Icons.Material.Filled.Delete"
-                                   Variant="@Variant.Outlined"
-                                   OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
-                </MudTd>
-            </RowTemplate>
-        </AppTable>
+                        <MudGrid>
+                            <MudItem xs="6" sm="3">
+                                <MudNumericField Label="Disc No"
+                                                 MaxLength="1"
+                                                 @bind-Value="disc.DiscNo"
+                                                 For="@(() => disc.DiscNo)" />
+                            </MudItem>
+                            <MudItem xs="6" sm="3">
+                                <MudNumericField Label="Track Count"
+                                                 MaxLength="3"
+                                                 @bind-Value="disc.TrackCount"
+                                                 For="@(() => disc.TrackCount)" />
+                            </MudItem>
+                        </MudGrid>
+
+                        <AppTable Items="@disc.Tracks">
+                            <RowTemplate>
+                                <MudTd>
+                                    <MudNumericField MaxLength="3"
+                                    @bind-Value="context.TrackNo"
+                                                     For="@(() => context.TrackNo)" />
+                                </MudTd>
+                                <MudTd>
+                                    <MudTextField MaxLength="500"
+                                    @bind-Value="context.Title"
+                                                  For="@(() => context.Title)" />
+                                </MudTd>
+                                <MudTd>@context.ArtistName</MudTd>
+                                <MudTd>@context.IdFromSource</MudTd>
+                                <MudTd Class="td-int">
+                                    <MudIconButton Size="@Size.Small"
+                                                   Icon="@Icons.Material.Filled.Delete"
+                                                   Variant="@Variant.Outlined"
+                                                   OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+                                </MudTd>
+                                <MudTd Class="td-int">
+                                    <MudMenu Icon="@Icons.Material.Filled.Album">
+                                        @foreach (var d in EditableItems)
+                                        {
+                                            if (d.DiscNo != disc.DiscNo)
+                                            {
+                                                <MudMenuItem OnClick="@(() => MoveToDisc(context, d.DiscNo))">Disc @d.DiscNo</MudMenuItem>
+                                            }
+                                        }
+
+                                        <MudMenuItem OnClick="@(() => MoveToDisc(context, null))">New Disc</MudMenuItem>
+                                    </MudMenu>
+                                </MudTd>
+                            </RowTemplate>
+                        </AppTable>
+
+                    </MudTabPanel>
+                }
+            </MudTabs>
+        }
 
     </ChildContent>
 </AppDialog>

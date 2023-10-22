@@ -8,7 +8,7 @@ internal class HelperCache : IHelperCache
     private readonly Dictionary<string, List<ArtistDetailsDTO>> _artistsByGenre = new();
     private readonly Dictionary<int, List<ArtistDetailsDTO>> _artistsByGrouping = new();
 
-    private readonly Dictionary<int, List<(TrackDetailsDTO Track, AlbumTrackLinkDTO AlbumTrack)>> _tracksByAlbum = new();
+    private readonly Dictionary<int, AlbumTracksDTO> _tracksByAlbum = new();
     private readonly Dictionary<int, List<TrackDetailsDTO>> _tracksByArtist = new();
 
     public void CacheAlbum(AlbumDetailsDTO album)
@@ -21,9 +21,9 @@ internal class HelperCache : IHelperCache
         _albumsFeaturingArtist.Cache(artistId, album);
     }
 
-    public void CacheAlbumTrack(AlbumTrackLinkDTO albumTrack, TrackDetailsDTO track)
+    public void CacheAlbumTracks(AlbumTracksDTO albumTracks)
     {
-        _tracksByAlbum.Cache(albumTrack.AlbumId, (track, albumTrack));
+        _tracksByAlbum.Cache(albumTracks.AlbumId, albumTracks);
     }
 
     public void CacheArtist(ArtistDetailsDTO artist)
@@ -72,25 +72,10 @@ internal class HelperCache : IHelperCache
         return _tracksByArtist.GetList<int, TrackDetailsDTO, TrackDTO>(id);
     }
 
-    public List<AlbumTrackDTO> GetAlbumTracks(int id)
+    public AlbumTracksDTO GetAlbumTracks(int id)
     {
-        var result = new List<AlbumTrackDTO>();
-
-        foreach (var track in _tracksByAlbum[id])
-        {
-            result.Add(new AlbumTrackDTO
-            {
-                TrackId = track.Track.Id,
-                Title = track.Track.Title,
-                ArtistId = track.Track.ArtistId,
-                ArtistName = track.Track.ArtistName,
-                DurationSeconds = track.Track.DurationSeconds,
-                DiscNo = track.AlbumTrack.DiscNo,
-                TrackNo = track.AlbumTrack.TrackNo,
-                IdFromSource = track.Track.IdFromSource
-            });
-        }
-
-        return result;
+        return _tracksByAlbum.TryGetValue(id, out var albumTracks)
+            ? albumTracks
+            : new AlbumTracksDTO { AlbumId = id, Discs = new List<AlbumDiscDTO>() };
     }
 }

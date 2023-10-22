@@ -3,7 +3,7 @@
 internal interface IViewModelMapper
 {
     AlbumDetailsVM Map(AlbumDetailsDTO dto);
-    AlbumTrackVM Map(AlbumTrackDTO dto);
+    AlbumTracksVM Map(AlbumTracksDTO dto);
     AlbumVM Map(AlbumDTO dto);
     ArtistVM Map(ArtistDTO dto);
     ArtistDetailsVM Map(ArtistDetailsDTO dto);

@@ -6,5 +6,5 @@ public class AlbumTabBase : FluxorComponent
 
     public bool Loading => ViewAlbumState.Value.IsLoading;
     public AlbumDetailsVM Album => ViewAlbumState.Value.Album;
-    public IReadOnlyCollection<DiscVM> Discs => ViewAlbumState.Value.Discs;
+    public IReadOnlyCollection<AlbumDiscVM> Discs => ViewAlbumState.Value.Tracks;
 }

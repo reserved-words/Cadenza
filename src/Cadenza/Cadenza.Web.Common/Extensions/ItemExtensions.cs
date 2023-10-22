@@ -9,14 +9,6 @@ public static class ItemExtensions
         return new ReadOnlyCollection<T>(items.ToList());
     }
 
-    public static List<DiscVM> GroupByDisc(this List<AlbumTrackVM> tracks)
-    {
-        return tracks
-            .GroupBy(t => t.DiscNo)
-            .OrderBy(g => g.Key)
-            .Select(r => new DiscVM(r.Key, r.OrderBy(a => a.TrackNo).ToReadOnlyList()))
-            .ToList();
-    }
 
     public static List<ArtistReleaseGroupVM> GroupByReleaseType(this List<AlbumVM> albums)
     {
@@ -69,11 +61,7 @@ public static class ItemExtensions
 
     public static string TrackPosition(this AlbumDetailsVM album, AlbumTrackLinkVM albumTrack)
     {
-        var trackCountIndex = albumTrack.DiscNo <= 0 ? 0 : albumTrack.DiscNo - 1;
-
-        return album.TrackCounts.Count > trackCountIndex
-                ? $"Track {albumTrack.TrackNo} of {album.TrackCounts[trackCountIndex]}"
-                : $"Track {albumTrack.TrackNo} of ?";
+        return $"Track {albumTrack.TrackNo} of {album.DiscTrackCounts[albumTrack.DiscNo]}";
     }
 
     private static string AsList(params string[] elements)

@@ -13,7 +13,7 @@ internal class MudDialogService : IDialogService
         _mudService = mudService;
     }
 
-    public Task Display<TView, TModel>(TModel model, string title, DialogWidth width)
+    public void Display<TView, TModel>(TModel model, string title, DialogWidth width)
         where TView : DialogViewBase<TModel>
         where TModel : class
     {
@@ -30,11 +30,9 @@ internal class MudDialogService : IDialogService
             MaxWidth = mbWidth.MaxWidth,
             FullWidth = mbWidth.FullWidth
         });
-
-        return Task.CompletedTask;
     }
 
-    public async Task<(bool Saved, TModel Data)> DisplayForm<TForm, TModel>(TModel model, string title, DialogWidth width)
+    public void DisplayForm<TForm, TModel>(TModel model, string title, DialogWidth width)
         where TForm : FormBase<TModel>
         where TModel : class
     {
@@ -51,8 +49,8 @@ internal class MudDialogService : IDialogService
             MaxWidth = mbWidth.MaxWidth,
             FullWidth = mbWidth.FullWidth
         });
-        var result = await formReference.Result;
-        return (!result.Canceled, result.Data as TModel);
+        //var result = await formReference.Result;
+        //return (!result.Canceled, result.Data as TModel);
     }
 
     private (MaxWidth MaxWidth, bool FullWidth) GetMudBlazorWidth(DialogWidth width)

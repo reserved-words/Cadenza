@@ -22,8 +22,8 @@
         return Task.CompletedTask;
     }
 
-    protected async Task OnEdit()
+    protected void OnEdit()
     {
-        await DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist", DialogWidth.Medium);
+        DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist", DialogWidth.Medium);
     }
 }

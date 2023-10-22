@@ -29,9 +29,19 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
+    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
     {
-        return tracks.Select(t => Map(t)).ToList();
+        var tracks = new List<AlbumTrackDTO>();
+
+        foreach (var disc in discs)
+        {
+            foreach (var track in disc.Tracks)
+            {
+                tracks.Add(Map(disc, track));
+            }
+        }
+
+        return tracks;
     }
 
     private static AlbumDetailsDTO Map(AlbumDetailsVM vm)
@@ -46,7 +56,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             ReleaseType = vm.ReleaseType,
             Tags = Map(vm.Tags),
             Title = vm.Title,
-            TrackCounts = vm.TrackCounts,
+            DiscTrackCounts = vm.DiscTrackCounts.ToDictionary(d => d.Key, d => d.Value),
             Year = vm.Year
         };
     }
@@ -92,18 +102,28 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         return new TagsDTO { Tags = vm.ToList() };
     }
 
-    private static AlbumTrackDTO Map(AlbumTrackVM vm)
+    private static AlbumDiscDTO Map(AlbumDiscVM disc)
+    {
+        return new AlbumDiscDTO
+        {
+            DiscNo = disc.DiscNo,
+            TrackCount = disc.TrackCount,
+            Tracks = disc.Tracks.Select(t => Map(disc, t)).ToList()
+        };
+    }
+
+    private static AlbumTrackDTO Map(AlbumDiscVM disc, AlbumTrackVM track)
     {
         return new AlbumTrackDTO
         {
-            ArtistId = vm.ArtistId,
-            ArtistName = vm.ArtistName,
-            Title = vm.Title,
-            DiscNo = vm.DiscNo,
-            DurationSeconds = vm.DurationSeconds,
-            TrackId = vm.TrackId,
-            TrackNo = vm.TrackNo,
-            IdFromSource = vm.IdFromSource
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            TrackId = track.TrackId,
+            TrackNo = track.TrackNo,
+            DiscNo = disc.DiscNo,
+            IdFromSource = track.IdFromSource
         };
     }
 }

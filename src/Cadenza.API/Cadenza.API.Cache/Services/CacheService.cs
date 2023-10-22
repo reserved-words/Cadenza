@@ -64,7 +64,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<AlbumTrackDTO>> GetAlbumTracks(int id)
+    public Task<AlbumTracksDTO> GetAlbumTracks(int id)
     {
         var result = _helperCache.GetAlbumTracks(id);
         return Task.FromResult(result);
@@ -203,7 +203,8 @@ internal class CacheService : ICacheService
 
     private IEnumerable<int> GetAlbumPlayTracks(int id)
     {
-        return _helperCache.GetAlbumTracks(id).Select(t => t.TrackId).ToList();
+        // TODO - better way to do this?
+        return _helperCache.GetAlbumTracks(id).Discs.SelectMany(d => d.Tracks).Select(t => t.TrackId);
     }
 
     private IEnumerable<int> GetArtistPlayTracks(int id)
@@ -220,6 +221,8 @@ internal class CacheService : ICacheService
             .ThenBy(at => at.TrackNo)
             .ToList();
 
+        var discs = new List<AlbumDiscDTO>();
+
         foreach (var t in tracks)
         {
             var track = _mainCache.GetTrack(t.TrackId);
@@ -229,8 +232,41 @@ internal class CacheService : ICacheService
                 _helperCache.CacheAlbumFeaturingArtist(track.ArtistId, album);
             }
 
-            _helperCache.CacheAlbumTrack(t, track);
             _mainCache.CacheAlbumTrack(t);
+
+            var disc = discs.SingleOrDefault(d => d.DiscNo == t.DiscNo);
+
+            if (disc == null)
+            {
+                disc = new AlbumDiscDTO
+                {
+                    DiscNo = t.DiscNo,
+                    TrackCount = album.DiscTrackCounts[t.DiscNo],
+                    Tracks = new List<AlbumTrackDTO>()
+                };
+
+                discs.Add(disc);
+            }
+
+            disc.Tracks.Add(new AlbumTrackDTO
+            {
+                TrackId = track.Id,
+                Title = track.Title,
+                ArtistId = track.ArtistId,
+                ArtistName = track.ArtistName,
+                DurationSeconds = track.DurationSeconds,
+                DiscNo = t.DiscNo,
+                TrackNo = t.TrackNo,
+                IdFromSource = track.IdFromSource
+            });
         }
+
+        var result = new AlbumTracksDTO
+        {
+            AlbumId = album.Id,
+            Discs = discs
+        };
+
+        _helperCache.CacheAlbumTracks(result);
     }
 }

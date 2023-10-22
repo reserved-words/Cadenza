@@ -101,7 +101,7 @@ internal class DataMapper : IDataMapper
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
             Year = album.Year,
             DiscCount = album.DiscCount,
-            TrackCounts = discs.Select(d => d.TrackCount).ToList(),
+            DiscTrackCounts = discs.ToDictionary(d => d.Index, d => d.TrackCount),
             Tags = new TagsDTO(album.TagList)
         };
     }

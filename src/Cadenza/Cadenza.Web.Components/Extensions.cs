@@ -21,11 +21,6 @@ public static class Extensions
         return text?.Replace("\n", "<br />", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public static string DiscTrackNo(this AlbumTrackVM track)
-    {
-        return $"{track.DiscNo}:{track.TrackNo}";
-    }
-
     public static string Duration(this int durationSeconds)
     {
         var duration = TimeSpan.FromSeconds(durationSeconds);

@@ -1,81 +1,109 @@
 ﻿namespace Cadenza.Web.Components.Forms.Album;
 
-using System.Collections.ObjectModel;
 using IDialogService = Interfaces.IDialogService;
 
-public class EditAlbumTracksBase : FormBase<AlbumDetailsVM> // Change this so model is the list of album tracks
+public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    protected List<EditableAlbumTrack> EditableItems { get; set; }
-
-    private IReadOnlyCollection<AlbumTrackVM> _originalTracks { get; set; }
+    protected List<EditableAlbumDisc> EditableItems { get; set; }
 
     protected override void OnInitialized()
     {
-        SubscribeToAction<FetchEditableAlbumTracksResultAction>(OnEditableAlbumTracksFetched);
         SubscribeToAction<AlbumTracksUpdatedAction>(OnAlbumTracksUpdated);
         base.OnInitialized();
     }
 
-    private void OnEditableAlbumTracksFetched(FetchEditableAlbumTracksResultAction action)
-    {
-        _originalTracks = action.Tracks;
-
-        EditableItems = action.Tracks
-            .Select(t => new EditableAlbumTrack
-            {
-                TrackId = t.TrackId,
-                ArtistId = t.ArtistId,
-                ArtistName = t.ArtistName,
-                IdFromSource = t.IdFromSource,
-                DurationSeconds = t.DurationSeconds,
-                DiscNo = t.DiscNo,
-                TrackNo = t.TrackNo,
-                Title = t.Title
-            })
-            .ToList();
-    }
-
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Model.Id));
+        EditableItems = Model.Discs.Select(d => new EditableAlbumDisc
+        {
+            DiscNo = d.DiscNo,
+            TrackCount = d.TrackCount,
+            Tracks = d.Tracks.Select(t => new EditableAlbumTrack
+            {
+                TrackId = t.TrackId,
+                TrackNo = t.TrackNo,
+                Title = t.Title,
+                DurationSeconds = t.DurationSeconds,
+                ArtistId = t.ArtistId,
+                ArtistName = t.ArtistName,
+                IdFromSource = t.IdFromSource
+            }).ToList()
+        }).ToList();
+
+        StateHasChanged();
+    }
+
+    private void OnAlbumTracksUpdated(AlbumTracksUpdatedAction action)
+    {
+        Submit();
     }
 
     protected void OnCancel()
     {
-        Dispatcher.Dispatch(new ResetEditableAlbumTracksRequest());
         Cancel();
     }
 
     protected void OnSubmit()
     {
-        var updatedTracks = EditableItems.Select(t => new AlbumTrackVM
-        {
-             TrackId = t.TrackId,
-             ArtistId = t.ArtistId,
-             ArtistName = t.ArtistName,
-             IdFromSource = t.IdFromSource,
-             DurationSeconds = t.DurationSeconds,
-             DiscNo = t.DiscNo,
-             TrackNo = t.TrackNo,
-             Title = t.Title
-        }).ToList();
+        var updatedDiscs = EditableItems
+            .Where(d => d.Tracks.Any())
+            .Select(d => new AlbumDiscVM
+            {
+                DiscNo = d.DiscNo,
+                TrackCount = d.TrackCount,
+                Tracks = d.Tracks.Select(t => new AlbumTrackVM
+                {
+                    TrackId = t.TrackId,
+                    ArtistId = t.ArtistId,
+                    ArtistName = t.ArtistName,
+                    IdFromSource = t.IdFromSource,
+                    DurationSeconds = t.DurationSeconds,
+                    TrackNo = t.TrackNo,
+                    Title = t.Title
+                }).ToList()
+            }).ToList();
 
-        Dispatcher.Dispatch(new AlbumTracksUpdateRequest(Model.Id, _originalTracks, updatedTracks));
-    }
-
-    private void OnAlbumTracksUpdated(AlbumTracksUpdatedAction action)
-    {
-        Dispatcher.Dispatch(new ResetEditableAlbumTracksRequest());
-        Submit();
+        Dispatcher.Dispatch(new AlbumTracksUpdateRequest(Model.AlbumId, Model.Discs, updatedDiscs));
     }
 
     protected void OnRemoveTrack(EditableAlbumTrack track)
     {
-        EditableItems.Remove(track);
+        var disc = EditableItems.Single(d => d.Tracks.Contains(track));
+        disc.Tracks.Remove(track);
         StateHasChanged();
+    }
+
+    protected void MoveToDisc(EditableAlbumTrack track, int? discNo)
+    {
+        var originalDisc = EditableItems.Single(d => d.Tracks.Contains(track));
+        originalDisc.Tracks.Remove(track);
+
+        if (discNo.HasValue)
+        {
+            var newDisc = EditableItems.Single(d => d.DiscNo == discNo.Value);
+            newDisc.Tracks.Add(track);
+            newDisc.Tracks = newDisc.Tracks.OrderBy(t => t.TrackNo).ToList();
+
+            var maxTrackNo = newDisc.Tracks.Max(t => t.TrackNo);
+            if (maxTrackNo > newDisc.TrackCount)
+            {
+                newDisc.TrackCount = maxTrackNo;
+            }
+        }
+        else
+        {
+            var newDisc = new EditableAlbumDisc
+            {
+                DiscNo = EditableItems.Max(d => d.DiscNo) + 1,
+                TrackCount = track.TrackNo,
+                Tracks = new List<EditableAlbumTrack>()
+            };
+            newDisc.Tracks.Add(track);
+            EditableItems.Add(newDisc);
+        }
     }
 }

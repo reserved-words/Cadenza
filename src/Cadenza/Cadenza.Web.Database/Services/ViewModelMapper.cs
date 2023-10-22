@@ -17,23 +17,17 @@ internal class ViewModelMapper : IViewModelMapper
             ReleaseType = dto.ReleaseType,
             Tags = Map(dto.Tags),
             Title = dto.Title,
-            TrackCounts = dto.TrackCounts,
+            DiscTrackCounts = dto.DiscTrackCounts,
             Year = dto.Year
         };
     }
 
-    public AlbumTrackVM Map(AlbumTrackDTO dto)
+    public AlbumTracksVM Map(AlbumTracksDTO dto)
     {
-        return new AlbumTrackVM
+        return new AlbumTracksVM
         {
-            ArtistId = dto.ArtistId,
-            ArtistName = dto.ArtistName,
-            Title = dto.Title,
-            DiscNo = dto.DiscNo,
-            DurationSeconds = dto.DurationSeconds,
-            TrackId = dto.TrackId,
-            TrackNo = dto.TrackNo,
-            IdFromSource = dto.IdFromSource
+            AlbumId = dto.AlbumId,
+            Discs = dto.Discs.Select(d => Map(d)).ToList()
         };
     }
 
@@ -146,5 +140,29 @@ internal class ViewModelMapper : IViewModelMapper
     public RecentAlbumVM Map(RecentAlbumDTO dto)
     {
         return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName);
+    }
+
+    private AlbumDiscVM Map(AlbumDiscDTO dto)
+    {
+        return new AlbumDiscVM
+        {
+            DiscNo = dto.DiscNo,
+            TrackCount = dto.TrackCount,
+            Tracks = dto.Tracks.Select(t => Map(t)).ToList()
+        };
+    }
+
+    private AlbumTrackVM Map(AlbumTrackDTO dto)
+    {
+        return new AlbumTrackVM
+        {
+            ArtistId = dto.ArtistId,
+            ArtistName = dto.ArtistName,
+            Title = dto.Title,
+            DurationSeconds = dto.DurationSeconds,
+            TrackId = dto.TrackId,
+            TrackNo = dto.TrackNo,
+            IdFromSource = dto.IdFromSource
+        };
     }
 }

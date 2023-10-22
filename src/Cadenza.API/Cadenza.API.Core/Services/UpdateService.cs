@@ -15,9 +15,12 @@ internal class UpdateService : IUpdateService
 
     public async Task UpdateAlbumTracks(UpdateAlbumTracksDTO request)
     {
+        // This currently won't do anything to update the track count of the disc
+
         foreach (var originalTrack in request.OriginalTracks)
         {
-            var updatedTrack = request.UpdatedTracks.SingleOrDefault(t => t.TrackId == originalTrack.TrackId);
+            var updatedTrack = request.UpdatedTracks
+                .SingleOrDefault(t => t.TrackId == originalTrack.TrackId);
 
             if (updatedTrack == null)
             {

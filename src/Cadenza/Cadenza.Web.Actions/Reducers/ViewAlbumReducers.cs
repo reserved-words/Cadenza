@@ -13,7 +13,7 @@ public static class ViewAlbumReducers
     {
         IsLoading = false,
         Album = action.Album,
-        Discs = action.Discs
+        Tracks = action.Tracks
     };
 
     [ReducerMethod]
@@ -22,28 +22,9 @@ public static class ViewAlbumReducers
         if (state.Album.Id != action.AlbumId)
             return state;
 
-        var discs = new Dictionary<int, List<AlbumTrackVM>>();
-
-        var updatedTracks = action.UpdatedTracks
-            .OrderBy(t => t.DiscNo)
-            .ThenBy(t => t.TrackNo)
-            .ToList();
-
-        foreach (var track in updatedTracks)
-        {
-            if (!discs.ContainsKey(track.DiscNo))
-            {
-                discs.Add(track.DiscNo, new List<AlbumTrackVM>());
-            }
-
-            discs[track.DiscNo].Add(track);
-        }
-
-        var updatedDiscs = discs.Select(d => new DiscVM(d.Key, new ReadOnlyCollection<AlbumTrackVM>(d.Value))).ToList();
-
         return state with
         {
-            Discs = new ReadOnlyCollection<DiscVM>(updatedDiscs)
+            Tracks = action.UpdatedTracks
         };
     }
 
