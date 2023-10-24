@@ -30,6 +30,7 @@ internal class UpdateRequestsHandler : IService
         var requests = await _database.GetUpdateRequests(source);
 
         await ProcessTrackUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Track).ToList());
+        // await ProcessDiscUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Disc)).ToList();
         await ProcessAlbumUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Album).ToList());
         await ProcessArtistUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Artist).ToList());
     }

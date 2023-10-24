@@ -4,5 +4,6 @@ public enum LibraryItemType
 {
     Album,
     Artist,
+    Disc,
     Track
 }

@@ -184,3 +184,25 @@ img.edit-image {
     border-style: solid;
     border-width: 1px;
 }
+
+table tr td {
+    .mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text {
+        margin-top: 0;
+    }
+}
+
+table tr td.td-int-input {
+
+    max-width: 3rem;
+
+    .mud-input-control {
+        max-width: 3rem;
+    }
+}
+
+.int-input {
+    input,
+    .mud-input > input.mud-input-root, div.mud-input-slot.mud-input-root {
+        max-width: 3rem;
+    }
+}
