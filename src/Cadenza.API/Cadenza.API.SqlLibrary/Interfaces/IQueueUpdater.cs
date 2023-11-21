@@ -6,7 +6,7 @@ internal interface IQueueUpdater
     Task MarkUpdateDone(ItemUpdateRequestDTO request);
     Task MarkUpdateErrored(ItemUpdateRequestDTO request);
 
-    Task QueueRemoval(TrackRemovalRequestDTO request);
+    Task QueueRemoval(int trackId);
     Task MarkRemovalDone(int requestId);
     Task MarkRemovalErrored(int requestId);
 }

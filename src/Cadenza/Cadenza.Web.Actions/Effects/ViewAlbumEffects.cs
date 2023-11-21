@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Extensions;
-
-namespace Cadenza.Web.Actions.Effects;
+﻿namespace Cadenza.Web.Actions.Effects;
 
 public class ViewAlbumEffects
 {
@@ -16,7 +14,6 @@ public class ViewAlbumEffects
     {
         var album = await _repository.GetAlbum(action.AlbumId);
         var tracks = await _repository.GetAlbumTracks(action.AlbumId);
-        var discs = tracks.GroupByDisc();
-        dispatcher.Dispatch(new FetchViewAlbumResult(album, discs));
+        dispatcher.Dispatch(new FetchViewAlbumResult(album, tracks.Discs));
     }
 }

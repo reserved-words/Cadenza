@@ -12,14 +12,18 @@
 
             <DataAnnotationsValidator />
 
-            <MudTabs Elevation="3">
-                <MudTabPanel Text="Details">
-                    <EditTrackDetails Model="@EditableItem" />
-                </MudTabPanel>
-                <MudTabPanel Text="Lyrics">
-                    <EditTrackLyrics Model="@EditableItem" />
-                </MudTabPanel>
-            </MudTabs>
+            <SubGrid>
+                <SubGridColumn sm="6">
+                    <SubGridRow>
+                        <EditTrackDetails Model="@EditableItem" />
+                    </SubGridRow>
+                </SubGridColumn>
+                <SubGridColumn sm="6">
+                    <SubGridRow>
+                        <EditTrackLyrics Model="@EditableItem" />
+                    </SubGridRow>
+                </SubGridColumn>
+            </SubGrid>
 
         </EditForm>
     </ChildContent>

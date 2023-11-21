@@ -1,5 +1,7 @@
-﻿namespace Cadenza.Web.State.Actions;
+﻿using System.Collections.Generic;
+
+namespace Cadenza.Web.State.Actions;
 
 public record FetchViewAlbumRequest(int AlbumId);
 
-public record FetchViewAlbumResult(AlbumDetailsVM Album, IReadOnlyCollection<DiscVM> Discs);
+public record FetchViewAlbumResult(AlbumDetailsVM Album, IReadOnlyCollection<AlbumDiscVM> Tracks);

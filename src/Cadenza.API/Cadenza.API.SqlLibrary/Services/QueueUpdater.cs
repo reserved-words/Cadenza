@@ -55,9 +55,9 @@ internal class QueueUpdater : IQueueUpdater
         }
     }
 
-    public async Task QueueRemoval(TrackRemovalRequestDTO request)
+    public async Task QueueRemoval(int trackId)
     {
-        await _insertionService.AddTrackRemoval(request.TrackId);
+        await _insertionService.AddTrackRemoval(trackId);
     }
 
     public async Task QueueUpdates(ItemUpdateRequestDTO request)

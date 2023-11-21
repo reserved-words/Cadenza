@@ -3,5 +3,5 @@
 public interface IAlbumRepository
 {
     Task<AlbumDetailsVM> GetAlbum(int id);
-    Task<List<AlbumTrackVM>> GetAlbumTracks(int albumId);
+    Task<AlbumTracksVM> GetAlbumTracks(int albumId);
 }

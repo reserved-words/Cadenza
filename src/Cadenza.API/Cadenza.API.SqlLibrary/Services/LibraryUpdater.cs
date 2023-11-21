@@ -95,8 +95,14 @@ internal class LibraryUpdater : ILibraryUpdater
         {
             switch (update.Property)
             {
+                case ItemProperty.TrackDiscNo:
+                    track.DiscIndex = int.Parse(update.UpdatedValue);
+                    break;
                 case ItemProperty.TrackLyrics:
                     track.Lyrics = update.UpdatedValue;
+                    break;
+                case ItemProperty.TrackNo:
+                    track.TrackNo = int.Parse(update.UpdatedValue);
                     break;
                 case ItemProperty.TrackTags:
                     track.TagList = update.UpdatedValue;

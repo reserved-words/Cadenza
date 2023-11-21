@@ -29,7 +29,22 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private AlbumDetailsDTO Map(AlbumDetailsVM vm)
+    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
+    {
+        var tracks = new List<AlbumTrackDTO>();
+
+        foreach (var disc in discs)
+        {
+            foreach (var track in disc.Tracks)
+            {
+                tracks.Add(Map(disc, track));
+            }
+        }
+
+        return tracks;
+    }
+
+    private static AlbumDetailsDTO Map(AlbumDetailsVM vm)
     {
         return new AlbumDetailsDTO
         {
@@ -41,12 +56,12 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             ReleaseType = vm.ReleaseType,
             Tags = Map(vm.Tags),
             Title = vm.Title,
-            TrackCounts = vm.TrackCounts,
+            DiscTrackCounts = vm.DiscTrackCounts.ToDictionary(d => d.Key, d => d.Value),
             Year = vm.Year
         };
     }
 
-    private ArtistDetailsDTO Map(ArtistDetailsVM vm)
+    private static ArtistDetailsDTO Map(ArtistDetailsVM vm)
     {
         return new ArtistDetailsDTO
         {
@@ -62,7 +77,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private TrackDetailsDTO Map(TrackDetailsVM vm)
+    private static TrackDetailsDTO Map(TrackDetailsVM vm)
     {
         return new TrackDetailsDTO
         {
@@ -77,13 +92,38 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public GroupingDTO Map(GroupingVM dto)
+    public static GroupingDTO Map(GroupingVM dto)
     {
         return new GroupingDTO(dto.Id, dto.Name);
     }
 
-    private TagsDTO Map(IReadOnlyCollection<string> vm)
+    private static TagsDTO Map(IReadOnlyCollection<string> vm)
     {
         return new TagsDTO { Tags = vm.ToList() };
+    }
+
+    private static AlbumDiscDTO Map(AlbumDiscVM disc)
+    {
+        return new AlbumDiscDTO
+        {
+            DiscNo = disc.DiscNo,
+            TrackCount = disc.TrackCount,
+            Tracks = disc.Tracks.Select(t => Map(disc, t)).ToList()
+        };
+    }
+
+    private static AlbumTrackDTO Map(AlbumDiscVM disc, AlbumTrackVM track)
+    {
+        return new AlbumTrackDTO
+        {
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            TrackId = track.TrackId,
+            TrackNo = track.TrackNo,
+            DiscNo = disc.DiscNo,
+            IdFromSource = track.IdFromSource
+        };
     }
 }

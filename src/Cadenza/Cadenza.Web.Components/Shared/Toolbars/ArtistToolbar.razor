@@ -1,9 +1,12 @@
-﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@using Cadenza.Web.Components.Interfaces;
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
         <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
-        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
+        <MudHidden Breakpoint="@Breakpoint.MdAndUp" Invert="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
+        </MudHidden>
     </MudButtonGroup>
 </MudPaper>
 
@@ -19,8 +22,8 @@
         return Task.CompletedTask;
     }
 
-    protected async Task OnEdit()
+    protected void OnEdit()
     {
-        await DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist");
+        DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist", DialogWidth.Medium);
     }
 }

@@ -13,37 +13,18 @@ public static class ViewAlbumReducers
     {
         IsLoading = false,
         Album = action.Album,
-        Discs = action.Discs
+        Tracks = action.Tracks
     };
 
     [ReducerMethod]
-    public static ViewAlbumState ReduceFetchViewAlbumResult(ViewAlbumState state, TrackRemovedAction action)
+    public static ViewAlbumState ReduceAlbumTracksUpdatedAction(ViewAlbumState state, AlbumTracksUpdatedAction action)
     {
-        if (!state.Discs.Any(d => d.Tracks.Any(t => t.TrackId == action.TrackId)))
+        if (state.Album.Id != action.AlbumId)
             return state;
-
-        var discs = state.Discs.ToList();
-        var updatedDiscs = new List<DiscVM>();
-
-        foreach (var disc in discs)
-        {
-            var tracks = disc.Tracks.ToList();
-            var removedTrack = tracks.SingleOrDefault(t => t.TrackId == action.TrackId);
-
-            if (removedTrack != null)
-            {
-                tracks.Remove(removedTrack);
-                updatedDiscs.Add(disc with { Tracks = tracks });
-            }
-            else
-            {
-                updatedDiscs.Add(disc);
-            }
-        }
 
         return state with
         {
-            Discs = new ReadOnlyCollection<DiscVM>(updatedDiscs)
+            Tracks = action.UpdatedTracks
         };
     }
 

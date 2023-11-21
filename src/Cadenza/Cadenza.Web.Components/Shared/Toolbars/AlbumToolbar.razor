@@ -1,9 +1,15 @@
-﻿@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
+﻿@inherits FluxorComponent
+
+@using Cadenza.Web.Components.Interfaces;
+@using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService
 
 <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0" Outlined="false">
     <MudButtonGroup >
         <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
-        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
+        <MudHidden Breakpoint="@Breakpoint.MdAndUp" Invert="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
+            <MudIconButton Icon="@Icons.Material.Filled.EditNote" Size="@Size.Medium" OnClick="OnEditTracks" />
+        </MudHidden>
     </MudButtonGroup>
 </MudPaper>
 
@@ -13,14 +19,30 @@
 
     [Parameter] public AlbumDetailsVM Album { get; set; }
 
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchEditableAlbumTracksResultAction>(OnEditableAlbumTracksFetched);
+        base.OnInitialized();
+    }
+
     protected Task OnPlay()
     {
         Dispatcher.Dispatch(new PlayAlbumRequest(Album.Id, 0));
         return Task.CompletedTask;
     }
 
-    protected async Task OnEdit()
+    protected void OnEdit()
     {
-        await DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album");
+        DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album", DialogWidth.Medium);
+    }
+
+    protected void OnEditTracks()
+    {
+        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Album.Id));
+    }
+
+    private void OnEditableAlbumTracksFetched(FetchEditableAlbumTracksResultAction action)
+    {
+        DialogService.DisplayForm<EditAlbumTracks, AlbumTracksVM>(action.Result, "Edit Tracks", DialogWidth.Large);
     }
 }

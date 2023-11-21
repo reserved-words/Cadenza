@@ -18,9 +18,10 @@ internal class AlbumRepository : IAlbumRepository
         var album = await _apiHelper.Get<AlbumDetailsDTO>(_settings.Album, id);
         return _mapper.Map(album);
     }
-    public async Task<List<AlbumTrackVM>> GetAlbumTracks(int id)
+
+    public async Task<AlbumTracksVM> GetAlbumTracks(int id)
     {
-        var tracks = await _apiHelper.Get<List<AlbumTrackDTO>>(_settings.AlbumTracks, id);
-        return tracks.Select(t => _mapper.Map(t)).ToList();
+        var dto = await _apiHelper.Get<AlbumTracksDTO>(_settings.AlbumTracks, id);
+        return _mapper.Map(dto);
     }
 }

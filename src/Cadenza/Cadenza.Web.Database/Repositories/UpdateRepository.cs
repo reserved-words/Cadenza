@@ -13,13 +13,15 @@ internal class UpdateRepository : IUpdateRepository
         _mapper = mapper;
     }
 
-    public async Task RemoveTrack(int trackId)
+    public async Task UpdateAlbumTracks(int albumId, IReadOnlyCollection<AlbumDiscVM> originalTracks, IReadOnlyCollection<AlbumDiscVM> updatedTracks)
     {
-        var data = new TrackRemovalRequestDTO
+        var dto = new UpdateAlbumTracksDTO
         {
-            TrackId = trackId
+            AlbumId = albumId, 
+            OriginalTracks = _mapper.MapAlbumTracks(originalTracks),
+            UpdatedTracks = _mapper.MapAlbumTracks(updatedTracks)
         };
-        await _http.Delete(_settings.Endpoints.RemoveTrack, data);
+        await _http.Delete(_settings.Endpoints.UpdateAlbumTracks, dto);
     }
 
     public async Task UpdateAlbum(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum)

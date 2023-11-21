@@ -7,7 +7,7 @@ public interface IUpdateRepository
     Task MarkUpdateDone(ItemUpdateRequestDTO request);
     Task MarkUpdateErrored(ItemUpdateRequestDTO request);
 
-    Task AddRemovalRequest(TrackRemovalRequestDTO request);
+    Task AddRemovalRequest(int trackId);
     Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source);
     Task MarkRemovalDone(int requestId);
     Task MarkRemovalErrored(int requestId);

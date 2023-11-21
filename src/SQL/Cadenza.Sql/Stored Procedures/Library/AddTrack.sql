@@ -55,4 +55,6 @@ BEGIN
 
 	END
 
+	EXECUTE [Library].[UpdateTrackCount] @DiscId
+
 END
