@@ -8,7 +8,6 @@ public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 
-    protected int DiscCount { get; set; }
     protected List<EditableAlbumDisc> EditableItems { get; set; }
 
     protected override void OnInitialized()
@@ -34,8 +33,6 @@ public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
                 IdFromSource = t.IdFromSource
             }).ToList()
         }).ToList();
-
-        DiscCount = Model.DiscCount; // Todo: Populate from DB, currently will always be 0
 
         StateHasChanged();
     }
@@ -67,10 +64,12 @@ public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
                     DurationSeconds = t.DurationSeconds,
                     TrackNo = t.TrackNo,
                     Title = t.Title
-                }).ToList()
-            }).ToList();
-
-        // Todo: Save DiscCount
+                })
+                .OrderBy(t => t.TrackNo)
+                .ToList()
+            })
+            .OrderBy(d => d.DiscNo)
+            .ToList();
 
         Dispatcher.Dispatch(new AlbumTracksUpdateRequest(Model.AlbumId, Model.Discs, updatedDiscs));
     }
@@ -84,8 +83,6 @@ public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
         {
             EditableItems.Remove(disc);
         }
-
-        DiscCount = EditableItems.Count;
     }
 
     protected void MoveToDisc(EditableAlbumTrack track, int? discNo)
@@ -117,14 +114,6 @@ public class EditAlbumTracksBase : FormBase<AlbumTracksVM>
             EditableItems.Add(newDisc);
         }
 
-        EditableItems.ForEach(i =>
-        {
-            if (!i.Tracks.Any())
-            {
-                EditableItems.Remove(i);
-            }
-        });
-
-        DiscCount = EditableItems.Count;
+        EditableItems.RemoveAll(i => !i.Tracks.Any());
     }
 }

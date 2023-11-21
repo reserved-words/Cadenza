@@ -15,77 +15,49 @@
                 @foreach (var disc in EditableItems)
                 {
                     <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-
-                        <MudGrid>
-                            <MudItem xs="12" sm="9">
-                                <AppTable Items="@disc.Tracks">
-                                    <RowTemplate>
-                                        <MudTd Class="td-int-input">
-                                            <MudNumericField MaxLength="3"
-                                                             HideSpinButtons="true"
-                                                             @bind-Value="context.TrackNo"
-                                                             For="@(() => context.TrackNo)" />
-                                        </MudTd>
-                                        <MudTd>
-                                            <MudTextField MaxLength="500"
-                                                          @bind-Value="context.Title"
-                                                          For="@(() => context.Title)" />
-                                        </MudTd>
-                                        <MudTd>
-                                            <MudText Typo="@Typo.body1">@context.ArtistName</MudText>
-                                            </MudTd>
-                                            <MudTd Class="td-icon">
-                                                <MudIcon Size="@Size.Small"
-                                                         Icon="@Icons.Material.Filled.Info"
-                                                         Title="@context.IdFromSource" />
-                                            </MudTd>
-                                            <MudTd Class="td-icon">
-                                                <MudIconButton Size="@Size.Small"
-                                                               Icon="@Icons.Material.Filled.Delete"
-                                                               OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
-                                            </MudTd>
-                                            <MudTd Class="td-icon">
-                                                <MudMenu Icon="@Icons.Material.Filled.Album">
-                                                    @foreach (var d in EditableItems)
+                        <AppTable Items="@disc.Tracks">
+                            <RowTemplate>
+                                <MudTd Class="td-int-input">
+                                    <MudNumericField MaxLength="3"
+                                                     HideSpinButtons="true"
+                                                     @bind-Value="context.TrackNo"
+                                                     For="@(() => context.TrackNo)" />
+                                </MudTd>
+                                <MudTd>
+                                    <MudTextField MaxLength="500"
+                                                  @bind-Value="context.Title"
+                                                  For="@(() => context.Title)" />
+                                </MudTd>
+                                <MudTd>
+                                    <MudText Typo="@Typo.body1">@context.ArtistName</MudText>
+                                    </MudTd>
+                                    <MudTd Class="td-icon">
+                                        <MudIcon Size="@Size.Small"
+                                                 Icon="@Icons.Material.Filled.Info"
+                                                 Title="@context.IdFromSource" />
+                                    </MudTd>
+                                    <MudTd Class="td-icon">
+                                        <MudIconButton Size="@Size.Small"
+                                                       Icon="@Icons.Material.Filled.Delete"
+                                                       Title="Remove"
+                                                       OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+                                    </MudTd>
+                                    <MudTd Class="td-icon">
+                                        <MudMenu Icon="@Icons.Material.Filled.Album"
+                                                 Size="@Size.Small"
+                                                 title="Change disc">
+                                            @foreach (var d in EditableItems)
+                                            {
+                                                if (d.DiscNo != disc.DiscNo)
                                                 {
-                                                    if (d.DiscNo != disc.DiscNo)
-                                                    {
-                                                        <MudMenuItem OnClick="@(() => MoveToDisc(context, d.DiscNo))">Disc @d.DiscNo</MudMenuItem>
-                                                    }
+                                                    <MudMenuItem OnClick="@(() => MoveToDisc(context, d.DiscNo))">Disc @d.DiscNo</MudMenuItem>
                                                 }
-                                                <MudMenuItem OnClick="@(() => MoveToDisc(context, null))">New Disc</MudMenuItem>
-                                            </MudMenu>
-                                        </MudTd>
-                                    </RowTemplate>
-                                </AppTable>
-                            </MudItem>
-                            <MudItem xs="12" sm="3">
-                                <MudCard Elevation="3">
-                                    <MudCardContent>
-                                        <MudStack>
-                                            <MudNumericField Label="Disc No"
-                                                             MaxLength="1"
-                                                             Class="int-input"
-                                                             HideSpinButtons="true"
-                                                             @bind-Value="disc.DiscNo"
-                                                             For="@(() => disc.DiscNo)" />
-                                            <MudNumericField Label="Track Count"
-                                                             MaxLength="3"
-                                                             Class="int-input"
-                                                             HideSpinButtons="true"
-                                                             @bind-Value="disc.TrackCount"
-                                                             For="@(() => disc.TrackCount)" />
-                                            <MudNumericField Label="Total Discs"
-                                                             MaxLength="1"
-                                                             HideSpinButtons="true"
-                                                             @bind-Value="DiscCount"
-                                                             For="@(() => DiscCount)" />
-                                        </MudStack>
-                                    </MudCardContent>
-                                </MudCard>
-                            </MudItem>
-                        </MudGrid>
-
+                                            }
+                                        <MudMenuItem OnClick="@(() => MoveToDisc(context, null))">New Disc</MudMenuItem>
+                                    </MudMenu>
+                                </MudTd>
+                            </RowTemplate>
+                        </AppTable>
                     </MudTabPanel>
                 }
             </MudTabs>
