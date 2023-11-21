@@ -5,5 +5,4 @@ public class UpdateAlbumTracksDTO
     public int AlbumId { get; set; }
     public List<AlbumTrackDTO> OriginalTracks { get; set; }
     public List<AlbumTrackDTO> UpdatedTracks { get; set; }
-    // Will need TrackCount stuff here separately
 }

@@ -6,6 +6,8 @@
 AS
 BEGIN
 
+	DECLARE @DiscsOnAlbum INT
+
 	SELECT @Id = [Id] 
 	FROM [Library].[Discs] 
 	WHERE [AlbumId] = @AlbumId
@@ -26,5 +28,7 @@ BEGIN
 	)
 
 	SET @Id = SCOPE_IDENTITY()
+
+	EXECUTE [Library].[UpdateDiscCount] @AlbumId
 
 END

@@ -6,7 +6,6 @@ BEGIN
 
 	DECLARE @DiscId INT,
 			@AlbumId INT,
-			@TrackCount INT,
 			@TracksOnDisc INT
 
 	SELECT 
@@ -27,29 +26,7 @@ BEGIN
 	WHERE
 		[Id] = @TrackId
 
-	SELECT
-		@TrackCount = [TrackCount]
-	FROM
-		[Library].[Discs]
-	WHERE
-		[Id] = @DiscId
-
-	SELECT 
-		@TracksOnDisc = COUNT([Id])
-	FROM
-		[Library].[Tracks]
-	WHERE
-		[DiscId] = @DiscId
-
-	IF @TracksOnDisc > @TrackCount
-	BEGIN
-		UPDATE
-			[Library].[Discs]
-		SET
-			@TrackCount = @TracksOnDisc
-		WHERE
-			[Id] = @DiscId
-	END
+	EXECUTE [Library].[UpdateTrackCount] @DiscId
 
 	EXECUTE [Library].[DeleteEmptyDiscs]
 

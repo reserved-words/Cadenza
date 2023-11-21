@@ -15,7 +15,6 @@ public enum ItemProperty
     ArtistState,
     ArtistTags,
     TrackDiscNo,
-    //DiscTrackCount,
     TrackLyrics,
     TrackNo,
     TrackTags,
