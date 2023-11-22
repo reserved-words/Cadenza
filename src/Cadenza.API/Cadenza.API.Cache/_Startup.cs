@@ -25,7 +25,6 @@ public static class Startup
             .AddSingleton<ICacheService, CacheService>()
             .AddSingleton<IHelperCache, HelperCache>()
             .AddSingleton<IItemCache, ItemCache>()
-            .AddSingleton<IMainCache, MainCache>()
-            .AddSingleton<IPlayCache, PlayCache>();
+            .AddSingleton<IMainCache, MainCache>();
     }
 }

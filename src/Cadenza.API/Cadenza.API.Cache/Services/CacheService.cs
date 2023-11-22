@@ -5,13 +5,11 @@ internal class CacheService : ICacheService
     private readonly IItemCache _itemCache;
     private readonly IHelperCache _helperCache;
     private readonly IMainCache _mainCache;
-    private readonly IPlayCache _playCache;
 
-    public CacheService(IItemCache itemCache, IMainCache mainCache, IPlayCache playCache, IHelperCache helperCache)
+    public CacheService(IItemCache itemCache, IMainCache mainCache, IHelperCache helperCache)
     {
         _itemCache = itemCache;
         _mainCache = mainCache;
-        _playCache = playCache;
         _helperCache = helperCache;
     }
 
@@ -20,7 +18,6 @@ internal class CacheService : ICacheService
         _helperCache.Clear();
         _itemCache.Clear();
         _mainCache.Clear();
-        _playCache.Clear();
 
         foreach (var artist in library.Artists)
         {
@@ -44,7 +41,6 @@ internal class CacheService : ICacheService
             _helperCache.CacheTrack(track);
             _itemCache.CacheTrack(track, album);
             _mainCache.CacheTrack(track);
-            _playCache.CacheTrack(track, artist, album);
         }
 
         var albumTrackAlbums = library.AlbumTracks
@@ -157,59 +153,6 @@ internal class CacheService : ICacheService
     {
         var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayAll()
-    {
-        var result = _playCache.GetAll();
-        return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayAlbum(int id)
-    {
-        var result = GetAlbumPlayTracks(id).ToList();
-        return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayArtist(int id)
-    {
-        var result = GetArtistPlayTracks(id).ToList();
-        return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayGenre(string id)
-    {
-        var result = _helperCache.GetArtistsByGenre(id)
-            .SelectMany(a => GetArtistPlayTracks(a.Id))
-            .ToList();
-
-        return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayGrouping(int id)
-    {
-        var result = _helperCache.GetArtistsByGrouping(id)
-            .SelectMany(a => GetArtistPlayTracks(a.Id))
-            .ToList();
-
-        return Task.FromResult(result);
-    }
-
-    public Task<List<int>> PlayTag(string id)
-    {
-        var result = _playCache.GetTag(id);
-        return Task.FromResult(result);
-    }
-
-    private IEnumerable<int> GetAlbumPlayTracks(int id)
-    {
-        // TODO - better way to do this?
-        return _helperCache.GetAlbumTracks(id).Discs.SelectMany(d => d.Tracks).Select(t => t.TrackId);
-    }
-
-    private IEnumerable<int> GetArtistPlayTracks(int id)
-    {
-        return _helperCache.GetArtistTracks(id).Select(t => t.Id).ToList();
     }
 
     private void CacheAlbumTracks(IGrouping<int, AlbumTrackLinkDTO> albumTracks)
