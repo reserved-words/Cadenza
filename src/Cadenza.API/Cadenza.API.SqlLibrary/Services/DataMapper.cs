@@ -1,7 +1,4 @@
-﻿using Cadenza.Database.SqlLibrary.Interfaces;
-using Cadenza.Database.SqlLibrary.Model;
-
-namespace Cadenza.Database.SqlLibrary.Services;
+﻿namespace Cadenza.Database.SqlLibrary.Services;
 internal class DataMapper : IDataMapper
 {
     private const string DefaultGenre = "None";

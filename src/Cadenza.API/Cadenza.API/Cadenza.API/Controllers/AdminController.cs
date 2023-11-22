@@ -4,16 +4,16 @@
 [ApiController]
 public class AdminController : ControllerBase
 {
-    private readonly IAdminService _service;
+    private readonly IAdminRepository _repository;
 
-    public AdminController(IAdminService service)
+    public AdminController(IAdminRepository repository)
     {
-        _service = service;
+        _repository = repository;
     }
 
     [HttpGet("GroupingOptions")]
     public async Task<List<GroupingDTO>> GroupingOptions()
     {
-        return await _service.GetGroupings();
+        return await _repository.GetGroupings();
     }
 }

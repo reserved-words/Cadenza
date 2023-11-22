@@ -1,12 +1,14 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.API.Interfaces.LastFm;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class WebController : ControllerBase
 {
-    private readonly IWebInfoService _service;
+    private readonly IInfoService _service;
 
-    public WebController(IWebInfoService service)
+    public WebController(IInfoService service)
     {
         _service = service;
     }
@@ -14,12 +16,14 @@ public class WebController : ControllerBase
     [HttpGet("AlbumArtworkUrl")]
     public async Task<AlbumArtworkDTO> AlbumArtworkUrl(string artist, string title)
     {
-        return await _service.AlbumArtworkUrl(artist, title);
+        var url = await _service.AlbumArtworkUrl(artist, title);
+        return new AlbumArtworkDTO { Url = url };
     }
 
     [HttpGet("ArtistImageUrl")]
-    public async Task<ArtistImageDTO> ArtistImageUrl(string name)
+    public Task<ArtistImageDTO> ArtistImageUrl(string name)
     {
-        return await _service.ArtistImageUrl(name);
+        var result = new ArtistImageDTO { Url = null };
+        return Task.FromResult(result);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Interfaces.Controllers;
+﻿namespace Cadenza.API.Interfaces.Services;
 
 public interface IUpdateService
 {

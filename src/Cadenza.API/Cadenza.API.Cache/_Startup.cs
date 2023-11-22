@@ -6,6 +6,7 @@ global using Cadenza.API.Interfaces.Library;
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Microsoft.Extensions.DependencyInjection;
+using Cadenza.API.Interfaces.Services;
 
 namespace Cadenza.API.Cache;
 

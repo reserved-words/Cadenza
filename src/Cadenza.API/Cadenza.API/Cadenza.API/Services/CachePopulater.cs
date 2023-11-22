@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Core;
+﻿using Cadenza.API.Interfaces.Services;
+
+namespace Cadenza.API.Services;
 
 internal class CachePopulater : ICachePopulater
 {
