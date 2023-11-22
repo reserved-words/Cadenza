@@ -1,6 +1,4 @@
-﻿using Cadenza.Database.SqlLibrary.Interfaces;
-
-namespace Cadenza.Database.SqlLibrary;
+﻿namespace Cadenza.Database.SqlLibrary;
 
 internal class HistoryRepository : IHistoryRepository
 {
