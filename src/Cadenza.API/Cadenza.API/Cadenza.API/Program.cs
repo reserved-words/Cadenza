@@ -9,8 +9,8 @@ global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Cadenza.Common.Utilities;
 global using Microsoft.AspNetCore.Mvc;
-using Cadenza.API.SqlLibrary;
 using Cadenza.Common;
+using Cadenza.Database.SqlLibrary;
 
 const string AuthConfigSectionName = "MainApiAuthentication";
 

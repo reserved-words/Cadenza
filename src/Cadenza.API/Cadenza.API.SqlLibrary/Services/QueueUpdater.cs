@@ -1,6 +1,4 @@
-﻿using Cadenza.API.SqlLibrary.Model;
-
-namespace Cadenza.API.SqlLibrary.Services;
+﻿namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class QueueUpdater : IQueueUpdater
 {

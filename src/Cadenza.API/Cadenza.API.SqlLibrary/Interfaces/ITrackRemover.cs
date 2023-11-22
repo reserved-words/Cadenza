@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.SqlLibrary.Interfaces;
+﻿namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface ITrackRemover
 {

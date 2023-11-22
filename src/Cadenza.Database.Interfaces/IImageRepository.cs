@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Interfaces.Repositories;
+﻿using Cadenza.Common.Model;
+
+namespace Cadenza.Database.Interfaces;
 
 public interface IImageRepository
 {

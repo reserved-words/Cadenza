@@ -1,6 +1,6 @@
-﻿using Cadenza.API.SqlLibrary.Model;
+﻿using Cadenza.Database.SqlLibrary.Model;
 
-namespace Cadenza.API.SqlLibrary.Interfaces;
+namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface IDataInsertService
 {

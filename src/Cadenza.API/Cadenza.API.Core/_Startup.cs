@@ -1,7 +1,7 @@
 ﻿global using Cadenza.API.Interfaces;
 global using Cadenza.API.Interfaces.Controllers;
 global using Cadenza.API.Interfaces.LastFm;
-global using Cadenza.API.Interfaces.Repositories;
+global using Cadenza.Database.Interfaces;
 
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.DTO.Attributes;
