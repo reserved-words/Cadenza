@@ -172,6 +172,7 @@
     <Build Include="Stored Procedures\Library\UpdateTrackDisc.sql" />
     <Build Include="Stored Procedures\Library\UpdateTrackCount.sql" />
     <Build Include="Stored Procedures\Library\UpdateDiscCount.sql" />
+    <Build Include="Tables\Admin\Settings.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

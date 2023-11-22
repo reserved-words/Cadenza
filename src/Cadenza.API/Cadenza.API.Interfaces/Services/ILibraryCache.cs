@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Interfaces;
+﻿namespace Cadenza.API.Interfaces.Services;
 
 public interface ILibraryCache
 {
