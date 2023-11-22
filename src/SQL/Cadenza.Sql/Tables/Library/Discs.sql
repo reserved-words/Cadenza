@@ -10,3 +10,7 @@
 GO
 
 CREATE INDEX [UNQ_Discs] ON [Library].[Discs] ([AlbumId], [Index])
+
+GO
+
+CREATE INDEX [IX_Discs_AlbumId] ON [Library].[Discs] ([AlbumId])

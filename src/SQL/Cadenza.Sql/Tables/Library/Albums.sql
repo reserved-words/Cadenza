@@ -19,3 +19,7 @@ GO
 
 
 CREATE INDEX [IX_Albums_Source] ON [Library].[Albums] ([SourceId])
+
+GO
+
+CREATE INDEX [IX_Albums_ArtistId] ON [Library].[Albums] ([ArtistId])

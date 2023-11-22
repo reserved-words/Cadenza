@@ -1,6 +1,4 @@
-﻿using Cadenza.Database.SqlLibrary.Model;
-
-namespace Cadenza.Database.SqlLibrary.Interfaces;
+﻿namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface IDataReadService
 {
@@ -8,7 +6,14 @@ internal interface IDataReadService
     Task<List<GetAlbumData>> GetAlbums(LibrarySource? source);
     Task<List<GetDiscData>> GetDiscs(LibrarySource? source);
     Task<List<GetTrackData>> GetTracks(LibrarySource? source);
-    Task<List<string>> GetAllTrackIds(LibrarySource source);
+    Task<List<string>> GetAllTrackSourceIds(LibrarySource source);
+
+    Task<List<int>> GetAllTrackIds();
+    Task<List<int>> GetAbumTrackIds(int albumId);
+    Task<List<int>> GetArtistTrackIds(int artistId);
+    Task<List<int>> GetGenreTrackIds(string genre);
+    Task<List<int>> GetGroupingTrackIds(int groupingId);
+    Task<List<int>> GetTagTrackIds(string tag);
 
     Task<AlbumData> GetAlbum(int albumId);
     Task<ArtistData> GetArtist(int artistId);

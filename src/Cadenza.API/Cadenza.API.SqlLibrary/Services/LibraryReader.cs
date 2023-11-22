@@ -32,6 +32,11 @@ internal class LibraryReader : ILibraryReader
         return library;
     }
 
+    public async Task<List<int>> GetAbumTrackIds(int albumId)
+    {
+        return await _readService.GetAbumTrackIds(albumId);
+    }
+
     public async Task<ArtworkImage> GetAlbumArtwork(int id)
     {
         var data = await _readService.GetAlbumArtwork(id);
@@ -46,9 +51,14 @@ internal class LibraryReader : ILibraryReader
         return _readService.GetAlbumTrackSourceIds(albumId);
     }
 
+    public async Task<List<int>> GetAllTrackIds()
+    {
+        return await _readService.GetAllTrackIds();
+    }
+
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        return await _readService.GetAllTrackIds(source);
+        return await _readService.GetAllTrackSourceIds(source);
     }
 
     public async Task<ArtworkImage> GetArtistImage(int id)
@@ -60,9 +70,29 @@ internal class LibraryReader : ILibraryReader
         return new ArtworkImage(data.Content, data.MimeType);
     }
 
+    public async Task<List<int>> GetArtistTrackIds(int artistId)
+    {
+        return await _readService.GetArtistTrackIds(artistId);
+    }
+
     public Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
         return _readService.GetArtistTrackSourceIds(artistId);
+    }
+
+    public async Task<List<int>> GetGenreTrackIds(string genre)
+    {
+        return await _readService.GetGenreTrackIds(genre);
+    }
+
+    public async Task<List<int>> GetGroupingTrackIds(int groupingId)
+    {
+        return await _readService.GetGroupingTrackIds(groupingId);
+    }
+
+    public async Task<List<int>> GetTagTrackIds(string tag)
+    {
+        return await _readService.GetTagTrackIds(tag);
     }
 
     public Task<string> GetTrackIdFromSource(int trackId)

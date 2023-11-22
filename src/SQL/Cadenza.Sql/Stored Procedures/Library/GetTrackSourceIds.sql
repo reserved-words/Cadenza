@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[GetTrackIds]
+﻿CREATE PROCEDURE [Library].[GetTrackSourceIds]
 	@SourceId INT
 AS
 BEGIN

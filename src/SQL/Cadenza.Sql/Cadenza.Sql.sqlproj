@@ -72,6 +72,7 @@
     <Folder Include="Stored Procedures\History" />
     <Folder Include="Views\History" />
     <Folder Include="Stored Procedures\Admin" />
+    <Folder Include="Stored Procedures\Play" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -91,7 +92,7 @@
     <Build Include="Stored Procedures\Library\GetArtists.sql" />
     <Build Include="Stored Procedures\Library\GetDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetTracks.sql" />
-    <Build Include="Stored Procedures\Library\GetTrackIds.sql" />
+    <Build Include="Stored Procedures\Library\GetTrackSourceIds.sql" />
     <Build Include="Views\Library\vw_ArtistTags.sql" />
     <Build Include="Views\Library\vw_AlbumTags.sql" />
     <Build Include="Views\Library\vw_TrackTags.sql" />
@@ -173,6 +174,13 @@
     <Build Include="Stored Procedures\Library\UpdateTrackCount.sql" />
     <Build Include="Stored Procedures\Library\UpdateDiscCount.sql" />
     <Build Include="Tables\Admin\Settings.sql" />
+    <Build Include="Stored Procedures\Play\GetAllTrackIds.sql" />
+    <Build Include="Schemas\Play.sql" />
+    <Build Include="Stored Procedures\Play\GetGenreTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetGroupingTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetAlbumTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetArtistTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetTagTrackIds.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
@@ -197,6 +205,10 @@
     <SqlCmdVariable Include="APIUser">
       <DefaultValue>TBC</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ServiceUser">
+      <DefaultValue>TBC</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
 </Project>
