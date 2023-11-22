@@ -15,14 +15,14 @@ internal class HistoryRepository : IPlaylistHistory
 
     public async Task<List<RecentAlbumVM>> GetRecentAlbums(int maxItems)
     {
-        var url = $"{_settings.GetRecentAlbums}/{maxItems}";
+        var url = $"{_settings.RecentAlbumRequests}/{maxItems}";
         var items = await _apiHelper.Get<List<RecentAlbumDTO>>(url);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<string>> GetRecentTags(int maxItems)
     {
-        var url = $"{_settings.GetRecentTags}/{maxItems}";
+        var url = $"{_settings.RecentTagRequests}/{maxItems}";
         return await _apiHelper.Get<List<string>>(url);
     }
 
@@ -31,25 +31,25 @@ internal class HistoryRepository : IPlaylistHistory
         switch (playlistId.Type)
         {
             case PlaylistType.All:
-                await _apiHelper.Post(_settings.LogLibraryPlay);
+                await _apiHelper.Post(_settings.LogLibraryRequest);
                 break;
             case PlaylistType.Artist:
-                await _apiHelper.Post($"{_settings.LogArtistPlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogArtistRequest}/{playlistId.Id}");
                 break;
             case PlaylistType.Album:
-                await _apiHelper.Post($"{_settings.LogAlbumPlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogAlbumRequest}/{playlistId.Id}");
                 break;
             case PlaylistType.Track:
-                await _apiHelper.Post($"{_settings.LogTrackPlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogTrackRequest}/{playlistId.Id}");
                 break;
             case PlaylistType.Genre:
-                await _apiHelper.Post($"{_settings.LogGenrePlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogGenreRequest}/{playlistId.Id}");
                 break;
             case PlaylistType.Grouping:
-                await _apiHelper.Post($"{_settings.LogGroupingPlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogGroupingRequest}/{playlistId.Id}");
                 break;
             case PlaylistType.Tag:
-                await _apiHelper.Post($"{_settings.LogTagPlay}/{playlistId.Id}");
+                await _apiHelper.Post($"{_settings.LogTagRequest}/{playlistId.Id}");
                 break;
             default:
                 throw new NotImplementedException($"No method implemented to log played item of type {playlistId.Type}");

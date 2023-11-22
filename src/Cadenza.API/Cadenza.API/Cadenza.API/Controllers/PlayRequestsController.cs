@@ -2,23 +2,23 @@
 
 [Route("api/[controller]")]
 [ApiController]
-public class HistoryController : ControllerBase
+public class PlayRequestsController : ControllerBase
 {
     private readonly IHistoryRepository _repository;
 
-    public HistoryController(IHistoryRepository repository)
+    public PlayRequestsController(IHistoryRepository repository)
     {
         _repository = repository;
     }
 
-    [HttpGet("GetRecentAlbums/{maxItems}")]
-    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
+    [HttpGet("RecentAlbums/{maxItems}")]
+    public async Task<List<RecentAlbumDTO>> RecentAlbums(int maxItems)
     {
         return await _repository.GetRecentAlbums(maxItems);
     }
 
-    [HttpGet("GetRecentTags/{maxItems}")]
-    public async Task<List<string>> GetRecentTags(int maxItems)
+    [HttpGet("RecentTags/{maxItems}")]
+    public async Task<List<string>> RecentTags(int maxItems)
     {
         return await _repository.GetRecentTags(maxItems);
     }
