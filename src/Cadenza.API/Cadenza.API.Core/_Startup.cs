@@ -1,7 +1,7 @@
 ﻿global using Cadenza.API.Interfaces;
 global using Cadenza.API.Interfaces.Controllers;
 global using Cadenza.API.Interfaces.LastFm;
-global using Cadenza.API.Interfaces.Repositories;
+global using Cadenza.Database.Interfaces;
 
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.DTO.Attributes;
@@ -34,7 +34,6 @@ public static class Startup
             .AddTransient<IPlayTrackService, PlayTrackService>()
             .AddTransient<ISearchService, SearchService>()
             .AddTransient<IStartupService, StartupService>()
-            .AddTransient<ISyncService, SyncService>()
             .AddTransient<IUpdateService, UpdateService>()
             .AddTransient<IWebInfoService, WebInfoService>();
     }

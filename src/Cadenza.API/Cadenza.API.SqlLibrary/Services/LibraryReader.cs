@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.SqlLibrary.Services;
+﻿using Cadenza.Database.SqlLibrary.Interfaces;
+
+namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class LibraryReader : ILibraryReader
 {

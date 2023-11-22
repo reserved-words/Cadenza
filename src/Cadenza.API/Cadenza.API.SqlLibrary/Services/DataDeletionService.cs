@@ -1,6 +1,7 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary.Interfaces;
+using Dapper;
 
-namespace Cadenza.API.SqlLibrary.Services;
+namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class DataDeletionService : IDataDeletionService
 {

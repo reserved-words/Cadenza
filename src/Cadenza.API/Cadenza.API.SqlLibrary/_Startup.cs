@@ -1,13 +1,15 @@
-﻿global using Cadenza.API.Interfaces.Repositories;
-global using Cadenza.API.SqlLibrary.Interfaces;
+﻿global using Cadenza.Database.Interfaces;
+global using Cadenza.Database.SqlLibrary.Interfaces;
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Cadenza.Common.Model;
 global using Cadenza.Common.Utilities.Interfaces;
-using Cadenza.API.SqlLibrary.Services;
+global using Cadenza.Database.SqlLibrary.Model;
+
+using Cadenza.Database.SqlLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cadenza.API.SqlLibrary;
+namespace Cadenza.Database.SqlLibrary;
 
 public static class _Startup
 {

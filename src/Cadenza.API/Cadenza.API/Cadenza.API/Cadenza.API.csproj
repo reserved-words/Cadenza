@@ -29,7 +29,7 @@
     <ProjectReference Include="..\..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.LastFM\Cadenza.API.LastFM.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.SqlLibrary\Cadenza.API.SqlLibrary.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.SqlLibrary\Cadenza.Database.SqlLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

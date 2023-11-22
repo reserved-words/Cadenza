@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.SqlLibrary.Model;
+﻿namespace Cadenza.Database.SqlLibrary.Model;
 
 internal class DiscData : DiscDataBase
 {

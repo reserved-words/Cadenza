@@ -1,4 +1,6 @@
-﻿var builder = Service.CreateBuilder(args, services =>
+﻿using Cadenza.Database.SqlLibrary;
+
+var builder = Service.CreateBuilder(args, services =>
 {
     var configuration = services.RegisterConfiguration();
 
@@ -11,17 +13,17 @@
 
     services
         .AddUtilities()
+        .AddSqlLibrary()
         .AddSingleton<IApiTokenCache, ApiTokenCache>()
         .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
-        .AddTransient<IDatabaseRepository, DatabaseRepository>()
         .AddTransient<ISourceRepository, LocalRepository>()
         .AddTransient<IService, UpdateRequestsHandler>()
         .AddTransient<IService, SyncHandler>();
 
     services
+        .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings")
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
-        .ConfigureSettings<DatabaseApiSettings>(configuration, "DatabaseApi")
         .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
         .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
 

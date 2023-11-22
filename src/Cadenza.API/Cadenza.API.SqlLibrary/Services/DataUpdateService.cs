@@ -1,14 +1,15 @@
-﻿using Cadenza.API.SqlLibrary.Model;
+﻿using Cadenza.Database.SqlLibrary.Interfaces;
+using Cadenza.Database.SqlLibrary.Model;
 using Dapper;
 
-namespace Cadenza.API.SqlLibrary.Services;
+namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class DataUpdateService : IDataUpdateService
 {
     private const string UpdateAlbumProcedure = "[Library].[UpdateAlbum]";
     private const string UpdateArtistProcedure = "[Library].[UpdateArtist]";
     private const string UpdateTrackProcedure = "[Library].[UpdateTrack]";
-    
+
     private const string MarkAlbumUpdateDoneProcedure = "[Queue].[MarkAlbumUpdateDone]";
     private const string MarkArtistUpdateDoneProcedure = "[Queue].[MarkArtistUpdateDone]";
     private const string MarkTrackUpdateDoneProcedure = "[Queue].[MarkTrackUpdateDone]";

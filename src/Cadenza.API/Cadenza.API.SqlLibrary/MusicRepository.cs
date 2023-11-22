@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.SqlLibrary;
+﻿namespace Cadenza.Database.SqlLibrary;
 
 internal class MusicRepository : IMusicRepository
 {

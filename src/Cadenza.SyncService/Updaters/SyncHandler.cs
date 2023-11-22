@@ -1,16 +1,20 @@
-﻿namespace Cadenza.SyncService.Updaters;
+﻿using Cadenza.Database.Interfaces;
+
+namespace Cadenza.SyncService.Updaters;
 
 internal class SyncHandler : IService
 {
-    private readonly IDatabaseRepository _database;
+    private readonly IMusicRepository _musicRepository;
+    private readonly IUpdateRepository _updateRepository;
     private readonly ILogger<UpdateRequestsHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
 
-    public SyncHandler(IDatabaseRepository database, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
+    public SyncHandler(IMusicRepository musicRepository, IUpdateRepository updateRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
     {
-        _database = database;
         _sources = spurces;
         _logger = logger;
+        _musicRepository = musicRepository;
+        _updateRepository = updateRepository;
     }
 
     public async Task Run()
@@ -21,7 +25,7 @@ internal class SyncHandler : IService
         {
             await ProcessRemovalRequests(repository);
 
-            var dbTracks = await _database.GetAllTracks(repository.Source);
+            var dbTracks = await _musicRepository.GetAllTracks(repository.Source);
             var sourceTracks = await repository.GetAllTracks();
 
             await RemoveDbTracksThatAreNotInSource(repository, dbTracks, sourceTracks);
@@ -40,7 +44,7 @@ internal class SyncHandler : IService
         {
             _logger.LogInformation($"Adding track {trackId}");
             var track = await repository.GetTrack(trackId);
-            await _database.AddTrack(repository.Source, track);
+            await _musicRepository.AddTrack(repository.Source, track);
         }
     }
 
@@ -51,14 +55,14 @@ internal class SyncHandler : IService
 
         if (removedTracks.Any())
         {
-            await _database.RemoveTracks(repository.Source, removedTracks);
+            await _musicRepository.RemoveTracks(removedTracks);
             _logger.LogInformation($"{removedTracks.Count} tracks removed");
         }
     }
 
     private async Task ProcessRemovalRequests(ISourceRepository repository)
     {
-        var requests = await _database.GetRemovalRequests(repository.Source);
+        var requests = await _updateRepository.GetRemovalRequests(repository.Source);
 
         foreach (var request in requests)
         {
@@ -67,12 +71,12 @@ internal class SyncHandler : IService
             try
             {
                 await repository.RemoveTrack(request);
-                await _database.MarkRemovalDone(request);
+                await _updateRepository.MarkRemovalDone(request.RequestId);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Failed to process removal request for {request.TrackIdFromSource} ({request.RequestId})");
-                await _database.MarkRemovalErrored(request);
+                await _updateRepository.MarkRemovalErrored(request.RequestId);
             }
         }
     }

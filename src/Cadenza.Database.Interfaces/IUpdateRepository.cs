@@ -1,4 +1,4 @@
-﻿namespace Cadenza.API.Interfaces.Repositories;
+﻿namespace Cadenza.Database.Interfaces;
 
 public interface IUpdateRepository
 {

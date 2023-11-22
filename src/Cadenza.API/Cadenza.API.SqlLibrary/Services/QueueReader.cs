@@ -1,6 +1,7 @@
-﻿using Cadenza.API.SqlLibrary.Model;
+﻿using Cadenza.Database.SqlLibrary.Interfaces;
+using Cadenza.Database.SqlLibrary.Model;
 
-namespace Cadenza.API.SqlLibrary.Services;
+namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class QueueReader : IQueueReader
 {

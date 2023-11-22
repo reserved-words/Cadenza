@@ -1,9 +1,11 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary;
+using Cadenza.Database.SqlLibrary.Interfaces;
+using Dapper;
 using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Cadenza.API.SqlLibrary.Services;
+namespace Cadenza.Database.SqlLibrary.Services;
 
 internal class DataAccess : IDataAccess
 {
