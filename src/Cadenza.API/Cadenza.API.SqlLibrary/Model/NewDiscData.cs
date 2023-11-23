@@ -1,5 +1,8 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Model;
-internal class NewDiscData : DiscDataBase
-{
 
+internal class NewDiscData
+{
+    public int AlbumId { get; set; }
+    public int Index { get; set; }
+    public int TrackCount { get; set; }
 }
