@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[GetAlbumArtwork]
+﻿CREATE PROCEDURE [Images].[GetAlbumArtwork]
 	@Id INT
 AS
 BEGIN

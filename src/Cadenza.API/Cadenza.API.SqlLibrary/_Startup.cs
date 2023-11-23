@@ -35,6 +35,7 @@ public static class _Startup
             .AddTransient<IMapper, Mapper>()
             .AddTransient<IAdmin, Admin>()
             .AddTransient<IHistory, History>()
+            .AddTransient<IImages, Images>()
             .AddTransient<ILibrary, Library>()
             .AddTransient<IPlay, Play>()
             .AddTransient<IQueue, Queue>()

@@ -1,6 +1,4 @@
-﻿using Dapper;
-
-namespace Cadenza.Database.SqlLibrary.Database;
+﻿namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Library : ILibrary
 {
@@ -14,11 +12,6 @@ internal class Library : ILibrary
     public async Task<AlbumData> GetAlbum(int id)
     {
         return await _sql.QuerySingle<AlbumData>(new { Id = id });
-    }
-
-    public async Task<AlbumArtwork> GetAlbumArtwork(int id)
-    {
-        return await _sql.QuerySingle<AlbumArtwork>(new { Id = id });
     }
 
     public async Task<List<GetAlbumData>> GetAlbums(LibrarySource? source)
@@ -39,11 +32,6 @@ internal class Library : ILibrary
     public async Task<ArtistData> GetArtist(int id)
     {
         return await _sql.QuerySingle<ArtistData>(new { Id = id });
-    }
-
-    public async Task<ArtistImage> GetArtistImage(int id)
-    {
-        return await _sql.QuerySingle<ArtistImage>(new { Id = id });
     }
 
     public async Task<List<GetArtistData>> GetArtists()

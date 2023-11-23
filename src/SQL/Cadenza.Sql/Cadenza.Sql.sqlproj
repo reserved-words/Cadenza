@@ -74,6 +74,7 @@
     <Folder Include="Stored Procedures\Admin" />
     <Folder Include="Stored Procedures\Play" />
     <Folder Include="Stored Procedures\Update" />
+    <Folder Include="Stored Procedures\Images" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -124,8 +125,6 @@
     <Build Include="Stored Procedures\Queue\MarkTrackUpdateErrored.sql" />
     <Build Include="Tables\Library\AlbumArtwork.sql" />
     <Build Include="Tables\Library\ArtistImages.sql" />
-    <Build Include="Stored Procedures\Library\GetArtistImage.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbumArtwork.sql" />
     <Build Include="Schemas\History.sql" />
     <Build Include="Tables\History\PlayedArtists.sql" />
     <Build Include="Tables\Admin\PlaylistTypes.sql" />
@@ -183,6 +182,9 @@
     <Build Include="Stored Procedures\Update\AddArtist.sql" />
     <Build Include="Stored Procedures\Update\AddDisc.sql" />
     <Build Include="Stored Procedures\Update\AddTrack.sql" />
+    <Build Include="Schemas\Images.sql" />
+    <Build Include="Stored Procedures\Images\GetArtistImage.sql" />
+    <Build Include="Stored Procedures\Images\GetAlbumArtwork.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

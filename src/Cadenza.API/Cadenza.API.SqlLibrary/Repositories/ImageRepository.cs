@@ -2,16 +2,16 @@
 
 internal class ImageRepository : IImageRepository
 {
-    private readonly ILibrary _library;
+    private readonly IImages _images;
 
-    public ImageRepository(ILibrary library)
+    public ImageRepository(IImages images)
     {
-        _library = library;
+        _images = images;
     }
 
     public async Task<ArtworkImage> GetAlbumArtwork(int albumId)
     {
-        var data = await _library.GetAlbumArtwork(albumId);
+        var data = await _images.GetAlbumArtwork(albumId);
         if (data?.Content == null)
             return null;
 
@@ -20,7 +20,7 @@ internal class ImageRepository : IImageRepository
 
     public async Task<ArtworkImage> GetArtistImage(int artistId)
     {
-        var data = await _library.GetArtistImage(artistId);
+        var data = await _images.GetArtistImage(artistId);
         if (data?.Content == null)
             return null;
 
