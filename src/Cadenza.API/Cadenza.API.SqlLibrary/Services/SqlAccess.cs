@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 
 namespace Cadenza.Database.SqlLibrary.Services;
 
-internal class DataAccess : IDataAccess
+internal class SqlAccess : ISqlAccess
 {
     private readonly IOptions<SqlLibrarySettings> _settings;
 
-    public DataAccess(IOptions<SqlLibrarySettings> settings)
+    public SqlAccess(IOptions<SqlLibrarySettings> settings)
     {
         _settings = settings;
     }

@@ -2,7 +2,7 @@
 
 namespace Cadenza.Database.SqlLibrary.Interfaces;
 
-internal interface IDataAccess
+internal interface ISqlAccess
 {
     Task Execute(string storedProcedureName, object data);
     Task Execute(string storedProcedureName, DynamicParameters parameters = null);

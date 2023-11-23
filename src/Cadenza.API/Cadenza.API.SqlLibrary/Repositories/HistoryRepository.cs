@@ -1,19 +1,17 @@
-﻿namespace Cadenza.Database.SqlLibrary;
+﻿namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class HistoryRepository : IHistoryRepository
 {
-    private readonly IDataInsertService _insertService;
-    private readonly IDataReadService _readService;
+    private readonly IHistory _history;
 
-    public HistoryRepository(IDataInsertService service, IDataReadService readService)
+    public HistoryRepository(IHistory history)
     {
-        _insertService = service;
-        _readService = readService;
+        _history = history;
     }
 
     public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
-        var data = await _readService.GetRecentAlbums(maxItems);
+        var data = await _history.GetRecentAlbums(maxItems);
 
         return data.Select(d => new RecentAlbumDTO
         {
@@ -26,42 +24,42 @@ internal class HistoryRepository : IHistoryRepository
 
     public async Task<List<string>> GetRecentTags(int maxItems)
     {
-        var data = await _readService.GetRecentTags(maxItems);
+        var data = await _history.GetRecentTags(maxItems);
         return data.Select(d => d.Tag).ToList();
     }
 
     public async Task LogAlbumPlay(int albumId)
     {
-        await _insertService.LogAlbumPlay(albumId);
+        await _history.LogAlbumPlay(albumId);
     }
 
     public async Task LogArtistPlay(int artistId)
     {
-        await _insertService.LogArtistPlay(artistId);
+        await _history.LogArtistPlay(artistId);
     }
 
     public async Task LogGenrePlay(string genre)
     {
-        await _insertService.LogGenrePlay(genre);
+        await _history.LogGenrePlay(genre);
     }
 
     public async Task LogGroupingPlay(int groupingId)
     {
-        await _insertService.LogGroupingPlay(groupingId);
+        await _history.LogGroupingPlay(groupingId);
     }
 
     public async Task LogLibraryPlay()
     {
-        await _insertService.LogLibraryPlay();
+        await _history.LogLibraryPlay();
     }
 
     public async Task LogTagPlay(string tag)
     {
-        await _insertService.LogTagPlay(tag);
+        await _history.LogTagPlay(tag);
     }
 
     public async Task LogTrackPlay(int trackId)
     {
-        await _insertService.LogTrackPlay(trackId);
+        await _history.LogTrackPlay(trackId);
     }
 }
