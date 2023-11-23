@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Database.Interfaces;
 
-public interface IPlayTrackRepository
+public interface IPlayRepository
 {
     Task<List<int>> PlayAll();
     Task<List<int>> PlayAlbum(int id);

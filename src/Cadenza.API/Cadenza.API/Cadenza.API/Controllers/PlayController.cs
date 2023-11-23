@@ -4,9 +4,9 @@
 [ApiController]
 public class PlayController : ControllerBase
 {
-    private readonly IPlayTrackRepository _repository;
+    private readonly IPlayRepository _repository;
 
-    public PlayController(IPlayTrackRepository repository)
+    public PlayController(IPlayRepository repository)
     {
         _repository = repository;
     }

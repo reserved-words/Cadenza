@@ -23,7 +23,7 @@ public static class _Startup
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
             .AddTransient<ILibraryRepository, LibraryRepository>()
-            .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
+            .AddTransient<IPlayRepository, PlayRepository>()
             .AddTransient<IQueueRepository, QueueRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }

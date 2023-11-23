@@ -1,10 +1,10 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Repositories;
 
-internal class PlayTrackRepository : IPlayTrackRepository
+internal class PlayRepository : IPlayRepository
 {
     private readonly IPlay _play;
 
-    public PlayTrackRepository(IPlay play)
+    public PlayRepository(IPlay play)
     {
         _play = play;
     }
