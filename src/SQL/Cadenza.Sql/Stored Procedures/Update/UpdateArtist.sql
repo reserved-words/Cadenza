@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[UpdateArtist]
+﻿CREATE PROCEDURE [Update].[UpdateArtist]
 	@Id INT,
 	@Name NVARCHAR(200),
 	@GroupingId INT,

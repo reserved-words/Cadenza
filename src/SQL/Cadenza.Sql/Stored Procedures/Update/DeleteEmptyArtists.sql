@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[DeleteEmptyArtists]
+﻿CREATE PROCEDURE [Update].[DeleteEmptyArtists]
 AS
 BEGIN
 

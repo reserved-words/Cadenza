@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[DeleteEmptyAlbums]
+﻿CREATE PROCEDURE [Update].[DeleteEmptyAlbums]
 AS
 BEGIN
 

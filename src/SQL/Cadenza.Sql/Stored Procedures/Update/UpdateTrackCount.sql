@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[UpdateTrackCount]
+﻿CREATE PROCEDURE [Update].[UpdateTrackCount]
 	@DiscId INT
 AS
 BEGIN
@@ -19,6 +19,6 @@ BEGIN
 	WHERE
 		[Id] = @DiscId
 
-	EXECUTE [Library].[DeleteEmptyDiscs]
+	EXECUTE [Update].[DeleteEmptyDiscs]
 
 END

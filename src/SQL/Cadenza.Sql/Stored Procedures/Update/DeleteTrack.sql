@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[DeleteTrack]
+﻿CREATE PROCEDURE [Update].[DeleteTrack]
 	@Id INT,
 	@IdFromSource NVARCHAR(500)
 AS

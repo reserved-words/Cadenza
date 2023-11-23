@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[UpdateDiscCount]
+﻿CREATE PROCEDURE [Update].[UpdateDiscCount]
 	@AlbumId INT
 AS
 BEGIN

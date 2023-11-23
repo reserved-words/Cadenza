@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[UpdateTrack]
+﻿CREATE PROCEDURE [Update].[UpdateTrack]
 	@Id INT,
 	@IdFromSource NVARCHAR(500),
 	@ArtistId INT,
@@ -13,7 +13,7 @@
 AS
 BEGIN
 
-	EXECUTE [Library].[UpdateTrackDisc] @Id, @DiscIndex
+	EXECUTE [Update].[UpdateTrackDisc] @Id, @DiscIndex
 
 	UPDATE 
 		[Library].[Tracks]

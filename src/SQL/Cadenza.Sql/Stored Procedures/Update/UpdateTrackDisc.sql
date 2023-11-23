@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[UpdateTrackDisc]
+﻿CREATE PROCEDURE [Update].[UpdateTrackDisc]
 	@TrackId INT,
 	@DiscIndex INT
 AS
@@ -17,7 +17,7 @@ BEGIN
 	WHERE
 		T.[Id] = @TrackId
 
-	EXECUTE [Library].[AddDisc] @AlbumId, @DiscIndex, 1, @DiscId OUTPUT
+	EXECUTE [Update].[AddDisc] @AlbumId, @DiscIndex, 1, @DiscId OUTPUT
 
 	UPDATE
 		[Library].[Tracks]
@@ -26,8 +26,8 @@ BEGIN
 	WHERE
 		[Id] = @TrackId
 
-	EXECUTE [Library].[UpdateTrackCount] @DiscId
+	EXECUTE [Update].[UpdateTrackCount] @DiscId
 
-	EXECUTE [Library].[DeleteEmptyDiscs]
+	EXECUTE [Update].[DeleteEmptyDiscs]
 
 END

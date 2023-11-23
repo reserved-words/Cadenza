@@ -2,11 +2,16 @@
 
 internal interface IUpdate
 {
-    Task DeleteTrackById(int id);
+    Task<int> AddArtist(NewArtistData data);
+    Task<int> AddAlbum(NewAlbumData data);
+    Task<int> AddDisc(NewDiscData data);
+    Task<int> AddTrack(NewTrackData data);
+
+    Task DeleteTrack(int id);
     Task DeleteEmptyDiscs();
     Task DeleteEmptyAlbums();
     Task DeleteEmptyArtists();
-    Task DeleteTrackByIdFromSource(string idFromSource);
+    Task DeleteTrack(string idFromSource);
 
     Task UpdateAlbum(AlbumData album);
     Task UpdateArtist(ArtistData artist);

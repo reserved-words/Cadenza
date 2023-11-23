@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[AddArtist]
+﻿CREATE PROCEDURE [Update].[AddArtist]
 	@Name NVARCHAR(200),
 	@CompareName NVARCHAR(200),
 	@GroupingName NVARCHAR(50),

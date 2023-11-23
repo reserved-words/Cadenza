@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[AddAlbum]
+﻿CREATE PROCEDURE [Update].[AddAlbum]
 	@SourceId INT,
 	@ArtistId INT,
 	@Title NVARCHAR(500),

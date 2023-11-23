@@ -6,7 +6,7 @@ internal interface ILibrary
     Task<List<GetAlbumData>> GetAlbums(LibrarySource? source);
     Task<List<GetDiscData>> GetDiscs(LibrarySource? source);
     Task<List<GetTrackData>> GetTracks(LibrarySource? source);
-    Task<List<string>> GetAllTrackSourceIds(LibrarySource source);
+    Task<List<string>> GetTrackSourceIds(LibrarySource source);
 
     Task<AlbumData> GetAlbum(int albumId);
     Task<ArtistData> GetArtist(int artistId);
@@ -18,9 +18,4 @@ internal interface ILibrary
     Task<List<string>> GetAlbumTrackSourceIds(int albumId);
     Task<string> GetTrackIdFromSource(int trackId);
     Task<List<string>> GetArtistTrackSourceIds(int artistId);
-
-    Task<int> AddArtist(NewArtistData data);
-    Task<int> AddAlbum(NewAlbumData data);
-    Task<int> AddDisc(NewDiscData data);
-    Task<int> AddTrack(NewTrackData data);
 }

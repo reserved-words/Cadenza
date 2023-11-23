@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[DeleteEmptyDiscs]
+﻿CREATE PROCEDURE [Update].[DeleteEmptyDiscs]
 AS
 BEGIN
 

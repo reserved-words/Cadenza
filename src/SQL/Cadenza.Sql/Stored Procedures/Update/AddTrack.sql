@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[AddTrack]
+﻿CREATE PROCEDURE [Update].[AddTrack]
 	@IdFromSource NVARCHAR(500),
 	@ArtistId INT,
 	@DiscId INT,
@@ -55,6 +55,6 @@ BEGIN
 
 	END
 
-	EXECUTE [Library].[UpdateTrackCount] @DiscId
+	EXECUTE [Update].[UpdateTrackCount] @DiscId
 
 END

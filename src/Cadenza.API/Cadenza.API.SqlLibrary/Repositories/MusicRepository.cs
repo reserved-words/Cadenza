@@ -20,24 +20,24 @@ internal class MusicRepository : IMusicRepository
     public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
     {
         var trackArtistData = _mapper.MapTrackArtist(track);
-        var trackArtistId = await _library.AddArtist(trackArtistData);
+        var trackArtistId = await _update.AddArtist(trackArtistData);
 
         var albumArtistId = trackArtistId;
 
         if (track.Artist.Name != track.Album.ArtistName)
         {
             var albumArtistData = _mapper.MapAlbumArtist(track);
-            albumArtistId = await _library.AddArtist(albumArtistData);
+            albumArtistId = await _update.AddArtist(albumArtistData);
         }
 
         var albumData = _mapper.MapAlbum(track, source, albumArtistId);
-        var albumId = await _library.AddAlbum(albumData);
+        var albumId = await _update.AddAlbum(albumData);
 
         var discData = _mapper.MapDisc(track, albumId);
-        var discId = await _library.AddDisc(discData);
+        var discId = await _update.AddDisc(discData);
 
         var trackData = _mapper.MapTrack(track, trackArtistId, discId);
-        await _library.AddTrack(trackData);
+        await _update.AddTrack(trackData);
     }
 
     public async Task<FullLibraryDTO> Get()
@@ -68,7 +68,7 @@ internal class MusicRepository : IMusicRepository
 
     public async Task<List<string>> GetAllTracks(LibrarySource source)
     {
-        return await _library.GetAllTrackSourceIds(source);
+        return await _library.GetTrackSourceIds(source);
     }
 
     public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
@@ -83,7 +83,7 @@ internal class MusicRepository : IMusicRepository
 
     public async Task RemoveTrack(int id)
     {
-        await _update.DeleteTrackById(id);
+        await _update.DeleteTrack(id);
         await _update.DeleteEmptyDiscs();
         await _update.DeleteEmptyAlbums();
         await _update.DeleteEmptyArtists();
@@ -93,7 +93,7 @@ internal class MusicRepository : IMusicRepository
     {
         foreach (var idFromSource in idsFromSource)
         {
-            await _update.DeleteTrackByIdFromSource(idFromSource);
+            await _update.DeleteTrack(idFromSource);
         }
 
         await _update.DeleteEmptyDiscs();

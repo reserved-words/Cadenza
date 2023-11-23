@@ -38,7 +38,7 @@ internal class Library : ILibrary
         return await _sql.Query<string>("[Library].[GetAlbumTrackSourceIds]", parameters);
     }
 
-    public async Task<List<string>> GetAllTrackSourceIds(LibrarySource source)
+    public async Task<List<string>> GetTrackSourceIds(LibrarySource source)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@SourceId", (int)source);
@@ -99,85 +99,5 @@ internal class Library : ILibrary
         parameters.Add("@SourceId", (int?)source);
         return await _sql.Query<GetTrackData>("[Library].[GetTracks]", parameters);
 
-    }
-
-
-    public async Task<int> AddAlbum(NewAlbumData data)
-    {
-        var parameters = new DynamicParameters();
-
-        parameters.Add(nameof(data.SourceId), data.SourceId);
-        parameters.Add(nameof(data.ArtistId), data.ArtistId);
-        parameters.Add(nameof(data.Title), data.Title);
-        parameters.Add(nameof(data.ReleaseTypeId), data.ReleaseTypeId);
-        parameters.Add(nameof(data.Year), data.Year);
-        parameters.Add(nameof(data.DiscCount), data.DiscCount);
-        parameters.Add(nameof(data.ArtworkMimeType), data.ArtworkMimeType);
-        parameters.Add(nameof(data.ArtworkContent), data.ArtworkContent, DbType.Binary);
-        parameters.Add(nameof(data.TagList), data.TagList);
-
-        parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-        await _sql.Execute("[Library].[AddAlbum]", parameters);
-
-        return parameters.Get<int>("@Id");
-    }
-
-    public async Task<int> AddArtist(NewArtistData data)
-    {
-        var parameters = new DynamicParameters();
-
-        parameters.Add(nameof(data.Name), data.Name);
-        parameters.Add(nameof(data.CompareName), data.CompareName);
-        parameters.Add(nameof(data.GroupingName), data.GroupingName);
-        parameters.Add(nameof(data.Genre), data.Genre);
-        parameters.Add(nameof(data.City), data.City);
-        parameters.Add(nameof(data.State), data.State);
-        parameters.Add(nameof(data.Country), data.Country);
-        parameters.Add(nameof(data.ImageMimeType), data.ImageMimeType);
-        parameters.Add(nameof(data.ImageContent), data.ImageContent, DbType.Binary);
-        parameters.Add(nameof(data.TagList), data.TagList);
-
-        parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-        await _sql.Execute("[Library].[AddArtist]", parameters);
-
-        return parameters.Get<int>("@Id");
-    }
-
-    public async Task<int> AddDisc(NewDiscData data)
-    {
-        var parameters = new DynamicParameters();
-
-        parameters.Add(nameof(data.AlbumId), data.AlbumId);
-        parameters.Add(nameof(data.Index), data.Index);
-        parameters.Add(nameof(data.TrackCount), data.TrackCount);
-
-        parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-        await _sql.Execute("[Library].[AddDisc]", parameters);
-
-        return parameters.Get<int>("@Id");
-    }
-
-    public async Task<int> AddTrack(NewTrackData data)
-    {
-        var parameters = new DynamicParameters();
-
-        parameters.Add(nameof(data.IdFromSource), data.IdFromSource);
-        parameters.Add(nameof(data.ArtistId), data.ArtistId);
-        parameters.Add(nameof(data.DiscId), data.DiscId);
-        parameters.Add(nameof(data.TrackNo), data.TrackNo);
-        parameters.Add(nameof(data.Title), data.Title);
-        parameters.Add(nameof(data.DurationSeconds), data.DurationSeconds);
-        parameters.Add(nameof(data.Year), data.Year);
-        parameters.Add(nameof(data.Lyrics), data.Lyrics);
-        parameters.Add(nameof(data.TagList), data.TagList);
-
-        parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-        await _sql.Execute("[Library].[AddTrack]", parameters);
-
-        return parameters.Get<int>("@Id");
     }
 }

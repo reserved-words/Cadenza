@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[AddDisc]
+﻿CREATE PROCEDURE [Update].[AddDisc]
 	@AlbumId INT,
 	@Index INT,
 	@TrackCount INT,
@@ -29,6 +29,6 @@ BEGIN
 
 	SET @Id = SCOPE_IDENTITY()
 
-	EXECUTE [Library].[UpdateDiscCount] @AlbumId
+	EXECUTE [Update].[UpdateDiscCount] @AlbumId
 
 END

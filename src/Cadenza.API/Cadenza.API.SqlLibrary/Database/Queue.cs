@@ -82,7 +82,7 @@ internal class Queue : IQueue
         await _sql.Execute("[Queue].[MarkTrackUpdateDone]", parameters);
     }
 
-    public async Task MarkRemovalDone(int id)
+    public async Task MarkTrackRemovalDone(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", id);
@@ -110,7 +110,7 @@ internal class Queue : IQueue
         await _sql.Execute("[Queue].[MarkTrackUpdateErrored]", parameters);
     }
 
-    public async Task MarkRemovalErrored(int id)
+    public async Task MarkTrackRemovalErrored(int id)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", id);

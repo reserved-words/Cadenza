@@ -20,6 +20,6 @@ internal interface IQueue
     Task MarkArtistUpdateErrored(int id);
     Task MarkTrackUpdateErrored(int id);
 
-    Task MarkRemovalDone(int id);
-    Task MarkRemovalErrored(int id);
+    Task MarkTrackRemovalDone(int id);
+    Task MarkTrackRemovalErrored(int id);
 }

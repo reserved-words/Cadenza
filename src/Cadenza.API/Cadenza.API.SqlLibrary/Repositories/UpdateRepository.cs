@@ -55,12 +55,12 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task MarkRemovalDone(int requestId)
     {
-        await _queue.MarkRemovalDone(requestId);
+        await _queue.MarkTrackRemovalDone(requestId);
     }
 
     public async Task MarkRemovalErrored(int requestId)
     {
-        await _queue.MarkRemovalErrored(requestId);
+        await _queue.MarkTrackRemovalErrored(requestId);
     }
 
     public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
