@@ -109,18 +109,12 @@ internal class Update : IUpdate
 
     public async Task DeleteTrack(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("Id", id);
-        parameters.Add("IdFromSource", null);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id, IdFromSource = (string)null });
     }
 
     public async Task DeleteTrack(string idFromSource)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("Id", null);
-        parameters.Add("IdFromSource", idFromSource);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = (int?)null, IdFromSource = idFromSource });
     }
 
     public async Task UpdateAlbum(AlbumData album)

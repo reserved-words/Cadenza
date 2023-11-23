@@ -11,7 +11,7 @@ internal class PlayTrackRepository : IPlayTrackRepository
 
     public async Task<List<int>> PlayAlbum(int id)
     {
-        return await _play.GetAbumTrackIds(id);
+        return await _play.GetAlbumTrackIds(id);
     }
 
     public async Task<List<int>> PlayAll()

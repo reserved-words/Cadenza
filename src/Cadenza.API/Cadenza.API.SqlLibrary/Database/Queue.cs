@@ -26,95 +26,69 @@ internal class Queue : IQueue
         await _sql.Execute(data);
     }
 
-    public async Task AddTrackRemoval(int trackId)
+    public async Task AddTrackRemoval(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", trackId);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<AlbumUpdateData>(parameters);
+        return await _sql.Query<AlbumUpdateData>(new { SourceId = (int?)source });
     }
 
     public async Task<List<ArtistUpdateData>> GetArtistUpdates(LibrarySource source)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<ArtistUpdateData>(parameters);
+        return await _sql.Query<ArtistUpdateData>(new { SourceId = (int)source });
     }
 
     public async Task<List<TrackRemovalData>> GetTrackRemovals(LibrarySource source)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<TrackRemovalData>(parameters);
+        return await _sql.Query<TrackRemovalData>(new { SourceId = (int)source });
     }
 
     public async Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<TrackUpdateData>(parameters);
+        return await _sql.Query<TrackUpdateData>(new { SourceId = (int)source });
     }
 
     public async Task MarkAlbumUpdateDone(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkArtistUpdateDone(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkTrackUpdateDone(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkTrackRemovalDone(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkAlbumUpdateErrored(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkArtistUpdateErrored(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkTrackUpdateErrored(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     public async Task MarkTrackRemovalErrored(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", id);
-        await _sql.Execute(parameters);
+        await _sql.Execute(new { Id = id });
     }
 
     

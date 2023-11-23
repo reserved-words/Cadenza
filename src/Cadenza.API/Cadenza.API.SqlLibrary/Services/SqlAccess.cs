@@ -29,12 +29,26 @@ internal class SqlAccess : ISqlAccess
         await connection.ExecuteAsync(StoredProcedure(storedProcedureName), parameters, commandType: CommandType.StoredProcedure);
     }
 
+    public async Task<List<T>> Query<T>(object parameters, [CallerMemberName] string storedProcedureName = null)
+    {
+        using var connection = new SqlConnection(_settings.Value.ConnectionString);
+        var qualifiedStoredProcedureName = StoredProcedure(storedProcedureName);
+        var results = await connection.QueryAsync<T>(qualifiedStoredProcedureName, parameters, commandType: CommandType.StoredProcedure);
+        return results.ToList();
+    }
+
     public async Task<List<T>> Query<T>(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null)
     {
         using var connection = new SqlConnection(_settings.Value.ConnectionString);
         var qualifiedStoredProcedureName = StoredProcedure(storedProcedureName);
         var results = await connection.QueryAsync<T>(qualifiedStoredProcedureName, parameters, commandType: CommandType.StoredProcedure);
         return results.ToList();
+    }
+
+    public async Task<T> QuerySingle<T>(object parameters, [CallerMemberName] string storedProcedureName = null)
+    {
+        using var connection = new SqlConnection(_settings.Value.ConnectionString);
+        return await connection.QuerySingleAsync<T>(StoredProcedure(storedProcedureName), parameters, commandType: CommandType.StoredProcedure);
     }
 
     public async Task<T> QuerySingle<T>(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null)

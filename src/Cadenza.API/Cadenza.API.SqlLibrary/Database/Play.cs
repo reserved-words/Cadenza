@@ -11,11 +11,9 @@ internal class Play : IPlay
         _sql = sql.Create(nameof(Play));
     }
 
-    public async Task<List<int>> GetAbumTrackIds(int albumId)
+    public async Task<List<int>> GetAlbumTrackIds(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", albumId);
-        return await _sql.Query<int>(parameters);
+        return await _sql.Query<int>(new { Id = id });
     }
 
 
@@ -24,31 +22,23 @@ internal class Play : IPlay
         return await _sql.Query<int>(null);
     }
 
-    public async Task<List<int>> GetArtistTrackIds(int artistId)
+    public async Task<List<int>> GetArtistTrackIds(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", artistId);
-        return await _sql.Query<int>(parameters);
+        return await _sql.Query<int>(new { Id = id });
     }
 
     public async Task<List<int>> GetGenreTrackIds(string genre)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Genre", genre);
-        return await _sql.Query<int>(parameters);
+        return await _sql.Query<int>(new { Genre = genre });
     }
 
-    public async Task<List<int>> GetGroupingTrackIds(int groupingId)
+    public async Task<List<int>> GetGroupingTrackIds(int id)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Id", groupingId);
-        return await _sql.Query<int>(parameters);
+        return await _sql.Query<int>(new { Id = id });
     }
 
     public async Task<List<int>> GetTagTrackIds(string tag)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@Tag", tag);
-        return await _sql.Query<int>(parameters);
+        return await _sql.Query<int>(new { Tag = tag });
     }
 }
