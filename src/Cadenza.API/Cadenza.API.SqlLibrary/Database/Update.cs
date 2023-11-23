@@ -5,11 +5,11 @@ namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Update : IUpdate
 {
-    private ISqlAccess _sql;
+    private readonly ISqlAccess _sql;
 
-    public Update(ISqlAccess sql)
+    public Update(ISqlAccessFactory sql)
     {
-        _sql = sql;
+        _sql = sql.Create(nameof(Update));
     }
 
 
@@ -29,7 +29,7 @@ internal class Update : IUpdate
 
         parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-        await _sql.Execute("[Update].[AddAlbum]", parameters);
+        await _sql.Execute(parameters);
 
         return parameters.Get<int>("@Id");
     }
@@ -51,7 +51,7 @@ internal class Update : IUpdate
 
         parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-        await _sql.Execute("[Update].[AddArtist]", parameters);
+        await _sql.Execute(parameters);
 
         return parameters.Get<int>("@Id");
     }
@@ -66,7 +66,7 @@ internal class Update : IUpdate
 
         parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-        await _sql.Execute("[Update].[AddDisc]", parameters);
+        await _sql.Execute(parameters);
 
         return parameters.Get<int>("@Id");
     }
@@ -87,24 +87,24 @@ internal class Update : IUpdate
 
         parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-        await _sql.Execute("[Update].[AddTrack]", parameters);
+        await _sql.Execute(parameters);
 
         return parameters.Get<int>("@Id");
     }
 
     public async Task DeleteEmptyArtists()
     {
-        await _sql.Execute("[Update].[DeleteEmptyArtists]");
+        await _sql.Execute(null);
     }
 
     public async Task DeleteEmptyAlbums()
     {
-        await _sql.Execute("[Update].[DeleteEmptyAlbums]");
+        await _sql.Execute(null);
     }
 
     public async Task DeleteEmptyDiscs()
     {
-        await _sql.Execute("[Update].[DeleteEmptyDiscs]");
+        await _sql.Execute(null);
     }
 
     public async Task DeleteTrack(int id)
@@ -112,7 +112,7 @@ internal class Update : IUpdate
         var parameters = new DynamicParameters();
         parameters.Add("Id", id);
         parameters.Add("IdFromSource", null);
-        await _sql.Execute("[Update].[DeleteTrack]", parameters);
+        await _sql.Execute(parameters);
     }
 
     public async Task DeleteTrack(string idFromSource)
@@ -120,21 +120,21 @@ internal class Update : IUpdate
         var parameters = new DynamicParameters();
         parameters.Add("Id", null);
         parameters.Add("IdFromSource", idFromSource);
-        await _sql.Execute("[Update].[DeleteTrack]", parameters);
+        await _sql.Execute(parameters);
     }
 
     public async Task UpdateAlbum(AlbumData album)
     {
-        await _sql.Execute("[Update].[UpdateAlbum]", album);
+        await _sql.Execute(album);
     }
 
     public async Task UpdateArtist(ArtistData artist)
     {
-        await _sql.Execute("[Update].[UpdateArtist]", artist);
+        await _sql.Execute(artist);
     }
 
     public async Task UpdateTrack(TrackData track)
     {
-        await _sql.Execute("[Update].[UpdateTrack]", track);
+        await _sql.Execute(track);
     }
 }

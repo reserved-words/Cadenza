@@ -2,17 +2,17 @@
 
 internal class Admin : IAdmin
 {
-    private ISqlAccess _sql;
+    private readonly ISqlAccess _sql;
 
-    public Admin(ISqlAccess sql)
+    public Admin(ISqlAccessFactory sql)
     {
-        _sql = sql;
+        _sql = sql.Create(nameof(Admin));
     }
 
     public async Task<List<GroupingDTO>> GetGroupings()
     {
         // should be using Data model not DTO here
-        return await _sql.Query<GroupingDTO>("[Admin].[GetGroupings]");
+        return await _sql.Query<GroupingDTO>(null);
     }
 
 

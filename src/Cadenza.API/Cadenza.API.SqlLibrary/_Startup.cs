@@ -30,7 +30,7 @@ public static class _Startup
     private static IServiceCollection AddInternalServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<ISqlAccess, SqlAccess>()
+            .AddTransient<ISqlAccessFactory, SqlAccessFactory>()
             .AddTransient<IDataMapper, DataMapper>()
             .AddTransient<IAdmin, Admin>()
             .AddTransient<IHistory, History>()

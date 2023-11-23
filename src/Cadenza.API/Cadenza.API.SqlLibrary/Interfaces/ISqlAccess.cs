@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using System.Runtime.CompilerServices;
 
 namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface ISqlAccess
 {
-    Task Execute(string storedProcedureName, object data);
-    Task Execute(string storedProcedureName, DynamicParameters parameters = null);
-    Task<List<T>> Query<T>(string storedProcedureName, DynamicParameters parameters = null);
-    Task<T> QuerySingle<T>(string storedProcedureName, DynamicParameters parameters = null);
+    Task Execute(object data, [CallerMemberName] string storedProcedureName = null);
+    Task Execute(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null);
+    Task<List<T>> Query<T>(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null);
+    Task<T> QuerySingle<T>(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null);
 }

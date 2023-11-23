@@ -1,81 +1,82 @@
 ﻿using Dapper;
-using System.Data;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Library : ILibrary
 {
-    private ISqlAccess _sql;
+    private readonly ISqlAccess _sql;
 
-    public Library(ISqlAccess sql)
+    public Library(ISqlAccessFactory sql)
     {
-        _sql = sql;
-    }public async Task<AlbumData> GetAlbum(int albumId)
+        _sql = sql.Create(nameof(Library));
+    }
+
+    public async Task<AlbumData> GetAlbum(int albumId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", albumId);
-        return await _sql.QuerySingle<AlbumData>("[Library].[GetAlbum]", parameters);
+        return await _sql.QuerySingle<AlbumData>(parameters);
     }
 
     public async Task<AlbumArtwork> GetAlbumArtwork(int albumId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", albumId);
-        return await _sql.QuerySingle<AlbumArtwork>("[Library].[GetAlbumArtwork]", parameters);
+        return await _sql.QuerySingle<AlbumArtwork>(parameters);
     }
 
     public async Task<List<GetAlbumData>> GetAlbums(LibrarySource? source)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<GetAlbumData>("[Library].[GetAlbums]", parameters);
+        return await _sql.Query<GetAlbumData>(parameters);
     }
 
     public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", albumId);
-        return await _sql.Query<string>("[Library].[GetAlbumTrackSourceIds]", parameters);
+        return await _sql.Query<string>(parameters);
     }
 
     public async Task<List<string>> GetTrackSourceIds(LibrarySource source)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@SourceId", (int)source);
-        return await _sql.Query<string>("[Library].[GetTrackSourceIds]", parameters);
+        return await _sql.Query<string>(parameters);
     }
 
     public async Task<ArtistData> GetArtist(int artistId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", artistId);
-        return await _sql.QuerySingle<ArtistData>("[Library].[GetArtist]", parameters);
+        return await _sql.QuerySingle<ArtistData>(parameters);
     }
 
     public async Task<ArtistImage> GetArtistImage(int artistId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", artistId);
-        return await _sql.QuerySingle<ArtistImage>("[Library].[GetArtistImage]", parameters);
+        return await _sql.QuerySingle<ArtistImage>(parameters);
     }
 
     public async Task<List<GetArtistData>> GetArtists()
     {
-        return await _sql.Query<GetArtistData>("[Library].[GetArtists]", null);
+        return await _sql.Query<GetArtistData>(null);
     }
 
     public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", artistId);
-        return await _sql.Query<string>("[Library].[GetArtistTrackSourceIds]", parameters);
+        return await _sql.Query<string>(parameters);
     }
 
     public async Task<List<GetDiscData>> GetDiscs(LibrarySource? source)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<GetDiscData>("[Library].[GetDiscs]", parameters);
+        return await _sql.Query<GetDiscData>(parameters);
     }
 
 
@@ -83,21 +84,21 @@ internal class Library : ILibrary
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", trackId);
-        return await _sql.QuerySingle<TrackData>("[Library].[GetTrack]", parameters);
+        return await _sql.QuerySingle<TrackData>(parameters);
     }
 
     public async Task<string> GetTrackIdFromSource(int trackId)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", trackId);
-        return await _sql.QuerySingle<string>("[Library].[GetTrackIdFromSource]", parameters);
+        return await _sql.QuerySingle<string>(parameters);
     }
 
     public async Task<List<GetTrackData>> GetTracks(LibrarySource? source)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@SourceId", (int?)source);
-        return await _sql.Query<GetTrackData>("[Library].[GetTracks]", parameters);
+        return await _sql.Query<GetTrackData>(parameters);
 
     }
 }
