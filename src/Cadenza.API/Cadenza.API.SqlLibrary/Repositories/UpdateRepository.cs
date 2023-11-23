@@ -3,12 +3,12 @@
 internal class UpdateRepository : IUpdateRepository
 {
     private readonly IAdmin _admin;
-    private readonly IDataMapper _mapper;
+    private readonly IMapper _mapper;
     private readonly IImageConverter _imageConverter;
     private readonly ILibrary _library;
     private readonly IUpdate _update;
 
-    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IDataMapper mapper)
+    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IMapper mapper)
     {
         _library = library;
         _imageConverter = imageConverter;

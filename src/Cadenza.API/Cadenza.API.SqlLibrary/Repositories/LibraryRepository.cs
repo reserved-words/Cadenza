@@ -2,10 +2,10 @@
 
 internal class LibraryRepository : ILibraryRepository
 {
-    private readonly IDataMapper _mapper;
+    private readonly IMapper _mapper;
     private readonly ILibrary _library;
 
-    public LibraryRepository(IDataMapper mapper, ILibrary library)
+    public LibraryRepository(IMapper mapper, ILibrary library)
     {
         _mapper = mapper;
         _library = library;
@@ -18,10 +18,7 @@ internal class LibraryRepository : ILibraryRepository
 
         var library = new FullLibraryDTO
         {
-            Artists = artists,
-            Albums = new List<AlbumDetailsDTO>(),
-            Tracks = new List<TrackDetailsDTO>(),
-            AlbumTracks = new List<AlbumTrackLinkDTO>()
+            Artists = artists
         };
 
         foreach (var src in Enum.GetValues<LibrarySource>())

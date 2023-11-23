@@ -2,24 +2,19 @@
 
 internal class HistoryRepository : IHistoryRepository
 {
+    private readonly IMapper _mapper;
     private readonly IHistory _history;
 
-    public HistoryRepository(IHistory history)
+    public HistoryRepository(IHistory history, IMapper mapper)
     {
         _history = history;
+        _mapper = mapper;
     }
 
     public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         var data = await _history.GetRecentAlbums(maxItems);
-
-        return data.Select(d => new RecentAlbumDTO
-        {
-            Id = d.AlbumId,
-            Title = d.AlbumTitle,
-            ArtistName = d.ArtistName
-        })
-        .ToList();
+        return data.Select(_mapper.MapRecentAlbum).ToList();
     }
 
     public async Task<List<string>> GetRecentTags(int maxItems)

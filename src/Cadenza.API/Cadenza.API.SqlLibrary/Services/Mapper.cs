@@ -1,11 +1,11 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Services;
-internal class DataMapper : IDataMapper
+internal class Mapper : IMapper
 {
     private const string DefaultGenre = "None";
 
     private readonly INameComparer _nameComparer;
 
-    public DataMapper(INameComparer nameComparer)
+    public Mapper(INameComparer nameComparer)
     {
         _nameComparer = nameComparer;
     }
@@ -151,5 +151,111 @@ internal class DataMapper : IDataMapper
     private static string ValueOrDefault(string value, string defaultValue)
     {
         return string.IsNullOrWhiteSpace(value) ? defaultValue : value;
+    }
+
+    public RecentAlbumDTO MapRecentAlbum(RecentAlbumData data)
+    {
+        return new RecentAlbumDTO
+        {
+            Id = data.AlbumId,
+            Title = data.AlbumTitle,
+            ArtistName = data.ArtistName
+        };
+    }
+
+    public SyncTrackRemovalRequestDTO MapSyncTrackRemovalRequest(TrackRemovalData data)
+    {
+        return new SyncTrackRemovalRequestDTO
+        {
+            RequestId = data.RequestId,
+            TrackIdFromSource = data.TrackIdFromSource
+        };
+    }
+
+    public NewArtistUpdateData MapArtistUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    {
+        return new NewArtistUpdateData
+        {
+            ArtistId = request.Id,
+            PropertyName = update.Property.ToString(),
+            OriginalValue = update.OriginalValue,
+            UpdatedValue = update.UpdatedValue
+        };
+    }
+
+    public NewAlbumUpdateData MapAlbumUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    {
+        return new NewAlbumUpdateData
+        {
+            AlbumId = request.Id,
+            PropertyName = update.Property.ToString(),
+            OriginalValue = update.OriginalValue,
+            UpdatedValue = update.UpdatedValue
+        };
+    }
+
+    public NewTrackUpdateData MapTrackUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    {
+        return new NewTrackUpdateData
+        {
+            TrackId = request.Id,
+            PropertyName = update.Property.ToString(),
+            OriginalValue = update.OriginalValue,
+            UpdatedValue = update.UpdatedValue
+        };
+    }
+
+    public List<ItemUpdateRequestDTO> MapAlbumUpdateRequests(List<AlbumUpdateData> data)
+    {
+        return data.GroupBy(d => d.AlbumId)
+            .Select(a => new ItemUpdateRequestDTO
+            {
+                Type = LibraryItemType.Album,
+                Id = a.Key,
+                Updates = a.Select(u => new PropertyUpdateDTO
+                {
+                    Id = u.Id,
+                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
+                    OriginalValue = u.OriginalValue,
+                    UpdatedValue = u.UpdatedValue
+                }).ToList()
+            })
+            .ToList();
+    }
+
+    public List<ItemUpdateRequestDTO> MapArtistUpdateRequests(List<ArtistUpdateData> data)
+    {
+        return data.GroupBy(d => d.ArtistId)
+            .Select(a => new ItemUpdateRequestDTO
+            {
+                Type = LibraryItemType.Artist,
+                Id = a.Key,
+                Updates = a.Select(u => new PropertyUpdateDTO
+                {
+                    Id = u.Id,
+                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
+                    OriginalValue = u.OriginalValue,
+                    UpdatedValue = u.UpdatedValue
+                }).ToList()
+            })
+            .ToList();
+    }
+
+    public List<ItemUpdateRequestDTO> MapTrackUpdateRequests(List<TrackUpdateData> data)
+    {
+        return data.GroupBy(d => d.TrackId)
+            .Select(a => new ItemUpdateRequestDTO
+            {
+                Type = LibraryItemType.Track,
+                Id = a.Key,
+                Updates = a.Select(u => new PropertyUpdateDTO
+                {
+                    Id = u.Id,
+                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
+                    OriginalValue = u.OriginalValue,
+                    UpdatedValue = u.UpdatedValue
+                }).ToList()
+            })
+            .ToList();
     }
 }

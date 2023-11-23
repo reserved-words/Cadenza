@@ -32,7 +32,7 @@ public static class _Startup
     {
         return services
             .AddTransient<ISqlAccessFactory, SqlAccessFactory>()
-            .AddTransient<IDataMapper, DataMapper>()
+            .AddTransient<IMapper, Mapper>()
             .AddTransient<IAdmin, Admin>()
             .AddTransient<IHistory, History>()
             .AddTransient<ILibrary, Library>()

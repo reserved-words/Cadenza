@@ -2,11 +2,13 @@
 
 internal class QueueRepository : IQueueRepository
 {
+    private readonly IMapper _mapper;
     private readonly IQueue _queue;
 
-    public QueueRepository(IQueue queue)
+    public QueueRepository(IQueue queue, IMapper mapper)
     {
         _queue = queue;
+        _mapper = mapper;
     }
 
     public async Task AddRemovalRequest(int trackId)
@@ -33,12 +35,7 @@ internal class QueueRepository : IQueueRepository
     public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
     {
         var requests = await _queue.GetTrackRemovals(source);
-        return requests.Select(r => new SyncTrackRemovalRequestDTO
-        {
-            RequestId = r.RequestId,
-            TrackIdFromSource = r.TrackIdFromSource
-        })
-        .ToList();
+        return requests.Select(_mapper.MapSyncTrackRemovalRequest).ToList();
     }
 
     public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
@@ -47,9 +44,9 @@ internal class QueueRepository : IQueueRepository
         var albumUpdates = await _queue.GetAlbumUpdates(source);
         var trackUpdates = await _queue.GetTrackUpdates(source);
 
-        return ConvertArtistUpdateRequests(artistUpdates)
-            .Concat(ConvertAlbumUpdateRequests(albumUpdates))
-            .Concat(ConvertTrackUpdateRequests(trackUpdates))
+        return _mapper.MapArtistUpdateRequests(artistUpdates)
+            .Concat(_mapper.MapAlbumUpdateRequests(albumUpdates))
+            .Concat(_mapper.MapTrackUpdateRequests(trackUpdates))
             .ToList();
     }
 
@@ -97,94 +94,19 @@ internal class QueueRepository : IQueueRepository
 
     private async Task QueueArtistUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
-        var artistUpdate = new NewArtistUpdateData
-        {
-            ArtistId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
-
+        var artistUpdate = _mapper.MapArtistUpdate(request, update);
         await _queue.AddArtistUpdate(artistUpdate);
     }
 
     private async Task QueueAlbumUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
-        var albumUpdate = new NewAlbumUpdateData
-        {
-            AlbumId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
-
+        var albumUpdate = _mapper.MapAlbumUpdate(request, update);
         await _queue.AddAlbumUpdate(albumUpdate);
     }
 
     private async Task QueueTrackUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
     {
-        var trackUpdate = new NewTrackUpdateData
-        {
-            TrackId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
-
+        var trackUpdate = _mapper.MapTrackUpdate(request, update);
         await _queue.AddTrackUpdate(trackUpdate);
-    }
-
-    private List<ItemUpdateRequestDTO> ConvertAlbumUpdateRequests(List<AlbumUpdateData> data)
-    {
-        return data.GroupBy(d => d.AlbumId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Album,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
-    }
-
-    private List<ItemUpdateRequestDTO> ConvertArtistUpdateRequests(List<ArtistUpdateData> data)
-    {
-        return data.GroupBy(d => d.ArtistId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Artist,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
-    }
-
-    private List<ItemUpdateRequestDTO> ConvertTrackUpdateRequests(List<TrackUpdateData> data)
-    {
-        return data.GroupBy(d => d.TrackId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Track,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
     }
 }
