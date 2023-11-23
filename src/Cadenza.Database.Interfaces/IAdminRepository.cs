@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.DTO;
-
-namespace Cadenza.Database.Interfaces;
+﻿namespace Cadenza.Database.Interfaces;
 
 public interface IAdminRepository
 {

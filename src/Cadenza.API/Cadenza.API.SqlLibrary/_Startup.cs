@@ -24,7 +24,7 @@ public static class _Startup
             .AddTransient<IImageRepository, ImageRepository>()
             .AddTransient<IMusicRepository, MusicRepository>()
             .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
-            .AddTransient<IUpdateRepository, UpdateRepository>();
+            .AddTransient<IQueueRepository, QueueRepository>();
     }
 
     private static IServiceCollection AddInternalServices(this IServiceCollection services)

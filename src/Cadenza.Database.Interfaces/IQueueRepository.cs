@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Database.Interfaces;
 
-public interface IUpdateRepository
+public interface IQueueRepository
 {
     Task AddUpdateRequest(ItemUpdateRequestDTO update);
     Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source);

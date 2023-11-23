@@ -1,10 +1,10 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Repositories;
 
-internal class UpdateRepository : IUpdateRepository
+internal class QueueRepository : IQueueRepository
 {
     private readonly IQueue _queue;
 
-    public UpdateRepository(IQueue queue)
+    public QueueRepository(IQueue queue)
     {
         _queue = queue;
     }

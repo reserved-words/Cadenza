@@ -5,16 +5,16 @@ namespace Cadenza.SyncService.Updaters;
 internal class SyncHandler : IService
 {
     private readonly IMusicRepository _musicRepository;
-    private readonly IUpdateRepository _updateRepository;
+    private readonly IQueueRepository _queueRepository;
     private readonly ILogger<UpdateRequestsHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
 
-    public SyncHandler(IMusicRepository musicRepository, IUpdateRepository updateRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
+    public SyncHandler(IMusicRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
     {
         _sources = spurces;
         _logger = logger;
         _musicRepository = musicRepository;
-        _updateRepository = updateRepository;
+        _queueRepository = queueRepository;
     }
 
     public async Task Run()
@@ -62,7 +62,7 @@ internal class SyncHandler : IService
 
     private async Task ProcessRemovalRequests(ISourceRepository repository)
     {
-        var requests = await _updateRepository.GetRemovalRequests(repository.Source);
+        var requests = await _queueRepository.GetRemovalRequests(repository.Source);
 
         foreach (var request in requests)
         {
@@ -71,12 +71,12 @@ internal class SyncHandler : IService
             try
             {
                 await repository.RemoveTrack(request);
-                await _updateRepository.MarkRemovalDone(request.RequestId);
+                await _queueRepository.MarkRemovalDone(request.RequestId);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Failed to process removal request for {request.TrackIdFromSource} ({request.RequestId})");
-                await _updateRepository.MarkRemovalErrored(request.RequestId);
+                await _queueRepository.MarkRemovalErrored(request.RequestId);
             }
         }
     }
