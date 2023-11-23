@@ -4,17 +4,19 @@ namespace Cadenza.SyncService.Updaters;
 
 internal class SyncHandler : IService
 {
-    private readonly IMusicRepository _musicRepository;
-    private readonly IQueueRepository _queueRepository;
     private readonly ILogger<UpdateRequestsHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
+    private readonly ILibraryRepository _libraryRepository;
+    private readonly IQueueRepository _queueRepository;
+    private readonly IUpdateRepository _updateRepository;
 
-    public SyncHandler(IMusicRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
+    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger, IUpdateRepository updateRepository)
     {
         _sources = spurces;
         _logger = logger;
-        _musicRepository = musicRepository;
+        _libraryRepository = musicRepository;
         _queueRepository = queueRepository;
+        _updateRepository = updateRepository;
     }
 
     public async Task Run()
@@ -25,7 +27,7 @@ internal class SyncHandler : IService
         {
             await ProcessRemovalRequests(repository);
 
-            var dbTracks = await _musicRepository.GetAllTracks(repository.Source);
+            var dbTracks = await _libraryRepository.GetAllTracks(repository.Source);
             var sourceTracks = await repository.GetAllTracks();
 
             await RemoveDbTracksThatAreNotInSource(repository, dbTracks, sourceTracks);
@@ -44,7 +46,7 @@ internal class SyncHandler : IService
         {
             _logger.LogInformation($"Adding track {trackId}");
             var track = await repository.GetTrack(trackId);
-            await _musicRepository.AddTrack(repository.Source, track);
+            await _updateRepository.AddTrack(repository.Source, track);
         }
     }
 
@@ -55,7 +57,7 @@ internal class SyncHandler : IService
 
         if (removedTracks.Any())
         {
-            await _musicRepository.RemoveTracks(removedTracks);
+            await _updateRepository.RemoveTracks(removedTracks);
             _logger.LogInformation($"{removedTracks.Count} tracks removed");
         }
     }

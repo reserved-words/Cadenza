@@ -22,9 +22,10 @@ public static class _Startup
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
-            .AddTransient<IMusicRepository, MusicRepository>()
+            .AddTransient<ILibraryRepository, LibraryRepository>()
             .AddTransient<IPlayTrackRepository, PlayTrackRepository>()
-            .AddTransient<IQueueRepository, QueueRepository>();
+            .AddTransient<IQueueRepository, QueueRepository>()
+            .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 
     private static IServiceCollection AddInternalServices(this IServiceCollection services)

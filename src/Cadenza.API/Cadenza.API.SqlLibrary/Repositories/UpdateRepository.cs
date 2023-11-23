@@ -1,20 +1,20 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Repositories;
 
-internal class MusicRepository : IMusicRepository
+internal class UpdateRepository : IUpdateRepository
 {
     private readonly IAdmin _admin;
-    private readonly IImageConverter _imageConverter;
     private readonly IDataMapper _mapper;
+    private readonly IImageConverter _imageConverter;
     private readonly ILibrary _library;
     private readonly IUpdate _update;
 
-    public MusicRepository(IDataMapper mapper, ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update)
+    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IDataMapper mapper)
     {
-        _mapper = mapper;
         _library = library;
         _imageConverter = imageConverter;
         _admin = admin;
         _update = update;
+        _mapper = mapper;
     }
 
     public async Task AddTrack(LibrarySource source, SyncTrackDTO track)
@@ -38,47 +38,6 @@ internal class MusicRepository : IMusicRepository
 
         var trackData = _mapper.MapTrack(track, trackArtistId, discId);
         await _update.AddTrack(trackData);
-    }
-
-    public async Task<FullLibraryDTO> Get()
-    {
-        var artistsData = await _library.GetArtists();
-        var artists = artistsData.Select(a => _mapper.MapArtist(a)).ToList();
-
-        var library = new FullLibraryDTO
-        {
-            Artists = artists,
-            Albums = new List<AlbumDetailsDTO>(),
-            Tracks = new List<TrackDetailsDTO>(),
-            AlbumTracks = new List<AlbumTrackLinkDTO>()
-        };
-
-        foreach (var src in Enum.GetValues<LibrarySource>())
-        {
-            await AddSource(library, src);
-        }
-
-        return library;
-    }
-
-    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
-    {
-        return await _library.GetAlbumTrackSourceIds(albumId);
-    }
-
-    public async Task<List<string>> GetAllTracks(LibrarySource source)
-    {
-        return await _library.GetTrackSourceIds(source);
-    }
-
-    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
-    {
-        return await _library.GetArtistTrackSourceIds(artistId);
-    }
-
-    public async Task<string> GetTrackIdFromSource(int trackId)
-    {
-        return await _library.GetTrackIdFromSource(trackId);
     }
 
     public async Task RemoveTrack(int id)
@@ -207,20 +166,5 @@ internal class MusicRepository : IMusicRepository
         }
 
         await _update.UpdateTrack(track);
-    }
-
-    private async Task AddSource(FullLibraryDTO library, LibrarySource source)
-    {
-        var albumsData = await _library.GetAlbums(source);
-        var discsData = await _library.GetDiscs(source);
-        var tracksData = await _library.GetTracks(source);
-
-        var albums = albumsData.Select(a => _mapper.MapAlbum(a, discsData.Where(d => d.AlbumId == a.Id).ToList())).ToList();
-        var albumTracks = tracksData.Select(t => _mapper.MapAlbumTrack(t)).ToList();
-        var tracks = tracksData.Select(t => _mapper.MapTrack(t)).ToList();
-
-        library.Albums.AddRange(albums);
-        library.Tracks.AddRange(tracks);
-        library.AlbumTracks.AddRange(albumTracks);
     }
 }

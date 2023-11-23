@@ -5,9 +5,9 @@ namespace Cadenza.API.Services;
 internal class CachePopulater : ICachePopulater
 {
     private readonly ILibraryCache _cache;
-    private readonly IMusicRepository _repository;
+    private readonly ILibraryRepository _repository;
 
-    public CachePopulater(ILibraryCache cache, IMusicRepository repository)
+    public CachePopulater(ILibraryCache cache, ILibraryRepository repository)
     {
         _cache = cache;
         _repository = repository;
