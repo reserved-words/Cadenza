@@ -16,3 +16,10 @@ CREATE UNIQUE INDEX [UNQ_Artist_CompareName] ON [Library].[Artists] ([CompareNam
 GO
 CREATE UNIQUE INDEX [UNQ_Artist_Name] ON [Library].[Artists] ([Name])
 GO
+
+
+CREATE INDEX [IX_Artists_Genre] ON [Library].[Artists] ([Genre])
+
+GO
+
+CREATE INDEX [IX_Artists_GroupingId] ON [Library].[Artists] ([GroupingId])

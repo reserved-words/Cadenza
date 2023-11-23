@@ -72,6 +72,9 @@
     <Folder Include="Stored Procedures\History" />
     <Folder Include="Views\History" />
     <Folder Include="Stored Procedures\Admin" />
+    <Folder Include="Stored Procedures\Play" />
+    <Folder Include="Stored Procedures\Update" />
+    <Folder Include="Stored Procedures\Images" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -83,22 +86,14 @@
     <Build Include="Tables\Library\Discs.sql" />
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
-    <Build Include="Stored Procedures\Library\AddArtist.sql" />
-    <Build Include="Stored Procedures\Library\AddAlbum.sql" />
-    <Build Include="Stored Procedures\Library\AddDisc.sql" />
-    <Build Include="Stored Procedures\Library\AddTrack.sql" />
     <Build Include="Stored Procedures\Library\GetAlbums.sql" />
     <Build Include="Stored Procedures\Library\GetArtists.sql" />
     <Build Include="Stored Procedures\Library\GetDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetTracks.sql" />
-    <Build Include="Stored Procedures\Library\GetTrackIds.sql" />
+    <Build Include="Stored Procedures\Library\GetTrackSourceIds.sql" />
     <Build Include="Views\Library\vw_ArtistTags.sql" />
     <Build Include="Views\Library\vw_AlbumTags.sql" />
     <Build Include="Views\Library\vw_TrackTags.sql" />
-    <Build Include="Stored Procedures\Library\DeleteTrack.sql" />
-    <Build Include="Stored Procedures\Library\DeleteEmptyArtists.sql" />
-    <Build Include="Stored Procedures\Library\DeleteEmptyAlbums.sql" />
-    <Build Include="Stored Procedures\Library\DeleteEmptyDiscs.sql" />
     <Build Include="Views\Library\vw_NonEmptyArtists.sql" />
     <Build Include="Views\Library\vw_EmptyArtists.sql" />
     <Build Include="Views\Library\vw_EmptyAlbums.sql" />
@@ -106,9 +101,6 @@
     <Build Include="Stored Procedures\Library\GetAlbum.sql" />
     <Build Include="Stored Procedures\Library\GetArtist.sql" />
     <Build Include="Stored Procedures\Library\GetTrack.sql" />
-    <Build Include="Stored Procedures\Library\UpdateAlbum.sql" />
-    <Build Include="Stored Procedures\Library\UpdateArtist.sql" />
-    <Build Include="Stored Procedures\Library\UpdateTrack.sql" />
     <Build Include="Schemas\Queue.sql" />
     <Build Include="Tables\Queue\ArtistUpdates.sql" />
     <Build Include="Tables\Queue\AlbumUpdates.sql" />
@@ -133,8 +125,6 @@
     <Build Include="Stored Procedures\Queue\MarkTrackUpdateErrored.sql" />
     <Build Include="Tables\Library\AlbumArtwork.sql" />
     <Build Include="Tables\Library\ArtistImages.sql" />
-    <Build Include="Stored Procedures\Library\GetArtistImage.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbumArtwork.sql" />
     <Build Include="Schemas\History.sql" />
     <Build Include="Tables\History\PlayedArtists.sql" />
     <Build Include="Tables\Admin\PlaylistTypes.sql" />
@@ -169,10 +159,32 @@
     <Build Include="Stored Procedures\Admin\GetGroupings.sql" />
     <None Include="SeedData\Groupings.sql" />
     <Build Include="Views\Library\vw_UsedTags.sql" />
-    <Build Include="Stored Procedures\Library\UpdateTrackDisc.sql" />
-    <Build Include="Stored Procedures\Library\UpdateTrackCount.sql" />
-    <Build Include="Stored Procedures\Library\UpdateDiscCount.sql" />
     <Build Include="Tables\Admin\Settings.sql" />
+    <Build Include="Stored Procedures\Play\GetAllTrackIds.sql" />
+    <Build Include="Schemas\Play.sql" />
+    <Build Include="Stored Procedures\Play\GetGenreTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetGroupingTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetAlbumTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetArtistTrackIds.sql" />
+    <Build Include="Stored Procedures\Play\GetTagTrackIds.sql" />
+    <Build Include="Schemas\Update.sql" />
+    <Build Include="Stored Procedures\Update\DeleteEmptyAlbums.sql" />
+    <Build Include="Stored Procedures\Update\DeleteEmptyArtists.sql" />
+    <Build Include="Stored Procedures\Update\DeleteEmptyDiscs.sql" />
+    <Build Include="Stored Procedures\Update\DeleteTrack.sql" />
+    <Build Include="Stored Procedures\Update\UpdateAlbum.sql" />
+    <Build Include="Stored Procedures\Update\UpdateArtist.sql" />
+    <Build Include="Stored Procedures\Update\UpdateTrack.sql" />
+    <Build Include="Stored Procedures\Update\UpdateDiscCount.sql" />
+    <Build Include="Stored Procedures\Update\UpdateTrackCount.sql" />
+    <Build Include="Stored Procedures\Update\UpdateTrackDisc.sql" />
+    <Build Include="Stored Procedures\Update\AddAlbum.sql" />
+    <Build Include="Stored Procedures\Update\AddArtist.sql" />
+    <Build Include="Stored Procedures\Update\AddDisc.sql" />
+    <Build Include="Stored Procedures\Update\AddTrack.sql" />
+    <Build Include="Schemas\Images.sql" />
+    <Build Include="Stored Procedures\Images\GetArtistImage.sql" />
+    <Build Include="Stored Procedures\Images\GetAlbumArtwork.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
@@ -197,6 +209,10 @@
     <SqlCmdVariable Include="APIUser">
       <DefaultValue>TBC</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ServiceUser">
+      <DefaultValue>TBC</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
 </Project>

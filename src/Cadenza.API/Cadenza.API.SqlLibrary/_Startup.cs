@@ -8,6 +8,8 @@ global using Cadenza.Database.SqlLibrary.Model;
 
 using Cadenza.Database.SqlLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Cadenza.Database.SqlLibrary.Database;
+using Cadenza.Database.SqlLibrary.Repositories;
 
 namespace Cadenza.Database.SqlLibrary;
 
@@ -20,24 +22,23 @@ public static class _Startup
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
-            .AddTransient<IMusicRepository, MusicRepository>()
+            .AddTransient<ILibraryRepository, LibraryRepository>()
+            .AddTransient<IPlayRepository, PlayRepository>()
+            .AddTransient<IQueueRepository, QueueRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 
     private static IServiceCollection AddInternalServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<IDataAccess, DataAccess>()
-            .AddTransient<IDataDeletionService, DataDeletionService>()
-            .AddTransient<IDataInsertService, DataInsertService>()
-            .AddTransient<IDataMapper, DataMapper>()
-            .AddTransient<IDataReadService, DataReadService>()
-            .AddTransient<IDataUpdateService, DataUpdateService>()
-            .AddTransient<ILibraryReader, LibraryReader>()
-            .AddTransient<ILibraryUpdater, LibraryUpdater>()
-            .AddTransient<IQueueReader, QueueReader>()
-            .AddTransient<IQueueUpdater, QueueUpdater>()
-            .AddTransient<ITrackAdder, TrackAdder>()
-            .AddTransient<ITrackRemover, TrackRemover>();
+            .AddTransient<ISqlAccessFactory, SqlAccessFactory>()
+            .AddTransient<IMapper, Mapper>()
+            .AddTransient<IAdmin, Admin>()
+            .AddTransient<IHistory, History>()
+            .AddTransient<IImages, Images>()
+            .AddTransient<ILibrary, Library>()
+            .AddTransient<IPlay, Play>()
+            .AddTransient<IQueue, Queue>()
+            .AddTransient<IUpdate, Update>();
     }
 }

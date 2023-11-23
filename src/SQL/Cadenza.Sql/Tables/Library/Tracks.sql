@@ -22,3 +22,10 @@ CREATE INDEX [UNQ_DiscTracks] ON [Library].[Tracks] ([DiscId],[TrackNo])
 GO
 
 
+
+
+CREATE INDEX [IX_Tracks_ArtistId] ON [Library].[Tracks] ([ArtistId])
+
+GO
+
+CREATE INDEX [IX_Tracks_DiscId] ON [Library].[Tracks] ([DiscId])

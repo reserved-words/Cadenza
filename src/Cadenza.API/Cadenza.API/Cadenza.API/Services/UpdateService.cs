@@ -5,15 +5,15 @@ namespace Cadenza.API.Services;
 
 internal class UpdateService : IUpdateService
 {
-    private readonly IMusicRepository _musicRepository;
+    private readonly IQueueRepository _queueRepository;
     private readonly IUpdateRepository _updateRepository;
     private readonly ICachePopulater _cachePopulater;
 
-    public UpdateService(IUpdateRepository updateRepository, IMusicRepository musicRepository, ICachePopulater cachePopulater)
+    public UpdateService(IQueueRepository queueRepository, ICachePopulater cachePopulater, IUpdateRepository updateRepository)
     {
-        _updateRepository = updateRepository;
-        _musicRepository = musicRepository;
+        _queueRepository = queueRepository;
         _cachePopulater = cachePopulater;
+        _updateRepository = updateRepository;
     }
 
     public async Task UpdateAlbumTracks(UpdateAlbumTracksDTO request)
@@ -25,8 +25,8 @@ internal class UpdateService : IUpdateService
 
             if (updatedTrack == null)
             {
-                await _updateRepository.AddRemovalRequest(originalTrack.TrackId);
-                await _musicRepository.RemoveTrack(originalTrack.TrackId);
+                await _queueRepository.AddRemovalRequest(originalTrack.TrackId);
+                await _updateRepository.RemoveTrack(originalTrack.TrackId);
             }
             else
             {
@@ -40,8 +40,8 @@ internal class UpdateService : IUpdateService
                 if (!trackUpdateRequest.Updates.Any())
                     continue;
 
-                await _updateRepository.AddUpdateRequest(trackUpdateRequest);
-                await _musicRepository.UpdateTrack(trackUpdateRequest);
+                await _queueRepository.AddUpdateRequest(trackUpdateRequest);
+                await _updateRepository.UpdateTrack(trackUpdateRequest);
             }
         }
 
@@ -60,8 +60,8 @@ internal class UpdateService : IUpdateService
         if (!request.Updates.Any())
             return;
 
-        await _updateRepository.AddUpdateRequest(request);
-        await _musicRepository.UpdateTrack(request);
+        await _queueRepository.AddUpdateRequest(request);
+        await _updateRepository.UpdateTrack(request);
         await _cachePopulater.Populate(false);
     }
 
@@ -77,8 +77,8 @@ internal class UpdateService : IUpdateService
         if (!request.Updates.Any())
             return;
 
-        await _updateRepository.AddUpdateRequest(request);
-        await _musicRepository.UpdateAlbum(request);
+        await _queueRepository.AddUpdateRequest(request);
+        await _updateRepository.UpdateAlbum(request);
         await _cachePopulater.Populate(false);
     }
 
@@ -94,8 +94,8 @@ internal class UpdateService : IUpdateService
         if (!request.Updates.Any())
             return;
 
-        await _updateRepository.AddUpdateRequest(request);
-        await _musicRepository.UpdateArtist(request);
+        await _queueRepository.AddUpdateRequest(request);
+        await _updateRepository.UpdateArtist(request);
         await _cachePopulater.Populate(false);
     }
 
