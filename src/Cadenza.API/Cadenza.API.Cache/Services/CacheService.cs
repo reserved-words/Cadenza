@@ -2,13 +2,11 @@
 
 internal class CacheService : ICacheService
 {
-    private readonly IItemCache _itemCache;
     private readonly IHelperCache _helperCache;
     private readonly IMainCache _mainCache;
 
-    public CacheService(IItemCache itemCache, IMainCache mainCache, IHelperCache helperCache)
+    public CacheService(IMainCache mainCache, IHelperCache helperCache)
     {
-        _itemCache = itemCache;
         _mainCache = mainCache;
         _helperCache = helperCache;
     }
@@ -16,21 +14,18 @@ internal class CacheService : ICacheService
     public Task Populate(FullLibraryDTO library)
     {
         _helperCache.Clear();
-        _itemCache.Clear();
         _mainCache.Clear();
 
         foreach (var artist in library.Artists)
         {
             artist.Genre ??= "None";
             _helperCache.CacheArtist(artist);
-            _itemCache.CacheArtist(artist);
             _mainCache.CacheArtist(artist);
         }
 
         foreach (var album in library.Albums)
         {
             _helperCache.CacheAlbum(album);
-            _itemCache.CacheAlbum(album);
             _mainCache.CacheAlbum(album);
         }
 
@@ -39,7 +34,6 @@ internal class CacheService : ICacheService
             var album = _mainCache.GetAlbum(track.AlbumId);
             var artist = _mainCache.GetArtist(track.ArtistId);
             _helperCache.CacheTrack(track);
-            _itemCache.CacheTrack(track, album);
             _mainCache.CacheTrack(track);
         }
 
@@ -108,46 +102,11 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItemDTO>> GetSearchAlbums()
-    {
-        var result = _itemCache.GetItems(PlayerItemType.Album);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<PlayerItemDTO>> GetArtists()
-    {
-        var result = _itemCache.GetItems(PlayerItemType.Artist);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<PlayerItemDTO>> GetTags()
-    {
-        var result = _itemCache.GetTags();
-        return Task.FromResult(result);
-    }
-
-    public Task<List<PlayerItemDTO>> GetTracks()
-    {
-        var result = _itemCache.GetItems(PlayerItemType.Track);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<PlayerItemDTO>> GetGenres()
-    {
-        var result = _itemCache.GetItems(PlayerItemType.Genre);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<PlayerItemDTO>> GetGroupings()
-    {
-        var result = _itemCache.GetItems(PlayerItemType.Grouping);
-        return Task.FromResult(result);
-    }
-
     public Task<List<PlayerItemDTO>> GetTag(string id)
     {
-        var result = _itemCache.GetTag(id);
-        return Task.FromResult(result);
+        throw new NotImplementedException();
+        //var result = _itemCache.GetTag(id);
+        //return Task.FromResult(result);
     }
     public Task<TrackFullDTO> GetTrack(int id)
     {

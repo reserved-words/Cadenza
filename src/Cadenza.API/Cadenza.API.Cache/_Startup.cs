@@ -24,7 +24,6 @@ public static class Startup
         return services
             .AddSingleton<ICacheService, CacheService>()
             .AddSingleton<IHelperCache, HelperCache>()
-            .AddSingleton<IItemCache, ItemCache>()
             .AddSingleton<IMainCache, MainCache>();
     }
 }

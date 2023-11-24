@@ -1,64 +1,49 @@
-﻿using Cadenza.API.Interfaces.Services;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class SearchController : ControllerBase
 {
-    private readonly ILibraryCache _cache;
-    private readonly ICachePopulater _populater;
+    private readonly ISearchRepository _repository;
 
-    public SearchController(ILibraryCache cache, ICachePopulater populater)
+    public SearchController(ISearchRepository repository)
     {
-        _cache = cache;
-        _populater = populater;
+        _repository = repository;
     }
 
     [HttpGet("Albums")]
     public async Task<List<PlayerItemDTO>> Albums()
     {
-        await PopulateCache();
-        return await _cache.Search.GetSearchAlbums();
+        return await _repository.GetAlbums();
     }
 
     [HttpGet("Artists")]
     public async Task<List<PlayerItemDTO>> Artists()
     {
-        await PopulateCache();
-        return await _cache.Search.GetArtists();
+        return await _repository.GetArtists();
     }
 
     [HttpGet("Genres")]
     public async Task<List<PlayerItemDTO>> Genres()
     {
-        await PopulateCache();
-        return await _cache.Search.GetGenres();
+        return await _repository.GetGenres();
     }
 
     [HttpGet("Groupings")]
     public async Task<List<PlayerItemDTO>> Groupings()
     {
-        await PopulateCache();
-        return await _cache.Search.GetGroupings();
+        return await _repository.GetGroupings();
     }
 
     [HttpGet("Tags")]
     public async Task<List<PlayerItemDTO>> Tags()
     {
-        await PopulateCache();
-        return await _cache.Search.GetTags();
+        return await _repository.GetTags();
     }
 
     [HttpGet("Tracks")]
     public async Task<List<PlayerItemDTO>> Tracks()
     {
-        await PopulateCache();
-        return await _cache.Search.GetTracks();
-    }
-
-    private async Task PopulateCache()
-    {
-        await _populater.Populate(true);
+        return await _repository.GetTracks();
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace Cadenza.API.Interfaces.Library;
+﻿namespace Cadenza.Database.Interfaces;
 
 public interface ISearchRepository
 {
-    Task<List<PlayerItemDTO>> GetSearchAlbums();
+    Task<List<PlayerItemDTO>> GetAlbums();
     Task<List<PlayerItemDTO>> GetArtists();
     Task<List<PlayerItemDTO>> GetGenres();
     Task<List<PlayerItemDTO>> GetGroupings();

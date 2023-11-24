@@ -15,8 +15,6 @@ internal class LibraryCache : ILibraryCache
 
     public IArtistRepository Artists => _cache;
 
-    public ISearchRepository Search => _cache;
-
     public ITagRepository Tags => _cache;
 
     public ITrackRepository Tracks => _cache;
