@@ -72,18 +72,6 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<ArtistDTO>> GetAllArtists()
-    {
-        var result = _mainCache.GetAllArtists();
-        return Task.FromResult(result);
-    }
-
-    public Task<ArtistDetailsDTO> GetArtist(int id)
-    {
-        var result = _mainCache.GetArtist(id);
-        return Task.FromResult(result);
-    }
-
     public Task<List<ArtistDTO>> GetArtistsByGenre(string id)
     {
         var result = _helperCache.GetArtistsByGenre(id);
@@ -96,18 +84,6 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<TrackDTO>> GetArtistTracks(int artistId)
-    {
-        var result = _helperCache.GetArtistTracks(artistId);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<SearchItemDTO>> GetTag(string id)
-    {
-        throw new NotImplementedException();
-        //var result = _itemCache.GetTag(id);
-        //return Task.FromResult(result);
-    }
     public Task<TrackFullDTO> GetTrack(int id)
     {
         var result = _mainCache.GetFullTrack(id);

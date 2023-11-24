@@ -51,20 +51,6 @@ public class LibraryController : ControllerBase
         return await _cache.Artists.GetAlbumsFeaturingArtist(id);
     }
 
-    [HttpGet("Artist/Tracks/{id}")]
-    public async Task<List<TrackDTO>> ArtistTracks(int id)
-    {
-        await PopulateCache();
-        return await _cache.Artists.GetArtistTracks(id);
-    }
-
-    [HttpGet("Artists")]
-    public async Task<List<ArtistDTO>> Artists()
-    {
-        await PopulateCache();
-        return await _cache.Artists.GetAllArtists();
-    }
-
     [HttpGet("Artists/Genre/{id}")]
     public async Task<List<ArtistDTO>> GenreArtists(string id)
     {

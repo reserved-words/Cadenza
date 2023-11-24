@@ -13,5 +13,4 @@ internal interface IHelperCache
     AlbumTracksDTO GetAlbumTracks(int id);
     List<ArtistDTO> GetArtistsByGenre(string id);
     List<ArtistDTO> GetArtistsByGrouping(int id);
-    List<TrackDTO> GetArtistTracks(int id);
 }

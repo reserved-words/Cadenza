@@ -25,8 +25,6 @@ public class DatabaseApiEndpoints
 
     public string Artist { get; set; }
     public string ArtistAlbums { get; set; }
-    public string ArtistTracks { get; set; }
-    public string AllArtists { get; set; }
     public string GroupingArtists { get; set; }
     public string GenreArtists { get; set; }
     public string Tag { get; set; }

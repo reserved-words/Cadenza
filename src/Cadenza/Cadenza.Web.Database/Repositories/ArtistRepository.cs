@@ -19,12 +19,6 @@ internal class ArtistRepository : IArtistRepository
         return albums.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<ArtistVM>> GetAllArtists()
-    {
-        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.AllArtists);
-        return artists.Select(a => _mapper.Map(a)).ToList();
-    }
-
     public async Task<List<ArtistVM>> GetArtistsByGrouping(int id)
     {
         var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, id);
@@ -47,11 +41,5 @@ internal class ArtistRepository : IArtistRepository
     {
         var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.ArtistAlbums, id);
         return albums.Select(a => _mapper.Map(a)).ToList();
-    }
-
-    public async Task<List<TrackVM>> GetArtistTracks(int id)
-    {
-        var tracks = await _apiHelper.Get<List<TrackDTO>>(_settings.ArtistTracks, id);
-        return tracks.Select(t => _mapper.Map(t)).ToList();
     }
 }
