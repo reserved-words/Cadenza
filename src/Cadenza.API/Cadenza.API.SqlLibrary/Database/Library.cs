@@ -61,9 +61,9 @@ internal class Library : ILibrary
         return await _sql.QuerySingle<GetArtistResult>(new { Id = id });
     }
 
-    public Task<GetTracksResult> GetTrack(int id)
+    public async Task<GetTrackResult> GetTrack(int id)
     {
-        throw new NotImplementedException();
+        return await _sql.QuerySingle<GetTrackResult>(new { Id = id });
     }
 
     public async Task<GetAlbumResult> GetAlbum(int id)

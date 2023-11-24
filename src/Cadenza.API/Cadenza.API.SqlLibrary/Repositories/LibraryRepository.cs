@@ -70,11 +70,10 @@ internal class LibraryRepository : ILibraryRepository
         return items.Select(_mapper.MapTaggedItem).ToList();
     }
 
-    public Task<TrackFullDTO> GetTrack(int id)
+    public async Task<TrackFullDTO> GetTrack(int id)
     {
-        throw new NotImplementedException();
-        //var track = await _library.GetTrack(id);
-        //return _mapper.MapTrack(track);
+        var track = await _library.GetTrack(id);
+        return _mapper.MapTrack(track);
     }
 
     public async Task<string> GetTrackIdFromSource(int trackId)

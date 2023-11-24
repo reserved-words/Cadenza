@@ -144,6 +144,63 @@ internal class LibraryMapper : ILibraryMapper
 
     public TrackFullDTO MapTrack(GetTrackResult track)
     {
-        throw new NotImplementedException();
+        return new TrackFullDTO
+        {
+            Track = new TrackDetailsDTO
+            {
+                Source = (LibrarySource)track.SourceId,
+                Id = track.Id,
+                IdFromSource = track.IdFromSource,
+                ArtistId = track.ArtistId,
+                ArtistName = track.ArtistName,
+                AlbumId = track.AlbumId,
+                Title = track.TrackTitle,
+                DurationSeconds = track.DurationSeconds,
+                Year = track.TrackYear,
+                Lyrics = track.Lyrics,
+                Tags = new TagsDTO(track.TrackTagList)
+            },
+            Artist = new ArtistDetailsDTO
+            {
+                Id = track.ArtistId,
+                Name = track.ArtistName,
+                Grouping = new GroupingDTO(track.ArtistGroupingId, track.ArtistGroupingName),
+                Genre = track.ArtistGenre,
+                City = track.ArtistCity,
+                State = track.ArtistState,
+                Country = track.ArtistCountry,
+                Tags = new TagsDTO(track.ArtistTagList)
+            },
+            Album = new AlbumDetailsDTO
+            {
+                Id = track.AlbumId,
+                ArtistId = track.AlbumArtistId,
+                ArtistName = track.AlbumArtistName,
+                Title = track.AlbumTitle,
+                ReleaseType = (ReleaseType)track.ReleaseTypeId,
+                Year = track.AlbumYear,
+                DiscCount = track.DiscCount,
+                // DiscTrackCounts not needed here?
+                Tags = new TagsDTO(track.AlbumTagList)
+            },
+            AlbumArtist = new ArtistDetailsDTO
+            {
+                Id = track.AlbumArtistId,
+                Name = track.AlbumArtistName,
+                Grouping = new GroupingDTO(track.AlbumArtistGroupingId, track.AlbumArtistGroupingName),
+                Genre = track.AlbumArtistGenre,
+                City = track.AlbumArtistCity,
+                State = track.AlbumArtistState,
+                Country = track.AlbumArtistCountry,
+                Tags = new TagsDTO(track.AlbumArtistTagList)
+            },
+            AlbumTrack = new AlbumTrackLinkDTO
+            {
+                TrackId = track.Id,
+                AlbumId = track.AlbumId,
+                DiscNo = track.DiscNo,
+                TrackNo = track.TrackNo
+            }
+        };
     }
 }
