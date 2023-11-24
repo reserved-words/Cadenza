@@ -10,10 +10,6 @@ internal interface ILibrary
     Task<List<GetTracksResult>> GetTracks(LibrarySource? source);
     Task<List<string>> GetTrackSourceIds(LibrarySource source);
 
-    Task<GetAlbumResult> GetAlbum(int albumId);
-    Task<GetArtistResult> GetArtist(int artistId);
-    Task<GetTrackResult> GetTrack(int trackId);
-
     Task<List<string>> GetAlbumTrackSourceIds(int albumId);
     Task<string> GetTrackIdFromSource(int trackId);
     Task<List<string>> GetArtistTrackSourceIds(int artistId);

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[GetTrack]
+﻿CREATE PROCEDURE [Update].[GetTrackForUpdate]
 	@Id INT
 AS
 BEGIN

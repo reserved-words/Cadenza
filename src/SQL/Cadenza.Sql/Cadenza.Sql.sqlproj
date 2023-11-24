@@ -98,9 +98,6 @@
     <Build Include="Views\Library\vw_EmptyArtists.sql" />
     <Build Include="Views\Library\vw_EmptyAlbums.sql" />
     <Build Include="Views\Library\vw_EmptyDiscs.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbum.sql" />
-    <Build Include="Stored Procedures\Library\GetArtist.sql" />
-    <Build Include="Stored Procedures\Library\GetTrack.sql" />
     <Build Include="Schemas\Queue.sql" />
     <Build Include="Tables\Queue\ArtistUpdates.sql" />
     <Build Include="Tables\Queue\AlbumUpdates.sql" />
@@ -185,6 +182,9 @@
     <Build Include="Schemas\Images.sql" />
     <Build Include="Stored Procedures\Images\GetArtistImage.sql" />
     <Build Include="Stored Procedures\Images\GetAlbumArtwork.sql" />
+    <Build Include="Stored Procedures\Update\GetAlbumForUpdate.sql" />
+    <Build Include="Stored Procedures\Update\GetArtistForUpdate.sql" />
+    <Build Include="Stored Procedures\Update\GetTrackForUpdate.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

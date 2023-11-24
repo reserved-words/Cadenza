@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Model.Library;
 
-internal class GetTrackResult
+internal class GetTrackForUpdateResult
 {
     public int Id { get; set; }
     public int DiscIndex { get; set; }

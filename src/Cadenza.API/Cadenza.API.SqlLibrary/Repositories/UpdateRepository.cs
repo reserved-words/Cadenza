@@ -1,18 +1,17 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Update;
+﻿using Cadenza.Database.SqlLibrary.Model.Library;
+using Cadenza.Database.SqlLibrary.Model.Update;
 
 namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class UpdateRepository : IUpdateRepository
 {
     private readonly IAdmin _admin;
-    private readonly IUpdateMapper _mapper;
     private readonly IImageConverter _imageConverter;
-    private readonly ILibrary _library;
     private readonly IUpdate _update;
+    private readonly IUpdateMapper _mapper;
 
-    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IUpdateMapper mapper)
+    public UpdateRepository(IImageConverter imageConverter, IAdmin admin, IUpdate update, IUpdateMapper mapper)
     {
-        _library = library;
         _imageConverter = imageConverter;
         _admin = admin;
         _update = update;
@@ -64,21 +63,9 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task UpdateAlbum(ItemUpdateRequestDTO request)
     {
-        var album = await _library.GetAlbum(request.Id);
+        var album = await _update.GetAlbumForUpdate(request.Id);
 
-        var updatedAlbum = new UpdateAlbumParameter
-        {
-            Id = album.Id,
-            ArtworkMimeType = album.ArtworkMimeType,
-            ArtworkContent = album.ArtworkContent,
-            SourceId = album.SourceId,
-            ArtistId = album.ArtistId,
-            Title = album.Title,
-            ReleaseTypeId = album.ReleaseTypeId,
-            Year = album.Year,
-            DiscCount = album.DiscCount,
-            TagList = album.TagList
-        };
+        var updatedAlbum = _mapper.MapAlbumToUpdate(album);
 
         foreach (var update in request.Updates)
         {
@@ -111,21 +98,9 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task UpdateArtist(ItemUpdateRequestDTO request)
     {
-        var artist = await _library.GetArtist(request.Id);
+        var artist = await _update.GetArtistForUpdate(request.Id);
 
-        var updatedArtist = new UpdateArtistParameter
-        {
-            Id = artist.Id,
-            ImageMimeType = artist.ImageMimeType,
-            ImageContent = artist.ImageContent,
-            Name = artist.Name,
-            GroupingId = artist.GroupingId,
-            Genre = artist.Genre,
-            City = artist.City,
-            State = artist.State,
-            Country = artist.Country,
-            TagList = artist.TagList
-        };
+        UpdateArtistParameter updatedArtist = _mapper.MapArtistToUpdate(artist);
 
         foreach (var update in request.Updates)
         {
@@ -166,22 +141,9 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task UpdateTrack(ItemUpdateRequestDTO request)
     {
-        var track = await _library.GetTrack(request.Id);
+        var track = await _update.GetTrackForUpdate(request.Id);
 
-        var updatedTrack = new UpdateTrackParameter
-        {
-            Id = track.Id,
-            DiscIndex = track.DiscIndex,
-            IdFromSource = track.IdFromSource,
-            ArtistId = track.ArtistId,
-            DiscId = track.DiscId,
-            TrackNo = track.TrackNo,
-            Title = track.Title,
-            DurationSeconds = track.DurationSeconds,
-            Year = track.Year,  
-            Lyrics = track.Lyrics,
-            TagList = track.TagList
-        };
+        UpdateTrackParameter updatedTrack = _mapper.MapTrackToUpdate(track);
 
         foreach (var update in request.Updates)
         {

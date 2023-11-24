@@ -11,11 +11,6 @@ internal class Library : ILibrary
         _sql = sql.Create(nameof(Library));
     }
 
-    public async Task<GetAlbumResult> GetAlbum(int id)
-    {
-        return await _sql.QuerySingle<GetAlbumResult>(new { Id = id });
-    }
-
     public async Task<List<GetAlbumsResult>> GetAlbums(LibrarySource? source)
     {
         return await _sql.Query<GetAlbumsResult>(new { SourceId = (int?)source });
@@ -31,11 +26,6 @@ internal class Library : ILibrary
         return await _sql.Query<string>(new { SourceId = (int)source });
     }
 
-    public async Task<GetArtistResult> GetArtist(int id)
-    {
-        return await _sql.QuerySingle<GetArtistResult>(new { Id = id });
-    }
-
     public async Task<List<GetArtistsResult>> GetArtists()
     {
         return await _sql.Query<GetArtistsResult>(null);
@@ -49,12 +39,6 @@ internal class Library : ILibrary
     public async Task<List<GetDiscsResult>> GetDiscs(LibrarySource? source)
     {
         return await _sql.Query<GetDiscsResult>(new { SourceId = (int?)source });
-    }
-
-
-    public async Task<GetTrackResult> GetTrack(int id)
-    {
-        return await _sql.QuerySingle<GetTrackResult>(new { Id = id });
     }
 
     public async Task<string> GetTrackIdFromSource(int id)

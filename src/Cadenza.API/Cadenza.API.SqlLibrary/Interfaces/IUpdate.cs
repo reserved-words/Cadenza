@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Update;
+﻿using Cadenza.Database.SqlLibrary.Model.Library;
+using Cadenza.Database.SqlLibrary.Model.Update;
 
 namespace Cadenza.Database.SqlLibrary.Interfaces;
 
@@ -14,6 +15,10 @@ internal interface IUpdate
     Task DeleteEmptyAlbums();
     Task DeleteEmptyArtists();
     Task DeleteTrack(string idFromSource);
+
+    Task<GetAlbumForUpdateResult> GetAlbumForUpdate(int albumId);
+    Task<GetArtistForUpdateResult> GetArtistForUpdate(int artistId);
+    Task<GetTrackForUpdateResult> GetTrackForUpdate(int trackId);
 
     Task UpdateAlbum(UpdateAlbumParameter album);
     Task UpdateArtist(UpdateArtistParameter artist);

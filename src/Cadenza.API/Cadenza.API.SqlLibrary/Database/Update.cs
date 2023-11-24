@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Update;
+﻿using Cadenza.Database.SqlLibrary.Model.Library;
+using Cadenza.Database.SqlLibrary.Model.Update;
 using Dapper;
 using System.Data;
 
@@ -116,6 +117,22 @@ internal class Update : IUpdate
     public async Task DeleteTrack(string idFromSource)
     {
         await _sql.Execute(new { Id = (int?)null, IdFromSource = idFromSource });
+    }
+
+    public async Task<GetAlbumForUpdateResult> GetAlbumForUpdate(int id)
+    {
+        return await _sql.QuerySingle<GetAlbumForUpdateResult>(new { Id = id });
+    }
+
+    public async Task<GetArtistForUpdateResult> GetArtistForUpdate(int id)
+    {
+        return await _sql.QuerySingle<GetArtistForUpdateResult>(new { Id = id });
+    }
+
+
+    public async Task<GetTrackForUpdateResult> GetTrackForUpdate(int id)
+    {
+        return await _sql.QuerySingle<GetTrackForUpdateResult>(new { Id = id });
     }
 
     public async Task UpdateAlbum(UpdateAlbumParameter album)

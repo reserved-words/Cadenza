@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Model.Library;
 
-internal class GetAlbumResult
+internal class GetAlbumForUpdateResult
 {
     public int Id { get; set; }
     public string ArtworkMimeType { get; set; }

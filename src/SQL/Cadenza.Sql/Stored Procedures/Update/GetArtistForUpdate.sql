@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[GetArtist]
+﻿CREATE PROCEDURE [Update].[GetArtistForUpdate]
 	@Id INT
 AS
 BEGIN

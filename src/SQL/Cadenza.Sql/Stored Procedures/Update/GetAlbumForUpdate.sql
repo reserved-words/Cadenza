@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Library].[GetAlbum]
+﻿CREATE PROCEDURE [Update].[GetAlbumForUpdate]
 	@Id INT
 AS
 BEGIN
