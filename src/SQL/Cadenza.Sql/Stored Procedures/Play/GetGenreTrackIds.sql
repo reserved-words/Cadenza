@@ -1,7 +1,13 @@
 ﻿CREATE PROCEDURE [Play].[GetGenreTrackIds]
-	@Genre NVARCHAR(100)
+	@Genre NVARCHAR(100),
+	@LogRequest BIT
 AS
 BEGIN
+
+	IF @LogRequest = 1
+	BEGIN
+		EXECUTE [Play].[LogGenreRequest] @Genre
+	END
 
 	SELECT 
 		TRK.[Id]

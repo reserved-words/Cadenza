@@ -1,7 +1,13 @@
 ﻿CREATE PROCEDURE [Play].[GetTagTrackIds]
-	@Tag NVARCHAR(200)
+	@Tag NVARCHAR(200),
+	@LogRequest BIT
 AS
 BEGIN
+
+	IF @LogRequest = 1
+	BEGIN
+		EXECUTE [Play].[LogTagRequest] @Tag
+	END
 
 	SELECT 
 		[TrackId]

@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [History].[LogGroupingPlay]
-	@GroupingId INT
+﻿CREATE PROCEDURE [Play].[LogArtistRequest]
+	@ArtistId INT
 AS
 BEGIN
 	
@@ -12,15 +12,15 @@ BEGIN
 	FROM
 		[Admin].[PlaylistTypes]
 	WHERE
-		[Name] = 'Grouping'
+		[Name] = 'Artist'
 
 	SET @PlayedItemId = SCOPE_IDENTITY()
 
-	INSERT INTO [History].[PlayedGroupings] (
+	INSERT INTO [History].[PlayedArtists] (
 		[PlayedItemId],
-		[GroupingId])
+		[ArtistId])
 	VALUES (
 		@PlayedItemId,
-		@GroupingId)
+		@ArtistId)
 
 END

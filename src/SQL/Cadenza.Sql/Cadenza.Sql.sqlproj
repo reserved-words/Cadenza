@@ -132,13 +132,6 @@
     <Build Include="Tables\History\PlayedGroupings.sql" />
     <Build Include="Tables\History\PlayedTags.sql" />
     <Build Include="Tables\History\PlayedItems.sql" />
-    <Build Include="Stored Procedures\History\LogArtistPlay.sql" />
-    <Build Include="Stored Procedures\History\LogAlbumPlay.sql" />
-    <Build Include="Stored Procedures\History\LogTrackPlay.sql" />
-    <Build Include="Stored Procedures\History\LogGenrePlay.sql" />
-    <Build Include="Stored Procedures\History\LogGroupingPlay.sql" />
-    <Build Include="Stored Procedures\History\LogTagPlay.sql" />
-    <Build Include="Stored Procedures\History\LogLibraryPlay.sql" />
     <Build Include="Views\History\vw_PlayedItems.sql" />
     <Build Include="Views\History\vw_PlayedAlbums.sql" />
     <Build Include="Stored Procedures\History\GetRecentAlbums.sql" />
@@ -185,6 +178,12 @@
     <Build Include="Stored Procedures\Update\GetAlbumForUpdate.sql" />
     <Build Include="Stored Procedures\Update\GetArtistForUpdate.sql" />
     <Build Include="Stored Procedures\Update\GetTrackForUpdate.sql" />
+    <Build Include="Stored Procedures\Play\LogAlbumRequest.sql" />
+    <Build Include="Stored Procedures\Play\LogArtistRequest.sql" />
+    <Build Include="Stored Procedures\Play\LogGenreRequest.sql" />
+    <Build Include="Stored Procedures\Play\LogGroupingRequest.sql" />
+    <Build Include="Stored Procedures\Play\LogLibraryRequest.sql" />
+    <Build Include="Stored Procedures\Play\LogTagRequest.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

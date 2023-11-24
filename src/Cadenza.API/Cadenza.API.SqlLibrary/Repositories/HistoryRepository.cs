@@ -22,39 +22,4 @@ internal class HistoryRepository : IHistoryRepository
         var data = await _history.GetRecentTags(maxItems);
         return data.Select(d => d.Tag).ToList();
     }
-
-    public async Task LogAlbumPlay(int albumId)
-    {
-        await _history.LogAlbumPlay(albumId);
-    }
-
-    public async Task LogArtistPlay(int artistId)
-    {
-        await _history.LogArtistPlay(artistId);
-    }
-
-    public async Task LogGenrePlay(string genre)
-    {
-        await _history.LogGenrePlay(genre);
-    }
-
-    public async Task LogGroupingPlay(int groupingId)
-    {
-        await _history.LogGroupingPlay(groupingId);
-    }
-
-    public async Task LogLibraryPlay()
-    {
-        await _history.LogLibraryPlay();
-    }
-
-    public async Task LogTagPlay(string tag)
-    {
-        await _history.LogTagPlay(tag);
-    }
-
-    public async Task LogTrackPlay(int trackId)
-    {
-        await _history.LogTrackPlay(trackId);
-    }
 }

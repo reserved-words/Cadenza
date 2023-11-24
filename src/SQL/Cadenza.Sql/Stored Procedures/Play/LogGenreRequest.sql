@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [History].[LogGenrePlay]
+﻿CREATE PROCEDURE [Play].[LogGenreRequest]
 	@Genre NVARCHAR(100)
 AS
 BEGIN

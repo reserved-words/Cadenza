@@ -1,7 +1,13 @@
 ﻿CREATE PROCEDURE [Play].[GetGroupingTrackIds]
-	@Id INT
+	@Id INT,
+	@LogRequest BIT
 AS
 BEGIN
+
+	IF @LogRequest = 1
+	BEGIN
+		EXECUTE [Play].[LogGroupingRequest] @Id
+	END
 
 	SELECT 
 		TRK.[Id]

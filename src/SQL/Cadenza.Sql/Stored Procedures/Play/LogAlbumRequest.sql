@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [History].[LogTrackPlay]
-	@TrackId INT
+﻿CREATE PROCEDURE [Play].[LogAlbumRequest]
+	@AlbumId INT
 AS
 BEGIN
 	
@@ -12,15 +12,15 @@ BEGIN
 	FROM
 		[Admin].[PlaylistTypes]
 	WHERE
-		[Name] = 'Track'
+		[Name] = 'Album'
 
 	SET @PlayedItemId = SCOPE_IDENTITY()
 
-	INSERT INTO [History].[PlayedTracks] (
+	INSERT INTO [History].[PlayedAlbums] (
 		[PlayedItemId],
-		[TrackId])
+		[AlbumId])
 	VALUES (
 		@PlayedItemId,
-		@TrackId)
+		@AlbumId)
 
 END

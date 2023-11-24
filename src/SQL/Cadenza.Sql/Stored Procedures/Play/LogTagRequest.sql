@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [History].[LogTagPlay]
+﻿CREATE PROCEDURE [Play].[LogTagRequest]
 	@Tag NVARCHAR(200)
 AS
 BEGIN

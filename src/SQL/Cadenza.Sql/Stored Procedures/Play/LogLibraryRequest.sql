@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [History].[LogLibraryPlay]
+﻿CREATE PROCEDURE [Play].[LogLibraryRequest]
 AS
 BEGIN
 	

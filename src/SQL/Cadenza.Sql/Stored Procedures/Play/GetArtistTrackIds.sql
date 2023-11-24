@@ -1,7 +1,13 @@
 ﻿CREATE PROCEDURE [Play].[GetArtistTrackIds]
-	@Id INT
+	@Id INT,
+	@LogRequest BIT
 AS
 BEGIN
+
+	IF @LogRequest = 1
+	BEGIN
+		EXECUTE [Play].[LogArtistRequest] @Id
+	END
 
 	SELECT 
 		TRK.[Id]

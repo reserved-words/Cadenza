@@ -14,14 +14,6 @@ public class DatabaseApiEndpoints
 
     public string GroupingOptions { get; set; }
 
-    public string LogLibraryRequest { get; set; }
-    public string LogArtistRequest { get; set; }
-    public string LogAlbumRequest { get; set; }
-    public string LogTrackRequest { get; set; }
-    public string LogGroupingRequest { get; set; }
-    public string LogGenreRequest { get; set; }
-    public string LogTagRequest { get; set; }
-
     public string UpdateAlbumTracks { get; set; }
     public string UpdateAlbum { get; set; }
     public string UpdateArtist { get; set; }
