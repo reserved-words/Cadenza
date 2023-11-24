@@ -1,34 +1,49 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Repositories;
 
-public class SearchRepository : ISearchRepository
+internal class SearchRepository : ISearchRepository
 {
-    public async Task<List<PlayerItemDTO>> GetAlbums()
+    private readonly ISearch _search;
+    private readonly ISearchMapper _mapper;
+
+    public SearchRepository(ISearch search, ISearchMapper mapper)
     {
-        return new List<PlayerItemDTO>();
+        _search = search;
+        _mapper = mapper;
     }
 
-    public async Task<List<PlayerItemDTO>> GetArtists()
+    public async Task<List<SearchItemDTO>> GetAlbums()
     {
-        return new List<PlayerItemDTO>();
+        var albums = await _search.GetAlbums();
+        return albums.Select(_mapper.MapAlbum).ToList();
     }
 
-    public async Task<List<PlayerItemDTO>> GetGenres()
+    public async Task<List<SearchItemDTO>> GetArtists()
     {
-        return new List<PlayerItemDTO>();
+        var albums = await _search.GetArtists();
+        return albums.Select(_mapper.MapArtist).ToList();
     }
 
-    public async Task<List<PlayerItemDTO>> GetGroupings()
+    public async Task<List<SearchItemDTO>> GetGenres()
     {
-        return new List<PlayerItemDTO>();
+        var albums = await _search.GetGenres();
+        return albums.Select(_mapper.MapGenre).ToList();
     }
 
-    public async Task<List<PlayerItemDTO>> GetTags()
+    public async Task<List<SearchItemDTO>> GetGroupings()
     {
-        return new List<PlayerItemDTO>();
+        var albums = await _search.GetGroupings();
+        return albums.Select(_mapper.MapGrouping).ToList();
     }
 
-    public async Task<List<PlayerItemDTO>> GetTracks()
+    public async Task<List<SearchItemDTO>> GetTags()
     {
-        return new List<PlayerItemDTO>();
+        var albums = await _search.GetTags();
+        return albums.Select(_mapper.MapTag).ToList();
+    }
+
+    public async Task<List<SearchItemDTO>> GetTracks()
+    {
+        var albums = await _search.GetTracks();
+        return albums.Select(_mapper.MapTrack).ToList();
     }
 }

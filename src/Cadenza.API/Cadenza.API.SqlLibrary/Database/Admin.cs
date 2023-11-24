@@ -13,9 +13,6 @@ internal class Admin : IAdmin
 
     public async Task<List<GetGroupingsResult>> GetGroupings()
     {
-        // should be using Data model not DTO here
         return await _sql.Query<GetGroupingsResult>(null);
     }
-
-
 }

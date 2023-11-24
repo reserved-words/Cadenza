@@ -75,6 +75,7 @@
     <Folder Include="Stored Procedures\Play" />
     <Folder Include="Stored Procedures\Update" />
     <Folder Include="Stored Procedures\Images" />
+    <Folder Include="Stored Procedures\Search" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -184,6 +185,13 @@
     <Build Include="Stored Procedures\Play\LogGroupingRequest.sql" />
     <Build Include="Stored Procedures\Play\LogLibraryRequest.sql" />
     <Build Include="Stored Procedures\Play\LogTagRequest.sql" />
+    <Build Include="Schemas\Search.sql" />
+    <Build Include="Stored Procedures\Search\GetAlbums.sql" />
+    <Build Include="Stored Procedures\Search\GetArtists.sql" />
+    <Build Include="Stored Procedures\Search\GetGenres.sql" />
+    <Build Include="Stored Procedures\Search\GetTracks.sql" />
+    <Build Include="Stored Procedures\Search\GetTags.sql" />
+    <Build Include="Stored Procedures\Search\GetGroupings.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

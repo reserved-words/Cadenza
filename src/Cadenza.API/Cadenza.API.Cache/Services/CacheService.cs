@@ -102,7 +102,7 @@ internal class CacheService : ICacheService
         return Task.FromResult(result);
     }
 
-    public Task<List<PlayerItemDTO>> GetTag(string id)
+    public Task<List<SearchItemDTO>> GetTag(string id)
     {
         throw new NotImplementedException();
         //var result = _itemCache.GetTag(id);

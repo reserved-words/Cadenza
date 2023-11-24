@@ -8,7 +8,7 @@ internal interface IViewModelMapper
     ArtistVM Map(ArtistDTO dto);
     ArtistDetailsVM Map(ArtistDetailsDTO dto);
     TrackVM Map(TrackDTO dto);
-    PlayerItemVM Map(PlayerItemDTO dto);
+    PlayerItemVM Map(SearchItemDTO dto);
     TrackFullVM Map(TrackFullDTO dto);
     GroupingVM Map(GroupingDTO dto);
     RecentAlbumVM Map(RecentAlbumDTO dto);

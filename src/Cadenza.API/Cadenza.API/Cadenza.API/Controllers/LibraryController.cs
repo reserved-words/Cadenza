@@ -79,7 +79,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Tag/{id}")]
-    public async Task<List<PlayerItemDTO>> Tag(string id)
+    public async Task<List<SearchItemDTO>> Tag(string id)
     {
         await PopulateCache();
         return await _cache.Tags.GetTag(id);

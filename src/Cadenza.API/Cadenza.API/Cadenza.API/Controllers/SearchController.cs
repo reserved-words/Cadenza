@@ -12,37 +12,37 @@ public class SearchController : ControllerBase
     }
 
     [HttpGet("Albums")]
-    public async Task<List<PlayerItemDTO>> Albums()
+    public async Task<List<SearchItemDTO>> Albums()
     {
         return await _repository.GetAlbums();
     }
 
     [HttpGet("Artists")]
-    public async Task<List<PlayerItemDTO>> Artists()
+    public async Task<List<SearchItemDTO>> Artists()
     {
         return await _repository.GetArtists();
     }
 
     [HttpGet("Genres")]
-    public async Task<List<PlayerItemDTO>> Genres()
+    public async Task<List<SearchItemDTO>> Genres()
     {
         return await _repository.GetGenres();
     }
 
     [HttpGet("Groupings")]
-    public async Task<List<PlayerItemDTO>> Groupings()
+    public async Task<List<SearchItemDTO>> Groupings()
     {
         return await _repository.GetGroupings();
     }
 
     [HttpGet("Tags")]
-    public async Task<List<PlayerItemDTO>> Tags()
+    public async Task<List<SearchItemDTO>> Tags()
     {
         return await _repository.GetTags();
     }
 
     [HttpGet("Tracks")]
-    public async Task<List<PlayerItemDTO>> Tracks()
+    public async Task<List<SearchItemDTO>> Tracks()
     {
         return await _repository.GetTracks();
     }

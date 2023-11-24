@@ -15,43 +15,43 @@ internal class SearchRepository : ISearchRepository
 
     public async Task<List<PlayerItemVM>> GetSearchAlbums()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchAlbums);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchAlbums);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetArtists()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchArtists);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchArtists);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetGenres()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchGenres);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchGenres);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetGroupings()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchGroupings);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchGroupings);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetSearchPlaylists()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchPlaylists);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchPlaylists);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetTags()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchTags);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchTags);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
     public async Task<List<PlayerItemVM>> GetTracks()
     {
-        var items = await _apiHelper.Get<List<PlayerItemDTO>>(_settings.SearchTracks);
+        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchTracks);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 }

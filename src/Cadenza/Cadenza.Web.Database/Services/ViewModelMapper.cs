@@ -87,7 +87,7 @@ internal class ViewModelMapper : IViewModelMapper
         };
     }
 
-    public PlayerItemVM Map(PlayerItemDTO dto)
+    public PlayerItemVM Map(SearchItemDTO dto)
     {
         return new PlayerItemVM(dto.Type, dto.Id, dto.Name, dto.Artist, dto.Album, dto.AlbumDisplay);
     }

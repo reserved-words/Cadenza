@@ -18,8 +18,25 @@ public static class _Startup
     public static IServiceCollection AddSqlLibrary(this IServiceCollection services)
     {
         return services
-            .AddSql()
             .AddMappers()
+            .AddRepositories()
+            .AddSql();
+    }
+
+    private static IServiceCollection AddMappers(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IAdminMapper, AdminMapper>()
+            .AddTransient<IHistoryMapper, HistoryMapper>()
+            .AddTransient<ILibraryMapper, LibraryMapper>()
+            .AddTransient<IQueueMapper, QueueMapper>()
+            .AddTransient<ISearchMapper, SearchMapper>()
+            .AddTransient<IUpdateMapper, UpdateMapper>();
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        return services
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
@@ -40,16 +57,7 @@ public static class _Startup
             .AddTransient<ILibrary, Library>()
             .AddTransient<IPlay, Play>()
             .AddTransient<IQueue, Queue>()
+            .AddTransient<ISearch, Search>()
             .AddTransient<IUpdate, Update>();
-    }
-
-    private static IServiceCollection AddMappers(this IServiceCollection services)
-    {
-        return services
-            .AddTransient<IAdminMapper, AdminMapper>()
-            .AddTransient<IHistoryMapper, HistoryMapper>()
-            .AddTransient<ILibraryMapper, LibraryMapper>()
-            .AddTransient<IQueueMapper, QueueMapper>()
-            .AddTransient<IUpdateMapper, UpdateMapper>();
     }
 }
