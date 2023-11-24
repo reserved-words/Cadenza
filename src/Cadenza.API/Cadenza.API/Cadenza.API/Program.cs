@@ -12,6 +12,7 @@ using Cadenza.Common;
 using Cadenza.Database.SqlLibrary;
 using Cadenza.API.Interfaces.Services;
 using Cadenza.API.Services;
+using Cadenza.Database.SqlLibrary.Configuration;
 
 const string AuthConfigSectionName = "MainApiAuthentication";
 

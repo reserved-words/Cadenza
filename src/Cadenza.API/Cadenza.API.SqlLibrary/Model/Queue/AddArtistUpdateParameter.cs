@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model;
+﻿namespace Cadenza.Database.SqlLibrary.Model.Queue;
 
 internal class AddArtistUpdateParameter
 {

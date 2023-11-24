@@ -1,4 +1,5 @@
 ﻿using Cadenza.Database.SqlLibrary;
+using Cadenza.Database.SqlLibrary.Configuration;
 
 var builder = Service.CreateBuilder(args, services =>
 {

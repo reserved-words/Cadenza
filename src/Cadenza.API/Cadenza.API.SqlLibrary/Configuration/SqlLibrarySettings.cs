@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary;
+﻿namespace Cadenza.Database.SqlLibrary.Configuration;
 
 public class SqlLibrarySettings
 {

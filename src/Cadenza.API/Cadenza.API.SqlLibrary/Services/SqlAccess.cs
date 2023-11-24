@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary.Configuration;
+using Dapper;
 using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;

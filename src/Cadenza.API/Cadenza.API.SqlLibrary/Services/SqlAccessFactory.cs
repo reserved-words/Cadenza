@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Cadenza.Database.SqlLibrary.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Cadenza.Database.SqlLibrary.Services;
 
