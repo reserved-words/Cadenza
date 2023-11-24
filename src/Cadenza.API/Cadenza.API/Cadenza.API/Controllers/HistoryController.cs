@@ -4,64 +4,22 @@
 [ApiController]
 public class HistoryController : ControllerBase
 {
-    private readonly IHistoryService _service;
+    private readonly IHistoryRepository _repository;
 
-    public HistoryController(IHistoryService service)
+    public HistoryController(IHistoryRepository repository)
     {
-        _service = service;
+        _repository = repository;
     }
 
-    [HttpGet("GetRecentAlbums/{maxItems}")]
-    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
+    [HttpGet("RecentAlbumRequests/{maxItems}")]
+    public async Task<List<RecentAlbumDTO>> RecentAlbumRequests(int maxItems)
     {
-        return await _service.GetRecentAlbums(maxItems);
+        return await _repository.GetRecentAlbums(maxItems);
     }
 
-    [HttpGet("GetRecentTags/{maxItems}")]
-    public async Task<List<string>> GetRecentTags(int maxItems)
+    [HttpGet("RecentTagRequests/{maxItems}")]
+    public async Task<List<string>> RecentTagRequests(int maxItems)
     {
-        return await _service.GetRecentTags(maxItems);
-    }
-
-    [HttpPost("LogAlbum/{albumId}")]
-    public async Task LogAlbumPlay(int albumId)
-    {
-        await _service.LogAlbumPlay(albumId);
-    }
-
-    [HttpPost("LogArtist/{artistId}")]
-    public async Task LogArtistPlay(int artistId)
-    {
-        await _service.LogArtistPlay(artistId);
-    }
-
-    [HttpPost("LogGenre/{genre}")]
-    public async Task LogGenrePlay(string genre)
-    {
-        await _service.LogGenrePlay(genre);
-    }
-
-    [HttpPost("LogGrouping/{groupingId}")]
-    public async Task LogGroupingPlay(int groupingId)
-    {
-        await _service.LogGroupingPlay(groupingId);
-    }
-
-    [HttpPost("LogLibrary")]
-    public async Task LogLibraryPlay()
-    {
-        await _service.LogLibraryPlay();
-    }
-
-    [HttpPost("LogTag/{tag}")]
-    public async Task LogTagPlay(string tag)
-    {
-        await _service.LogTagPlay(tag);
-    }
-
-    [HttpPost("LogTrack/{trackId}")]
-    public async Task LogTrackPlay(int trackId)
-    {
-        await _service.LogTrackPlay(trackId);
+        return await _repository.GetRecentTags(maxItems);
     }
 }

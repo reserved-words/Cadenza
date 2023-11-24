@@ -6,6 +6,7 @@ global using Cadenza.API.Interfaces.Library;
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Microsoft.Extensions.DependencyInjection;
+using Cadenza.API.Interfaces.Services;
 
 namespace Cadenza.API.Cache;
 
@@ -24,7 +25,6 @@ public static class Startup
             .AddSingleton<ICacheService, CacheService>()
             .AddSingleton<IHelperCache, HelperCache>()
             .AddSingleton<IItemCache, ItemCache>()
-            .AddSingleton<IMainCache, MainCache>()
-            .AddSingleton<IPlayCache, PlayCache>();
+            .AddSingleton<IMainCache, MainCache>();
     }
 }

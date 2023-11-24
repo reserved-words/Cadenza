@@ -11,16 +11,8 @@ public class PlaylistHistoryEffects
         _history = history;
     }
 
-
     [EffectMethod]
-    public async Task HandleLogPlayedItemRequest(LogPlayedItemRequest action, IDispatcher dispatcher)
-    {
-        await _history.LogPlayedItem(action.Playlist);
-        dispatcher.Dispatch(new LogPlayedItemCompletedAction(action.Playlist));
-    }
-
-    [EffectMethod]
-    public Task HandleLogPlayedItemCompletedAction(LogPlayedItemCompletedAction action, IDispatcher dispatcher)
+    public Task HandleFetchPlaylistHistoryRequest(FetchPlaylistHistoryRequest action, IDispatcher dispatcher)
     {
         if (action.Playlist.Type == PlaylistType.Album)
         {

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Cache;
+﻿using Cadenza.API.Interfaces.Services;
+
+namespace Cadenza.API.Cache;
 
 internal class LibraryCache : ILibraryCache
 {
@@ -12,8 +14,6 @@ internal class LibraryCache : ILibraryCache
     public IAlbumRepository Albums => _cache;
 
     public IArtistRepository Artists => _cache;
-
-    public IPlayTrackRepository PlayTracks => _cache;
 
     public ISearchRepository Search => _cache;
 

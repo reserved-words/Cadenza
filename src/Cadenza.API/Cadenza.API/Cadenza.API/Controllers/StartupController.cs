@@ -1,14 +1,16 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.API.Interfaces.Services;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class StartupController : ControllerBase
 {
-    private readonly IStartupService _service;
+    private readonly ICachePopulater _populater;
 
-    public StartupController(IStartupService service)
+    public StartupController(ICachePopulater populater)
     {
-        _service = service;
+        _populater = populater;
     }
 
     [HttpGet("Connect")]
@@ -20,6 +22,6 @@ public class StartupController : ControllerBase
     [HttpPost("Populate")]
     public async Task Populate()
     {
-        await _service.Populate();
+        await _populater.Populate(false);
     }
 }

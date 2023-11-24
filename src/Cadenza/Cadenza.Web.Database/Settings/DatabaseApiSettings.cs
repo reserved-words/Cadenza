@@ -9,18 +9,10 @@ public class DatabaseApiEndpoints
     public string Connect { get; set; }
     public string Populate { get; set; }
 
-    public string GetRecentAlbums { get; set; }
-    public string GetRecentTags { get; set; }
+    public string RecentAlbumRequests { get; set; }
+    public string RecentTagRequests { get; set; }
 
     public string GroupingOptions { get; set; }
-
-    public string LogLibraryPlay { get; set; }
-    public string LogArtistPlay { get; set; }
-    public string LogAlbumPlay { get; set; }
-    public string LogTrackPlay { get; set; }
-    public string LogGroupingPlay { get; set; }
-    public string LogGenrePlay { get; set; }
-    public string LogTagPlay { get; set; }
 
     public string UpdateAlbumTracks { get; set; }
     public string UpdateAlbum { get; set; }

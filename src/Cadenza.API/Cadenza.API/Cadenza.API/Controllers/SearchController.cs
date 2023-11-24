@@ -1,49 +1,64 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.API.Interfaces.Services;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class SearchController : ControllerBase
 {
-    private readonly ISearchService _service;
+    private readonly ILibraryCache _cache;
+    private readonly ICachePopulater _populater;
 
-    public SearchController(ISearchService service)
+    public SearchController(ILibraryCache cache, ICachePopulater populater)
     {
-        _service = service;
+        _cache = cache;
+        _populater = populater;
     }
 
     [HttpGet("Albums")]
     public async Task<List<PlayerItemDTO>> Albums()
     {
-        return await _service.GetSearchAlbums();
+        await PopulateCache();
+        return await _cache.Search.GetSearchAlbums();
     }
 
     [HttpGet("Artists")]
     public async Task<List<PlayerItemDTO>> Artists()
     {
-        return await _service.GetSearchArtists();
+        await PopulateCache();
+        return await _cache.Search.GetArtists();
     }
 
     [HttpGet("Genres")]
     public async Task<List<PlayerItemDTO>> Genres()
     {
-        return await _service.GetSearchGenres();
+        await PopulateCache();
+        return await _cache.Search.GetGenres();
     }
 
     [HttpGet("Groupings")]
     public async Task<List<PlayerItemDTO>> Groupings()
     {
-        return await _service.GetSearchGroupings();
+        await PopulateCache();
+        return await _cache.Search.GetGroupings();
     }
 
     [HttpGet("Tags")]
     public async Task<List<PlayerItemDTO>> Tags()
     {
-        return await _service.GetSearchTags();
+        await PopulateCache();
+        return await _cache.Search.GetTags();
     }
 
     [HttpGet("Tracks")]
     public async Task<List<PlayerItemDTO>> Tracks()
     {
-        return await _service.GetSearchTracks();
+        await PopulateCache();
+        return await _cache.Search.GetTracks();
+    }
+
+    private async Task PopulateCache()
+    {
+        await _populater.Populate(true);
     }
 }

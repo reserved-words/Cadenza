@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Cadenza.Common.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cadenza.API.Controllers;
 
@@ -7,17 +8,18 @@ namespace Cadenza.API.Controllers;
 [AllowAnonymous] // Override authentication for now - later can improve this
 public class ImageController : ControllerBase
 {
-    private readonly IImageService _service;
+    private readonly IImageRepository _repository;
 
-    public ImageController(IImageService service)
+    public ImageController(IImageRepository repository)
     {
-        _service = service;
+        _repository = repository;
     }
 
     [HttpGet("Artist/{id}")]
     public async Task Artist(int id)
     {
-        var artwork = await _service.GetArtistImage(id);
+        var image = await _repository.GetArtistImage(id);
+        var artwork = image ?? GetDefaultImage();
         Response.ContentType = artwork.MimeType;
         Response.ContentLength = artwork.Bytes.Length;
         var readOnlyMemory = new ReadOnlyMemory<byte>(artwork.Bytes);
@@ -27,10 +29,17 @@ public class ImageController : ControllerBase
     [HttpGet("Album/{id}")]
     public async Task Album(int id)
     {
-        var artwork = await _service.GetAlbumArtwork(id);
+        var image = await _repository.GetAlbumArtwork(id);
+        var artwork = image ?? GetDefaultImage();
         Response.ContentType = artwork.MimeType;
         Response.ContentLength = artwork.Bytes.Length;
         var readOnlyMemory = new ReadOnlyMemory<byte>(artwork.Bytes);
         await Response.BodyWriter.WriteAsync(readOnlyMemory);
+    }
+
+    private ArtworkImage GetDefaultImage()
+    {
+        var bytes = System.IO.File.ReadAllBytes("Images/default.png");
+        return new ArtworkImage(bytes, "image/png");
     }
 }

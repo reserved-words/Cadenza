@@ -1,14 +1,18 @@
-﻿namespace Cadenza.SyncService.Updaters;
+﻿using Cadenza.Database.Interfaces;
+
+namespace Cadenza.SyncService.Updaters;
 
 internal class UpdateRequestsHandler : IService
 {
-    private readonly IDatabaseRepository _database;
+    private readonly ILibraryRepository _musicRepository;
+    private readonly IQueueRepository _queueRepository;
     private readonly ILogger<UpdateRequestsHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
 
-    public UpdateRequestsHandler(IDatabaseRepository database, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
+    public UpdateRequestsHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
     {
-        _database = database;
+        _musicRepository = musicRepository;
+        _queueRepository = queueRepository;
         _sources = spurces;
         _logger = logger;
     }
@@ -27,7 +31,7 @@ internal class UpdateRequestsHandler : IService
 
     private async Task ProcessUpdates(ISourceRepository repository, LibrarySource source)
     {
-        var requests = await _database.GetUpdateRequests(source);
+        var requests = await _queueRepository.GetUpdateRequests(source);
 
         await ProcessTrackUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Track).ToList());
         await ProcessAlbumUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Album).ToList());
@@ -40,7 +44,7 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var tracks = await _database.GetTracksByArtist(request.Id);
+            var tracks = await _musicRepository.GetArtistTrackSourceIds(request.Id);
             await TryUpdateTracks(repository, tracks, source, request);
         }
 
@@ -53,7 +57,7 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var tracks = await _database.GetTracksByAlbum(request.Id);
+            var tracks = await _musicRepository.GetAlbumTrackSourceIds(request.Id);
             await TryUpdateTracks(repository, tracks, source, request);
         }
 
@@ -66,8 +70,8 @@ internal class UpdateRequestsHandler : IService
 
         foreach (var request in requests)
         {
-            var trackIdFromSource = await _database.GetTrackIdFromSource(request.Id);
-            var tracks = new List<string> { trackIdFromSource.IdFromSource };
+            var trackIdFromSource = await _musicRepository.GetTrackIdFromSource(request.Id);
+            var tracks = new List<string> { trackIdFromSource };
             await TryUpdateTracks(repository, tracks, source, request);
         }
 
@@ -93,11 +97,11 @@ internal class UpdateRequestsHandler : IService
 
     private async Task MarkErrored(ItemUpdateRequestDTO request)
     {
-        await _database.MarkUpdateErrored(request);
+        await _queueRepository.MarkUpdateErrored(request);
     }
 
     private async Task MarkUpdated(ItemUpdateRequestDTO request)
     {
-        await _database.MarkUpdateDone(request);
+        await _queueRepository.MarkUpdateDone(request);
     }
 }

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -19,17 +19,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Cache\Cadenza.API.Cache.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.Core\Cadenza.API.Core.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
     <ProjectReference Include="..\..\Cadenza.API.LastFM\Cadenza.API.LastFM.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.SqlLibrary\Cadenza.API.SqlLibrary.csproj" />
+    <ProjectReference Include="..\..\Cadenza.API.SqlLibrary\Cadenza.Database.SqlLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
