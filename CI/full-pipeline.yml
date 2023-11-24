@@ -39,7 +39,7 @@ stages:
       displayName: 'Use .NET Core SDK'
       inputs:
         packageType: 'sdk'
-        version: '6.0.x'
+        version: '8.0.x'
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -108,7 +108,7 @@ stages:
       displayName: 'Use .NET Core SDK'
       inputs:
         packageType: 'sdk'
-        version: '6.0.x'
+        version: '8.0.x'
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
