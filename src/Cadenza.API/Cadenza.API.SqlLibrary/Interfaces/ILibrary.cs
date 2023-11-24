@@ -13,4 +13,5 @@ internal interface ILibrary
     Task<List<string>> GetAlbumTrackSourceIds(int albumId);
     Task<string> GetTrackIdFromSource(int trackId);
     Task<List<string>> GetArtistTrackSourceIds(int artistId);
+    Task<List<GetTaggedItemsResult>> GetTaggedItems(string tag);
 }

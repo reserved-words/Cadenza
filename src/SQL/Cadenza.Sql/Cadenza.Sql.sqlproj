@@ -192,6 +192,7 @@
     <Build Include="Stored Procedures\Search\GetTracks.sql" />
     <Build Include="Stored Procedures\Search\GetTags.sql" />
     <Build Include="Stored Procedures\Search\GetGroupings.sql" />
+    <Build Include="Stored Procedures\Library\GetTaggedItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

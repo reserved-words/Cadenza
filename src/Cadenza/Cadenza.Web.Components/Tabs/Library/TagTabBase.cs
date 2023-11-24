@@ -18,20 +18,20 @@ public class TagTabBase : FluxorComponent
 
     public bool Loading => ViewTagState.Value.IsLoading;
     public string Tag => ViewTagState.Value.Tag;
-    public IReadOnlyCollection<PlayerItemVM> Items => ViewTagState.Value.Items;
+    public IReadOnlyCollection<TaggedItemVM> Items => ViewTagState.Value.Items;
 
     protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
     protected string FilterType { get; set; }
 
-    protected bool OnFilter(PlayerItemVM item)
+    protected bool OnFilter(TaggedItemVM item)
     {
         var filterType = FilterTypes[FilterType];
         return !filterType.HasValue || item.Type == filterType;
     }
 
-    protected void OnViewItem(PlayerItemVM item)
+    protected void OnViewItem(TaggedItemVM item)
     {
-        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
+        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id.ToString(), item.Name));
     }
 
     private void AddFilterType(PlayerItemType type)

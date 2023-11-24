@@ -14,7 +14,7 @@ public class SearchItemsEffects
     {
         // Do these all at the same time
 
-        var items = new List<PlayerItemVM>();
+        var items = new List<SearchItemVM>();
 
         var tracks = await _repository.GetTracks();
         items.AddRange(tracks);

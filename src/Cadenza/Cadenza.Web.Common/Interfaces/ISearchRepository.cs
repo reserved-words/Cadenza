@@ -2,10 +2,10 @@
 
 public interface ISearchRepository
 {
-    Task<List<PlayerItemVM>> GetSearchAlbums();
-    Task<List<PlayerItemVM>> GetArtists();
-    Task<List<PlayerItemVM>> GetGenres();
-    Task<List<PlayerItemVM>> GetGroupings();
-    Task<List<PlayerItemVM>> GetTags();
-    Task<List<PlayerItemVM>> GetTracks();
+    Task<List<SearchItemVM>> GetSearchAlbums();
+    Task<List<SearchItemVM>> GetArtists();
+    Task<List<SearchItemVM>> GetGenres();
+    Task<List<SearchItemVM>> GetGroupings();
+    Task<List<SearchItemVM>> GetTags();
+    Task<List<SearchItemVM>> GetTracks();
 }

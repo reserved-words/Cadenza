@@ -20,7 +20,7 @@ var localBasePath = "/";
 var baseElement = document.createElement("base");
 baseElement.setAttribute("href", deployedBasePath);
 
-const base = window.location.href.indexOf("localhost:") >= 0)
+const base = window.location.href.indexOf("localhost:") >= 0
     ? localBasePath
     : deployedBasePath;
 

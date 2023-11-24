@@ -57,8 +57,6 @@ internal class SearchMapper : ISearchMapper
 
     public SearchItemDTO MapTrack(GetTracksResult result)
     {
-        // id, title, artist, album, album + (albumArtist == artist ? "" : $" ({albumArtist})"
-
         return new SearchItemDTO
         {
             Type = PlayerItemType.Track,

@@ -46,6 +46,25 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
+    public TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result)
+    {
+        var type = Enum.Parse< PlayerItemType>(result.Type);
+
+        var albumDisplay = type == PlayerItemType.Track
+            ? result.Album + (result.AlbumArtist == result.Artist ? "" : $" ({result.AlbumArtist})")
+            : null;
+
+        return new TaggedItemDTO
+        { 
+            Type = type,
+            Id = result.Id,
+            Name = result.Name,
+            Artist = result.Artist,
+            Album = result.Album,
+            AlbumDisplay = albumDisplay
+        };
+    }
+
     public TrackDetailsDTO MapTrack(GetTracksResult track)
     {
         return new TrackDetailsDTO

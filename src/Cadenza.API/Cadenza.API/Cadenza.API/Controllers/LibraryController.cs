@@ -8,11 +8,13 @@ public class LibraryController : ControllerBase
 {
     private readonly ILibraryCache _cache;
     private readonly ICachePopulater _populater;
+    private readonly ILibraryRepository _repository;
 
-    public LibraryController(ILibraryCache cache, ICachePopulater populater)
+    public LibraryController(ILibraryCache cache, ICachePopulater populater, ILibraryRepository repository)
     {
         _cache = cache;
         _populater = populater;
+        _repository = repository;
     }
 
     [HttpGet("Album/{id}")]
@@ -79,10 +81,9 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Tag/{id}")]
-    public async Task<List<SearchItemDTO>> Tag(string id)
+    public async Task<List<TaggedItemDTO>> Tag(string id)
     {
-        await PopulateCache();
-        return await _cache.Tags.GetTag(id);
+        return await _repository.GetTaggedItems(id);
     }
 
     [HttpGet("Track/{id}")]

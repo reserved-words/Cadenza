@@ -8,4 +8,5 @@ internal interface ILibraryMapper
     AlbumDetailsDTO MapAlbum(GetAlbumsResult album, List<GetDiscsResult> discs);
     AlbumTrackLinkDTO MapAlbumTrack(GetTracksResult track);
     TrackDetailsDTO MapTrack(GetTracksResult track);
+    TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result);
 }

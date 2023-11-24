@@ -15,8 +15,6 @@ internal class LibraryCache : ILibraryCache
 
     public IArtistRepository Artists => _cache;
 
-    public ITagRepository Tags => _cache;
-
     public ITrackRepository Tracks => _cache;
 
     public bool IsPopulated { get; private set; } = false;

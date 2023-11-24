@@ -3,8 +3,7 @@
 internal interface ICacheService :
     IAlbumRepository,
     IArtistRepository,
-    ITrackRepository,
-    ITagRepository
+    ITrackRepository
 {
     Task Populate(FullLibraryDTO library);
 }

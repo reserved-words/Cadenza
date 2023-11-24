@@ -2,4 +2,4 @@
 
 public record FetchViewTagRequest(string Tag);
 
-public record FetchViewTagResult(string Tag, IReadOnlyCollection<PlayerItemVM> Items);
+public record FetchViewTagResult(string Tag, IReadOnlyCollection<TaggedItemVM> Items);

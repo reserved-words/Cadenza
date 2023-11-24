@@ -2,5 +2,5 @@
 
 public interface ITagRepository
 {
-    Task<List<PlayerItemVM>> GetTag(string id);
+    Task<List<TaggedItemVM>> GetTag(string id);
 }

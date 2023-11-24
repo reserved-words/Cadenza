@@ -2,4 +2,4 @@
 
 public record SearchItemsUpdateRequest();
 
-public record SearchItemsUpdatedAction(IReadOnlyCollection<PlayerItemVM> Result);
+public record SearchItemsUpdatedAction(IReadOnlyCollection<SearchItemVM> Result);

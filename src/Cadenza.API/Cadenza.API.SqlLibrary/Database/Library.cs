@@ -50,4 +50,9 @@ internal class Library : ILibrary
     {
         return await _sql.Query<GetTracksResult>(new { SourceId = (int?)source });
     }
+
+    public async Task<List<GetTaggedItemsResult>> GetTaggedItems(string tag)
+    {
+        return await _sql.Query<GetTaggedItemsResult>(new { Tag = tag });
+    }
 }

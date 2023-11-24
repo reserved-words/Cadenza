@@ -13,43 +13,43 @@ internal class SearchRepository : ISearchRepository
         _mapper = mapper;
     }
 
-    public async Task<List<PlayerItemVM>> GetSearchAlbums()
+    public async Task<List<SearchItemVM>> GetSearchAlbums()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchAlbums);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetArtists()
+    public async Task<List<SearchItemVM>> GetArtists()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchArtists);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetGenres()
+    public async Task<List<SearchItemVM>> GetGenres()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchGenres);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetGroupings()
+    public async Task<List<SearchItemVM>> GetGroupings()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchGroupings);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetSearchPlaylists()
+    public async Task<List<SearchItemVM>> GetSearchPlaylists()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchPlaylists);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetTags()
+    public async Task<List<SearchItemVM>> GetTags()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchTags);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<PlayerItemVM>> GetTracks()
+    public async Task<List<SearchItemVM>> GetTracks()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchTracks);
         return items.Select(i => _mapper.Map(i)).ToList();

@@ -13,9 +13,9 @@ internal class TagRepository : ITagRepository
         _mapper = mapper;
     }
 
-    public async Task<List<PlayerItemVM>> GetTag(string id)
+    public async Task<List<TaggedItemVM>> GetTag(string id)
     {
-        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.Tag, id);
+        var items = await _apiHelper.Get<List<TaggedItemDTO>>(_settings.Tag, id);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
