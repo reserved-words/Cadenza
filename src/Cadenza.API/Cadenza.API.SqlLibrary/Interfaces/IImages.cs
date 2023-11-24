@@ -1,7 +1,9 @@
-﻿namespace Cadenza.Database.SqlLibrary.Interfaces;
+﻿using Cadenza.Database.SqlLibrary.Model.Images;
+
+namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface IImages
 {
-    Task<AlbumArtwork> GetAlbumArtwork(int albumId);
-    Task<ArtistImage> GetArtistImage(int artistId);
+    Task<GetAlbumArtworkResult> GetAlbumArtwork(int albumId);
+    Task<GetArtistImageResult> GetArtistImage(int artistId);
 }

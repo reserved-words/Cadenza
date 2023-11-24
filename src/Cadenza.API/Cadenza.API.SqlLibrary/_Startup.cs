@@ -10,6 +10,7 @@ using Cadenza.Database.SqlLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Cadenza.Database.SqlLibrary.Database;
 using Cadenza.Database.SqlLibrary.Repositories;
+using Cadenza.Database.SqlLibrary.Mappers;
 
 namespace Cadenza.Database.SqlLibrary;
 
@@ -18,7 +19,8 @@ public static class _Startup
     public static IServiceCollection AddSqlLibrary(this IServiceCollection services)
     {
         return services
-            .AddInternalServices()
+            .AddSql()
+            .AddMappers()
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
@@ -28,11 +30,10 @@ public static class _Startup
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 
-    private static IServiceCollection AddInternalServices(this IServiceCollection services)
+    private static IServiceCollection AddSql(this IServiceCollection services)
     {
         return services
             .AddTransient<ISqlAccessFactory, SqlAccessFactory>()
-            .AddTransient<IMapper, Mapper>()
             .AddTransient<IAdmin, Admin>()
             .AddTransient<IHistory, History>()
             .AddTransient<IImages, Images>()
@@ -40,5 +41,15 @@ public static class _Startup
             .AddTransient<IPlay, Play>()
             .AddTransient<IQueue, Queue>()
             .AddTransient<IUpdate, Update>();
+    }
+
+    private static IServiceCollection AddMappers(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IAdminMapper, AdminMapper>()
+            .AddTransient<IHistoryMapper, HistoryMapper>()
+            .AddTransient<ILibraryMapper, LibraryMapper>()
+            .AddTransient<IQueueMapper, QueueMapper>()
+            .AddTransient<IUpdateMapper, UpdateMapper>();
     }
 }

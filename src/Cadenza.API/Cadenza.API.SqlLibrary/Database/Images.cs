@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Database;
+﻿using Cadenza.Database.SqlLibrary.Model.Images;
+
+namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Images : IImages
 {
@@ -9,13 +11,13 @@ internal class Images : IImages
         _sql = sql.Create(nameof(Images));
     }
 
-    public async Task<AlbumArtwork> GetAlbumArtwork(int id)
+    public async Task<GetAlbumArtworkResult> GetAlbumArtwork(int id)
     {
-        return await _sql.QuerySingle<AlbumArtwork>(new { Id = id });
+        return await _sql.QuerySingle<GetAlbumArtworkResult>(new { Id = id });
     }
 
-    public async Task<ArtistImage> GetArtistImage(int id)
+    public async Task<GetArtistImageResult> GetArtistImage(int id)
     {
-        return await _sql.QuerySingle<ArtistImage>(new { Id = id });
+        return await _sql.QuerySingle<GetArtistImageResult>(new { Id = id });
     }
 }

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\Play\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary.Model.Update;
+using Dapper;
 using System.Data;
 
 namespace Cadenza.Database.SqlLibrary.Database;
@@ -13,7 +14,7 @@ internal class Update : IUpdate
     }
 
 
-    public async Task<int> AddAlbum(NewAlbumData data)
+    public async Task<int> AddAlbum(AddAlbumParameter data)
     {
         var parameters = new DynamicParameters();
 
@@ -34,7 +35,7 @@ internal class Update : IUpdate
         return parameters.Get<int>("@Id");
     }
 
-    public async Task<int> AddArtist(NewArtistData data)
+    public async Task<int> AddArtist(AddArtistParameter data)
     {
         var parameters = new DynamicParameters();
 
@@ -56,7 +57,7 @@ internal class Update : IUpdate
         return parameters.Get<int>("@Id");
     }
 
-    public async Task<int> AddDisc(NewDiscData data)
+    public async Task<int> AddDisc(AddDiscParameter data)
     {
         var parameters = new DynamicParameters();
 
@@ -71,7 +72,7 @@ internal class Update : IUpdate
         return parameters.Get<int>("@Id");
     }
 
-    public async Task<int> AddTrack(NewTrackData data)
+    public async Task<int> AddTrack(AddTrackParameter data)
     {
         var parameters = new DynamicParameters();
 
@@ -117,17 +118,17 @@ internal class Update : IUpdate
         await _sql.Execute(new { Id = (int?)null, IdFromSource = idFromSource });
     }
 
-    public async Task UpdateAlbum(AlbumData album)
+    public async Task UpdateAlbum(UpdateAlbumParameter album)
     {
         await _sql.Execute(album);
     }
 
-    public async Task UpdateArtist(ArtistData artist)
+    public async Task UpdateArtist(UpdateArtistParameter artist)
     {
         await _sql.Execute(artist);
     }
 
-    public async Task UpdateTrack(TrackData track)
+    public async Task UpdateTrack(UpdateTrackParameter track)
     {
         await _sql.Execute(track);
     }

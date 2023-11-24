@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Database;
+﻿using Cadenza.Database.SqlLibrary.Model.Library;
+
+namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Library : ILibrary
 {
@@ -9,14 +11,14 @@ internal class Library : ILibrary
         _sql = sql.Create(nameof(Library));
     }
 
-    public async Task<AlbumData> GetAlbum(int id)
+    public async Task<GetAlbumResult> GetAlbum(int id)
     {
-        return await _sql.QuerySingle<AlbumData>(new { Id = id });
+        return await _sql.QuerySingle<GetAlbumResult>(new { Id = id });
     }
 
-    public async Task<List<GetAlbumData>> GetAlbums(LibrarySource? source)
+    public async Task<List<GetAlbumsResult>> GetAlbums(LibrarySource? source)
     {
-        return await _sql.Query<GetAlbumData>(new { SourceId = (int?)source });
+        return await _sql.Query<GetAlbumsResult>(new { SourceId = (int?)source });
     }
 
     public async Task<List<string>> GetAlbumTrackSourceIds(int id)
@@ -29,14 +31,14 @@ internal class Library : ILibrary
         return await _sql.Query<string>(new { SourceId = (int)source });
     }
 
-    public async Task<ArtistData> GetArtist(int id)
+    public async Task<GetArtistResult> GetArtist(int id)
     {
-        return await _sql.QuerySingle<ArtistData>(new { Id = id });
+        return await _sql.QuerySingle<GetArtistResult>(new { Id = id });
     }
 
-    public async Task<List<GetArtistData>> GetArtists()
+    public async Task<List<GetArtistsResult>> GetArtists()
     {
-        return await _sql.Query<GetArtistData>(null);
+        return await _sql.Query<GetArtistsResult>(null);
     }
 
     public async Task<List<string>> GetArtistTrackSourceIds(int id)
@@ -44,15 +46,15 @@ internal class Library : ILibrary
         return await _sql.Query<string>(new { Id = id });
     }
 
-    public async Task<List<GetDiscData>> GetDiscs(LibrarySource? source)
+    public async Task<List<GetDiscsResult>> GetDiscs(LibrarySource? source)
     {
-        return await _sql.Query<GetDiscData>(new { SourceId = (int?)source });
+        return await _sql.Query<GetDiscsResult>(new { SourceId = (int?)source });
     }
 
 
-    public async Task<TrackData> GetTrack(int id)
+    public async Task<GetTrackResult> GetTrack(int id)
     {
-        return await _sql.QuerySingle<TrackData>(new { Id = id });
+        return await _sql.QuerySingle<GetTrackResult>(new { Id = id });
     }
 
     public async Task<string> GetTrackIdFromSource(int id)
@@ -60,8 +62,8 @@ internal class Library : ILibrary
         return await _sql.QuerySingle<string>(new { Id = id });
     }
 
-    public async Task<List<GetTrackData>> GetTracks(LibrarySource? source)
+    public async Task<List<GetTracksResult>> GetTracks(LibrarySource? source)
     {
-        return await _sql.Query<GetTrackData>(new { SourceId = (int?)source });
+        return await _sql.Query<GetTracksResult>(new { SourceId = (int?)source });
     }
 }

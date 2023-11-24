@@ -1,9 +1,11 @@
-﻿namespace Cadenza.Database.SqlLibrary.Interfaces;
+﻿using Cadenza.Database.SqlLibrary.Model.History;
+
+namespace Cadenza.Database.SqlLibrary.Interfaces;
 
 internal interface IHistory
 {
-    Task<List<RecentAlbumData>> GetRecentAlbums(int maxItems);
-    Task<List<RecentTagData>> GetRecentTags(int maxItems);
+    Task<List<GetRecentAlbumsResult>> GetRecentAlbums(int maxItems);
+    Task<List<GetRecentTagsResult>> GetRecentTags(int maxItems);
     Task LogLibraryPlay();
     Task LogArtistPlay(int artistId);
     Task LogAlbumPlay(int albumId);

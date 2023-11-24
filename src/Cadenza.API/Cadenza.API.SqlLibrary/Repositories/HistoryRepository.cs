@@ -2,10 +2,10 @@
 
 internal class HistoryRepository : IHistoryRepository
 {
-    private readonly IMapper _mapper;
     private readonly IHistory _history;
+    private readonly IHistoryMapper _mapper;
 
-    public HistoryRepository(IHistory history, IMapper mapper)
+    public HistoryRepository(IHistory history, IHistoryMapper mapper)
     {
         _history = history;
         _mapper = mapper;

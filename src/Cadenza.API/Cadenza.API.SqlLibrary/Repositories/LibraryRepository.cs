@@ -2,10 +2,10 @@
 
 internal class LibraryRepository : ILibraryRepository
 {
-    private readonly IMapper _mapper;
+    private readonly ILibraryMapper _mapper;
     private readonly ILibrary _library;
 
-    public LibraryRepository(IMapper mapper, ILibrary library)
+    public LibraryRepository(ILibraryMapper mapper, ILibrary library)
     {
         _mapper = mapper;
         _library = library;

@@ -1,14 +1,16 @@
-﻿namespace Cadenza.Database.SqlLibrary.Repositories;
+﻿using Cadenza.Database.SqlLibrary.Model.Update;
+
+namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class UpdateRepository : IUpdateRepository
 {
     private readonly IAdmin _admin;
-    private readonly IMapper _mapper;
+    private readonly IUpdateMapper _mapper;
     private readonly IImageConverter _imageConverter;
     private readonly ILibrary _library;
     private readonly IUpdate _update;
 
-    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IMapper mapper)
+    public UpdateRepository(ILibrary library, IImageConverter imageConverter, IAdmin admin, IUpdate update, IUpdateMapper mapper)
     {
         _library = library;
         _imageConverter = imageConverter;
@@ -64,38 +66,66 @@ internal class UpdateRepository : IUpdateRepository
     {
         var album = await _library.GetAlbum(request.Id);
 
+        var updatedAlbum = new UpdateAlbumParameter
+        {
+            Id = album.Id,
+            ArtworkMimeType = album.ArtworkMimeType,
+            ArtworkContent = album.ArtworkContent,
+            SourceId = album.SourceId,
+            ArtistId = album.ArtistId,
+            Title = album.Title,
+            ReleaseTypeId = album.ReleaseTypeId,
+            Year = album.Year,
+            DiscCount = album.DiscCount,
+            TagList = album.TagList
+        };
+
         foreach (var update in request.Updates)
         {
             switch (update.Property)
             {
                 case ItemProperty.AlbumTags:
-                    album.TagList = update.UpdatedValue;
+                    updatedAlbum.TagList = update.UpdatedValue;
                     break;
                 case ItemProperty.AlbumTitle:
-                    album.Title = update.UpdatedValue;
+                    updatedAlbum.Title = update.UpdatedValue;
                     break;
                 case ItemProperty.AlbumArtwork:
                     var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
-                    album.ArtworkMimeType = image.MimeType;
-                    album.ArtworkContent = image.Bytes;
+                    updatedAlbum.ArtworkMimeType = image.MimeType;
+                    updatedAlbum.ArtworkContent = image.Bytes;
                     break;
                 case ItemProperty.AlbumReleaseType:
-                    album.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
+                    updatedAlbum.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
                     break;
                 case ItemProperty.AlbumReleaseYear:
-                    album.Year = update.UpdatedValue;
+                    updatedAlbum.Year = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        await _update.UpdateAlbum(album);
+        await _update.UpdateAlbum(updatedAlbum);
     }
 
     public async Task UpdateArtist(ItemUpdateRequestDTO request)
     {
         var artist = await _library.GetArtist(request.Id);
+
+        var updatedArtist = new UpdateArtistParameter
+        {
+            Id = artist.Id,
+            ImageMimeType = artist.ImageMimeType,
+            ImageContent = artist.ImageContent,
+            Name = artist.Name,
+            GroupingId = artist.GroupingId,
+            Genre = artist.Genre,
+            City = artist.City,
+            State = artist.State,
+            Country = artist.Country,
+            TagList = artist.TagList
+        };
 
         foreach (var update in request.Updates)
         {
@@ -103,68 +133,83 @@ internal class UpdateRepository : IUpdateRepository
             {
                 case ItemProperty.ArtistImage:
                     var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
-                    artist.ImageMimeType = image.MimeType;
-                    artist.ImageContent = image.Bytes;
+                    updatedArtist.ImageMimeType = image.MimeType;
+                    updatedArtist.ImageContent = image.Bytes;
                     break;
                 case ItemProperty.ArtistTags:
-                    artist.TagList = update.UpdatedValue;
+                    updatedArtist.TagList = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistCity:
-                    artist.City = update.UpdatedValue;
+                    updatedArtist.City = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistCountry:
-                    artist.Country = update.UpdatedValue;
+                    updatedArtist.Country = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistGenre:
-                    artist.Genre = update.UpdatedValue;
+                    updatedArtist.Genre = update.UpdatedValue;
                     break;
                 case ItemProperty.ArtistGrouping:
                     var groupings = await _admin.GetGroupings();
                     var grouping = groupings.Single(g => g.Name == update.UpdatedValue);
-                    artist.GroupingId = grouping.Id;
+                    updatedArtist.GroupingId = grouping.Id;
                     break;
                 case ItemProperty.ArtistState:
-                    artist.State = update.UpdatedValue;
+                    updatedArtist.State = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        await _update.UpdateArtist(artist);
+        await _update.UpdateArtist(updatedArtist);
     }
 
     public async Task UpdateTrack(ItemUpdateRequestDTO request)
     {
         var track = await _library.GetTrack(request.Id);
 
+        var updatedTrack = new UpdateTrackParameter
+        {
+            Id = track.Id,
+            DiscIndex = track.DiscIndex,
+            IdFromSource = track.IdFromSource,
+            ArtistId = track.ArtistId,
+            DiscId = track.DiscId,
+            TrackNo = track.TrackNo,
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            Year = track.Year,  
+            Lyrics = track.Lyrics,
+            TagList = track.TagList
+        };
+
         foreach (var update in request.Updates)
         {
             switch (update.Property)
             {
                 case ItemProperty.TrackDiscNo:
-                    track.DiscIndex = int.Parse(update.UpdatedValue);
+                    updatedTrack.DiscIndex = int.Parse(update.UpdatedValue);
                     break;
                 case ItemProperty.TrackLyrics:
-                    track.Lyrics = update.UpdatedValue;
+                    updatedTrack.Lyrics = update.UpdatedValue;
                     break;
                 case ItemProperty.TrackNo:
-                    track.TrackNo = int.Parse(update.UpdatedValue);
+                    updatedTrack.TrackNo = int.Parse(update.UpdatedValue);
                     break;
                 case ItemProperty.TrackTags:
-                    track.TagList = update.UpdatedValue;
+                    updatedTrack.TagList = update.UpdatedValue;
                     break;
                 case ItemProperty.TrackTitle:
-                    track.Title = update.UpdatedValue;
+                    updatedTrack.Title = update.UpdatedValue;
                     break;
                 case ItemProperty.TrackYear:
-                    track.Year = update.UpdatedValue;
+                    updatedTrack.Year = update.UpdatedValue;
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        await _update.UpdateTrack(track);
+        await _update.UpdateTrack(updatedTrack);
     }
 }

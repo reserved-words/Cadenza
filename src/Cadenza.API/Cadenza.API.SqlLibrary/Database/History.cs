@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary.Model.History;
+using Dapper;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 
@@ -11,14 +12,14 @@ internal class History : IHistory
         _sql = sql.Create(nameof(History));
     }
 
-    public async Task<List<RecentAlbumData>> GetRecentAlbums(int maxItems)
+    public async Task<List<GetRecentAlbumsResult>> GetRecentAlbums(int maxItems)
     {
-        return await _sql.Query<RecentAlbumData>(new { MaxItems = maxItems });
+        return await _sql.Query<GetRecentAlbumsResult>(new { MaxItems = maxItems });
     }
 
-    public async Task<List<RecentTagData>> GetRecentTags(int maxItems)
+    public async Task<List<GetRecentTagsResult>> GetRecentTags(int maxItems)
     {
-        return await _sql.Query<RecentTagData>(new { MaxItems = maxItems });
+        return await _sql.Query<GetRecentTagsResult>(new { MaxItems = maxItems });
     }
 
     public async Task LogAlbumPlay(int albumId)

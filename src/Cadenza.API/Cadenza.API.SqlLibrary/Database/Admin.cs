@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Database;
+﻿using Cadenza.Database.SqlLibrary.Model.Admin;
+
+namespace Cadenza.Database.SqlLibrary.Database;
 
 internal class Admin : IAdmin
 {
@@ -9,10 +11,10 @@ internal class Admin : IAdmin
         _sql = sql.Create(nameof(Admin));
     }
 
-    public async Task<List<GroupingDTO>> GetGroupings()
+    public async Task<List<GetGroupingsResult>> GetGroupings()
     {
         // should be using Data model not DTO here
-        return await _sql.Query<GroupingDTO>(null);
+        return await _sql.Query<GetGroupingsResult>(null);
     }
 
 

@@ -2,10 +2,10 @@
 
 internal class QueueRepository : IQueueRepository
 {
-    private readonly IMapper _mapper;
+    private readonly IQueueMapper _mapper;
     private readonly IQueue _queue;
 
-    public QueueRepository(IQueue queue, IMapper mapper)
+    public QueueRepository(IQueue queue, IQueueMapper mapper)
     {
         _queue = queue;
         _mapper = mapper;

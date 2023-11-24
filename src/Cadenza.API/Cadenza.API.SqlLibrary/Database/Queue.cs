@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Cadenza.Database.SqlLibrary.Model.Queue;
+using Dapper;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 
@@ -11,17 +12,17 @@ internal class Queue : IQueue
         _sql = sql.Create(nameof(Queue));
     }
 
-    public async Task AddAlbumUpdate(NewAlbumUpdateData data)
+    public async Task AddAlbumUpdate(AddAlbumUpdateParameter data)
     {
         await _sql.Execute(data);
     }
 
-    public async Task AddArtistUpdate(NewArtistUpdateData data)
+    public async Task AddArtistUpdate(AddArtistUpdateParameter data)
     {
         await _sql.Execute(data);
     }
 
-    public async Task AddTrackUpdate(NewTrackUpdateData data)
+    public async Task AddTrackUpdate(AddTrackUpdateParameter data)
     {
         await _sql.Execute(data);
     }
@@ -31,24 +32,24 @@ internal class Queue : IQueue
         await _sql.Execute(new { Id = id });
     }
 
-    public async Task<List<AlbumUpdateData>> GetAlbumUpdates(LibrarySource source)
+    public async Task<List<GetAlbumUpdatesResult>> GetAlbumUpdates(LibrarySource source)
     {
-        return await _sql.Query<AlbumUpdateData>(new { SourceId = (int?)source });
+        return await _sql.Query<GetAlbumUpdatesResult>(new { SourceId = (int?)source });
     }
 
-    public async Task<List<ArtistUpdateData>> GetArtistUpdates(LibrarySource source)
+    public async Task<List<GetArtistUpdatesResult>> GetArtistUpdates(LibrarySource source)
     {
-        return await _sql.Query<ArtistUpdateData>(new { SourceId = (int)source });
+        return await _sql.Query<GetArtistUpdatesResult>(new { SourceId = (int)source });
     }
 
-    public async Task<List<TrackRemovalData>> GetTrackRemovals(LibrarySource source)
+    public async Task<List<GetTrackRemovalsResult>> GetTrackRemovals(LibrarySource source)
     {
-        return await _sql.Query<TrackRemovalData>(new { SourceId = (int)source });
+        return await _sql.Query<GetTrackRemovalsResult>(new { SourceId = (int)source });
     }
 
-    public async Task<List<TrackUpdateData>> GetTrackUpdates(LibrarySource source)
+    public async Task<List<GetTrackUpdatesResult>> GetTrackUpdates(LibrarySource source)
     {
-        return await _sql.Query<TrackUpdateData>(new { SourceId = (int)source });
+        return await _sql.Query<GetTrackUpdatesResult>(new { SourceId = (int)source });
     }
 
     public async Task MarkAlbumUpdateDone(int id)

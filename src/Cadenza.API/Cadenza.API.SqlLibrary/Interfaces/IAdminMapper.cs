@@ -1,8 +1,7 @@
 ﻿using Cadenza.Database.SqlLibrary.Model.Admin;
 
 namespace Cadenza.Database.SqlLibrary.Interfaces;
-
-internal interface IAdmin
+internal interface IAdminMapper
 {
-    Task<List<GetGroupingsResult>> GetGroupings();
+    GroupingDTO MapGrouping(GetGroupingsResult result);
 }
