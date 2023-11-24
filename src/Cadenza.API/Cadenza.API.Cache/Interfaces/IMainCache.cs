@@ -9,7 +9,6 @@ internal interface IMainCache
     void Clear();
     AlbumDetailsDTO GetAlbum(int id);
     AlbumTrackLinkDTO GetAlbumTrack(int trackId);
-    List<ArtistDTO> GetAllArtists();
     ArtistDetailsDTO GetArtist(int id);
     TrackDetailsDTO GetTrack(int id);
     TrackFullDTO GetFullTrack(int id);

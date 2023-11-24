@@ -75,4 +75,9 @@ internal class Library : ILibrary
     {
         return await _sql.Query<GetAlbumDiscsResult>(new { Id = id });
     }
+
+    public async Task<List<GetAlbumTracksResult>> GetAlbumTracks(int id)
+    {
+        return await _sql.Query<GetAlbumTracksResult>(new { Id = id });
+    }
 }

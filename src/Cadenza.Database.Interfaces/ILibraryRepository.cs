@@ -13,4 +13,6 @@ public interface ILibraryRepository
     Task<ArtistDetailsDTO> GetArtist(int id);
     Task<AlbumDetailsDTO> GetAlbum(int id);
     Task<TrackFullDTO> GetTrack(int id);
+
+    Task<AlbumTracksDTO> GetAlbumTracks(int id);
 }

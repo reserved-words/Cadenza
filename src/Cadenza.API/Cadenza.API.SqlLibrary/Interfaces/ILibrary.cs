@@ -19,4 +19,5 @@ internal interface ILibrary
     Task<GetTracksResult> GetTrack(int id);
     Task<GetAlbumResult> GetAlbum(int id);
     Task<List<GetAlbumDiscsResult>> GetAlbumDiscs(int id);
+    Task<List<GetAlbumTracksResult>> GetAlbumTracks(int id);
 }

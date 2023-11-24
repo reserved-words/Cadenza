@@ -47,6 +47,34 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
+    public AlbumTracksDTO MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks)
+    {
+        return new AlbumTracksDTO
+        {
+            AlbumId = id,
+            Discs = discs.Select(d => new AlbumDiscDTO
+            {
+                DiscNo = d.DiscNo,
+                TrackCount = d.TrackCount,
+                Tracks = tracks
+                .Where(t => t.DiscNo == d.DiscNo)
+                .Select(t => new AlbumTrackDTO
+                {
+                    TrackId = t.TrackId,
+                    IdFromSource = t.IdFromSource,
+                    Title = t.Title,
+                    ArtistId = t.ArtistId,
+                    ArtistName = t.ArtistName,
+                    DurationSeconds = t.DurationSeconds,
+                    DiscNo = t.DiscNo,
+                    TrackNo = t.TrackNo
+                })
+                .ToList()
+            })
+            .ToList()
+        };
+    }
+
     public ArtistDetailsDTO MapArtist(GetArtistsResult artist)
     {
         return new ArtistDetailsDTO

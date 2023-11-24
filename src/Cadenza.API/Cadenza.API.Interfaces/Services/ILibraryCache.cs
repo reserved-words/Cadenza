@@ -2,7 +2,6 @@
 
 public interface ILibraryCache
 {
-    IAlbumRepository Albums { get; }
     IArtistRepository Artists { get; }
     ITrackRepository Tracks { get; }
 
