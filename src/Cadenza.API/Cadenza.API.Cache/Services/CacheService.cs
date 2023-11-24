@@ -33,7 +33,6 @@ internal class CacheService : ICacheService
         {
             var album = _mainCache.GetAlbum(track.AlbumId);
             var artist = _mainCache.GetArtist(track.ArtistId);
-            _helperCache.CacheTrack(track);
             _mainCache.CacheTrack(track);
         }
 
@@ -46,12 +45,6 @@ internal class CacheService : ICacheService
         }
 
         return Task.CompletedTask;
-    }
-
-    public Task<AlbumTracksDTO> GetAlbumTracks(int id)
-    {
-        var result = _helperCache.GetAlbumTracks(id);
-        return Task.FromResult(result);
     }
 
     public Task<List<AlbumDTO>> GetAlbums(int artistId)
@@ -75,12 +68,6 @@ internal class CacheService : ICacheService
     public Task<List<ArtistDTO>> GetArtistsByGrouping(int id)
     {
         var result = _helperCache.GetArtistsByGrouping(id);
-        return Task.FromResult(result);
-    }
-
-    public Task<TrackFullDTO> GetTrack(int id)
-    {
-        var result = _mainCache.GetFullTrack(id);
         return Task.FromResult(result);
     }
 
@@ -132,13 +119,5 @@ internal class CacheService : ICacheService
                 IdFromSource = track.IdFromSource
             });
         }
-
-        var result = new AlbumTracksDTO
-        {
-            AlbumId = album.Id,
-            Discs = discs
-        };
-
-        _helperCache.CacheAlbumTracks(result);
     }
 }

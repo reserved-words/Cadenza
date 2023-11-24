@@ -1,8 +1,7 @@
 ﻿namespace Cadenza.API.Cache.Interfaces;
 
 internal interface ICacheService :
-    IArtistRepository,
-    ITrackRepository
+    IArtistRepository
 {
     Task Populate(FullLibraryDTO library);
 }
