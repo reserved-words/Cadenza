@@ -194,6 +194,8 @@
     <Build Include="Stored Procedures\Search\GetGroupings.sql" />
     <Build Include="Stored Procedures\Library\GetTaggedItems.sql" />
     <Build Include="Stored Procedures\Library\GetArtist.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbum.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbumDiscs.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

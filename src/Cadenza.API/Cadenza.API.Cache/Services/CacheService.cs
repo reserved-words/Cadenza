@@ -48,12 +48,6 @@ internal class CacheService : ICacheService
         return Task.CompletedTask;
     }
 
-    public Task<AlbumDetailsDTO> GetAlbum(int id)
-    {
-        var result = _mainCache.GetAlbum(id);
-        return Task.FromResult(result);
-    }
-
     public Task<AlbumTracksDTO> GetAlbumTracks(int id)
     {
         var result = _helperCache.GetAlbumTracks(id);

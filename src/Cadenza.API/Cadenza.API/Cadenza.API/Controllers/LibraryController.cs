@@ -20,8 +20,7 @@ public class LibraryController : ControllerBase
     [HttpGet("Album/{id}")]
     public async Task<AlbumDetailsDTO> Album(int id)
     {
-        await PopulateCache();
-        return await _cache.Albums.GetAlbum(id);
+        return await _repository.GetAlbum(id);
     }
 
     [HttpGet("Album/Tracks/{id}")]
@@ -74,8 +73,7 @@ public class LibraryController : ControllerBase
     [HttpGet("Track/{id}")]
     public async Task<TrackFullDTO> Track(int id)
     {
-        await PopulateCache();
-        return await _cache.Tracks.GetTrack(id);
+        return await _repository.GetTrack(id);
     }
 
     private async Task PopulateCache()

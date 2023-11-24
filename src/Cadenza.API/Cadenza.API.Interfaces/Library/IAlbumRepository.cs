@@ -2,6 +2,5 @@
 
 public interface IAlbumRepository
 {
-    Task<AlbumDetailsDTO> GetAlbum(int id);
     Task<AlbumTracksDTO> GetAlbumTracks(int albumId);
 }

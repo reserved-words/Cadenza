@@ -29,6 +29,13 @@ internal class LibraryRepository : ILibraryRepository
         return library;
     }
 
+    public async Task<AlbumDetailsDTO> GetAlbum(int id)
+    {
+        var album = await _library.GetAlbum(id);
+        var discs = await _library.GetAlbumDiscs(id);
+        return _mapper.MapAlbum(album, discs);
+    }
+
     public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
         return await _library.GetAlbumTrackSourceIds(albumId);
@@ -54,6 +61,13 @@ internal class LibraryRepository : ILibraryRepository
     {
         var items = await _library.GetTaggedItems(tag);
         return items.Select(_mapper.MapTaggedItem).ToList();
+    }
+
+    public Task<TrackFullDTO> GetTrack(int id)
+    {
+        throw new NotImplementedException();
+        //var track = await _library.GetTrack(id);
+        //return _mapper.MapTrack(track);
     }
 
     public async Task<string> GetTrackIdFromSource(int trackId)

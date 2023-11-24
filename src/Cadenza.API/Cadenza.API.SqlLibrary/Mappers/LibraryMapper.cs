@@ -20,6 +20,22 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
+    public AlbumDetailsDTO MapAlbum(GetAlbumResult album, List<GetAlbumDiscsResult> discs)
+    {
+        return new AlbumDetailsDTO
+        {
+            Id = album.Id,
+            ArtistId = album.ArtistId,
+            ArtistName = album.ArtistName,
+            Title = album.Title,
+            ReleaseType = (ReleaseType)album.ReleaseTypeId,
+            Year = album.Year,
+            DiscCount = album.DiscCount,
+            DiscTrackCounts = discs.ToDictionary(d => d.DiscNo, d => d.TrackCount),
+            Tags = new TagsDTO(album.TagList)
+        };
+    }
+
     public AlbumTrackLinkDTO MapAlbumTrack(GetTracksResult track)
     {
         return new AlbumTrackLinkDTO
@@ -63,14 +79,14 @@ internal class LibraryMapper : ILibraryMapper
 
     public TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result)
     {
-        var type = Enum.Parse< PlayerItemType>(result.Type);
+        var type = Enum.Parse<PlayerItemType>(result.Type);
 
         var albumDisplay = type == PlayerItemType.Track
             ? result.Album + (result.AlbumArtist == result.Artist ? "" : $" ({result.AlbumArtist})")
             : null;
 
         return new TaggedItemDTO
-        { 
+        {
             Type = type,
             Id = result.Id,
             Name = result.Name,
@@ -96,5 +112,10 @@ internal class LibraryMapper : ILibraryMapper
             Lyrics = track.Lyrics,
             Tags = new TagsDTO(track.TagList)
         };
+    }
+
+    public TrackFullDTO MapTrack(GetTrackResult track)
+    {
+        throw new NotImplementedException();
     }
 }
