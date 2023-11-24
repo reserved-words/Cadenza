@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model.Library;
+﻿namespace Cadenza.Database.SqlLibrary.Model.Update;
 
 internal class GetTrackForUpdateResult
 {

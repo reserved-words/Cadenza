@@ -39,6 +39,12 @@ internal class LibraryRepository : ILibraryRepository
         return await _library.GetTrackSourceIds(source);
     }
 
+    public async Task<ArtistDetailsDTO> GetArtist(int id)
+    {
+        var artist = await _library.GetArtist(id);
+        return _mapper.MapArtist(artist);
+    }
+
     public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
         return await _library.GetArtistTrackSourceIds(artistId);

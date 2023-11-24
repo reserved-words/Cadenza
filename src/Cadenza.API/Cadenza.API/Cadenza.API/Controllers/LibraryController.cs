@@ -34,8 +34,7 @@ public class LibraryController : ControllerBase
     [HttpGet("Artist/{id}")]
     public async Task<ArtistDetailsDTO> Artist(int id)
     {
-        await PopulateCache();
-        return await _cache.Artists.GetArtist(id);
+        return await _repository.GetArtist(id);
     }
 
     [HttpGet("Artist/Albums/{id}")]

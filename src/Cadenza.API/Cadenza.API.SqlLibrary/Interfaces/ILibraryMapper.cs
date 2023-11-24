@@ -9,4 +9,5 @@ internal interface ILibraryMapper
     AlbumTrackLinkDTO MapAlbumTrack(GetTracksResult track);
     TrackDetailsDTO MapTrack(GetTracksResult track);
     TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result);
+    ArtistDetailsDTO MapArtist(GetArtistResult artist);
 }
