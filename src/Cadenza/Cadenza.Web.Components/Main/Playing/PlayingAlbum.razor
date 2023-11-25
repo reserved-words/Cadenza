@@ -11,14 +11,14 @@
                 <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
                 <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
                 <MudText Typo="@Typo.body1">@Model.Year</MudText>
-                <MudText Typo="@Typo.body1">@Model.DiscPosition(AlbumTrack)</MudText>
-                <MudText Typo="@Typo.body1">@Model.TrackPosition(AlbumTrack)</MudText>
+                <MudText Typo="@Typo.body1">@AlbumTrack.DiscPosition()</MudText>
+                <MudText Typo="@Typo.body1">@AlbumTrack.TrackPosition()</MudText>
             </MudItem>
         </MudGrid>
     </ChildContent>
 </ItemCard>
 
-@code {
+    @code {
     [Parameter] public AlbumTrackLinkVM AlbumTrack { get; set; }
     [Parameter] public Breakpoint Breakpoint { get; set; }
 
