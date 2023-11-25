@@ -29,15 +29,15 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
+    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
     {
-        var tracks = new List<AlbumTrackDTO>();
+        var tracks = new List<UpdatedAlbumTrackPropertiesDTO>();
 
         foreach (var disc in discs)
         {
             foreach (var track in disc.Tracks)
             {
-                tracks.Add(Map(disc, track));
+                tracks.Add(MapUpdateProperties(disc, track));
             }
         }
 
@@ -116,6 +116,17 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             TrackNo = track.TrackNo,
             DiscNo = disc.DiscNo,
             IdFromSource = track.IdFromSource
+        };
+    }
+
+    private static UpdatedAlbumTrackPropertiesDTO MapUpdateProperties(AlbumDiscVM disc, AlbumTrackVM track)
+    {
+        return new UpdatedAlbumTrackPropertiesDTO
+        {
+            TrackId = track.TrackId,
+            Title = track.Title,
+            TrackNo = track.TrackNo,
+            DiscNo = disc.DiscNo
         };
     }
 }
