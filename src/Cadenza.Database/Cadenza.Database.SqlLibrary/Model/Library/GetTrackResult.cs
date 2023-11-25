@@ -13,6 +13,8 @@ public class GetTrackResult
 
     public int DiscNo { get; set; }
     public int TrackNo { get; set; }
+    public int DiscCount { get; set; }
+    public int TrackCount { get; set; }
 
     public int ArtistId { get; set; }
     public string ArtistName { get; set; }
@@ -28,7 +30,6 @@ public class GetTrackResult
     public string AlbumTitle { get; set; }
     public int ReleaseTypeId { get; set; }
     public string AlbumYear { get; set; }
-    public int DiscCount { get; set; }
     public string AlbumTagList { get; set; }
 
 

@@ -16,7 +16,6 @@ internal class LibraryMapper : ILibraryMapper
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
             Year = album.Year,
             DiscCount = album.DiscCount,
-            DiscTrackCounts = discs.ToDictionary(d => d.DiscNo, d => d.TrackCount),
             Tags = new TagsDTO(album.TagList)
         };
     }
@@ -57,20 +56,22 @@ internal class LibraryMapper : ILibraryMapper
                 DiscNo = d.DiscNo,
                 TrackCount = d.TrackCount,
                 Tracks = tracks
-                .Where(t => t.DiscNo == d.DiscNo)
-                .Select(t => new AlbumTrackDTO
-                {
-                    TrackId = t.TrackId,
-                    IdFromSource = t.IdFromSource,
-                    Title = t.Title,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    DurationSeconds = t.DurationSeconds,
-                    DiscNo = t.DiscNo,
-                    TrackNo = t.TrackNo
-                })
-                .ToList()
+                    .Where(t => t.DiscNo == d.DiscNo)
+                    .Select(t => new AlbumTrackDTO
+                    {
+                        TrackId = t.TrackId,
+                        IdFromSource = t.IdFromSource,
+                        Title = t.Title,
+                        ArtistId = t.ArtistId,
+                        ArtistName = t.ArtistName,
+                        DurationSeconds = t.DurationSeconds,
+                        DiscNo = t.DiscNo,
+                        TrackNo = t.TrackNo
+                    })
+                    .OrderBy(t => t.TrackNo)
+                    .ToList()
             })
+            .OrderBy(d => d.DiscNo)
             .ToList()
         };
     }
@@ -188,7 +189,9 @@ internal class LibraryMapper : ILibraryMapper
                 TrackId = track.Id,
                 AlbumId = track.AlbumId,
                 DiscNo = track.DiscNo,
-                TrackNo = track.TrackNo
+                TrackNo = track.TrackNo,
+                DiscCount = track.DiscCount,
+                TrackCount = track.TrackCount
             }
         };
     }

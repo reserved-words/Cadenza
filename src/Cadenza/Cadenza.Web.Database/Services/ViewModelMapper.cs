@@ -12,12 +12,10 @@ internal class ViewModelMapper : IViewModelMapper
             ArtistId = dto.ArtistId,
             ArtistName = dto.ArtistName,
             ArtworkBase64 = dto.ArtworkBase64,
-            DiscCount = dto.DiscCount,
             Id = dto.Id,
             ReleaseType = dto.ReleaseType,
             Tags = Map(dto.Tags),
             Title = dto.Title,
-            DiscTrackCounts = dto.DiscTrackCounts,
             Year = dto.Year
         };
     }
@@ -129,7 +127,7 @@ internal class ViewModelMapper : IViewModelMapper
 
     private AlbumTrackLinkVM Map(AlbumTrackLinkDTO dto)
     {
-        return new AlbumTrackLinkVM(dto.AlbumId, dto.TrackId, dto.DiscNo, dto.TrackNo);
+        return new AlbumTrackLinkVM(dto.AlbumId, dto.TrackId, dto.DiscNo, dto.TrackNo, dto.DiscCount, dto.TrackCount);
     }
 
     public GroupingVM Map(GroupingDTO dto)

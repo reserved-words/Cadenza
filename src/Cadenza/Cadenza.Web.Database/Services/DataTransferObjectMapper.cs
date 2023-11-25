@@ -51,12 +51,10 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             ArtistId = vm.ArtistId,
             ArtistName = vm.ArtistName,
             ArtworkBase64 = vm.ArtworkBase64,
-            DiscCount = vm.DiscCount,
             Id = vm.Id,
             ReleaseType = vm.ReleaseType,
             Tags = Map(vm.Tags),
             Title = vm.Title,
-            DiscTrackCounts = vm.DiscTrackCounts.ToDictionary(d => d.Key, d => d.Value),
             Year = vm.Year
         };
     }

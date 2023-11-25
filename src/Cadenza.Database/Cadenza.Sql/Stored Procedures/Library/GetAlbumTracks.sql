@@ -20,5 +20,8 @@ BEGIN
 		[Library].[Artists] ART ON ART.[Id] = TRK.[ArtistId]
 	WHERE
 		DSC.[AlbumId] = @Id
+	ORDER BY 
+		DSC.[Index],
+		TRK.[TrackNo]
 
 END

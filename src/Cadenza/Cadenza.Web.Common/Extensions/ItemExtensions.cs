@@ -53,15 +53,15 @@ public static class ItemExtensions
         return AsList(artist.City, artist.State, artist.Country);
     }
 
-    public static string DiscPosition(this AlbumDetailsVM album, AlbumTrackLinkVM albumTrack)
+    public static string DiscPosition(this AlbumTrackLinkVM albumTrack)
     {
-        var discCount = album.DiscCount == 0 ? 1 : album.DiscCount;
+        var discCount = albumTrack.DiscCount == 0 ? 1 : albumTrack.DiscCount;
         return $"Disc {albumTrack.DiscNo} of {discCount}";
     }
 
-    public static string TrackPosition(this AlbumDetailsVM album, AlbumTrackLinkVM albumTrack)
+    public static string TrackPosition(this AlbumTrackLinkVM albumTrack)
     {
-        return $"Track {albumTrack.TrackNo} of {album.DiscTrackCounts[albumTrack.DiscNo]}";
+        return $"Track {albumTrack.TrackNo} of {albumTrack.TrackCount}";
     }
 
     private static string AsList(params string[] elements)
