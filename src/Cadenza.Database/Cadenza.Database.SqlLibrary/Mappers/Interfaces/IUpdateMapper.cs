@@ -4,9 +4,9 @@ namespace Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 
 internal interface IUpdateMapper
 {
-    UpdateAlbumParameter MapAlbumToUpdate(GetAlbumForUpdateResult album);
-    UpdateArtistParameter MapArtistToUpdate(GetArtistForUpdateResult artist);
-    UpdateTrackParameter MapTrackToUpdate(GetTrackForUpdateResult track);
+    UpdateAlbumParameter MapAlbumToUpdate(int id, GetAlbumForUpdateResult album);
+    UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist);
+    UpdateTrackParameter MapTrackToUpdate(int id, GetTrackForUpdateResult track);
 
     AddArtistParameter MapTrackArtist(SyncTrackDTO track);
     AddArtistParameter MapAlbumArtist(SyncTrackDTO track);

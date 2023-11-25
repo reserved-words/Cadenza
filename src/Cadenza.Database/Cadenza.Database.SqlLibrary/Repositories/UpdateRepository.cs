@@ -66,7 +66,7 @@ internal class UpdateRepository : IUpdateRepository
     {
         var album = await _update.GetAlbumForUpdate(request.Id);
 
-        var updatedAlbum = _mapper.MapAlbumToUpdate(album);
+        var updatedAlbum = _mapper.MapAlbumToUpdate(request.Id, album);
 
         foreach (var update in request.Updates)
         {
@@ -101,7 +101,7 @@ internal class UpdateRepository : IUpdateRepository
     {
         var artist = await _update.GetArtistForUpdate(request.Id);
 
-        UpdateArtistParameter updatedArtist = _mapper.MapArtistToUpdate(artist);
+        UpdateArtistParameter updatedArtist = _mapper.MapArtistToUpdate(request.Id, artist);
 
         foreach (var update in request.Updates)
         {
@@ -144,7 +144,7 @@ internal class UpdateRepository : IUpdateRepository
     {
         var track = await _update.GetTrackForUpdate(request.Id);
 
-        UpdateTrackParameter updatedTrack = _mapper.MapTrackToUpdate(track);
+        UpdateTrackParameter updatedTrack = _mapper.MapTrackToUpdate(request.Id, track);
 
         foreach (var update in request.Updates)
         {

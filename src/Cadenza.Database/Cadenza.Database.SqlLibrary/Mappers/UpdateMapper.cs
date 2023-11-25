@@ -92,31 +92,28 @@ internal class UpdateMapper : IUpdateMapper
         };
     }
 
-    public UpdateAlbumParameter MapAlbumToUpdate(GetAlbumForUpdateResult album)
+    public UpdateAlbumParameter MapAlbumToUpdate(int id, GetAlbumForUpdateResult album)
     {
         return new UpdateAlbumParameter
         {
-            Id = album.Id,
+            Id = id,
             ArtworkMimeType = album.ArtworkMimeType,
             ArtworkContent = album.ArtworkContent,
-            SourceId = album.SourceId,
             ArtistId = album.ArtistId,
             Title = album.Title,
             ReleaseTypeId = album.ReleaseTypeId,
             Year = album.Year,
-            DiscCount = album.DiscCount,
             TagList = album.TagList
         };
     }
 
-    public UpdateArtistParameter MapArtistToUpdate(GetArtistForUpdateResult artist)
+    public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
     {
         return new UpdateArtistParameter
         {
-            Id = artist.Id,
+            Id = id,
             ImageMimeType = artist.ImageMimeType,
             ImageContent = artist.ImageContent,
-            Name = artist.Name,
             GroupingId = artist.GroupingId,
             Genre = artist.Genre,
             City = artist.City,
@@ -126,18 +123,14 @@ internal class UpdateMapper : IUpdateMapper
         };
     }
 
-    public UpdateTrackParameter MapTrackToUpdate(GetTrackForUpdateResult track)
+    public UpdateTrackParameter MapTrackToUpdate(int id, GetTrackForUpdateResult track)
     {
         return new UpdateTrackParameter
         {
-            Id = track.Id,
+            Id = id,
             DiscNo = track.DiscNo,
-            IdFromSource = track.IdFromSource,
-            ArtistId = track.ArtistId,
-            DiscId = track.DiscId,
             TrackNo = track.TrackNo,
             Title = track.Title,
-            DurationSeconds = track.DurationSeconds,
             Year = track.Year,
             Lyrics = track.Lyrics,
             TagList = track.TagList

@@ -4,13 +4,10 @@ AS
 BEGIN
 
 	SELECT 
-		ALB.[Id],
-		ALB.[SourceId], 
 		ALB.[ArtistId], 
 		ALB.[Title],
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
-		ALB.[DiscCount],
 		IMG.[MimeType] [ArtworkMimeType],
 		IMG.[Content] [ArtworkContent],
 		TAG.[TagList]

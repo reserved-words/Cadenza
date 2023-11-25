@@ -1,6 +1,5 @@
 ﻿CREATE PROCEDURE [Update].[UpdateArtist]
 	@Id INT,
-	@Name NVARCHAR(200),
 	@GroupingId INT,
 	@Genre NVARCHAR(100),
 	@City NVARCHAR(100),
@@ -15,7 +14,6 @@ BEGIN
 	UPDATE
 		[Library].[Artists] 
 	SET
-		[Name] = @Name,
 		[GroupingId] = @GroupingId,
 		[Genre] = @Genre,
 		[City] = @City,
