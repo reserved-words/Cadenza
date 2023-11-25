@@ -29,29 +29,27 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public List<AlbumTrackDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
+    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
     {
-        var tracks = new List<AlbumTrackDTO>();
+        var tracks = new List<UpdatedAlbumTrackPropertiesDTO>();
 
         foreach (var disc in discs)
         {
             foreach (var track in disc.Tracks)
             {
-                tracks.Add(Map(disc, track));
+                tracks.Add(MapUpdateProperties(disc, track));
             }
         }
 
         return tracks;
     }
 
-    private static AlbumDetailsDTO Map(AlbumDetailsVM vm)
+    private static UpdatedAlbumPropertiesDTO Map(AlbumDetailsVM vm)
     {
-        return new AlbumDetailsDTO
+        return new UpdatedAlbumPropertiesDTO
         {
-            ArtistId = vm.ArtistId,
-            ArtistName = vm.ArtistName,
-            ArtworkBase64 = vm.ArtworkBase64,
             Id = vm.Id,
+            ArtworkBase64 = vm.ArtworkBase64,
             ReleaseType = vm.ReleaseType,
             Tags = Map(vm.Tags),
             Title = vm.Title,
@@ -59,33 +57,26 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    private static ArtistDetailsDTO Map(ArtistDetailsVM vm)
+    private static UpdatedArtistPropertiesDTO Map(ArtistDetailsVM vm)
     {
-        return new ArtistDetailsDTO
+        return new UpdatedArtistPropertiesDTO
         {
-            Name = vm.Name,
-            Grouping = Map(vm.Grouping),
-            Genre = vm.Genre,
             Id = vm.Id,
+            GroupingName = vm.Grouping.Name,
+            Genre = vm.Genre,
             City = vm.City,
             Country = vm.Country,
-            ImageBase64 = vm.ImageBase64,
             State = vm.State,
-            Tags = Map(vm.Tags)
+            Tags = Map(vm.Tags),
+            ImageBase64 = vm.ImageBase64
         };
     }
 
-    private static TrackDetailsDTO Map(TrackDetailsVM vm)
+    private static UpdatedTrackPropertiesDTO Map(TrackDetailsVM vm)
     {
-        return new TrackDetailsDTO
+        return new UpdatedTrackPropertiesDTO
         {
-            AlbumId = vm.AlbumId,
-            ArtistId = vm.ArtistId,
-            ArtistName = vm.ArtistName,
-            DurationSeconds = vm.DurationSeconds,
             Id = vm.Id,
-            IdFromSource = vm.IdFromSource,
-            Source = vm.Source,
             Title = vm.Title,
             Lyrics = vm.Lyrics,
             Year = vm.Year,
@@ -125,6 +116,17 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             TrackNo = track.TrackNo,
             DiscNo = disc.DiscNo,
             IdFromSource = track.IdFromSource
+        };
+    }
+
+    private static UpdatedAlbumTrackPropertiesDTO MapUpdateProperties(AlbumDiscVM disc, AlbumTrackVM track)
+    {
+        return new UpdatedAlbumTrackPropertiesDTO
+        {
+            TrackId = track.TrackId,
+            Title = track.Title,
+            TrackNo = track.TrackNo,
+            DiscNo = disc.DiscNo
         };
     }
 }

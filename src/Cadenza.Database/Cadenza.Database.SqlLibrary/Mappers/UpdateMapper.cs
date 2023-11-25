@@ -54,7 +54,7 @@ internal class UpdateMapper : IUpdateMapper
         return new AddDiscParameter
         {
             AlbumId = albumId,
-            Index = index,
+            DiscNo = index,
             TrackCount = trackCount
         };
     }
@@ -131,7 +131,7 @@ internal class UpdateMapper : IUpdateMapper
         return new UpdateTrackParameter
         {
             Id = track.Id,
-            DiscIndex = track.DiscIndex,
+            DiscNo = track.DiscNo,
             IdFromSource = track.IdFromSource,
             ArtistId = track.ArtistId,
             DiscId = track.DiscId,

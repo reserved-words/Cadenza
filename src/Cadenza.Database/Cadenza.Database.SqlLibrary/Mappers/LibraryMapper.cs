@@ -15,7 +15,6 @@ internal class LibraryMapper : ILibraryMapper
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
             Year = album.Year,
-            DiscCount = album.DiscCount,
             Tags = new TagsDTO(album.TagList)
         };
     }
@@ -169,8 +168,6 @@ internal class LibraryMapper : ILibraryMapper
                 Title = track.AlbumTitle,
                 ReleaseType = (ReleaseType)track.ReleaseTypeId,
                 Year = track.AlbumYear,
-                DiscCount = track.DiscCount,
-                // DiscTrackCounts not needed here?
                 Tags = new TagsDTO(track.AlbumTagList)
             },
             AlbumArtist = new ArtistDetailsDTO

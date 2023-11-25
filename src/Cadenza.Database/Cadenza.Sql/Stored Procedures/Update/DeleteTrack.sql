@@ -15,11 +15,6 @@ BEGIN
 	END
 
 	DELETE
-		[History].[PlayedTracks]
-	WHERE
-		[TrackId] = @Id
-
-	DELETE
 		[Queue].[TrackUpdates]
 	WHERE
 		[TrackId] = @Id

@@ -124,7 +124,6 @@
     <Build Include="Tables\Admin\PlaylistTypes.sql" />
     <None Include="SeedData\PlaylistTypes.sql" />
     <Build Include="Tables\History\PlayedAlbums.sql" />
-    <Build Include="Tables\History\PlayedTracks.sql" />
     <Build Include="Tables\History\PlayedGenres.sql" />
     <Build Include="Tables\History\PlayedGroupings.sql" />
     <Build Include="Tables\History\PlayedTags.sql" />

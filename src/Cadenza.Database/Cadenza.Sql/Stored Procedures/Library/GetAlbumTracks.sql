@@ -10,7 +10,7 @@ BEGIN
 		TRK.[ArtistId],
 		ART.[Name] [ArtistName],
 		TRK.[DurationSeconds],
-		DSC.[Index] [DiscNo],
+		DSC.[DiscNo],
 		TRK.[TrackNo]
 	FROM
 		[Library].[Tracks] TRK
@@ -21,7 +21,7 @@ BEGIN
 	WHERE
 		DSC.[AlbumId] = @Id
 	ORDER BY 
-		DSC.[Index],
+		DSC.[DiscNo],
 		TRK.[TrackNo]
 
 END

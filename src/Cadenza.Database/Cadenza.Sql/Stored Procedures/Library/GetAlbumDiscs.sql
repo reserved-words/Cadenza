@@ -4,7 +4,7 @@ AS
 BEGIN
 
 	SELECT 
-		[Index] [DiscNo],
+		[DiscNo],
 		[TrackCount]
 	FROM
 		[Library].[Discs]

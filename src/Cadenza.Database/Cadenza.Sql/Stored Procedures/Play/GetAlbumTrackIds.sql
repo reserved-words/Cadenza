@@ -18,7 +18,7 @@ BEGIN
 	WHERE
 		DSC.[AlbumId] = @Id
 	ORDER BY
-		DSC.[Index],
+		DSC.[DiscNo],
 		TRK.[TrackNo]
 
 END
