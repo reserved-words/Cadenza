@@ -12,7 +12,7 @@ BEGIN
 		TRK.[Year] [TrackYear],
 		TRK.[Lyrics] [Lyrics],
 		TAG.[TagList] [TrackTagList],
-		DSC.[Index] [DiscNo],
+		DSC.[DiscNo] [DiscNo],
 		TRK.[TrackNo] [TrackNo],
 		ALB.[DiscCount] [DiscCount],
 		DSC.[TrackCount] [TrackCount],

@@ -63,7 +63,7 @@ internal class Update : IUpdate
         var parameters = new DynamicParameters();
 
         parameters.Add(nameof(data.AlbumId), data.AlbumId);
-        parameters.Add(nameof(data.Index), data.Index);
+        parameters.Add(nameof(data.DiscNo), data.DiscNo);
         parameters.Add(nameof(data.TrackCount), data.TrackCount);
 
         parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);

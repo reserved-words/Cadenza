@@ -3,7 +3,7 @@
 	@IdFromSource NVARCHAR(500),
 	@ArtistId INT,
 	@DiscId INT,
-	@DiscIndex INT,
+	@DiscNo INT,
 	@TrackNo INT,
 	@Title NVARCHAR(500),
 	@DurationSeconds INT,
@@ -13,7 +13,7 @@
 AS
 BEGIN
 
-	EXECUTE [Update].[UpdateTrackDisc] @Id, @DiscIndex
+	EXECUTE [Update].[UpdateTrackDisc] @Id, @DiscNo
 
 	UPDATE 
 		[Library].[Tracks]

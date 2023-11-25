@@ -8,7 +8,7 @@ BEGIN
 		TRK.[IdFromSource],
 		TRK.[ArtistId],
 		TRK.[DiscId],
-		DSC.[Index] [DiscIndex],
+		DSC.[DiscNo],
 		TRK.[TrackNo],
 		TRK.[Title],
 		TRK.[DurationSeconds],

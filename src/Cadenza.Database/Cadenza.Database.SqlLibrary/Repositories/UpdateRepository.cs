@@ -152,7 +152,7 @@ internal class UpdateRepository : IUpdateRepository
             switch (update.Property)
             {
                 case ItemProperty.TrackDiscNo:
-                    updatedTrack.DiscIndex = int.Parse(update.UpdatedValue);
+                    updatedTrack.DiscNo = int.Parse(update.UpdatedValue);
                     break;
                 case ItemProperty.TrackLyrics:
                     updatedTrack.Lyrics = update.UpdatedValue;
