@@ -132,6 +132,28 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
+    public ArtistDTO MapArtist(GetArtistsByGroupingResult artist)
+    {
+        return new ArtistDTO
+        {
+            Id = artist.Id,
+            Name = artist.Name,
+            Grouping = new GroupingDTO(artist.GroupingId, artist.GroupingName),
+            Genre = artist.Genre
+        };
+    }
+
+    public ArtistDTO MapArtist(GetArtistsByGenreResult artist)
+    {
+        return new ArtistDTO
+        {
+            Id = artist.Id,
+            Name = artist.Name,
+            Grouping = new GroupingDTO(artist.GroupingId, artist.GroupingName),
+            Genre = artist.Genre
+        };
+    }
+
     public TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result)
     {
         var type = Enum.Parse<PlayerItemType>(result.Type);

@@ -91,4 +91,14 @@ internal class Library : ILibrary
     {
         return await _sql.Query<GetAlbumsFeaturingArtistResult>(new { ArtistId = artistId });
     }
+
+    public async Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(int groupingId)
+    {
+        return await _sql.Query<GetArtistsByGroupingResult>(new { GroupingId = groupingId });
+    }
+
+    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre)
+    {
+        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre });
+    }
 }

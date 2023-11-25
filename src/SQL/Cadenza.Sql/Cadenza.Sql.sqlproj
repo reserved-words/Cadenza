@@ -200,6 +200,8 @@
     <Build Include="Stored Procedures\Library\GetTrack.sql" />
     <Build Include="Stored Procedures\Library\GetArtistAlbums.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
+    <Build Include="Stored Procedures\Library\GetArtistsByGenre.sql" />
+    <Build Include="Stored Procedures\Library\GetArtistsByGrouping.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

@@ -74,6 +74,18 @@ internal class LibraryRepository : ILibraryRepository
         return albums.Select(_mapper.MapAlbum).ToList();
     }
 
+    public async Task<List<ArtistDTO>> GetArtistsByGenre(string genre)
+    {
+        var artists = await _library.GetArtistsByGenre(genre);
+        return artists.Select(_mapper.MapArtist).ToList();
+    }
+
+    public async Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId)
+    {
+        var artists = await _library.GetArtistsByGrouping(groupingId);
+        return artists.Select(_mapper.MapArtist).ToList();
+    }
+
     public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
     {
         return await _library.GetArtistTrackSourceIds(artistId);

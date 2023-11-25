@@ -5,6 +5,8 @@ namespace Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 internal interface ILibraryMapper
 {
     ArtistDetailsDTO MapArtist(GetArtistsResult artist);
+    ArtistDTO MapArtist(GetArtistsByGroupingResult artist);
+    ArtistDTO MapArtist(GetArtistsByGenreResult artist);
     AlbumDetailsDTO MapAlbum(GetAlbumsResult album, List<GetDiscsResult> discs);
     AlbumDTO MapAlbum(GetArtistAlbumsResult album);
     AlbumDTO MapAlbum(GetAlbumsFeaturingArtistResult album);

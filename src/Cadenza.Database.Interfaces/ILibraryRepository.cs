@@ -18,4 +18,7 @@ public interface ILibraryRepository
 
     Task<List<AlbumDTO>> GetArtistAlbums(int artistId);
     Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId);
+
+    Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId);
+    Task<List<ArtistDTO>> GetArtistsByGenre(string genre);
 }
