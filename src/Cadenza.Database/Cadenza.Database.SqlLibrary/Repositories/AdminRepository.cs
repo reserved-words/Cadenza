@@ -19,4 +19,9 @@ internal class AdminRepository : IAdminRepository
         var groupings = await _admin.GetGroupings();
         return groupings.Select(_mapper.MapGrouping).ToList();
     }
+
+    public async Task SaveLastFmSessionKey(string username, string lastFmUsername, string lastFmSessionKey)
+    {
+        await _admin.SaveLastFmSessionKey(username, lastFmUsername, lastFmSessionKey);
+    }
 }

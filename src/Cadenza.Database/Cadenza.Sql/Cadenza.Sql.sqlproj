@@ -204,6 +204,8 @@
     <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
     <Build Include="Stored Procedures\History\GetNewScrobbles.sql" />
     <Build Include="Views\History\vw_PotentialScrobbleMatches.sql" />
+    <Build Include="Tables\Admin\Users.sql" />
+    <Build Include="Stored Procedures\Admin\SaveLastFmSessionKey.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

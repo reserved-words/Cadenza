@@ -33,18 +33,20 @@ internal class Authoriser : IAuthoriser
         return Task.FromResult(result);
     }
 
-    public async Task<string> CreateSession(string token)
+    public async Task<(string Username, string SessionKey)> CreateSession(string token)
     {
         try
         {
             var url = GetSessionKeyUrl(token);
             var response = await _http.Get(url);
             var xml = _responseReader.GetXmlContent(response);
-            return _parser.Get(xml, "session", "key");
+            var username = _parser.Get(xml, "session", "name");
+            var sessionKey = _parser.Get(xml, "session", "key");
+            return (username, sessionKey);
         }
         catch (HttpException)
         {
-            return "";
+            return ("", "");
         }
     }
 

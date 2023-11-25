@@ -1,0 +1,7 @@
+﻿CREATE TABLE [Admin].[Users]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[Username] NVARCHAR(100) NOT NULL UNIQUE,
+	[LastFmUsername] NVARCHAR(100) NULL,
+	[LastFmSessionKey] NVARCHAR(100) NULL
+)

@@ -1,4 +1,5 @@
-﻿using Cadenza.API.Interfaces.LastFm;
+﻿using Cadenza.API.Extensions;
+using Cadenza.API.Interfaces.LastFm;
 using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Controllers;
@@ -11,15 +12,17 @@ public class LastFmController : ControllerBase
     private readonly IFavourites _favourites;
     private readonly IHistory _history;
     private readonly IScrobbler _scrobbler;
-    private readonly IHistoryRepository _repository;
+    private readonly IHistoryRepository _historyRepository;
+    private readonly IAdminRepository _adminRepository;
 
-    public LastFmController(IAuthoriser authoriser, IScrobbler scrobbler, IFavourites favourites, IHistory history, IHistoryRepository repository)
+    public LastFmController(IAuthoriser authoriser, IScrobbler scrobbler, IFavourites favourites, IHistory history, IHistoryRepository repository, IAdminRepository adminRepository)
     {
         _authoriser = authoriser;
         _scrobbler = scrobbler;
         _favourites = favourites;
         _history = history;
-        _repository = repository;
+        _historyRepository = repository;
+        _adminRepository = adminRepository;
     }
 
 
@@ -29,10 +32,14 @@ public class LastFmController : ControllerBase
         return await _authoriser.GetAuthUrl(redirectUri);
     }
 
+    // TODO: Should be POST
     [HttpGet("CreateSession")]
     public async Task<string> CreateSession(string token)
     {
-        return await _authoriser.CreateSession(token);
+        var session = await _authoriser.CreateSession(token);
+        var username = HttpContext.GetUsername();
+        await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
+        return session.SessionKey;
     }
 
     [HttpPost("RecordPlay")]
@@ -40,7 +47,7 @@ public class LastFmController : ControllerBase
     {
         // TODO: Don't do the actual scrobble here - leave that to the service
         // TODO: Move this out of LastFmController and into HistoryController
-        await _repository.ScrobbleTrack(scrobble.TrackId, scrobble.Timestamp);
+        await _historyRepository.ScrobbleTrack(scrobble.TrackId, scrobble.Timestamp);
         await _scrobbler.RecordPlay(scrobble);
     }
 

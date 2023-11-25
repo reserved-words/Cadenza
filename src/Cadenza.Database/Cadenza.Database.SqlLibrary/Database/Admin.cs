@@ -16,4 +16,9 @@ internal class Admin : IAdmin
     {
         return await _sql.Query<GetGroupingsResult>(null);
     }
+
+    public async Task SaveLastFmSessionKey(string username, string lastFmUsername, string lastFmSessionKey)
+    {
+        await _sql.Execute(new { Username = username, LastFmUsername = lastFmUsername, LastFmSessionKey = lastFmSessionKey });
+    }
 }
