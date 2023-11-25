@@ -87,10 +87,6 @@
     <Build Include="Tables\Library\Discs.sql" />
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbums.sql" />
-    <Build Include="Stored Procedures\Library\GetArtists.sql" />
-    <Build Include="Stored Procedures\Library\GetDiscs.sql" />
-    <Build Include="Stored Procedures\Library\GetTracks.sql" />
     <Build Include="Stored Procedures\Library\GetTrackSourceIds.sql" />
     <Build Include="Views\Library\vw_ArtistTags.sql" />
     <Build Include="Views\Library\vw_AlbumTags.sql" />

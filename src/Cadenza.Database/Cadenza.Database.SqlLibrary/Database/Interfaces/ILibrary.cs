@@ -4,10 +4,6 @@ namespace Cadenza.Database.SqlLibrary.Database.Interfaces;
 
 internal interface ILibrary
 {
-    Task<List<GetArtistsResult>> GetArtists();
-    Task<List<GetAlbumsResult>> GetAlbums(LibrarySource? source);
-    Task<List<GetDiscsResult>> GetDiscs(LibrarySource? source);
-    Task<List<GetTracksResult>> GetTracks(LibrarySource? source);
     Task<List<string>> GetTrackSourceIds(LibrarySource source);
 
     Task<List<string>> GetAlbumTrackSourceIds(int albumId);

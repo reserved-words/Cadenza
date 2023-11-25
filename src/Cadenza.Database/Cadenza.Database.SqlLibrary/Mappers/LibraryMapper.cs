@@ -5,22 +5,6 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class LibraryMapper : ILibraryMapper
 {
-    public AlbumDetailsDTO MapAlbum(GetAlbumsResult album, List<GetDiscsResult> discs)
-    {
-        return new AlbumDetailsDTO
-        {
-            Id = album.Id,
-            ArtistId = album.ArtistId,
-            ArtistName = album.ArtistName,
-            Title = album.Title,
-            ReleaseType = (ReleaseType)album.ReleaseTypeId,
-            Year = album.Year,
-            DiscCount = album.DiscCount,
-            DiscTrackCounts = discs.ToDictionary(d => d.Index, d => d.TrackCount),
-            Tags = new TagsDTO(album.TagList)
-        };
-    }
-
     public AlbumDetailsDTO MapAlbum(GetAlbumResult album, List<GetAlbumDiscsResult> discs)
     {
         return new AlbumDetailsDTO
@@ -63,17 +47,6 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    public AlbumTrackLinkDTO MapAlbumTrack(GetTracksResult track)
-    {
-        return new AlbumTrackLinkDTO
-        {
-            TrackId = track.Id,
-            AlbumId = track.AlbumId,
-            DiscNo = track.DiscIndex,
-            TrackNo = track.TrackNo
-        };
-    }
-
     public AlbumTracksDTO MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks)
     {
         return new AlbumTracksDTO
@@ -99,21 +72,6 @@ internal class LibraryMapper : ILibraryMapper
                 .ToList()
             })
             .ToList()
-        };
-    }
-
-    public ArtistDetailsDTO MapArtist(GetArtistsResult artist)
-    {
-        return new ArtistDetailsDTO
-        {
-            Id = artist.Id,
-            Name = artist.Name,
-            Grouping = new GroupingDTO(artist.GroupingId, artist.GroupingName),
-            Genre = artist.Genre,
-            City = artist.City,
-            State = artist.State,
-            Country = artist.Country,
-            Tags = new TagsDTO(artist.TagList)
         };
     }
 
@@ -170,24 +128,6 @@ internal class LibraryMapper : ILibraryMapper
             Artist = result.Artist,
             Album = result.Album,
             AlbumDisplay = albumDisplay
-        };
-    }
-
-    public TrackDetailsDTO MapTrack(GetTracksResult track)
-    {
-        return new TrackDetailsDTO
-        {
-            Source = track.SourceId,
-            Id = track.Id,
-            IdFromSource = track.IdFromSource,
-            ArtistId = track.ArtistId,
-            ArtistName = track.ArtistName,
-            AlbumId = track.AlbumId,
-            Title = track.Title,
-            DurationSeconds = track.DurationSeconds,
-            Year = track.Year,
-            Lyrics = track.Lyrics,
-            Tags = new TagsDTO(track.TagList)
         };
     }
 

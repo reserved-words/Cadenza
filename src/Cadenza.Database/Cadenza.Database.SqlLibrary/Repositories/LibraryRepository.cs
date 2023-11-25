@@ -14,24 +14,6 @@ internal class LibraryRepository : ILibraryRepository
         _library = library;
     }
 
-    public async Task<FullLibraryDTO> Get()
-    {
-        var artistsData = await _library.GetArtists();
-        var artists = artistsData.Select(a => _mapper.MapArtist(a)).ToList();
-
-        var library = new FullLibraryDTO
-        {
-            Artists = artists
-        };
-
-        foreach (var src in Enum.GetValues<LibrarySource>())
-        {
-            await AddSource(library, src);
-        }
-
-        return library;
-    }
-
     public async Task<AlbumDetailsDTO> GetAlbum(int id)
     {
         var album = await _library.GetAlbum(id);
@@ -106,20 +88,5 @@ internal class LibraryRepository : ILibraryRepository
     public async Task<string> GetTrackIdFromSource(int trackId)
     {
         return await _library.GetTrackIdFromSource(trackId);
-    }
-
-    private async Task AddSource(FullLibraryDTO library, LibrarySource source)
-    {
-        var albumsData = await _library.GetAlbums(source);
-        var discsData = await _library.GetDiscs(source);
-        var tracksData = await _library.GetTracks(source);
-
-        var albums = albumsData.Select(a => _mapper.MapAlbum(a, discsData.Where(d => d.AlbumId == a.Id).ToList())).ToList();
-        var albumTracks = tracksData.Select(t => _mapper.MapAlbumTrack(t)).ToList();
-        var tracks = tracksData.Select(t => _mapper.MapTrack(t)).ToList();
-
-        library.Albums.AddRange(albums);
-        library.Tracks.AddRange(tracks);
-        library.AlbumTracks.AddRange(albumTracks);
     }
 }
