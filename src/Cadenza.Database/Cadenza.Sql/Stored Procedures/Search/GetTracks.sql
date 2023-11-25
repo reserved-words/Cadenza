@@ -15,7 +15,7 @@ BEGIN
 	INNER JOIN
 		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
 	INNER JOIN
-		[Library].[Albums] ALB ON ALB.[Id] = DSC.[Id]
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
 	INNER JOIN
 		[Library].[Artists] AAR ON AAR.[Id] = ALB.[ArtistId]
 
