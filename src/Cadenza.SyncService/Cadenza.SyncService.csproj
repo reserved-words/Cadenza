@@ -18,14 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cadenza.API\Cadenza.API.SqlLibrary\Cadenza.Database.SqlLibrary.csproj" />
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps.WindowsService\Cadenza.Apps.WindowsService.csproj" />
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.DTO\Cadenza.Common.DTO.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Http\Cadenza.Common.Http.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
-    <ProjectReference Include="..\Cadenza.Database.Interfaces\Cadenza.Database.Interfaces.csproj" />
+    <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.Interfaces\Cadenza.Database.Interfaces.csproj" />
+    <ProjectReference Include="..\Cadenza.Database\Cadenza.Database.SqlLibrary\Cadenza.Database.SqlLibrary.csproj" />
   </ItemGroup>
 
 </Project>

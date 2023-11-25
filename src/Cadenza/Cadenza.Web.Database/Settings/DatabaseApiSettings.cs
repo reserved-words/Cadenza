@@ -7,7 +7,6 @@ public class DatabaseApiSettings : ApiOptions<DatabaseApiEndpoints>
 public class DatabaseApiEndpoints
 {
     public string Connect { get; set; }
-    public string Populate { get; set; }
 
     public string RecentAlbumRequests { get; set; }
     public string RecentTagRequests { get; set; }

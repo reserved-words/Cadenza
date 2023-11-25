@@ -88,7 +88,10 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             Id = vm.Id,
             IdFromSource = vm.IdFromSource,
             Source = vm.Source,
-            Title = vm.Title
+            Title = vm.Title,
+            Lyrics = vm.Lyrics,
+            Year = vm.Year,
+            Tags = Map(vm.Tags)
         };
     }
 

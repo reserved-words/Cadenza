@@ -13,16 +13,6 @@ public static class DatabaseConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(DatabasePopulateRequest))]
-    public static DatabaseConnectionState ReduceDatabasePopulateRequest(DatabaseConnectionState state)
-    {
-        return state with
-        {
-            State = ConnectionState.Connecting,
-            Message = "Populating"
-        };
-    }
-
     [ReducerMethod(typeof(DatabaseConnectionFailedAction))]
     public static DatabaseConnectionState ReduceDatabaseConnectionErroredAction(DatabaseConnectionState state)
     {

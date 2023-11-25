@@ -22,27 +22,11 @@ public class DatabaseConnectionEffects
         try
         {
             await _connector.Connect();
-            dispatcher.Dispatch(new DatabasePopulateRequest());
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to connect to database");
-            dispatcher.Dispatch(new DatabaseConnectionFailedAction());
-        }
-    }
-
-    [EffectMethod(typeof(DatabasePopulateRequest))]
-    public async Task HandleDatabasePopulateRequest(IDispatcher dispatcher)
-    {
-        DispatchProgressAction(dispatcher);
-        try
-        {
-            await _connector.Populate();
             dispatcher.Dispatch(new DatabaseConnectedAction());
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to populate database");
+            _logger.LogError(ex, "Failed to connect to database");
             dispatcher.Dispatch(new DatabaseConnectionFailedAction());
         }
     }

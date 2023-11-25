@@ -1,4 +1,3 @@
-global using Cadenza.API.Cache;
 global using Cadenza.API.LastFM;
 global using Cadenza.API.LastFM.Settings;
 global using Cadenza.Apps;
@@ -19,15 +18,13 @@ const string AuthConfigSectionName = "MainApiAuthentication";
 var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
 {
     services
-        .AddCache()
         .AddSqlLibrary()
         .AddLastFM()
         .AddUtilities()
         .AddHttpHelper();
 
     services
-        .AddTransient<IUpdateService, UpdateService>()
-        .AddTransient<ICachePopulater, CachePopulater>();
+        .AddTransient<IUpdateService, UpdateService>();
 
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")

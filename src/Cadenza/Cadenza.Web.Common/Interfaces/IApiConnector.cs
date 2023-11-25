@@ -3,5 +3,4 @@
 public interface IApiConnector
 {
     Task Connect();
-    Task Populate();
 }
