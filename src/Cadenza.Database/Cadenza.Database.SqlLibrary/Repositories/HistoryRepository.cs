@@ -25,4 +25,9 @@ internal class HistoryRepository : IHistoryRepository
         var data = await _history.GetRecentTags(maxItems);
         return data.Select(d => d.Tag).ToList();
     }
+
+    public async Task ScrobbleTrack(int trackId, DateTime scrobbledAt)
+    {
+        await _history.InsertScrobble(trackId, scrobbledAt);
+    }
 }

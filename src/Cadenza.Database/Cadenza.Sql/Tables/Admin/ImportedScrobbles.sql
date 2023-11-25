@@ -1,0 +1,9 @@
+﻿CREATE TABLE [Admin].[ImportedScrobbles]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[ScrobbledAt] DATETIME NOT NULL,
+	[Track] NVARCHAR(200) NOT NULL,
+	[Artist] NVARCHAR(200) NOT NULL,
+	[Album] NVARCHAR(200),
+	[AlbumArtist] NVARCHAR(200)
+)

@@ -197,6 +197,13 @@
     <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGenre.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGrouping.sql" />
+    <Build Include="Tables\History\Scrobbles.sql" />
+    <Build Include="Tables\History\TrackScrobbles.sql" />
+    <Build Include="Stored Procedures\History\InsertScrobble.sql" />
+    <Build Include="Tables\Admin\ImportedScrobbles.sql" />
+    <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
+    <Build Include="Stored Procedures\History\GetNewScrobbles.sql" />
+    <Build Include="Views\History\vw_PotentialScrobbleMatches.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

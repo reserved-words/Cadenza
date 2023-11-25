@@ -21,4 +21,9 @@ internal class History : IHistory
     {
         return await _sql.Query<GetRecentTagsResult>(new { MaxItems = maxItems });
     }
+
+    public async Task InsertScrobble(int trackId, DateTime scrobbledAt)
+    {
+        await _sql.Execute(new { TrackId = trackId, ScrobbledAt = scrobbledAt });
+    }
 }

@@ -39,6 +39,7 @@ internal class Scrobbler : IPlayTracker
         {
             SessionKey = sessionKey,
             Timestamp = timestamp ?? DateTime.Now,
+            TrackId = track.Id,
             Artist = track.Artist.Name,
             Title = track.Track.Title,
             AlbumTitle = track.Album.Title,
