@@ -9,9 +9,12 @@ BEGIN
 	
 	GRANT EXECUTE ON SCHEMA::[Admin] TO [$(APIUser)]
 	GRANT EXECUTE ON SCHEMA::[History] TO [$(APIUser)]
+	GRANT EXECUTE ON SCHEMA::[Images] TO [$(APIUser)]
 	GRANT EXECUTE ON SCHEMA::[Library] TO [$(APIUser)]
 	GRANT EXECUTE ON SCHEMA::[Play] TO [$(APIUser)]
 	GRANT EXECUTE ON SCHEMA::[Queue] TO [$(APIUser)]
+	GRANT EXECUTE ON SCHEMA::[Search] TO [$(APIUser)]
+	GRANT EXECUTE ON SCHEMA::[Update] TO [$(APIUser)]
 
 END
 
@@ -25,5 +28,6 @@ BEGIN
 	
 	GRANT EXECUTE ON SCHEMA::[Library] TO [$(ServiceUser)]
 	GRANT EXECUTE ON SCHEMA::[Queue] TO [$(ServiceUser)]
+	GRANT EXECUTE ON SCHEMA::[Update] TO [$(ServiceUser)]
 
 END
