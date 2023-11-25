@@ -22,6 +22,10 @@ html, body {
   width: 100%;
 }
 
+.inline {
+    float: left;
+}
+
 .invalid {
   outline: 1px solid red;
 }
@@ -108,6 +112,10 @@ table tbody tr td.td-datetime {
 table tbody tr td.td-img {
   width: 1px;
   padding: 1rem 1rem 0 1rem;
+}
+
+table tbody tr td.td-highlight {
+    background-color: var(--mud-palette-primary-darken);
 }
 
 .mud-list-item-icon {
