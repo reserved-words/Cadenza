@@ -22,6 +22,8 @@ var builder = Service.CreateBuilder(args, services =>
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<ISourceRepository, LocalRepository>()
         .AddTransient<IScheduledServiceFactory, ScheduledServiceFactory>()
+        .AddTransient<IScrobbler, Scrobbler>()
+        .AddTransient<IScrobbleSyncer, ScrobbleSyncer>()
         .AddTransient<IUpdatesHandler, UpdatesHandler>()
         .AddTransient<ISyncHandler, SyncHandler>();
 
