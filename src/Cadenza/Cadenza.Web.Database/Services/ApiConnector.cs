@@ -16,10 +16,4 @@ internal class ApiConnector : IApiConnector
         var connectionUrl = _apiSettings.Value.Endpoints.Connect;
         await _httpHelper.Get(connectionUrl);
     }
-
-    public async Task Populate()
-    {
-        var populateUrl = _apiSettings.Value.Endpoints.Populate;
-        await _httpHelper.Post(populateUrl);
-    }
 }

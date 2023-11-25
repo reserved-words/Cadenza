@@ -7,12 +7,10 @@ internal class UpdateService : IUpdateService
 {
     private readonly IQueueRepository _queueRepository;
     private readonly IUpdateRepository _updateRepository;
-    private readonly ICachePopulater _cachePopulater;
 
-    public UpdateService(IQueueRepository queueRepository, ICachePopulater cachePopulater, IUpdateRepository updateRepository)
+    public UpdateService(IQueueRepository queueRepository, IUpdateRepository updateRepository)
     {
         _queueRepository = queueRepository;
-        _cachePopulater = cachePopulater;
         _updateRepository = updateRepository;
     }
 
@@ -44,8 +42,6 @@ internal class UpdateService : IUpdateService
                 await _updateRepository.UpdateTrack(trackUpdateRequest);
             }
         }
-
-        await _cachePopulater.Populate(false);
     }
 
     public async Task UpdateTrack(UpdateTrackDTO dto)
@@ -62,7 +58,6 @@ internal class UpdateService : IUpdateService
 
         await _queueRepository.AddUpdateRequest(request);
         await _updateRepository.UpdateTrack(request);
-        await _cachePopulater.Populate(false);
     }
 
     public async Task UpdateAlbum(UpdateAlbumDTO dto)
@@ -79,7 +74,6 @@ internal class UpdateService : IUpdateService
 
         await _queueRepository.AddUpdateRequest(request);
         await _updateRepository.UpdateAlbum(request);
-        await _cachePopulater.Populate(false);
     }
 
     public async Task UpdateArtist(UpdateArtistDTO dto)
@@ -96,7 +90,6 @@ internal class UpdateService : IUpdateService
 
         await _queueRepository.AddUpdateRequest(request);
         await _updateRepository.UpdateArtist(request);
-        await _cachePopulater.Populate(false);
     }
 
     private List<PropertyUpdateDTO> GetUpdates<T>(T originalItem, T updatedItem)
