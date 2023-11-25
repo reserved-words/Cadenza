@@ -1,16 +1,17 @@
 ﻿using Cadenza.Database.Interfaces;
+using Cadenza.SyncService.Updaters.Interfaces;
 
 namespace Cadenza.SyncService.Updaters;
 
-internal class SyncHandler : IService
+internal class SyncHandler : ISyncHandler
 {
-    private readonly ILogger<UpdateRequestsHandler> _logger;
+    private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
     private readonly ILibraryRepository _libraryRepository;
     private readonly IQueueRepository _queueRepository;
     private readonly IUpdateRepository _updateRepository;
 
-    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger, IUpdateRepository updateRepository)
+    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger, IUpdateRepository updateRepository)
     {
         _sources = spurces;
         _logger = logger;

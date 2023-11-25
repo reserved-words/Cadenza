@@ -1,5 +1,7 @@
 ﻿using Cadenza.Database.SqlLibrary;
 using Cadenza.Database.SqlLibrary.Configuration;
+using Cadenza.Local.SyncService;
+using Cadenza.SyncService.Updaters.Interfaces;
 
 var builder = Service.CreateBuilder(args, services =>
 {
@@ -19,8 +21,9 @@ var builder = Service.CreateBuilder(args, services =>
         .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<ISourceRepository, LocalRepository>()
-        .AddTransient<IService, UpdateRequestsHandler>()
-        .AddTransient<IService, SyncHandler>();
+        .AddTransient<IScheduledServiceFactory, ScheduledServiceFactory>()
+        .AddTransient<IUpdatesHandler, UpdatesHandler>()
+        .AddTransient<ISyncHandler, SyncHandler>();
 
     services
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings")
@@ -28,6 +31,7 @@ var builder = Service.CreateBuilder(args, services =>
         .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
         .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
 
+    services.AddHostedService<Worker>();
 });
 
 builder.Build().Run();
