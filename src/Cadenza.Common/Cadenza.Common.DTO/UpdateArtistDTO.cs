@@ -2,6 +2,6 @@
 
 public class UpdateArtistDTO
 {
-    public ArtistDetailsDTO OriginalArtist { get; set; }
-    public ArtistDetailsDTO UpdatedArtist { get; set; }
+    public UpdatedArtistPropertiesDTO OriginalArtist { get; set; }
+    public UpdatedArtistPropertiesDTO UpdatedArtist { get; set; }
 }

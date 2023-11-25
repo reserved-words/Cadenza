@@ -2,6 +2,6 @@
 
 public class UpdateTrackDTO
 {
-    public TrackDetailsDTO OriginalTrack { get; set; }
-    public TrackDetailsDTO UpdatedTrack { get; set; }
+    public UpdatedTrackPropertiesDTO OriginalTrack { get; set; }
+    public UpdatedTrackPropertiesDTO UpdatedTrack { get; set; }
 }

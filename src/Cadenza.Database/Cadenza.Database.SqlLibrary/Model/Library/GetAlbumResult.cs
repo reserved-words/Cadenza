@@ -8,6 +8,5 @@ public class GetAlbumResult
     public string Title { get; set; }
     public int ReleaseTypeId { get; set; }
     public string Year { get; set; }
-    public int DiscCount { get; set; }
     public string TagList { get; set; }
 }

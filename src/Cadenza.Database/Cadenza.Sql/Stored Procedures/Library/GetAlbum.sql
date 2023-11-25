@@ -10,7 +10,6 @@ BEGIN
 		ALB.[Title],
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
-		ALB.[DiscCount],
 		TAG.[TagList]
 	FROM
 		[Library].[Albums] ALB

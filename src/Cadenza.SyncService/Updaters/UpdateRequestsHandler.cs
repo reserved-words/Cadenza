@@ -33,38 +33,38 @@ internal class UpdateRequestsHandler : IService
     {
         var requests = await _queueRepository.GetUpdateRequests(source);
 
-        await ProcessTrackUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Track).ToList());
-        await ProcessAlbumUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Album).ToList());
-        await ProcessArtistUpdates(repository, source, requests.Where(u => u.Type == LibraryItemType.Artist).ToList());
+        await ProcessTrackUpdates(repository, requests.Where(u => u.Type == LibraryItemType.Track).ToList());
+        await ProcessAlbumUpdates(repository, requests.Where(u => u.Type == LibraryItemType.Album).ToList());
+        await ProcessArtistUpdates(repository, requests.Where(u => u.Type == LibraryItemType.Artist).ToList());
     }
 
-    private async Task ProcessArtistUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
+    private async Task ProcessArtistUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} artist update requests to process");
 
         foreach (var request in requests)
         {
             var tracks = await _musicRepository.GetArtistTrackSourceIds(request.Id);
-            await TryUpdateTracks(repository, tracks, source, request);
+            await TryUpdateTracks(repository, tracks, request);
         }
 
         _logger.LogInformation("All artist update requests processed");
     }
 
-    private async Task ProcessAlbumUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
+    private async Task ProcessAlbumUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} album update requests to process");
 
         foreach (var request in requests)
         {
             var tracks = await _musicRepository.GetAlbumTrackSourceIds(request.Id);
-            await TryUpdateTracks(repository, tracks, source, request);
+            await TryUpdateTracks(repository, tracks, request);
         }
 
         _logger.LogInformation("All album update requests processed");
     }
 
-    private async Task ProcessTrackUpdates(ISourceRepository repository, LibrarySource source, List<ItemUpdateRequestDTO> requests)
+    private async Task ProcessTrackUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
         _logger.LogInformation($"{requests.Count} track update requests to process");
 
@@ -72,13 +72,13 @@ internal class UpdateRequestsHandler : IService
         {
             var trackIdFromSource = await _musicRepository.GetTrackIdFromSource(request.Id);
             var tracks = new List<string> { trackIdFromSource };
-            await TryUpdateTracks(repository, tracks, source, request);
+            await TryUpdateTracks(repository, tracks, request);
         }
 
         _logger.LogInformation("All track update requests processed");
     }
 
-    private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, LibrarySource source, ItemUpdateRequestDTO request)
+    private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, ItemUpdateRequestDTO request)
     {
         _logger.LogInformation($"Started processing update ID {request.Id}");
 

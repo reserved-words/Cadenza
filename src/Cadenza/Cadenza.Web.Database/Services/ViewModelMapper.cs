@@ -11,7 +11,6 @@ internal class ViewModelMapper : IViewModelMapper
         {
             ArtistId = dto.ArtistId,
             ArtistName = dto.ArtistName,
-            ArtworkBase64 = dto.ArtworkBase64,
             Id = dto.Id,
             ReleaseType = dto.ReleaseType,
             Tags = Map(dto.Tags),
@@ -36,7 +35,6 @@ internal class ViewModelMapper : IViewModelMapper
             Title = dto.Title,
             ArtistId = dto.ArtistId,
             ArtistName = dto.ArtistName,
-            ArtworkBase64 = dto.ArtworkBase64,
             Id = dto.Id,
             ReleaseType = dto.ReleaseType,
             Year = dto.Year
@@ -64,7 +62,6 @@ internal class ViewModelMapper : IViewModelMapper
             Id = dto.Id,
             City = dto.City,
             Country = dto.Country,
-            ImageBase64 = dto.ImageBase64,
             State = dto.State,
             Tags = Map(dto.Tags)
         };

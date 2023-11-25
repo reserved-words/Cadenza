@@ -2,6 +2,6 @@
 
 public class UpdateAlbumDTO
 {
-    public AlbumDetailsDTO OriginalAlbum { get; set; }
-    public AlbumDetailsDTO UpdatedAlbum { get; set; }
+    public UpdatedAlbumPropertiesDTO OriginalAlbum { get; set; }
+    public UpdatedAlbumPropertiesDTO UpdatedAlbum { get; set; }
 }
