@@ -25,7 +25,6 @@ internal class CacheService : ICacheService
 
         foreach (var album in library.Albums)
         {
-            _helperCache.CacheAlbum(album);
             _mainCache.CacheAlbum(album);
         }
 
@@ -36,27 +35,7 @@ internal class CacheService : ICacheService
             _mainCache.CacheTrack(track);
         }
 
-        var albumTrackAlbums = library.AlbumTracks
-            .GroupBy(at => at.AlbumId);
-
-        foreach (var album in albumTrackAlbums)
-        {
-            CacheAlbumTracks(album);
-        }
-
         return Task.CompletedTask;
-    }
-
-    public Task<List<AlbumDTO>> GetAlbums(int artistId)
-    {
-        var result = _helperCache.GetAlbumsByArtist(artistId);
-        return Task.FromResult(result);
-    }
-
-    public Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId)
-    {
-        var result = _helperCache.GetAlbumsFeaturingArtist(artistId);
-        return Task.FromResult(result);
     }
 
     public Task<List<ArtistDTO>> GetArtistsByGenre(string id)
@@ -69,55 +48,5 @@ internal class CacheService : ICacheService
     {
         var result = _helperCache.GetArtistsByGrouping(id);
         return Task.FromResult(result);
-    }
-
-    private void CacheAlbumTracks(IGrouping<int, AlbumTrackLinkDTO> albumTracks)
-    {
-        var album = _mainCache.GetAlbum(albumTracks.Key);
-
-        var tracks = albumTracks
-            .OrderBy(at => at.DiscNo)
-            .ThenBy(at => at.TrackNo)
-            .ToList();
-
-        var discs = new List<AlbumDiscDTO>();
-
-        foreach (var t in tracks)
-        {
-            var track = _mainCache.GetTrack(t.TrackId);
-
-            if (track.ArtistId != album.ArtistId)
-            {
-                _helperCache.CacheAlbumFeaturingArtist(track.ArtistId, album);
-            }
-
-            _mainCache.CacheAlbumTrack(t);
-
-            var disc = discs.SingleOrDefault(d => d.DiscNo == t.DiscNo);
-
-            if (disc == null)
-            {
-                disc = new AlbumDiscDTO
-                {
-                    DiscNo = t.DiscNo,
-                    TrackCount = album.DiscTrackCounts[t.DiscNo],
-                    Tracks = new List<AlbumTrackDTO>()
-                };
-
-                discs.Add(disc);
-            }
-
-            disc.Tracks.Add(new AlbumTrackDTO
-            {
-                TrackId = track.Id,
-                Title = track.Title,
-                ArtistId = track.ArtistId,
-                ArtistName = track.ArtistName,
-                DurationSeconds = track.DurationSeconds,
-                DiscNo = t.DiscNo,
-                TrackNo = t.TrackNo,
-                IdFromSource = track.IdFromSource
-            });
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Library;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Library;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 
@@ -79,5 +80,15 @@ internal class Library : ILibrary
     public async Task<List<GetAlbumTracksResult>> GetAlbumTracks(int id)
     {
         return await _sql.Query<GetAlbumTracksResult>(new { Id = id });
+    }
+
+    public async Task<List<GetArtistAlbumsResult>> GetArtistAlbums(int artistId)
+    {
+        return await _sql.Query<GetArtistAlbumsResult>(new { ArtistId = artistId });
+    }
+
+    public async Task<List<GetAlbumsFeaturingArtistResult>> GetAlbumsFeaturingArtist(int artistId)
+    {
+        return await _sql.Query<GetAlbumsFeaturingArtistResult>(new { ArtistId = artistId });
     }
 }

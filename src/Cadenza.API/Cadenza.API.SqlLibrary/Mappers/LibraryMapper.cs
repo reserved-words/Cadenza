@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Library;
+﻿using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Library;
 
 namespace Cadenza.Database.SqlLibrary.Mappers;
 
@@ -33,6 +34,32 @@ internal class LibraryMapper : ILibraryMapper
             DiscCount = album.DiscCount,
             DiscTrackCounts = discs.ToDictionary(d => d.DiscNo, d => d.TrackCount),
             Tags = new TagsDTO(album.TagList)
+        };
+    }
+
+    public AlbumDTO MapAlbum(GetArtistAlbumsResult album)
+    {
+        return new AlbumDTO
+        {
+            Id = album.Id,
+            ArtistId = album.ArtistId,
+            ArtistName = album.ArtistName,
+            Title = album.Title,
+            ReleaseType = (ReleaseType)album.ReleaseTypeId,
+            Year = album.Year,
+        };
+    }
+
+    public AlbumDTO MapAlbum(GetAlbumsFeaturingArtistResult album)
+    {
+        return new AlbumDTO
+        {
+            Id = album.Id,
+            ArtistId = album.ArtistId,
+            ArtistName = album.ArtistName,
+            Title = album.Title,
+            ReleaseType = (ReleaseType)album.ReleaseTypeId,
+            Year = album.Year,
         };
     }
 

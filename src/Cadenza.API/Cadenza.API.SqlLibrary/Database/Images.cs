@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Images;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Images;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 

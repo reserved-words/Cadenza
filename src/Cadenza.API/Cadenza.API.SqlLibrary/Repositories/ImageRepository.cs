@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Repositories;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+
+namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class ImageRepository : IImageRepository
 {

@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Search;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Search;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 

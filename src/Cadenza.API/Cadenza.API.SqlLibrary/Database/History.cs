@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.History;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.History;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 

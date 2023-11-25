@@ -198,6 +198,8 @@
     <Build Include="Stored Procedures\Library\GetAlbumDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTracks.sql" />
     <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetArtistAlbums.sql" />
+    <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

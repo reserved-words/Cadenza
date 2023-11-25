@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Admin;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Admin;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 

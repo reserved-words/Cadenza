@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Database.SqlLibrary.Repositories;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+
+namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class QueueRepository : IQueueRepository
 {

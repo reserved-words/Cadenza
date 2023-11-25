@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Update;
+﻿using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Update;
 
 namespace Cadenza.Database.SqlLibrary.Mappers;
 

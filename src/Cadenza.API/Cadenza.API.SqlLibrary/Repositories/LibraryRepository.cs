@@ -1,4 +1,7 @@
-﻿namespace Cadenza.Database.SqlLibrary.Repositories;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+
+namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class LibraryRepository : ILibraryRepository
 {
@@ -36,6 +39,12 @@ internal class LibraryRepository : ILibraryRepository
         return _mapper.MapAlbum(album, discs);
     }
 
+    public async Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId)
+    {
+        var albums = await _library.GetAlbumsFeaturingArtist(artistId);
+        return albums.Select(_mapper.MapAlbum).ToList();
+    }
+
     public async Task<AlbumTracksDTO> GetAlbumTracks(int id)
     {
         var discs = await _library.GetAlbumDiscs(id);
@@ -57,6 +66,12 @@ internal class LibraryRepository : ILibraryRepository
     {
         var artist = await _library.GetArtist(id);
         return _mapper.MapArtist(artist);
+    }
+
+    public async Task<List<AlbumDTO>> GetArtistAlbums(int artistId)
+    {
+        var albums = await _library.GetArtistAlbums(artistId);
+        return albums.Select(_mapper.MapAlbum).ToList();
     }
 
     public async Task<List<string>> GetArtistTrackSourceIds(int artistId)

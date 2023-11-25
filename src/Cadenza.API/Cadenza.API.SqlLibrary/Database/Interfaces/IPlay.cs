@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary.Interfaces;
+﻿namespace Cadenza.Database.SqlLibrary.Database.Interfaces;
 
 internal interface IPlay
 {

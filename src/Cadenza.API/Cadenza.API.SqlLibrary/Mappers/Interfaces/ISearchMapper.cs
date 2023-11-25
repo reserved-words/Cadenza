@@ -1,6 +1,6 @@
 ﻿using Cadenza.Database.SqlLibrary.Model.Search;
 
-namespace Cadenza.Database.SqlLibrary.Interfaces;
+namespace Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 
 internal interface ISearchMapper
 {

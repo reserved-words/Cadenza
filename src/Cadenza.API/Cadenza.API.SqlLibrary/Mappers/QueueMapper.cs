@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Queue;
+﻿using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Queue;
 
 namespace Cadenza.Database.SqlLibrary.Mappers;
 

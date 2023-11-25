@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Cadenza.Database.SqlLibrary.Database;
 using Cadenza.Database.SqlLibrary.Repositories;
 using Cadenza.Database.SqlLibrary.Mappers;
+using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 
 namespace Cadenza.Database.SqlLibrary;
 

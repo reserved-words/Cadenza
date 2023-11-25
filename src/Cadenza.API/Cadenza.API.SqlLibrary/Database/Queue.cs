@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Model.Queue;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.Queue;
 using Dapper;
 
 namespace Cadenza.Database.SqlLibrary.Database;

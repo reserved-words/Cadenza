@@ -1,6 +1,6 @@
 ﻿using Cadenza.Database.SqlLibrary.Model.Library;
 
-namespace Cadenza.Database.SqlLibrary.Interfaces;
+namespace Cadenza.Database.SqlLibrary.Database.Interfaces;
 
 internal interface ILibrary
 {
@@ -18,6 +18,10 @@ internal interface ILibrary
     Task<GetArtistResult> GetArtist(int id);
     Task<GetTrackResult> GetTrack(int id);
     Task<GetAlbumResult> GetAlbum(int id);
+
     Task<List<GetAlbumDiscsResult>> GetAlbumDiscs(int id);
     Task<List<GetAlbumTracksResult>> GetAlbumTracks(int id);
+
+    Task<List<GetArtistAlbumsResult>> GetArtistAlbums(int artistId);
+    Task<List<GetAlbumsFeaturingArtistResult>> GetAlbumsFeaturingArtist(int artistId);
 }
