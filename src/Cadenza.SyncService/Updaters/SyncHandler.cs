@@ -30,7 +30,7 @@ internal class SyncHandler : IService
             var dbTracks = await _libraryRepository.GetAllTracks(repository.Source);
             var sourceTracks = await repository.GetAllTracks();
 
-            await RemoveDbTracksThatAreNotInSource(repository, dbTracks, sourceTracks);
+            await RemoveDbTracksThatAreNotInSource(dbTracks, sourceTracks);
             await AddDbTracksThatAreInSource(repository, dbTracks, sourceTracks);
         }
 
@@ -40,7 +40,7 @@ internal class SyncHandler : IService
     private async Task AddDbTracksThatAreInSource(ISourceRepository repository, List<string> dbTracks, List<string> sourceTracks)
     {
         var addedTracks = sourceTracks.Except(dbTracks).ToList();
-        _logger.LogInformation($"{addedTracks.Count} tracks to add");
+        _logger.LogDebug($"{addedTracks.Count} tracks to add");
 
         foreach (var trackId in addedTracks)
         {
@@ -50,10 +50,10 @@ internal class SyncHandler : IService
         }
     }
 
-    private async Task RemoveDbTracksThatAreNotInSource(ISourceRepository repository, List<string> dbTracks, List<string> sourceTracks)
+    private async Task RemoveDbTracksThatAreNotInSource(List<string> dbTracks, List<string> sourceTracks)
     {
         var removedTracks = dbTracks.Except(sourceTracks).ToList();
-        _logger.LogInformation($"{removedTracks.Count} tracks to remove");
+        _logger.LogDebug($"{removedTracks.Count} tracks to remove");
 
         if (removedTracks.Any())
         {

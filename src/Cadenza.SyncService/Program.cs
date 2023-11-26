@@ -34,7 +34,7 @@ var builder = Service.CreateBuilder(args, services =>
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings")
-        .ConfigureSettings<FrequencySecondsSettings>(configuration, "ServiceSettings")
+        .ConfigureSettings<FrequencySecondsSettings>(configuration, "FrequencySeconds")
         .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
         .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
 
