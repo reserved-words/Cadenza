@@ -38,6 +38,11 @@ internal class HistoryRepository : IHistoryRepository
         await _history.MarkScrobbled(scrobbleId);
     }
 
+    public async Task MarkScrobbleFailed(int scrobbleId)
+    {
+        await _history.MarkScrobbleFailed(scrobbleId);
+    }
+
     public async Task ScrobbleTrack(int trackId, string username, DateTime scrobbledAt)
     {
         await _history.InsertScrobble(new InsertScrobbleParameter

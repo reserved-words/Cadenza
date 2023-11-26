@@ -6,7 +6,8 @@ BEGIN
 	UPDATE
 		[History].[Scrobbles]
 	SET
-		[Scrobbled] = 1
+		[Scrobbled] = 1,
+		[LastAttempt] = GETDATE()
 	WHERE
 		[Id] = @ScrobbleId
 

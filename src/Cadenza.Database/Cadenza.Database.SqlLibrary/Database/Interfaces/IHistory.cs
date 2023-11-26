@@ -9,4 +9,5 @@ internal interface IHistory
     Task<List<GetRecentTagsResult>> GetRecentTags(int maxItems);
     Task InsertScrobble(InsertScrobbleParameter parameters);
     Task MarkScrobbled(int scrobbleId);
+    Task MarkScrobbleFailed(int scrobbleId);
 }

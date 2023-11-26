@@ -207,6 +207,7 @@
     <Build Include="Tables\Admin\Users.sql" />
     <Build Include="Stored Procedures\Admin\SaveLastFmSessionKey.sql" />
     <Build Include="Stored Procedures\History\MarkScrobbled.sql" />
+    <Build Include="Stored Procedures\History\MarkScrobbleFailed.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

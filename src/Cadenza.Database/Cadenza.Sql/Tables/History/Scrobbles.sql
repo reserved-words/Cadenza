@@ -7,7 +7,9 @@
 	[Artist] NVARCHAR(200) NOT NULL,
 	[Album] NVARCHAR(200),
 	[AlbumArtist] NVARCHAR(200),
-	[Scrobbled] BIT NOT NULL DEFAULT 0
+	[Scrobbled] BIT NOT NULL DEFAULT 0,
+	[FailedAttempts] INT NOT NULL DEFAULT 0,
+	[LastAttempt] DATETIME NULL
 )
 
 GO
