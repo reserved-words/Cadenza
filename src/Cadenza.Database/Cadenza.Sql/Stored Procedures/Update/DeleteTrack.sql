@@ -15,6 +15,11 @@ BEGIN
 	END
 
 	DELETE
+		[History].[TrackScrobbles]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE
 		[Queue].[TrackUpdates]
 	WHERE
 		[TrackId] = @Id

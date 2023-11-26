@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿namespace Cadenza.Local.SyncService;
 
-namespace Cadenza.Apps.WindowsService;
-
-public class Worker : BackgroundService
+internal class Worker : BackgroundService
 {
     private readonly IEnumerable<IService> _services;
     private readonly IOptions<ServiceSettings> _settings;

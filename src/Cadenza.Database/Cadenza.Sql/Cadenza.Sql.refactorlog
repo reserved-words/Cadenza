@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="MimeType" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="d7654587-041e-4fd6-905b-4b62e3e81eb6" ChangeDateTime="11/25/2023 18:42:14">
+    <Property Name="ElementName" Value="[History].[Scrobbles].[IX_Scrobbles_TrackIs]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[History].[Scrobbles]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Scrobbles_TrackId]" />
+  </Operation>
 </Operations>

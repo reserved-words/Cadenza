@@ -18,7 +18,6 @@ public static class _Startup
     public static IServiceCollection AddLastFm(this IServiceCollection services)
     {
         return services
-            .AddTransient<IPlayTracker, Scrobbler>()
             .AddTransient<IFavouritesService, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IPlayHistory, History>()

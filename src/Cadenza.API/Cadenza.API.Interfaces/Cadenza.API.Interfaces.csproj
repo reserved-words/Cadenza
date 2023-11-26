@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.DTO\Cadenza.Common.DTO.csproj" />
-    <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.LastFm\Cadenza.Common.LastFm.csproj" />
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
   </ItemGroup>
 

@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="appsettings*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+	  <Content Include="appsettings.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="appsettings.*.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <DependentUpon>appsettings.json</DependentUpon>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +25,7 @@
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps.WindowsService\Cadenza.Apps.WindowsService.csproj" />
     <ProjectReference Include="..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.DTO\Cadenza.Common.DTO.csproj" />
+    <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.LastFm\Cadenza.Common.LastFm.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common\Cadenza.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Http\Cadenza.Common.Http.csproj" />
     <ProjectReference Include="..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />

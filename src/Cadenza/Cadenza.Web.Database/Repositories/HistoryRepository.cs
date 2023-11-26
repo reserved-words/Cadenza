@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Database.Repositories;
 
-internal class HistoryRepository : IPlaylistHistory
+internal class HistoryRepository : IHistoryRepository, IPlayTracker
 {
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
@@ -24,5 +24,41 @@ internal class HistoryRepository : IPlaylistHistory
     {
         var url = $"{_settings.RecentTagRequests}/{maxItems}";
         return await _apiHelper.Get<List<string>>(url);
+    }
+
+    public async Task<List<RecentTrackVM>> GetRecentTracks(int maxItems)
+    {
+        var url = $"{_settings.RecentTracks}/{maxItems}";
+        return await _apiHelper.Get<List<RecentTrackVM>>(url);
+    }
+
+    public async Task RecordPlay(TrackFullVM track, DateTime timestamp)
+    {
+        var scrobble = GetScrobble(track, timestamp);
+        await _apiHelper.Post(_settings.Scrobble, scrobble);
+    }
+
+    public async Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining)
+    {
+        var nowPlaying = GetNowPlaying(track, secondsRemaining);
+        await _apiHelper.Post(_settings.UpdateNowPlaying, nowPlaying);
+    }
+
+    private NowPlayingDTO GetNowPlaying(TrackFullVM track, int secondsRemaining)
+    {
+        return new NowPlayingDTO
+        {
+            TrackId = track.Id,
+            SecondsRemaining = secondsRemaining
+        };
+    }
+
+    private ScrobbleDTO GetScrobble(TrackFullVM track, DateTime timestamp)
+    {
+        return new ScrobbleDTO
+        {
+            Timestamp = timestamp,
+            TrackId = track.Id,
+        };
     }
 }

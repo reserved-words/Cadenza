@@ -4,13 +4,13 @@ namespace Cadenza.SyncService.Updaters;
 
 internal class SyncHandler : IService
 {
-    private readonly ILogger<UpdateRequestsHandler> _logger;
+    private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
     private readonly ILibraryRepository _libraryRepository;
     private readonly IQueueRepository _queueRepository;
     private readonly IUpdateRepository _updateRepository;
 
-    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger, IUpdateRepository updateRepository)
+    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger, IUpdateRepository updateRepository)
     {
         _sources = spurces;
         _logger = logger;
@@ -21,7 +21,7 @@ internal class SyncHandler : IService
 
     public async Task Run()
     {
-        _logger.LogInformation("Started syncing repositories");
+        _logger.LogDebug("Started syncing repositories");
 
         foreach (var repository in _sources)
         {
@@ -34,7 +34,7 @@ internal class SyncHandler : IService
             await AddDbTracksThatAreInSource(repository, dbTracks, sourceTracks);
         }
 
-        _logger.LogInformation("Finished syncing repositories");
+        _logger.LogDebug("Finished syncing repositories");
     }
 
     private async Task AddDbTracksThatAreInSource(ISourceRepository repository, List<string> dbTracks, List<string> sourceTracks)

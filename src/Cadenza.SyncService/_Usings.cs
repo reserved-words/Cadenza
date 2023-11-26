@@ -1,7 +1,6 @@
 ﻿global using Cadenza.Apps;
 global using Cadenza.Apps.WindowsService;
 global using Cadenza.Apps.WindowsService.Interfaces;
-global using Cadenza.Apps.WindowsService.Settings;
 global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
 global using Cadenza.Common.Utilities;
