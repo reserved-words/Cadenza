@@ -3,6 +3,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 
 using Serilog;
+using Serilog.Events;
 
 namespace Cadenza.Apps.WindowsService;
 
@@ -18,7 +19,7 @@ public static class Service
             .UseWindowsService()
             .UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File(ctx.Configuration.LogFilePath(), rollingInterval: RollingInterval.Day));
+                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Verbose)
+                .WriteTo.File(ctx.Configuration.LogFilePath(), rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: LogEventLevel.Information));
     }
 }
