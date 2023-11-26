@@ -1,4 +1,4 @@
-﻿CREATE VIEW [History].[vw_PotentialScrobbleMatches]
+﻿CREATE VIEW [History].[vw_ScrobbleMatches_AlbumArtist]
 AS
 SELECT 
 	TRK.[Id] [TrackId], 
@@ -6,7 +6,7 @@ SELECT
 	ART.[Name] [Artist],
 	ALB.[Title] [Album],
 	ALA.[Name] [AlbumArtist],
-	DENSE_RANK() OVER (PARTITION BY ALB.[Title], ALA.[Name] ORDER BY ALB.[ReleaseTypeId], ALB.[Id]) [Rank]
+	DENSE_RANK() OVER (PARTITION BY TRK.[Title], ART.[Name], ALB.[Title], ALA.[Name] ORDER BY ALB.[ReleaseTypeId], ALB.[Id], TRK.[Id]) [Rank]
 FROM
 	[Library].[Tracks] TRK
 INNER JOIN 
