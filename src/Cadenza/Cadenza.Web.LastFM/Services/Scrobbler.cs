@@ -6,45 +6,44 @@ internal class Scrobbler : IPlayTracker
 {
     private readonly ILastFmHttpHelper _http;
     private readonly IUrl _url;
-    private readonly IState<LastFmConnectionState> _lastFmConnectionState;
     private readonly LastFmApiSettings _apiSettings;
 
-    public Scrobbler(IUrl url, ILastFmHttpHelper http, IOptions<LastFmApiSettings> settings, IState<LastFmConnectionState> lastFmConnectionState)
+    public Scrobbler(IUrl url, ILastFmHttpHelper http, IOptions<LastFmApiSettings> settings)
     {
         _url = url;
         _http = http;
         _apiSettings = settings.Value;
-        _lastFmConnectionState = lastFmConnectionState;
     }
 
     public async Task RecordPlay(TrackFullVM track, DateTime timestamp)
     {
-        var scrobble = GetScrobble(track, null, timestamp);
+        var scrobble = GetScrobble(track, timestamp);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.Scrobble);
         await _http.Post(url, scrobble);
     }
 
-    public async Task UpdateNowPlaying(TrackFullVM track, int duration)
+    public async Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining)
     {
-        var scrobble = GetScrobble(track, duration, null);
+        var nowPlaying = GetNowPlaying(track, secondsRemaining);
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.UpdateNowPlaying);
-        await _http.Post(url, scrobble);
+        await _http.Post(url, nowPlaying);
     }
 
-    private ScrobbleDTO GetScrobble(TrackFullVM track, int? duration, DateTime? timestamp)
+    private NowPlayingDTO GetNowPlaying(TrackFullVM track, int secondsRemaining)
     {
-        var sessionKey = _lastFmConnectionState.Value.SessionKey;
+        return new NowPlayingDTO
+        {
+            TrackId = track.Id,
+            SecondsRemaining = secondsRemaining
+        };
+    }
 
+    private ScrobbleDTO GetScrobble(TrackFullVM track, DateTime timestamp)
+    {
         return new ScrobbleDTO
         {
-            SessionKey = sessionKey,
-            Timestamp = timestamp ?? DateTime.Now,
+            Timestamp = timestamp,
             TrackId = track.Id,
-            Artist = track.Artist.Name,
-            Title = track.Track.Title,
-            AlbumTitle = track.Album.Title,
-            AlbumArtist = track.Album.ArtistName,
-            Duration = duration ?? track.Duration
         };
     }
 }

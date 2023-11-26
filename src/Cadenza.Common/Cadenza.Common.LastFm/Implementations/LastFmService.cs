@@ -26,4 +26,17 @@ internal class LastFmService : ILastFmService
             { "timestamp", unixTimeStamp.ToString() },
         });
     }
+    
+    public async Task UpdateNowPlaying(string sessionKey, NowPlaying nowPlaying)
+    {
+        await _authorisedClient.Post(sessionKey, new Dictionary<string, string>
+        {
+            { "method", "track.updateNowPlaying" },
+            { "artist", nowPlaying.Artist },
+            { "track", nowPlaying.Title },
+            { "album", nowPlaying.AlbumTitle },
+            { "albumArtist", nowPlaying.AlbumArtist },
+            { "duration", nowPlaying.Duration.ToString() },
+        });
+    }
 }

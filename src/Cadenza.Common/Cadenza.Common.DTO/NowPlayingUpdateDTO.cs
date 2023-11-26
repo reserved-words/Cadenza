@@ -1,11 +1,11 @@
 ﻿namespace Cadenza.Common.DTO;
 
-// TODO: DTOs like this are only used by the service, others only by the API - need to sort better
-public class NewScrobbleDTO
+public class NowPlayingUpdateDTO
 {
-    public int Id { get; set; }
+    public int UserId { get; set; }
     public string SessionKey { get; set; }
-    public DateTime ScrobbledAt { get; set; }
+    public DateTime Timestamp { get; set; }
+    public int SecondsRemaining { get; set; }
     public string Track { get; set; }
     public string Artist { get; set; }
     public string Album { get; set; }

@@ -23,8 +23,7 @@ public static class Startup
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IFavourites, Favourites>()
             .AddTransient<IHistory, History>()
-            .AddTransient<IInfoService, InfoService>()
-            .AddTransient<IScrobbler, Scrobbler>();
+            .AddTransient<IInfoService, InfoService>();
     }
 
     private static IServiceCollection AddInternals(this IServiceCollection services)

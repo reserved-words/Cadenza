@@ -1,4 +1,5 @@
-﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
+﻿using Cadenza.Common.DTO;
+using Cadenza.Database.SqlLibrary.Database.Interfaces;
 using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 using Cadenza.Database.SqlLibrary.Model.History;
 
@@ -21,6 +22,12 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(_mapper.MapScrobble).ToList();
     }
 
+    public async Task<List<NowPlayingUpdateDTO>> GetNowPlayingUpdates()
+    {
+        var data = await _history.GetNowPlayingUpdates();
+        return data.Select(_mapper.MapNowPlaying).ToList();
+    }
+
     public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         var data = await _history.GetRecentAlbums(maxItems);
@@ -31,6 +38,16 @@ internal class HistoryRepository : IHistoryRepository
     {
         var data = await _history.GetRecentTags(maxItems);
         return data.Select(d => d.Tag).ToList();
+    }
+
+    public Task MarkNowPlayingFailed(int userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task MarkNowPlayingUpdated(int userId)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task MarkScrobbled(int scrobbleId)
@@ -50,6 +67,16 @@ internal class HistoryRepository : IHistoryRepository
             TrackId = trackId, 
             Username = username,
             ScrobbledAt = scrobbledAt
+        });
+    }
+
+    public async Task UpdateNowPlaying(string username, int trackId, int secondsRemaining)
+    {
+        await _history.InsertNowPlaying(new InsertNowPlayingParameter
+        {
+            TrackId = trackId,
+            Username = username,
+            SecondsRemaining = secondsRemaining
         });
     }
 }

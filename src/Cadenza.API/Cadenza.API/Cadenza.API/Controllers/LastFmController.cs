@@ -10,14 +10,12 @@ public class LastFmController : ControllerBase
     private readonly IAuthoriser _authoriser;
     private readonly IFavourites _favourites;
     private readonly IHistory _history;
-    private readonly IScrobbler _scrobbler;
     private readonly IHistoryRepository _historyRepository;
     private readonly IAdminRepository _adminRepository;
 
-    public LastFmController(IAuthoriser authoriser, IScrobbler scrobbler, IFavourites favourites, IHistory history, IHistoryRepository repository, IAdminRepository adminRepository)
+    public LastFmController(IAuthoriser authoriser, IFavourites favourites, IHistory history, IHistoryRepository repository, IAdminRepository adminRepository)
     {
         _authoriser = authoriser;
-        _scrobbler = scrobbler;
         _favourites = favourites;
         _history = history;
         _historyRepository = repository;
@@ -47,14 +45,14 @@ public class LastFmController : ControllerBase
         // TODO: Move this out of LastFmController and into HistoryController
         var username = HttpContext.GetUsername();
         await _historyRepository.ScrobbleTrack(scrobble.TrackId, username, scrobble.Timestamp);
-        // await _scrobbler.RecordPlay(scrobble);
     }
 
     [HttpPost("UpdateNowPlaying")]
-    public async Task UpdateNowPlaying(ScrobbleDTO scrobble)
+    public async Task UpdateNowPlaying(NowPlayingDTO nowPlaying)
     {
-        // TODO: Think about letting the service do this as well - eventually no need to have any ref to Last.FM in the API?
-        await _scrobbler.UpdateNowPlaying(scrobble);
+        // TODO: Move this out of LastFmController and into HistoryController
+        var username = HttpContext.GetUsername();
+        await _historyRepository.UpdateNowPlaying(username, nowPlaying.TrackId, nowPlaying.SecondsRemaining);
     }
 
     [HttpGet("IsFavourite")]

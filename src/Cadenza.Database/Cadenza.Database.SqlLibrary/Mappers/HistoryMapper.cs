@@ -5,6 +5,20 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class HistoryMapper : IHistoryMapper
 {
+    public NowPlayingUpdateDTO MapNowPlaying(GetNowPlayingUpdatesResult data)
+    {
+        return new NowPlayingUpdateDTO
+        {
+            UserId = data.UserId,
+            SessionKey = data.SessionKey,
+            Timestamp = data.Timestamp,
+            SecondsRemaining = data.SecondsRemaining,
+            Track = data.Track,
+            Artist = data.Artist,
+            Album = data.Album,
+            AlbumArtist = data.AlbumArtist
+        };
+    }
 
     public RecentAlbumDTO MapRecentAlbum(GetRecentAlbumsResult data)
     {
@@ -16,17 +30,17 @@ internal class HistoryMapper : IHistoryMapper
         };
     }
 
-    public NewScrobbleDTO MapScrobble(GetNewScrobblesResult result)
+    public NewScrobbleDTO MapScrobble(GetNewScrobblesResult data)
     {
         return new NewScrobbleDTO
         {
-            Id = result.Id,
-            SessionKey = result.SessionKey,
-            ScrobbledAt = result.ScrobbledAt,
-            Track = result.Track,
-            Artist = result.Artist,
-            Album = result.Album,
-            AlbumArtist = result.AlbumArtist
+            Id = data.Id,
+            SessionKey = data.SessionKey,
+            ScrobbledAt = data.ScrobbledAt,
+            Track = data.Track,
+            Artist = data.Artist,
+            Album = data.Album,
+            AlbumArtist = data.AlbumArtist
         };
     }
 }
