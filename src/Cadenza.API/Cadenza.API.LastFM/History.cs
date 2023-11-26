@@ -15,38 +15,6 @@
             _urlService = urlService;
         }
 
-        public async Task<List<RecentTrackDTO>> GetRecentTracks(int limit, int page = 1)
-        {
-            var url = _config.Value.ApiBaseUrl;
-            url = _urlService.SetMethod(url, "user.getRecentTracks");
-            url = _urlService.AddParameter(url, "user", _config.Value.Username);
-            url = _urlService.AddParameter(url, "limit", limit);
-            url = _urlService.AddParameter(url, "page", page);
-            url = _urlService.AddParameter(url, "extended", 1);
-
-            return await _client.Get(url, xml => xml
-                    .Element("recenttracks")
-                    .Elements("track")
-                    .Select(t =>
-                    {
-                        var nowPlaying = _parser.GetBool(t, "nowplaying", true);
-
-                        return new RecentTrackDTO
-                        {
-                            Title = _parser.Get(t, "name"),
-                            Artist = _parser.Get(t, "artist", "name"),
-                            Album = _parser.Get(t, "album"),
-                            IsLoved = _parser.GetBool(t, "loved"),
-                            ImageUrl = _parser.GetImage(t),
-                            Played = nowPlaying
-                                ? DateTime.Now
-                                : _parser.GetDateTime(t, "date"),
-                            NowPlaying = nowPlaying
-                        };
-                    })
-                    .ToList());
-        }
-
         public async Task<List<PlayedTrackDTO>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
         {
             var url = _config.Value.ApiBaseUrl;

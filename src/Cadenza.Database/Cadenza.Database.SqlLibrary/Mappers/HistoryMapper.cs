@@ -30,6 +30,21 @@ internal class HistoryMapper : IHistoryMapper
         };
     }
 
+    public RecentTrackDTO MapRecentTrack(GetRecentTracksResult result)
+    {
+        return new RecentTrackDTO
+        {
+            Id = result.Id,
+            Title = result.Title,
+            Artist = result.Artist,
+            Album = result.AlbumTitle,
+            AlbumId = result.AlbumId,
+            Played = result.ScrobbledAt,
+            NowPlaying = result.NowPlaying,
+            IsLoved = result.IsLoved
+        };
+    }
+
     public NewScrobbleDTO MapScrobble(GetNewScrobblesResult data)
     {
         return new NewScrobbleDTO

@@ -77,10 +77,11 @@ public class LastFmController : ControllerBase
     }
 
     [HttpGet("RecentTracks")]
-    public async Task<List<RecentTrackDTO>> RecentTracks(int limit, int page)
+    public async Task<List<RecentTrackDTO>> RecentTracks(int limit)
     {
-        // TODO: Get from database
-        return await _history.GetRecentTracks(limit, page);
+        // TODO: Move this out of LastFmController and into HistoryController
+        var username = HttpContext.GetUsername();
+        return await _historyRepository.GetRecentTracks(username, limit);
     }
 
     [HttpGet("TopAlbums")]

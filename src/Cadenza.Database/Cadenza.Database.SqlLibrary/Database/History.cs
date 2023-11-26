@@ -32,6 +32,11 @@ internal class History : IHistory
         return await _sql.Query<GetRecentTagsResult>(new { MaxItems = maxItems });
     }
 
+    public async Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(string username, int maxItems)
+    {
+        return await _sql.Query<GetRecentTracksResult>(new { Username = username, MaxItems = maxItems });
+    }
+
     public async Task InsertNowPlaying(InsertNowPlayingParameter parameters)
     {
         await _sql.Execute(parameters);

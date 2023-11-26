@@ -9,6 +9,7 @@
 	[DurationSeconds] INT NOT NULL,
 	[Year] NCHAR(4) NOT NULL,
 	[Lyrics] NVARCHAR(MAX), 
+	[IsLoved] BIT NOT NULL DEFAULT 0
     CONSTRAINT [FK_Tracks_ToArtists] FOREIGN KEY ([ArtistId]) REFERENCES [Library].[Artists]([Id]), 
     CONSTRAINT [FK_Tracks_ToDiscs] FOREIGN KEY ([DiscId]) REFERENCES [Library].[Discs]([Id])
 )

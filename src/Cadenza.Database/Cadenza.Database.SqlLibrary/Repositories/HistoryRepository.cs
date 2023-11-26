@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.DTO;
-using Cadenza.Database.SqlLibrary.Database.Interfaces;
+﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
 using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 using Cadenza.Database.SqlLibrary.Model.History;
 
@@ -38,6 +37,12 @@ internal class HistoryRepository : IHistoryRepository
     {
         var data = await _history.GetRecentTags(maxItems);
         return data.Select(d => d.Tag).ToList();
+    }
+
+    public async Task<List<RecentTrackDTO>> GetRecentTracks(string username, int maxItems)
+    {
+        var data = await _history.GetRecentTracks(username, maxItems);
+        return data.Select(_mapper.MapRecentTrack).ToList();
     }
 
     public async Task MarkNowPlayingFailed(int userId)
