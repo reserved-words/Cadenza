@@ -12,6 +12,11 @@ internal class History : IHistory
         _sql = sql.Create(nameof(History));
     }
 
+    public async Task<List<GetNewScrobblesResult>> GetNewScrobbles()
+    {
+        return await _sql.Query<GetNewScrobblesResult>(null);
+    }
+
     public async Task<List<GetRecentAlbumsResult>> GetRecentAlbums(int maxItems)
     {
         return await _sql.Query<GetRecentAlbumsResult>(new { MaxItems = maxItems });
@@ -22,8 +27,13 @@ internal class History : IHistory
         return await _sql.Query<GetRecentTagsResult>(new { MaxItems = maxItems });
     }
 
-    public async Task InsertScrobble(int trackId, DateTime scrobbledAt)
+    public async Task InsertScrobble(InsertScrobbleParameter parameters)
     {
-        await _sql.Execute(new { TrackId = trackId, ScrobbledAt = scrobbledAt });
+        await _sql.Execute(parameters);
+    }
+
+    public async Task MarkScrobbled(int scrobbleId)
+    {
+        await _sql.Execute(new { ScrobbleId = scrobbleId });
     }
 }

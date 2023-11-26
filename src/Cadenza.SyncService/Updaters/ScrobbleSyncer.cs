@@ -1,8 +1,6 @@
-﻿using Cadenza.SyncService.Updaters.Interfaces;
+﻿namespace Cadenza.SyncService.Updaters;
 
-namespace Cadenza.SyncService.Updaters;
-
-internal class ScrobbleSyncer : IScrobbleSyncer
+internal class ScrobbleSyncer : IService
 {
     public Task Run()
     {

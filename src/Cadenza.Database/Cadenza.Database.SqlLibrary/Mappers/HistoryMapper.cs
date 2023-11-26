@@ -15,4 +15,18 @@ internal class HistoryMapper : IHistoryMapper
             ArtistName = data.ArtistName
         };
     }
+
+    public NewScrobbleDTO MapScrobble(GetNewScrobblesResult result)
+    {
+        return new NewScrobbleDTO
+        {
+            Id = result.Id,
+            SessionKey = result.SessionKey,
+            ScrobbledAt = result.ScrobbledAt,
+            Track = result.Track,
+            Artist = result.Artist,
+            Album = result.Album,
+            AlbumArtist = result.AlbumArtist
+        };
+    }
 }

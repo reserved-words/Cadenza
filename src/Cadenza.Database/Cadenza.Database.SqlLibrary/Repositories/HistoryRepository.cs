@@ -1,5 +1,6 @@
 ﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
 using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+using Cadenza.Database.SqlLibrary.Model.History;
 
 namespace Cadenza.Database.SqlLibrary.Repositories;
 
@@ -14,6 +15,12 @@ internal class HistoryRepository : IHistoryRepository
         _mapper = mapper;
     }
 
+    public async Task<List<NewScrobbleDTO>> GetNewScrobbles()
+    {
+        var data = await _history.GetNewScrobbles();
+        return data.Select(_mapper.MapScrobble).ToList();
+    }
+
     public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
     {
         var data = await _history.GetRecentAlbums(maxItems);
@@ -26,8 +33,18 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(d => d.Tag).ToList();
     }
 
-    public async Task ScrobbleTrack(int trackId, DateTime scrobbledAt)
+    public async Task MarkScrobbled(int scrobbleId)
     {
-        await _history.InsertScrobble(trackId, scrobbledAt);
+        await _history.MarkScrobbled(scrobbleId);
+    }
+
+    public async Task ScrobbleTrack(int trackId, string username, DateTime scrobbledAt)
+    {
+        await _history.InsertScrobble(new InsertScrobbleParameter
+        {
+            TrackId = trackId, 
+            Username = username,
+            ScrobbledAt = scrobbledAt
+        });
     }
 }

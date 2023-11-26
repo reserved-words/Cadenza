@@ -1,6 +1,5 @@
 ﻿using Cadenza.API.Extensions;
 using Cadenza.API.Interfaces.LastFm;
-using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Controllers;
 
@@ -43,18 +42,18 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("RecordPlay")]
-    public async Task RecordPlay(Scrobble scrobble)
+    public async Task RecordPlay(ScrobbleDTO scrobble)
     {
-        // TODO: Don't do the actual scrobble here - leave that to the service
         // TODO: Move this out of LastFmController and into HistoryController
-        await _historyRepository.ScrobbleTrack(scrobble.TrackId, scrobble.Timestamp);
-        await _scrobbler.RecordPlay(scrobble);
+        var username = HttpContext.GetUsername();
+        await _historyRepository.ScrobbleTrack(scrobble.TrackId, username, scrobble.Timestamp);
+        // await _scrobbler.RecordPlay(scrobble);
     }
 
     [HttpPost("UpdateNowPlaying")]
-    public async Task UpdateNowPlaying(Scrobble scrobble)
+    public async Task UpdateNowPlaying(ScrobbleDTO scrobble)
     {
-        // TODO: Think about letting the service do this as well - eventually no need to have any ref to Last.FM in the API
+        // TODO: Think about letting the service do this as well - eventually no need to have any ref to Last.FM in the API?
         await _scrobbler.UpdateNowPlaying(scrobble);
     }
 
@@ -66,14 +65,14 @@ public class LastFmController : ControllerBase
     }
 
     [HttpPost("Favourite")]
-    public async Task Favourite(FavouriteTrack track)
+    public async Task Favourite(FavouriteTrackDTO track)
     {
         // TODO: Update in database and then service can pass on to Last.FM
         await _favourites.Favourite(track);
     }
 
     [HttpPost("Unfavourite")]
-    public async Task Unfavourite(FavouriteTrack track)
+    public async Task Unfavourite(FavouriteTrackDTO track)
     {
         // TODO: Update in database and then service can pass on to Last.FM
         await _favourites.Unfavourite(track);

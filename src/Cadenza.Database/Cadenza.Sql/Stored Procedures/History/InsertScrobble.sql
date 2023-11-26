@@ -1,21 +1,32 @@
 ﻿CREATE PROCEDURE [History].[InsertScrobble]
 	@TrackId INT,
+	@Username NVARCHAR(100),
 	@ScrobbledAt DATETIME
 AS
 BEGIN
 
-	DECLARE @ScrobbleId INT
+	DECLARE @UserId INT,
+			@ScrobbleId INT
+
+	SELECT 
+		@UserId = [Id]
+	FROM
+		[Admin].[Users]
+	WHERE
+		[Username] = @Username
 
 	BEGIN TRANSACTION
 
 		INSERT INTO [History].[Scrobbles] (
 			[ScrobbledAt],
+			[UserId],
 			[Track],
 			[Artist],
 			[Album],
 			[AlbumArtist])
 		SELECT
 			@ScrobbledAt,
+			@UserId,
 			TRK.[Title],
 			ART.[Name],
 			ALB.[Title],

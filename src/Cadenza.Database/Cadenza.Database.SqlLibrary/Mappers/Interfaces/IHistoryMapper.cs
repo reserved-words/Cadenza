@@ -5,4 +5,5 @@ namespace Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 internal interface IHistoryMapper
 {
     RecentAlbumDTO MapRecentAlbum(GetRecentAlbumsResult data);
+    NewScrobbleDTO MapScrobble(GetNewScrobblesResult result);
 }

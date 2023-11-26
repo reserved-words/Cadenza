@@ -1,9 +1,8 @@
 ﻿using Cadenza.Database.Interfaces;
-using Cadenza.SyncService.Updaters.Interfaces;
 
 namespace Cadenza.SyncService.Updaters;
 
-internal class SyncHandler : ISyncHandler
+internal class SyncHandler : IService
 {
     private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;

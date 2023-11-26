@@ -3,14 +3,20 @@ AS
 BEGIN
 
 	SELECT
-		[ScrobbledAt],
-		[Track],
-		[Artist],
-		[Album],
-		[AlbumArtist]
+		SCR.[Id],
+		USR.[LastFmSessionKey] [SessionKey],
+		SCR.[ScrobbledAt],
+		SCR.[Track],
+		SCR.[Artist],
+		SCR.[Album],
+		SCR.[AlbumArtist]
 	FROM
-		[History].[Scrobbles]
+		[History].[Scrobbles] SCR
+	INNER JOIN
+		[Admin].[Users] USR ON USR.[Id] = SCR.[UserId]
 	WHERE
-		[Scrobbled] = 0
+		SCR.[Scrobbled] = 0
+	AND
+		USR.[LastFmSessionKey] IS NOT NULL
 
 END

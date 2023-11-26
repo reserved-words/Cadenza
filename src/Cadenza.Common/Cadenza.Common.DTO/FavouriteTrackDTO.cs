@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Common.LastFm;
+﻿namespace Cadenza.Common.DTO;
 
-public class FavouriteTrack
+public class FavouriteTrackDTO
 {
     public string SessionKey { get; set; }
     public string Artist { get; set; }

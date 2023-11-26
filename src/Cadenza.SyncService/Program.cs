@@ -1,7 +1,8 @@
 ﻿using Cadenza.Database.SqlLibrary;
 using Cadenza.Database.SqlLibrary.Configuration;
 using Cadenza.Local.SyncService;
-using Cadenza.SyncService.Updaters.Interfaces;
+using Cadenza.Common.LastFm;
+using Cadenza.Common.LastFm.Settings;
 
 var builder = Service.CreateBuilder(args, services =>
 {
@@ -17,19 +18,23 @@ var builder = Service.CreateBuilder(args, services =>
     services
         .AddUtilities()
         .AddSqlLibrary()
+        .AddLastFm()
         .AddSingleton<IApiTokenCache, ApiTokenCache>()
         .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
-        .AddTransient<ISourceRepository, LocalRepository>()
-        .AddTransient<IScheduledServiceFactory, ScheduledServiceFactory>()
-        .AddTransient<IScrobbler, Scrobbler>()
-        .AddTransient<IScrobbleSyncer, ScrobbleSyncer>()
-        .AddTransient<IUpdatesHandler, UpdatesHandler>()
-        .AddTransient<ISyncHandler, SyncHandler>();
+        .AddTransient<ISourceRepository, LocalRepository>();
 
     services
+        .AddTransient<IScheduledServiceFactory, ScheduledServiceFactory>()
+        .AddKeyedTransient<IService, SyncHandler>("LibrarySync")
+        .AddKeyedTransient<IService, UpdatesHandler>("LibraryUpdates")
+        .AddKeyedTransient<IService, ScrobbleSyncer>("ScrobbleSync")
+        .AddKeyedTransient<IService, Scrobbler>("Scrobbling");
+
+    services
+        .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings")
-        .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
+        .ConfigureSettings<FrequencySecondsSettings>(configuration, "ServiceSettings")
         .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
         .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
 

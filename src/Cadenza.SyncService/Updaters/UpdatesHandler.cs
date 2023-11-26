@@ -1,9 +1,8 @@
 ﻿using Cadenza.Database.Interfaces;
-using Cadenza.SyncService.Updaters.Interfaces;
 
 namespace Cadenza.SyncService.Updaters;
 
-internal class UpdatesHandler : IUpdatesHandler
+internal class UpdatesHandler : IService
 {
     private readonly ILibraryRepository _musicRepository;
     private readonly IQueueRepository _queueRepository;

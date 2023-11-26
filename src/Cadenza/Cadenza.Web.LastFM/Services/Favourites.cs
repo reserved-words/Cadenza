@@ -1,4 +1,4 @@
-﻿using Cadenza.Common.LastFm;
+﻿using Cadenza.Common.LastFm.Model;
 
 namespace Cadenza.Web.LastFM.Services;
 

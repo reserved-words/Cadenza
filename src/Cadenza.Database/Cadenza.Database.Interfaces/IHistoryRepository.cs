@@ -2,7 +2,9 @@
 
 public interface IHistoryRepository
 {
+    Task<List<NewScrobbleDTO>> GetNewScrobbles();
     Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems);
     Task<List<string>> GetRecentTags(int maxItems);
-    Task ScrobbleTrack(int trackId, DateTime scrobbledAt);
+    Task MarkScrobbled(int scrobbleId);
+    Task ScrobbleTrack(int trackId, string username, DateTime scrobbledAt);
 }

@@ -1,4 +1,4 @@
-﻿CREATE VIEW [Library].[vw_PotentialScrobbleMatches]
+﻿CREATE VIEW [History].[vw_PotentialScrobbleMatches]
 AS
 SELECT 
 	TRK.[Id] [TrackId], 
