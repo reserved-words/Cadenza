@@ -26,6 +26,7 @@ BEGIN
 		CREATE USER [$(ServiceUser)] FOR LOGIN [$(ServiceUser)]
 	END
 	
+	GRANT EXECUTE ON SCHEMA::[History] TO [$(ServiceUser)]
 	GRANT EXECUTE ON SCHEMA::[Library] TO [$(ServiceUser)]
 	GRANT EXECUTE ON SCHEMA::[Queue] TO [$(ServiceUser)]
 	GRANT EXECUTE ON SCHEMA::[Update] TO [$(ServiceUser)]
