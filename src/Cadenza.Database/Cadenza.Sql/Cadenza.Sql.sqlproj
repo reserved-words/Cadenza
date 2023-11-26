@@ -215,6 +215,7 @@
     <Build Include="Stored Procedures\History\GetNowPlayingUpdates.sql" />
     <Build Include="Stored Procedures\History\GetRecentTracks.sql" />
     <Build Include="Stored Procedures\Admin\ImportScrobble.sql" />
+    <Build Include="Stored Procedures\Admin\ImportScrobbles.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
