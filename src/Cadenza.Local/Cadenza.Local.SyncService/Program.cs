@@ -1,4 +1,6 @@
-﻿var builder = Service.CreateBuilder(args, services =>
+﻿using Cadenza.Local.SyncService;
+
+var builder = Service.CreateBuilder(args, services =>
 {
     var configuration = services.RegisterConfiguration();
 
@@ -9,6 +11,8 @@
     services
         .ConfigureSettings<ServiceSettings>(configuration, "ServiceSettings")
         .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
+
+    services.AddHostedService<Worker>();
 });
 
 builder.Build().Run();

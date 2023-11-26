@@ -2,14 +2,14 @@
 
 namespace Cadenza.SyncService.Updaters;
 
-internal class UpdateRequestsHandler : IService
+internal class UpdatesHandler : IService
 {
     private readonly ILibraryRepository _musicRepository;
     private readonly IQueueRepository _queueRepository;
-    private readonly ILogger<UpdateRequestsHandler> _logger;
+    private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
 
-    public UpdateRequestsHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdateRequestsHandler> logger)
+    public UpdatesHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger)
     {
         _musicRepository = musicRepository;
         _queueRepository = queueRepository;
@@ -19,14 +19,14 @@ internal class UpdateRequestsHandler : IService
 
     public async Task Run()
     {
-        _logger.LogInformation("Started processing update requests");
+        _logger.LogDebug("Started processing update requests");
 
         foreach (var repository in _sources)
         {
             await ProcessUpdates(repository, repository.Source);
         }
 
-        _logger.LogInformation("Finished processing update requests");
+        _logger.LogDebug("Finished processing update requests");
     }
 
     private async Task ProcessUpdates(ISourceRepository repository, LibrarySource source)
@@ -40,7 +40,7 @@ internal class UpdateRequestsHandler : IService
 
     private async Task ProcessArtistUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
-        _logger.LogInformation($"{requests.Count} artist update requests to process");
+        _logger.LogDebug($"{requests.Count} artist update requests to process");
 
         foreach (var request in requests)
         {
@@ -48,12 +48,12 @@ internal class UpdateRequestsHandler : IService
             await TryUpdateTracks(repository, tracks, request);
         }
 
-        _logger.LogInformation("All artist update requests processed");
+        _logger.LogDebug("All artist update requests processed");
     }
 
     private async Task ProcessAlbumUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
-        _logger.LogInformation($"{requests.Count} album update requests to process");
+        _logger.LogDebug($"{requests.Count} album update requests to process");
 
         foreach (var request in requests)
         {
@@ -61,12 +61,12 @@ internal class UpdateRequestsHandler : IService
             await TryUpdateTracks(repository, tracks, request);
         }
 
-        _logger.LogInformation("All album update requests processed");
+        _logger.LogDebug("All album update requests processed");
     }
 
     private async Task ProcessTrackUpdates(ISourceRepository repository, List<ItemUpdateRequestDTO> requests)
     {
-        _logger.LogInformation($"{requests.Count} track update requests to process");
+        _logger.LogDebug($"{requests.Count} track update requests to process");
 
         foreach (var request in requests)
         {
@@ -75,7 +75,7 @@ internal class UpdateRequestsHandler : IService
             await TryUpdateTracks(repository, tracks, request);
         }
 
-        _logger.LogInformation("All track update requests processed");
+        _logger.LogDebug("All track update requests processed");
     }
 
     private async Task TryUpdateTracks(ISourceRepository repository, List<string> tracks, ItemUpdateRequestDTO request)

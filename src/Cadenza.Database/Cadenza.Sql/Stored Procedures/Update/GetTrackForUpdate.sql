@@ -4,14 +4,9 @@ AS
 BEGIN
 
 	SELECT 
-		TRK.[Id],
-		TRK.[IdFromSource],
-		TRK.[ArtistId],
-		TRK.[DiscId],
 		DSC.[DiscNo],
 		TRK.[TrackNo],
 		TRK.[Title],
-		TRK.[DurationSeconds],
 		TRK.[Year],
 		TRK.[Lyrics],
 		TAG.[TagList]

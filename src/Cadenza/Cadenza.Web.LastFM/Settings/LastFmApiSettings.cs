@@ -15,9 +15,6 @@ public class LastFmApiEndpoints
     public string TopAlbums { get; set; }
     public string TopArtists { get; set; }
     public string TopTracks { get; set; }
-    public string RecentTracks { get; set; }
-    public string UpdateNowPlaying { get; set; }
-    public string Scrobble { get; set; }
 }
 
 

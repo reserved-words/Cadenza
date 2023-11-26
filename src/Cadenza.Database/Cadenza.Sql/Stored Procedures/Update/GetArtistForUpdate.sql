@@ -4,10 +4,7 @@ AS
 BEGIN
 
 	SELECT 
-		ART.[Id],
-		ART.[Name],
 		ART.[GroupingId],
-		GRP.[Name] [GroupingName],
 		ART.[Genre],
 		ART.[City],
 		ART.[State],

@@ -4,9 +4,9 @@ public class PlaylistHistoryEffects
 {
     private const int MaxItems = 10;
 
-    private readonly IPlaylistHistory _history;
+    private readonly IHistoryRepository _history;
 
-    public PlaylistHistoryEffects(IPlaylistHistory history)
+    public PlaylistHistoryEffects(IHistoryRepository history)
     {
         _history = history;
     }

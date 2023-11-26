@@ -2,14 +2,15 @@
 
 Console.WriteLine("Starting");
 
-//var service = new UpdateFromBase64ToFilepaths();
-//await service.Run("cadenza-test");
+Console.WriteLine("Enter API key");
+var apiKey = Console.ReadLine();
 
-//var service = new StripBaseDirectoryFromFilepath();
-//await service.Run("cadenza-test", "C:\\Cadenza-Test\\Music\\");
+Console.WriteLine("Enter username");
+var username = Console.ReadLine();
 
-var service = new UpdateArtistCompareNames();
-await service.Run("cadenza-test");
+var service = new ScrobbleImporter();
+
+await service.Run(apiKey, username);
 
 Console.WriteLine("-------------");
 Console.WriteLine("Finished");

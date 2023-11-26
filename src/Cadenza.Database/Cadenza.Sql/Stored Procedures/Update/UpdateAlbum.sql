@@ -1,11 +1,9 @@
 ﻿CREATE PROCEDURE [Update].[UpdateAlbum]
 	@Id INT,
-	@SourceId INT,
 	@ArtistId INT,
 	@Title NVARCHAR(500),
 	@ReleaseTypeId INT,
 	@Year NCHAR(4),
-	@DiscCount INT,
 	@TagList NVARCHAR(1000),
 	@ArtworkMimeType NVARCHAR(30),
 	@ArtworkContent VARBINARY(MAX)
@@ -28,12 +26,10 @@ BEGIN
 	UPDATE 
 		[Library].[Albums] 
 	SET
-		[SourceId] = @SourceId, 
 		[ArtistId] = @ArtistId, 
 		[Title] = @Title,
 		[ReleaseTypeId] = @ReleaseTypeId,
-		[Year] = @Year,
-		[DiscCount] = @DiscCount
+		[Year] = @Year
 	WHERE
 		[Id] = @Id
 

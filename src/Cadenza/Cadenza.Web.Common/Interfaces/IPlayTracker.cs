@@ -3,5 +3,5 @@
 public interface IPlayTracker
 {
     Task RecordPlay(TrackFullVM track, DateTime timestamp);
-    Task UpdateNowPlaying(TrackFullVM track, int duration);
+    Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining);
 }

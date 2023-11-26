@@ -197,6 +197,26 @@
     <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGenre.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGrouping.sql" />
+    <Build Include="Tables\History\Scrobbles.sql" />
+    <Build Include="Tables\History\TrackScrobbles.sql" />
+    <Build Include="Stored Procedures\History\InsertScrobble.sql" />
+    <Build Include="Tables\Admin\ImportedScrobbles.sql" />
+    <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
+    <Build Include="Stored Procedures\History\GetNewScrobbles.sql" />
+    <Build Include="Views\History\vw_ScrobbleMatches_AlbumArtist.sql" />
+    <Build Include="Tables\Admin\Users.sql" />
+    <Build Include="Stored Procedures\Admin\SaveLastFmSessionKey.sql" />
+    <Build Include="Stored Procedures\History\MarkScrobbled.sql" />
+    <Build Include="Stored Procedures\History\MarkScrobbleFailed.sql" />
+    <Build Include="Tables\History\NowPlaying.sql" />
+    <Build Include="Stored Procedures\History\InsertNowPlaying.sql" />
+    <Build Include="Stored Procedures\History\MarkNowPlayingUpdated.sql" />
+    <Build Include="Stored Procedures\History\MarkNowPlayingFailed.sql" />
+    <Build Include="Stored Procedures\History\GetNowPlayingUpdates.sql" />
+    <Build Include="Stored Procedures\History\GetRecentTracks.sql" />
+    <Build Include="Stored Procedures\Admin\ImportScrobble.sql" />
+    <Build Include="Stored Procedures\Admin\ImportScrobbles.sql" />
+    <Build Include="Views\History\vw_ScrobbleMatches_NoAlbumArtist.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

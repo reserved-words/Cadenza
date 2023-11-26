@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.LastFm;
-
-namespace Cadenza.API.LastFM;
+﻿namespace Cadenza.API.LastFM;
 
 internal class Favourites : IFavourites
 {
@@ -37,7 +35,7 @@ internal class Favourites : IFavourites
         });
     }
 
-    public async Task Favourite(FavouriteTrack track)
+    public async Task Favourite(FavouriteTrackDTO track)
     {
         await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {
@@ -47,7 +45,7 @@ internal class Favourites : IFavourites
         });
     }
 
-    public async Task Unfavourite(FavouriteTrack track)
+    public async Task Unfavourite(FavouriteTrackDTO track)
     {
         await _authorisedClient.Post(track.SessionKey, new Dictionary<string, string>
         {
