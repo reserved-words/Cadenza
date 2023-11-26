@@ -16,4 +16,6 @@ public interface IHistoryRepository
     Task UpdateNowPlaying(string username, int trackId, int secondsRemaining);
 
     Task<List<RecentTrackDTO>> GetRecentTracks(string username, int maxItems);
+
+    Task SyncScrobbles();
 }

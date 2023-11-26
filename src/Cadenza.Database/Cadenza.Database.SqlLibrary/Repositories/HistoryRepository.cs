@@ -75,6 +75,11 @@ internal class HistoryRepository : IHistoryRepository
         });
     }
 
+    public async Task SyncScrobbles()
+    {
+        await _history.SyncScrobbles();
+    }
+
     public async Task UpdateNowPlaying(string username, int trackId, int secondsRemaining)
     {
         await _history.InsertNowPlaying(new InsertNowPlayingParameter

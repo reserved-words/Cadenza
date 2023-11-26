@@ -66,4 +66,9 @@ internal class History : IHistory
     {
         await _sql.Execute(new { ScrobbleId = scrobbleId });
     }
+
+    public async Task SyncScrobbles()
+    {
+        await _sql.Execute(null);
+    }
 }
