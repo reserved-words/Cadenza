@@ -6,13 +6,15 @@ public class RecentPlayHistoryEffects
     private const int MinMinutesPlayed = 4;
     private const int MinPercentagePlayed = 50;
 
+    private readonly IArtworkFetcher _artworkFetcher;
     private readonly IPlayHistory _history;
     private readonly IPlayTracker _tracker;
 
-    public RecentPlayHistoryEffects(IPlayHistory history, IPlayTracker tracker)
+    public RecentPlayHistoryEffects(IPlayHistory history, IPlayTracker tracker, IArtworkFetcher artworkFetcher)
     {
         _history = history;
         _tracker = tracker;
+        _artworkFetcher = artworkFetcher;
     }
 
     [EffectMethod]
@@ -46,7 +48,16 @@ public class RecentPlayHistoryEffects
     public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
     {
         var result = await _history.GetRecentTracks(MaxItems);
-        dispatcher.Dispatch(new FetchRecentPlayHistoryResult(result.ToList()));
+
+        var list = result.ToList();
+
+        var listWithImages = list.Select(t => t with
+        {
+            ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(t.AlbumId)
+        })
+        .ToList();
+
+        dispatcher.Dispatch(new FetchRecentPlayHistoryResult(listWithImages));
     }
 
     private async Task RecordPlay(TrackFullVM track, TrackProgress progress)
