@@ -39,22 +39,6 @@ public class LastFmController : ControllerBase
         return session.SessionKey;
     }
 
-    [HttpPost("RecordPlay")]
-    public async Task RecordPlay(ScrobbleDTO scrobble)
-    {
-        // TODO: Move this out of LastFmController and into HistoryController
-        var username = HttpContext.GetUsername();
-        await _historyRepository.ScrobbleTrack(scrobble.TrackId, username, scrobble.Timestamp);
-    }
-
-    [HttpPost("UpdateNowPlaying")]
-    public async Task UpdateNowPlaying(NowPlayingDTO nowPlaying)
-    {
-        // TODO: Move this out of LastFmController and into HistoryController
-        var username = HttpContext.GetUsername();
-        await _historyRepository.UpdateNowPlaying(username, nowPlaying.TrackId, nowPlaying.SecondsRemaining);
-    }
-
     [HttpGet("IsFavourite")]
     public async Task<bool> IsFavourite(string artist, string title)
     {
@@ -74,14 +58,6 @@ public class LastFmController : ControllerBase
     {
         // TODO: Update in database and then service can pass on to Last.FM
         await _favourites.Unfavourite(track);
-    }
-
-    [HttpGet("RecentTracks")]
-    public async Task<List<RecentTrackDTO>> RecentTracks(int limit)
-    {
-        // TODO: Move this out of LastFmController and into HistoryController
-        var username = HttpContext.GetUsername();
-        return await _historyRepository.GetRecentTracks(username, limit);
     }
 
     [HttpGet("TopAlbums")]

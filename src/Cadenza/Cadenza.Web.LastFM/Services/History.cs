@@ -30,10 +30,4 @@ internal class History : IPlayHistory
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopTracks, ("period", period), ("limit", limit), ("page", page));
         return await _http.Get<List<PlayedTrackVM>>(url);
     }
-
-    public async Task<List<RecentTrackVM>> GetRecentTracks(int limit)
-    {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.RecentTracks, ("limit", limit));
-        return await _http.Get<List<RecentTrackVM>>(url);
-    }
 }

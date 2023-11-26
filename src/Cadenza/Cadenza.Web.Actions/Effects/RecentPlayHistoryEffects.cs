@@ -7,10 +7,10 @@ public class RecentPlayHistoryEffects
     private const int MinPercentagePlayed = 50;
 
     private readonly IArtworkFetcher _artworkFetcher;
-    private readonly IPlayHistory _history;
+    private readonly IHistoryRepository _history;
     private readonly IPlayTracker _tracker;
 
-    public RecentPlayHistoryEffects(IPlayHistory history, IPlayTracker tracker, IArtworkFetcher artworkFetcher)
+    public RecentPlayHistoryEffects(IHistoryRepository history, IPlayTracker tracker, IArtworkFetcher artworkFetcher)
     {
         _history = history;
         _tracker = tracker;

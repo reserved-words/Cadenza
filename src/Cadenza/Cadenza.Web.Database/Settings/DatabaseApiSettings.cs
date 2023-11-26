@@ -49,4 +49,8 @@ public class DatabaseApiEndpoints
 
     public string AlbumArtworkUrl { get; set; }
     public string ArtistImageUrl { get; set; }
+
+    public string RecentTracks { get; set; }
+    public string UpdateNowPlaying { get; set; }
+    public string Scrobble { get; set; }
 }
