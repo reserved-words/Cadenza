@@ -27,13 +27,8 @@ public class RecentPlayHistoryEffects
         {
             await UpdateNowPlaying(action.Track, progress.SecondsRemaining);
         }
-        else if (action.Status == PlayStatus.Paused)
-        {
-            await UpdateNowPlaying(action.Track, 1);
-        }
         else if (action.Status == PlayStatus.Stopped && action.Track != null)
         {
-            await UpdateNowPlaying(action.Track, 0);
             await RecordPlay(action.Track, progress);
         }
 

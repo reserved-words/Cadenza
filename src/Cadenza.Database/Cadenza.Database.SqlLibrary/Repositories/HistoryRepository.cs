@@ -40,14 +40,14 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(d => d.Tag).ToList();
     }
 
-    public Task MarkNowPlayingFailed(int userId)
+    public async Task MarkNowPlayingFailed(int userId)
     {
-        throw new NotImplementedException();
+        await _history.MarkNowPlayingFailed(userId);
     }
 
-    public Task MarkNowPlayingUpdated(int userId)
+    public async Task MarkNowPlayingUpdated(int userId)
     {
-        throw new NotImplementedException();
+        await _history.MarkNowPlayingUpdated(userId);
     }
 
     public async Task MarkScrobbled(int scrobbleId)

@@ -25,6 +25,46 @@ internal class Scrobbler : IService
         {
             await TryScrobble(newScrobble);
         }
+
+        var nowPlayingUpdates = await _historyRepository.GetNowPlayingUpdates();
+
+        foreach (var nowPlayingUpdate in nowPlayingUpdates)
+        {
+            await TryUpdateNowPlaying(nowPlayingUpdate);
+        }
+    }
+
+    private async Task TryUpdateNowPlaying(NowPlayingUpdateDTO nowPlayingUpdate)
+    {
+        await _historyRepository.MarkNowPlayingUpdated(nowPlayingUpdate.UserId);
+
+        // If update was so long ago that the seconds remaining have already passed don't bother updating
+        if (nowPlayingUpdate.Timestamp.AddSeconds(nowPlayingUpdate.SecondsRemaining) < DateTime.Now)
+            return;
+
+        var nowPlaying = new NowPlaying
+        {
+            Duration = nowPlayingUpdate.SecondsRemaining,
+            Title = nowPlayingUpdate.Track,
+            Artist = nowPlayingUpdate.Artist,
+            AlbumTitle = nowPlayingUpdate.Album,
+            AlbumArtist = nowPlayingUpdate.AlbumArtist
+        };
+
+        await TryUpdateNowPlaying(nowPlayingUpdate.UserId, nowPlayingUpdate.SessionKey, nowPlaying);
+    }
+
+    private async Task TryUpdateNowPlaying(int userId, string sessionKey, NowPlaying nowPlaying)
+    {
+        try
+        {
+            await _lastFmService.UpdateNowPlaying(sessionKey, nowPlaying);
+        }
+        catch (Exception ex)
+        {
+            await TryMarkNowPlayingFailed(userId);
+            _logger.LogError(ex, "Failed to update now playing (User ID {0})", userId);
+        }
     }
 
     private async Task TryScrobble(NewScrobbleDTO newScrobble)
@@ -53,6 +93,18 @@ internal class Scrobbler : IService
         {
             await TryMarkScrobbleFailed(scrobbleId);
             _logger.LogError(ex, "Failed scrobble (ID {0})", scrobbleId);
+        }
+    }
+
+    private async Task TryMarkNowPlayingFailed(int userId)
+    {
+        try
+        {
+            await _historyRepository.MarkNowPlayingFailed(userId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to mark now playing attempt as failed (User ID {0})", userId);
         }
     }
 

@@ -44,19 +44,19 @@ internal class Worker : BackgroundService
 
         try
         {
-            _logger.LogInformation($"Running service {serviceName}");
+            _logger.LogDebug($"Running service {serviceName}");
 
             service.LastRun = DateTime.Now;
 
             await service.Service.Run();
 
-            _logger.LogInformation($"Finished processing service {serviceName}");
+            _logger.LogDebug($"Finished processing service {serviceName}");
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Error running service {serviceName}");
         }
 
-        _logger.LogInformation("---------------------------------------------");
+        _logger.LogDebug("---------------------------------------------");
     }
 }
