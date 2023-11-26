@@ -1,10 +1,18 @@
-﻿namespace Cadenza.SyncService.Updaters;
+﻿using Cadenza.Database.Interfaces;
+
+namespace Cadenza.SyncService.Updaters;
 
 internal class ScrobbleSyncer : IService
 {
-    public Task Run()
+    private readonly IHistoryRepository _repository;
+
+    public ScrobbleSyncer(IHistoryRepository repository)
     {
-        // TODO
-        return Task.CompletedTask;
+        _repository = repository;
+    }
+
+    public async Task Run()
+    {
+        await _repository.SyncScrobbles();
     }
 }

@@ -21,7 +21,7 @@ internal class SyncHandler : IService
 
     public async Task Run()
     {
-        _logger.LogInformation("Started syncing repositories");
+        _logger.LogDebug("Started syncing repositories");
 
         foreach (var repository in _sources)
         {
@@ -34,7 +34,7 @@ internal class SyncHandler : IService
             await AddDbTracksThatAreInSource(repository, dbTracks, sourceTracks);
         }
 
-        _logger.LogInformation("Finished syncing repositories");
+        _logger.LogDebug("Finished syncing repositories");
     }
 
     private async Task AddDbTracksThatAreInSource(ISourceRepository repository, List<string> dbTracks, List<string> sourceTracks)

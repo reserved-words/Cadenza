@@ -14,4 +14,8 @@ public interface IHistoryRepository
     Task MarkNowPlayingUpdated(int userId);
     Task MarkNowPlayingFailed(int userId);
     Task UpdateNowPlaying(string username, int trackId, int secondsRemaining);
+
+    Task<List<RecentTrackDTO>> GetRecentTracks(string username, int maxItems);
+
+    Task SyncScrobbles();
 }

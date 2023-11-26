@@ -16,4 +16,7 @@ internal interface IHistory
     Task InsertScrobble(InsertScrobbleParameter parameters);
     Task MarkScrobbled(int scrobbleId);
     Task MarkScrobbleFailed(int scrobbleId);
+    Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(string username, int maxItems);
+
+    Task SyncScrobbles();
 }
