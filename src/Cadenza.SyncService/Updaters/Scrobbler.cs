@@ -6,70 +6,30 @@ namespace Cadenza.SyncService.Updaters;
 
 internal class Scrobbler : IService
 {
-    private readonly IHistoryRepository _historyRepository;
+    private readonly ILastFmRepository _repository;
     private readonly ILastFmService _lastFmService;
     private readonly ILogger<Scrobbler> _logger;
 
-    public Scrobbler(IHistoryRepository repository, ILastFmService lastFmService, ILogger<Scrobbler> logger)
+    public Scrobbler(ILastFmRepository repository, ILastFmService lastFmService, ILogger<Scrobbler> logger)
     {
-        _historyRepository = repository;
+        _repository = repository;
         _lastFmService = lastFmService;
         _logger = logger;
     }
 
     public async Task Run()
     {
-        var newScrobbles = await _historyRepository.GetNewScrobbles();
+        var newScrobbles = await _repository.GetNewScrobbles();
 
         foreach (var newScrobble in newScrobbles)
         {
             await TryScrobble(newScrobble);
         }
-
-        var nowPlayingUpdates = await _historyRepository.GetNowPlayingUpdates();
-
-        foreach (var nowPlayingUpdate in nowPlayingUpdates)
-        {
-            await TryUpdateNowPlaying(nowPlayingUpdate);
-        }
-    }
-
-    private async Task TryUpdateNowPlaying(NowPlayingUpdateDTO nowPlayingUpdate)
-    {
-        await _historyRepository.MarkNowPlayingUpdated(nowPlayingUpdate.UserId);
-
-        // If update was so long ago that the seconds remaining have already passed don't bother updating
-        if (nowPlayingUpdate.Timestamp.AddSeconds(nowPlayingUpdate.SecondsRemaining) < DateTime.Now)
-            return;
-
-        var nowPlaying = new NowPlaying
-        {
-            Duration = nowPlayingUpdate.SecondsRemaining,
-            Title = nowPlayingUpdate.Track,
-            Artist = nowPlayingUpdate.Artist,
-            AlbumTitle = nowPlayingUpdate.Album,
-            AlbumArtist = nowPlayingUpdate.AlbumArtist
-        };
-
-        await TryUpdateNowPlaying(nowPlayingUpdate.UserId, nowPlayingUpdate.SessionKey, nowPlaying);
-    }
-
-    private async Task TryUpdateNowPlaying(int userId, string sessionKey, NowPlaying nowPlaying)
-    {
-        try
-        {
-            await _lastFmService.UpdateNowPlaying(sessionKey, nowPlaying);
-        }
-        catch (Exception ex)
-        {
-            await TryMarkNowPlayingFailed(userId);
-            _logger.LogError(ex, "Failed to update now playing (User ID {0})", userId);
-        }
     }
 
     private async Task TryScrobble(NewScrobbleDTO newScrobble)
     {
-        await _historyRepository.MarkScrobbled(newScrobble.Id);
+        await _repository.MarkScrobbled(newScrobble.Id);
 
         var scrobble = new Scrobble
         {
@@ -96,23 +56,11 @@ internal class Scrobbler : IService
         }
     }
 
-    private async Task TryMarkNowPlayingFailed(int userId)
-    {
-        try
-        {
-            await _historyRepository.MarkNowPlayingFailed(userId);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to mark now playing attempt as failed (User ID {0})", userId);
-        }
-    }
-
     private async Task TryMarkScrobbleFailed(int scrobbleId)
     {
         try
         {
-            await _historyRepository.MarkScrobbleFailed(scrobbleId);
+            await _repository.MarkScrobbleFailed(scrobbleId);
         }
         catch (Exception ex)
         {

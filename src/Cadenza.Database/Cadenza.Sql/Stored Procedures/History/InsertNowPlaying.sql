@@ -5,15 +5,7 @@
 AS
 BEGIN
 
-	DECLARE @UserId INT,
-			@ScrobbleId INT
-
-	SELECT 
-		@UserId = [Id]
-	FROM
-		[Admin].[Users]
-	WHERE
-		[Username] = @Username
+	DECLARE @UserId INT = [Admin].[GetUserId](@Username)
 
 	IF NOT EXISTS (SELECT [UserId] FROM [History].[NowPlaying] WHERE [UserId] = @UserId)
 	BEGIN
@@ -32,11 +24,10 @@ BEGIN
 	SET
 		[TrackId] = @TrackId,
 		[Timestamp] = GETDATE(),
-		[SecondsRemaining] = @SecondsRemaining,
-		[Scrobbled] = 0,
-		[FailedAttempts] = 0,
-		[LastAttempt] = NULL
+		[SecondsRemaining] = @SecondsRemaining
 	WHERE
 		[UserId] = @UserId
+
+	EXECUTE [LastFm].[QueueNowPlaying] @UserId
 
 END

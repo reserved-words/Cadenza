@@ -52,8 +52,7 @@
         </MudHidden>
 
         <MudTd Class="td-icon">
-@*             Removed until functionality for updating in database is implemented *@
-            @* <FavouriteTrack Artist="@context.Artist" Title="@context.Title" IsFavourite="@context.IsLoved" /> *@
+            <FavouriteTrack TrackId="@context.Id" IsFavourite="@context.IsLoved" />
         </MudTd>
 
     </RowTemplate>

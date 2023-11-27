@@ -4,60 +4,34 @@ public class FavouriteTrackBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public string Artist { get; set; }
-    [Parameter] public string Title { get; set; }
-    [Parameter] public bool? IsFavourite { get; set; }
+    [Parameter] public int TrackId { get; set; }
+    [Parameter] public bool IsFavourite { get; set; }
 
-    public bool IsEnabled { get; set; }
+    public bool IsEnabled => TrackId > 0;
 
     protected override void OnInitialized()
     {
-        SubscribeToAction<IsFavouriteResultAction>(OnIsFavouriteResult);
         SubscribeToAction<FavouriteStatusChangedAction>(OnFavouriteStatusChanged);
         base.OnInitialized();
     }
 
     private void OnFavouriteStatusChanged(FavouriteStatusChangedAction action)
     {
-        if (action.Artist != Artist || action.Title != Title)
+        if (action.TrackId != TrackId)
             return;
 
         IsFavourite = action.IsFavourite;
     }
 
-    private void OnIsFavouriteResult(IsFavouriteResultAction action)
-    {
-        if (action.Artist != Artist || action.Title != Title)
-            return;
-
-        IsFavourite = action.Result;
-    }
-
-    protected override void OnParametersSet()
-    {
-        IsEnabled = false;
-
-        if (Artist == null || Title == null)
-            return;
-
-        IsEnabled = true;
-
-        if (!IsFavourite.HasValue)
-        {
-            IsFavourite = false;
-            Dispatcher.Dispatch(new IsFavouriteRequest(Artist, Title));
-        }
-    }
-
     public void Favourite()
     {
-        Dispatcher.Dispatch(new FavouriteRequest(Artist, Title));
+        Dispatcher.Dispatch(new FavouriteRequest(TrackId));
         IsFavourite = true;
     }
 
     public void Unfavourite()
     {
-        Dispatcher.Dispatch(new UnfavouriteRequest(Artist, Title));
+        Dispatcher.Dispatch(new UnfavouriteRequest(TrackId));
         IsFavourite = false;
     }
 }
