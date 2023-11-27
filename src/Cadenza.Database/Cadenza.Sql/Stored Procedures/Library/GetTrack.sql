@@ -8,6 +8,7 @@ BEGIN
 		TRK.[Id] [Id],
 		TRK.[IdFromSource] [IdFromSource],
 		TRK.[Title] [TrackTitle],
+		TRK.[IsLoved] [IsLoved],
 		TRK.[DurationSeconds] [DurationSeconds],
 		TRK.[Year] [TrackYear],
 		TRK.[Lyrics] [Lyrics],

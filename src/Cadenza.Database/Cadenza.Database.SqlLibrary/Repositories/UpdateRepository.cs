@@ -42,6 +42,11 @@ internal class UpdateRepository : IUpdateRepository
         await _update.AddTrack(trackData);
     }
 
+    public async Task LoveTrack(int trackId)
+    {
+        await _update.UpdateTrackIsLoved(new UpdateTrackIsLovedParameter { TrackId = trackId, IsLoved = true });
+    }
+
     public async Task RemoveTrack(int id)
     {
         await _update.DeleteTrack(id);
@@ -60,6 +65,11 @@ internal class UpdateRepository : IUpdateRepository
         await _update.DeleteEmptyDiscs();
         await _update.DeleteEmptyAlbums();
         await _update.DeleteEmptyArtists();
+    }
+
+    public async Task UnloveTrack(int trackId)
+    {
+        await _update.UpdateTrackIsLoved(new UpdateTrackIsLovedParameter { TrackId = trackId, IsLoved = false } );
     }
 
     public async Task UpdateAlbum(ItemUpdateRequestDTO request)

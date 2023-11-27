@@ -22,4 +22,6 @@ internal interface IUpdate
     Task UpdateAlbum(UpdateAlbumParameter album);
     Task UpdateArtist(UpdateArtistParameter artist);
     Task UpdateTrack(UpdateTrackParameter track);
+
+    Task UpdateTrackIsLoved(UpdateTrackIsLovedParameter parameter);
 }

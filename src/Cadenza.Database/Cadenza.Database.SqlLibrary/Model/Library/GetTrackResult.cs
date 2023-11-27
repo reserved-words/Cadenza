@@ -6,6 +6,7 @@ public class GetTrackResult
     public int Id { get; set; }
     public string IdFromSource { get; set; }
     public string TrackTitle { get; set; }
+    public bool IsLoved { get; set; }
     public int DurationSeconds { get; set; }
     public string TrackYear { get; set; }
     public string Lyrics { get; set; }

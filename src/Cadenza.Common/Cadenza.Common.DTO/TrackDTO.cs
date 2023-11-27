@@ -10,4 +10,5 @@ public class TrackDTO
     public string ArtistName { get; set; }
     public int DurationSeconds { get; set; }
     public int AlbumId { get; set; }
+    public bool IsLoved { get; set; }
 }

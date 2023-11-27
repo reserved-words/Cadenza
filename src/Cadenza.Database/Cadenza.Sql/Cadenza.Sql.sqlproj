@@ -76,6 +76,8 @@
     <Folder Include="Stored Procedures\Update" />
     <Folder Include="Stored Procedures\Images" />
     <Folder Include="Stored Procedures\Search" />
+    <Folder Include="Tables\LastFm" />
+    <Folder Include="Stored Procedures\LastFm" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -219,6 +221,10 @@
     <Build Include="Views\History\vw_ScrobbleMatches_NoAlbumArtist.sql" />
     <Build Include="Stored Procedures\History\UpdateTrackScrobbles.sql" />
     <Build Include="Stored Procedures\History\UpdateAlbumScrobbles.sql" />
+    <Build Include="Stored Procedures\Update\UpdateTrackIsLoved.sql" />
+    <Build Include="Schemas\LastFm.sql" />
+    <Build Include="Tables\LastFm\LovedTracks.sql" />
+    <Build Include="Stored Procedures\LastFm\UpdateLovedTrack.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

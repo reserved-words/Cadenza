@@ -149,4 +149,9 @@ internal class Update : IUpdate
     {
         await _sql.Execute(track);
     }
+
+    public async Task UpdateTrackIsLoved(UpdateTrackIsLovedParameter parameter)
+    {
+        await _sql.Execute(parameter);
+    }
 }

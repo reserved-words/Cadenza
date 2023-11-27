@@ -5,8 +5,6 @@ global using Cadenza.Web.LastFM.Interfaces;
 global using Cadenza.Web.LastFM.Services;
 global using Cadenza.Web.LastFM.Settings;
 global using Cadenza.Web.Model;
-global using Cadenza.Web.State.Store;
-global using Fluxor;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 
@@ -18,7 +16,6 @@ public static class _Startup
     public static IServiceCollection AddLastFm(this IServiceCollection services)
     {
         return services
-            .AddTransient<IFavouritesService, Favourites>()
             .AddTransient<IAuthoriser, Authoriser>()
             .AddTransient<IPlayHistory, History>()
             .AddTransient<ILastFmHttpHelper, LastFmHttpHelper>();

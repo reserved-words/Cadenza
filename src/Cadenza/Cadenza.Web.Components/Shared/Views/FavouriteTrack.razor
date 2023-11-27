@@ -4,7 +4,7 @@
 {
     <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" Disabled="true" />   
 }
-else if (IsFavourite.HasValue && IsFavourite.Value)
+else if (IsFavourite)
 {
     <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="@Unfavourite" />
 }

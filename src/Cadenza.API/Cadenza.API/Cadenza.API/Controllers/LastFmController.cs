@@ -8,18 +8,16 @@ namespace Cadenza.API.Controllers;
 public class LastFmController : ControllerBase
 {
     private readonly IAuthoriser _authoriser;
-    private readonly IFavourites _favourites;
     private readonly IHistory _history;
-    private readonly IHistoryRepository _historyRepository;
     private readonly IAdminRepository _adminRepository;
+    private readonly IUpdateRepository _updateRepository;
 
-    public LastFmController(IAuthoriser authoriser, IFavourites favourites, IHistory history, IHistoryRepository repository, IAdminRepository adminRepository)
+    public LastFmController(IAuthoriser authoriser, IHistory history, IAdminRepository adminRepository, IUpdateRepository updateRepository)
     {
         _authoriser = authoriser;
-        _favourites = favourites;
         _history = history;
-        _historyRepository = repository;
         _adminRepository = adminRepository;
+        _updateRepository = updateRepository;
     }
 
 
@@ -37,27 +35,6 @@ public class LastFmController : ControllerBase
         var username = HttpContext.GetUsername();
         await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
         return session.SessionKey;
-    }
-
-    [HttpGet("IsFavourite")]
-    public async Task<bool> IsFavourite(string artist, string title)
-    {
-        // TODO: Get this from database
-        return await _favourites.IsFavourite(artist, title);
-    }
-
-    [HttpPost("Favourite")]
-    public async Task Favourite(FavouriteTrackDTO track)
-    {
-        // TODO: Update in database and then service can pass on to Last.FM
-        await _favourites.Favourite(track);
-    }
-
-    [HttpPost("Unfavourite")]
-    public async Task Unfavourite(FavouriteTrackDTO track)
-    {
-        // TODO: Update in database and then service can pass on to Last.FM
-        await _favourites.Unfavourite(track);
     }
 
     [HttpGet("TopAlbums")]
