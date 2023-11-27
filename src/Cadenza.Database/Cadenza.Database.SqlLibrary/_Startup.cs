@@ -30,6 +30,7 @@ public static class _Startup
         return services
             .AddTransient<IAdminMapper, AdminMapper>()
             .AddTransient<IHistoryMapper, HistoryMapper>()
+            .AddTransient<ILastFmMapper, LastFmMapper>()
             .AddTransient<ILibraryMapper, LibraryMapper>()
             .AddTransient<IQueueMapper, QueueMapper>()
             .AddTransient<ISearchMapper, SearchMapper>()
@@ -42,6 +43,7 @@ public static class _Startup
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IHistoryRepository, HistoryRepository>()
             .AddTransient<IImageRepository, ImageRepository>()
+            .AddTransient<ILastFmRepository, LastFmRepository>()
             .AddTransient<ILibraryRepository, LibraryRepository>()
             .AddTransient<IPlayRepository, PlayRepository>()
             .AddTransient<IQueueRepository, QueueRepository>()
@@ -56,6 +58,7 @@ public static class _Startup
             .AddTransient<IAdmin, Admin>()
             .AddTransient<IHistory, History>()
             .AddTransient<IImages, Images>()
+            .AddTransient<ILastFm, LastFm>()
             .AddTransient<ILibrary, Library>()
             .AddTransient<IPlay, Play>()
             .AddTransient<IQueue, Queue>()

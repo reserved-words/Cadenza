@@ -8,6 +8,6 @@ public interface IUpdateRepository
     Task UpdateAlbum(ItemUpdateRequestDTO request);
     Task UpdateTrack(ItemUpdateRequestDTO request);
     Task AddTrack(LibrarySource source, SyncTrackDTO track);
-    Task LoveTrack(int trackId);
-    Task UnloveTrack(int trackId);
+    Task LoveTrack(string username, int trackId);
+    Task UnloveTrack(string username, int trackId);
 }

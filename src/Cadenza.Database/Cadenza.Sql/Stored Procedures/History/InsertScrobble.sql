@@ -5,15 +5,9 @@
 AS
 BEGIN
 
-	DECLARE @UserId INT,
-			@ScrobbleId INT
+	DECLARE @UserId INT = [Admin].[GetUserId](@Username)
 
-	SELECT 
-		@UserId = [Id]
-	FROM
-		[Admin].[Users]
-	WHERE
-		[Username] = @Username
+	DECLARE @ScrobbleId INT
 
 	BEGIN TRANSACTION
 
@@ -52,6 +46,8 @@ BEGIN
 		VALUES (
 			@ScrobbleId, 
 			@TrackId)
+
+		EXECUTE [LastFm].[QueueScrobble] @ScrobbleId
 
 	COMMIT TRANSACTION
 

@@ -6,27 +6,27 @@ namespace Cadenza.SyncService.Updaters;
 
 internal class Scrobbler : IService
 {
-    private readonly IHistoryRepository _historyRepository;
+    private readonly ILastFmRepository _repository;
     private readonly ILastFmService _lastFmService;
     private readonly ILogger<Scrobbler> _logger;
 
-    public Scrobbler(IHistoryRepository repository, ILastFmService lastFmService, ILogger<Scrobbler> logger)
+    public Scrobbler(ILastFmRepository repository, ILastFmService lastFmService, ILogger<Scrobbler> logger)
     {
-        _historyRepository = repository;
+        _repository = repository;
         _lastFmService = lastFmService;
         _logger = logger;
     }
 
     public async Task Run()
     {
-        var newScrobbles = await _historyRepository.GetNewScrobbles();
+        var newScrobbles = await _repository.GetNewScrobbles();
 
         foreach (var newScrobble in newScrobbles)
         {
             await TryScrobble(newScrobble);
         }
 
-        var nowPlayingUpdates = await _historyRepository.GetNowPlayingUpdates();
+        var nowPlayingUpdates = await _repository.GetNowPlayingUpdates();
 
         foreach (var nowPlayingUpdate in nowPlayingUpdates)
         {
@@ -36,7 +36,7 @@ internal class Scrobbler : IService
 
     private async Task TryUpdateNowPlaying(NowPlayingUpdateDTO nowPlayingUpdate)
     {
-        await _historyRepository.MarkNowPlayingUpdated(nowPlayingUpdate.UserId);
+        await _repository.MarkNowPlayingUpdated(nowPlayingUpdate.UserId);
 
         // If update was so long ago that the seconds remaining have already passed don't bother updating
         if (nowPlayingUpdate.Timestamp.AddSeconds(nowPlayingUpdate.SecondsRemaining) < DateTime.Now)
@@ -69,7 +69,7 @@ internal class Scrobbler : IService
 
     private async Task TryScrobble(NewScrobbleDTO newScrobble)
     {
-        await _historyRepository.MarkScrobbled(newScrobble.Id);
+        await _repository.MarkScrobbled(newScrobble.Id);
 
         var scrobble = new Scrobble
         {
@@ -100,7 +100,7 @@ internal class Scrobbler : IService
     {
         try
         {
-            await _historyRepository.MarkNowPlayingFailed(userId);
+            await _repository.MarkNowPlayingFailed(userId);
         }
         catch (Exception ex)
         {
@@ -112,7 +112,7 @@ internal class Scrobbler : IService
     {
         try
         {
-            await _historyRepository.MarkScrobbleFailed(scrobbleId);
+            await _repository.MarkScrobbleFailed(scrobbleId);
         }
         catch (Exception ex)
         {

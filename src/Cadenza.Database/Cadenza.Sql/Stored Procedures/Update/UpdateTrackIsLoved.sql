@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [Update].[UpdateTrackIsLoved]
+	@Username NVARCHAR(100),
 	@TrackId INT,
 	@IsLoved BIT
 AS
@@ -11,6 +12,7 @@ BEGIN
 	WHERE
 		[Id] = @TrackId
 
-	EXECUTE [LastFm].[UpdateLovedTrack] @TrackId, @IsLoved
+	DECLARE @UserId INT = [Admin].[GetUserId](@Username)
+	EXECUTE [LastFm].[QueueLovedTrack] @UserId, @TrackId
 
 END

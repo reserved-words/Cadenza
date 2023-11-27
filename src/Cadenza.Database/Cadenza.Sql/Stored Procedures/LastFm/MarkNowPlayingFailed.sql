@@ -1,12 +1,12 @@
-﻿CREATE PROCEDURE [History].[MarkNowPlayingFailed]
+﻿CREATE PROCEDURE [LastFm].[MarkNowPlayingFailed]
 	@UserId INT
 AS
 BEGIN
 
 	UPDATE
-		[History].[NowPlaying]
+		[LastFm].[NowPlaying]
 	SET
-		[Scrobbled] = 0,
+		[Synced] = 0,
 		[FailedAttempts] = [FailedAttempts] + 1
 	WHERE
 		[UserId] = @UserId

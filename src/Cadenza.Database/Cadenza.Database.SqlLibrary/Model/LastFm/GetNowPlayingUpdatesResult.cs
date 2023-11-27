@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model.History;
+﻿namespace Cadenza.Database.SqlLibrary.Model.LastFm;
 
 public class GetNowPlayingUpdatesResult
 {

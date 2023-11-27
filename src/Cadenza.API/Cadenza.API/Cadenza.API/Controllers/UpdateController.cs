@@ -1,4 +1,5 @@
-﻿using Cadenza.API.Interfaces.Services;
+﻿using Cadenza.API.Extensions;
+using Cadenza.API.Interfaces.Services;
 
 namespace Cadenza.API.Controllers;
 
@@ -42,12 +43,14 @@ public class UpdateController : ControllerBase
     [HttpPost("LoveTrack")]
     public async Task LoveTrack([FromBody] UpdateLovedTrackDTO request)
     {
-        await _repository.LoveTrack(request.TrackId);
+        var username = HttpContext.GetUsername();
+        await _repository.LoveTrack(username, request.TrackId);
     }
 
     [HttpPost("UnloveTrack")]
     public async Task UnloveTrack([FromBody] UpdateLovedTrackDTO request)
     {
-        await _repository.UnloveTrack(request.TrackId);
+        var username = HttpContext.GetUsername();
+        await _repository.UnloveTrack(username, request.TrackId);
     }
 }

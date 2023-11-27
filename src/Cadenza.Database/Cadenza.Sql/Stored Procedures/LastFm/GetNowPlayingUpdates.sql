@@ -1,9 +1,9 @@
-﻿CREATE PROCEDURE [History].[GetNowPlayingUpdates]
+﻿CREATE PROCEDURE [LastFm].[GetNowPlayingUpdates]
 AS
 BEGIN
 	
 	SELECT
-		NPL.[UserId],
+		LFM.[UserId],
 		USR.[LastFmSessionKey] [SessionKey],
 		NPL.[Timestamp],
 		NPL.[SecondsRemaining],
@@ -12,7 +12,9 @@ BEGIN
 		ALB.[Title] [Album],
 		ALA.[Name] [AlbumArtist]
 	FROM
-		[History].[NowPlaying] NPL
+		[LastFm].[NowPlaying] LFM
+	INNER JOIN
+		[History].[NowPlaying] NPL ON NPL.[UserId] = LFM.[UserId]
 	INNER JOIN
 		[Admin].[Users] USR ON USR.[Id] = NPL.[UserId]
 	INNER JOIN
@@ -26,15 +28,14 @@ BEGIN
 	INNER JOIN
 		[Library].[Artists] ALA ON ALA.[Id] = ALB.[ArtistId]
 	WHERE
+		LFM.[Synced] = 0
+	AND
+		LFM.[FailedAttempts] < 3
+	AND
 		USR.[LastFmSessionKey] IS NOT NULL
 	AND
 		NPL.[TrackId] IS NOT NULL
 	AND
-		NPL.[Scrobbled] = 0
-	AND
 		NPL.[SecondsRemaining] > 0
-	AND
-		NPL.[FailedAttempts] < 3 -- TODO: This is just to prevent the service retrying over and over - need to add something better
-								-- that checks failed attempts as well as last attempt time etc, set max failed attempts from config etc
 
 END
