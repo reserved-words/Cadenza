@@ -30,7 +30,6 @@ public static class Startup
         return services
             .AddTransient<ISigner, Signer>()
             .AddTransient<IApiClient, ApiClient>()
-            .AddTransient<IAuthorisedApiClient, AuthorisedApiClient>()
             .AddTransient<IHasher, Hasher>()
             .AddTransient<IParser, Parser>()
             .AddTransient<IResponseReader, ResponseReader>()

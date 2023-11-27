@@ -10,14 +10,12 @@ public class LastFmController : ControllerBase
     private readonly IAuthoriser _authoriser;
     private readonly IHistory _history;
     private readonly IAdminRepository _adminRepository;
-    private readonly IUpdateRepository _updateRepository;
 
-    public LastFmController(IAuthoriser authoriser, IHistory history, IAdminRepository adminRepository, IUpdateRepository updateRepository)
+    public LastFmController(IAuthoriser authoriser, IHistory history, IAdminRepository adminRepository)
     {
         _authoriser = authoriser;
         _history = history;
         _adminRepository = adminRepository;
-        _updateRepository = updateRepository;
     }
 
 
