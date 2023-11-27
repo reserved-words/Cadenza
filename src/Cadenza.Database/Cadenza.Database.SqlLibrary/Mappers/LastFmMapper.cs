@@ -5,6 +5,19 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class LastFmMapper : ILastFmMapper
 {
+    public LovedTrackUpdateDTO MapLovedTrack(GetLovedTrackUpdatesResult data)
+    {
+        return new LovedTrackUpdateDTO
+        {
+            TrackId = data.TrackId,
+            UserId = data.UserId,
+            SessionKey = data.SessionKey,
+            IsLoved = data.IsLoved,
+            Track = data.Track,
+            Artist = data.Artist
+        };
+    }
+
     public NowPlayingUpdateDTO MapNowPlaying(GetNowPlayingUpdatesResult data)
     {
         return new NowPlayingUpdateDTO

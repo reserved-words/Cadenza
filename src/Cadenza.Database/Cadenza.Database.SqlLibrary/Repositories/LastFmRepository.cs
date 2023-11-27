@@ -14,6 +14,12 @@ internal class LastFmRepository : ILastFmRepository
         _mapper = mapper;
     }
 
+    public async Task<List<LovedTrackUpdateDTO>> GetLovedTrackUpdates()
+    {
+        var updates = await _lastFm.GetLovedTrackUpdates();
+        return updates.Select(_mapper.MapLovedTrack).ToList();
+    }
+
     public async Task<List<NewScrobbleDTO>> GetNewScrobbles()
     {
         var data = await _lastFm.GetNewScrobbles();
@@ -24,6 +30,16 @@ internal class LastFmRepository : ILastFmRepository
     {
         var data = await _lastFm.GetNowPlayingUpdates();
         return data.Select(_mapper.MapNowPlaying).ToList();
+    }
+
+    public async Task MarkLovedTrackFailed(int userId, int trackId)
+    {
+        await _lastFm.MarkLovedTrackFailed(userId, trackId);
+    }
+
+    public async Task MarkLovedTrackUpdated(int userId, int trackId)
+    {
+        await _lastFm.MarkLovedTrackUpdated(userId, trackId);
     }
 
     public async Task MarkNowPlayingFailed(int userId)

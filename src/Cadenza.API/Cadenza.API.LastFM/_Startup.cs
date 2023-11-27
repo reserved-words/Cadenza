@@ -21,7 +21,6 @@ public static class Startup
         return services
             .AddInternals()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IFavourites, Favourites>()
             .AddTransient<IHistory, History>()
             .AddTransient<IInfoService, InfoService>();
     }

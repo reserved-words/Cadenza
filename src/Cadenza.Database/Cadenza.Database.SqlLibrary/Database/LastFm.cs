@@ -12,6 +12,11 @@ internal class LastFm : ILastFm
         _sql = sql.Create(nameof(LastFm));
     }
 
+    public async Task<List<GetLovedTrackUpdatesResult>> GetLovedTrackUpdates()
+    {
+        return await _sql.Query<GetLovedTrackUpdatesResult>(null);
+    }
+
     public async Task<List<GetNewScrobblesResult>> GetNewScrobbles()
     {
         return await _sql.Query<GetNewScrobblesResult>(null);
@@ -20,6 +25,16 @@ internal class LastFm : ILastFm
     public async Task<List<GetNowPlayingUpdatesResult>> GetNowPlayingUpdates()
     {
         return await _sql.Query<GetNowPlayingUpdatesResult>(null);
+    }
+
+    public async Task MarkLovedTrackFailed(int userId, int trackId)
+    {
+        await _sql.Execute(new { UserId = userId, TrackId = trackId });
+    }
+
+    public async Task MarkLovedTrackUpdated(int userId, int trackId)
+    {
+        await _sql.Execute(new { UserId = userId, TrackId = trackId });
     }
 
     public async Task MarkNowPlayingFailed(int userId)

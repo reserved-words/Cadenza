@@ -6,4 +6,5 @@ internal interface ILastFmMapper
 {
     NewScrobbleDTO MapScrobble(GetNewScrobblesResult data);
     NowPlayingUpdateDTO MapNowPlaying(GetNowPlayingUpdatesResult data);
+    LovedTrackUpdateDTO MapLovedTrack(GetLovedTrackUpdatesResult data);
 }

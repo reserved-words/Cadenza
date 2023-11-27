@@ -4,6 +4,7 @@ BEGIN
 	
 	SELECT
 		LFM.[TrackId],
+		LFM.[UserId],
 		USR.[LastFmSessionKey] [SessionKey],
 		TRK.[Title] [Track],
 		ART.[Name] [Artist],
