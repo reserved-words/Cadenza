@@ -39,4 +39,6 @@ BEGIN
 
 	END
 
+	EXECUTE [History].[UpdateTrackScrobbles] @Id, @Title
+
 END

@@ -217,6 +217,8 @@
     <Build Include="Stored Procedures\Admin\ImportScrobble.sql" />
     <Build Include="Stored Procedures\Admin\ImportScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_NoAlbumArtist.sql" />
+    <Build Include="Stored Procedures\History\UpdateTrackScrobbles.sql" />
+    <Build Include="Stored Procedures\History\UpdateAlbumScrobbles.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
