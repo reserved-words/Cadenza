@@ -79,6 +79,8 @@
     <Folder Include="Tables\LastFm" />
     <Folder Include="Stored Procedures\LastFm" />
     <Folder Include="Functions" />
+    <Folder Include="Functions\Admin" />
+    <Folder Include="Functions\History" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -221,7 +223,6 @@
     <Build Include="Stored Procedures\LastFm\QueueNowPlayingUpdate.sql" />
     <Build Include="Stored Procedures\LastFm\GetNowPlayingUpdates.sql" />
     <Build Include="Stored Procedures\LastFm\GetLovedTrackUpdates.sql" />
-    <Build Include="Functions\GetUserId.sql" />
     <Build Include="Stored Procedures\LastFm\GetNewScrobbles.sql" />
     <Build Include="Stored Procedures\LastFm\MarkNowPlayingFailed.sql" />
     <Build Include="Stored Procedures\LastFm\MarkNowPlayingUpdated.sql" />
@@ -237,6 +238,13 @@
     <Build Include="Stored Procedures\LastFm\ImportLovedTrack.sql" />
     <Build Include="Tables\LastFm\ImportedLovedTracks.sql" />
     <Build Include="Stored Procedures\LastFm\ImportLovedTracks.sql" />
+    <Build Include="Views\Library\vw_TrackDetails.sql" />
+    <Build Include="Stored Procedures\History\GetTopTracks.sql" />
+    <Build Include="Views\History\vw_Scrobbles.sql" />
+    <Build Include="Functions\Admin\GetUserId.sql" />
+    <Build Include="Functions\History\GetStartDate.sql" />
+    <Build Include="Stored Procedures\History\GetTopAlbums.sql" />
+    <Build Include="Stored Procedures\History\GetTopArtists.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
