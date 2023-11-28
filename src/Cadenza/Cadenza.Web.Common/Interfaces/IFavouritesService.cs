@@ -2,7 +2,6 @@
 
 public interface IFavouritesService
 {
-    Task Favourite(string artist, string title);
-    Task Unfavourite(string artist, string title);
-    Task<bool> IsFavourite(string artist, string title);
+    Task Favourite(int trackId);
+    Task Unfavourite(int trackId);
 }

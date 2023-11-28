@@ -53,4 +53,7 @@ public class DatabaseApiEndpoints
     public string RecentTracks { get; set; }
     public string UpdateNowPlaying { get; set; }
     public string Scrobble { get; set; }
+
+    public string UnloveTrack { get; set; }
+    public string LoveTrack { get; set; }
 }

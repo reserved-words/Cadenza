@@ -140,6 +140,7 @@ internal class LibraryMapper : ILibraryMapper
                 Source = (LibrarySource)track.SourceId,
                 Id = track.Id,
                 IdFromSource = track.IdFromSource,
+                IsLoved = track.IsLoved,
                 ArtistId = track.ArtistId,
                 ArtistName = track.ArtistName,
                 AlbumId = track.AlbumId,

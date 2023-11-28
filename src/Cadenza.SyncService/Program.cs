@@ -29,7 +29,9 @@ var builder = Service.CreateBuilder(args, services =>
         .AddKeyedTransient<IService, SyncHandler>("LibrarySync")
         .AddKeyedTransient<IService, UpdatesHandler>("LibraryUpdates")
         .AddKeyedTransient<IService, ScrobbleSyncer>("ScrobbleSync")
-        .AddKeyedTransient<IService, Scrobbler>("Scrobbling");
+        .AddKeyedTransient<IService, Scrobbler>("Scrobbling")
+        .AddKeyedTransient<IService, LovedTracksUpdater>("LovedTracks")
+        .AddKeyedTransient<IService, NowPlayingUpdater>("NowPlaying");
 
     services
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")

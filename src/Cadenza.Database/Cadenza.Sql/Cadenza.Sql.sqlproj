@@ -76,6 +76,9 @@
     <Folder Include="Stored Procedures\Update" />
     <Folder Include="Stored Procedures\Images" />
     <Folder Include="Stored Procedures\Search" />
+    <Folder Include="Tables\LastFm" />
+    <Folder Include="Stored Procedures\LastFm" />
+    <Folder Include="Functions" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Library.sql" />
@@ -200,23 +203,40 @@
     <Build Include="Tables\History\Scrobbles.sql" />
     <Build Include="Tables\History\TrackScrobbles.sql" />
     <Build Include="Stored Procedures\History\InsertScrobble.sql" />
-    <Build Include="Tables\Admin\ImportedScrobbles.sql" />
     <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
-    <Build Include="Stored Procedures\History\GetNewScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_AlbumArtist.sql" />
     <Build Include="Tables\Admin\Users.sql" />
     <Build Include="Stored Procedures\Admin\SaveLastFmSessionKey.sql" />
-    <Build Include="Stored Procedures\History\MarkScrobbled.sql" />
-    <Build Include="Stored Procedures\History\MarkScrobbleFailed.sql" />
     <Build Include="Tables\History\NowPlaying.sql" />
     <Build Include="Stored Procedures\History\InsertNowPlaying.sql" />
-    <Build Include="Stored Procedures\History\MarkNowPlayingUpdated.sql" />
-    <Build Include="Stored Procedures\History\MarkNowPlayingFailed.sql" />
-    <Build Include="Stored Procedures\History\GetNowPlayingUpdates.sql" />
     <Build Include="Stored Procedures\History\GetRecentTracks.sql" />
-    <Build Include="Stored Procedures\Admin\ImportScrobble.sql" />
-    <Build Include="Stored Procedures\Admin\ImportScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_NoAlbumArtist.sql" />
+    <Build Include="Stored Procedures\History\UpdateTrackScrobbles.sql" />
+    <Build Include="Stored Procedures\History\UpdateAlbumScrobbles.sql" />
+    <Build Include="Stored Procedures\Update\UpdateTrackIsLoved.sql" />
+    <Build Include="Schemas\LastFm.sql" />
+    <Build Include="Tables\LastFm\LovedTracks.sql" />
+    <Build Include="Stored Procedures\LastFm\QueueLovedTrack.sql" />
+    <Build Include="Tables\LastFm\NowPlaying.sql" />
+    <Build Include="Stored Procedures\LastFm\QueueNowPlayingUpdate.sql" />
+    <Build Include="Stored Procedures\LastFm\GetNowPlayingUpdates.sql" />
+    <Build Include="Stored Procedures\LastFm\GetLovedTrackUpdates.sql" />
+    <Build Include="Functions\GetUserId.sql" />
+    <Build Include="Stored Procedures\LastFm\GetNewScrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkNowPlayingFailed.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkNowPlayingUpdated.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkScrobbled.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkScrobbleFailed.sql" />
+    <Build Include="Tables\LastFm\Scrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\QueueScrobble.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkLovedTrackFailed.sql" />
+    <Build Include="Stored Procedures\LastFm\MarkLovedTrackUpdated.sql" />
+    <Build Include="Tables\LastFm\ImportedScrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportScrobble.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportScrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportLovedTrack.sql" />
+    <Build Include="Tables\LastFm\ImportedLovedTracks.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportLovedTracks.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

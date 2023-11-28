@@ -67,21 +67,6 @@ internal class ViewModelMapper : IViewModelMapper
         };
     }
 
-    public TrackVM Map(TrackDTO dto)
-    {
-        return new TrackVM
-        {
-            AlbumId = dto.AlbumId,
-            ArtistId = dto.ArtistId,
-            ArtistName = dto.ArtistName,
-            DurationSeconds = dto.DurationSeconds,
-            Id = dto.Id,
-            IdFromSource = dto.IdFromSource,
-            Source = dto.Source,
-            Title = dto.Title
-        };
-    }
-
     public SearchItemVM Map(SearchItemDTO dto)
     {
         return new SearchItemVM(dto.Type, dto.Id, dto.Name, dto.Artist, dto.Album, dto.AlbumDisplay);
@@ -108,14 +93,15 @@ internal class ViewModelMapper : IViewModelMapper
     {
         return new TrackDetailsVM
         {
+            Source = dto.Source,
+            Id = dto.Id,
+            IdFromSource = dto.IdFromSource,
+            Title = dto.Title,
+            IsLoved = dto.IsLoved,
             AlbumId = dto.AlbumId,
             ArtistId = dto.ArtistId,
             ArtistName = dto.ArtistName,
             DurationSeconds = dto.DurationSeconds,
-            Id = dto.Id,
-            IdFromSource = dto.IdFromSource,
-            Source = dto.Source,
-            Title = dto.Title,
             Lyrics = dto.Lyrics,
             Tags = Map(dto.Tags),
             Year = dto.Year

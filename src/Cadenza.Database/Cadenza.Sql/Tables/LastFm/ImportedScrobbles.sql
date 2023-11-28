@@ -1,4 +1,4 @@
-﻿CREATE TABLE [Admin].[ImportedScrobbles]
+﻿CREATE TABLE [LastFm].[ImportedScrobbles]
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	[ScrobbledAt] DATETIME NOT NULL,

@@ -21,7 +21,6 @@ public static class Startup
         return services
             .AddInternals()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IFavourites, Favourites>()
             .AddTransient<IHistory, History>()
             .AddTransient<IInfoService, InfoService>();
     }
@@ -31,7 +30,6 @@ public static class Startup
         return services
             .AddTransient<ISigner, Signer>()
             .AddTransient<IApiClient, ApiClient>()
-            .AddTransient<IAuthorisedApiClient, AuthorisedApiClient>()
             .AddTransient<IHasher, Hasher>()
             .AddTransient<IParser, Parser>()
             .AddTransient<IResponseReader, ResponseReader>()

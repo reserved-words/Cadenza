@@ -10,4 +10,5 @@ public record TrackVM
     public string ArtistName { get; init; }
     public int DurationSeconds { get; init; }
     public int AlbumId { get; init; }
+    public bool IsLoved { get; set; }
 }

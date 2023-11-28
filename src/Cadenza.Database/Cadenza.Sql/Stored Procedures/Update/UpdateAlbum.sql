@@ -69,4 +69,6 @@ BEGIN
 
 	END
 
+	EXECUTE [History].[UpdateAlbumScrobbles] @Id, @Title
+
 END

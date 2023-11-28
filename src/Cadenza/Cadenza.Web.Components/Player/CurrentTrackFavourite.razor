@@ -1,5 +1,8 @@
 ﻿
-<FavouriteTrack Artist="@Model?.ArtistName" Title="@Model?.Title" IsFavourite="@null" />
+@if (Model != null)
+{
+    <FavouriteTrack TrackId="@Model.Id" IsFavourite="@Model.IsLoved" />
+}
 
 @code {
     [Parameter] public TrackVM Model { get; set; }
