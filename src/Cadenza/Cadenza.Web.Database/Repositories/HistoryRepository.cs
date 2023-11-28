@@ -5,12 +5,14 @@ internal class HistoryRepository : IHistoryRepository, IPlayTracker
     private readonly DatabaseApiEndpoints _settings;
     private readonly IApiHttpHelper _apiHelper;
     private readonly IViewModelMapper _mapper;
+    private readonly IUrl _url;
 
-    public HistoryRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper, IViewModelMapper mapper)
+    public HistoryRepository(IOptions<DatabaseApiSettings> settings, IApiHttpHelper apiHelper, IViewModelMapper mapper, IUrl url)
     {
         _settings = settings.Value.Endpoints;
         _apiHelper = apiHelper;
         _mapper = mapper;
+        _url = url;
     }
 
     public async Task<List<RecentAlbumVM>> GetRecentAlbums(int maxItems)
@@ -42,6 +44,24 @@ internal class HistoryRepository : IHistoryRepository, IPlayTracker
     {
         var nowPlaying = GetNowPlaying(track, secondsRemaining);
         await _apiHelper.Post(_settings.UpdateNowPlaying, nowPlaying);
+    }
+
+    public async Task<List<TopAlbumVM>> GetTopAlbums(HistoryPeriod period, int maxItems)
+    {
+        var url = _url.Build(_settings.TopAlbums, ("period", period), ("maxItems", maxItems));
+        return await _apiHelper.Get<List<TopAlbumVM>>(url);
+    }
+
+    public async Task<List<TopArtistVM>> GetTopArtists(HistoryPeriod period, int maxItems)
+    {
+        var url = _url.Build(_settings.TopArtists, ("period", period), ("maxItems", maxItems));
+        return await _apiHelper.Get<List<TopArtistVM>>(url);
+    }
+
+    public async Task<List<TopTrackVM>> GetTopTracks(HistoryPeriod period, int maxItems)
+    {
+        var url = _url.Build(_settings.TopTracks, ("period", period), ("maxItems", maxItems));
+        return await _apiHelper.Get<List<TopTrackVM>>(url);
     }
 
     private NowPlayingDTO GetNowPlaying(TrackFullVM track, int secondsRemaining)

@@ -56,4 +56,8 @@ public class DatabaseApiEndpoints
 
     public string UnloveTrack { get; set; }
     public string LoveTrack { get; set; }
+
+    public string TopAlbums { get; set; }
+    public string TopArtists { get; set; }
+    public string TopTracks { get; set; }
 }

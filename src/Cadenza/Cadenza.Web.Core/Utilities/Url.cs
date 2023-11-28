@@ -5,9 +5,14 @@ internal class Url : IUrl
     public string Build(string baseUrl, string endpoint, params (string, object)[] parameters)
     {
         var url = $"{baseUrl}{endpoint}";
+        return Build(url, parameters);
+    }
+
+    public string Build(string endpoint, params (string, object)[] parameters)
+    {
         var keyValuePairs = parameters.Select(GetQueryPair);
         var queryString = string.Join("&", keyValuePairs);
-        return $"{url}?{queryString}";
+        return $"{endpoint}?{queryString}";
     }
 
     private string GetQueryPair((string, object) parameter)

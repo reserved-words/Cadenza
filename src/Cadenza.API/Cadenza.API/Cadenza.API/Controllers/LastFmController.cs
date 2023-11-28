@@ -34,28 +34,4 @@ public class LastFmController : ControllerBase
         await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
         return session.SessionKey;
     }
-
-    // TODO: Move to HistoryController
-    [HttpGet("TopAlbums")]
-    public async Task<List<TopAlbumDTO>> TopAlbums(HistoryPeriod period, int maxItems)
-    {
-        // TODO: Get from database
-        return await _historyRepository.GetTopAlbums(period, maxItems);
-    }
-
-    // TODO: Move to HistoryController
-    [HttpGet("TopArtists")]
-    public async Task<List<TopArtistDTO>> TopArtists(HistoryPeriod period, int maxItems)
-    {
-        // TODO: Get from database
-        return await _historyRepository.GetTopArtists(period, maxItems);
-    }
-
-    // TODO: Move to HistoryController
-    [HttpGet("TopTracks")]
-    public async Task<List<TopTrackDTO>> TopTracks(HistoryPeriod period, int maxItems)
-    {
-        // TODO: Get from database
-        return await _historyRepository.GetTopTracks(period, maxItems);
-    }
 }

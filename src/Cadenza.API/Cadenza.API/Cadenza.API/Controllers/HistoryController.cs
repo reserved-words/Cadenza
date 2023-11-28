@@ -46,4 +46,22 @@ public class HistoryController : ControllerBase
         var username = HttpContext.GetUsername();
         await _repository.UpdateNowPlaying(username, nowPlaying.TrackId, nowPlaying.SecondsRemaining);
     }
+
+    [HttpGet("TopAlbums")]
+    public async Task<List<TopAlbumDTO>> TopAlbums(HistoryPeriod period, int maxItems)
+    {
+        return await _repository.GetTopAlbums(period, maxItems);
+    }
+
+    [HttpGet("TopArtists")]
+    public async Task<List<TopArtistDTO>> TopArtists(HistoryPeriod period, int maxItems)
+    {
+        return await _repository.GetTopArtists(period, maxItems);
+    }
+
+    [HttpGet("TopTracks")]
+    public async Task<List<TopTrackDTO>> TopTracks(HistoryPeriod period, int maxItems)
+    {
+        return await _repository.GetTopTracks(period, maxItems);
+    }
 }

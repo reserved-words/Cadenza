@@ -5,9 +5,9 @@ public class PlayHistoryEffects
     private const int MaxItems = 5;
 
     private readonly IArtworkFetcher _artworkFetcher;
-    private readonly IPlayHistory _history;
+    private readonly IHistoryRepository _history;
 
-    public PlayHistoryEffects(IPlayHistory history, IArtworkFetcher artworkFetcher)
+    public PlayHistoryEffects(IHistoryRepository history, IArtworkFetcher artworkFetcher)
     {
         _history = history;
         _artworkFetcher = artworkFetcher;
