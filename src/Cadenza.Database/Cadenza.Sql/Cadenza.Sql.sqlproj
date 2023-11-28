@@ -203,7 +203,6 @@
     <Build Include="Tables\History\Scrobbles.sql" />
     <Build Include="Tables\History\TrackScrobbles.sql" />
     <Build Include="Stored Procedures\History\InsertScrobble.sql" />
-    <Build Include="Tables\Admin\ImportedScrobbles.sql" />
     <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_AlbumArtist.sql" />
     <Build Include="Tables\Admin\Users.sql" />
@@ -211,8 +210,6 @@
     <Build Include="Tables\History\NowPlaying.sql" />
     <Build Include="Stored Procedures\History\InsertNowPlaying.sql" />
     <Build Include="Stored Procedures\History\GetRecentTracks.sql" />
-    <Build Include="Stored Procedures\Admin\ImportScrobble.sql" />
-    <Build Include="Stored Procedures\Admin\ImportScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_NoAlbumArtist.sql" />
     <Build Include="Stored Procedures\History\UpdateTrackScrobbles.sql" />
     <Build Include="Stored Procedures\History\UpdateAlbumScrobbles.sql" />
@@ -234,6 +231,12 @@
     <Build Include="Stored Procedures\LastFm\QueueScrobble.sql" />
     <Build Include="Stored Procedures\LastFm\MarkLovedTrackFailed.sql" />
     <Build Include="Stored Procedures\LastFm\MarkLovedTrackUpdated.sql" />
+    <Build Include="Tables\LastFm\ImportedScrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportScrobble.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportScrobbles.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportLovedTrack.sql" />
+    <Build Include="Tables\LastFm\ImportedLovedTracks.sql" />
+    <Build Include="Stored Procedures\LastFm\ImportLovedTracks.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

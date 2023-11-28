@@ -8,7 +8,7 @@ var apiKey = Console.ReadLine();
 Console.WriteLine("Enter username");
 var username = Console.ReadLine();
 
-var service = new ScrobbleImporter();
+var service = new LovedTrackImporter();
 
 await service.Run(apiKey, username);
 
