@@ -74,7 +74,7 @@ internal class ScrobbleImporter
         {
             foreach (var scrobble in scrobbles)
             {
-                await connection.ExecuteAsync("[Admin].[ImportScrobble]", scrobble, commandType: CommandType.StoredProcedure);
+                await connection.ExecuteAsync("[LastFm].[ImportScrobble]", scrobble, commandType: CommandType.StoredProcedure);
             }
         }
         finally
@@ -85,58 +85,58 @@ internal class ScrobbleImporter
             }
         }
     }
-}
 
-internal class Scrobble
-{
-    public DateTime ScrobbledAt { get; set; }
-    public string Track { get; set; }
-    public string Artist { get; set; }
-    public string Album { get; set; }
-    public string AlbumArtist { get; set; }
-}
+    internal class Scrobble
+    {
+        public DateTime ScrobbledAt { get; set; }
+        public string Track { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        public string AlbumArtist { get; set; }
+    }
 
 
-internal class LastFmResponse
-{
-    public RecentTracks RecentTracks { get; set; }
-}
+    internal class LastFmResponse
+    {
+        public RecentTracks RecentTracks { get; set; }
+    }
 
-internal class RecentTracks
-{
-    public List<Track> Track { get; set; }
-    [JsonPropertyName("@attr")]
-    public Attr Attr { get; set; }
-}
+    internal class RecentTracks
+    {
+        public List<Track> Track { get; set; }
+        [JsonPropertyName("@attr")]
+        public Attr Attr { get; set; }
+    }
 
-internal class Track
-{
-    public Artist Artist { get; set; }
-    public Album Album { get; set; }
-    public string Name { get; set; } // title
-    public ScrobbleDate Date { get; set; }
-}
+    internal class Track
+    {
+        public Artist Artist { get; set; }
+        public Album Album { get; set; }
+        public string Name { get; set; } // title
+        public ScrobbleDate Date { get; set; }
+    }
 
-internal class Artist
-{
-    [JsonPropertyName("#text")]
-    public string Text { get; set; }
-}
+    internal class Artist
+    {
+        [JsonPropertyName("#text")]
+        public string Text { get; set; }
+    }
 
-internal class Album
-{
-    [JsonPropertyName("#text")]
-    public string Text { get; set; }
-}
+    internal class Album
+    {
+        [JsonPropertyName("#text")]
+        public string Text { get; set; }
+    }
 
-internal class ScrobbleDate
-{
-    public long UTS { get; set; }
-    [JsonPropertyName("#text")]
-    public string Text { get; set; } 
-}
+    internal class ScrobbleDate
+    {
+        public long UTS { get; set; }
+        [JsonPropertyName("#text")]
+        public string Text { get; set; }
+    }
 
-internal class Attr
-{
-    public int TotalPages { get; set; }
+    internal class Attr
+    {
+        public int TotalPages { get; set; }
+    }
 }

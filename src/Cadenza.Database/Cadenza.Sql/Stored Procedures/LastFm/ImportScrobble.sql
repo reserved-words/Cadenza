@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Admin].[ImportScrobble]
+﻿CREATE PROCEDURE [LastFm].[ImportScrobble]
 	@ScrobbledAt DATETIME,
 	@Track NVARCHAR(200),
 	@Artist NVARCHAR(200),
@@ -7,7 +7,7 @@
 AS
 BEGIN
 
-	INSERT INTO [Admin].[ImportedScrobbles] (
+	INSERT INTO [LastFm].[ImportedScrobbles] (
 		[ScrobbledAt],
 		[Track],
 		[Artist],

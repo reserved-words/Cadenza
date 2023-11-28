@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [Admin].[ImportScrobbles]
+﻿CREATE PROCEDURE [LastFm].[ImportScrobbles]
 	@UserId INT
 AS
 BEGIN
@@ -16,6 +16,6 @@ BEGIN
 		[Artist], 
 		[Album] 
 	FROM 
-		[Admin].[ImportedScrobbles]
+		[LastFm].[ImportedScrobbles]
 
 END
