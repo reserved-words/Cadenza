@@ -13,21 +13,21 @@ internal class History : IPlayHistory
         _apiSettings = apiSettings.Value;
     }
 
-    public async Task<List<PlayedAlbumVM>> GetPlayedAlbums(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<TopAlbumVM>> GetTopAlbums(HistoryPeriod period, int maxItems)
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopAlbums, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedAlbumVM>>(url);
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopAlbums, ("period", period), ("maxItems", maxItems));
+        return await _http.Get<List<TopAlbumVM>>(url);
     }
 
-    public async Task<List<PlayedArtistVM>> GetPlayedArtists(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<TopArtistVM>> GetTopArtists(HistoryPeriod period, int maxItems)
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopArtists, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedArtistVM>>(url);
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopArtists, ("period", period), ("maxItems", maxItems));
+        return await _http.Get<List<TopArtistVM>>(url);
     }
 
-    public async Task<List<PlayedTrackVM>> GetPlayedTracks(HistoryPeriod period, int limit, int page = 1)
+    public async Task<List<TopTrackVM>> GetTopTracks(HistoryPeriod period, int maxItems)
     {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopTracks, ("period", period), ("limit", limit), ("page", page));
-        return await _http.Get<List<PlayedTrackVM>>(url);
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.TopTracks, ("period", period), ("maxItems", maxItems));
+        return await _http.Get<List<TopTrackVM>>(url);
     }
 }

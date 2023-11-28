@@ -27,6 +27,21 @@ internal class History : IHistory
         return await _sql.Query<GetRecentTracksResult>(new { Username = username, MaxItems = maxItems });
     }
 
+    public async Task<List<GetTopAlbumsResult>> GetTopAlbums(GetTopAlbumsParameter parameter)
+    {
+        return await _sql.Query<GetTopAlbumsResult>(parameter);
+    }
+
+    public async Task<List<GetTopArtistsResult>> GetTopArtists(GetTopArtistsParameter parameter)
+    {
+        return await _sql.Query<GetTopArtistsResult>(parameter);
+    }
+
+    public async Task<List<GetTopTracksResult>> GetTopTracks(GetTopTracksParameter parameter)
+    {
+        return await _sql.Query<GetTopTracksResult>(parameter);
+    }
+
     public async Task InsertNowPlaying(InsertNowPlayingParameter parameters)
     {
         await _sql.Execute(parameters);

@@ -2,8 +2,6 @@
 global using Cadenza.API.LastFM.Interfaces;
 global using Cadenza.API.LastFM.Services;
 global using Cadenza.API.LastFM.Settings;
-global using Cadenza.Common.DTO;
-global using Cadenza.Common.Enums;
 global using Cadenza.Common.Http;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
@@ -21,7 +19,6 @@ public static class Startup
         return services
             .AddInternals()
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IHistory, History>()
             .AddTransient<IInfoService, InfoService>();
     }
 

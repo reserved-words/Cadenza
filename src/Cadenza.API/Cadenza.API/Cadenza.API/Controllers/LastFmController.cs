@@ -8,14 +8,14 @@ namespace Cadenza.API.Controllers;
 public class LastFmController : ControllerBase
 {
     private readonly IAuthoriser _authoriser;
-    private readonly IHistory _history;
     private readonly IAdminRepository _adminRepository;
+    private readonly IHistoryRepository _historyRepository;
 
-    public LastFmController(IAuthoriser authoriser, IHistory history, IAdminRepository adminRepository)
+    public LastFmController(IAuthoriser authoriser, IAdminRepository adminRepository, IHistoryRepository historyRepository)
     {
         _authoriser = authoriser;
-        _history = history;
         _adminRepository = adminRepository;
+        _historyRepository = historyRepository;
     }
 
 
@@ -35,24 +35,27 @@ public class LastFmController : ControllerBase
         return session.SessionKey;
     }
 
+    // TODO: Move to HistoryController
     [HttpGet("TopAlbums")]
-    public async Task<List<PlayedAlbumDTO>> TopAlbums(HistoryPeriod period, int limit, int page)
+    public async Task<List<TopAlbumDTO>> TopAlbums(HistoryPeriod period, int maxItems)
     {
         // TODO: Get from database
-        return await _history.GetPlayedAlbums(period, limit, page);
+        return await _historyRepository.GetTopAlbums(period, maxItems);
     }
 
+    // TODO: Move to HistoryController
     [HttpGet("TopArtists")]
-    public async Task<List<PlayedArtistDTO>> TopArtists(HistoryPeriod period, int limit, int page)
+    public async Task<List<TopArtistDTO>> TopArtists(HistoryPeriod period, int maxItems)
     {
         // TODO: Get from database
-        return await _history.GetPlayedArtists(period, limit, page);
+        return await _historyRepository.GetTopArtists(period, maxItems);
     }
 
+    // TODO: Move to HistoryController
     [HttpGet("TopTracks")]
-    public async Task<List<PlayedTrackDTO>> TopTracks(HistoryPeriod period, int limit, int page)
+    public async Task<List<TopTrackDTO>> TopTracks(HistoryPeriod period, int maxItems)
     {
         // TODO: Get from database
-        return await _history.GetPlayedTracks(period, limit, page);
+        return await _historyRepository.GetTopTracks(period, maxItems);
     }
 }

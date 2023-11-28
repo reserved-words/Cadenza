@@ -2,6 +2,10 @@
 
 public interface IHistoryRepository
 {
+    Task<List<TopAlbumDTO>> GetTopAlbums(HistoryPeriod period, int maxItems);
+    Task<List<TopArtistDTO>> GetTopArtists(HistoryPeriod period, int maxItems);
+    Task<List<TopTrackDTO>> GetTopTracks(HistoryPeriod period, int maxItems);
+
     Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems);
     Task<List<string>> GetRecentTags(int maxItems);
 

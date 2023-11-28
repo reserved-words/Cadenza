@@ -29,4 +29,39 @@ internal class HistoryMapper : IHistoryMapper
             IsLoved = result.IsLoved
         };
     }
+
+    public TopAlbumDTO MapTopAlbum(GetTopAlbumsResult result, int rank)
+    {
+        return new TopAlbumDTO
+        {
+            Id = result.Id,
+            Title = result.Title,
+            Artist = result.Artist,
+            Plays = result.Plays,
+            Rank = rank
+        };
+    }
+
+    public TopArtistDTO MapTopArtist(GetTopArtistsResult result, int rank)
+    {
+        return new TopArtistDTO
+        {
+            Id = result.Id,
+            Name = result.Name,
+            Plays = result.Plays,
+            Rank = rank
+        };
+    }
+
+    public TopTrackDTO MapTopTrack(GetTopTracksResult result, int rank)
+    {
+        return new TopTrackDTO
+        {
+            Id = result.Id,
+            Title = result.Title,
+            Artist = result.Artist,
+            Plays = result.Plays,
+            Rank = rank
+        };
+    }
 }
