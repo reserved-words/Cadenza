@@ -8,14 +8,14 @@ namespace Cadenza.API.Controllers;
 public class LastFmController : ControllerBase
 {
     private readonly IAuthoriser _authoriser;
-    private readonly IHistory _history;
     private readonly IAdminRepository _adminRepository;
+    private readonly IHistoryRepository _historyRepository;
 
-    public LastFmController(IAuthoriser authoriser, IHistory history, IAdminRepository adminRepository)
+    public LastFmController(IAuthoriser authoriser, IAdminRepository adminRepository, IHistoryRepository historyRepository)
     {
         _authoriser = authoriser;
-        _history = history;
         _adminRepository = adminRepository;
+        _historyRepository = historyRepository;
     }
 
 
@@ -33,26 +33,5 @@ public class LastFmController : ControllerBase
         var username = HttpContext.GetUsername();
         await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
         return session.SessionKey;
-    }
-
-    [HttpGet("TopAlbums")]
-    public async Task<List<PlayedAlbumDTO>> TopAlbums(HistoryPeriod period, int limit, int page)
-    {
-        // TODO: Get from database
-        return await _history.GetPlayedAlbums(period, limit, page);
-    }
-
-    [HttpGet("TopArtists")]
-    public async Task<List<PlayedArtistDTO>> TopArtists(HistoryPeriod period, int limit, int page)
-    {
-        // TODO: Get from database
-        return await _history.GetPlayedArtists(period, limit, page);
-    }
-
-    [HttpGet("TopTracks")]
-    public async Task<List<PlayedTrackDTO>> TopTracks(HistoryPeriod period, int limit, int page)
-    {
-        // TODO: Get from database
-        return await _history.GetPlayedTracks(period, limit, page);
     }
 }

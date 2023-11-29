@@ -33,6 +33,27 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(_mapper.MapRecentTrack).ToList();
     }
 
+    public async Task<List<TopAlbumDTO>> GetTopAlbums(HistoryPeriod period, int maxItems)
+    {
+        var data = await _history.GetTopAlbums(new GetTopAlbumsParameter { HistoryPeriod = (int)period, MaxItems = maxItems });
+        var rank = 1;
+        return data.Select(d => _mapper.MapTopAlbum(d, rank++)).ToList();
+    }
+
+    public async Task<List<TopArtistDTO>> GetTopArtists(HistoryPeriod period, int maxItems)
+    {
+        var data = await _history.GetTopArtists(new GetTopArtistsParameter { HistoryPeriod = (int)period, MaxItems = maxItems });
+        var rank = 1;
+        return data.Select(d => _mapper.MapTopArtist(d, rank++)).ToList();
+    }
+
+    public async Task<List<TopTrackDTO>> GetTopTracks(HistoryPeriod period, int maxItems)
+    {
+        var data = await _history.GetTopTracks(new GetTopTracksParameter { HistoryPeriod = (int)period, MaxItems = maxItems });
+        var rank = 1;
+        return data.Select(d => _mapper.MapTopTrack(d, rank++)).ToList();
+    }
+
     public async Task ScrobbleTrack(int trackId, string username, DateTime scrobbledAt)
     {
         await _history.InsertScrobble(new InsertScrobbleParameter

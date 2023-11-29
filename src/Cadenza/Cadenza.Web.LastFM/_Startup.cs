@@ -17,7 +17,6 @@ public static class _Startup
     {
         return services
             .AddTransient<IAuthoriser, Authoriser>()
-            .AddTransient<IPlayHistory, History>()
             .AddTransient<ILastFmHttpHelper, LastFmHttpHelper>();
     }
 }

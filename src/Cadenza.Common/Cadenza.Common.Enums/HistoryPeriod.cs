@@ -5,15 +5,15 @@ namespace Cadenza.Common.Enums;
 public enum HistoryPeriod
 {
     [Display(Name = "All time")]
-    Overall,
+    Overall = 0,
     [Display(Name = "Last week")]
-    Week,
+    Week = 1,
     [Display(Name = "Last month")]
-    Month,
+    Month = 2,
     [Display(Name = "Last 3 months")]
-    QuarterYear,
+    QuarterYear = 3,
     [Display(Name = "Last 6 months")]
-    HalfYear,
+    HalfYear = 4,
     [Display(Name = "Last year")]
-    Year
+    Year = 5
 }
