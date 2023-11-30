@@ -2,7 +2,7 @@
 
 public class PlayHistoryEffects
 {
-    private const int MaxItems = 5;
+    private const int MaxItems = 12;
 
     private readonly IArtworkFetcher _artworkFetcher;
     private readonly IHistoryRepository _history;
