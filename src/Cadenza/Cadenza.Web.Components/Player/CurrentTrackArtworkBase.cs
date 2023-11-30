@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Player;
+﻿using Cadenza.Web.Common.Interfaces;
+
+namespace Cadenza.Web.Components.Player;
 
 public class CurrentTrackArtworkBase : FluxorComponent
 {
@@ -9,34 +11,15 @@ public class CurrentTrackArtworkBase : FluxorComponent
     public string AlbumDisplay { get; private set; }
     public string ArtworkUrl { get; private set; }
 
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
-        base.OnInitialized();
-    }
-
     protected override void OnParametersSet()
     {
         AlbumDisplay = Model == null
             ? null
             : $"{Model.Album.Title} ({Model.Album.ArtistName})";
 
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model?.Album.Id ?? 0, Model?.Album.ArtworkBase64));
-    }
-
-    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
-    {
-        if (Model == null)
-        {
-            if (action.AlbumId == 0)
-            {
-                ArtworkUrl = action.Result;
-            }
-        }
-        else if (action.AlbumId == Model.Album.Id)
-        {
-            ArtworkUrl = action.Result;
-        }
+        ArtworkUrl = Model == null
+            ? "images/artwork-placeholder.png" // TODO - put this somewhere else
+            : Model.Album.ImageUrl;
     }
 
     protected void OnViewAlbum()

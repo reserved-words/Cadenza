@@ -3,10 +3,17 @@
 <HistoryCard Title="Top Albums"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top albums..."
-             Items="@Items"
              Period="@Period"
              UpdateItems="@UpdateItems">
-    <RowTemplate>
+    @* <MudGrid Spacing="1" Justify="Justify.FlexStart">
+        @foreach (var album in Items){
+            <MudItem xs="4">
+                <AlbumArtworkView Id="@album.Id" ImageUrl="@album.ImageUrl" Caption="@album.ToString()" />
+            </MudItem>
+        }
+    </MudGrid> *@
+    <AppTable Items="@Items">
+        <RowTemplate>
         <MudTd Class="td-img">
             <img src="@context.ImageUrl" width="45" height="45"><img>
         </MudTd>
@@ -21,4 +28,5 @@
             @context.Plays
         </MudTd>
     </RowTemplate>         
+    </AppTable>
 </HistoryCard>

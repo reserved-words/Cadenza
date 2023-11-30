@@ -19,7 +19,8 @@ public class EditAlbumBase : FormBase<AlbumDetailsVM>
             ReleaseType = Model.ReleaseType,
             Year = Model.Year,
             ArtworkBase64 = Model.ArtworkBase64,
-            Tags = Model.Tags.ToList()
+            Tags = Model.Tags.ToList(),
+            ImageUrl = Model.ImageUrl
         };
     }
 

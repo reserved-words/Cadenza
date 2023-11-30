@@ -2,11 +2,13 @@
 
 public class CurrentTrackEffects
 {
+    private readonly IArtworkFetcher _artworkFetcher;
     private readonly ITrackRepository _repository;
 
-    public CurrentTrackEffects(ITrackRepository repository)
+    public CurrentTrackEffects(ITrackRepository repository, IArtworkFetcher artworkFetcher)
     {
         _repository = repository;
+        _artworkFetcher = artworkFetcher;
     }
 
     [EffectMethod]
@@ -19,6 +21,11 @@ public class CurrentTrackEffects
         var isLast = fullTrack == null
             ? false
             : action.IsLastTrackInPlaylist;
+
+        if (fullTrack != null)
+        {
+            fullTrack.Album.ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(fullTrack.Album.Id);
+        }
 
         dispatcher.Dispatch(new UpdateCurrentTrackAction(action.TrackId, fullTrack, isLast));
     }

@@ -1,39 +1,20 @@
 ﻿
 @inherits FluxorComponent
 
-@if (Model != null)
+@if (ImageUrl != null)
 {
-    <img class="artwork" src="@ArtworkSrc" @ondblclick="@Play" />
+    <img class="artwork" src="@ImageUrl" @ondblclick="@Play" title="@Caption" />
 }
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public AlbumVM Model { get; set; }
-
-    public string ArtworkSrc { get; private set; }
-
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
-        base.OnInitialized();
-    }
-
-    protected override void OnParametersSet()
-    {
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
-    }
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string ImageUrl { get; set; }
+    [Parameter] public string Caption { get; set; }
 
     public void Play()
     {
-        Dispatcher.Dispatch(new PlayAlbumRequest(Model.Id, 0));
-    }
-
-    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
-    {
-        if (action.AlbumId != Model.Id)
-            return;
-
-        ArtworkSrc = action.Result;
+        Dispatcher.Dispatch(new PlayAlbumRequest(Id, 0));
     }
 }

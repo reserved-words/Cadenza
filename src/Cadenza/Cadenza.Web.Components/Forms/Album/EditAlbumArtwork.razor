@@ -39,23 +39,9 @@
 
     private string OriginalArtworkSrc { get; set; }
 
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<FetchAlbumArtworkResultAction>(OnAlbumArtworkFetched);
-        base.OnInitialized();
-    }
-
     protected override void OnParametersSet()
     {
-        Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
-    }
-
-    private void OnAlbumArtworkFetched(FetchAlbumArtworkResultAction action)
-    {
-        if (action.AlbumId != Model.Id)
-            return;
-
-        OriginalArtworkSrc = action.Result;
+        OriginalArtworkSrc = Model.ImageUrl;
     }
 
     protected async Task OnLoad()

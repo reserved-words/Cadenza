@@ -11,4 +11,6 @@ public class EditableAlbum
     public string Year { get; set; }
     public string ArtworkBase64 { get; set; }
     public ICollection<string> Tags { get; set; }
+
+    public string ImageUrl { get; set; }
 }

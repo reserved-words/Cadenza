@@ -10,6 +10,7 @@ public record AlbumVM
     public ReleaseType ReleaseType { get; init; }
     public string Year { get; init; }
     public string ArtworkBase64 { get; init; }
+    public string ImageUrl { get; set; }
 
-    public override string ToString() => $"{ArtistName} - {Title}";
+    public override string ToString() => $"{Title} by {ArtistName}";
 }

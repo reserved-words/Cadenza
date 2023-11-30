@@ -9,7 +9,7 @@
     <ChildContent>
         <MudGrid>
             <MudItem xs="6" md="12">
-                <AlbumArtworkView Model="@Model" />
+                <AlbumArtworkView Id="@Model.Id" ImageUrl="@Model.ImageUrl" />
             </MudItem>
             <MudItem xs="6" md="12">
                 <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />

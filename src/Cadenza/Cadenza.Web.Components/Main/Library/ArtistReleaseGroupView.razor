@@ -3,7 +3,7 @@
     <ChildContent>
         <AppGrid Items="@Model.Albums" ItemXs="6">
             <ImageTemplate>
-                <AlbumArtworkView Model="@context" />
+                <AlbumArtworkView Id="@context.Id" ImageUrl="@context.ImageUrl" Caption="@context.ToString()" />
             </ImageTemplate>
             <CaptionTemplate>
                 <AlbumSummaryView Model="@context" />
