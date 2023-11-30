@@ -125,7 +125,7 @@ internal class ViewModelMapper : IViewModelMapper
 
     public RecentAlbumVM Map(RecentAlbumDTO dto)
     {
-        return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName);
+        return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName, null);
     }
 
     private AlbumDiscVM Map(AlbumDiscDTO dto)

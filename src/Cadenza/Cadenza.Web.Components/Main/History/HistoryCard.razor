@@ -3,8 +3,7 @@
 {
     <AppCardScrollContainer Elevation="3">
         <HeaderContent>
-            <HistoryCardHeader T="@T"
-                               ShowPeriodOption="@ShowPeriodOption"
+            <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
                                Title="@Title"
                                OnUpdate="@UpdateItems"
                                Period="@Period" />
@@ -18,34 +17,28 @@
     </AppCardScrollContainer>
 
 }
-else if (Items != null)
+else
 {
     <AppCardScrollContainer Elevation="3">
         <HeaderContent>
-            <HistoryCardHeader T="@T"
-                               ShowPeriodOption="@ShowPeriodOption"
+            <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
                                Title="@Title"
                                OnUpdate="@UpdateItems"
                                Period="@Period" />
         </HeaderContent>
         <ChildContent>
             <MudDivider />
-            <AppTable T="@T"
-                      Items="@Items"
-                      RowTemplate="@RowTemplate" />
+            @ChildContent
         </ChildContent>
     </AppCardScrollContainer>
 }
-
-@typeparam T
 
 @code {
     [Parameter] public string Title { get; set; }
     [Parameter] public bool ShowPeriodOption { get; set; } = true;
     [Parameter] public bool IsLoading { get; set; }
     [Parameter] public string LoadingCaption { get; set; }
-    [Parameter] public IReadOnlyCollection<T> Items { get; set; }
     [Parameter] public HistoryPeriod Period { get; set; }
-    [Parameter] public RenderFragment<T> RowTemplate { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public Action<HistoryPeriod> UpdateItems { get; set; }
 }

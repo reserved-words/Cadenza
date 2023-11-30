@@ -1,0 +1,15 @@
+﻿
+<MudLink Style="cursor: pointer;" OnClick="@View">
+    <img class="artwork" src="@Model.ImageUrl" title="@Model.ToString()" />
+</MudLink>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    [Parameter] public RecentAlbumVM Model { get; set; }
+
+    public void View()
+    {
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Album, Model.Id.ToString(), Model.Title));
+    }
+}

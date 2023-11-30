@@ -2,13 +2,15 @@
 
 public class PlaylistHistoryEffects
 {
-    private const int MaxItems = 10;
+    private const int MaxItems = 12;
 
+    private readonly IArtworkFetcher _artworkFetcher;
     private readonly IHistoryRepository _history;
 
-    public PlaylistHistoryEffects(IHistoryRepository history)
+    public PlaylistHistoryEffects(IHistoryRepository history, IArtworkFetcher artworkFetcher)
     {
         _history = history;
+        _artworkFetcher = artworkFetcher;
     }
 
     [EffectMethod]
@@ -30,7 +32,14 @@ public class PlaylistHistoryEffects
     public async Task HandleFetchPlaylistHistoryAlbumsRequest(FetchPlaylistHistoryAlbumsRequest action, IDispatcher dispatcher)
     {
         var result = await _history.GetRecentAlbums(MaxItems);
-        dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsResult(result));
+        
+        var resultWithImages = result.Select(album => album with
+        {
+            ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(album.Id)
+        })
+        .ToList();
+
+        dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsResult(resultWithImages));
     }
 
     [EffectMethod]
