@@ -3,10 +3,10 @@
 <HistoryCard Title="Top Albums"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top albums..."
-             Items="@Items"
              Period="@Period"
              UpdateItems="@UpdateItems">
-    <RowTemplate>
+    <AppTable Items="@Items">
+        <RowTemplate>
         <MudTd Class="td-img">
             <img src="@context.ImageUrl" width="45" height="45"><img>
         </MudTd>
@@ -21,4 +21,5 @@
             @context.Plays
         </MudTd>
     </RowTemplate>         
+    </AppTable>
 </HistoryCard>

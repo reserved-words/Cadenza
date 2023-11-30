@@ -3,19 +3,19 @@
 <HistoryCard Title="Top Artists"
              IsLoading="@IsLoading"
              LoadingCaption="Loading top artists..."
-             Items="@Items"
              Period="@Period"
              UpdateItems="@UpdateItems">
-    <RowTemplate>
-        <MudTd Class="td-int">
-            @context.Rank
-        </MudTd>
-        <MudTd>
-            <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
-            <MudText Typo="@Typo.body2">-</MudText>
-        </MudTd>
-        <MudTd Class="td-int">
-            @context.Plays
-        </MudTd>
-    </RowTemplate>
+    <AppTable Items="@Items">
+        <RowTemplate>
+            <MudTd Class="td-int">
+                @context.Rank
+            </MudTd>
+            <MudTd>
+                <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+            </MudTd>
+            <MudTd Class="td-int">
+                @context.Plays
+            </MudTd>
+        </RowTemplate>
+    </AppTable>
 </HistoryCard>

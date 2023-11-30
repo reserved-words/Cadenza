@@ -38,25 +38,21 @@
             </TabGridRow>
         </TabGridColumn>
 
-        <TabGridColumn md="8">
+        <TabGridColumn md="4">
             <TabGridRow RowHeight="@RowHeight.Fixed">
-
-                <SubGrid>
-                    <SubGridColumn md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <HistoryArtists />
-                        </SubGridRow>
-                    </SubGridColumn>
-                    <SubGridColumn md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-                            <HistoryTracks />
-                        </SubGridRow>
-                    </SubGridColumn>
-                </SubGrid>
-
+                <HistoryArtists />
             </TabGridRow>
             <TabGridRow RowHeight="@RowHeight.Fixed">
+                <RecentAlbums />
+            </TabGridRow>
+        </TabGridColumn>
+
+        <TabGridColumn md="4">
+            <TabGridRow RowHeight="@RowHeight.Fixed">
                 <HistoryAlbums />
+            </TabGridRow>
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+                <HistoryTracks />
             </TabGridRow>
         </TabGridColumn>
 
