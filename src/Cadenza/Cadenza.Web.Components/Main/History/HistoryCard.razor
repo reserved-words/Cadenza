@@ -1,21 +1,42 @@
-﻿
-@if (IsLoading)
+﻿@if (IsLoading)
 {
-    <AppCardScrollContainer Elevation="3">
-        <HeaderContent>
-            <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
-                               Title="@Title"
-                               OnUpdate="@UpdateItems"
-                               Period="@Period" />
-        </HeaderContent>
-        <ChildContent>
+    <MudCard Elevation="3"
+             Class="ma-0 pa-0 fixed-height"
+             Style="display: flex; flex-direction: column; overflow: hidden;">
+        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+            <CardHeaderContent>
+                <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                   Title="@Title"
+                                   OnUpdate="@UpdateItems"
+                                   Period="@Period" />
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-0 ma-0">
             <MudDivider />
             <MudContainer Class="pa-2">
                 <MudText Typo="@Typo.body1">@LoadingCaption</MudText>
             </MudContainer>
-        </ChildContent>
-    </AppCardScrollContainer>
-
+        </MudCardContent>
+    </MudCard>
+}
+else if (!Scroll)
+{
+    <MudCard Elevation="3"
+             Class="ma-0 pa-0 fixed-height"
+             Style="display: flex; flex-direction: column; overflow: hidden;">
+        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+            <CardHeaderContent>
+                <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                   Title="@Title"
+                                   OnUpdate="@UpdateItems"
+                                   Period="@Period" />
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Style="flex-grow: 1;" Class="fixed-height-scroll pa-0 ma-0">
+            <MudDivider />
+            @ChildContent
+        </MudCardContent>
+    </MudCard>
 }
 else
 {
@@ -41,4 +62,5 @@ else
     [Parameter] public HistoryPeriod Period { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public Action<HistoryPeriod> UpdateItems { get; set; }
+    [Parameter] public bool Scroll { get; set; } = false;
 }
