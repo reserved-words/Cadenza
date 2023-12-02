@@ -7,15 +7,13 @@ namespace Cadenza.API.Controllers;
 [ApiController]
 public class LastFmController : ControllerBase
 {
-    private readonly IAuthoriser _authoriser;
+    private readonly ILastFmSessionService _authoriser;
     private readonly IAdminRepository _adminRepository;
-    private readonly IHistoryRepository _historyRepository;
 
-    public LastFmController(IAuthoriser authoriser, IAdminRepository adminRepository, IHistoryRepository historyRepository)
+    public LastFmController(ILastFmSessionService authoriser, IAdminRepository adminRepository)
     {
         _authoriser = authoriser;
         _adminRepository = adminRepository;
-        _historyRepository = historyRepository;
     }
 
 

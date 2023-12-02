@@ -25,9 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps.API\Cadenza.Apps.API.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
+    <ProjectReference Include="..\..\..\Cadenza.Common\Cadenza.Common.LastFm\Cadenza.Common.LastFm.csproj" />
     <ProjectReference Include="..\..\..\Cadenza.Database\Cadenza.Database.SqlLibrary\Cadenza.Database.SqlLibrary.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.Interfaces\Cadenza.API.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Cadenza.API.LastFM\Cadenza.API.LastFM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

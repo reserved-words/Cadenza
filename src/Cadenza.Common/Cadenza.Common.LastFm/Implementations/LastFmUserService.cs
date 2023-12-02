@@ -2,11 +2,11 @@
 
 namespace Cadenza.Common.LastFm.Implementations;
 
-internal class LastFmService : ILastFmService
+internal class LastFmUserService : ILastFmUserService
 {
     private readonly IAuthorisedApiClient _authorisedClient;
 
-    public LastFmService(IAuthorisedApiClient client)
+    public LastFmUserService(IAuthorisedApiClient client)
     {
         _authorisedClient = client;
     }

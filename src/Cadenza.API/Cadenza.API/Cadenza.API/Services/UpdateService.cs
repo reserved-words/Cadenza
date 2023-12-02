@@ -1,4 +1,4 @@
-﻿using Cadenza.API.Interfaces.Services;
+﻿using Cadenza.API.Interfaces;
 using Cadenza.Common.DTO.Attributes;
 
 namespace Cadenza.API.Services;

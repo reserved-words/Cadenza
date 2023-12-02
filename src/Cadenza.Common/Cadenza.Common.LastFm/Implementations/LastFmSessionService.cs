@@ -1,8 +1,11 @@
-﻿using Cadenza.Common.Http.Interfaces;
+﻿using Cadenza.API.Interfaces.LastFm;
+using Cadenza.Common.Http;
+using Cadenza.Common.Http.Interfaces;
+using Microsoft.Extensions.Options;
 
-namespace Cadenza.API.LastFM;
+namespace Cadenza.Common.LastFm.Implementations;
 
-internal class Authoriser : IAuthoriser
+internal class LastFmSessionService : ILastFmSessionService
 {
     private readonly IHttpHelper _http;
     private readonly IOptions<LastFmApiSettings> _config;
@@ -11,7 +14,7 @@ internal class Authoriser : IAuthoriser
     private readonly IResponseReader _responseReader;
     private readonly IUrlService _urlService;
 
-    public Authoriser(IOptions<LastFmApiSettings> config, ISigner signer, IHttpHelper http, IParser parser, IUrlService urlService, IResponseReader responseReader)
+    public LastFmSessionService(IOptions<LastFmApiSettings> config, ISigner signer, IHttpHelper http, IParser parser, IUrlService urlService, IResponseReader responseReader)
     {
         _config = config;
         _signer = signer;

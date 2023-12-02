@@ -7,10 +7,10 @@ namespace Cadenza.SyncService.Updaters;
 internal class NowPlayingUpdater : IService
 {
     private readonly ILastFmRepository _repository;
-    private readonly ILastFmService _lastFmService;
+    private readonly ILastFmUserService _lastFmService;
     private readonly ILogger<NowPlayingUpdater> _logger;
 
-    public NowPlayingUpdater(ILastFmRepository repository, ILastFmService lastFmService, ILogger<NowPlayingUpdater> logger)
+    public NowPlayingUpdater(ILastFmRepository repository, ILastFmUserService lastFmService, ILogger<NowPlayingUpdater> logger)
     {
         _repository = repository;
         _lastFmService = lastFmService;

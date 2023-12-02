@@ -1,5 +1,5 @@
 ﻿using Cadenza.API.Extensions;
-using Cadenza.API.Interfaces.Services;
+using Cadenza.API.Interfaces;
 
 namespace Cadenza.API.Controllers;
 

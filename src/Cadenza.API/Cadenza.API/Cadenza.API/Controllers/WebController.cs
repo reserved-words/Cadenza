@@ -1,4 +1,4 @@
-﻿using Cadenza.API.Interfaces.LastFm;
+﻿using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Controllers;
 
@@ -6,9 +6,9 @@ namespace Cadenza.API.Controllers;
 [ApiController]
 public class WebController : ControllerBase
 {
-    private readonly IInfoService _service;
+    private readonly ILastFmInfoService _service;
 
-    public WebController(IInfoService service)
+    public WebController(ILastFmInfoService service)
     {
         _service = service;
     }

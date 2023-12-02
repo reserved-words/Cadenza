@@ -7,10 +7,10 @@ namespace Cadenza.SyncService.Updaters;
 internal class Scrobbler : IService
 {
     private readonly ILastFmRepository _repository;
-    private readonly ILastFmService _lastFmService;
+    private readonly ILastFmUserService _lastFmService;
     private readonly ILogger<Scrobbler> _logger;
 
-    public Scrobbler(ILastFmRepository repository, ILastFmService lastFmService, ILogger<Scrobbler> logger)
+    public Scrobbler(ILastFmRepository repository, ILastFmUserService lastFmService, ILogger<Scrobbler> logger)
     {
         _repository = repository;
         _lastFmService = lastFmService;

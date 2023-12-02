@@ -2,7 +2,7 @@
 
 namespace Cadenza.Common.LastFm;
 
-public interface ILastFmService
+public interface ILastFmUserService
 {
     Task ScrobbleTrack(string sessionKey, Scrobble scrobble);
     Task UpdateLovedTrack(string sessionKey, LovedTrack track);
