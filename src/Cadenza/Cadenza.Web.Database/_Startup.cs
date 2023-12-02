@@ -19,7 +19,7 @@ public static class Startup
         return services
             .AddMappers()
             .AddApiRepositories()
-            .AddTransient<IWebInfoService, WebInfoService>()
+            .AddTransient<IUrl, Url>()
             .AddTransient<IApiHttpHelper, ApiHttpHelper>()
             .AddTransient<IApiConnector, ApiConnector>();
     }
@@ -37,6 +37,7 @@ public static class Startup
             .AddTransient<IArtworkFetcher, ArtworkFetcher>();
 
         return services
+            .AddTransient<IWebInfoService, WebInfoService>()
             .AddTransient<ILastFmSessionService, LastFmSessionService>()
             .AddTransient<IFavouritesService, FavouritesRepository>()
             .AddTransient<IAdminRepository, AdminRepository>()

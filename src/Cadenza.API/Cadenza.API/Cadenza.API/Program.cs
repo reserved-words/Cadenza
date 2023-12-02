@@ -24,6 +24,7 @@ var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection servi
         .AddHttpHelper();
 
     services
+        .AddTransient<IShuffler, Shuffler>()
         .AddTransient<IUpdateService, UpdateService>();
 
     services

@@ -1,14 +1,18 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.API.Interfaces;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class PlayController : ControllerBase
 {
     private readonly IPlayRepository _repository;
+    private readonly IShuffler _shuffler;
 
-    public PlayController(IPlayRepository repository)
+    public PlayController(IPlayRepository repository, IShuffler shuffler)
     {
         _repository = repository;
+        _shuffler = shuffler;
     }
 
     [HttpGet("Album/{id}")]
@@ -20,30 +24,40 @@ public class PlayController : ControllerBase
     [HttpGet("Artist/{id}")]
     public async Task<List<int>> Artist(int id)
     {
-        return await _repository.PlayArtist(id);
+        var tracks = await _repository.PlayArtist(id);
+        _shuffler.Shuffle(tracks);
+        return tracks;
     }
 
     [HttpGet("Genre/{id}")]
     public async Task<List<int>> Genre(string id)
     {
-        return await _repository.PlayGenre(id);
+        var tracks = await _repository.PlayGenre(id);
+        _shuffler.Shuffle(tracks);
+        return tracks;
     }
 
     [HttpGet("Grouping/{id}")]
     public async Task<List<int>> Grouping(int id)
     {
-        return await _repository.PlayGrouping(id);
+        var tracks = await _repository.PlayGrouping(id);
+        _shuffler.Shuffle(tracks);
+        return tracks;
     }
 
     [HttpGet("Tag/{id}")]
     public async Task<List<int>> Tag(string id)
     {
-        return await _repository.PlayTag(id);
+        var tracks = await _repository.PlayTag(id);
+        _shuffler.Shuffle(tracks);
+        return tracks;
     }
 
     [HttpGet("Tracks")]
     public async Task<List<int>> Tracks()
     {
-        return await _repository.PlayAll();
+        var tracks = await _repository.PlayAll();
+        _shuffler.Shuffle(tracks);
+        return tracks;
     }
 }

@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+
 </Project>

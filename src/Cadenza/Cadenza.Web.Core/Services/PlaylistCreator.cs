@@ -2,16 +2,14 @@
 
 internal class PlaylistCreator : IPlaylistCreator
 {
-    private readonly IShuffler _shuffler;
     private readonly IAlbumRepository _albumRepository;
     private readonly IArtistRepository _artistRepository;
     private readonly IPlayTrackRepository _repository;
     private readonly ITrackRepository _trackRepository;
 
-    public PlaylistCreator(IShuffler shuffler, IPlayTrackRepository repository, IArtistRepository artistRepository,
+    public PlaylistCreator(IPlayTrackRepository repository, IArtistRepository artistRepository,
         IAlbumRepository albumRepository, ITrackRepository trackRepository)
     {
-        _shuffler = shuffler;
         _repository = repository;
         _artistRepository = artistRepository;
         _albumRepository = albumRepository;
@@ -25,12 +23,10 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var playlistId = new PlaylistId(id.ToString(), PlaylistType.Artist, artist.Name);
 
-        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
-
         return new PlaylistDefinition
         {
             Id = playlistId,
-            Tracks = shuffledTracks.ToList()
+            Tracks = tracks
         };
     }
 
@@ -71,14 +67,12 @@ internal class PlaylistCreator : IPlaylistCreator
     {
         var tracks = await _repository.PlayAll();
 
-        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
-
         var playlistId = new PlaylistId("", PlaylistType.All, "All Library");
 
         return new PlaylistDefinition
         {
             Id = playlistId,
-            Tracks = shuffledTracks.ToList()
+            Tracks = tracks
         };
     }
 
@@ -88,12 +82,10 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var playlistId = new PlaylistId(grouping.Id.ToString(), PlaylistType.Grouping, grouping.Name);
 
-        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
-
         return new PlaylistDefinition
         {
             Id = playlistId,
-            Tracks = shuffledTracks.ToList()
+            Tracks = tracks
         };
     }
 
@@ -103,12 +95,10 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var playlistId = new PlaylistId(id, PlaylistType.Genre, id);
 
-        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
-
         return new PlaylistDefinition
         {
             Id = playlistId,
-            Tracks = shuffledTracks.ToList()
+            Tracks = tracks
         };
     }
 
@@ -118,12 +108,10 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var playlistId = new PlaylistId(id, PlaylistType.Tag, id);
 
-        var shuffledTracks = _shuffler.Shuffle(tracks.ToList());
-
         return new PlaylistDefinition
         {
             Id = playlistId,
-            Tracks = shuffledTracks.ToList()
+            Tracks = tracks
         };
     }
 }

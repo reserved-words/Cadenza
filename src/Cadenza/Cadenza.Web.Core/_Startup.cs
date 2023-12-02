@@ -14,7 +14,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using System.Web;
 using Cadenza.Common.Utilities;
 using Cadenza.Web.Core.Player;
-using Cadenza.Web.Core.Utilities;
 
 namespace Cadenza.Web.Core;
 
@@ -26,9 +25,7 @@ public static class Startup
 
         services
             .AddTransient<IImageFinder, ImageFinder>()
-            .AddTransient<IPlaylistCreator, PlaylistCreator>()
-            .AddTransient<IShuffler, Shuffler>()
-            .AddTransient<IUrl, Url>();
+            .AddTransient<IPlaylistCreator, PlaylistCreator>();
 
         return services;
     }

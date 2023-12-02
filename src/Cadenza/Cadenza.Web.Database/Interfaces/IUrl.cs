@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿namespace Cadenza.Web.Database.Interfaces;
 
-public interface IUrl
+internal interface IUrl
 {
     string Build(string endpoint, params (string, object)[] parameters);
     string Build(string baseUrl, string endpoint, params (string, object)[] parameters);
