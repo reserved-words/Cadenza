@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs.Library;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Components.Tabs.Library;
 
 public class GroupingTabBase : FluxorComponent
 {

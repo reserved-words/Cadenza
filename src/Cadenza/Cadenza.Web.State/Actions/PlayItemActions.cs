@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.State.Actions;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.State.Actions;
 
 public record PlayAlbumRequest(int Id, int StartTrackId);
 public record PlayArtistRequest(int Id);

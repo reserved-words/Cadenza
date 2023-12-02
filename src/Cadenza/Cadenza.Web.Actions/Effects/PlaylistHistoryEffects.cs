@@ -4,13 +4,13 @@ public class PlaylistHistoryEffects
 {
     private const int MaxItems = 12;
 
-    private readonly IArtworkFetcher _artworkFetcher;
-    private readonly IHistoryRepository _history;
+    private readonly IArtworkApi _artworkApi;
+    private readonly IHistoryApi _historyApi;
 
-    public PlaylistHistoryEffects(IHistoryRepository history, IArtworkFetcher artworkFetcher)
+    public PlaylistHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
     {
-        _history = history;
-        _artworkFetcher = artworkFetcher;
+        _historyApi = historyApi;
+        _artworkApi = artworkApi;
     }
 
     [EffectMethod]
@@ -31,11 +31,11 @@ public class PlaylistHistoryEffects
     [EffectMethod]
     public async Task HandleFetchPlaylistHistoryAlbumsRequest(FetchPlaylistHistoryAlbumsRequest action, IDispatcher dispatcher)
     {
-        var result = await _history.GetRecentAlbums(MaxItems);
+        var result = await _historyApi.GetRecentAlbums(MaxItems);
         
         var resultWithImages = result.Select(album => album with
         {
-            ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(album.Id)
+            ImageUrl = _artworkApi.GetAlbumArtworkUrl(album.Id)
         })
         .ToList();
 
@@ -45,7 +45,7 @@ public class PlaylistHistoryEffects
     [EffectMethod]
     public async Task HandleFetchPlaylistHistoryTagasRequest(FetchPlaylistHistoryTagsRequest action, IDispatcher dispatcher)
     {
-        var result = await _history.GetRecentTags(MaxItems);
+        var result = await _historyApi.GetRecentTags(MaxItems);
         dispatcher.Dispatch(new FetchPlaylistHistoryTagsResult(result));
     }
 }

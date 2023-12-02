@@ -6,7 +6,7 @@ global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Components.Main.ViewBases;
 global using Cadenza.Web.Components.MudServices;
 global using Cadenza.Web.Components.Shared.Dialogs;
-global using Cadenza.Web.Model;
+global using Cadenza.Web.Common.ViewModel;
 global using Cadenza.Web.State.Actions;
 global using Cadenza.Web.State.Store;
 global using Fluxor;

@@ -3,7 +3,7 @@
 public enum ConnectionType
 {
     [Display(Name = "Database")]
-    Database,
+    Api,
     [Display(Name = "Last.FM")]
     LastFm,
     [Display(Name = "Local Source")]

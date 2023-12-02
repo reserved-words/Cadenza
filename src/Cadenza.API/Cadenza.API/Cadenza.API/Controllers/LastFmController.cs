@@ -1,5 +1,5 @@
-﻿using Cadenza.API.Extensions;
-using Cadenza.API.Interfaces.LastFm;
+﻿using Cadenza.API.Interfaces.LastFm;
+using Cadenza.Common.LastFm;
 
 namespace Cadenza.API.Controllers;
 
@@ -7,31 +7,43 @@ namespace Cadenza.API.Controllers;
 [ApiController]
 public class LastFmController : ControllerBase
 {
-    private readonly IAuthoriser _authoriser;
-    private readonly IAdminRepository _adminRepository;
-    private readonly IHistoryRepository _historyRepository;
+    private readonly ILastFmInfoService _infoService;
+    private readonly ILastFmSessionService _sessionService;
+    private readonly IAdminRepository _repository;
 
-    public LastFmController(IAuthoriser authoriser, IAdminRepository adminRepository, IHistoryRepository historyRepository)
+    public LastFmController(ILastFmSessionService authoriser, IAdminRepository adminRepository, ILastFmInfoService infoService)
     {
-        _authoriser = authoriser;
-        _adminRepository = adminRepository;
-        _historyRepository = historyRepository;
+        _sessionService = authoriser;
+        _repository = adminRepository;
+        _infoService = infoService;
     }
 
 
     [HttpGet("AuthUrl")]
     public async Task<string> AuthUrl(string redirectUri)
     {
-        return await _authoriser.GetAuthUrl(redirectUri);
+        return await _sessionService.GetAuthUrl(redirectUri);
     }
 
-    // TODO: Should be POST
-    [HttpGet("CreateSession")]
-    public async Task<string> CreateSession(string token)
+    [HttpPost("CreateSession")]
+    public async Task CreateSession(string token)
     {
-        var session = await _authoriser.CreateSession(token);
+        var session = await _sessionService.CreateSession(token);
         var username = HttpContext.GetUsername();
-        await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
-        return session.SessionKey;
+        await _repository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
+    }
+
+    [HttpGet("HasSession")]
+    public async Task<bool> HasSession()
+    {
+        var username = HttpContext.GetUsername();
+        return await _repository.HasLastFmSessionKey(username);
+    }
+
+    [HttpGet("AlbumArtworkUrl")]
+    public async Task<AlbumArtworkDTO> AlbumArtworkUrl(string artist, string title)
+    {
+        var url = await _infoService.AlbumArtworkUrl(artist, title);
+        return new AlbumArtworkDTO { Url = url };
     }
 }

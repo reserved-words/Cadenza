@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Reducers;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Actions.Reducers;
 
 public static class PlaylistHistoryReducers
 {

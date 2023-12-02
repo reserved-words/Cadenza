@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Components.Tabs;
 
 public class SearchTabBase : ComponentBase
 {

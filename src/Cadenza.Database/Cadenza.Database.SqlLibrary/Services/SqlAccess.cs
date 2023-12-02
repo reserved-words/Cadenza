@@ -21,13 +21,15 @@ internal class SqlAccess : ISqlAccess
     public async Task Execute(object data, [CallerMemberName] string storedProcedureName = null)
     {
         using var connection = new SqlConnection(_settings.Value.ConnectionString);
-        await connection.ExecuteAsync(StoredProcedure(storedProcedureName), data, commandType: CommandType.StoredProcedure);
+        var qualifiedStoredProcedureName = StoredProcedure(storedProcedureName);
+        await connection.ExecuteAsync(qualifiedStoredProcedureName, data, commandType: CommandType.StoredProcedure);
     }
 
     public async Task Execute(DynamicParameters parameters, [CallerMemberName] string storedProcedureName = null)
     {
         using var connection = new SqlConnection(_settings.Value.ConnectionString);
-        await connection.ExecuteAsync(StoredProcedure(storedProcedureName), parameters, commandType: CommandType.StoredProcedure);
+        var qualifiedStoredProcedureName = StoredProcedure(storedProcedureName);
+        await connection.ExecuteAsync(qualifiedStoredProcedureName, parameters, commandType: CommandType.StoredProcedure);
     }
 
     public async Task<List<T>> Query<T>(object parameters, [CallerMemberName] string storedProcedureName = null)

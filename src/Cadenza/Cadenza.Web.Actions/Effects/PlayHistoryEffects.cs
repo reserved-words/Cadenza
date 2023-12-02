@@ -4,25 +4,25 @@ public class PlayHistoryEffects
 {
     private const int MaxItems = 12;
 
-    private readonly IArtworkFetcher _artworkFetcher;
-    private readonly IHistoryRepository _history;
+    private readonly IArtworkApi _artworkApi;
+    private readonly IHistoryApi _historyApi;
 
-    public PlayHistoryEffects(IHistoryRepository history, IArtworkFetcher artworkFetcher)
+    public PlayHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
     {
-        _history = history;
-        _artworkFetcher = artworkFetcher;
+        _historyApi = historyApi;
+        _artworkApi = artworkApi;
     }
 
     [EffectMethod]
     public async Task HandleFetchPlayHistoryAlbumsRequest(FetchPlayHistoryAlbumsRequest action, IDispatcher dispatcher)
     {
-        var result = await _history.GetTopAlbums(action.Period, MaxItems);
+        var result = await _historyApi.GetTopAlbums(action.Period, MaxItems);
 
         var list = result.ToList();
 
         var listWithImages = list.Select(t => t with
         {
-            ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(t.Id)
+            ImageUrl = _artworkApi.GetAlbumArtworkUrl(t.Id)
         })
         .ToList();
 
@@ -32,14 +32,14 @@ public class PlayHistoryEffects
     [EffectMethod]
     public async Task HandleFetchPlayHistoryArtistsRequest(FetchPlayHistoryArtistsRequest action, IDispatcher dispatcher)
     {
-        var result = await _history.GetTopArtists(action.Period, MaxItems);
+        var result = await _historyApi.GetTopArtists(action.Period, MaxItems);
         dispatcher.Dispatch(new FetchPlayHistoryArtistsResult(action.Period, result.ToList()));
     }
 
     [EffectMethod]
     public async Task HandleFetchPlayHistoryTracksRequest(FetchPlayHistoryTracksRequest action, IDispatcher dispatcher)
     {
-        var result = await _history.GetTopTracks(action.Period, MaxItems);
+        var result = await _historyApi.GetTopTracks(action.Period, MaxItems);
         dispatcher.Dispatch(new FetchPlayHistoryTracksResult(action.Period, result.ToList()));
     }
 }
