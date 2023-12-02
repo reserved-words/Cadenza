@@ -2,13 +2,13 @@
 
 internal class PlaylistCreator : IPlaylistCreator
 {
-    private readonly IAlbumRepository _albumRepository;
-    private readonly IArtistRepository _artistRepository;
-    private readonly IPlayTrackRepository _repository;
-    private readonly ITrackRepository _trackRepository;
+    private readonly IAlbumApi _albumRepository;
+    private readonly IArtistApi _artistRepository;
+    private readonly IPlayApi _repository;
+    private readonly ITrackApi _trackRepository;
 
-    public PlaylistCreator(IPlayTrackRepository repository, IArtistRepository artistRepository,
-        IAlbumRepository albumRepository, ITrackRepository trackRepository)
+    public PlaylistCreator(IPlayApi repository, IArtistApi artistRepository,
+        IAlbumApi albumRepository, ITrackApi trackRepository)
     {
         _repository = repository;
         _artistRepository = artistRepository;

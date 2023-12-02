@@ -29,10 +29,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cadenza.Apps\Cadenza.Apps\Cadenza.Apps.csproj" />
+    <ProjectReference Include="..\Cadenza.Web.Api\Cadenza.Web.Api.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Database\Cadenza.Web.Database.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Source.Local\Cadenza.Web.Source.Local.csproj" />
   </ItemGroup>
 

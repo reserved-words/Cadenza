@@ -6,8 +6,6 @@ global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
 global using Cadenza.Web.Components;
 global using Cadenza.Web.Core;
-global using Cadenza.Web.Database;
-global using Cadenza.Web.Database.Settings;
 global using Cadenza.Web.Source.Local;
 global using Cadenza.Web.Source.Local.Settings;
 global using Microsoft.AspNetCore.Components;

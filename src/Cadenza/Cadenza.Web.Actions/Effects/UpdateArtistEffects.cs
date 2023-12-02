@@ -2,11 +2,11 @@
 
 public class UpdateArtistEffects
 {
-    private readonly IUpdateRepository _repository;
+    private readonly IUpdateApi _api;
 
-    public UpdateArtistEffects(IUpdateRepository repository)
+    public UpdateArtistEffects(IUpdateApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
@@ -14,7 +14,7 @@ public class UpdateArtistEffects
     {
         try
         {
-            await _repository.UpdateArtist(action.OriginalArtist, action.UpdatedArtist);
+            await _api.UpdateArtist(action.OriginalArtist, action.UpdatedArtist);
             dispatcher.Dispatch(new ArtistUpdatedAction(action.UpdatedArtist));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Artist, action.OriginalArtist.Id));
         }

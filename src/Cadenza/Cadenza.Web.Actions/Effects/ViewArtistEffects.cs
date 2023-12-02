@@ -4,19 +4,19 @@ namespace Cadenza.Web.Actions.Effects;
 
 public class ViewArtistEffects
 {
-    private readonly IArtistRepository _repository;
+    private readonly IArtistApi _api;
 
-    public ViewArtistEffects(IArtistRepository repository)
+    public ViewArtistEffects(IArtistApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchViewArtistRequest(FetchViewArtistRequest action, IDispatcher dispatcher)
     {
-        var artist = await _repository.GetArtist(action.ArtistId);
-        var albumsByArtist = await _repository.GetAlbums(action.ArtistId);
-        var albumsFeaturingArtist = await _repository.GetAlbumsFeaturingArtist(action.ArtistId);
+        var artist = await _api.GetArtist(action.ArtistId);
+        var albumsByArtist = await _api.GetAlbums(action.ArtistId);
+        var albumsFeaturingArtist = await _api.GetAlbumsFeaturingArtist(action.ArtistId);
 
         var releases = albumsByArtist
             .GroupByReleaseType()

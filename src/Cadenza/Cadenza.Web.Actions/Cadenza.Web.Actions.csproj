@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Cadenza.Web.Api\Cadenza.Web.Api.csproj" />
 		<ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
 	</ItemGroup>
 

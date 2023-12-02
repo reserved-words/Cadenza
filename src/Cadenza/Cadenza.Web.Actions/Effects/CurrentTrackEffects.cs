@@ -2,11 +2,11 @@
 
 public class CurrentTrackEffects
 {
-    private readonly ITrackRepository _repository;
+    private readonly ITrackApi _api;
 
-    public CurrentTrackEffects(ITrackRepository repository)
+    public CurrentTrackEffects(ITrackApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
@@ -14,7 +14,7 @@ public class CurrentTrackEffects
     {
         var fullTrack = action.TrackId == 0
             ? null
-            : await _repository.GetTrack(action.TrackId);
+            : await _api.GetTrack(action.TrackId);
 
         var isLast = fullTrack == null
             ? false

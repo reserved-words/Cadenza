@@ -3,12 +3,12 @@
 public class AlbumArtworkEffects
 {
     private readonly IState<AlbumArtworkState> _state;
-    private readonly IArtworkFetcher _artworkFetcher;
+    private readonly IArtworkApi _api;
 
-    public AlbumArtworkEffects(IState<AlbumArtworkState> state, IArtworkFetcher artworkFetcher)
+    public AlbumArtworkEffects(IState<AlbumArtworkState> state, IArtworkApi api)
     {
         _state = state;
-        _artworkFetcher = artworkFetcher;
+        _api = api;
     }
 
     [EffectMethod]
@@ -18,7 +18,7 @@ public class AlbumArtworkEffects
 
         if (action.Id == 0)
         {
-            result = _artworkFetcher.GetAlbumArtworkSrc(null);
+            result = _api.GetAlbumArtworkUrl(null);
             dispatcher.Dispatch(new FetchAlbumArtworkResultAction(0, result));
             return Task.CompletedTask;
         }
@@ -33,7 +33,7 @@ public class AlbumArtworkEffects
         }
         else
         {
-            result = _artworkFetcher.GetAlbumArtworkSrc(action.Id);
+            result = _api.GetAlbumArtworkUrl(action.Id);
         }
 
         dispatcher.Dispatch(new FetchAlbumArtworkResultAction(action.Id, result));

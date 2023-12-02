@@ -6,15 +6,13 @@ public class RecentPlayHistoryEffects
     private const int MinMinutesPlayed = 4;
     private const int MinPercentagePlayed = 50;
 
-    private readonly IArtworkFetcher _artworkFetcher;
-    private readonly IHistoryRepository _history;
-    private readonly IPlayTracker _tracker;
+    private readonly IArtworkApi _artworkApi;
+    private readonly IHistoryApi _historyApi;
 
-    public RecentPlayHistoryEffects(IHistoryRepository history, IPlayTracker tracker, IArtworkFetcher artworkFetcher)
+    public RecentPlayHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
     {
-        _history = history;
-        _tracker = tracker;
-        _artworkFetcher = artworkFetcher;
+        _historyApi = historyApi;
+        _artworkApi = artworkApi;
     }
 
     [EffectMethod]
@@ -47,13 +45,13 @@ public class RecentPlayHistoryEffects
     [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
     public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
     {
-        var result = await _history.GetRecentTracks(MaxItems);
+        var result = await _historyApi.GetRecentTracks(MaxItems);
 
         var list = result.ToList();
 
         var listWithImages = list.Select(t => t with
         {
-            ImageUrl = _artworkFetcher.GetAlbumArtworkSrc(t.AlbumId)
+            ImageUrl = _artworkApi.GetAlbumArtworkUrl(t.AlbumId)
         })
         .ToList();
 
@@ -68,7 +66,7 @@ public class RecentPlayHistoryEffects
         if (!PlayedEnough(progress))
             return;
 
-        await _tracker.RecordPlay(track, DateTime.Now);
+        await _historyApi.RecordPlay(track, DateTime.Now);
     }
 
     private async Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining)
@@ -76,7 +74,7 @@ public class RecentPlayHistoryEffects
         if (track == null)
             return;
 
-        await _tracker.UpdateNowPlaying(track, secondsRemaining);
+        await _historyApi.UpdateNowPlaying(track, secondsRemaining);
     }
 
     private static bool PlayedEnough(TrackProgress progress)

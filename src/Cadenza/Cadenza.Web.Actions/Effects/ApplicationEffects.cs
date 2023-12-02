@@ -4,11 +4,11 @@ public class ApplicationEffects
 {
     private readonly IStartupDialogService _dialogService;
 
-    private readonly IState<DatabaseConnectionState> _databaseConnectionState;
+    private readonly IState<ApiConnectionState> _databaseConnectionState;
     private readonly IState<LastFmConnectionState> _lastFmConnectionState;
     private readonly IState<LocalSourceConnectionState> _localSourceConnectionState;
 
-    public ApplicationEffects(IStartupDialogService dialogService, IState<DatabaseConnectionState> databaseConnectionState, IState<LastFmConnectionState> lastFmConnectionState, IState<LocalSourceConnectionState> localSourceConnectionState)
+    public ApplicationEffects(IStartupDialogService dialogService, IState<ApiConnectionState> databaseConnectionState, IState<LastFmConnectionState> lastFmConnectionState, IState<LocalSourceConnectionState> localSourceConnectionState)
     {
         _dialogService = dialogService;
         _databaseConnectionState = databaseConnectionState;
@@ -22,7 +22,7 @@ public class ApplicationEffects
     {
         var connections = new List<ConnectionStartupParameter>
         {
-            new ConnectionStartupParameter(ConnectionType.Database, new DatabaseConnectRequest()),
+            new ConnectionStartupParameter(ConnectionType.Api, new ApiConnectRequest()),
             new ConnectionStartupParameter(ConnectionType.Local, new LocalSourceConnectRequest()),
             new ConnectionStartupParameter(ConnectionType.LastFm, new LastFmConnectRequest())
         };
@@ -30,7 +30,7 @@ public class ApplicationEffects
         await _dialogService.Run(connections);
     }
 
-    [EffectMethod(typeof(DatabaseConnectedAction))]
+    [EffectMethod(typeof(ApiConnectedAction))]
     public Task HandleDatabaseConnectedAction(IDispatcher dispatcher)
     {
         return CheckIfAllConnected(dispatcher);

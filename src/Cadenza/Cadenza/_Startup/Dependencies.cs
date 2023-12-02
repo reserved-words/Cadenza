@@ -1,6 +1,7 @@
 ﻿using Cadenza.Common.Http;
 using Cadenza.HttpMessageHandlers;
 using Cadenza.Web.Common.Enums;
+using Cadenza.Web.Api;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace Cadenza._Startup;
@@ -12,10 +13,10 @@ public static class Dependencies
         services
             .RegisterExternalHttpHelper()
             .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
-            .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "DatabaseApi:BaseUrl");
+            .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "Api:BaseUrl");
 
         return services
-            .AddDatabase()
+            .AddApi()
             .AddPlayer()
             .AddCoreServices()
             .AddInteropServices()

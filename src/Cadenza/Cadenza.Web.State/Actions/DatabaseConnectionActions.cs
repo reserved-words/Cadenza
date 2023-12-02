@@ -1,5 +1,5 @@
 ﻿namespace Cadenza.Web.State.Actions;
 
-public record DatabaseConnectRequest();
-public record DatabaseConnectionFailedAction();
-public record DatabaseConnectedAction();
+public record ApiConnectRequest();
+public record ApiConnectionFailedAction();
+public record ApiConnectedAction();

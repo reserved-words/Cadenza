@@ -12,6 +12,8 @@ global using Cadenza.Web.State.Store;
 global using Fluxor;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Web;
+global using Cadenza.Web.Api.Interfaces;
+
 using Cadenza.Common.Utilities;
 using Cadenza.Web.Core.Player;
 

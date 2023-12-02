@@ -6,13 +6,13 @@ namespace Cadenza.Web.Actions.Effects;
 public class LastFmConnectionEffects
 {
     private readonly IState<LastFmConnectionState> _state;
-    private readonly ILastFmSessionService _authoriser;
+    private readonly ILastFmApi _api;
     private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<LastFmConnectionEffects> _logger;
 
-    public LastFmConnectionEffects(ILastFmSessionService authoriser, IOptions<AppSettings> settings, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
+    public LastFmConnectionEffects(ILastFmApi api, IOptions<AppSettings> settings, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
     {
-        _authoriser = authoriser;
+        _api = api;
         _settings = settings;
         _state = state;
         _logger = logger;
@@ -22,7 +22,7 @@ public class LastFmConnectionEffects
     public async Task HandleLastFmConnectRequest(IDispatcher dispatcher)
     {
         DispatchProgressAction(dispatcher);
-        var doesSessionExist = await _authoriser.DoesSessionExist();
+        var doesSessionExist = await _api.DoesSessionExist();
         if (doesSessionExist)
         {
             dispatcher.Dispatch(new LastFmConnectedAction());
@@ -39,7 +39,7 @@ public class LastFmConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            var authUrl = await _authoriser.GetAuthUrl(_settings.Value.LastFmRedirectUri);
+            var authUrl = await _api.GetAuthUrl(_settings.Value.LastFmRedirectUri);
             dispatcher.Dispatch(new NavigationRequest(authUrl, false));
         }
         catch (Exception ex)
@@ -63,7 +63,7 @@ public class LastFmConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            await _authoriser.CreateSession(action.Token);
+            await _api.CreateSession(action.Token);
             dispatcher.Dispatch(new NavigationRequest("/", false));
         }
         catch (Exception ex)

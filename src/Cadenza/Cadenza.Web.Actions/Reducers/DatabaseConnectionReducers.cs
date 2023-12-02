@@ -2,8 +2,8 @@
 
 public static class DatabaseConnectionReducers
 {
-    [ReducerMethod(typeof(DatabaseConnectRequest))]
-    public static DatabaseConnectionState ReduceDatabaseConnectRequest(DatabaseConnectionState state)
+    [ReducerMethod(typeof(ApiConnectRequest))]
+    public static ApiConnectionState ReduceDatabaseConnectRequest(ApiConnectionState state)
     {
         return state with
         {
@@ -13,8 +13,8 @@ public static class DatabaseConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(DatabaseConnectionFailedAction))]
-    public static DatabaseConnectionState ReduceDatabaseConnectionErroredAction(DatabaseConnectionState state)
+    [ReducerMethod(typeof(ApiConnectionFailedAction))]
+    public static ApiConnectionState ReduceDatabaseConnectionErroredAction(ApiConnectionState state)
     {
         return state with
         {
@@ -23,8 +23,8 @@ public static class DatabaseConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(DatabaseConnectedAction))]
-    public static DatabaseConnectionState ReduceDatabaseConnectedAction(DatabaseConnectionState state)
+    [ReducerMethod(typeof(ApiConnectedAction))]
+    public static ApiConnectionState ReduceDatabaseConnectedAction(ApiConnectionState state)
     {
         return state with
         {

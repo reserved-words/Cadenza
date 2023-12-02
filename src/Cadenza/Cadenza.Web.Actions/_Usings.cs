@@ -1,4 +1,5 @@
 ﻿global using Cadenza.Common.Enums;
+global using Cadenza.Web.Api.Interfaces;
 global using Cadenza.Web.Common.Enums;
 global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;

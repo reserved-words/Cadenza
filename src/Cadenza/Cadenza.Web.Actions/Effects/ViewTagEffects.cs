@@ -2,17 +2,17 @@
 
 public class ViewTagEffects
 {
-    private readonly ITagRepository _repository;
+    private readonly ITagsApi _api;
 
-    public ViewTagEffects(ITagRepository repository)
+    public ViewTagEffects(ITagsApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchViewTagRequest(FetchViewTagRequest action, IDispatcher dispatcher)
     {
-        var items = (await _repository.GetTag(action.Tag))
+        var items = (await _api.GetTag(action.Tag))
             .OrderBy(i => i.Type)
             .ThenBy(i => i.Name)
             .ToList();

@@ -8,7 +8,7 @@ public class MainApiAuthorizationMessageHandler : AuthorizationMessageHandler
         NavigationManager navigation, IConfiguration config)
         : base(provider, navigation)
     {
-        var baseUrl = config["DatabaseApi:BaseUrl"];
+        var baseUrl = config["Api:BaseUrl"];
         var scope = config["AppAuthentication:Scopes:Database"];
 
         ConfigureHandler(

@@ -2,17 +2,17 @@
 
 public class ViewTrackEffects
 {
-    private readonly ITrackRepository _repository;
+    private readonly ITrackApi _api;
 
-    public ViewTrackEffects(ITrackRepository repository)
+    public ViewTrackEffects(ITrackApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchViewTrackRequest(FetchViewTrackRequest action, IDispatcher dispatcher)
     {
-        var track = await _repository.GetTrack(action.TrackId);
+        var track = await _api.GetTrack(action.TrackId);
         dispatcher.Dispatch(new FetchViewTrackResult(track));
     }
 }
