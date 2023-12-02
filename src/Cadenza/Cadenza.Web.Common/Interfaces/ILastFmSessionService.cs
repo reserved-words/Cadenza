@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Web.LastFM.Interfaces;
+﻿namespace Cadenza.Web.Common.Interfaces;
 
-public interface IAuthoriser
+public interface ILastFmSessionService
 {
     Task<string> GetAuthUrl(string redirectUri);
     Task CreateSession(string token);

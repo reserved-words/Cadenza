@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.LastFM.Interfaces;
-using Cadenza.Web.LastFM.Settings;
+﻿using Cadenza.Web.Common.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 namespace Cadenza.Web.Actions.Effects;
@@ -7,11 +6,11 @@ namespace Cadenza.Web.Actions.Effects;
 public class LastFmConnectionEffects
 {
     private readonly IState<LastFmConnectionState> _state;
-    private readonly IAuthoriser _authoriser;
-    private readonly IOptions<LastFmApiSettings> _settings;
+    private readonly ILastFmSessionService _authoriser;
+    private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<LastFmConnectionEffects> _logger;
 
-    public LastFmConnectionEffects(IAuthoriser authoriser, IOptions<LastFmApiSettings> settings, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
+    public LastFmConnectionEffects(ILastFmSessionService authoriser, IOptions<AppSettings> settings, IState<LastFmConnectionState> state, ILogger<LastFmConnectionEffects> logger)
     {
         _authoriser = authoriser;
         _settings = settings;
@@ -40,7 +39,7 @@ public class LastFmConnectionEffects
         DispatchProgressAction(dispatcher);
         try
         {
-            var authUrl = await _authoriser.GetAuthUrl(_settings.Value.RedirectUri);
+            var authUrl = await _authoriser.GetAuthUrl(_settings.Value.LastFmRedirectUri);
             dispatcher.Dispatch(new NavigationRequest(authUrl, false));
         }
         catch (Exception ex)

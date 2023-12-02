@@ -33,7 +33,6 @@
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Database\Cadenza.Web.Database.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.LastFM\Cadenza.Web.LastFM.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Source.Local\Cadenza.Web.Source.Local.csproj" />
   </ItemGroup>
 

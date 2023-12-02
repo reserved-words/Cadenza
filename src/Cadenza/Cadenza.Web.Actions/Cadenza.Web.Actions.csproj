@@ -8,10 +8,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Fluxor" Version="5.9.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Cadenza.Web.LastFM\Cadenza.Web.LastFM.csproj" />
 		<ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
 	</ItemGroup>
 

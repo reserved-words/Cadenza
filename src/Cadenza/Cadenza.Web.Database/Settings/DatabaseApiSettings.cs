@@ -60,4 +60,7 @@ public class DatabaseApiEndpoints
     public string TopAlbums { get; set; }
     public string TopArtists { get; set; }
     public string TopTracks { get; set; }
+    public string LastFmAuthUrl { get; set; }
+    public string LastFmCreateSession { get; set; }
+    public string LastFmHasSession { get; set; }
 }

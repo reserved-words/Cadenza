@@ -21,8 +21,7 @@ public static class Dependencies
             .AddInteropServices()
             .AddUtilities()
             .AddComponents()
-            .AddLocalSource<HtmlPlayer>()
-            .AddLastFm();
+            .AddLocalSource<HtmlPlayer>();
     }
 
     private static IServiceCollection RegisterExternalHttpHelper(this IServiceCollection services)

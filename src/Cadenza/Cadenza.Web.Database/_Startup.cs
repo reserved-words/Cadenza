@@ -37,6 +37,7 @@ public static class Startup
             .AddTransient<IArtworkFetcher, ArtworkFetcher>();
 
         return services
+            .AddTransient<ILastFmSessionService, LastFmSessionService>()
             .AddTransient<IFavouritesService, FavouritesRepository>()
             .AddTransient<IAdminRepository, AdminRepository>()
             .AddTransient<IAlbumRepository, AlbumRepository>()
