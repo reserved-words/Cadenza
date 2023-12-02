@@ -29,6 +29,7 @@ public class ApiEndpoints
     public string LastFmAuthUrl { get; set; }
     public string LastFmCreateSession { get; set; }
     public string LastFmHasSession { get; set; }
+    public string LastFmAlbumArtworkUrl { get; set; }
 
     public string Album { get; set; }
     public string AlbumsFeaturingArtist { get; set; }
@@ -58,7 +59,4 @@ public class ApiEndpoints
 
     public string UnloveTrack { get; set; }
     public string LoveTrack { get; set; }
-
-
-    public string AlbumArtworkUrl { get; set; }
 }

@@ -7,13 +7,13 @@ internal class ImageFinder : IImageFinder
 
     private readonly IHttpHelper _httpHelper;
     private readonly IImageConverter _imageConverter;
-    private readonly IArtworkApi _artworkApi;
+    private readonly ILastFmApi _lastFmApi;
 
-    public ImageFinder(IHttpHelper httpHelper, IImageConverter imageConverter, IArtworkApi artworkApi)
+    public ImageFinder(IHttpHelper httpHelper, IImageConverter imageConverter, ILastFmApi lastFmApi)
     {
         _httpHelper = httpHelper;
         _imageConverter = imageConverter;
-        _artworkApi = artworkApi;
+        _lastFmApi = lastFmApi;
     }
 
     public async Task<string> GetBase64ArtworkSource(string url)
@@ -52,6 +52,6 @@ internal class ImageFinder : IImageFinder
 
     public async Task<string> GetAlbumArtworkUrl(string artist, string title)
     {
-        return await _artworkApi.FindAlbumArtworkUrl(artist, title);
+        return await _lastFmApi.GetAlbumArtworkUrl(artist, title);
     }
 }

@@ -30,4 +30,11 @@ internal class LastFmApi : ILastFmApi
         var url = _url.Build(_apiSettings.Endpoints.LastFmHasSession);
         return await _apiHelper.Get<bool>(url);
     }
+
+    public async Task<string> GetAlbumArtworkUrl(string artist, string title)
+    {
+        var url = _url.Build(_apiSettings.Endpoints.LastFmAlbumArtworkUrl, ("artist", artist), ("title", title));
+        var result = await _apiHelper.Get<AlbumArtworkDTO>(url);
+        return result.Url;
+    }
 }

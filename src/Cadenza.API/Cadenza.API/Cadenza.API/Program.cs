@@ -1,17 +1,22 @@
+global using Cadenza.API.Extensions;
+global using Cadenza.API.Interfaces;
 global using Cadenza.Apps;
 global using Cadenza.Apps.API;
 global using Cadenza.Common.DTO;
+global using Cadenza.Common.DTO.Attributes;
 global using Cadenza.Common.Enums;
+global using Cadenza.Common.Model;
 global using Cadenza.Common.Utilities;
-global using Microsoft.AspNetCore.Mvc;
 global using Cadenza.Database.Interfaces;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+
+using Cadenza.API.Services;
 using Cadenza.Common;
 using Cadenza.Database.SqlLibrary;
-using Cadenza.API.Services;
 using Cadenza.Database.SqlLibrary.Configuration;
 using Cadenza.Common.LastFm;
 using Cadenza.Common.LastFm.Settings;
-using Cadenza.API.Interfaces;
 
 const string AuthConfigSectionName = "MainApiAuthentication";
 

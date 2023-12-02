@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Interfaces;
-using Cadenza.Common.DTO.Attributes;
-
-namespace Cadenza.API.Services;
+﻿namespace Cadenza.API.Services;
 
 internal class UpdateService : IUpdateService
 {
