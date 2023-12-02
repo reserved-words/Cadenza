@@ -19,11 +19,4 @@ internal class WebInfoService : IWebInfoService
         var result = await _httpHelper.Get<AlbumArtworkDTO>(url);
         return result.Url;
     }
-
-    public async Task<string> GetArtistImageUrl(string name)
-    {
-        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.ArtistImageUrl, ("name", name));
-        var result = await _httpHelper.Get<ArtistImageDTO>(url);
-        return result.Url;
-    }
 }

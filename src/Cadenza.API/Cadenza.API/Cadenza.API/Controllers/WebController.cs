@@ -19,11 +19,4 @@ public class WebController : ControllerBase
         var url = await _service.AlbumArtworkUrl(artist, title);
         return new AlbumArtworkDTO { Url = url };
     }
-
-    [HttpGet("ArtistImageUrl")]
-    public Task<ArtistImageDTO> ArtistImageUrl(string name)
-    {
-        var result = new ArtistImageDTO { Url = null };
-        return Task.FromResult(result);
-    }
 }

@@ -13,7 +13,7 @@ internal class SearchRepository : ISearchRepository
         _mapper = mapper;
     }
 
-    public async Task<List<SearchItemVM>> GetSearchAlbums()
+    public async Task<List<SearchItemVM>> GetAlbums()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchAlbums);
         return items.Select(i => _mapper.Map(i)).ToList();
@@ -34,12 +34,6 @@ internal class SearchRepository : ISearchRepository
     public async Task<List<SearchItemVM>> GetGroupings()
     {
         var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchGroupings);
-        return items.Select(i => _mapper.Map(i)).ToList();
-    }
-
-    public async Task<List<SearchItemVM>> GetSearchPlaylists()
-    {
-        var items = await _apiHelper.Get<List<SearchItemDTO>>(_settings.SearchPlaylists);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 

@@ -37,7 +37,7 @@ internal class HistoryRepository : IHistoryRepository, IPlayTracker
     public async Task RecordPlay(TrackFullVM track, DateTime timestamp)
     {
         var scrobble = GetScrobble(track, timestamp);
-        await _apiHelper.Post(_settings.Scrobble, scrobble);
+        await _apiHelper.Post(_settings.RecordPlay, scrobble);
     }
 
     public async Task UpdateNowPlaying(TrackFullVM track, int secondsRemaining)

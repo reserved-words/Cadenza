@@ -19,7 +19,7 @@ public class SearchItemsEffects
         var tracks = await _repository.GetTracks();
         items.AddRange(tracks);
 
-        var albums = await _repository.GetSearchAlbums();
+        var albums = await _repository.GetAlbums();
         items.AddRange(albums);
 
         var artists = await _repository.GetArtists();
