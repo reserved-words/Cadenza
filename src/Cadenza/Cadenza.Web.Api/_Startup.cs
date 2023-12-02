@@ -35,17 +35,14 @@ public static class Startup
     {
         return services
             .AddTransient<IAdminApi, AdminApi>()
-            .AddTransient<IAlbumApi, AlbumApi>()
             .AddTransient<IArtworkApi, ArtworkApi>()
             .AddTransient<IFavouritesApi, FavouritesApi>()
             .AddTransient<IHistoryApi, HistoryApi>()
             .AddTransient<ILastFmApi, LastFmApi>()
-            .AddTransient<IArtistApi, ArtistApi>()
+            .AddTransient<ILibraryApi, LibraryApi>()
             .AddTransient<IPlayApi, PlayApi>()
             .AddTransient<ISearchApi, SearchApi>()
             .AddTransient<IStartupApi, StartupApi>()
-            .AddTransient<ITagsApi, TagsApi>()
-            .AddTransient<ITrackApi, TrackApi>()
             .AddTransient<IUpdateApi, UpdateApi>();
     }
 }

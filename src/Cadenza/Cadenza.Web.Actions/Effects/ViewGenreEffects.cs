@@ -2,9 +2,9 @@
 
 public class ViewGenreEffects
 {
-    private readonly IArtistApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewGenreEffects(IArtistApi api)
+    public ViewGenreEffects(ILibraryApi api)
     {
         _api = api;
     }

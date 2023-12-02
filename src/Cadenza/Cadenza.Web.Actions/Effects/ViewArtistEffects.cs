@@ -4,9 +4,9 @@ namespace Cadenza.Web.Actions.Effects;
 
 public class ViewArtistEffects
 {
-    private readonly IArtistApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewArtistEffects(IArtistApi api)
+    public ViewArtistEffects(ILibraryApi api)
     {
         _api = api;
     }

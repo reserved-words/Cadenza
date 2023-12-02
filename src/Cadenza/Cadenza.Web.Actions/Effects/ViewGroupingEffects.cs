@@ -2,9 +2,9 @@
 
 public class ViewGroupingEffects
 {
-    private readonly IArtistApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewGroupingEffects(IArtistApi api)
+    public ViewGroupingEffects(ILibraryApi api)
     {
         _api = api;
     }

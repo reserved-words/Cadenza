@@ -2,9 +2,9 @@
 
 public class CurrentTrackEffects
 {
-    private readonly ITrackApi _api;
+    private readonly ILibraryApi _api;
 
-    public CurrentTrackEffects(ITrackApi api)
+    public CurrentTrackEffects(ILibraryApi api)
     {
         _api = api;
     }

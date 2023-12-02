@@ -2,9 +2,9 @@
 
 public class ViewTagEffects
 {
-    private readonly ITagsApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewTagEffects(ITagsApi api)
+    public ViewTagEffects(ILibraryApi api)
     {
         _api = api;
     }

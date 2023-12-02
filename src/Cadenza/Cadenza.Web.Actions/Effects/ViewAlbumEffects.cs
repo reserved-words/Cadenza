@@ -2,9 +2,9 @@
 
 public class ViewAlbumEffects
 {
-    private readonly IAlbumApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewAlbumEffects(IAlbumApi api)
+    public ViewAlbumEffects(ILibraryApi api)
     {
         _api = api;
     }

@@ -2,9 +2,9 @@
 
 public class ViewTrackEffects
 {
-    private readonly ITrackApi _api;
+    private readonly ILibraryApi _api;
 
-    public ViewTrackEffects(ITrackApi api)
+    public ViewTrackEffects(ILibraryApi api)
     {
         _api = api;
     }
