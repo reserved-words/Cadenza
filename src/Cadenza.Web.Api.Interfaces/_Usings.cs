@@ -1,2 +1,2 @@
-﻿global using Cadenza.Common.Enums;
-global using Cadenza.Web.Model;
+﻿global using Cadenza.Web.Common.ViewModel;
+global using Cadenza.Common.Enums;

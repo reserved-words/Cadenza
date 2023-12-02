@@ -12,7 +12,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
-		<ProjectReference Include="..\Cadenza.Web.Model\Cadenza.Web.Model.csproj" />
 	</ItemGroup>
 
 </Project>

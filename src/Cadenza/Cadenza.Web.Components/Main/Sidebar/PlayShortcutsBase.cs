@@ -1,4 +1,6 @@
 ﻿
+using Cadenza.Web.Common.ViewModel;
+
 namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class PlayShortcutsBase : FluxorComponent

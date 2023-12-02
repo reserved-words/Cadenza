@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Api.Interfaces;
-using Cadenza.Web.Api.Settings;
-
-namespace Cadenza.Web.Api.Services;
+﻿namespace Cadenza.Web.Api.Services;
 
 internal class SearchApi : ISearchApi
 {

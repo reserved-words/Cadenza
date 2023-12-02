@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Main.Sidebar;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class SearchBase : FluxorComponent
 {

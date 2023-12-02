@@ -1,5 +1,6 @@
 ﻿namespace Cadenza.Web.Components.Forms.Album;
 
+using Cadenza.Web.Common.ViewModel;
 using IDialogService = Interfaces.IDialogService;
 
 public class EditAlbumTracksBase : FormBase<AlbumTracksVM>

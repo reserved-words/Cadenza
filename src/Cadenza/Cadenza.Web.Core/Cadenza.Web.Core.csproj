@@ -10,7 +10,6 @@
     <ProjectReference Include="..\..\Cadenza.Common\Cadenza.Common.Utilities\Cadenza.Common.Utilities.csproj" />
     <ProjectReference Include="..\..\Cadenza.Web.Api.Interfaces\Cadenza.Web.Api.Interfaces.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Common\Cadenza.Web.Common.csproj" />
-    <ProjectReference Include="..\Cadenza.Web.Model\Cadenza.Web.Model.csproj" />
     <ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
   </ItemGroup>
 

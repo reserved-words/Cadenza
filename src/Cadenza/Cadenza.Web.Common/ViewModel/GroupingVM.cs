@@ -1,3 +1,3 @@
-﻿namespace Cadenza.Web.Model;
+﻿namespace Cadenza.Web.Common.ViewModel;
 
 public record GroupingVM(int Id, string Name);

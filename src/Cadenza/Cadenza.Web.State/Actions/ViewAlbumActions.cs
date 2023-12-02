@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cadenza.Web.Common.ViewModel;
+using System.Collections.Generic;
 
 namespace Cadenza.Web.State.Actions;
 

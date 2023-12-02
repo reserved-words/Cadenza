@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Common.Interfaces;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Common.Interfaces;
 
 public interface IPlaylistCreator
 {

@@ -1,13 +1,13 @@
 ﻿global using Cadenza.Common.DTO;
 global using Cadenza.Common.Enums;
-global using Cadenza.Web.Common.Interfaces;
 global using Cadenza.Web.Common.Model;
-global using Cadenza.Web.Model;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
+global using Cadenza.Web.Api.Interfaces;
+global using Cadenza.Web.Api.Settings;
+global using Cadenza.Web.Common.ViewModel;
 
 using Cadenza.Web.Api.Helpers;
-using Cadenza.Web.Api.Interfaces;
 using Cadenza.Web.Api.Services;
 
 namespace Cadenza.Web.Api;

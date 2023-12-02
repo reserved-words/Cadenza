@@ -1,4 +1,5 @@
 ﻿using Cadenza.Web.Api.Interfaces;
+using Cadenza.Web.Common.ViewModel;
 using System.Collections.ObjectModel;
 
 namespace Cadenza.Web.Api.Helpers;
