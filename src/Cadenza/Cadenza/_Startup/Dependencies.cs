@@ -54,7 +54,6 @@ public static class Dependencies
     private static IServiceCollection AddInteropServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<INavigation, NavigationInterop>()
-            .AddTransient<IStore, StoreInterop>();
+            .AddTransient<INavigation, NavigationInterop>();
     }
 }

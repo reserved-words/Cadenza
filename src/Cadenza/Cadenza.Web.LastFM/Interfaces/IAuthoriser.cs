@@ -3,5 +3,6 @@
 public interface IAuthoriser
 {
     Task<string> GetAuthUrl(string redirectUri);
-    Task<string> CreateSession(string token);
+    Task CreateSession(string token);
+    Task<bool> DoesSessionExist();
 }

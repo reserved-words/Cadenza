@@ -13,15 +13,21 @@ internal class Authoriser : IAuthoriser
         _apiSettings = apiEndpoints.Value;
     }
 
-    public async Task<string> CreateSession(string token)
+    public async Task CreateSession(string token)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.CreateSession, ("token", token));
-        return await _http.Get(url);
+        await _http.Post(url);
     }
 
     public async Task<string> GetAuthUrl(string redirectUri)
     {
         var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.AuthUrl, ("redirectUri", redirectUri));
         return await _http.Get(url);
+    }
+
+    public async Task<bool> DoesSessionExist()
+    {
+        var url = _url.Build(_apiSettings.BaseUrl, _apiSettings.Endpoints.HasSession);
+        return await _http.Get<bool>(url);
     }
 }

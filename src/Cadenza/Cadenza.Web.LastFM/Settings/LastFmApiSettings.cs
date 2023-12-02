@@ -9,6 +9,7 @@ public class LastFmApiEndpoints
 {
     public string AuthUrl { get; set; }
     public string CreateSession { get; set; }
+    public string HasSession { get; set; }
 }
 
 

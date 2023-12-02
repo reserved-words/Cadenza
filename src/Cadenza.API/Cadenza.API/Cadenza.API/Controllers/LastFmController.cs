@@ -23,13 +23,18 @@ public class LastFmController : ControllerBase
         return await _authoriser.GetAuthUrl(redirectUri);
     }
 
-    // TODO: Should be POST
-    [HttpGet("CreateSession")]
-    public async Task<string> CreateSession(string token)
+    [HttpPost("CreateSession")]
+    public async Task CreateSession(string token)
     {
         var session = await _authoriser.CreateSession(token);
         var username = HttpContext.GetUsername();
         await _adminRepository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
-        return session.SessionKey;
+    }
+
+    [HttpGet("HasSession")]
+    public async Task<bool> HasSession()
+    {
+        var username = HttpContext.GetUsername();
+        return await _adminRepository.HasLastFmSessionKey(username);
     }
 }

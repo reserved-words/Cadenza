@@ -245,6 +245,7 @@
     <Build Include="Functions\History\GetStartDate.sql" />
     <Build Include="Stored Procedures\History\GetTopAlbums.sql" />
     <Build Include="Stored Procedures\History\GetTopArtists.sql" />
+    <Build Include="Stored Procedures\Admin\HasLastFmSessionKey.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

@@ -46,6 +46,10 @@ public class DatabaseConnectionEffects
         dispatcher.Dispatch(new FetchGroupingsRequest());
         dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsRequest());
         dispatcher.Dispatch(new FetchPlaylistHistoryTagsRequest());
+        dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
+        dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(HistoryPeriod.Week));
+        dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(HistoryPeriod.Week));
+        dispatcher.Dispatch(new FetchPlayHistoryTracksRequest(HistoryPeriod.Week));
         return Task.CompletedTask;
     }
 
