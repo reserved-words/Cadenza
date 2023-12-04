@@ -1,8 +1,6 @@
-﻿using Cadenza.Web.Common.ViewModel;
+﻿namespace Cadenza.Web.Components.Main.Dashboard;
 
-namespace Cadenza.Web.Components.Main.History;
-
-public class HistoryAlbumsBase : FluxorComponent
+public class TopAlbumsBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<PlayHistoryAlbumsState> PlayHistoryAlbumsState { get; set; }

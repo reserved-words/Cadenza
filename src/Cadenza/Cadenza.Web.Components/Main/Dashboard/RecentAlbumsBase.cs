@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Components.Main.History;
+﻿namespace Cadenza.Web.Components.Main.Dashboard;
 
 public class RecentAlbumsBase : FluxorComponent
 {

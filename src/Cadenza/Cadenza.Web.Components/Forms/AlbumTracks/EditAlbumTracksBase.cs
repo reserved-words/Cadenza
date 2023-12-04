@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Web.Components.Forms.Album;
+﻿namespace Cadenza.Web.Components.Forms.AlbumTracks;
 
 using Cadenza.Web.Common.ViewModel;
 using IDialogService = Interfaces.IDialogService;

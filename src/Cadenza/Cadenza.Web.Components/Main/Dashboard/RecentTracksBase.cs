@@ -1,8 +1,6 @@
-﻿using Cadenza.Web.Common.ViewModel;
+﻿namespace Cadenza.Web.Components.Main.Dashboard;
 
-namespace Cadenza.Web.Components.Main.History;
-
-public class HistoryRecentBase : FluxorComponent
+public class RecentTracksBase : FluxorComponent
 {
     [Inject] public IState<RecentPlayHistoryState> RecentPlayHistoryState { get; set; }
 
