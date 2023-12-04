@@ -1,7 +1,4 @@
-﻿
-using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Components.Main.Sidebar;
+﻿namespace Cadenza.Web.Components.Main.Sidebar;
 
 public class PlayShortcutsBase : FluxorComponent
 {
@@ -11,8 +8,8 @@ public class PlayShortcutsBase : FluxorComponent
     [Inject] public IState<PlaylistHistoryTagsState> TagHistoryState { get; set; }
 
     protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
-    protected IReadOnlyCollection<RecentAlbumVM> RecentAlbums => AlbumHistoryState.Value.Items;
-    protected IReadOnlyCollection<string> RecentTags => TagHistoryState.Value.Items;
+    protected IReadOnlyCollection<RecentAlbumVM> RecentAlbums => AlbumHistoryState.Value.Items.Take(8).ToList();
+    protected IReadOnlyCollection<string> RecentTags => TagHistoryState.Value.Items.Take(8).ToList();
 
     protected Task PlayLibrary()
     {

@@ -17,7 +17,7 @@
 <PlayShortcutsMenu Label="Play Recent Album">
     @foreach (var item in RecentAlbums)
     {
-        <MudMenuItem OnClick="@(() => PlayRecentAlbum(item))" Icon="@Icons.Material.Filled.History">
+        <MudMenuItem OnClick="@(() => PlayRecentAlbum(item))" Icon="@PlayerItemType.Album.GetIcon()">
             <MudText Typo="@Typo.body1">@item.Title</MudText>
             <MudText Typo="@Typo.body2">@item.ArtistName</MudText>
         </MudMenuItem>
@@ -27,7 +27,7 @@
 <PlayShortcutsMenu Label="Play Recent Tag">
     @foreach (var tag in RecentTags)
     {
-        <MudMenuItem OnClick="@(() => PlayRecentTag(tag))" Icon="@Icons.Material.Filled.History">@tag</MudMenuItem>
+        <MudMenuItem OnClick="@(() => PlayRecentTag(tag))" Icon="@PlayerItemType.Tag.GetIcon()">@tag</MudMenuItem>
     }
 </PlayShortcutsMenu>
 
