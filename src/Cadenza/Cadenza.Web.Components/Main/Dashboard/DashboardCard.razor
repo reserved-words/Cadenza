@@ -5,10 +5,10 @@
              Style="display: flex; flex-direction: column;">
         <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
             <CardHeaderContent>
-                <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
-                                   Title="@Title"
-                                   OnUpdate="@UpdateItems"
-                                   Period="@Period" />
+                <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                     Title="@Title"
+                                     OnUpdate="@UpdateItems"
+                                     Period="@Period" />
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent Style="flex-grow: 1; overflow: hidden;" Class="fixed-height-scroll pa-0 ma-0">
@@ -26,10 +26,10 @@ else if (!Scroll)
              Style="display: flex; flex-direction: column;">
         <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
             <CardHeaderContent>
-                <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
-                                   Title="@Title"
-                                   OnUpdate="@UpdateItems"
-                                   Period="@Period" />
+                <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                     Title="@Title"
+                                     OnUpdate="@UpdateItems"
+                                     Period="@Period" />
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent Style="flex-grow: 1; overflow: hidden;" Class="fixed-height-scroll pa-0 ma-0">
@@ -42,10 +42,10 @@ else
 {
     <AppCardScrollContainer Elevation="3">
         <HeaderContent>
-            <HistoryCardHeader ShowPeriodOption="@ShowPeriodOption"
-                               Title="@Title"
-                               OnUpdate="@UpdateItems"
-                               Period="@Period" />
+            <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                 Title="@Title"
+                                 OnUpdate="@UpdateItems"
+                                 Period="@Period" />
         </HeaderContent>
         <ChildContent>
             <MudDivider />

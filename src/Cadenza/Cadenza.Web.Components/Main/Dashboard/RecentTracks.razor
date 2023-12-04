@@ -1,10 +1,10 @@
-﻿@inherits HistoryRecentBase
+﻿@inherits RecentTracksBase
 
-<HistoryCard Title="Recent Tracks"
-             ShowPeriodOption="false"
-             IsLoading="@IsLoading"
-             LoadingCaption="Loading recent tracks..."
-             Scroll="true">
+<DashboardCard Title="Recent Tracks"
+               ShowPeriodOption="false"
+               IsLoading="@IsLoading"
+               LoadingCaption="Loading recent tracks..."
+               Scroll="true">
     <AppTable Items="@Model">
         <RowTemplate>
 
@@ -24,7 +24,7 @@
                     }
                     else
                     {
-                        <HistoryPlayTime PlayedTrack="context" />
+                        <RecentTrackPlayTime PlayedTrack="context" />
                     }
                 </MudTd>
 
@@ -46,7 +46,7 @@
                 else
                 {
                     <MudTd Class="td-datetime">
-                        <HistoryPlayTime PlayedTrack="context" />
+                        <RecentTrackPlayTime PlayedTrack="context" />
                     </MudTd>
                 }
 
@@ -58,4 +58,4 @@
 
         </RowTemplate>
     </AppTable>
-</HistoryCard>
+</DashboardCard>
