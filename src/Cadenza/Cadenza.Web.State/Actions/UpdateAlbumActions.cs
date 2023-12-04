@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.State.Actions;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.State.Actions;
 
 public record AlbumUpdateRequest(AlbumDetailsVM OriginalAlbum, AlbumDetailsVM UpdatedAlbum);
 public record AlbumUpdatedAction(AlbumDetailsVM UpdatedAlbum);

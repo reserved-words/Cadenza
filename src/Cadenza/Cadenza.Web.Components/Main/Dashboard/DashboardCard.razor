@@ -1,0 +1,66 @@
+﻿@if (IsLoading)
+{
+    <MudCard Elevation="3"
+             Class="ma-0 pa-0 fixed-height"
+             Style="display: flex; flex-direction: column;">
+        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+            <CardHeaderContent>
+                <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                     Title="@Title"
+                                     OnUpdate="@UpdateItems"
+                                     Period="@Period" />
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Style="flex-grow: 1; overflow: hidden;" Class="fixed-height-scroll pa-0 ma-0">
+            <MudDivider />
+            <MudContainer Class="pa-2">
+                <MudText Typo="@Typo.body1">@LoadingCaption</MudText>
+            </MudContainer>
+        </MudCardContent>
+    </MudCard>
+}
+else if (!Scroll)
+{
+    <MudCard Elevation="3"
+             Class="ma-0 pa-0 fixed-height"
+             Style="display: flex; flex-direction: column;">
+        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+            <CardHeaderContent>
+                <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                     Title="@Title"
+                                     OnUpdate="@UpdateItems"
+                                     Period="@Period" />
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Style="flex-grow: 1; overflow: hidden;" Class="fixed-height-scroll pa-0 ma-0">
+            <MudDivider />
+            @ChildContent
+        </MudCardContent>
+    </MudCard>
+}
+else
+{
+    <AppCardScrollContainer Elevation="3">
+        <HeaderContent>
+            <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                 Title="@Title"
+                                 OnUpdate="@UpdateItems"
+                                 Period="@Period" />
+        </HeaderContent>
+        <ChildContent>
+            <MudDivider />
+            @ChildContent
+        </ChildContent>
+    </AppCardScrollContainer>
+}
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool ShowPeriodOption { get; set; } = true;
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public string LoadingCaption { get; set; }
+    [Parameter] public HistoryPeriod Period { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Action<HistoryPeriod> UpdateItems { get; set; }
+    [Parameter] public bool Scroll { get; set; } = false;
+}

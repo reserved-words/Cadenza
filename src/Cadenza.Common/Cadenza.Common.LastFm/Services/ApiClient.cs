@@ -1,5 +1,6 @@
 ﻿using Cadenza.Common.Http.Interfaces;
 using Microsoft.Extensions.Options;
+using System.Reflection.Metadata;
 
 namespace Cadenza.Common.LastFm.Services;
 
@@ -18,9 +19,12 @@ internal class ApiClient : IApiClient
         _responseReader = responseReader;
     }
 
-    public async Task<T> Get<T>(string url, Func<XElement, T> getValue)
+    public async Task<T> Get<T>(Dictionary<string, string> parameters, Func<XElement, T> getValue)
     {
-        url = _urlService.AddParameter(url, "api_key", _config.Value.ApiKey);
+        parameters.Add("api_key", _config.Value.ApiKey);
+
+        var url = _config.Value.ApiBaseUrl;
+        url = _urlService.AddParameters(url, parameters);
 
         var response = await _httpClient.Get(url);
 

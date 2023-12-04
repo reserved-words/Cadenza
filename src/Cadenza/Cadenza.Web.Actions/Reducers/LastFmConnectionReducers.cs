@@ -33,24 +33,13 @@ public static class LastFmConnectionReducers
         };
     }
 
-    [ReducerMethod(typeof(LastFmFetchSessionKeyRequest))]
+    [ReducerMethod(typeof(LastFmCreateSessionRequest))]
     public static LastFmConnectionState ReduceLastFmFetchSessionKeyRequest(LastFmConnectionState state)
     {
         return state with
         {
             State = ConnectionState.Connecting,
-            Message = "Fetching session key"
-        };
-    }
-
-    [ReducerMethod]
-    public static LastFmConnectionState ReduceLastFmFetchSessionKeyResult(LastFmConnectionState state, LastFmFetchSessionKeyResult action)
-    {
-        return state with
-        {
-            State = ConnectionState.Connecting,
-            Message = "Saving session key",
-            SessionKey = action.SessionKey
+            Message = "Creating session"
         };
     }
 

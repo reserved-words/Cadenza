@@ -1,0 +1,61 @@
+﻿@inherits RecentTracksBase
+
+<DashboardCard Title="Recent Tracks"
+               ShowPeriodOption="false"
+               IsLoading="@IsLoading"
+               LoadingCaption="Loading recent tracks..."
+               Scroll="true">
+    <AppTable Items="@Model">
+        <RowTemplate>
+
+            <MudTd Class="td-img">
+                <img src="@context.ImageUrl" width="50" height="50"><img>
+            </MudTd>
+
+            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+
+                <MudTd>
+                    <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                    <MudText Typo="@Typo.body2">@context.Artist</MudText>
+
+                        @if (context.NowPlaying)
+                    {
+                        <CurrentlyPlayingIcon Class="ma-1" />
+                    }
+                    else
+                    {
+                        <RecentTrackPlayTime PlayedTrack="context" />
+                    }
+                </MudTd>
+
+            </MudHidden>
+
+            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+
+                <MudTd>
+                    <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                    <MudText Typo="@Typo.body2">@context.Artist</MudText>
+                    </MudTd>
+
+                    @if (context.NowPlaying)
+                {
+                    <MudTd Class="td-icon">
+                        <CurrentlyPlayingIcon Class="ma-1" />
+                    </MudTd>
+                }
+                else
+                {
+                    <MudTd Class="td-datetime">
+                        <RecentTrackPlayTime PlayedTrack="context" />
+                    </MudTd>
+                }
+
+            </MudHidden>
+
+            <MudTd Class="td-icon">
+                <FavouriteTrack TrackId="@context.Id" IsFavourite="@context.IsLoved" />
+            </MudTd>
+
+        </RowTemplate>
+    </AppTable>
+</DashboardCard>

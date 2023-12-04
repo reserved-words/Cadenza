@@ -1,7 +1,4 @@
-﻿using Cadenza.API.Extensions;
-using Cadenza.Database.Interfaces;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

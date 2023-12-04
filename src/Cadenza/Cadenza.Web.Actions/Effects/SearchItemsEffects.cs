@@ -1,12 +1,14 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class SearchItemsEffects
 {
-    private readonly ISearchRepository _repository;
+    private readonly ISearchApi _api;
 
-    public SearchItemsEffects(ISearchRepository repository)
+    public SearchItemsEffects(ISearchApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
@@ -16,22 +18,22 @@ public class SearchItemsEffects
 
         var items = new List<SearchItemVM>();
 
-        var tracks = await _repository.GetTracks();
+        var tracks = await _api.GetTracks();
         items.AddRange(tracks);
 
-        var albums = await _repository.GetSearchAlbums();
+        var albums = await _api.GetAlbums();
         items.AddRange(albums);
 
-        var artists = await _repository.GetArtists();
+        var artists = await _api.GetArtists();
         items.AddRange(artists);
 
-        var genres = await _repository.GetGenres();
+        var genres = await _api.GetGenres();
         items.AddRange(genres);
 
-        var groupings = await _repository.GetGroupings();
+        var groupings = await _api.GetGroupings();
         items.AddRange(groupings);
 
-        var tags = await _repository.GetTags();
+        var tags = await _api.GetTags();
         items.AddRange(tags);
 
         dispatcher.Dispatch(new SearchItemsUpdatedAction(items));

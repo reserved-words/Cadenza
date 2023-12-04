@@ -2,18 +2,18 @@
 
 public class ViewAlbumEffects
 {
-    private readonly IAlbumRepository _repository;
+    private readonly ILibraryApi _api;
 
-    public ViewAlbumEffects(IAlbumRepository repository)
+    public ViewAlbumEffects(ILibraryApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchViewAlbumRequest(FetchViewAlbumRequest action, IDispatcher dispatcher)
     {
-        var album = await _repository.GetAlbum(action.AlbumId);
-        var tracks = await _repository.GetAlbumTracks(action.AlbumId);
+        var album = await _api.GetAlbum(action.AlbumId);
+        var tracks = await _api.GetAlbumTracks(action.AlbumId);
         dispatcher.Dispatch(new FetchViewAlbumResult(album, tracks.Discs));
     }
 }

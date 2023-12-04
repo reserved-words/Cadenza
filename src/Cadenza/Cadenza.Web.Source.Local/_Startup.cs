@@ -20,7 +20,6 @@ public static class Startup
             .AddTransient<ISourcePlayer>(sp => new LocalPlayer(
                 sp.GetRequiredService<TAudioPlayer>(),
                 sp.GetRequiredService<IOptions<LocalApiSettings>>(),
-                sp.GetRequiredService<IUrl>(),
                 sp.GetRequiredService<IBase64Encoder>()))
             .AddTransient<ILocalHttpHelper, LocalHttpHelper>()
             .AddTransient<ILocalSourceConnector, Connector>();

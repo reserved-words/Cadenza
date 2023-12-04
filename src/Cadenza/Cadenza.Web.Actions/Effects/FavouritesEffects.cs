@@ -2,24 +2,24 @@
 
 public class FavouritesEffects
 {
-    private readonly IFavouritesService _favourites;
+    private readonly IFavouritesApi _api;
 
-    public FavouritesEffects(IFavouritesService favourites)
+    public FavouritesEffects(IFavouritesApi api)
     {
-        _favourites = favourites;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFavouriteRequest(FavouriteRequest action, IDispatcher dispatcher)
     {
-        await _favourites.Favourite(action.TrackId);
+        await _api.Favourite(action.TrackId);
         dispatcher.Dispatch(new FavouriteStatusChangedAction(action.TrackId, true));
     }
 
     [EffectMethod]
     public async Task HandleUnfavouriteRequest(UnfavouriteRequest action, IDispatcher dispatcher)
     {
-        await _favourites.Unfavourite(action.TrackId);
+        await _api.Unfavourite(action.TrackId);
         dispatcher.Dispatch(new FavouriteStatusChangedAction(action.TrackId, false));
     }
 }

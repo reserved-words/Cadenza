@@ -2,17 +2,17 @@
 
 public class GroupingsEffects
 {
-    private readonly IAdminRepository _repository;
+    private readonly IAdminApi _api;
 
-    public GroupingsEffects(IAdminRepository repository)
+    public GroupingsEffects(IAdminApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchGroupingsRequest(FetchGroupingsRequest action, IDispatcher dispatcher)
     {
-        var result = await _repository.GetGroupingOptions();
+        var result = await _api.GetGroupingOptions();
         dispatcher.Dispatch(new FetchGroupingsResult(result));
     }
 }

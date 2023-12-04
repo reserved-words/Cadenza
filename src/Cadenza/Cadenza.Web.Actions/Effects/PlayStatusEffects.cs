@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class PlayStatusEffects
 {

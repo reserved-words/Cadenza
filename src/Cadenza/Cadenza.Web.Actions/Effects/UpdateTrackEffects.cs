@@ -2,11 +2,11 @@
 
 public class TrackUpdateEffects
 {
-    private readonly IUpdateRepository _repository;
+    private readonly IUpdateApi _api;
 
-    public TrackUpdateEffects(IUpdateRepository repository)
+    public TrackUpdateEffects(IUpdateApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
@@ -14,7 +14,7 @@ public class TrackUpdateEffects
     {
         try
         {
-            await _repository.UpdateTrack(action.OriginalTrack, action.UpdatedTrack);
+            await _api.UpdateTrack(action.OriginalTrack, action.UpdatedTrack);
             dispatcher.Dispatch(new TrackUpdatedAction(action.UpdatedTrack));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Track, action.OriginalTrack.Id));
         }

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.State.Store;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
 public record ViewAlbumState(bool IsLoading, AlbumDetailsVM Album, IReadOnlyCollection<AlbumDiscVM> Tracks)

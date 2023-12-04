@@ -1,7 +1,4 @@
-﻿using Cadenza.Common.Model;
-using Microsoft.AspNetCore.Authorization;
-
-namespace Cadenza.API.Controllers;
+﻿namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

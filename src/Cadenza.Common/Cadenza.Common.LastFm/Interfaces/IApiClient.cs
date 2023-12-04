@@ -2,5 +2,5 @@
 
 internal interface IApiClient
 {
-    Task<T> Get<T>(string url, Func<XElement, T> getValue);
+    Task<T> Get<T>(Dictionary<string, string> parameters, Func<XElement, T> getValue);
 }

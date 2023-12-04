@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Cadenza.Web.Common.ViewModel;
+using System.Collections.ObjectModel;
 
 namespace Cadenza.Web.Components.Forms.Album;
 

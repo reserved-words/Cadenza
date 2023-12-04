@@ -1,4 +1,5 @@
 ﻿using Cadenza.Common.Enums;
+using Cadenza.Web.Common.ViewModel;
 
 namespace Cadenza.Web.State.Store;
 

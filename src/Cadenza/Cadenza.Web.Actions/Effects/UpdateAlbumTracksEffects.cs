@@ -2,11 +2,11 @@
 
 public class UpdateAlbumTracksEffects
 {
-    private readonly IUpdateRepository _repository;
+    private readonly IUpdateApi _api;
 
-    public UpdateAlbumTracksEffects(IUpdateRepository repository)
+    public UpdateAlbumTracksEffects(IUpdateApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
@@ -14,7 +14,7 @@ public class UpdateAlbumTracksEffects
     {
         try
         {
-            await _repository.UpdateAlbumTracks(action.AlbumId, action.OriginalTracks, action.UpdatedTracks);
+            await _api.UpdateAlbumTracks(action.AlbumId, action.OriginalTracks, action.UpdatedTracks);
             dispatcher.Dispatch(new AlbumTracksUpdatedAction(action.AlbumId, action.UpdatedTracks));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.AlbumTracks, action.AlbumId));
         }

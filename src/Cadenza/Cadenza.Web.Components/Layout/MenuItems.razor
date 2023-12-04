@@ -14,13 +14,13 @@
               Class="@MenuItemClass(Tab.Home)" />
 }
 
-<MenuItem Icon="@Icons.Material.Filled.History"
+<MenuItem Icon="@Icons.Material.Filled.Dashboard"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
-          Label="History"
-          Tab="@Tab.History"
+          Label="Dashboard"
+          Tab="@Tab.Dashboard"
           OnClickItem="@UpdateActiveTab"
-          Class="@MenuItemClass(Tab.History)" />
+          Class="@MenuItemClass(Tab.Dashboard)" />
 
 <MenuItem Icon="@Icons.Material.Filled.PlaylistPlay"
           IconSize="@IconSize"
@@ -71,14 +71,14 @@
 
     protected override void OnParametersSet()
     {
-        ActiveTab = IncludeHomeTab ? Tab.Home : Tab.History;
+        ActiveTab = IncludeHomeTab ? Tab.Home : Tab.Dashboard;
         base.OnParametersSet();
     }
 
     private void ViewState_StateChanged(object sender, EventArgs args)
     {
         ActiveTab = ViewState.Value.Tab == Tab.Home && !IncludeHomeTab
-            ? Tab.History
+            ? Tab.Dashboard
             : ViewState.Value.Tab;
     }
 

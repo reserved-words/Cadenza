@@ -3,7 +3,7 @@
 public enum Tab
 {
     CurrentTrack,
-    History,
+    Dashboard,
     Home,
     Library,
     Search

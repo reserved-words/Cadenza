@@ -2,17 +2,17 @@
 
 public class EditableAlbumEffects
 {
-    private readonly IAlbumRepository _repository;
+    private readonly ILibraryApi _api;
 
-    public EditableAlbumEffects(IAlbumRepository repository)
+    public EditableAlbumEffects(ILibraryApi api)
     {
-        _repository = repository;
+        _api = api;
     }
 
     [EffectMethod]
     public async Task HandleFetchEditableAlbumTracksRequest(FetchEditableAlbumTracksRequest action, IDispatcher dispatcher)
     {
-        var result = await _repository.GetAlbumTracks(action.AlbumId);
+        var result = await _api.GetAlbumTracks(action.AlbumId);
         dispatcher.Dispatch(new FetchEditableAlbumTracksResultAction(result));
     }
 }
