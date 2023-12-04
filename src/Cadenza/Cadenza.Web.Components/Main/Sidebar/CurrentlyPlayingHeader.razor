@@ -3,7 +3,7 @@
 <MudContainer Class="ma-0 pa-0">
     <MudText Typo="Typo.h6">Currently Playing</MudText>
 
-    <MudStack Row="true" Spacing="2">
+    <MudStack Row="true" Spacing="2" Style="white-space: nowrap; overflow-x: hidden;">
         @if (ShowViewLink)
         {
             <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" Icon="@Icon" />
@@ -15,7 +15,7 @@
                 <MudIcon Icon="@Icon" Size="@Size.Small" />
             }
 
-            <MudText Typo="Typo.body1">@PlaylistName</MudText>
+            <MudText Typo="Typo.body1" title="@PlaylistName">@PlaylistName</MudText>
         }
     </MudStack>
     <MudDivider Class="my-1" />

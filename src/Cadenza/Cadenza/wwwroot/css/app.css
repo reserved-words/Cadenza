@@ -22,10 +22,6 @@ html, body {
   width: 100%;
 }
 
-.inline {
-    float: left;
-}
-
 .invalid {
   outline: 1px solid red;
 }
@@ -114,10 +110,6 @@ table tbody tr td.td-img {
   padding: 1rem 1rem 0 1rem;
 }
 
-table tbody tr td.td-highlight {
-    background-color: var(--mud-palette-primary-darken);
-}
-
 .mud-list-item-icon {
   min-width: 3rem;
 }
@@ -195,4 +187,24 @@ table tr td.td-int-input .mud-input-control {
 .int-input input,
 .int-input .mud-input > input.mud-input-root, .int-input div.mud-input-slot.mud-input-root {
   max-width: 3rem;
+}
+
+.player-card {
+  position: relative;
+  height: 320px;
+  max-height: 320px;
+  min-height: 320px;
+}
+
+.mud-card-header-content {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.action-link {
+  cursor: pointer;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
