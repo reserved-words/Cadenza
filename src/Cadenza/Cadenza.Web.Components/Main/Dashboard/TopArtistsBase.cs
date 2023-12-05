@@ -5,7 +5,9 @@ public class TopArtistsBase : FluxorComponent
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<PlayHistoryArtistsState> PlayHistoryArtistsState { get; set; }
 
-    protected IReadOnlyCollection<TopArtistVM> Items => PlayHistoryArtistsState.Value.Items.Take(10).ToList();
+    private const int MaxItems = 8;
+
+    protected IReadOnlyCollection<TopArtistVM> Items => GetItems();
 
     protected bool IsLoading => PlayHistoryArtistsState.Value.IsLoading;
     protected HistoryPeriod Period => PlayHistoryArtistsState.Value.Period;
@@ -13,5 +15,17 @@ public class TopArtistsBase : FluxorComponent
     protected void UpdateItems(HistoryPeriod period)
     {
         Dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(period));
+    }
+
+    private IReadOnlyCollection<TopArtistVM> GetItems()
+    {
+        var items = new List<TopArtistVM>(PlayHistoryArtistsState.Value.Items.Take(MaxItems));
+
+        while (items.Count() < MaxItems)
+        {
+            items.Add(new TopArtistVM(0, "-", 0, items.Count + 1));
+        }
+
+        return items;
     }
 }

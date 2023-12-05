@@ -11,7 +11,14 @@
                 @context.Rank
             </MudTd>
             <MudTd>
-                <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                @if (context.Plays > 0)
+                {
+                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                }
+                else
+                {
+                    <MudText Typo="@Typo.body1">@context.Name</MudText>
+                }
             </MudTd>
             <MudTd Class="td-int">
                 @context.Plays

@@ -1,21 +1,28 @@
 ﻿@inherits TopTracksBase
 
 <DashboardCard Title="Top Tracks"
-             IsLoading="@IsLoading"
-             LoadingCaption="Loading top tracks..."
-             Period="@Period"
-             UpdateItems="@UpdateItems">
+               IsLoading="@IsLoading"
+               LoadingCaption="Loading top tracks..."
+               Period="@Period"
+               UpdateItems="@UpdateItems">
     <AppTable Items="@Items">
         <RowTemplate>
             <MudTd Class="td-int">
                 @context.Rank
             </MudTd>
             <MudTd>
-                <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                @if (context.Plays > 0)
+                {
+                    <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                }
+                else
+                {
+                    <MudText Typo="@Typo.body1">@context.Title</MudText>
+                }
                 <MudText Typo="@Typo.body2">@context.Artist</MudText>
-                </MudTd>
-                <MudTd Class="td-int">
-                    @context.Plays
+            </MudTd>
+            <MudTd Class="td-int">
+                @context.Plays
             </MudTd>
         </RowTemplate>
     </AppTable>
