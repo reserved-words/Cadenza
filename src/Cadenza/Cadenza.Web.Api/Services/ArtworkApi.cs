@@ -1,9 +1,9 @@
-﻿namespace Cadenza.Web.Api.Services;
+﻿using Cadenza.Web.Common;
+
+namespace Cadenza.Web.Api.Services;
 
 internal class ArtworkApi : IArtworkApi
 {
-    private const string ArtworkPlaceholderUrl = "images/artwork-placeholder.png";
-
     private readonly ApiSettings _settings;
 
     public ArtworkApi(IOptions<ApiSettings> settings)
@@ -14,7 +14,7 @@ internal class ArtworkApi : IArtworkApi
     public string GetArtistImageUrl(int? artistId)
     {
         if (artistId == null || artistId == 0)
-            return ArtworkPlaceholderUrl;
+            return ImageUrl.Default;
 
         return GetUrl(_settings.Endpoints.ArtistImage, artistId.Value);
     }
@@ -22,7 +22,7 @@ internal class ArtworkApi : IArtworkApi
     public string GetAlbumArtworkUrl(int? albumId)
     {
         if (albumId == null || albumId == 0)
-            return ArtworkPlaceholderUrl;
+            return ImageUrl.Default;
 
         return GetUrl(_settings.Endpoints.AlbumArtwork, albumId.Value);
     }
