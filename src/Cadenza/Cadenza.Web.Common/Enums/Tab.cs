@@ -6,5 +6,7 @@ public enum Tab
     Dashboard,
     Home,
     Library,
-    Search
+    Search,
+    Edit,
+    Settings
 }

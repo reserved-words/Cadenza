@@ -41,13 +41,29 @@
 @if (IncludeSearchTab)
 {
     <MenuItem Icon="@Icons.Material.Filled.Search"
+              IconSize="@IconSize"
+              ShowLabel="@ShowLabels"
+              Label="Search"
+              Tab="@Tab.Search"
+              OnClickItem="@UpdateActiveTab"
+              Class="@MenuItemClass(Tab.Search)" />
+}
+
+<MenuItem Icon="@Icons.Material.Filled.Edit"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
-          Label="Search"
-          Tab="@Tab.Search"
+          Label="Edit"
+          Tab="@Tab.Edit"
           OnClickItem="@UpdateActiveTab"
-          Class="@MenuItemClass(Tab.Search)" />
-}
+          Class="@MenuItemClass(Tab.Edit)" />
+
+<MenuItem Icon="@Icons.Material.Filled.Settings"
+          IconSize="@IconSize"
+          ShowLabel="@ShowLabels"
+          Label="Settings"
+          Tab="@Tab.Settings"
+          OnClickItem="@UpdateActiveTab"
+          Class="@MenuItemClass(Tab.Settings)" />
 
 <MudSpacer />
 <Search />
