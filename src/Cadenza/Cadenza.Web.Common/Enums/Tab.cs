@@ -2,6 +2,7 @@
 
 public enum Tab
 {
+    Default,
     CurrentTrack,
     Dashboard,
     Home,
