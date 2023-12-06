@@ -1,0 +1,12 @@
+﻿
+<h3>Edit Artist</h3>
+
+<MudText Typo="@Typo.body1">@Item.Name</MudText>
+<MudText Typo="@Typo.body2">@Item.Type</MudText>
+<MudText Typo="@Typo.body2">@Item.Id</MudText>
+
+@code 
+{
+    [Parameter]
+    public EditItem Item { get; set; }
+}
