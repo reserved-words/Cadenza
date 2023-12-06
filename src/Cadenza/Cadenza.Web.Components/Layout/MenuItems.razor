@@ -12,7 +12,7 @@
               Tab="@Tab.Home"
               OnClickItem="@UpdateActiveTab"
               Class="@MenuItemClass(Tab.Home)"
-              Disabled="@AreMainTabsDisabled" />
+              Disabled="@IsNavigationDisabled" />
 }
 
 <MenuItem Icon="@Icons.Material.Filled.Dashboard"
@@ -22,7 +22,7 @@
           Tab="@Tab.Dashboard"
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.Dashboard)"
-          Disabled="@AreMainTabsDisabled" />
+          Disabled="@IsNavigationDisabled" />
 
 <MenuItem Icon="@Icons.Material.Filled.PlaylistPlay"
           IconSize="@IconSize"
@@ -31,7 +31,7 @@
           Tab="@Tab.CurrentTrack"
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.CurrentTrack)"
-          Disabled="@AreMainTabsDisabled" />
+          Disabled="@IsNavigationDisabled" />
 
 <MenuItem Icon="@Icons.Material.Filled.FormatListBulleted"
           IconSize="@IconSize"
@@ -40,7 +40,7 @@
           Tab="@Tab.Library"
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.Library)"
-          Disabled="@AreMainTabsDisabled" />
+          Disabled="@IsNavigationDisabled" />
 
 @if (IncludeSearchTab)
 {
@@ -51,17 +51,8 @@
               Tab="@Tab.Search"
               OnClickItem="@UpdateActiveTab"
               Class="@MenuItemClass(Tab.Search)"
-              Disabled="@AreMainTabsDisabled" />
+              Disabled="@IsNavigationDisabled" />
 }
-
-<MenuItem Icon="@Icons.Material.Filled.Edit"
-          IconSize="@IconSize"
-          ShowLabel="@ShowLabels"
-          Label="Edit"
-          Tab="@Tab.Edit"
-          OnClickItem="@UpdateActiveTab"
-          Class="@MenuItemClass(Tab.Edit)"
-          Disabled="@AreMainTabsDisabled" />
 
 <MenuItem Icon="@Icons.Material.Filled.Settings"
           IconSize="@IconSize"
@@ -70,7 +61,17 @@
           Tab="@Tab.Settings"
           OnClickItem="@UpdateActiveTab"
           Class="@MenuItemClass(Tab.Settings)"
-          Disabled="@AreMainTabsDisabled" />
+          Disabled="@IsNavigationDisabled" />
+
+@if (ActiveTab == Tab.Edit)
+{
+    <MenuItem Icon="@Icons.Material.Filled.Edit"
+              IconSize="@IconSize"
+              ShowLabel="@ShowLabels"
+              Label="Edit"
+              Tab="@Tab.Edit"
+              Class="@MenuItemClass(Tab.Edit)" />
+}
 
 <MudSpacer />
 <Search />
@@ -86,7 +87,7 @@
 
     private Tab ActiveTab { get; set; }
 
-    private bool AreMainTabsDisabled;
+    private bool IsNavigationDisabled;
 
     private Tab DefaultTab => IncludeHomeTab ? Tab.Home : Tab.Dashboard;
 
@@ -104,7 +105,7 @@
 
     private void ViewState_StateChanged(object sender, EventArgs args)
     {
-        AreMainTabsDisabled = ViewState.Value.IsNavigationDisabled;
+        IsNavigationDisabled = ViewState.Value.IsNavigationDisabled;
 
         ActiveTab = ViewState.Value.CurrentTab == Tab.Default
             ? DefaultTab

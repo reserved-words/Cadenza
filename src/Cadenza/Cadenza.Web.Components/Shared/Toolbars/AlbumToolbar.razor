@@ -19,11 +19,6 @@
 
     [Parameter] public AlbumDetailsVM Album { get; set; }
 
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<FetchEditableAlbumTracksResultAction>(OnEditableAlbumTracksFetched);
-        base.OnInitialized();
-    }
 
     protected Task OnPlay()
     {
@@ -33,16 +28,11 @@
 
     protected void OnEdit()
     {
-        DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album", DialogWidth.Medium);
+        Dispatcher.Dispatch(new ViewEditItemRequest(PlayerItemType.Album, Album.Id, Album.Title));
     }
 
     protected void OnEditTracks()
     {
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Album.Id));
-    }
-
-    private void OnEditableAlbumTracksFetched(FetchEditableAlbumTracksResultAction action)
-    {
-        DialogService.DisplayForm<EditAlbumTracks, AlbumTracksVM>(action.Result, "Edit Tracks", DialogWidth.Large);
+        Dispatcher.Dispatch(new ViewEditItemRequest(PlayerItemType.Album, Album.Id, Album.Title));
     }
 }

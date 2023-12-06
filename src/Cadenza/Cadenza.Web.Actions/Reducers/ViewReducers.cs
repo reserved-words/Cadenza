@@ -16,7 +16,7 @@ public static class ViewReducers
         {
             CurrentTab = action.Tab,
             PreviousTab = previousTab,
-            IsNavigationDisabled = action.Tab == Tab.Edit
+            IsNavigationDisabled = false
         };
     }
 
@@ -34,20 +34,32 @@ public static class ViewReducers
         {
             CurrentTab = Tab.Library,
             PreviousTab = previousTab,
-            Item = new ViewItem(action.Type, action.Id, action.Name),
+            ViewItem = new ViewItem(action.Type, action.Id, action.Name),
             IsNavigationDisabled = false
         };
     }
 
     [ReducerMethod]
-    public static ViewState ReduceViewResetRequest(ViewState state, ViewResetRequest action)
+    public static ViewState ReduceViewEditItemRequest(ViewState state, ViewEditItemRequest action)
     {
-        var previousTab = state.PreviousTab;
+        var previousTab = state.CurrentTab;
 
         return state with
         {
-            CurrentTab = previousTab,
+            CurrentTab = Tab.Edit,
             PreviousTab = previousTab,
+            EditItem = new EditItem(action.Type, action.Id, action.Name),
+            IsNavigationDisabled = true
+        };
+    }
+
+    [ReducerMethod]
+    public static ViewState ReduceViewEditEndRequest(ViewState state, ViewEditEndRequest action)
+    {
+        return state with
+        {
+            CurrentTab = state.PreviousTab,
+            EditItem = null,
             IsNavigationDisabled = false
         };
     }

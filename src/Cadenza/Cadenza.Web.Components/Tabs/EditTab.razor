@@ -2,4 +2,11 @@
 
 <h3>EditTab</h3>
 
+@if (CurrentItem != null)
+{
+    <MudText Typo="@Typo.body1">@CurrentItem.Value.Name</MudText>
+    <MudText Typo="@Typo.body2">@CurrentItem.Value.Type</MudText>
+    <MudText Typo="@Typo.body2">@CurrentItem.Value.Id</MudText>
+}
+
 <MudButton OnClick="@ResetTabs" Variant="@Variant.Outlined">Reset Tabs</MudButton>

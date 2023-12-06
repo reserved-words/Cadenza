@@ -23,6 +23,6 @@
 
     protected void OnEdit()
     {
-        DialogService.DisplayForm<EditTrack, TrackDetailsVM>(Track, "Edit Track", DialogWidth.Medium);
+        Dispatcher.Dispatch(new ViewEditItemRequest(PlayerItemType.Track, Track.Id, Track.Title));
     }
 }
