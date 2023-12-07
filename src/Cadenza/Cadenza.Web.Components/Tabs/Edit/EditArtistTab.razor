@@ -35,11 +35,11 @@
     <SubGridColumn md="6">
         <SubGridRow RowHeight="@RowHeight.Full">
 
-            <MudCard>
+            <MudCard Class="fixed-height">
                 <MudCardHeader>
                     <MudText Typo="@Typo.h5">Edit Artist Releases</MudText>
                 </MudCardHeader>
-                <MudCardContent>
+                <MudCardContent Class="fixed-height-scroll">
                     <EditArtistReleases Model="@EditableReleases" />
                 </MudCardContent>
             </MudCard>
