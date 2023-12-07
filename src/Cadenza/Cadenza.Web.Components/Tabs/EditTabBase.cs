@@ -7,8 +7,20 @@ public class EditTabBase : FluxorComponent
 
     protected EditItem? CurrentItem => ViewState.Value.EditItem;
 
-    protected void ResetTabs()
+    protected string CancelCaption => "Cancel";
+    protected string RemoveCaption => $"Remove {CurrentItem.Value.Type}";
+    protected string SaveCaption => "Save Changes";
+
+    protected void Cancel()
     {
         Dispatcher.Dispatch(new ViewEditEndRequest());
+    }
+    protected void Remove()
+    {
+        Dispatcher.Dispatch(new NotificationErrorRequest("Not implemented yet", null, null));
+    }
+    protected void Save()
+    {
+        Dispatcher.Dispatch(new NotificationErrorRequest("Not implemented yet", null, null));
     }
 }

@@ -2,18 +2,38 @@
 
 @if (CurrentItem != null)
 {
-    if (CurrentItem.Value.Type == PlayerItemType.Album)
-    {
-        <EditAlbumTab Item="@CurrentItem.Value" />
-    }
-    else if (CurrentItem.Value.Type == PlayerItemType.Artist)
-    {
-        <EditArtistTab Item="@CurrentItem.Value" />
-    }
-    else if (CurrentItem.Value.Type == PlayerItemType.Track)
-    {
-        <EditTrackTab Item="@CurrentItem.Value" />
-    }
-}
 
-<MudButton OnClick="@ResetTabs" Variant="@Variant.Outlined">Reset Tabs</MudButton>
+    <TabGrid>
+
+        <TabGridColumn>
+            <TabGridRow RowHeight="@RowHeight.Stretch">
+
+                @if (CurrentItem.Value.Type == PlayerItemType.Album)
+                {
+                    <EditAlbumTab Item="@CurrentItem.Value" />
+                }
+                else if (CurrentItem.Value.Type == PlayerItemType.Artist)
+                {
+                    <EditArtistTab Item="@CurrentItem.Value" />
+                }
+                else if (CurrentItem.Value.Type == PlayerItemType.Track)
+                {
+                    <EditTrackTab Item="@CurrentItem.Value" />
+                }
+
+            </TabGridRow>
+
+            <TabGridRow RowHeight="@RowHeight.Fixed">
+
+                <MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+                    <MudButton OnClick="@Remove" Variant="@Variant.Outlined" Color="@Color.Secondary">@RemoveCaption</MudButton>
+                    <MudButton OnClick="@Save" Variant="@Variant.Outlined" Color="@Color.Primary">@SaveCaption</MudButton>
+                    <MudButton OnClick="@Cancel" Variant="@Variant.Outlined" Color="@Color.Default">@CancelCaption</MudButton>
+                </MudContainer>
+
+            </TabGridRow>
+        </TabGridColumn>
+
+    </TabGrid>
+
+}
