@@ -1,5 +1,6 @@
 ﻿
-<EditCard>
+@if (Model != null)
+{
     <MudTextField Label="Name"
                   ReadOnly="true"
                   Disabled="true"
@@ -28,11 +29,14 @@
                   Label="Country"
                   @bind-Value="Model.Country"
                   For="@(() => Model.Country)" />
-</EditCard>
 
-<EditTagsCard Model="@Model.Tags" />
+    <EditTagsCard Model="@Model.Tags" />
+}
 
 @code {
+    [Inject] public IState<GroupingsState> GroupingsState { get; set; }
+
     [Parameter] public EditableArtist Model { get; set; }
-    [Parameter] public IReadOnlyCollection<GroupingVM> Groupings { get; set; }
+
+    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
 }

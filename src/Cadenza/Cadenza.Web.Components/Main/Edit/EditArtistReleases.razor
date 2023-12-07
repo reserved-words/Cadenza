@@ -1,0 +1,44 @@
+﻿
+<AppCardScrollContainer Elevation="0">
+    <AppTable Items="@Model">
+        <RowTemplate>
+            <MudTd>
+                <MudTextField MaxLength="500"
+                              @bind-Value="context.Title"
+                              For="@(() => context.Title)" />
+            </MudTd>
+            <MudTd>
+                <MudSelect @bind-Value="context.ReleaseType"
+                           For="@(() => context.ReleaseType)">
+                    @foreach (var releaseType in ReleaseTypes)
+                    {
+                        <MudSelectItem Value="@releaseType">@releaseType.GetDisplayName()</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudTd>
+            <MudTd>
+                <MudTextField MaxLength="4"
+                              @bind-Value="context.Year"
+                              For="@(() => context.Year)"
+                              Mask="@(new PatternMask("0000"))" />
+            </MudTd>
+            <MudTd Class="td-icon">
+                <MudIconButton Size="@Size.Small"
+                               Icon="@Icons.Material.Filled.Delete"
+                               Title="Remove"
+                               OnClick="@(() => OnRemoveRelease(context))" />
+            </MudTd>
+        </RowTemplate>
+    </AppTable>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter] public List<EditableArtistRelease> Model { get; set; }
+
+    protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
+
+    public void OnRemoveRelease(EditableArtistRelease release)
+    {
+
+    }
+}

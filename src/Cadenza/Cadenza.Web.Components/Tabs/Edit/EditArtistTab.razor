@@ -1,12 +1,50 @@
-﻿
-<h3>Edit Artist</h3>
+﻿@inherits EditArtistTabBase
 
-<MudText Typo="@Typo.body1">@Item.Name</MudText>
-<MudText Typo="@Typo.body2">@Item.Type</MudText>
-<MudText Typo="@Typo.body2">@Item.Id</MudText>
+<SubGrid>
 
-@code 
-{
-    [Parameter]
-    public EditItem Item { get; set; }
-}
+    <SubGridColumn md="3">
+        <SubGridRow RowHeight="@RowHeight.Fixed">
+
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="@Typo.h5">Edit Artist</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditArtistDetails Model="@EditableArtist" />
+                </MudCardContent>
+            </MudCard>
+
+        </SubGridRow>
+    </SubGridColumn>
+
+    <SubGridColumn md="3">
+        <SubGridRow RowHeight="@RowHeight.Fixed">
+
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="@Typo.h5">Edit Artist Image</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditArtistImage Model="@EditableArtist" />
+                </MudCardContent>
+            </MudCard>
+
+        </SubGridRow>
+    </SubGridColumn>
+
+    <SubGridColumn md="6">
+        <SubGridRow RowHeight="@RowHeight.Full">
+
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="@Typo.h5">Edit Artist Releases</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditArtistReleases Model="@EditableReleases" />
+                </MudCardContent>
+            </MudCard>
+
+        </SubGridRow>
+    </SubGridColumn>
+
+</SubGrid>

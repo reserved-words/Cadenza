@@ -1,7 +1,7 @@
-﻿
-@inherits FluxorComponent
+﻿@inherits FluxorComponent
 
-<EditCard>
+@if (Model != null)
+{
     <MudContainer Class="mt-3 d-flex flex-column align-center">
         @if (Model.ImageBase64 != null)
         {
@@ -26,16 +26,16 @@
 
         <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
     </MudStack>
-</EditCard>
+}
 
 @code {
+
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public EditableArtist Model { get; set; }
 
     private string ImageUrl { get; set; }
-
     private string OriginalImageSrc { get; set; }
 
     protected override void OnInitialized()
@@ -46,6 +46,9 @@
 
     protected override void OnParametersSet()
     {
+        if (Model == null)
+            return;
+
         Dispatcher.Dispatch(new FetchArtistImageRequest(Model.Id, Model.ImageBase64));
     }
 
@@ -65,18 +68,17 @@
 
     protected async Task OnUpdateUrl()
     {
+        if (string.IsNullOrWhiteSpace(ImageUrl))
+            return;
+
         try
         {
-            if (string.IsNullOrWhiteSpace(ImageUrl))
-            {
-                throw new Exception("No URL entered");
-            }
-
             Model.ImageBase64 = await ImageFinder.GetBase64ArtworkSource(ImageUrl);
+            StateHasChanged();
         }
         catch (Exception ex)
         {
-            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading image", ex.Message, ex.StackTrace));
             return;
         }
     }

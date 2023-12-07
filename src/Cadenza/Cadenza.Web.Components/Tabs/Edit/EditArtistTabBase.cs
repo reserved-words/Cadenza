@@ -1,5 +1,51 @@
 ﻿namespace Cadenza.Web.Components.Tabs.Edit;
 
-internal class EditArtistTabBase : FluxorComponent
+public class EditArtistTabBase : FluxorComponent
 {
+    [Inject] public IState<EditArtistState> EditArtistState { get; set; }
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    public bool Loading => EditArtistState.Value.IsLoading;
+    public ArtistDetailsVM Artist => EditArtistState.Value.Artist;
+    public IReadOnlyCollection<AlbumVM> Releases => EditArtistState.Value.Releases;
+
+    protected EditableArtist EditableArtist { get; set; }
+    protected List<EditableArtistRelease> EditableReleases { get; set; }
+
+    [Parameter] public EditItem Item { get; set; }
+
+    protected override void OnInitialized()
+    {
+        SubscribeToAction<FetchEditArtistResult>(OnEditArtistFetched);
+        base.OnInitialized();
+    }
+
+    private void OnEditArtistFetched(FetchEditArtistResult result)
+    {
+        if (Artist == null)
+            return;
+
+        EditableArtist = new EditableArtist
+        {
+            Id = Artist.Id,
+            Name = Artist.Name,
+            Grouping = Artist.Grouping,
+            Genre = Artist.Genre,
+            Country = Artist.Country,
+            State = Artist.State,
+            City = Artist.City,
+            ImageBase64 = Artist.ImageBase64,
+            Tags = Artist.Tags.ToList()
+        };
+
+        EditableReleases = Releases
+            .Select(a => new EditableArtistRelease
+            {
+                Id = a.Id,
+                Title = a.Title,
+                ReleaseType = a.ReleaseType,
+                Year = a.Year
+            })
+            .ToList();
+    }
 }
