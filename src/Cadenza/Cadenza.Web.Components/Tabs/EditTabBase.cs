@@ -13,14 +13,14 @@ public class EditTabBase : FluxorComponent
 
     protected void Cancel()
     {
-        Dispatcher.Dispatch(new ViewEditEndRequest());
+        Dispatcher.Dispatch(new CancelEditItemRequest(CurrentItem.Value.Type, CurrentItem.Value.Id));
     }
     protected void Remove()
     {
-        Dispatcher.Dispatch(new NotificationErrorRequest("Not implemented yet", null, null));
+        Dispatcher.Dispatch(new RemoveEditItemRequest(CurrentItem.Value.Type, CurrentItem.Value.Id));
     }
     protected void Save()
     {
-        Dispatcher.Dispatch(new NotificationErrorRequest("Not implemented yet", null, null));
+        Dispatcher.Dispatch(new SaveEditItemRequest(CurrentItem.Value.Type, CurrentItem.Value.Id));
     }
 }

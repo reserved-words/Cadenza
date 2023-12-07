@@ -28,11 +28,11 @@
 
     protected void OnEdit()
     {
-        Dispatcher.Dispatch(new ViewEditItemRequest(PlayerItemType.Album, Album.Id, Album.Title));
+        Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Album, Album.Id, Album.Title));
     }
 
     protected void OnEditTracks()
     {
-        Dispatcher.Dispatch(new ViewEditItemRequest(PlayerItemType.Album, Album.Id, Album.Title));
+        Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Album, Album.Id, Album.Title));
     }
 }

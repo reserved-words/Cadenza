@@ -8,15 +8,15 @@
         <TabGridColumn>
             <TabGridRow RowHeight="@RowHeight.Stretch">
 
-                @if (CurrentItem.Value.Type == PlayerItemType.Album)
+                @if (CurrentItem.Value.Type == LibraryItemType.Album)
                 {
                     <EditAlbumTab Item="@CurrentItem.Value" />
                 }
-                else if (CurrentItem.Value.Type == PlayerItemType.Artist)
+                else if (CurrentItem.Value.Type == LibraryItemType.Artist)
                 {
                     <EditArtistTab Item="@CurrentItem.Value" />
                 }
-                else if (CurrentItem.Value.Type == PlayerItemType.Track)
+                else if (CurrentItem.Value.Type == LibraryItemType.Track)
                 {
                     <EditTrackTab Item="@CurrentItem.Value" />
                 }
