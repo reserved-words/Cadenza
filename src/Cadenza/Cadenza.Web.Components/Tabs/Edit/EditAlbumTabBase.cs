@@ -44,6 +44,7 @@ public class EditAlbumTabBase : FluxorComponent
                 {
                     TrackId = t.TrackId,
                     TrackNo = t.TrackNo,
+                    DiscNo = t.DiscNo,
                     Title = t.Title,
                     DurationSeconds = t.DurationSeconds,
                     ArtistId = t.ArtistId,
