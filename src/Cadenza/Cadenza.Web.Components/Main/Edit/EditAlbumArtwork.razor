@@ -13,8 +13,10 @@
         }
 
         <MudStack Row="true" Class="my-2">
-            <MudButton OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
-            <MudButton OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
+            <MudButton Variant="@Variant.Outlined"
+                       OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
+            <MudButton Variant="@Variant.Outlined"
+                       OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
         </MudStack>
     </MudContainer>
 
@@ -24,7 +26,8 @@
                       @bind-Value="ArtworkUrl"
                       For="@(() => ArtworkUrl)" />
 
-        <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
+        <MudButton Variant="@Variant.Outlined"
+                   OnClick="@OnUpdateUrl">Update</MudButton>
     </MudStack>
 }
 
