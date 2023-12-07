@@ -1,5 +1,4 @@
 ﻿using Cadenza.Web.Api.Interfaces;
-using Cadenza.Web.Common.ViewModel;
 using System.Collections.ObjectModel;
 
 namespace Cadenza.Web.Api.Helpers;
@@ -21,12 +20,13 @@ internal class ViewModelMapper : IViewModelMapper
         };
     }
 
-    public AlbumTracksVM Map(AlbumTracksDTO dto)
+    public AlbumDiscVM Map(AlbumDiscDTO dto)
     {
-        return new AlbumTracksVM
+        return new AlbumDiscVM
         {
-            AlbumId = dto.AlbumId,
-            Discs = dto.Discs.Select(d => Map(d)).ToList()
+            DiscNo = dto.DiscNo,
+            TrackCount = dto.TrackCount,
+            Tracks = dto.Tracks.Select(t => Map(t)).ToList()
         };
     }
 
@@ -128,16 +128,6 @@ internal class ViewModelMapper : IViewModelMapper
     public RecentAlbumVM Map(RecentAlbumDTO dto)
     {
         return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName, null);
-    }
-
-    private AlbumDiscVM Map(AlbumDiscDTO dto)
-    {
-        return new AlbumDiscVM
-        {
-            DiscNo = dto.DiscNo,
-            TrackCount = dto.TrackCount,
-            Tracks = dto.Tracks.Select(t => Map(t)).ToList()
-        };
     }
 
     private AlbumTrackVM Map(AlbumTrackDTO dto)

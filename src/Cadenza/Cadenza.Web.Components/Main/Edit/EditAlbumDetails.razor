@@ -1,0 +1,27 @@
+﻿
+<MudTextField Label="Title"
+              MaxLength="500"
+              @bind-Value="Model.Title" />
+<MudTextField Label="Artist"
+              ReadOnly="true"
+              Disabled="true"
+              Value="Model.ArtistName" />
+<MudSelect Label="Release Type"
+           @bind-Value="Model.ReleaseType"
+           For="@(() => Model.ReleaseType)">
+    @foreach (var releaseType in ReleaseTypes)
+    {
+        <MudSelectItem Value="@releaseType">@releaseType.GetDisplayName()</MudSelectItem>
+    }
+</MudSelect>
+<MudTextField MaxLength="4"
+              Label="Release Year"
+              @bind-Value="Model.Year"
+              For="@(() => Model.Year)"
+              Mask="@(new PatternMask("0000"))" />
+
+@code {
+    [Parameter] public EditableAlbum Model { get; set; }
+
+    protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
+}

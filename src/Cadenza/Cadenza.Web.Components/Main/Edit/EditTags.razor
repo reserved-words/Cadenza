@@ -1,9 +1,23 @@
-﻿using System.Text.RegularExpressions;
+﻿@using System.Text.RegularExpressions
 
-namespace Cadenza.Web.Components.Forms.Shared;
+<MudChipSet AllClosable="true" OnClose="OnRemoveTag">
+    @foreach (var tag in Model)
+    {
+        <MudChip Text="@tag" Size="@Size.Small"></MudChip>
+    }
+</MudChipSet>
 
-public class TagsEditorBase : ComponentBase
-{
+<MudFocusTrap DefaultFocus="DefaultFocus">
+    <MudTextField MaxLength="100"
+                  T="string"
+                  Label="Add tag"
+                  For="@(() => NewTagText)"
+                  Value="@NewTagText"
+                  ValueChanged="@(tag => OnAddTag(tag))"/>
+    <MudText Color="@Color.Error">@ErrorMessage</MudText>
+</MudFocusTrap>
+
+@code {
     private const string RegexPattern = @"^[0-9a-zß-ÿ\-]*$";
 
     [Parameter] public ICollection<string> Model { get; set; } = new List<string>();

@@ -1,12 +1,40 @@
-﻿
-<h3>Edit Track</h3>
+﻿@inherits EditTrackTabBase
 
-<MudText Typo="@Typo.body1">@Item.Name</MudText>
-<MudText Typo="@Typo.body2">@Item.Type</MudText>
-<MudText Typo="@Typo.body2">@Item.Id</MudText>
+<SubGrid>
 
-@code 
-{
-    [Parameter]
-    public EditItem Item { get; set; }
-}
+    <SubGridColumn md="4">
+        <SubGridRow RowHeight="@RowHeight.Fixed">
+            <MudCard>
+                <MudCardHeader Class="pb-0">
+                    <MudText Typo="@Typo.h5">Edit Track</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditTrackDetails Model="@EditableTrack" />
+                </MudCardContent>
+            </MudCard>
+
+            <MudCard Class="mt-3">
+                <MudCardHeader Class="pb-0">
+                    <MudText Typo="@Typo.h6">Tags</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditTags Model="@EditableTrack.Tags" />
+                </MudCardContent>
+            </MudCard>
+        </SubGridRow>
+    </SubGridColumn>
+
+    <SubGridColumn md="4">
+        <SubGridRow RowHeight="@RowHeight.Full">
+            <MudCard Class="fixed-height">
+                <MudCardHeader>
+                    <MudText Typo="@Typo.h6">Lyrics</MudText>
+                </MudCardHeader>
+                <MudCardContent Class="fixed-height-scroll">
+                    <EditTrackLyrics Model="@EditableTrack" />
+                </MudCardContent>
+            </MudCard>
+        </SubGridRow>
+    </SubGridColumn>
+
+</SubGrid>

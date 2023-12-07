@@ -8,7 +8,6 @@
         <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
         <MudHidden Breakpoint="@Breakpoint.MdAndUp" Invert="true">
             <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
-            <MudIconButton Icon="@Icons.Material.Filled.EditNote" Size="@Size.Medium" OnClick="OnEditTracks" />
         </MudHidden>
     </MudButtonGroup>
 </MudPaper>
@@ -27,11 +26,6 @@
     }
 
     protected void OnEdit()
-    {
-        Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Album, Album.Id, Album.Title));
-    }
-
-    protected void OnEditTracks()
     {
         Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Album, Album.Id, Album.Title));
     }

@@ -10,15 +10,15 @@
 
                 @if (CurrentItem.Value.Type == LibraryItemType.Album)
                 {
-                    <EditAlbumTab Item="@CurrentItem.Value" />
+                    <EditAlbumTab />
                 }
                 else if (CurrentItem.Value.Type == LibraryItemType.Artist)
                 {
-                    <EditArtistTab Item="@CurrentItem.Value" />
+                    <EditArtistTab />
                 }
                 else if (CurrentItem.Value.Type == LibraryItemType.Track)
                 {
-                    <EditTrackTab Item="@CurrentItem.Value" />
+                    <EditTrackTab />
                 }
 
             </TabGridRow>

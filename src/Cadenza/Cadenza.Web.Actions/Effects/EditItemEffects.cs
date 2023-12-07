@@ -2,25 +2,18 @@
 
 public class EditItemEffects
 {
-    private readonly ILibraryApi _api;
-
-    public EditItemEffects(ILibraryApi api)
-    {
-        _api = api;
-    }
-
     [EffectMethod]
     public Task HandleFetchEditItemRequest(ViewEditItemRequest action, IDispatcher dispatcher)
     {
-        if (action.Type == LibraryItemType.Artist)
+        object fetchRequest = action.Type switch
         {
-            dispatcher.Dispatch(new FetchEditArtistRequest(action.Id));
-        }
-        else
-        {
-            dispatcher.Dispatch(new NotificationErrorRequest("Fetch item not implemented yet", null, null));
-        }
+            LibraryItemType.Album => new FetchEditAlbumRequest(action.Id),
+            LibraryItemType.Artist => new FetchEditArtistRequest(action.Id),
+            LibraryItemType.Track => new FetchEditTrackRequest(action.Id),
+            _ => throw new NotImplementedException()
+        };
 
+        dispatcher.Dispatch(fetchRequest);
         return Task.CompletedTask;
     }
 

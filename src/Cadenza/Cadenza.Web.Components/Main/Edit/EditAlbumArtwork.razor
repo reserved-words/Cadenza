@@ -1,21 +1,20 @@
-﻿
-@inherits FluxorComponent
+﻿@inherits FluxorComponent
 
-<EditCard>
+@if (Model != null)
+{
     <MudContainer Class="mt-3 d-flex flex-column align-center">
-
         @if (Model.ArtworkBase64 != null)
         {
-            <img class="artwork edit-image" src="@Model.ArtworkBase64" />
+            <img class="image-Artwork edit-image" src="@Model.ArtworkBase64" />
         }
         else
         {
-            <img class="artwork edit-image" src="@OriginalArtworkSrc" />
+            <img class="image-Artwork edit-image" src="@OriginalArtworkSrc" />
         }
 
         <MudStack Row="true" Class="my-2">
-            <MudButton OnClick="@OnLoad">Load</MudButton>
-            <MudButton OnClick="@OnSearch">Search</MudButton>
+            <MudButton OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
+            <MudButton OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
         </MudStack>
     </MudContainer>
 
@@ -27,16 +26,16 @@
 
         <MudButton OnClick="@OnUpdateUrl">Update</MudButton>
     </MudStack>
-</EditCard>
+}
 
 @code {
+
     [Inject] public IImageFinder ImageFinder { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public EditableAlbum Model { get; set; }
 
     private string ArtworkUrl { get; set; }
-
     private string OriginalArtworkSrc { get; set; }
 
     protected override void OnInitialized()
@@ -47,6 +46,9 @@
 
     protected override void OnParametersSet()
     {
+        if (Model == null)
+            return;
+
         Dispatcher.Dispatch(new FetchAlbumArtworkRequest(Model.Id, Model.ArtworkBase64));
     }
 
@@ -58,28 +60,7 @@
         OriginalArtworkSrc = action.Result;
     }
 
-    protected async Task OnLoad()
-    {
-        try
-        {
-            var artworkUrl = await ImageFinder.GetAlbumArtworkUrl(Model.ArtistName, Model.Title);
-
-            if (string.IsNullOrWhiteSpace(artworkUrl))
-            {
-                throw new Exception("No artwork found");
-            }
-
-            ArtworkUrl = artworkUrl;
-
-            await OnUpdateUrl();
-        }
-        catch (Exception ex)
-        {
-            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
-        }
-    }
-
-    protected void OnSearch()
+    protected void OnSearch(SearchSource source)
     {
         var searchUrl = ImageFinder.GetAlbumArtworkSearchUrl(Model.ArtistName, Model.Title);
         Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
@@ -87,18 +68,17 @@
 
     protected async Task OnUpdateUrl()
     {
+        if (string.IsNullOrWhiteSpace(ArtworkUrl))
+            return;
+
         try
         {
-            if (string.IsNullOrWhiteSpace(ArtworkUrl))
-            {
-                throw new Exception("No URL entered");
-            }
-
             Model.ArtworkBase64 = await ImageFinder.GetBase64ArtworkSource(ArtworkUrl);
+            StateHasChanged();
         }
         catch (Exception ex)
         {
-            Dispatcher.Dispatch(new NotificationErrorRequest(ex.Message, null, null));
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading image", ex.Message, ex.StackTrace));
             return;
         }
     }

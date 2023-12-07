@@ -12,8 +12,6 @@ public class EditArtistTabBase : FluxorComponent
     protected EditableArtist EditableArtist { get; set; }
     protected List<EditableArtistRelease> EditableReleases { get; set; }
 
-    [Parameter] public EditItem Item { get; set; }
-
     protected override void OnInitialized()
     {
         SubscribeToAction<FetchEditArtistResult>(OnEditArtistFetched);
