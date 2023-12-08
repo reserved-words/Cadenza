@@ -27,7 +27,7 @@ internal class LibraryRepository : ILibraryRepository
         return albums.Select(_mapper.MapAlbum).ToList();
     }
 
-    public async Task<AlbumTracksDTO> GetAlbumTracks(int id)
+    public async Task<List<AlbumDiscDTO>> GetAlbumTracks(int id)
     {
         var discs = await _library.GetAlbumDiscs(id);
         var tracks = await _library.GetAlbumTracks(id);

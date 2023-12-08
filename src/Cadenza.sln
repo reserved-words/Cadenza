@@ -81,7 +81,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Cadenza.Sql", "Cadenza.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Api", "Cadenza\Cadenza.Web.Api\Cadenza.Web.Api.csproj", "{C0BF5B62-7BE8-4C67-B282-6058EF212F77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadenza.Web.Api.Interfaces", "Cadenza.Web.Api.Interfaces\Cadenza.Web.Api.Interfaces.csproj", "{1B812078-FD3A-41D8-B13A-7A9E8692AF14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadenza.Web.Api.Interfaces", "Cadenza.Web.Api.Interfaces\Cadenza.Web.Api.Interfaces.csproj", "{1B812078-FD3A-41D8-B13A-7A9E8692AF14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

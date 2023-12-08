@@ -3,6 +3,7 @@
 	@ArtistId INT,
 	@Title NVARCHAR(500),
 	@ReleaseTypeId INT,
+	@DiscCount INT,
 	@Year NCHAR(4),
 	@TagList NVARCHAR(1000),
 	@ArtworkMimeType NVARCHAR(30),
@@ -29,7 +30,8 @@ BEGIN
 		[ArtistId] = @ArtistId, 
 		[Title] = @Title,
 		[ReleaseTypeId] = @ReleaseTypeId,
-		[Year] = @Year
+		[Year] = @Year,
+		[DiscCount] = @DiscCount
 	WHERE
 		[Id] = @Id
 

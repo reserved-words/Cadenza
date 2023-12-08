@@ -1,11 +1,9 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Api.Interfaces;
+﻿namespace Cadenza.Web.Api.Interfaces;
 
 internal interface IViewModelMapper
 {
     AlbumDetailsVM Map(AlbumDetailsDTO dto);
-    AlbumTracksVM Map(AlbumTracksDTO dto);
+    AlbumDiscVM Map(AlbumDiscDTO dto);
     AlbumVM Map(AlbumDTO dto);
     ArtistVM Map(ArtistDTO dto);
     ArtistDetailsVM Map(ArtistDetailsDTO dto);

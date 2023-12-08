@@ -3,15 +3,64 @@
 public static class ViewReducers
 {
     [ReducerMethod]
-    public static ViewState ReduceViewTabRequest(ViewState state, ViewTabRequest action) => state with
+    public static ViewState ReduceViewTabRequest(ViewState state, ViewTabRequest action) 
     {
-        Tab = action.Tab
-    };
+        if (state.IsNavigationDisabled)
+            return state;
+
+        var previousTab = state.CurrentTab == action.Tab
+            ? state.PreviousTab
+            : state.CurrentTab;
+
+        return state with
+        {
+            CurrentTab = action.Tab,
+            PreviousTab = previousTab,
+            IsNavigationDisabled = false
+        };
+    }
 
     [ReducerMethod]
-    public static ViewState ReduceViewItemRequest(ViewState state, ViewItemRequest action) => state with
+    public static ViewState ReduceViewItemRequest(ViewState state, ViewItemRequest action) 
     {
-        Tab = Tab.Library,
-        Item = new ViewItem(action.Type, action.Id, action.Name)
-    };
+        if (state.IsNavigationDisabled)
+            return state;
+
+        var previousTab = state.CurrentTab == Tab.Library
+            ? state.PreviousTab
+            : state.CurrentTab;
+
+        return state with
+        {
+            CurrentTab = Tab.Library,
+            PreviousTab = previousTab,
+            ViewItem = new ViewItem(action.Type, action.Id, action.Name),
+            IsNavigationDisabled = false
+        };
+    }
+
+    [ReducerMethod]
+    public static ViewState ReduceViewEditItemRequest(ViewState state, ViewEditItemRequest action)
+    {
+        var previousTab = state.CurrentTab;
+
+        return state with
+        {
+            CurrentTab = Tab.Edit,
+            PreviousTab = previousTab,
+            EditItem = new EditItem(action.Type, action.Id, action.Name),
+            IsNavigationDisabled = true
+        };
+    }
+
+    [ReducerMethod]
+    public static ViewState ReduceViewEditEndRequest(ViewState state, ViewEditEndRequest action)
+    {
+        return state with
+        {
+            CurrentTab = state.PreviousTab,
+            EditItem = null,
+            IsNavigationDisabled = false
+        };
+    }
 }

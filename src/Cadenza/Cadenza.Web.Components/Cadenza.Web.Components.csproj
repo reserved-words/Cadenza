@@ -22,10 +22,4 @@
     <ProjectReference Include="..\Cadenza.Web.State\Cadenza.Web.State.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Forms\AlbumTracks\EditAlbumTracks.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
 </Project>

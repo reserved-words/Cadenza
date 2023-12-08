@@ -14,6 +14,7 @@ internal class LibraryMapper : ILibraryMapper
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
+            DiscCount = album.DiscCount,
             Year = album.Year,
             Tags = new TagsDTO(album.TagList)
         };
@@ -45,16 +46,13 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    public AlbumTracksDTO MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks)
+    public List<AlbumDiscDTO> MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks)
     {
-        return new AlbumTracksDTO
+        return discs.Select(d => new AlbumDiscDTO
         {
-            AlbumId = id,
-            Discs = discs.Select(d => new AlbumDiscDTO
-            {
-                DiscNo = d.DiscNo,
-                TrackCount = d.TrackCount,
-                Tracks = tracks
+            DiscNo = d.DiscNo,
+            TrackCount = d.TrackCount,
+            Tracks = tracks
                     .Where(t => t.DiscNo == d.DiscNo)
                     .Select(t => new AlbumTrackDTO
                     {
@@ -71,8 +69,7 @@ internal class LibraryMapper : ILibraryMapper
                     .ToList()
             })
             .OrderBy(d => d.DiscNo)
-            .ToList()
-        };
+            .ToList();
     }
 
     public ArtistDetailsDTO MapArtist(GetArtistResult artist)
@@ -168,6 +165,7 @@ internal class LibraryMapper : ILibraryMapper
                 ArtistName = track.AlbumArtistName,
                 Title = track.AlbumTitle,
                 ReleaseType = (ReleaseType)track.ReleaseTypeId,
+                DiscCount = track.DiscCount,
                 Year = track.AlbumYear,
                 Tags = new TagsDTO(track.AlbumTagList)
             },

@@ -18,7 +18,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album/Tracks/{id}")]
-    public async Task<AlbumTracksDTO> AlbumTracks(int id)
+    public async Task<List<AlbumDiscDTO>> AlbumTracks(int id)
     {
         return await _repository.GetAlbumTracks(id);
     }

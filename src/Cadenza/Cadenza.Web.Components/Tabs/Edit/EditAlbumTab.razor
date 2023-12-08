@@ -1,0 +1,47 @@
+﻿@inherits EditAlbumTabBase
+
+<SubGrid>
+
+    <SubGridColumn md="3">
+        <SubGridRow RowHeight="@RowHeight.Fixed">
+            <MudCard>
+                <MudCardHeader Class="pb-0">
+                    <MudText Typo="@Typo.h5">Edit Album</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditAlbumDetails Model="@EditableAlbum" />
+                </MudCardContent>
+            </MudCard>
+
+            <MudCard Class="mt-3">
+                <MudCardHeader Class="pb-0">
+                    <MudText Typo="@Typo.h6">Tags</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <EditTags Model="@EditableAlbum.Tags" />
+                </MudCardContent>
+            </MudCard>
+        </SubGridRow>
+    </SubGridColumn>
+
+    <SubGridColumn md="3">
+        <SubGridRow RowHeight="@RowHeight.Fixed">
+            <MudCard>
+                <MudCardContent>
+                    <EditAlbumArtwork Model="@EditableAlbum" />
+                </MudCardContent>
+            </MudCard>
+        </SubGridRow>
+    </SubGridColumn>
+
+    <SubGridColumn md="6">
+        <SubGridRow RowHeight="@RowHeight.Full">
+            <MudContainer Class="pa-0 ma-0 fixed-height">
+                <MudContainer Class="pa-0 ma-0 fixed-height-scroll">
+                    <EditAlbumTracks Model="@EditableTracks" />
+                </MudContainer>
+            </MudContainer>
+        </SubGridRow>
+    </SubGridColumn>
+
+</SubGrid>

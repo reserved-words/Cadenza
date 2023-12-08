@@ -9,5 +9,7 @@ public class EditableAlbumTrack
     public int ArtistId { get; init; }
 
     public string Title { get; set; }
+
+    public int DiscNo { get; set; }
     public int TrackNo { get; set; }
 }

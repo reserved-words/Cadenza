@@ -1,7 +1,4 @@
-﻿using Cadenza.Web.Api.Interfaces;
-using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Api.Helpers;
+﻿namespace Cadenza.Web.Api.Helpers;
 
 internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
@@ -52,6 +49,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         return new UpdatedAlbumPropertiesDTO
         {
             Id = vm.Id,
+            DiscCount = vm.DiscCount,
             ArtworkBase64 = vm.ArtworkBase64,
             ReleaseType = vm.ReleaseType,
             Tags = Map(vm.Tags),

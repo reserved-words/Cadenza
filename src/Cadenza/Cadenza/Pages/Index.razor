@@ -7,41 +7,29 @@
 <MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
 
     <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
-
         <MudTabPanel Text="HOME" ID="@(Tab.Home)">
             <HomeTab />
         </MudTabPanel>
-        <MudTabPanel Text="DASHBOARD" ID="@(Tab.Dashboard)">
-            <DashboardTab />
-        </MudTabPanel>
-        <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
-            <CurrentlyPlayingTab />
-        </MudTabPanel>
-        <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
-            <LibraryTab />
-        </MudTabPanel>
-        <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
-            <SearchTab />
-        </MudTabPanel>
-
     </MudHidden>
 
-    <MudHidden Breakpoint="Breakpoint.SmAndDown">
-
-        <MudTabPanel Text="DASHBOARD" ID="@(Tab.Dashboard)">
-            <DashboardTab />
-        </MudTabPanel>
-        <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
-            <CurrentlyPlayingTab />
-        </MudTabPanel>
-        <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
-            <LibraryTab />
-        </MudTabPanel>
-        <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
-            <SearchTab />
-        </MudTabPanel>
-
-    </MudHidden>
+    <MudTabPanel Text="DASHBOARD" ID="@(Tab.Dashboard)">
+        <DashboardTab />
+    </MudTabPanel>
+    <MudTabPanel Text="CURRENT TRACK" ID="@(Tab.CurrentTrack)">
+        <CurrentlyPlayingTab />
+    </MudTabPanel>
+    <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
+        <LibraryTab />
+    </MudTabPanel>
+    <MudTabPanel Text="SEARCH" ID="@(Tab.Search)">
+        <SearchTab />
+    </MudTabPanel>
+    <MudTabPanel Text="SETTINGS" ID="@(Tab.Settings)">
+        <SettingsTab />
+    </MudTabPanel>
+    <MudTabPanel Text="EDIT" ID="@(Tab.Edit)">
+        <EditTab />
+    </MudTabPanel>
 
 </MudTabs>
 
@@ -61,7 +49,11 @@
 
     private void ViewState_StateChanged(object sender, EventArgs args)
     {
-        tabs.ActivatePanel(ViewState.Value.Tab);
+        var switchToTab = ViewState.Value.CurrentTab == Tab.Default
+            ? Tab.Dashboard // should be Tab.Dashboard if Tab.Home doesn't exist
+            : ViewState.Value.CurrentTab;
+
+        tabs.ActivatePanel(switchToTab);
     }
 
     protected override void OnParametersSet()

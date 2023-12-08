@@ -6,4 +6,6 @@ public class EditableAlbumDisc
 
     public int DiscNo { get; set; }
     public int TrackCount { get; set; }
+
+    public string DiscName => $"Disc {DiscNo}";
 }

@@ -1,0 +1,53 @@
+﻿
+<MudContainer Class="ma-0 pa-0 d-flex align-stretch">
+    <MudTextField Class="textarea"
+                  @bind-Value="Model.Lyrics"
+                  For="@(() => Model.Lyrics)"
+                  Lines="30" />
+</MudContainer>
+
+<MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
+    <MudStack Row="true" Class="mt-2">
+        <MudButton Variant="@Variant.Outlined"
+                   OnClick="@OnLoad" Disabled="true">Load</MudButton>
+        <MudButton Variant="@Variant.Outlined"
+                   OnClick="@OnSearch">Search</MudButton>
+    </MudStack>
+</MudContainer>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    [Parameter] public EditableTrack Model { get; set; }
+
+    private const string SearchUrl = "https://www.google.com/search?q=%22{0}%22+%22{1}%22+lyrics";
+
+    private static bool AreEqual(string originalValue, string updatedValue)
+    {
+        if (originalValue == null && updatedValue == null)
+            return true;
+
+        if (originalValue == null || updatedValue == null)
+            return false;
+
+        return originalValue == updatedValue;
+    }
+
+    private string GetSearchUrl()
+    {
+        var artist = HttpUtility.UrlEncode(Model.ArtistName);
+        var title = HttpUtility.UrlEncode(Model.Title);
+        return string.Format(SearchUrl, artist, title);
+    }
+
+    protected Task OnLoad()
+    {
+        return Task.CompletedTask;
+    }
+
+    protected void OnSearch()
+    {
+        var searchUrl = GetSearchUrl();
+        Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));
+    }
+}

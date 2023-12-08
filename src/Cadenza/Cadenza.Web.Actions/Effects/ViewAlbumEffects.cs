@@ -14,6 +14,6 @@ public class ViewAlbumEffects
     {
         var album = await _api.GetAlbum(action.AlbumId);
         var tracks = await _api.GetAlbumTracks(action.AlbumId);
-        dispatcher.Dispatch(new FetchViewAlbumResult(album, tracks.Discs));
+        dispatcher.Dispatch(new FetchViewAlbumResult(album, tracks));
     }
 }
