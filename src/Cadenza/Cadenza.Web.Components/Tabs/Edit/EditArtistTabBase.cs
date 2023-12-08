@@ -15,7 +15,16 @@ public class EditArtistTabBase : FluxorComponent
     protected override void OnInitialized()
     {
         SubscribeToAction<FetchEditArtistResult>(OnEditArtistFetched);
+        SubscribeToAction<SaveEditItemRequest>(OnSave);
         base.OnInitialized();
+    }
+
+    private void OnSave(SaveEditItemRequest request)
+    {
+        if (Artist == null)
+            return;
+
+        Dispatcher.Dispatch(new NotificationErrorRequest("Save artist not implemented yet", null, null));
     }
 
     private void OnEditArtistFetched(FetchEditArtistResult result)

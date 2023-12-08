@@ -1,4 +1,5 @@
-﻿namespace Cadenza.Web.Components.Tabs.Edit;
+﻿
+namespace Cadenza.Web.Components.Tabs.Edit;
 
 public class EditTrackTabBase : FluxorComponent
 {
@@ -13,7 +14,16 @@ public class EditTrackTabBase : FluxorComponent
     protected override void OnInitialized()
     {
         SubscribeToAction<FetchEditTrackResult>(OnEditTrackFetched);
+        SubscribeToAction<SaveEditItemRequest>(OnSave);
         base.OnInitialized();
+    }
+
+    private void OnSave(SaveEditItemRequest request)
+    {
+        if (Track == null)
+            return;
+
+        Dispatcher.Dispatch(new NotificationErrorRequest("Save track not implemented yet", null, null));
     }
 
     private void OnEditTrackFetched(FetchEditTrackResult result)

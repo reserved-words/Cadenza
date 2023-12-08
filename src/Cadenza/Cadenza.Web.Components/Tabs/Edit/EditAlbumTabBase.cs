@@ -15,7 +15,16 @@ public class EditAlbumTabBase : FluxorComponent
     protected override void OnInitialized()
     {
         SubscribeToAction<FetchEditAlbumResult>(OnEditAlbumFetched);
+        SubscribeToAction<SaveEditItemRequest>(OnSave);
         base.OnInitialized();
+    }
+
+    private void OnSave(SaveEditItemRequest request)
+    {
+        if (Album == null)
+            return;
+
+        Dispatcher.Dispatch(new NotificationErrorRequest("Save album not implemented yet", null, null));
     }
 
     private void OnEditAlbumFetched(FetchEditAlbumResult result)
