@@ -25,7 +25,10 @@ public class EditArtistTabBase : FluxorComponent
         if (Artist == null)
             return;
 
-        Dispatcher.Dispatch(new NotificationErrorRequest("Save artist not implemented yet", null, null));
+        var editedArtist = Mapper.MapEditedArtist(EditableArtist);
+
+        Dispatcher.Dispatch(new ArtistUpdateRequest(Artist, editedArtist));
+        // TODO: Update artist releases
     }
 
     private void OnEditArtistFetched(FetchEditArtistResult result)

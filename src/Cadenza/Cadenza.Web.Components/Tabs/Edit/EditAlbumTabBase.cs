@@ -25,7 +25,10 @@ public class EditAlbumTabBase : FluxorComponent
         if (Album == null)
             return;
 
-        Dispatcher.Dispatch(new NotificationErrorRequest("Save album not implemented yet", null, null));
+        var editedAlbum = Mapper.MapEditedAlbum(EditableAlbum);
+
+        Dispatcher.Dispatch(new AlbumUpdateRequest(Album, editedAlbum));
+        // TODO: Update album tracks
     }
 
     private void OnEditAlbumFetched(FetchEditAlbumResult result)
