@@ -19,6 +19,11 @@
               @bind-Value="Model.Year"
               For="@(() => Model.Year)"
               Mask="@(new PatternMask("0000"))" />
+<MudNumericField MaxLength="1"
+                 Label="Disc Count"
+                 HideSpinButtons="true"
+                 @bind-Value="Model.DiscCount"
+                 For="@(() => Model.DiscCount)" />
 
 @code {
     [Parameter] public EditableAlbum Model { get; set; }

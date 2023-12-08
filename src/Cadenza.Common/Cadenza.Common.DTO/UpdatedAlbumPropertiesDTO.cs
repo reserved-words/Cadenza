@@ -15,6 +15,8 @@ public class UpdatedAlbumPropertiesDTO
 
     [ItemProperty(ItemProperty.AlbumArtwork)]
     public string ArtworkBase64 { get; set; }
+    [ItemProperty(ItemProperty.AlbumDiscCount)]
+    public int DiscCount { get; set; }
 
     [ItemProperty(ItemProperty.AlbumTags)]
     public TagsDTO Tags { get; set; }

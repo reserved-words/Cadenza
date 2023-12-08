@@ -14,6 +14,7 @@ internal class EditItemMapper : IEditItemMapper
             Title = album.Title,
             ReleaseType = album.ReleaseType,
             Year = album.Year,
+            DiscCount = album.DiscCount,
             ArtworkBase64 = album.ArtworkBase64,
             Tags = album.Tags.ToList()
         };
@@ -98,6 +99,7 @@ internal class EditItemMapper : IEditItemMapper
             Title = album.Title,
             ReleaseType = album.ReleaseType,
             Year = album.Year,
+            DiscCount = album.DiscCount,
             ArtworkBase64 = album.ArtworkBase64,
             Tags = album.Tags.ToList()
         };

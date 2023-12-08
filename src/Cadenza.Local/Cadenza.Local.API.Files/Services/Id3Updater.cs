@@ -35,6 +35,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.AlbumArtwork:
                 trackData.Album.Artwork = _imageConverter.GetImageFromBase64Url(value);
                 break;
+            case ItemProperty.AlbumDiscCount:
+                trackData.Album.DiscCount = int.Parse(value);
+                break;
             case ItemProperty.AlbumReleaseType:
                 trackData.Album.ReleaseType = value;
                 break;
