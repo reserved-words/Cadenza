@@ -28,7 +28,8 @@
                             <MudNumericField MaxLength="3"
                                              HideSpinButtons="true"
                                              @bind-Value="context.TrackNo"
-                                             For="@(() => context.TrackNo)" />
+                                             For="@(() => context.TrackNo)"
+                                             OnBlur="@(() => OnTrackNoChanged(context))" />
                         </MudTd>
                         <MudTd>
                             <MudTextField MaxLength="500"
@@ -61,6 +62,11 @@
 
     protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
 
+    public void OnTrackNoChanged(EditableAlbumTrack track)
+    {
+        SortTracks();
+    }
+
     public void OnDiscNoChanged(EditableAlbumTrack track)
     {
         var currentDisc = Model.Single(d => d.Tracks.Contains(track));
@@ -88,6 +94,16 @@
         if (!currentDisc.Tracks.Any())
         {
             Model.Remove(currentDisc);
+        }
+
+        SortTracks();
+    }
+
+    private void SortTracks()
+    {
+        foreach (var disc in Model)
+        {
+            disc.Tracks = disc.Tracks.OrderBy(t => t.TrackNo).ToList();
         }
 
         Model = Model.OrderBy(d => d.DiscNo).ToList();
