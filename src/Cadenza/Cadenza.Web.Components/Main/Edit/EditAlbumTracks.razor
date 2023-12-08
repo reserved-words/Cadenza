@@ -5,54 +5,55 @@
             <MudContainer Class="d-flex flex-row pa-0 ma-0 align-end">
                 <MudText Typo="@Typo.h6"
                          Class="flex-grow-1">@disc.DiscName</MudText>
-                <MudText Typo="@Typo.body1"
-                         Class="flex-grow-0 mr-3 mb-1">Track Count:</MudText>
-                <MudTextField Class="flex-grow-0"
-                              Style="width: 40px;"
-                              MaxLength="3"
-                              @bind-Value="disc.TrackCount"
-                              For="@(() => disc.TrackCount)" />
-            </MudContainer>
-        </MudCardHeader>
-        <MudCardContent Class="pa-0 ma-0">
-            <AppTable Items="@disc.Tracks">
-                <RowTemplate>
-                    <MudTd Class="td-int-input">
-                        <MudNumericField MaxLength="3"
-                                            HideSpinButtons="true"
-                                            @bind-Value="context.DiscNo"
-                                            For="@(() => context.DiscNo)" />
-                    </MudTd>
-                    <MudTd Class="td-int-input">
-                        <MudNumericField MaxLength="3"
-                                            HideSpinButtons="true"
-                                            @bind-Value="context.TrackNo"
-                                            For="@(() => context.TrackNo)" />
-                    </MudTd>
-                    <MudTd>
-                        <MudTextField MaxLength="500"
-                                        @bind-Value="context.Title"
-                                        For="@(() => context.Title)" />
-                    </MudTd>
-                    <MudTd>
-                        <MudText Typo="@Typo.body1">@context.ArtistName</MudText>
-                    </MudTd>
-                    <MudTd Class="td-icon">
-                        <MudIcon Size="@Size.Small"
-                                    Icon="@Icons.Material.Filled.Info"
-                                    Title="@context.IdFromSource" />
-                    </MudTd>
-                    <MudTd Class="td-icon">
-                        <MudIconButton Size="@Size.Small"
-                                        Icon="@Icons.Material.Filled.Delete"
-                                        Variant="@Variant.Outlined"
-                                        Title="Remove"
-                                        OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
-                    </MudTd>
-                </RowTemplate>
-            </AppTable>
-        </MudCardContent>
-    </MudCard>
+                    <MudText Typo="@Typo.body1"
+                             Class="flex-grow-0 mr-3 mb-1">Track Count:</MudText>
+                    <MudTextField Class="flex-grow-0"
+                                  Style="width: 40px;"
+                                  MaxLength="3"
+                                  @bind-Value="disc.TrackCount"
+                                  For="@(() => disc.TrackCount)" />
+                </MudContainer>
+            </MudCardHeader>
+            <MudCardContent Class="pa-0 ma-0">
+                <AppTable Items="@disc.Tracks">
+                    <RowTemplate>
+                        <MudTd Class="td-int-input">
+                            <MudNumericField MaxLength="3"
+                                             HideSpinButtons="true"
+                                             @bind-Value="context.DiscNo"
+                                             For="@(() => context.DiscNo)"
+                                             OnBlur="@(() => OnDiscNoChanged(context))" />
+                        </MudTd>
+                        <MudTd Class="td-int-input">
+                            <MudNumericField MaxLength="3"
+                                             HideSpinButtons="true"
+                                             @bind-Value="context.TrackNo"
+                                             For="@(() => context.TrackNo)" />
+                        </MudTd>
+                        <MudTd>
+                            <MudTextField MaxLength="500"
+                                          @bind-Value="context.Title"
+                                          For="@(() => context.Title)" />
+                        </MudTd>
+                        <MudTd>
+                            <MudText Typo="@Typo.body1">@context.ArtistName</MudText>
+                        </MudTd>
+                        <MudTd Class="td-icon">
+                            <MudIcon Size="@Size.Small"
+                                     Icon="@Icons.Material.Filled.Info"
+                                     Title="@context.IdFromSource" />
+                        </MudTd>
+                        <MudTd Class="td-icon">
+                            <MudIconButton Size="@Size.Small"
+                                           Icon="@Icons.Material.Filled.Delete"
+                                           Variant="@Variant.Outlined"
+                                           Title="Remove"
+                                           OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+                        </MudTd>
+                    </RowTemplate>
+                </AppTable>
+            </MudCardContent>
+        </MudCard>
 }
 
 @code {
@@ -60,7 +61,39 @@
 
     protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
 
-    public void OnRemoveTrack(EditableAlbumTrack release)
+    public void OnDiscNoChanged(EditableAlbumTrack track)
+    {
+        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
+        if (currentDisc.DiscNo == track.DiscNo)
+            return;
+
+        var newDisc = Model.SingleOrDefault(d => d.DiscNo == track.DiscNo);
+        if (newDisc == null)
+        {
+            newDisc = new EditableAlbumDisc
+            {
+                DiscNo = track.DiscNo,
+                TrackCount = 1,
+                Tracks = new List<EditableAlbumTrack>()
+            };
+            Model.Add(newDisc);
+        }
+
+        currentDisc.Tracks.Remove(track);
+        newDisc.Tracks.Add(track);
+
+        newDisc.TrackCount = Math.Max(newDisc.TrackCount, newDisc.Tracks.Count);
+        currentDisc.TrackCount = Math.Max(currentDisc.TrackCount, currentDisc.Tracks.Count);
+
+        if (!currentDisc.Tracks.Any())
+        {
+            Model.Remove(currentDisc);
+        }
+
+        Model = Model.OrderBy(d => d.DiscNo).ToList();
+    }
+
+    public void OnRemoveTrack(EditableAlbumTrack track)
     {
 
     }
