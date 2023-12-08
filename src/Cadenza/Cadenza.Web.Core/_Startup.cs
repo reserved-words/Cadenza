@@ -25,6 +25,7 @@ public static class Startup
         services.AddUtilities();
 
         services
+            .AddTransient<IEditItemMapper, EditItemMapper>()
             .AddTransient<IImageFinder, ImageFinder>()
             .AddTransient<IPlaylistCreator, PlaylistCreator>();
 

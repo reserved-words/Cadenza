@@ -4,6 +4,7 @@ public class EditArtistTabBase : FluxorComponent
 {
     [Inject] public IState<EditArtistState> EditArtistState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IEditItemMapper Mapper { get; set; }
 
     public bool Loading => EditArtistState.Value.IsLoading;
     public ArtistDetailsVM Artist => EditArtistState.Value.Artist;
@@ -32,27 +33,7 @@ public class EditArtistTabBase : FluxorComponent
         if (Artist == null)
             return;
 
-        EditableArtist = new EditableArtist
-        {
-            Id = Artist.Id,
-            Name = Artist.Name,
-            Grouping = Artist.Grouping,
-            Genre = Artist.Genre,
-            Country = Artist.Country,
-            State = Artist.State,
-            City = Artist.City,
-            ImageBase64 = Artist.ImageBase64,
-            Tags = Artist.Tags.ToList()
-        };
-
-        EditableReleases = Releases
-            .Select(a => new EditableArtistRelease
-            {
-                Id = a.Id,
-                Title = a.Title,
-                ReleaseType = a.ReleaseType,
-                Year = a.Year
-            })
-            .ToList();
+        EditableArtist = Mapper.MapArtist(Artist);
+        EditableReleases = Mapper.MapArtistReleases(Releases);
     }
 }
