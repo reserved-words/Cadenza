@@ -33,7 +33,7 @@ public class EditAlbumTabBase : FluxorComponent
         if (Album == null)
             return;
 
-        EditableAlbum = Mapper.MapAlbum(Album);
-        EditableTracks = Mapper.MapAlbumTracks(Tracks);
+        EditableAlbum = Mapper.MapEditableAlbum(Album);
+        EditableTracks = Mapper.MapEditableAlbumTracks(Tracks);
     }
 }

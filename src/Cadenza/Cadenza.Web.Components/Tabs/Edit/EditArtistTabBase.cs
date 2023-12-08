@@ -33,7 +33,7 @@ public class EditArtistTabBase : FluxorComponent
         if (Artist == null)
             return;
 
-        EditableArtist = Mapper.MapArtist(Artist);
-        EditableReleases = Mapper.MapArtistReleases(Releases);
+        EditableArtist = Mapper.MapEditableArtist(Artist);
+        EditableReleases = Mapper.MapEditableArtistReleases(Releases);
     }
 }

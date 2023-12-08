@@ -1,5 +1,4 @@
-﻿
-namespace Cadenza.Web.Components.Tabs.Edit;
+﻿namespace Cadenza.Web.Components.Tabs.Edit;
 
 public class EditTrackTabBase : FluxorComponent
 {
@@ -24,7 +23,9 @@ public class EditTrackTabBase : FluxorComponent
         if (Track == null)
             return;
 
-        Dispatcher.Dispatch(new NotificationErrorRequest("Save track not implemented yet", null, null));
+        var editedTrack = Mapper.MapEditedTrack(EditableTrack);
+
+        Dispatcher.Dispatch(new TrackUpdateRequest(Track, editedTrack));
     }
 
     private void OnEditTrackFetched(FetchEditTrackResult result)
@@ -32,6 +33,6 @@ public class EditTrackTabBase : FluxorComponent
         if (Track == null)
             return;
 
-        EditableTrack = Mapper.MapTrack(Track);
+        EditableTrack = Mapper.MapEditableTrack(Track);
     }
 }
