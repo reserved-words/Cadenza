@@ -32,12 +32,4 @@ public class EditItemEffects
         return Task.CompletedTask;
 
     }
-
-    [EffectMethod]
-    public Task HandleSaveEditItemRequest(SaveEditItemRequest action, IDispatcher dispatcher)
-    {
-        dispatcher.Dispatch(new NotificationErrorRequest("Save item not implemented yet", null, null));
-        dispatcher.Dispatch(new ViewEditEndRequest());
-        return Task.CompletedTask;
-    }
 }

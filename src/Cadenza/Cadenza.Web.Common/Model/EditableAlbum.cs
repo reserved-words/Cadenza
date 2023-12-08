@@ -9,6 +9,8 @@ public class EditableAlbum
     public string Title { get; set; }
     public ReleaseType ReleaseType { get; set; }
     public string Year { get; set; }
+    public int DiscCount { get; set; }
+
     public string ArtworkBase64 { get; set; }
     public ICollection<string> Tags { get; set; }
 }

@@ -6,6 +6,7 @@ public class UpdateEffects
     public Task HandleUpdateFailedAction(UpdateFailedAction action, IDispatcher dispatcher)
     {
         dispatcher.Dispatch(new NotificationErrorRequest("Update failed", action.Error, action.StackTrace));
+        dispatcher.Dispatch(new ViewEditEndRequest());
         return Task.CompletedTask;
     }
 
@@ -14,6 +15,7 @@ public class UpdateEffects
     {
         dispatcher.Dispatch(new NotificationSuccessRequest("Update succeeded"));
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
+        dispatcher.Dispatch(new ViewEditEndRequest());
         return Task.CompletedTask;
     }
 }

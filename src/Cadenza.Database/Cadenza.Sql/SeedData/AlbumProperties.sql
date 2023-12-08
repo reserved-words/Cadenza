@@ -6,7 +6,8 @@ VALUES
 	(2, 'AlbumReleaseYear'),
 	(3, 'AlbumArtwork'),
 	(4, 'AlbumTags'),
-	(5, 'AlbumTitle')
+	(5, 'AlbumTitle'),
+	(6, 'AlbumDiscCount')
 
 DECLARE @AlbumPropertyId INT,
 		@AlbumPropertyName NVARCHAR(50)

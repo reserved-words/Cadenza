@@ -4,6 +4,7 @@ public class EditTrackTabBase : FluxorComponent
 {
     [Inject] public IState<EditTrackState> EditTrackState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IEditItemMapper Mapper { get; set; }
 
     public bool Loading => EditTrackState.Value.IsLoading;
     public TrackDetailsVM Track => EditTrackState.Value.Track;
@@ -13,7 +14,18 @@ public class EditTrackTabBase : FluxorComponent
     protected override void OnInitialized()
     {
         SubscribeToAction<FetchEditTrackResult>(OnEditTrackFetched);
+        SubscribeToAction<SaveEditItemRequest>(OnSave);
         base.OnInitialized();
+    }
+
+    private void OnSave(SaveEditItemRequest request)
+    {
+        if (Track == null)
+            return;
+
+        var editedTrack = Mapper.MapEditedTrack(EditableTrack);
+
+        Dispatcher.Dispatch(new TrackUpdateRequest(Track, editedTrack));
     }
 
     private void OnEditTrackFetched(FetchEditTrackResult result)
@@ -21,19 +33,6 @@ public class EditTrackTabBase : FluxorComponent
         if (Track == null)
             return;
 
-        EditableTrack = new EditableTrack
-        {
-            Id = Track.Id,
-            ArtistId = Track.ArtistId,
-            ArtistName = Track.ArtistName,
-            Title = Track.Title,
-            Year = Track.Year,
-            AlbumId = Track.AlbumId,
-            DurationSeconds = Track.DurationSeconds,
-            IdFromSource = Track.IdFromSource,
-            Lyrics = Track.Lyrics,
-            Source = Track.Source,
-            Tags = Track.Tags.ToList()
-        };
+        EditableTrack = Mapper.MapEditableTrack(Track);
     }
 }

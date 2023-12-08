@@ -14,6 +14,7 @@ internal class ViewModelMapper : IViewModelMapper
             ArtistName = dto.ArtistName,
             Id = dto.Id,
             ReleaseType = dto.ReleaseType,
+            DiscCount = dto.DiscCount,
             Tags = Map(dto.Tags),
             Title = dto.Title,
             Year = dto.Year
