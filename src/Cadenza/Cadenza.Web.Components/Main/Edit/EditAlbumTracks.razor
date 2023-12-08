@@ -111,6 +111,12 @@
 
     public void OnRemoveTrack(EditableAlbumTrack track)
     {
+        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
+        currentDisc.Tracks.Remove(track);
 
+        if (!currentDisc.Tracks.Any())
+        {
+            Model.Remove(currentDisc);
+        }
     }
 }
