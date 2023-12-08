@@ -2,6 +2,7 @@
 
 public enum UpdateType
 {
+    [Display(Name = "Album tracks")]
     AlbumTracks,
     Track,
     Album,
