@@ -24,6 +24,6 @@
 
     protected void OnEdit()
     {
-        DialogService.DisplayForm<EditArtist, ArtistDetailsVM>(Artist, "Edit Artist", DialogWidth.Medium);
+        Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Artist, Artist.Id, Artist.Name));
     }
 }

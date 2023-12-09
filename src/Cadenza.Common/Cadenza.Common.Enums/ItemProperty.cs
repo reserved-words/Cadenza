@@ -3,6 +3,7 @@
 public enum ItemProperty
 {
     AlbumArtwork,
+    AlbumDiscCount,
     AlbumReleaseType,
     AlbumReleaseYear,
     AlbumTags,

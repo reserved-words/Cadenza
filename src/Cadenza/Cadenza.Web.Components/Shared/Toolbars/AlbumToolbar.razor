@@ -8,7 +8,6 @@
         <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" Size="@Size.Medium" OnClick="OnPlay" />
         <MudHidden Breakpoint="@Breakpoint.MdAndUp" Invert="true">
             <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="@Size.Medium" OnClick="OnEdit" />
-            <MudIconButton Icon="@Icons.Material.Filled.EditNote" Size="@Size.Medium" OnClick="OnEditTracks" />
         </MudHidden>
     </MudButtonGroup>
 </MudPaper>
@@ -19,11 +18,6 @@
 
     [Parameter] public AlbumDetailsVM Album { get; set; }
 
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<FetchEditableAlbumTracksResultAction>(OnEditableAlbumTracksFetched);
-        base.OnInitialized();
-    }
 
     protected Task OnPlay()
     {
@@ -33,16 +27,6 @@
 
     protected void OnEdit()
     {
-        DialogService.DisplayForm<EditAlbum, AlbumDetailsVM>(Album, "Edit Album", DialogWidth.Medium);
-    }
-
-    protected void OnEditTracks()
-    {
-        Dispatcher.Dispatch(new FetchEditableAlbumTracksRequest(Album.Id));
-    }
-
-    private void OnEditableAlbumTracksFetched(FetchEditableAlbumTracksResultAction action)
-    {
-        DialogService.DisplayForm<EditAlbumTracks, AlbumTracksVM>(action.Result, "Edit Tracks", DialogWidth.Large);
+        Dispatcher.Dispatch(new ViewEditItemRequest(LibraryItemType.Album, Album.Id, Album.Title));
     }
 }

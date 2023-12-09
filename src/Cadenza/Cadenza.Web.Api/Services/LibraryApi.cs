@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Api.Services;
+﻿using Cadenza.Web.Common.ViewModel;
+
+namespace Cadenza.Web.Api.Services;
 
 internal class LibraryApi : ILibraryApi
 {
@@ -31,10 +33,10 @@ internal class LibraryApi : ILibraryApi
         return albums.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<AlbumTracksVM> GetAlbumTracks(int id)
+    public async Task<List<AlbumDiscVM>> GetAlbumTracks(int id)
     {
-        var dto = await _apiHelper.Get<AlbumTracksDTO>(_settings.AlbumTracks, id);
-        return _mapper.Map(dto);
+        var discs = await _apiHelper.Get<List<AlbumDiscDTO>>(_settings.AlbumTracks, id);
+        return discs.Select(d => _mapper.Map(d)).ToList();
     }
 
     public async Task<ArtistDetailsVM> GetArtist(int id)

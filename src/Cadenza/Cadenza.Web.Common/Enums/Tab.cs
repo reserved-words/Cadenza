@@ -2,9 +2,12 @@
 
 public enum Tab
 {
+    Default,
     CurrentTrack,
     Dashboard,
     Home,
     Library,
-    Search
+    Search,
+    Edit,
+    Settings
 }

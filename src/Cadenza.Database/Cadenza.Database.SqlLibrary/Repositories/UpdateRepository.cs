@@ -96,6 +96,9 @@ internal class UpdateRepository : IUpdateRepository
                 case ItemProperty.AlbumReleaseType:
                     updatedAlbum.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
                     break;
+                case ItemProperty.AlbumDiscCount:
+                    updatedAlbum.DiscCount = int.Parse(update.UpdatedValue);
+                    break;
                 case ItemProperty.AlbumReleaseYear:
                     updatedAlbum.Year = update.UpdatedValue;
                     break;

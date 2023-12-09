@@ -1,0 +1,40 @@
+﻿
+@if (Model != null)
+{
+    <MudTextField Label="Name"
+                  ReadOnly="true"
+                  Disabled="true"
+                  Value="Model.Name" />
+    <MudSelect Label="Grouping"
+               @bind-Value="Model.Grouping"
+               For="@(() => Model.Grouping)">
+        @foreach (var grouping in Groupings)
+        {
+            <MudSelectItem Value="@grouping">@grouping.Name</MudSelectItem>
+        }
+    </MudSelect>
+    <MudTextField MaxLength="50"
+                  Label="Genre"
+                  @bind-Value="Model.Genre"
+                  For="@(() => Model.Genre)" />
+    <MudTextField MaxLength="50"
+                  Label="City"
+                  @bind-Value="Model.City"
+                  For="@(() => Model.City)" />
+    <MudTextField MaxLength="50"
+                  Label="State"
+                  @bind-Value="Model.State"
+                  For="@(() => Model.State)" />
+    <MudTextField MaxLength="50"
+                  Label="Country"
+                  @bind-Value="Model.Country"
+                  For="@(() => Model.Country)" />
+}
+
+@code {
+    [Inject] public IState<GroupingsState> GroupingsState { get; set; }
+
+    [Parameter] public EditableArtist Model { get; set; }
+
+    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+}

@@ -1,5 +1,4 @@
-﻿using Cadenza.Web.Components.Forms;
-using Cadenza.Web.Components.Interfaces;
+﻿using Cadenza.Web.Components.Interfaces;
 using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components.MudServices;
@@ -30,27 +29,6 @@ internal class MudDialogService : IDialogService
             MaxWidth = mbWidth.MaxWidth,
             FullWidth = mbWidth.FullWidth
         });
-    }
-
-    public void DisplayForm<TForm, TModel>(TModel model, string title, DialogWidth width)
-        where TForm : FormBase<TModel>
-        where TModel : class
-    {
-        var parameters = new DialogParameters
-        {
-            { nameof(FormBase<TModel>.Model), model }
-        };
-
-        var mbWidth = GetMudBlazorWidth(width);
-
-        var formReference = _mudService.Show<TForm>(title, parameters, new DialogOptions
-        {
-            DisableBackdropClick = true,
-            MaxWidth = mbWidth.MaxWidth,
-            FullWidth = mbWidth.FullWidth
-        });
-        //var result = await formReference.Result;
-        //return (!result.Canceled, result.Data as TModel);
     }
 
     private (MaxWidth MaxWidth, bool FullWidth) GetMudBlazorWidth(DialogWidth width)

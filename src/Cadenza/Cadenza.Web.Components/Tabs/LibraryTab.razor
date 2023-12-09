@@ -2,5 +2,28 @@
 
 @if (CurrentItem != null)
 {
-    <ItemTab Item="@CurrentItem.Value" />
+    if (CurrentItem.Value.Type == PlayerItemType.Album)
+    {
+        <AlbumTab />
+    }
+    else if (CurrentItem.Value.Type == PlayerItemType.Artist)
+    {
+        <ArtistTab />
+    }
+    else if (CurrentItem.Value.Type == PlayerItemType.Genre)
+    {
+        <GenreTab />
+    }
+    else if (CurrentItem.Value.Type == PlayerItemType.Grouping)
+    {
+        <GroupingTab />
+    }
+    else if (CurrentItem.Value.Type == PlayerItemType.Tag)
+    {
+        <TagTab />
+    }
+    else if (CurrentItem.Value.Type == PlayerItemType.Track)
+    {
+        <TrackTab />
+    }
 }
