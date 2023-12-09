@@ -43,19 +43,11 @@ internal class UpdateMapper : IUpdateMapper
 
     public AddDiscParameter MapDisc(SyncTrackDTO track, int albumId)
     {
-        var index = track.DiscNo;
-        if (index <= 0)
-            index = 1;
-
-        var trackCount = track.Album.TrackCounts.Count >= index
-            ? track.Album.TrackCounts[index - 1]
-            : 0;
-
         return new AddDiscParameter
         {
             AlbumId = albumId,
-            DiscNo = index,
-            TrackCount = trackCount
+            DiscNo = track.DiscNo,
+            TrackCount = track.DiscTrackCount
         };
     }
 
@@ -133,7 +125,8 @@ internal class UpdateMapper : IUpdateMapper
             Title = track.Title,
             Year = track.Year,
             Lyrics = track.Lyrics,
-            TagList = track.TagList
+            TagList = track.TagList,
+            DiscTrackCount = track.DiscTrackCount
         };
     }
 

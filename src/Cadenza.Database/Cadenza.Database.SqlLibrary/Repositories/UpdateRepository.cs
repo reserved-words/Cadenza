@@ -166,6 +166,9 @@ internal class UpdateRepository : IUpdateRepository
                 case ItemProperty.TrackDiscNo:
                     updatedTrack.DiscNo = int.Parse(update.UpdatedValue);
                     break;
+                case ItemProperty.TrackDiscTrackCount:
+                    updatedTrack.DiscTrackCount = int.Parse(update.UpdatedValue);
+                    break;
                 case ItemProperty.TrackLyrics:
                     updatedTrack.Lyrics = update.UpdatedValue;
                     break;

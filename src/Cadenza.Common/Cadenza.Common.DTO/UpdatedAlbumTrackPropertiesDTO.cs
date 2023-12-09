@@ -10,6 +10,9 @@ public class UpdatedAlbumTrackPropertiesDTO
     [ItemProperty(ItemProperty.TrackDiscNo)]
     public int DiscNo { get; set; }
 
+    [ItemProperty(ItemProperty.TrackDiscTrackCount)]
+    public int DiscTrackCount { get; set; }
+
     [ItemProperty(ItemProperty.TrackNo)]
     public int TrackNo { get; set; }
 }

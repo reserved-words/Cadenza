@@ -1,12 +1,12 @@
 ﻿CREATE PROCEDURE [Update].[UpdateTrackDisc]
 	@TrackId INT,
-	@DiscIndex INT
+	@DiscNo INT,
+	@TrackCount INT
 AS
 BEGIN
 
 	DECLARE @DiscId INT,
-			@AlbumId INT,
-			@TracksOnDisc INT
+			@AlbumId INT
 
 	SELECT 
 		@AlbumId = [AlbumId]
@@ -17,7 +17,14 @@ BEGIN
 	WHERE
 		T.[Id] = @TrackId
 
-	EXECUTE [Update].[AddDisc] @AlbumId, @DiscIndex, 1, @DiscId OUTPUT
+	EXECUTE [Update].[AddDisc] @AlbumId, @DiscNo, @TrackCount, @DiscId OUTPUT
+
+	UPDATE
+		[Library].[Discs]
+	SET
+		[TrackCount] = @TrackCount
+	WHERE
+		[Id] = @DiscId
 
 	UPDATE
 		[Library].[Tracks]
@@ -25,8 +32,6 @@ BEGIN
 		[DiscId] = @DiscId
 	WHERE
 		[Id] = @TrackId
-
-	EXECUTE [Update].[UpdateTrackCount] @DiscId
 
 	EXECUTE [Update].[DeleteEmptyDiscs]
 

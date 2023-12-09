@@ -7,7 +7,8 @@ VALUES
 	(3, 'TrackLyrics'),
 	(4, 'TrackTags'),
 	(5, 'TrackNo'),
-	(6, 'TrackDiscNo')
+	(6, 'TrackDiscNo'),
+	(7, 'TrackDiscTrackCount')
 
 DECLARE @TrackPropertyId INT,
 		@TrackPropertyName NVARCHAR(50)

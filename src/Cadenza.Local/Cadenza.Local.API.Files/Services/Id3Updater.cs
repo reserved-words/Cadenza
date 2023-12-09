@@ -74,6 +74,9 @@ internal class Id3Updater : IId3Updater
             case ItemProperty.TrackDiscNo:
                 trackData.Disc.DiscNo = int.Parse(value);
                 break;
+            case ItemProperty.TrackDiscTrackCount:
+                trackData.Disc.TrackCount = int.Parse(value);
+                break;
             case ItemProperty.TrackLyrics:
                 trackData.Track.Lyrics = value;
                 break;

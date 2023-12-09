@@ -127,7 +127,8 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
             TrackId = track.TrackId,
             Title = track.Title,
             TrackNo = track.TrackNo,
-            DiscNo = disc.DiscNo
+            DiscNo = disc.DiscNo,
+            DiscTrackCount = disc.TrackCount
         };
     }
 }

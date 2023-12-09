@@ -5,11 +5,12 @@
 	@Title NVARCHAR(500),
 	@Year NCHAR(4),
 	@Lyrics NVARCHAR(MAX),
-	@TagList NVARCHAR(1000)
+	@TagList NVARCHAR(1000),
+	@DiscTrackCount INT
 AS
 BEGIN
 
-	EXECUTE [Update].[UpdateTrackDisc] @Id, @DiscNo
+	EXECUTE [Update].[UpdateTrackDisc] @Id, @DiscNo, @DiscTrackCount
 
 	UPDATE 
 		[Library].[Tracks]

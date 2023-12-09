@@ -167,7 +167,6 @@
     <Build Include="Stored Procedures\Update\UpdateArtist.sql" />
     <Build Include="Stored Procedures\Update\UpdateTrack.sql" />
     <Build Include="Stored Procedures\Update\UpdateDiscCount.sql" />
-    <Build Include="Stored Procedures\Update\UpdateTrackCount.sql" />
     <Build Include="Stored Procedures\Update\UpdateTrackDisc.sql" />
     <Build Include="Stored Procedures\Update\AddAlbum.sql" />
     <Build Include="Stored Procedures\Update\AddArtist.sql" />

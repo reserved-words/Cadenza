@@ -10,5 +10,4 @@ public class SyncAlbumDTO
     public byte[] ArtworkContent { get; set; }
     public string TagList { get; set; }
     public int DiscCount { get; set; }
-    public List<int> TrackCounts { get; set; }
 }
