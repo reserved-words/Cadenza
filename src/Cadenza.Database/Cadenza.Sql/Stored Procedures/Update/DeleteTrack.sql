@@ -20,6 +20,21 @@ BEGIN
 		[TrackId] = @Id
 
 	DELETE
+		[History].[NowPlaying]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE
+		[History].[NowPlaying]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE
+		[LastFm].[LovedTracks]
+	WHERE
+		[TrackId] = @Id
+
+	DELETE
 		[Queue].[TrackUpdates]
 	WHERE
 		[TrackId] = @Id

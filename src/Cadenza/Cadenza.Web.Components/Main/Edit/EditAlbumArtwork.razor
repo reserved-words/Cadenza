@@ -13,11 +13,10 @@
         }
 
         <MudStack Row="true" Class="my-2">
-            <MudButton Variant="@Variant.Outlined"
-                       OnClick="@(() => OnSearch(SearchSource.LastFM))">Search Last.FM</MudButton>
-            <MudButton Variant="@Variant.Outlined"
-                       OnClick="@(() => OnSearch(SearchSource.Spotify))">Search Spotify</MudButton>
+            <MudButton OnClick="@OnLoad">Load</MudButton>
+            <MudButton OnClick="@OnSearch">Search</MudButton>
         </MudStack>
+
     </MudContainer>
 
     <MudStack Row="true" Class="my-1">
@@ -63,7 +62,28 @@
         OriginalArtworkSrc = action.Result;
     }
 
-    protected void OnSearch(SearchSource source)
+    protected async Task OnLoad()
+    {
+        try
+        {
+            var artworkUrl = await ImageFinder.GetAlbumArtworkUrl(Model.ArtistName, Model.Title);
+
+            if (string.IsNullOrWhiteSpace(artworkUrl))
+            {
+                throw new Exception("No artwork found");
+            }
+
+            ArtworkUrl = artworkUrl;
+
+            await OnUpdateUrl();
+        }
+        catch (Exception ex)
+        {
+            Dispatcher.Dispatch(new NotificationErrorRequest("Error loading artwork", ex.Message, ex.StackTrace));
+        }
+    }
+
+    protected void OnSearch()
     {
         var searchUrl = ImageFinder.GetAlbumArtworkSearchUrl(Model.ArtistName, Model.Title);
         Dispatcher.Dispatch(new NavigationRequest(searchUrl, true));

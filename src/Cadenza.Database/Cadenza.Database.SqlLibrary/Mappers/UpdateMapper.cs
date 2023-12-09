@@ -23,7 +23,7 @@ internal class UpdateMapper : IUpdateMapper
             Title = track.Album.Title,
             ReleaseTypeId = (int)track.Album.ReleaseType,
             Year = track.Album.Year,
-            DiscCount = track.Album.TrackCounts.Count,
+            DiscCount = track.Album.DiscCount,
             TagList = track.Album.TagList,
             ArtworkMimeType = track.Album.ArtworkMimeType,
             ArtworkContent = track.Album.ArtworkContent

@@ -9,5 +9,6 @@ public class SyncAlbumDTO
     public string ArtworkMimeType { get; set; }
     public byte[] ArtworkContent { get; set; }
     public string TagList { get; set; }
+    public int DiscCount { get; set; }
     public List<int> TrackCounts { get; set; }
 }

@@ -47,6 +47,7 @@ internal class Id3Fetcher : IId3Fetcher
             ArtistName = data.Album.ArtistName,
             Title = data.Album.Title,
             ReleaseType = Enum.TryParse(data.Album.ReleaseType, out ReleaseType result) ? result : ReleaseType.Album,
+            DiscCount = data.Album.DiscCount,
             TrackCounts = new List<int>(),
             Year = data.Album.Year.Nullify(),
             TagList = comment.AlbumTags,
