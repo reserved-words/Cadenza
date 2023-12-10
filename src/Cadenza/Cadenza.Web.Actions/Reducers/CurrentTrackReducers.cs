@@ -19,10 +19,20 @@ public static class CurrentTrackReducers
     [ReducerMethod]
     public static CurrentTrackState ReduceAlbumUpdatedAction(CurrentTrackState state, AlbumUpdatedAction action)
     {
-        if (state.Track == null || state.Track.Album.Id != action.UpdatedAlbum.Id)
+        if (state.Track == null || state.Track.Album.Id != action.AlbumId)
             return state;
 
-        var track = state.Track with { Album = action.UpdatedAlbum };
+        var updatedAlbum = state.Track.Album with
+        {
+            Title = action.UpdatedAlbum.Title,
+            ReleaseType = action.UpdatedAlbum.ReleaseType,
+            Year = action.UpdatedAlbum.Year,
+            DiscCount = action.UpdatedAlbum.DiscCount,
+            ArtworkBase64 = action.UpdatedAlbum.ArtworkBase64,
+            Tags = action.UpdatedAlbum.Tags
+        };
+
+        var track = state.Track with { Album = updatedAlbum };
 
         return state with { Track = track };
     }

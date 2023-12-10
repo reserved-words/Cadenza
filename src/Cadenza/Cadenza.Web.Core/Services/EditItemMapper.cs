@@ -4,12 +4,11 @@ namespace Cadenza.Web.Core.Services;
 
 internal class EditItemMapper : IEditItemMapper
 {
-    public EditableAlbum MapEditableAlbum(AlbumDetailsVM album)
+    public EditableAlbum MapEditableAlbum(UpdateAlbumVM album)
     {
         return new EditableAlbum
         {
             Id = album.Id,
-            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = album.ReleaseType,
@@ -20,23 +19,22 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<AlbumDiscVM> tracks)
+    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<UpdateAlbumTrackVM> tracks)
     {
         return tracks
+            .GroupBy(t => t.DiscNo)
             .Select(d => new EditableAlbumDisc
             {
-                DiscNo = d.DiscNo,
-                TrackCount = d.TrackCount,
-                Tracks = d.Tracks.Select(t => new EditableAlbumTrack
+                DiscNo = d.Key,
+                TrackCount = d.First().DiscTrackCount,
+                Tracks = d.Select(t => new EditableAlbumTrack
                 {
                     TrackId = t.TrackId,
+                    IdFromSource = t.IdFromSource,
+                    ArtistName = t.ArtistName,
                     TrackNo = t.TrackNo,
                     DiscNo = t.DiscNo,
-                    Title = t.Title,
-                    DurationSeconds = t.DurationSeconds,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    IdFromSource = t.IdFromSource
+                    Title = t.Title
                 }).ToList()
             })
             .ToList();
@@ -89,12 +87,11 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public AlbumDetailsVM MapEditedAlbum(EditableAlbum album)
+    public UpdateAlbumVM MapEditedAlbum(EditableAlbum album)
     {
-        return new AlbumDetailsVM
+        return new UpdateAlbumVM
         {
             Id = album.Id,
-            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = album.ReleaseType,
@@ -105,26 +102,25 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public IReadOnlyCollection<AlbumDiscVM> MapEditedAlbumTracks(List<EditableAlbumDisc> tracks)
+    public IReadOnlyCollection<UpdateAlbumTrackVM> MapEditedAlbumTracks(List<EditableAlbumDisc> discs)
     {
-        return tracks
-            .Select(d => new AlbumDiscVM
+        var tracks = new List<UpdateAlbumTrackVM>();
+
+        foreach (var disc in discs)
+        {
+            tracks.AddRange(disc.Tracks.Select(t => new UpdateAlbumTrackVM
             {
-                DiscNo = d.DiscNo,
-                TrackCount = d.TrackCount,
-                Tracks = d.Tracks.Select(t => new AlbumTrackVM
-                {
-                    TrackId = t.TrackId,
-                    TrackNo = t.TrackNo,
-                    DiscNo = t.DiscNo,
-                    Title = t.Title,
-                    DurationSeconds = t.DurationSeconds,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    IdFromSource = t.IdFromSource
-                }).ToList()
-            })
-            .ToList();
+                TrackId = t.TrackId,
+                TrackNo = t.TrackNo,
+                DiscNo = t.DiscNo,
+                DiscTrackCount = disc.TrackCount,
+                Title = t.Title,
+                ArtistName = t.ArtistName,
+                IdFromSource = t.IdFromSource
+            }));
+        };
+
+        return tracks;
     }
 
     public ArtistDetailsVM MapEditedArtist(EditableArtist artist)

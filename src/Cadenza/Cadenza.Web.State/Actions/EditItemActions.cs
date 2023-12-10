@@ -11,7 +11,7 @@ public record FetchEditArtistRequest(int ArtistId);
 public record FetchEditArtistResult(ArtistDetailsVM Artist, IReadOnlyCollection<AlbumVM> Releases);
 
 public record FetchEditAlbumRequest(int AlbumId);
-public record FetchEditAlbumResult(AlbumDetailsVM Album, IReadOnlyCollection<AlbumDiscVM> Tracks);
+public record FetchEditAlbumResult(UpdateAlbumVM Album, IReadOnlyCollection<UpdateAlbumTrackVM> Tracks);
 
 public record FetchEditTrackRequest(int TrackId);
 public record FetchEditTrackResult(TrackDetailsVM Track);

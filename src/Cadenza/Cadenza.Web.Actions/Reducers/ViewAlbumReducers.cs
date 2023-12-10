@@ -22,9 +22,47 @@ public static class ViewAlbumReducers
         if (state.Album.Id != action.AlbumId)
             return state;
 
+        var tracks = new List<(AlbumTrackVM Track, int DiscTrackCount)>();
+
+        foreach (var disc in state.Tracks)
+        {
+            foreach (var track in disc.Tracks)
+            {
+                if (action.RemovedTracks.Contains(track.TrackId))
+                    continue;
+
+                var update = action.UpdatedAlbumTracks.SingleOrDefault(t => t.TrackId == track.TrackId);
+
+                if (update == null)
+                {
+                    tracks.Add((track, disc.TrackCount));
+                }
+                else
+                {
+                    var updatedTrack = track with
+                    {
+                        Title = update.Title,
+                        TrackNo = update.TrackNo,
+                        DiscNo = update.DiscNo
+                    };
+
+                    tracks.Add((updatedTrack, update.DiscTrackCount));
+                }
+            }
+        }
+
+        var discs = tracks.GroupBy(t => t.Track.DiscNo)
+            .Select(d => new AlbumDiscVM
+            {
+                DiscNo = d.Key,
+                TrackCount = d.First().DiscTrackCount,
+                Tracks = d.Select(t => t.Track).ToList()
+            })
+            .ToList();
+
         return state with
         {
-            Tracks = action.UpdatedTracks
+            Tracks = discs
         };
     }
 
@@ -34,6 +72,16 @@ public static class ViewAlbumReducers
         if (state.Album == null || state.Album.Id != action.UpdatedAlbum.Id)
             return state;
 
-        return state with { Album = action.UpdatedAlbum };
+        var updatedAlbum = state.Album with
+        {
+            Title = action.UpdatedAlbum.Title,
+            ReleaseType = action.UpdatedAlbum.ReleaseType,
+            Year = action.UpdatedAlbum.Year,
+            DiscCount = action.UpdatedAlbum.DiscCount,
+            ArtworkBase64 = action.UpdatedAlbum.ArtworkBase64,
+            Tags = action.UpdatedAlbum.Tags
+        };
+
+        return state with { Album = updatedAlbum };
     }
 }

@@ -58,7 +58,8 @@
 }
 
 @code {
-    [Parameter] public List<EditableAlbumDisc> Model { get; set; }
+    [Parameter] public List<EditableAlbumDisc> Model { get; set; } = new List<EditableAlbumDisc>();
+    [Parameter] public List<int> RemovedTracks { get; set; } = new List<int>();
 
     protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
 
@@ -118,5 +119,7 @@
         {
             Model.Remove(currentDisc);
         }
+
+        RemovedTracks.Add(track.TrackId);
     }
 }

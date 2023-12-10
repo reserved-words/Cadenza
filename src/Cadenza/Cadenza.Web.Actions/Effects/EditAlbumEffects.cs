@@ -2,9 +2,9 @@
 
 public class EditAlbumEffects
 {
-    private readonly ILibraryApi _api;
+    private readonly IUpdateApi _api;
 
-    public EditAlbumEffects(ILibraryApi api)
+    public EditAlbumEffects(IUpdateApi api)
     {
         _api = api;
     }

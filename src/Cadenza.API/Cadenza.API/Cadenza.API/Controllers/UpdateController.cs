@@ -4,19 +4,60 @@
 [ApiController]
 public class UpdateController : ControllerBase
 {
-    private readonly IUpdateRepository _repository;
+    private readonly ILibraryRepository _libraryRepository;
+    private readonly IUpdateRepository _updateRepository;
     private readonly IUpdateService _service;
 
-    public UpdateController(IUpdateService service, IUpdateRepository repository)
+    public UpdateController(IUpdateService service, IUpdateRepository updateRepository, ILibraryRepository libraryRepository)
     {
         _service = service;
-        _repository = repository;
+        _updateRepository = updateRepository;
+        _libraryRepository = libraryRepository;
     }
 
-    [HttpDelete("UpdateAlbumTracks")]
-    public async Task UpdateAlbumTracks([FromBody] UpdateAlbumTracksDTO request)
+    [HttpGet("GetAlbum/{id}")]
+    public async Task<AlbumForUpdateDTO> GetAlbum(int id)
     {
-        await _service.UpdateAlbumTracks(request);
+        // TODO: Should really get the DTOs directly from database instead of mapping to one DTO then another
+
+        var album = await _libraryRepository.GetAlbum(id);
+
+        return new AlbumForUpdateDTO
+        {
+            AlbumId = album.Id,
+            ArtistName = album.ArtistName,
+            Title = album.Title,
+            ReleaseType = album.ReleaseType,
+            Year = album.Year,
+            DiscCount = album.DiscCount,
+            Tags = album.Tags,
+        };
+    }
+
+    [HttpGet("GetAlbumTracks/{id}")]
+    public async Task<List<AlbumTrackForUpdateDTO>> GetAlbumTracks(int id)
+    {
+        // TODO: Should really get the DTOs directly from database instead of mapping to one DTO then another
+
+        var discs = await _libraryRepository.GetAlbumTracks(id);
+
+        var tracks = new List<AlbumTrackForUpdateDTO>();
+
+        foreach (var disc in discs)
+        {
+            tracks.AddRange(disc.Tracks.Select(t => new AlbumTrackForUpdateDTO
+            {
+                TrackId = t.TrackId,
+                IdFromSource = t.IdFromSource,
+                Title = t.Title,
+                ArtistName = t.ArtistName,
+                TrackNo = t.TrackNo,
+                DiscNo = disc.DiscNo,
+                DiscTrackCount = disc.TrackCount
+            }));
+        }
+
+        return tracks;
     }
 
     [HttpPost("UpdateTrack")]
@@ -32,7 +73,7 @@ public class UpdateController : ControllerBase
     }
 
     [HttpPost("UpdateAlbum")]
-    public async Task UpdateAlbum([FromBody] UpdatedAlbumPropertiesDTO request)
+    public async Task UpdateAlbum([FromBody] AlbumUpdateDTO request)
     {
         await _service.UpdateAlbum(request);
     }
@@ -41,13 +82,13 @@ public class UpdateController : ControllerBase
     public async Task LoveTrack([FromBody] UpdateLovedTrackDTO request)
     {
         var username = HttpContext.GetUsername();
-        await _repository.LoveTrack(username, request.TrackId);
+        await _updateRepository.LoveTrack(username, request.TrackId);
     }
 
     [HttpPost("UnloveTrack")]
     public async Task UnloveTrack([FromBody] UpdateLovedTrackDTO request)
     {
         var username = HttpContext.GetUsername();
-        await _repository.UnloveTrack(username, request.TrackId);
+        await _updateRepository.UnloveTrack(username, request.TrackId);
     }
 }

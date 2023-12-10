@@ -2,8 +2,7 @@
 
 public interface IUpdateService
 {
-    Task UpdateAlbumTracks(UpdateAlbumTracksDTO request);
     Task UpdateTrack(UpdatedTrackPropertiesDTO updates);
-    Task UpdateAlbum(UpdatedAlbumPropertiesDTO updates);
+    Task UpdateAlbum(AlbumUpdateDTO request);
     Task UpdateArtist(UpdatedArtistPropertiesDTO updates);
 }

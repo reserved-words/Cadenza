@@ -13,36 +13,39 @@ internal class UpdateService : IUpdateService
         _updateRepository = updateRepository;
     }
 
-    public async Task UpdateAlbumTracks(UpdateAlbumTracksDTO request)
-    {
-        foreach (var originalTrack in request.OriginalTracks)
-        {
-            var updatedTrack = request.UpdatedTracks
-                .SingleOrDefault(t => t.TrackId == originalTrack.TrackId);
-
-            if (updatedTrack == null)
-            {
-                await _queueRepository.AddRemovalRequest(originalTrack.TrackId);
-                await _updateRepository.RemoveTrack(originalTrack.TrackId);
-            }
-            else
-            {
-                await _updateRepository.UpdateAlbumTrack(updatedTrack);
-                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
-            }
-        }
-    }
-
     public async Task UpdateTrack(UpdatedTrackPropertiesDTO update)
     {
         await _updateRepository.UpdateTrack(update);
         await _queueRepository.AddTrackUpdateRequest(update.TrackId);
     }
 
-    public async Task UpdateAlbum(UpdatedAlbumPropertiesDTO update)
+    public async Task UpdateAlbum(AlbumUpdateDTO update)
     {
-        await _updateRepository.UpdateAlbum(update);
-        await _queueRepository.AddAlbumUpdateRequest(update.AlbumId);
+        // TODO: Ideally do this all in one transaction so can roll back all and display one error message if it fails
+
+        if (update.UpdatedAlbum != null)
+        {
+            await _updateRepository.UpdateAlbum(update.UpdatedAlbum);
+            await _queueRepository.AddAlbumUpdateRequest(update.AlbumId);
+        }
+
+        if (update.UpdatedAlbumTracks != null)
+        {
+            foreach (var updatedTrack in update.UpdatedAlbumTracks)
+            {
+                await _updateRepository.UpdateAlbumTrack(updatedTrack);
+                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
+            }
+        }
+
+        if (update.RemovedTracks != null)
+        {
+            foreach (var removedTrackId in update.RemovedTracks)
+            {
+                await _queueRepository.AddRemovalRequest(removedTrackId);
+                await _updateRepository.RemoveTrack(removedTrackId);
+            }
+        }
     }
 
     public async Task UpdateArtist(UpdatedArtistPropertiesDTO update)
