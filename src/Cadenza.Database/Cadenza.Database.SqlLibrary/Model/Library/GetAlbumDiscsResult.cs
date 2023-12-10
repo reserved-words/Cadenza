@@ -1,6 +1,4 @@
-﻿using Cadenza.Common.DTO.Attributes;
-
-namespace Cadenza.Database.SqlLibrary.Model.Library;
+﻿namespace Cadenza.Database.SqlLibrary.Model.Library;
 
 public class GetAlbumDiscsResult
 {

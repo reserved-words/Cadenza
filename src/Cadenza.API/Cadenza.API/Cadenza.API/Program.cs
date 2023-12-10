@@ -3,7 +3,6 @@ global using Cadenza.API.Interfaces;
 global using Cadenza.Apps;
 global using Cadenza.Apps.API;
 global using Cadenza.Common.DTO;
-global using Cadenza.Common.DTO.Attributes;
 global using Cadenza.Common.Enums;
 global using Cadenza.Common.Model;
 global using Cadenza.Common.Utilities;
