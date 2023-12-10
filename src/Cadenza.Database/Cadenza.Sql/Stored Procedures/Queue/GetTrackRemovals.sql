@@ -11,6 +11,8 @@ BEGIN
 		[Queue].[TrackRemovalSync]
 	WHERE
 		[SourceId] = @SourceId
+	AND 
+		[Synced] = 0
 	AND
 		[FailedAttempts] < 3
 

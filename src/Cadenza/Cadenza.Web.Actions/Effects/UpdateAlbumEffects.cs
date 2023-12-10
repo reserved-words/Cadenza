@@ -14,14 +14,14 @@ public class AlbumUpdateEffects
     {
         try
         {
-            await _api.UpdateAlbum(action.OriginalAlbum, action.UpdatedAlbum);
+            await _api.UpdateAlbum(action.UpdatedAlbum);
             dispatcher.Dispatch(new AlbumUpdatedAction(action.UpdatedAlbum));
-            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.OriginalAlbum.Id));
+            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.UpdatedAlbum.Id));
         }
         catch (Exception ex)
         {
-            dispatcher.Dispatch(new AlbumUpdateFailedAction(action.OriginalAlbum.Id));
-            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Album, action.OriginalAlbum.Id, ex.Message, ex.StackTrace));
+            dispatcher.Dispatch(new AlbumUpdateFailedAction(action.UpdatedAlbum.Id));
+            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Album, action.UpdatedAlbum.Id, ex.Message, ex.StackTrace));
         }
     }
 }

@@ -28,9 +28,9 @@ internal class Queue : IQueue
         await _sql.Execute(new { TrackId = trackId });
     }
 
-    public async Task AddTrackRemoval(int id)
+    public async Task AddTrackRemoval(int trackId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { TrackId = trackId });
     }
 
     public async Task<List<GetAlbumUpdatesResult>> GetAlbumUpdates(LibrarySource source)

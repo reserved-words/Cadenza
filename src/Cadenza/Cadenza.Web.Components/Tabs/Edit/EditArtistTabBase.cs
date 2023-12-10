@@ -27,7 +27,7 @@ public class EditArtistTabBase : FluxorComponent
 
         var editedArtist = Mapper.MapEditedArtist(EditableArtist);
 
-        Dispatcher.Dispatch(new ArtistUpdateRequest(Artist, editedArtist));
+        Dispatcher.Dispatch(new ArtistUpdateRequest(editedArtist));
 
         if (Releases.Any())
         {

@@ -28,7 +28,7 @@ public class EditAlbumTabBase : FluxorComponent
         var editedAlbum = Mapper.MapEditedAlbum(EditableAlbum);
         var editedTracks = Mapper.MapEditedAlbumTracks(EditableTracks);
 
-        Dispatcher.Dispatch(new AlbumUpdateRequest(Album, editedAlbum));
+        Dispatcher.Dispatch(new AlbumUpdateRequest(editedAlbum));
         Dispatcher.Dispatch(new AlbumTracksUpdateRequest(Album.Id, Tracks, editedTracks));
     }
 

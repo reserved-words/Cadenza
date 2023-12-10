@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Services;
+﻿using Cadenza.Common.DTO;
+
+namespace Cadenza.API.Services;
 
 internal class UpdateService : IUpdateService
 {
@@ -25,27 +27,27 @@ internal class UpdateService : IUpdateService
             }
             else
             {
-                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
                 await _updateRepository.UpdateAlbumTrack(updatedTrack);
+                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
             }
         }
     }
 
-    public async Task UpdateTrack(UpdateTrackDTO request)
+    public async Task UpdateTrack(UpdatedTrackPropertiesDTO update)
     {
-        await _queueRepository.AddTrackUpdateRequest(request.UpdatedTrack.TrackId);
-        await _updateRepository.UpdateTrack(request.UpdatedTrack);
+        await _updateRepository.UpdateTrack(update);
+        await _queueRepository.AddTrackUpdateRequest(update.TrackId);
     }
 
-    public async Task UpdateAlbum(UpdateAlbumDTO request)
+    public async Task UpdateAlbum(UpdatedAlbumPropertiesDTO update)
     {
-        await _queueRepository.AddAlbumUpdateRequest(request.UpdatedAlbum.AlbumId);
-        await _updateRepository.UpdateAlbum(request.UpdatedAlbum);
+        await _updateRepository.UpdateAlbum(update);
+        await _queueRepository.AddAlbumUpdateRequest(update.AlbumId);
     }
 
-    public async Task UpdateArtist(UpdateArtistDTO request)
+    public async Task UpdateArtist(UpdatedArtistPropertiesDTO update)
     {
-        await _queueRepository.AddArtistUpdateRequest(request.UpdatedArtist.ArtistId);
-        await _updateRepository.UpdateArtist(request.UpdatedArtist);
+        await _updateRepository.UpdateArtist(update);
+        await _queueRepository.AddArtistUpdateRequest(update.ArtistId);
     }
 }

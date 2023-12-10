@@ -24,21 +24,21 @@ internal class UpdateApi : IUpdateApi
         await _http.Delete(_settings.Endpoints.UpdateAlbumTracks, dto);
     }
 
-    public async Task UpdateAlbum(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum)
+    public async Task UpdateAlbum(AlbumDetailsVM updatedAlbum)
     {
-        var dto = _mapper.MapUpdate(originalAlbum, updatedAlbum);
+        var dto = _mapper.MapUpdate(updatedAlbum);
         await _http.Post(_settings.Endpoints.UpdateAlbum, dto);
     }
 
-    public async Task UpdateArtist(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist)
+    public async Task UpdateArtist(ArtistDetailsVM updatedArtist)
     {
-        var dto = _mapper.MapUpdate(originalArtist, updatedArtist);
+        var dto = _mapper.MapUpdate(updatedArtist);
         await _http.Post(_settings.Endpoints.UpdateArtist, dto);
     }
 
-    public async Task UpdateTrack(TrackDetailsVM originalTrack, TrackDetailsVM updatedTrack)
+    public async Task UpdateTrack(TrackDetailsVM updatedTrack)
     {
-        var dto = _mapper.MapUpdate(originalTrack, updatedTrack);
+        var dto = _mapper.MapUpdate(updatedTrack);
         await _http.Post(_settings.Endpoints.UpdateTrack, dto);
     }
 }

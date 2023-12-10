@@ -25,7 +25,7 @@ public class EditTrackTabBase : FluxorComponent
 
         var editedTrack = Mapper.MapEditedTrack(EditableTrack);
 
-        Dispatcher.Dispatch(new TrackUpdateRequest(Track, editedTrack));
+        Dispatcher.Dispatch(new TrackUpdateRequest(editedTrack));
     }
 
     private void OnEditTrackFetched(FetchEditTrackResult result)

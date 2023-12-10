@@ -25,7 +25,7 @@ BEGIN
 	LEFT JOIN
 		[Library].[ArtistImages] IMG ON IMG.[ArtistId] = ART.[Id]
 	WHERE
-		SNC.[LastSynced] < SNC.[LastUpdated]
+		(SNC.[LastSynced] IS NULL OR SNC.[LastSynced] < SNC.[LastUpdated])
 	AND
 		SNC.[FailedAttempts] < 3
 

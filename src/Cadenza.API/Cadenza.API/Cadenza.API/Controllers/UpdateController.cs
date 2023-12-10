@@ -20,19 +20,19 @@ public class UpdateController : ControllerBase
     }
 
     [HttpPost("UpdateTrack")]
-    public async Task UpdateTrack([FromBody] UpdateTrackDTO request)
+    public async Task UpdateTrack([FromBody] UpdatedTrackPropertiesDTO request)
     {
         await _service.UpdateTrack(request);
     }
 
     [HttpPost("UpdateArtist")]
-    public async Task UpdateArtist([FromBody] UpdateArtistDTO request)
+    public async Task UpdateArtist([FromBody] UpdatedArtistPropertiesDTO request)
     {
         await _service.UpdateArtist(request);
     }
 
     [HttpPost("UpdateAlbum")]
-    public async Task UpdateAlbum([FromBody] UpdateAlbumDTO request)
+    public async Task UpdateAlbum([FromBody] UpdatedAlbumPropertiesDTO request)
     {
         await _service.UpdateAlbum(request);
     }
