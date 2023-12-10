@@ -3,7 +3,7 @@ using Cadenza.Web.Common.ViewModel;
 
 namespace Cadenza.Web.State.Actions;
 
-public record CancelEditItemRequest(LibraryItemType Type, int Id);
+public record CancelEditItemRequest();
 public record RemoveEditItemRequest(LibraryItemType Type, int Id);
 public record SaveEditItemRequest(LibraryItemType Type, int Id);
 

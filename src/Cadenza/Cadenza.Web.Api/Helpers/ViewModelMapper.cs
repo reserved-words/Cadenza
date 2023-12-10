@@ -105,7 +105,7 @@ internal class ViewModelMapper : IViewModelMapper
             ArtistId = dto.ArtistId,
             ArtistName = dto.ArtistName,
             DurationSeconds = dto.DurationSeconds,
-            Lyrics = dto.Lyrics,
+            Lyrics = dto.Lyrics ?? "",
             Tags = Map(dto.Tags),
             Year = dto.Year
         };

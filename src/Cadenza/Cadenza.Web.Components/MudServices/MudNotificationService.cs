@@ -18,4 +18,9 @@ internal class MudNotificationService : INotificationService
     {
         _snackbar.Add(message, Severity.Success);
     }
+
+    public void Information(string message)
+    {
+        _snackbar.Add(message, Severity.Info);
+    }
 }

@@ -23,7 +23,6 @@ BEGIN
 			[Queue].[AlbumSync]
 		SET
 			[LastUpdated] = GETDATE(),
-			[LastSynced] = NULL,
 			[FailedAttempts] = 0,
 			[LastAttempt] = NULL
 		WHERE	

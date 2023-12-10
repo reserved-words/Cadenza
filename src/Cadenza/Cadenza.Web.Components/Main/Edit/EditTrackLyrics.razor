@@ -1,19 +1,22 @@
 ﻿
-<MudContainer Class="ma-0 pa-0 d-flex align-stretch">
-    <MudTextField Class="textarea"
-                  @bind-Value="Model.Lyrics"
-                  For="@(() => Model.Lyrics)"
-                  Lines="30" />
-</MudContainer>
+@if (Model != null)
+{
+    <MudContainer Class="ma-0 pa-0 d-flex align-stretch">
+        <MudTextField Class="textarea"
+                      @bind-Value="Model.Lyrics"
+                      For="@(() => Model.Lyrics)"
+                      Lines="30" />
+    </MudContainer>
 
-<MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
-    <MudStack Row="true" Class="mt-2">
-        <MudButton Variant="@Variant.Outlined"
-                   OnClick="@OnLoad" Disabled="true">Load</MudButton>
-        <MudButton Variant="@Variant.Outlined"
-                   OnClick="@OnSearch">Search</MudButton>
-    </MudStack>
-</MudContainer>
+    <MudContainer Class="ma-0 pa-0 d-flex flex-column align-center">
+        <MudStack Row="true" Class="mt-2">
+            <MudButton Variant="@Variant.Outlined"
+                       OnClick="@OnLoad" Disabled="true">Load</MudButton>
+            <MudButton Variant="@Variant.Outlined"
+                       OnClick="@OnSearch">Search</MudButton>
+        </MudStack>
+    </MudContainer>
+}
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }

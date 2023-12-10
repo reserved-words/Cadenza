@@ -3,6 +3,7 @@
 public class EditTrackTabBase : FluxorComponent
 {
     [Inject] public IState<EditTrackState> EditTrackState { get; set; }
+    [Inject] public IChangeDetector ChangeDetector { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IEditItemMapper Mapper { get; set; }
 
@@ -25,7 +26,15 @@ public class EditTrackTabBase : FluxorComponent
 
         var editedTrack = Mapper.MapEditedTrack(EditableTrack);
 
-        Dispatcher.Dispatch(new TrackUpdateRequest(editedTrack));
+        if (!ChangeDetector.HasTrackChanged(Track, editedTrack))
+        {
+            Dispatcher.Dispatch(new NotificationInformationRequest("No changes made"));
+            Dispatcher.Dispatch(new CancelEditItemRequest());
+        }
+        else
+        {
+            Dispatcher.Dispatch(new TrackUpdateRequest(editedTrack));
+        }
     }
 
     private void OnEditTrackFetched(FetchEditTrackResult result)
