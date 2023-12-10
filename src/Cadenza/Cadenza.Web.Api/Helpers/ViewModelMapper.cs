@@ -27,7 +27,7 @@ internal class ViewModelMapper : IViewModelMapper
         {
             DiscNo = dto.DiscNo,
             TrackCount = dto.TrackCount,
-            Tracks = dto.Tracks.Select(t => Map(t)).ToList()
+            Tracks = dto.Tracks.Select(t => Map(t, dto)).ToList()
         };
     }
 
@@ -131,7 +131,7 @@ internal class ViewModelMapper : IViewModelMapper
         return new RecentAlbumVM(dto.Id, dto.Title, dto.ArtistName, null);
     }
 
-    private AlbumTrackVM Map(AlbumTrackDTO dto)
+    private AlbumTrackVM Map(AlbumTrackDTO dto, AlbumDiscDTO disc)
     {
         return new AlbumTrackVM
         {
@@ -142,6 +142,7 @@ internal class ViewModelMapper : IViewModelMapper
             TrackId = dto.TrackId,
             TrackNo = dto.TrackNo,
             DiscNo = dto.DiscNo,
+            DiscTrackCount = disc.TrackCount,
             IdFromSource = dto.IdFromSource
         };
     }

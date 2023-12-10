@@ -3,7 +3,7 @@
 namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record EditAlbumState(bool IsLoading, UpdateAlbumVM Album, IReadOnlyCollection<UpdateAlbumTrackVM> Tracks)
+public record EditAlbumState(bool IsLoading, AlbumDetailsVM Album, IReadOnlyCollection<AlbumTrackVM> Tracks)
 {
     private static EditAlbumState Init() => new EditAlbumState(true, null, null);
 }

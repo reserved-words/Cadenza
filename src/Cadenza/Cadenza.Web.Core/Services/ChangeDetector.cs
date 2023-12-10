@@ -4,7 +4,7 @@ namespace Cadenza.Web.Core.Services;
 
 internal class ChangeDetector : IChangeDetector
 {
-    public bool HasAlbumChanged(UpdateAlbumVM originalAlbum, UpdateAlbumVM updatedAlbum)
+    public bool HasAlbumChanged(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum)
     {
         return updatedAlbum.Title != originalAlbum.Title
             || updatedAlbum.ReleaseType != originalAlbum.ReleaseType
@@ -34,9 +34,9 @@ internal class ChangeDetector : IChangeDetector
              || HaveTagsChanged(updatedTrack.Tags, originalTrack.Tags);
     }
 
-    public bool HaveAlbumTracksChanged(IReadOnlyCollection<UpdateAlbumTrackVM> originalTracks, IReadOnlyCollection<UpdateAlbumTrackVM> tracksAfterEdit, out IReadOnlyCollection<UpdateAlbumTrackVM> changedTracks)
+    public bool HaveAlbumTracksChanged(IReadOnlyCollection<AlbumTrackVM> originalTracks, IReadOnlyCollection<AlbumTrackVM> tracksAfterEdit, out IReadOnlyCollection<AlbumTrackVM> changedTracks)
     {
-        var tracksWithChanges = new List<UpdateAlbumTrackVM>();
+        var tracksWithChanges = new List<AlbumTrackVM>();
 
         foreach (var originalTrack in originalTracks)
         {
@@ -56,7 +56,7 @@ internal class ChangeDetector : IChangeDetector
         return changedTracks.Any();
     }
 
-    private bool HasAlbumTrackChanged(UpdateAlbumTrackVM originalTrack, UpdateAlbumTrackVM updatedTrack)
+    private bool HasAlbumTrackChanged(AlbumTrackVM originalTrack, AlbumTrackVM updatedTrack)
     {
         return updatedTrack.Title != originalTrack.Title
             || updatedTrack.TrackNo != originalTrack.TrackNo

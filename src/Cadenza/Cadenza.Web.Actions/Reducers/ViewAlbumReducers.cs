@@ -22,7 +22,7 @@ public static class ViewAlbumReducers
         if (state.Album.Id != action.AlbumId)
             return state;
 
-        var tracks = new List<(AlbumTrackVM Track, int DiscTrackCount)>();
+        var tracks = new List<AlbumTrackVM>();
 
         foreach (var disc in state.Tracks)
         {
@@ -31,32 +31,17 @@ public static class ViewAlbumReducers
                 if (action.RemovedTracks.Contains(track.TrackId))
                     continue;
 
-                var update = action.UpdatedAlbumTracks.SingleOrDefault(t => t.TrackId == track.TrackId);
-
-                if (update == null)
-                {
-                    tracks.Add((track, disc.TrackCount));
-                }
-                else
-                {
-                    var updatedTrack = track with
-                    {
-                        Title = update.Title,
-                        TrackNo = update.TrackNo,
-                        DiscNo = update.DiscNo
-                    };
-
-                    tracks.Add((updatedTrack, update.DiscTrackCount));
-                }
+                var updatedTrack = action.UpdatedAlbumTracks.SingleOrDefault(t => t.TrackId == track.TrackId) ?? track;
+                tracks.Add(updatedTrack);
             }
         }
 
-        var discs = tracks.GroupBy(t => t.Track.DiscNo)
+        var discs = tracks.GroupBy(t => t.DiscNo)
             .Select(d => new AlbumDiscVM
             {
                 DiscNo = d.Key,
                 TrackCount = d.First().DiscTrackCount,
-                Tracks = d.Select(t => t.Track).ToList()
+                Tracks = d.ToList()
             })
             .ToList();
 

@@ -2,9 +2,9 @@
 
 public class EditAlbumEffects
 {
-    private readonly IUpdateApi _api;
+    private readonly ILibraryApi _api;
 
-    public EditAlbumEffects(IUpdateApi api)
+    public EditAlbumEffects(ILibraryApi api)
     {
         _api = api;
     }
@@ -13,7 +13,10 @@ public class EditAlbumEffects
     public async Task HandleFetchEditAlbumRequest(FetchEditAlbumRequest action, IDispatcher dispatcher)
     {
         var album = await _api.GetAlbum(action.AlbumId);
-        var tracks = await _api.GetAlbumTracks(action.AlbumId);
+        var discs = await _api.GetAlbumTracks(action.AlbumId);
+
+        var tracks = discs.SelectMany(d => d.Tracks).ToList();   
+
         dispatcher.Dispatch(new FetchEditAlbumResult(album, tracks));
     }
 }

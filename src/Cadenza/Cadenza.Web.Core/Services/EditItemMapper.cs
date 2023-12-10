@@ -4,7 +4,7 @@ namespace Cadenza.Web.Core.Services;
 
 internal class EditItemMapper : IEditItemMapper
 {
-    public EditableAlbum MapEditableAlbum(UpdateAlbumVM album)
+    public EditableAlbum MapEditableAlbum(AlbumDetailsVM album)
     {
         return new EditableAlbum
         {
@@ -19,7 +19,7 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<UpdateAlbumTrackVM> tracks)
+    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
     {
         return tracks
             .GroupBy(t => t.DiscNo)
@@ -31,6 +31,7 @@ internal class EditItemMapper : IEditItemMapper
                 {
                     TrackId = t.TrackId,
                     IdFromSource = t.IdFromSource,
+                    ArtistId = t.ArtistId,
                     ArtistName = t.ArtistName,
                     TrackNo = t.TrackNo,
                     DiscNo = t.DiscNo,
@@ -87,9 +88,9 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public UpdateAlbumVM MapEditedAlbum(EditableAlbum album)
+    public AlbumDetailsVM MapEditedAlbum(EditableAlbum album)
     {
-        return new UpdateAlbumVM
+        return new AlbumDetailsVM
         {
             Id = album.Id,
             ArtistName = album.ArtistName,
@@ -102,19 +103,20 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public IReadOnlyCollection<UpdateAlbumTrackVM> MapEditedAlbumTracks(List<EditableAlbumDisc> discs)
+    public IReadOnlyCollection<AlbumTrackVM> MapEditedAlbumTracks(List<EditableAlbumDisc> discs)
     {
-        var tracks = new List<UpdateAlbumTrackVM>();
+        var tracks = new List<AlbumTrackVM>();
 
         foreach (var disc in discs)
         {
-            tracks.AddRange(disc.Tracks.Select(t => new UpdateAlbumTrackVM
+            tracks.AddRange(disc.Tracks.Select(t => new AlbumTrackVM
             {
                 TrackId = t.TrackId,
                 TrackNo = t.TrackNo,
                 DiscNo = t.DiscNo,
                 DiscTrackCount = disc.TrackCount,
                 Title = t.Title,
+                ArtistId = t.ArtistId,
                 ArtistName = t.ArtistName,
                 IdFromSource = t.IdFromSource
             }));

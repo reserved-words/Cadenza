@@ -2,7 +2,7 @@
 
 internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
-    public UpdatedAlbumPropertiesDTO MapAlbum(UpdateAlbumVM vm)
+    public UpdatedAlbumPropertiesDTO MapAlbum(AlbumDetailsVM vm)
     {
         return new UpdatedAlbumPropertiesDTO
         {
@@ -43,7 +43,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         };
     }
 
-    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<UpdateAlbumTrackVM> tracks)
+    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
     {
         return tracks.Select(track => new UpdatedAlbumTrackPropertiesDTO
         {
@@ -59,33 +59,5 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
     private static TagsDTO Map(IReadOnlyCollection<string> vm)
     {
         return new TagsDTO { Tags = vm.ToList() };
-    }
-
-    public UpdateAlbumVM MapAlbum(AlbumForUpdateDTO album)
-    {
-        return new UpdateAlbumVM
-        {
-            Id = album.AlbumId,
-            ArtistName = album.ArtistName,
-            Title = album.Title,
-            ReleaseType = album.ReleaseType,
-            Year = album.Year,
-            DiscCount = album.DiscCount,
-            Tags = album.Tags.Tags
-        };
-    }
-
-    public UpdateAlbumTrackVM MapTrack(AlbumTrackForUpdateDTO track)
-    {
-        return new UpdateAlbumTrackVM
-        {
-            TrackId = track.TrackId,
-            ArtistName = track.ArtistName,
-            Title = track.Title,
-            IdFromSource = track.IdFromSource,
-            DiscNo = track.DiscNo,
-            DiscTrackCount = track.DiscTrackCount,
-            TrackNo = track.TrackNo
-        };
     }
 }

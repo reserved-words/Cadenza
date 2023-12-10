@@ -2,8 +2,8 @@
 
 public interface IChangeDetector
 {
-    bool HasAlbumChanged(UpdateAlbumVM originalAlbum, UpdateAlbumVM updatedAlbum);
+    bool HasAlbumChanged(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum);
     bool HasArtistChanged(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist);
     bool HasTrackChanged(TrackDetailsVM originalTrack, TrackDetailsVM updatedTrack);
-    bool HaveAlbumTracksChanged(IReadOnlyCollection<UpdateAlbumTrackVM> tracks, IReadOnlyCollection<UpdateAlbumTrackVM> updatedTracks, out IReadOnlyCollection<UpdateAlbumTrackVM> changedTracks);
+    bool HaveAlbumTracksChanged(IReadOnlyCollection<AlbumTrackVM> tracks, IReadOnlyCollection<AlbumTrackVM> updatedTracks, out IReadOnlyCollection<AlbumTrackVM> changedTracks);
 }

@@ -13,19 +13,7 @@ internal class UpdateApi : IUpdateApi
         _mapper = mapper;
     }
 
-    public async Task<UpdateAlbumVM> GetAlbum(int albumId)
-    {
-        var dto = await _http.Get<AlbumForUpdateDTO>(_settings.Endpoints.GetAlbumForUpdate, albumId);
-        return _mapper.MapAlbum(dto);
-    }
-
-    public async Task<List<UpdateAlbumTrackVM>> GetAlbumTracks(int albumId)
-    {
-        var dto = await _http.Get<List<AlbumTrackForUpdateDTO>>(_settings.Endpoints.GetAlbumTracksForUpdate, albumId);
-        return dto.Select(t => _mapper.MapTrack(t)).ToList();
-    }
-
-    public async Task UpdateAlbum(int albumId, UpdateAlbumVM updatedAlbum, IReadOnlyCollection<UpdateAlbumTrackVM> updatedTracks, IReadOnlyCollection<int> removedTracks)
+    public async Task UpdateAlbum(int albumId, AlbumDetailsVM updatedAlbum, IReadOnlyCollection<AlbumTrackVM> updatedTracks, IReadOnlyCollection<int> removedTracks)
     {
         var album = updatedAlbum == null ? null : _mapper.MapAlbum(updatedAlbum);
         var albumTracks = updatedTracks == null ? null : _mapper.MapAlbumTracks(updatedTracks);

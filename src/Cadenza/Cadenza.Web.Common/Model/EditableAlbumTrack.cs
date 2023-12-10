@@ -3,6 +3,7 @@
 public class EditableAlbumTrack
 {
     public int TrackId { get; init; }
+    public int ArtistId { get; set; }
     public string ArtistName { get; init; }
     public string IdFromSource { get; init; }
     public string Title { get; set; }

@@ -8,8 +8,8 @@ public class EditAlbumTabBase : FluxorComponent
     [Inject] public IEditItemMapper Mapper { get; set; }
 
     public bool Loading => EditAlbumState.Value.IsLoading;
-    public UpdateAlbumVM Album => EditAlbumState.Value.Album;
-    public IReadOnlyCollection<UpdateAlbumTrackVM> Tracks => EditAlbumState.Value.Tracks;
+    public AlbumDetailsVM Album => EditAlbumState.Value.Album;
+    public IReadOnlyCollection<AlbumTrackVM> Tracks => EditAlbumState.Value.Tracks;
 
     protected EditableAlbum EditableAlbum { get; set; }
     protected List<EditableAlbumDisc> EditableTracks { get; set; } = new List<EditableAlbumDisc>();
