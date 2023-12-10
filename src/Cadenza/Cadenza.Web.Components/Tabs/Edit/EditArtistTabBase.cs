@@ -3,6 +3,7 @@
 public class EditArtistTabBase : FluxorComponent
 {
     [Inject] public IState<EditArtistState> EditArtistState { get; set; }
+    [Inject] public IChangeDetector ChangeDetector { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IEditItemMapper Mapper { get; set; }
 
@@ -27,12 +28,20 @@ public class EditArtistTabBase : FluxorComponent
 
         var editedArtist = Mapper.MapEditedArtist(EditableArtist);
 
-        Dispatcher.Dispatch(new ArtistUpdateRequest(editedArtist));
+        if (!ChangeDetector.HasArtistChanged(Artist, editedArtist))
+        {
+            Dispatcher.Dispatch(new NotificationInformationRequest("No changes made"));
+            Dispatcher.Dispatch(new CancelEditItemRequest());
+        }
+        else
+        {
+            Dispatcher.Dispatch(new ArtistUpdateRequest(editedArtist));
+        }
 
         if (Releases.Any())
         {
-            // TODO: Update artist releases
-            Dispatcher.Dispatch(new NotificationErrorRequest("Updating artist releases is not yet implemented", null, null));
+            // TODO: Update artist releases IF any changed
+            Dispatcher.Dispatch(new NotificationInformationRequest("Updating artist releases is not yet implemented"));
         }
     }
 
