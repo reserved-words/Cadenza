@@ -2,7 +2,7 @@
 
 public class UpdatedAlbumPropertiesDTO
 {
-    public int Id { get; set; }
+    public int AlbumId { get; set; }
 
     [ItemProperty(ItemProperty.AlbumTitle)]
     public string Title { get; set; }

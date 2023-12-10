@@ -1,61 +1,33 @@
 ﻿CREATE PROCEDURE [Queue].[AddArtistUpdate]
-	@ArtistId INT,
-	@PropertyName NVARCHAR(50),
-	@OriginalValue NVARCHAR(MAX),
-	@UpdatedValue NVARCHAR(MAX)
+	@ArtistId INT
 AS
 BEGIN
 
-	DECLARE @PropertyId INT
-
-	SELECT 
-		@PropertyId = [Id] 
-	FROM
-		[Admin].[ArtistProperties]
-	WHERE
-		[Name] = @PropertyName
-
-	UPDATE
-		[Queue].[ArtistUpdates]
-	SET
-		[DateRemoved] = GETDATE()
-	WHERE
-		[ArtistId] = @ArtistId
-	AND
-		[PropertyId] = @PropertyId
-	AND
-		[DateProcessed] IS NULL
-	AND
-		[DateRemoved] IS NULL
-
-	DECLARE @SourceId INT
-	DECLARE @Sources TABLE ([SourceId] INT)
-	INSERT INTO @Sources 
-	SELECT [Id]
-	FROM [Admin].[Sources]
-
-	WHILE EXISTS (SELECT [SourceId] FROM @Sources)
+	IF NOT EXISTS (SELECT [ArtistId] FROM [Queue].[ArtistSync] WHERE [ArtistId] = @ArtistId)
 	BEGIN
 
-		SELECT @SourceId = [SourceId] FROM @Sources
-		
-		INSERT INTO [Queue].[ArtistUpdates] 
-		(
+		INSERT INTO [Queue].[ArtistSync] (
 			[ArtistId],
-			[SourceId],
-			[PropertyId],
-			[OriginalValue],
-			[UpdatedValue]
+			[LastUpdated]
 		)
 		VALUES (
 			@ArtistId,
-			@SourceId,
-			@PropertyId,
-			@OriginalValue,
-			@UpdatedValue
+			GETDATE()
 		)
 
-		DELETE @Sources WHERE [SourceId] = @SourceId
+	END
+	ELSE
+	BEGIN
+
+		UPDATE 
+			[Queue].[ArtistSync]
+		SET
+			[LastUpdated] = GETDATE(),
+			[LastSynced] = NULL,
+			[FailedAttempts] = 0,
+			[LastAttempt] = NULL
+		WHERE	
+			[ArtistId] = @ArtistId
 
 	END
 

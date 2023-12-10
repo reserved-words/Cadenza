@@ -1,13 +1,14 @@
 ﻿CREATE PROCEDURE [Queue].[MarkTrackUpdateErrored]
-	@Id INT
+	@TrackId INT
 AS
 BEGIN
 
 	UPDATE
-		[Queue].[TrackUpdates]
+		[Queue].[TrackSync]
 	SET
-		[DateErrored] = GETDATE()
+		[LastAttempt] = GETDATE(),
+		[FailedAttempts] = [FailedAttempts] + 1
 	WHERE
-		[Id] = @Id
+		[TrackId] = @TrackId
 
 END

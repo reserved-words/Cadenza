@@ -1,13 +1,14 @@
 ﻿CREATE PROCEDURE [Queue].[MarkAlbumUpdateErrored]
-	@Id INT
+	@AlbumId INT
 AS
 BEGIN
 
 	UPDATE
-		[Queue].[AlbumUpdates]
+		[Queue].[AlbumSync]
 	SET
-		[DateErrored] = GETDATE()
+		[LastAttempt] = GETDATE(),
+		[FailedAttempts] = [FailedAttempts] + 1
 	WHERE
-		[Id] = @Id
+		[AlbumId] = @AlbumId
 
 END

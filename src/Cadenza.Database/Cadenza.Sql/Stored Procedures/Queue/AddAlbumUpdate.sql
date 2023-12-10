@@ -1,54 +1,34 @@
 ﻿CREATE PROCEDURE [Queue].[AddAlbumUpdate]
-	@AlbumId INT,
-	@PropertyName NVARCHAR(50),
-	@OriginalValue NVARCHAR(MAX),
-	@UpdatedValue NVARCHAR(MAX)
+	@AlbumId INT
 AS
 BEGIN
 
-	DECLARE @PropertyId INT,
-			@SourceId INT
+	IF NOT EXISTS (SELECT [AlbumId] FROM [Queue].[AlbumSync] WHERE [AlbumId] = @AlbumId)
+	BEGIN
 
-	SELECT 
-		@PropertyId = [Id] 
-	FROM
-		[Admin].[AlbumProperties]
-	WHERE
-		[Name] = @PropertyName
+		INSERT INTO [Queue].[AlbumSync] (
+			[AlbumId],
+			[LastUpdated]
+		)
+		VALUES (
+			@AlbumId,
+			GETDATE()
+		)
 
-	SELECT
-		@SourceId = [SourceId]
-	FROM
-		[Library].[Albums]
-	WHERE
-		[Id] = @AlbumId
+	END
+	ELSE
+	BEGIN
 
-	UPDATE
-		[Queue].[AlbumUpdates]
-	SET
-		[DateRemoved] = GETDATE()
-	WHERE
-		[AlbumId] = @AlbumId
-	AND
-		[PropertyId] = @PropertyId
-	AND
-		[DateProcessed] IS NULL
-	AND
-		[DateRemoved] IS NULL
+		UPDATE 
+			[Queue].[AlbumSync]
+		SET
+			[LastUpdated] = GETDATE(),
+			[LastSynced] = NULL,
+			[FailedAttempts] = 0,
+			[LastAttempt] = NULL
+		WHERE	
+			[AlbumId] = @AlbumId
 
-	INSERT INTO [Queue].[AlbumUpdates] (
-		[AlbumId],
-		[SourceId],
-		[PropertyId],
-		[OriginalValue],
-		[UpdatedValue]
-	)
-	VALUES (
-		@AlbumId,
-		@SourceId,
-		@PropertyId,
-		@OriginalValue,
-		@UpdatedValue
-	)
+	END
 
 END

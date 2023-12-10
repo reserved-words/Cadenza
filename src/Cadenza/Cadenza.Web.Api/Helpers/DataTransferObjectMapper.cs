@@ -48,7 +48,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
     {
         return new UpdatedAlbumPropertiesDTO
         {
-            Id = vm.Id,
+            AlbumId = vm.Id,
             DiscCount = vm.DiscCount,
             ArtworkBase64 = vm.ArtworkBase64,
             ReleaseType = vm.ReleaseType,
@@ -62,7 +62,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
     {
         return new UpdatedArtistPropertiesDTO
         {
-            Id = vm.Id,
+            ArtistId = vm.Id,
             GroupingName = vm.Grouping.Name,
             Genre = vm.Genre,
             City = vm.City,
@@ -77,7 +77,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
     {
         return new UpdatedTrackPropertiesDTO
         {
-            Id = vm.Id,
+            TrackId = vm.Id,
             Title = vm.Title,
             Lyrics = vm.Lyrics,
             Year = vm.Year,

@@ -101,15 +101,6 @@
     <Build Include="Views\Library\vw_EmptyAlbums.sql" />
     <Build Include="Views\Library\vw_EmptyDiscs.sql" />
     <Build Include="Schemas\Queue.sql" />
-    <Build Include="Tables\Queue\ArtistUpdates.sql" />
-    <Build Include="Tables\Queue\AlbumUpdates.sql" />
-    <Build Include="Tables\Queue\TrackUpdates.sql" />
-    <Build Include="Tables\Admin\ArtistProperties.sql" />
-    <Build Include="Tables\Admin\TrackProperties.sql" />
-    <Build Include="Tables\Admin\AlbumProperties.sql" />
-    <None Include="SeedData\ArtistProperties.sql" />
-    <None Include="SeedData\AlbumProperties.sql" />
-    <None Include="SeedData\TrackProperties.sql" />
     <Build Include="Stored Procedures\Queue\AddAlbumUpdate.sql" />
     <Build Include="Stored Procedures\Queue\AddArtistUpdate.sql" />
     <Build Include="Stored Procedures\Queue\AddTrackUpdate.sql" />
@@ -142,7 +133,6 @@
     <Build Include="Stored Procedures\Queue\GetTrackRemovals.sql" />
     <Build Include="Stored Procedures\Queue\MarkTrackRemovalDone.sql" />
     <Build Include="Stored Procedures\Queue\MarkTrackRemovalErrored.sql" />
-    <Build Include="Tables\Queue\TrackRemovals.sql" />
     <Build Include="Stored Procedures\Library\GetTrackIdFromSource.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
@@ -245,6 +235,10 @@
     <Build Include="Stored Procedures\History\GetTopAlbums.sql" />
     <Build Include="Stored Procedures\History\GetTopArtists.sql" />
     <Build Include="Stored Procedures\Admin\HasLastFmSessionKey.sql" />
+    <Build Include="Tables\Queue\AlbumSync.sql" />
+    <Build Include="Tables\Queue\ArtistSync.sql" />
+    <Build Include="Tables\Queue\TrackSync.sql" />
+    <Build Include="Tables\Queue\TrackRemovalSync.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

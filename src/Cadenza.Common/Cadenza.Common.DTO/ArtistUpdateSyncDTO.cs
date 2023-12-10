@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model.Queue;
+﻿namespace Cadenza.Common.DTO;
 
-internal class GetArtistUpdatesResult
+public class ArtistUpdateSyncDTO
 {
     public int ArtistId { get; set; }
     public string Name { get; set; }
@@ -9,7 +9,8 @@ internal class GetArtistUpdatesResult
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
-    public string ImageMimeType { get; set; }
-    public byte[] ImageContent { get; set; }
+    //public string ImageMimeType { get; set; }
+    //public byte[] ImageContent { get; set; }
+    public string ImageBase64 { get; set; }
     public string TagList { get; set; }
 }

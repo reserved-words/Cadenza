@@ -2,7 +2,7 @@
 
 public class UpdatedTrackPropertiesDTO
 {
-    public int Id { get; set; }
+    public int TrackId { get; set; }
 
     [ItemProperty(ItemProperty.TrackTitle)]
     public string Title { get; set; }

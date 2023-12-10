@@ -1,6 +1,6 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model.Queue;
+﻿namespace Cadenza.Common.DTO;
 
-internal class GetTrackUpdatesResult
+public class TrackUpdateSyncDTO
 {
     public int TrackId { get; set; }
     public string Title { get; set; }

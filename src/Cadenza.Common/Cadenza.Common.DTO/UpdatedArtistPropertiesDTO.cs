@@ -2,7 +2,7 @@
 
 public class UpdatedArtistPropertiesDTO
 {
-    public int Id { get; set; }
+    public int ArtistId { get; set; }
 
     [ItemProperty(ItemProperty.ArtistGrouping)]
     public string GroupingName { get; set; }

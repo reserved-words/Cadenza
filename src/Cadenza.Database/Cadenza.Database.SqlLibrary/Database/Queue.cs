@@ -13,19 +13,19 @@ internal class Queue : IQueue
         _sql = sql.Create(nameof(Queue));
     }
 
-    public async Task AddAlbumUpdate(AddAlbumUpdateParameter data)
+    public async Task AddAlbumUpdate(int albumId)
     {
-        await _sql.Execute(data);
+        await _sql.Execute(new { AlbumId = albumId });
     }
 
-    public async Task AddArtistUpdate(AddArtistUpdateParameter data)
+    public async Task AddArtistUpdate(int artistId)
     {
-        await _sql.Execute(data);
+        await _sql.Execute(new { ArtistId = artistId });
     }
 
-    public async Task AddTrackUpdate(AddTrackUpdateParameter data)
+    public async Task AddTrackUpdate(int trackId)
     {
-        await _sql.Execute(data);
+        await _sql.Execute(new { TrackId = trackId });
     }
 
     public async Task AddTrackRemoval(int id)
@@ -53,19 +53,19 @@ internal class Queue : IQueue
         return await _sql.Query<GetTrackUpdatesResult>(new { SourceId = (int)source });
     }
 
-    public async Task MarkAlbumUpdateDone(int id)
+    public async Task MarkAlbumUpdateDone(int albumId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { AlbumId = albumId });
     }
 
-    public async Task MarkArtistUpdateDone(int id)
+    public async Task MarkArtistUpdateDone(int artistId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { ArtistId = artistId });
     }
 
-    public async Task MarkTrackUpdateDone(int id)
+    public async Task MarkTrackUpdateDone(int trackId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { TrackId = trackId });
     }
 
     public async Task MarkTrackRemovalDone(int id)
@@ -73,19 +73,19 @@ internal class Queue : IQueue
         await _sql.Execute(new { Id = id });
     }
 
-    public async Task MarkAlbumUpdateErrored(int id)
+    public async Task MarkAlbumUpdateErrored(int albumId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { AlbumId = albumId });
     }
 
-    public async Task MarkArtistUpdateErrored(int id)
+    public async Task MarkArtistUpdateErrored(int artistId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { ArtistId = artistId });
     }
 
-    public async Task MarkTrackUpdateErrored(int id)
+    public async Task MarkTrackUpdateErrored(int trackId)
     {
-        await _sql.Execute(new { Id = id });
+        await _sql.Execute(new { TrackId = trackId });
     }
 
     public async Task MarkTrackRemovalErrored(int id)

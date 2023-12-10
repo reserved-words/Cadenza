@@ -69,126 +69,102 @@ internal class UpdateRepository : IUpdateRepository
 
     public async Task UnloveTrack(string username, int trackId)
     {
-        await _update.UpdateTrackIsLoved(new UpdateTrackIsLovedParameter { Username = username, TrackId = trackId, IsLoved = false } );
+        await _update.UpdateTrackIsLoved(new UpdateTrackIsLovedParameter { Username = username, TrackId = trackId, IsLoved = false });
     }
 
-    public async Task UpdateAlbum(ItemUpdateRequestDTO request)
+    public async Task UpdateAlbum(UpdatedAlbumPropertiesDTO update)
     {
-        var album = await _update.GetAlbumForUpdate(request.Id);
+        var albumToUpdate = await _update.GetAlbumForUpdate(update.AlbumId);
 
-        var updatedAlbum = _mapper.MapAlbumToUpdate(request.Id, album);
-
-        foreach (var update in request.Updates)
+        var albumUpdateParameter = new UpdateAlbumParameter
         {
-            switch (update.Property)
-            {
-                case ItemProperty.AlbumTags:
-                    updatedAlbum.TagList = update.UpdatedValue;
-                    break;
-                case ItemProperty.AlbumTitle:
-                    updatedAlbum.Title = update.UpdatedValue;
-                    break;
-                case ItemProperty.AlbumArtwork:
-                    var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
-                    updatedAlbum.ArtworkMimeType = image.MimeType;
-                    updatedAlbum.ArtworkContent = image.Bytes;
-                    break;
-                case ItemProperty.AlbumReleaseType:
-                    updatedAlbum.ReleaseTypeId = (int)Enum.Parse<ReleaseType>(update.UpdatedValue);
-                    break;
-                case ItemProperty.AlbumDiscCount:
-                    updatedAlbum.DiscCount = int.Parse(update.UpdatedValue);
-                    break;
-                case ItemProperty.AlbumReleaseYear:
-                    updatedAlbum.Year = update.UpdatedValue;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            Id = update.AlbumId,
+            ArtistId = albumToUpdate.ArtistId,
+            Title = update.Title,
+            ReleaseTypeId = (int)update.ReleaseType,
+            Year = update.Year,
+            DiscCount = update.DiscCount,
+            ArtworkMimeType = albumToUpdate.ArtworkMimeType,
+            ArtworkContent = albumToUpdate.ArtworkContent,
+            TagList = update.Tags.ToString()
+        };
+
+        if (update.ArtworkBase64 != null)
+        {
+            var image = _imageConverter.GetImageFromBase64Url(update.ArtworkBase64);
+            albumUpdateParameter.ArtworkMimeType = image.MimeType;
+            albumUpdateParameter.ArtworkContent = image.Bytes;
         }
 
-        await _update.UpdateAlbum(updatedAlbum);
+        await _update.UpdateAlbum(albumUpdateParameter);
     }
 
-    public async Task UpdateArtist(ItemUpdateRequestDTO request)
+    public async Task UpdateArtist(UpdatedArtistPropertiesDTO update)
     {
-        var artist = await _update.GetArtistForUpdate(request.Id);
+        var artistToUpdate = await _update.GetArtistForUpdate(update.ArtistId);
 
-        UpdateArtistParameter updatedArtist = _mapper.MapArtistToUpdate(request.Id, artist);
+        // TODO - just pass name to the parameter and sort getting ID within the stored proc
+        var groupings = await _admin.GetGroupings();
+        var grouping = groupings.Single(g => g.Name == update.GroupingName);
 
-        foreach (var update in request.Updates)
+        var artistUpdateParameter = new UpdateArtistParameter
         {
-            switch (update.Property)
-            {
-                case ItemProperty.ArtistImage:
-                    var image = _imageConverter.GetImageFromBase64Url(update.UpdatedValue);
-                    updatedArtist.ImageMimeType = image.MimeType;
-                    updatedArtist.ImageContent = image.Bytes;
-                    break;
-                case ItemProperty.ArtistTags:
-                    updatedArtist.TagList = update.UpdatedValue;
-                    break;
-                case ItemProperty.ArtistCity:
-                    updatedArtist.City = update.UpdatedValue;
-                    break;
-                case ItemProperty.ArtistCountry:
-                    updatedArtist.Country = update.UpdatedValue;
-                    break;
-                case ItemProperty.ArtistGenre:
-                    updatedArtist.Genre = update.UpdatedValue;
-                    break;
-                case ItemProperty.ArtistGrouping:
-                    var groupings = await _admin.GetGroupings();
-                    var grouping = groupings.Single(g => g.Name == update.UpdatedValue);
-                    updatedArtist.GroupingId = grouping.Id;
-                    break;
-                case ItemProperty.ArtistState:
-                    updatedArtist.State = update.UpdatedValue;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            Id = update.ArtistId,
+            GroupingId = grouping.Id,
+            Genre = update.Genre,
+            City = update.City,
+            State = update.State,
+            Country = update.Country,
+            ImageMimeType = artistToUpdate.ImageMimeType,
+            ImageContent = artistToUpdate.ImageContent,
+            TagList = update.Tags.ToString()
+        };
+
+        if (update.ImageBase64 != null)
+        {
+            var image = _imageConverter.GetImageFromBase64Url(update.ImageBase64);
+            artistUpdateParameter.ImageMimeType = image.MimeType;
+            artistUpdateParameter.ImageContent = image.Bytes;
         }
 
-        await _update.UpdateArtist(updatedArtist);
+        await _update.UpdateArtist(artistUpdateParameter);
     }
 
-    public async Task UpdateTrack(ItemUpdateRequestDTO request)
+    public async Task UpdateAlbumTrack(UpdatedAlbumTrackPropertiesDTO update)
     {
-        var track = await _update.GetTrackForUpdate(request.Id);
+        var track = await _update.GetTrackForUpdate(update.TrackId);
 
-        UpdateTrackParameter updatedTrack = _mapper.MapTrackToUpdate(request.Id, track);
-
-        foreach (var update in request.Updates)
+        var trackUpdateParameter = new UpdateTrackParameter
         {
-            switch (update.Property)
-            {
-                case ItemProperty.TrackDiscNo:
-                    updatedTrack.DiscNo = int.Parse(update.UpdatedValue);
-                    break;
-                case ItemProperty.TrackDiscTrackCount:
-                    updatedTrack.DiscTrackCount = int.Parse(update.UpdatedValue);
-                    break;
-                case ItemProperty.TrackLyrics:
-                    updatedTrack.Lyrics = update.UpdatedValue;
-                    break;
-                case ItemProperty.TrackNo:
-                    updatedTrack.TrackNo = int.Parse(update.UpdatedValue);
-                    break;
-                case ItemProperty.TrackTags:
-                    updatedTrack.TagList = update.UpdatedValue;
-                    break;
-                case ItemProperty.TrackTitle:
-                    updatedTrack.Title = update.UpdatedValue;
-                    break;
-                case ItemProperty.TrackYear:
-                    updatedTrack.Year = update.UpdatedValue;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+            Id = update.TrackId,
+            Title = update.Title,
+            Year = track.Year,
+            Lyrics = track.Lyrics,
+            DiscNo = update.DiscNo,
+            TrackNo = update.TrackNo,
+            DiscTrackCount = update.DiscTrackCount,
+            TagList = track.TagList
+        };
 
-        await _update.UpdateTrack(updatedTrack);
+        await _update.UpdateTrack(trackUpdateParameter);
+    }
+
+    public async Task UpdateTrack(UpdatedTrackPropertiesDTO update)
+    {
+        var track = await _update.GetTrackForUpdate(update.TrackId);
+
+        var trackUpdateParameter = new UpdateTrackParameter
+        {
+            Id = update.TrackId,
+            Title = update.Title,
+            Year = update.Year,
+            Lyrics = update.Lyrics,
+            DiscNo = track.DiscNo,
+            TrackNo = track.TrackNo,
+            DiscTrackCount = track.DiscTrackCount,
+            TagList = update.Tags.ToString()
+        };
+
+        await _update.UpdateTrack(trackUpdateParameter);
     }
 }

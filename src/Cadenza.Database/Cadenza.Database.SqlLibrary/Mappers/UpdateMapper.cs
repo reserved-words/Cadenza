@@ -99,21 +99,21 @@ internal class UpdateMapper : IUpdateMapper
         };
     }
 
-    public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
-    {
-        return new UpdateArtistParameter
-        {
-            Id = id,
-            ImageMimeType = artist.ImageMimeType,
-            ImageContent = artist.ImageContent,
-            GroupingId = artist.GroupingId,
-            Genre = artist.Genre,
-            City = artist.City,
-            State = artist.State,
-            Country = artist.Country,
-            TagList = artist.TagList
-        };
-    }
+    //public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
+    //{
+    //    return new UpdateArtistParameter
+    //    {
+    //        Id = id,
+    //        ImageMimeType = artist.ImageMimeType,
+    //        ImageContent = artist.ImageContent,
+    //        GroupingId = artist.GroupingId,
+    //        Genre = artist.Genre,
+    //        City = artist.City,
+    //        State = artist.State,
+    //        Country = artist.Country,
+    //        TagList = artist.TagList
+    //    };
+    //}
 
     public UpdateTrackParameter MapTrackToUpdate(int id, GetTrackForUpdateResult track)
     {

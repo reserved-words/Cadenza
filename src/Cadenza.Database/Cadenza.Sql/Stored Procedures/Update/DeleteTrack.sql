@@ -35,12 +35,7 @@ BEGIN
 		[TrackId] = @Id
 
 	DELETE
-		[Queue].[TrackUpdates]
-	WHERE
-		[TrackId] = @Id
-
-	DELETE
-		[Queue].[TrackUpdates]
+		[Queue].[TrackSync]
 	WHERE
 		[TrackId] = @Id
 

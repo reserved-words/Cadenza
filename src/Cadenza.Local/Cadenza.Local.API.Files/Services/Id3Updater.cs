@@ -20,7 +20,7 @@ internal class Id3Updater : IId3Updater
 
         foreach (var update in updates)
         {
-            Update(data, commentData, update.Property, update.UpdatedValue);
+            Update(data, commentData, update.Property, update.NewValue.ToString());
         }
 
         data.Track.Comment = _commentProcessor.CreateComment(commentData);

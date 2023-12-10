@@ -25,110 +25,27 @@ internal class UpdateService : IUpdateService
             }
             else
             {
-                var trackUpdateRequest = new ItemUpdateRequestDTO
-                {
-                    Id = originalTrack.TrackId,
-                    Type = LibraryItemType.Track,
-                    Updates = GetUpdates(originalTrack, updatedTrack)
-                };
-
-                if (!trackUpdateRequest.Updates.Any())
-                    continue;
-
-                await _queueRepository.AddUpdateRequest(trackUpdateRequest);
-                await _updateRepository.UpdateTrack(trackUpdateRequest);
+                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
+                await _updateRepository.UpdateAlbumTrack(updatedTrack);
             }
         }
     }
 
-    public async Task UpdateTrack(UpdateTrackDTO dto)
+    public async Task UpdateTrack(UpdateTrackDTO request)
     {
-        var request = new ItemUpdateRequestDTO
-        {
-            Id = dto.OriginalTrack.Id,
-            Type = LibraryItemType.Track,
-            Updates = GetUpdates(dto.OriginalTrack, dto.UpdatedTrack)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateTrack(request);
+        await _queueRepository.AddTrackUpdateRequest(request.UpdatedTrack.TrackId);
+        await _updateRepository.UpdateTrack(request.UpdatedTrack);
     }
 
-    public async Task UpdateAlbum(UpdateAlbumDTO dto)
+    public async Task UpdateAlbum(UpdateAlbumDTO request)
     {
-        var request = new ItemUpdateRequestDTO
-        {
-            Id = dto.OriginalAlbum.Id,
-            Type = LibraryItemType.Album,
-            Updates = GetUpdates(dto.OriginalAlbum, dto.UpdatedAlbum)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateAlbum(request);
+        await _queueRepository.AddAlbumUpdateRequest(request.UpdatedAlbum.AlbumId);
+        await _updateRepository.UpdateAlbum(request.UpdatedAlbum);
     }
 
-    public async Task UpdateArtist(UpdateArtistDTO dto)
+    public async Task UpdateArtist(UpdateArtistDTO request)
     {
-        var request = new ItemUpdateRequestDTO
-        {
-            Id = dto.OriginalArtist.Id,
-            Type = LibraryItemType.Artist,
-            Updates = GetUpdates(dto.OriginalArtist, dto.UpdatedArtist)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateArtist(request);
-    }
-
-    private List<PropertyUpdateDTO> GetUpdates<T>(T originalItem, T updatedItem)
-    {
-        var updates = new List<PropertyUpdateDTO>();
-
-        var properties = typeof(T).GetProperties();
-
-        foreach (var property in properties)
-        {
-            var itemProperty = property.GetCustomAttributes(false)
-                .OfType<ItemPropertyAttribute>()
-                .SingleOrDefault();
-
-            if (itemProperty == null)
-                continue;
-
-            var originalValue = property.GetValue(originalItem)?.ToString();
-            var updatedValue = property.GetValue(updatedItem)?.ToString();
-
-            if (AreEqual(originalValue, updatedValue))
-                continue;
-
-            updates.Add(new PropertyUpdateDTO
-            {
-                Property = itemProperty.Property,
-                OriginalValue = originalValue,
-                UpdatedValue = updatedValue
-            });
-        }
-
-        return updates;
-    }
-
-    private static bool AreEqual(string originalValue, string updatedValue)
-    {
-        if (originalValue == null && updatedValue == null)
-            return true;
-
-        if (originalValue == null || updatedValue == null)
-            return false;
-
-        return originalValue == updatedValue;
+        await _queueRepository.AddArtistUpdateRequest(request.UpdatedArtist.ArtistId);
+        await _updateRepository.UpdateArtist(request.UpdatedArtist);
     }
 }
