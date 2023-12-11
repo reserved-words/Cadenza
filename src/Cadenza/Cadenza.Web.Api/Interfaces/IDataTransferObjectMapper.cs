@@ -2,8 +2,9 @@
 
 internal interface IDataTransferObjectMapper
 {
+    UpdatedAlbumPropertiesDTO MapAlbum(AlbumDetailsVM album);
     List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks);
-    UpdatedAlbumPropertiesDTO MapAlbum(AlbumDetailsVM updatedAlbum);
-    UpdatedArtistPropertiesDTO MapArtist(ArtistDetailsVM updatedArtist);
-    UpdatedTrackPropertiesDTO MapTrack(TrackDetailsVM updateTrack);
+    UpdatedArtistPropertiesDTO MapArtist(ArtistDetailsVM artist);
+    List<UpdatedArtistReleasePropertiesDTO> MapArtistReleases(IReadOnlyCollection<AlbumVM> releases);
+    UpdatedTrackPropertiesDTO MapTrack(TrackDetailsVM track);
 }

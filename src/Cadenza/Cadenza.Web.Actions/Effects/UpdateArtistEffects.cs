@@ -14,14 +14,24 @@ public class UpdateArtistEffects
     {
         try
         {
-            await _api.UpdateArtist(action.UpdatedArtist);
-            dispatcher.Dispatch(new ArtistUpdatedAction(action.UpdatedArtist));
-            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Artist, action.UpdatedArtist.Id));
+            await _api.UpdateArtist(action.ArtistId, action.UpdatedArtist, action.UpdatedArtistReleases);
+
+            if (action.UpdatedArtist != null)
+            {
+                dispatcher.Dispatch(new ArtistUpdatedAction(action.ArtistId, action.UpdatedArtist));
+            }
+
+            if (action.UpdatedArtistReleases.Any())
+            {
+                dispatcher.Dispatch(new ArtistReleasesUpdatedAction(action.ArtistId, action.UpdatedArtistReleases));
+            }
+
+            dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Artist, action.ArtistId));
         }
         catch (Exception ex)
         {
-            dispatcher.Dispatch(new ArtistUpdateFailedAction(action.UpdatedArtist.Id));
-            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Artist, action.UpdatedArtist.Id, ex.Message, ex.StackTrace));
+            dispatcher.Dispatch(new ArtistUpdateFailedAction(action.ArtistId));
+            dispatcher.Dispatch(new UpdateFailedAction(UpdateType.Artist, action.ArtistId, ex.Message, ex.StackTrace));
         }
     }
 }

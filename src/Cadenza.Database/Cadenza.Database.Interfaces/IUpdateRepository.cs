@@ -11,4 +11,5 @@ public interface IUpdateRepository
     Task AddTrack(LibrarySource source, SyncTrackDTO track);
     Task LoveTrack(string username, int trackId);
     Task UnloveTrack(string username, int trackId);
+    Task UpdateArtistRelease(UpdatedArtistReleasePropertiesDTO update);
 }

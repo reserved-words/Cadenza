@@ -48,9 +48,23 @@ internal class UpdateService : IUpdateService
         }
     }
 
-    public async Task UpdateArtist(UpdatedArtistPropertiesDTO update)
+    public async Task UpdateArtist(ArtistUpdateDTO update)
     {
-        await _updateRepository.UpdateArtist(update);
-        await _queueRepository.AddArtistUpdateRequest(update.ArtistId);
+        // TODO: Ideally do this all in one transaction so can roll back all and display one error message if it fails
+
+        if (update.UpdatedArtist != null)
+        {
+            await _updateRepository.UpdateArtist(update.UpdatedArtist);
+            await _queueRepository.AddArtistUpdateRequest(update.ArtistId);
+        }
+
+        if (update.UpdatedArtistReleases != null)
+        {
+            foreach (var updatedRelease in update.UpdatedArtistReleases)
+            {
+                await _updateRepository.UpdateArtistRelease(updatedRelease);
+                await _queueRepository.AddAlbumUpdateRequest(updatedRelease.AlbumId);
+            }
+        }
     }
 }

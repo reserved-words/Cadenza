@@ -20,7 +20,7 @@ public class UpdateController : ControllerBase
     }
 
     [HttpPost("UpdateArtist")]
-    public async Task UpdateArtist([FromBody] UpdatedArtistPropertiesDTO request)
+    public async Task UpdateArtist([FromBody] ArtistUpdateDTO request)
     {
         await _service.UpdateArtist(request);
     }

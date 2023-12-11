@@ -55,6 +55,4 @@ BEGIN
 
 	END
 
-	EXECUTE [Update].[UpdateTrackCount] @DiscId
-
 END

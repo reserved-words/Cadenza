@@ -40,13 +40,7 @@ public class EditArtistTabBase : FluxorComponent
         else
         {
             var updatedArtist = hasArtistChanged ? editedArtist : null;
-            Dispatcher.Dispatch(new ArtistUpdateRequest(updatedArtist));
-
-            if (haveArtistReleasesChanged)
-            {
-                // TODO: Update artist releases IF any changed
-                Dispatcher.Dispatch(new NotificationInformationRequest("Updating artist releases is not yet implemented"));
-            }
+            Dispatcher.Dispatch(new ArtistUpdateRequest(Artist.Id, updatedArtist, changedReleases));
         }
     }
 

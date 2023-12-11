@@ -167,4 +167,24 @@ internal class UpdateRepository : IUpdateRepository
 
         await _update.UpdateTrack(trackUpdateParameter);
     }
+
+    public async Task UpdateArtistRelease(UpdatedArtistReleasePropertiesDTO update)
+    {
+        var album = await _update.GetAlbumForUpdate(update.AlbumId);
+
+        var albumUpdateParameter = new UpdateAlbumParameter
+        {
+            Id = update.AlbumId,
+            ArtistId = album.ArtistId,
+            Title = update.Title,
+            ReleaseTypeId = (int)update.ReleaseType,
+            Year = update.Year,
+            DiscCount = album.DiscCount,
+            ArtworkMimeType = album.ArtworkMimeType,
+            ArtworkContent = album.ArtworkContent,
+            TagList = album.TagList
+        };
+
+        await _update.UpdateAlbum(albumUpdateParameter);
+    }
 }

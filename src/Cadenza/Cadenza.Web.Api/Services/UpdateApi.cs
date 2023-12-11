@@ -29,9 +29,18 @@ internal class UpdateApi : IUpdateApi
         await _http.Post(_settings.Endpoints.UpdateAlbum, dto);
     }
 
-    public async Task UpdateArtist(ArtistDetailsVM updatedArtist)
+    public async Task UpdateArtist(int artistId, ArtistDetailsVM updatedArtist, IReadOnlyCollection<AlbumVM> updatedReleases)
     {
-        var dto = _mapper.MapArtist(updatedArtist);
+        var artist = updatedArtist == null ? null : _mapper.MapArtist(updatedArtist);
+        var releases = updatedReleases == null ? null : _mapper.MapArtistReleases(updatedReleases);
+
+        var dto = new ArtistUpdateDTO
+        {
+            ArtistId = artistId,
+            UpdatedArtist = artist,
+            UpdatedArtistReleases = releases
+        };
+
         await _http.Post(_settings.Endpoints.UpdateArtist, dto);
     }
 
