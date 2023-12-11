@@ -17,6 +17,7 @@ public class TrackUpdateEffects
             await _api.UpdateTrack(action.UpdatedTrack);
             dispatcher.Dispatch(new TrackUpdatedAction(action.UpdatedTrack));
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Track, action.UpdatedTrack.Id));
+            dispatcher.Dispatch(new SearchItemsUpdateRequest());
         }
         catch (Exception ex)
         {

@@ -27,6 +27,7 @@ public class AlbumUpdateEffects
             }
 
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Album, action.AlbumId));
+            dispatcher.Dispatch(new SearchItemsUpdateRequest());
         }
         catch (Exception ex)
         {
