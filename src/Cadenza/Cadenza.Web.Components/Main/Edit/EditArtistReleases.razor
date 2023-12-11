@@ -21,13 +21,13 @@
                           For="@(() => context.Year)"
                           Mask="@(new PatternMask("0000"))" />
         </MudTd>
-        <MudTd Class="td-icon">
+@*         <MudTd Class="td-icon">
             <MudIconButton Size="@Size.Small"
                            Variant="@Variant.Outlined"
                            Icon="@Icons.Material.Filled.Delete"
                            Title="Remove"
                            OnClick="@(() => OnRemoveRelease(context))" />
-        </MudTd>
+        </MudTd> *@
     </RowTemplate>
 </AppTable>
 
