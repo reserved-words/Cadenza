@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Reducers;
+﻿using Cadenza.Web.Common.Extensions;
+
+namespace Cadenza.Web.Actions.Reducers;
 
 public static class ViewAlbumReducers
 {
@@ -36,18 +38,9 @@ public static class ViewAlbumReducers
             }
         }
 
-        var discs = tracks.GroupBy(t => t.DiscNo)
-            .Select(d => new AlbumDiscVM
-            {
-                DiscNo = d.Key,
-                TrackCount = d.First().DiscTrackCount,
-                Tracks = d.ToList()
-            })
-            .ToList();
-
         return state with
         {
-            Tracks = discs
+            Tracks = tracks.GroupByDisc()
         };
     }
 
