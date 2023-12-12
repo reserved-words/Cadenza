@@ -1,4 +1,4 @@
-﻿@foreach (var disc in Model)
+﻿@foreach (var disc in Model.Discs)
 {
     <MudCard Class="ma-0 pa-0 mb-2">
         <MudCardHeader>
@@ -60,14 +60,14 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public List<EditableAlbumDisc> Model { get; set; } = new List<EditableAlbumDisc>();
-    [Parameter] public List<int> RemovedTracks { get; set; } = new List<int>();
+    [Parameter] public EditableAlbumDiscs Model { get; set; }
+    [Parameter] public List<int> RemovedTracks { get; set; }
 
     protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
 
     public void OnTrackNoChanged(EditableAlbumTrack track)
     {
-        Model = Model.SortAll();
+        Model.Discs = Model.SortAll();
     }
 
     public void OnDiscNoChanged(EditableAlbumTrack track)
@@ -81,7 +81,7 @@
         var newDisc = Model.GetDisc(track.DiscNo);
         AddTrackToDisc(newDisc, track);
 
-        Model = Model.SortAll();
+        Model.Discs = Model.SortAll();
         UpdateDiscCount();
     }
 
@@ -98,7 +98,6 @@
     {
         disc.AddTrack(track);
         disc.UpdateTrackCount();
-
     }
 
     private void RemoveTrackFromDisc(EditableAlbumDisc disc, EditableAlbumTrack track)
@@ -108,7 +107,7 @@
 
         if (!disc.Tracks.Any())
         {
-            Model.Remove(disc);
+            Model.Discs.Remove(disc);
         }
     }
 

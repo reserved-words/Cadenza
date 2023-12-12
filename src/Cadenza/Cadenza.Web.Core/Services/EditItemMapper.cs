@@ -19,27 +19,30 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
+    public EditableAlbumDiscs MapEditableAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
     {
-        return tracks
-            .GroupBy(t => t.DiscNo)
-            .Select(d => new EditableAlbumDisc
-            {
-                DiscNo = d.Key,
-                TrackCount = d.First().DiscTrackCount,
-                Tracks = d.Select(t => new EditableAlbumTrack
+        return new EditableAlbumDiscs
+        {
+            Discs = tracks
+                .GroupBy(t => t.DiscNo)
+                .Select(d => new EditableAlbumDisc
                 {
-                    TrackId = t.TrackId,
-                    IdFromSource = t.IdFromSource,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    TrackNo = t.TrackNo,
-                    DiscNo = t.DiscNo,
-                    Title = t.Title,
-                    DurationSeconds = t.DurationSeconds
-                }).ToList()
-            })
-            .ToList();
+                    DiscNo = d.Key,
+                    TrackCount = d.First().DiscTrackCount,
+                    Tracks = d.Select(t => new EditableAlbumTrack
+                    {
+                        TrackId = t.TrackId,
+                        IdFromSource = t.IdFromSource,
+                        ArtistId = t.ArtistId,
+                        ArtistName = t.ArtistName,
+                        TrackNo = t.TrackNo,
+                        DiscNo = t.DiscNo,
+                        Title = t.Title,
+                        DurationSeconds = t.DurationSeconds
+                    }).ToList()
+                })
+                .ToList()
+        };
     }
 
     public EditableArtist MapEditableArtist(ArtistDetailsVM artist)
@@ -104,11 +107,11 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public IReadOnlyCollection<AlbumTrackVM> MapEditedAlbumTracks(List<EditableAlbumDisc> discs)
+    public IReadOnlyCollection<AlbumTrackVM> MapEditedAlbumTracks(EditableAlbumDiscs discs)
     {
         var tracks = new List<AlbumTrackVM>();
 
-        foreach (var disc in discs)
+        foreach (var disc in discs.Discs)
         {
             tracks.AddRange(disc.Tracks.Select(t => new AlbumTrackVM
             {

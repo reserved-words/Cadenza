@@ -12,7 +12,7 @@ public class EditAlbumTabBase : FluxorComponent
     public IReadOnlyCollection<AlbumTrackVM> Tracks => EditAlbumState.Value.Tracks;
 
     protected EditableAlbum EditableAlbum { get; set; }
-    protected List<EditableAlbumDisc> EditableTracks { get; set; } = new List<EditableAlbumDisc>();
+    protected EditableAlbumDiscs EditableDiscs { get; set; }
     protected List<int> RemovedTracks { get; set; } = new List<int>();
 
     protected override void OnInitialized()
@@ -28,7 +28,7 @@ public class EditAlbumTabBase : FluxorComponent
             return;
 
         var editedAlbum = Mapper.MapEditedAlbum(EditableAlbum);
-        var editedTracks = Mapper.MapEditedAlbumTracks(EditableTracks);
+        var editedTracks = Mapper.MapEditedAlbumTracks(EditableDiscs);
 
         var hasAlbumChanged = ChangeDetector.HasAlbumChanged(Album, editedAlbum);
         var haveAlbumTracksChanged = ChangeDetector.HaveAlbumTracksChanged(Tracks, editedTracks, out var changedTracks);
@@ -52,6 +52,6 @@ public class EditAlbumTabBase : FluxorComponent
             return;
 
         EditableAlbum = Mapper.MapEditableAlbum(Album);
-        EditableTracks = Mapper.MapEditableAlbumTracks(Tracks);
+        EditableDiscs = Mapper.MapEditableAlbumTracks(Tracks);
     }
 }

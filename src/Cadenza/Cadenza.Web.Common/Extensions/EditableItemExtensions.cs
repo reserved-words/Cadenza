@@ -7,14 +7,14 @@ public static class EditableItemExtensions
         disc.Tracks.Add(track);
     }
 
-    public static EditableAlbumDisc GetDisc(this List<EditableAlbumDisc> discs, EditableAlbumTrack track)
+    public static EditableAlbumDisc GetDisc(this EditableAlbumDiscs discs, EditableAlbumTrack track)
     {
-        return discs.Single(d => d.Tracks.Contains(track));
+        return discs.Discs.Single(d => d.Tracks.Contains(track));
     }
 
-    public static EditableAlbumDisc GetDisc(this List<EditableAlbumDisc> discs, int discNo)
+    public static EditableAlbumDisc GetDisc(this EditableAlbumDiscs discs, int discNo)
     {
-        var disc = discs.SingleOrDefault(d => d.DiscNo == discNo);
+        var disc = discs.Discs.SingleOrDefault(d => d.DiscNo == discNo);
         if (disc == null)
         {
             disc = new EditableAlbumDisc
@@ -23,20 +23,20 @@ public static class EditableItemExtensions
                 TrackCount = 1,
                 Tracks = []
             };
-            discs.Add(disc);
+            discs.Discs.Add(disc);
         }
 
         return disc;
     }
 
-    public static List<EditableAlbumDisc> SortAll(this List<EditableAlbumDisc> discs)
+    public static List<EditableAlbumDisc> SortAll(this EditableAlbumDiscs discs)
     {
-        foreach (var disc in discs)
+        foreach (var disc in discs.Discs)
         {
             disc.SortTracks();
         }
 
-        return discs.OrderBy(d => d.DiscNo).ToList();
+        return discs.Discs.OrderBy(d => d.DiscNo).ToList();
     }
 
     public static void SortTracks(this EditableAlbumDisc disc)
@@ -49,8 +49,8 @@ public static class EditableItemExtensions
         disc.TrackCount = Math.Max(disc.TrackCount, disc.Tracks.Count);
     }
 
-    public static int GetDiscCount(this List<EditableAlbumDisc> discs)
+    public static int GetDiscCount(this EditableAlbumDiscs discs)
     {
-        return Math.Max(discs.Count, discs.Max(d => d.DiscNo));
+        return Math.Max(discs.Discs.Count, discs.Discs.Max(d => d.DiscNo));
     }
 }
