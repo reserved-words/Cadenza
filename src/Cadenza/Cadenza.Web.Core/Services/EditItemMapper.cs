@@ -35,7 +35,8 @@ internal class EditItemMapper : IEditItemMapper
                     ArtistName = t.ArtistName,
                     TrackNo = t.TrackNo,
                     DiscNo = t.DiscNo,
-                    Title = t.Title
+                    Title = t.Title,
+                    DurationSeconds = t.DurationSeconds
                 }).ToList()
             })
             .ToList();
@@ -118,7 +119,8 @@ internal class EditItemMapper : IEditItemMapper
                 Title = t.Title,
                 ArtistId = t.ArtistId,
                 ArtistName = t.ArtistName,
-                IdFromSource = t.IdFromSource
+                IdFromSource = t.IdFromSource,
+                DurationSeconds = t.DurationSeconds
             }));
         };
 

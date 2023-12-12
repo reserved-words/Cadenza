@@ -18,6 +18,7 @@ public static class ItemExtensions
                 TrackCount = d.First().DiscTrackCount,
                 Tracks = d.ToList()
             })
+            .OrderBy(d => d.DiscNo)
             .ToList();
     }
 

@@ -58,6 +58,8 @@
 }
 
 @code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
     [Parameter] public List<EditableAlbumDisc> Model { get; set; } = new List<EditableAlbumDisc>();
     [Parameter] public List<int> RemovedTracks { get; set; } = new List<int>();
 
@@ -65,61 +67,53 @@
 
     public void OnTrackNoChanged(EditableAlbumTrack track)
     {
-        SortTracks();
+        Model = Model.SortAll();
     }
 
     public void OnDiscNoChanged(EditableAlbumTrack track)
     {
-        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
+        var currentDisc = Model.GetDisc(track);
         if (currentDisc.DiscNo == track.DiscNo)
             return;
 
-        var newDisc = Model.SingleOrDefault(d => d.DiscNo == track.DiscNo);
-        if (newDisc == null)
-        {
-            newDisc = new EditableAlbumDisc
-            {
-                DiscNo = track.DiscNo,
-                TrackCount = 1,
-                Tracks = new List<EditableAlbumTrack>()
-            };
-            Model.Add(newDisc);
-        }
+        RemoveTrackFromDisc(currentDisc, track);
 
-        currentDisc.Tracks.Remove(track);
-        newDisc.Tracks.Add(track);
+        var newDisc = Model.GetDisc(track.DiscNo);
+        AddTrackToDisc(newDisc, track);
 
-        newDisc.TrackCount = Math.Max(newDisc.TrackCount, newDisc.Tracks.Count);
-        currentDisc.TrackCount = Math.Max(currentDisc.TrackCount, currentDisc.Tracks.Count);
-
-        if (!currentDisc.Tracks.Any())
-        {
-            Model.Remove(currentDisc);
-        }
-
-        SortTracks();
-    }
-
-    private void SortTracks()
-    {
-        foreach (var disc in Model)
-        {
-            disc.Tracks = disc.Tracks.OrderBy(t => t.TrackNo).ToList();
-        }
-
-        Model = Model.OrderBy(d => d.DiscNo).ToList();
+        Model = Model.SortAll();
+        UpdateDiscCount();
     }
 
     public void OnRemoveTrack(EditableAlbumTrack track)
     {
-        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
-        currentDisc.Tracks.Remove(track);
-
-        if (!currentDisc.Tracks.Any())
-        {
-            Model.Remove(currentDisc);
-        }
-
+        var currentDisc = Model.GetDisc(track);
+        RemoveTrackFromDisc(currentDisc, track);
         RemovedTracks.Add(track.TrackId);
+
+        UpdateDiscCount();
+    }
+
+    private void AddTrackToDisc(EditableAlbumDisc disc, EditableAlbumTrack track)
+    {
+        disc.AddTrack(track);
+        disc.UpdateTrackCount();
+
+    }
+
+    private void RemoveTrackFromDisc(EditableAlbumDisc disc, EditableAlbumTrack track)
+    {
+        disc.Tracks.Remove(track);
+        disc.UpdateTrackCount();
+
+        if (!disc.Tracks.Any())
+        {
+            Model.Remove(disc);
+        }
+    }
+
+    private void UpdateDiscCount()
+    {
+        Dispatcher.Dispatch(new AlbumUpdateDiscCountRequest(Model.GetDiscCount()));
     }
 }
