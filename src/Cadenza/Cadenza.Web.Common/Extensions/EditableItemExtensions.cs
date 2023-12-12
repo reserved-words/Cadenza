@@ -29,14 +29,22 @@ public static class EditableItemExtensions
         return disc;
     }
 
-    public static List<EditableAlbumDisc> SortAll(this EditableAlbumDiscs discs)
+    public static void RemoveIfEmpty(this EditableAlbumDiscs discs, EditableAlbumDisc disc)
+    {
+        if (!disc.Tracks.Any())
+        {
+            discs.Discs.Remove(disc);
+        }
+    }
+
+    public static void SortAll(this EditableAlbumDiscs discs)
     {
         foreach (var disc in discs.Discs)
         {
             disc.SortTracks();
         }
 
-        return discs.Discs.OrderBy(d => d.DiscNo).ToList();
+        discs.Discs = discs.Discs.OrderBy(d => d.DiscNo).ToList();
     }
 
     public static void SortTracks(this EditableAlbumDisc disc)

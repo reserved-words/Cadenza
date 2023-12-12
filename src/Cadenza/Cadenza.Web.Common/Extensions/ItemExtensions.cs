@@ -16,7 +16,7 @@ public static class ItemExtensions
             {
                 DiscNo = d.Key,
                 TrackCount = d.First().DiscTrackCount,
-                Tracks = d.ToList()
+                Tracks = d.OrderBy(t => t.TrackNo).ToList()
             })
             .OrderBy(d => d.DiscNo)
             .ToList();

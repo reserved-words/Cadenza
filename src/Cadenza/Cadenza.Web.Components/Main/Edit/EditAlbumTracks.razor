@@ -67,7 +67,7 @@
 
     public void OnTrackNoChanged(EditableAlbumTrack track)
     {
-        Model.Discs = Model.SortAll();
+        Model.SortAll();
     }
 
     public void OnDiscNoChanged(EditableAlbumTrack track)
@@ -76,22 +76,19 @@
         if (currentDisc.DiscNo == track.DiscNo)
             return;
 
-        RemoveTrackFromDisc(currentDisc, track);
-
         var newDisc = Model.GetDisc(track.DiscNo);
-        AddTrackToDisc(newDisc, track);
-
-        Model.Discs = Model.SortAll();
+        RemoveTrackFromDisc(currentDisc, track);
         UpdateDiscCount();
+        AddTrackToDisc(newDisc, track);
+        Model.SortAll();
     }
 
     public void OnRemoveTrack(EditableAlbumTrack track)
     {
         var currentDisc = Model.GetDisc(track);
         RemoveTrackFromDisc(currentDisc, track);
-        RemovedTracks.Add(track.TrackId);
-
         UpdateDiscCount();
+        RemovedTracks.Add(track.TrackId);
     }
 
     private void AddTrackToDisc(EditableAlbumDisc disc, EditableAlbumTrack track)
@@ -104,11 +101,7 @@
     {
         disc.Tracks.Remove(track);
         disc.UpdateTrackCount();
-
-        if (!disc.Tracks.Any())
-        {
-            Model.Discs.Remove(disc);
-        }
+        Model.RemoveIfEmpty(disc);
     }
 
     private void UpdateDiscCount()
