@@ -13,32 +13,40 @@ internal class UpdateApi : IUpdateApi
         _mapper = mapper;
     }
 
-    public async Task UpdateAlbumTracks(int albumId, IReadOnlyCollection<AlbumDiscVM> originalTracks, IReadOnlyCollection<AlbumDiscVM> updatedTracks)
+    public async Task UpdateAlbum(int albumId, AlbumDetailsVM updatedAlbum, IReadOnlyCollection<AlbumTrackVM> updatedTracks, IReadOnlyCollection<int> removedTracks)
     {
-        var dto = new UpdateAlbumTracksDTO
+        var album = updatedAlbum == null ? null : _mapper.MapAlbum(updatedAlbum);
+        var albumTracks = updatedTracks == null ? null : _mapper.MapAlbumTracks(updatedTracks);
+
+        var dto = new AlbumUpdateDTO
         {
             AlbumId = albumId,
-            OriginalTracks = _mapper.MapAlbumTracks(originalTracks),
-            UpdatedTracks = _mapper.MapAlbumTracks(updatedTracks)
+            UpdatedAlbum = album,
+            UpdatedAlbumTracks = albumTracks,
+            RemovedTracks = removedTracks.ToList()
         };
-        await _http.Delete(_settings.Endpoints.UpdateAlbumTracks, dto);
-    }
 
-    public async Task UpdateAlbum(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum)
-    {
-        var dto = _mapper.MapUpdate(originalAlbum, updatedAlbum);
         await _http.Post(_settings.Endpoints.UpdateAlbum, dto);
     }
 
-    public async Task UpdateArtist(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist)
+    public async Task UpdateArtist(int artistId, ArtistDetailsVM updatedArtist, IReadOnlyCollection<AlbumVM> updatedReleases)
     {
-        var dto = _mapper.MapUpdate(originalArtist, updatedArtist);
+        var artist = updatedArtist == null ? null : _mapper.MapArtist(updatedArtist);
+        var releases = updatedReleases == null ? null : _mapper.MapArtistReleases(updatedReleases);
+
+        var dto = new ArtistUpdateDTO
+        {
+            ArtistId = artistId,
+            UpdatedArtist = artist,
+            UpdatedArtistReleases = releases
+        };
+
         await _http.Post(_settings.Endpoints.UpdateArtist, dto);
     }
 
-    public async Task UpdateTrack(TrackDetailsVM originalTrack, TrackDetailsVM updatedTrack)
+    public async Task UpdateTrack(TrackDetailsVM updatedTrack)
     {
-        var dto = _mapper.MapUpdate(originalTrack, updatedTrack);
+        var dto = _mapper.MapTrack(updatedTrack);
         await _http.Post(_settings.Endpoints.UpdateTrack, dto);
     }
 }

@@ -3,11 +3,11 @@ AS
 BEGIN
 
 	DELETE
-		UPD
+		SYN
 	FROM
-		[Queue].[AlbumUpdates] UPD
+		[Queue].[AlbumSync] SYN
 	INNER JOIN 
-		[Library].[vw_EmptyAlbums] EMP ON EMP.[Id] = UPD.[AlbumId]
+		[Library].[vw_EmptyAlbums] EMP ON EMP.[Id] = SYN.[AlbumId]
 
 	DELETE
 		HST

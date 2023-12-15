@@ -2,132 +2,74 @@
 
 internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
-    public UpdateAlbumDTO MapUpdate(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum)
-    {
-        return new UpdateAlbumDTO
-        {
-            OriginalAlbum = Map(originalAlbum),
-            UpdatedAlbum = Map(updatedAlbum)
-        };
-    }
-
-    public UpdateArtistDTO MapUpdate(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist)
-    {
-        return new UpdateArtistDTO
-        {
-            OriginalArtist = Map(originalArtist),
-            UpdatedArtist = Map(updatedArtist)
-        };
-    }
-
-    public UpdateTrackDTO MapUpdate(TrackDetailsVM originalTrack, TrackDetailsVM updatedTrack)
-    {
-        return new UpdateTrackDTO
-        {
-            OriginalTrack = Map(originalTrack),
-            UpdatedTrack = Map(updatedTrack)
-        };
-    }
-
-    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> discs)
-    {
-        var tracks = new List<UpdatedAlbumTrackPropertiesDTO>();
-
-        foreach (var disc in discs)
-        {
-            foreach (var track in disc.Tracks)
-            {
-                tracks.Add(MapUpdateProperties(disc, track));
-            }
-        }
-
-        return tracks;
-    }
-
-    private static UpdatedAlbumPropertiesDTO Map(AlbumDetailsVM vm)
+    public UpdatedAlbumPropertiesDTO MapAlbum(AlbumDetailsVM album)
     {
         return new UpdatedAlbumPropertiesDTO
         {
-            Id = vm.Id,
-            DiscCount = vm.DiscCount,
-            ArtworkBase64 = vm.ArtworkBase64,
-            ReleaseType = vm.ReleaseType,
-            Tags = Map(vm.Tags),
-            Title = vm.Title,
-            Year = vm.Year
+            AlbumId = album.Id,
+            DiscCount = album.DiscCount,
+            ArtworkBase64 = album.ArtworkBase64,
+            ReleaseType = album.ReleaseType,
+            Tags = Map(album.Tags),
+            Title = album.Title,
+            Year = album.Year
         };
     }
 
-    private static UpdatedArtistPropertiesDTO Map(ArtistDetailsVM vm)
+    public UpdatedArtistPropertiesDTO MapArtist(ArtistDetailsVM artist)
     {
         return new UpdatedArtistPropertiesDTO
         {
-            Id = vm.Id,
-            GroupingName = vm.Grouping.Name,
-            Genre = vm.Genre,
-            City = vm.City,
-            Country = vm.Country,
-            State = vm.State,
-            Tags = Map(vm.Tags),
-            ImageBase64 = vm.ImageBase64
+            ArtistId = artist.Id,
+            GroupingName = artist.Grouping.Name,
+            Genre = artist.Genre,
+            City = artist.City,
+            Country = artist.Country,
+            State = artist.State,
+            Tags = Map(artist.Tags),
+            ImageBase64 = artist.ImageBase64
         };
     }
 
-    private static UpdatedTrackPropertiesDTO Map(TrackDetailsVM vm)
+    public UpdatedTrackPropertiesDTO MapTrack(TrackDetailsVM track)
     {
         return new UpdatedTrackPropertiesDTO
         {
-            Id = vm.Id,
-            Title = vm.Title,
-            Lyrics = vm.Lyrics,
-            Year = vm.Year,
-            Tags = Map(vm.Tags)
-        };
-    }
-
-    public static GroupingDTO Map(GroupingVM dto)
-    {
-        return new GroupingDTO(dto.Id, dto.Name);
-    }
-
-    private static TagsDTO Map(IReadOnlyCollection<string> vm)
-    {
-        return new TagsDTO { Tags = vm.ToList() };
-    }
-
-    private static AlbumDiscDTO Map(AlbumDiscVM disc)
-    {
-        return new AlbumDiscDTO
-        {
-            DiscNo = disc.DiscNo,
-            TrackCount = disc.TrackCount,
-            Tracks = disc.Tracks.Select(t => Map(disc, t)).ToList()
-        };
-    }
-
-    private static AlbumTrackDTO Map(AlbumDiscVM disc, AlbumTrackVM track)
-    {
-        return new AlbumTrackDTO
-        {
-            ArtistId = track.ArtistId,
-            ArtistName = track.ArtistName,
+            TrackId = track.Id,
             Title = track.Title,
-            DurationSeconds = track.DurationSeconds,
-            TrackId = track.TrackId,
-            TrackNo = track.TrackNo,
-            DiscNo = disc.DiscNo,
-            IdFromSource = track.IdFromSource
+            Lyrics = track.Lyrics,
+            Year = track.Year,
+            Tags = Map(track.Tags)
         };
     }
 
-    private static UpdatedAlbumTrackPropertiesDTO MapUpdateProperties(AlbumDiscVM disc, AlbumTrackVM track)
+    public List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
     {
-        return new UpdatedAlbumTrackPropertiesDTO
+        return tracks.Select(r => new UpdatedAlbumTrackPropertiesDTO
         {
-            TrackId = track.TrackId,
-            Title = track.Title,
-            TrackNo = track.TrackNo,
-            DiscNo = disc.DiscNo
-        };
+            TrackId = r.TrackId,
+            Title = r.Title,
+            TrackNo = r.TrackNo,
+            DiscNo = r.DiscNo,
+            DiscTrackCount = r.DiscTrackCount
+        })
+        .ToList();
+    }
+
+    private static TagsDTO Map(IReadOnlyCollection<string> tags)
+    {
+        return new TagsDTO { Tags = tags.ToList() };
+    }
+
+    public List<UpdatedArtistReleasePropertiesDTO> MapArtistReleases(IReadOnlyCollection<AlbumVM> releases)
+    {
+        return releases.Select(r => new UpdatedArtistReleasePropertiesDTO
+        {
+            AlbumId = r.Id,
+            Title = r.Title,
+            ReleaseType = r.ReleaseType,
+            Year = r.Year
+        })
+        .ToList();
     }
 }

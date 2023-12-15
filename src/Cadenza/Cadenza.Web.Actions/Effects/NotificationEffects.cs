@@ -36,4 +36,11 @@ public class NotificationEffects
         _notificationService.Success(action.Message);
         return Task.CompletedTask;
     }
+
+    [EffectMethod]
+    public Task HandleNotificationInformationRequest(NotificationInformationRequest action, IDispatcher dispatcher)
+    {
+        _notificationService.Information(action.Message);
+        return Task.CompletedTask;
+    }
 }

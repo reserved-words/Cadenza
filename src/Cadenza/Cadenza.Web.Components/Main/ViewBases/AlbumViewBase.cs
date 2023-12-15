@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Components.Main.ViewBases;
+﻿namespace Cadenza.Web.Components.Main.ViewBases;
 
 public class AlbumViewBase : FluxorComponent
 {
@@ -16,7 +14,15 @@ public class AlbumViewBase : FluxorComponent
     {
         if (Model != null && Model.Id == action.UpdatedAlbum.Id)
         {
-            Model = action.UpdatedAlbum;
+            Model = Model with
+            {
+                Title = action.UpdatedAlbum.Title,
+                ReleaseType = action.UpdatedAlbum.ReleaseType,
+                Year = action.UpdatedAlbum.Year,
+                DiscCount = action.UpdatedAlbum.DiscCount,
+                ArtworkBase64 = action.UpdatedAlbum.ArtworkBase64,
+                Tags = action.UpdatedAlbum.Tags
+            };
             StateHasChanged();
         }
     }

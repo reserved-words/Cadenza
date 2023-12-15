@@ -1,11 +1,10 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Api.Interfaces;
+﻿namespace Cadenza.Web.Api.Interfaces;
 
 internal interface IDataTransferObjectMapper
 {
-    List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumDiscVM> tracks);
-    UpdateAlbumDTO MapUpdate(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum);
-    UpdateArtistDTO MapUpdate(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist);
-    UpdateTrackDTO MapUpdate(TrackDetailsVM originalTrack, TrackDetailsVM updateTrack);
+    UpdatedAlbumPropertiesDTO MapAlbum(AlbumDetailsVM album);
+    List<UpdatedAlbumTrackPropertiesDTO> MapAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks);
+    UpdatedArtistPropertiesDTO MapArtist(ArtistDetailsVM artist);
+    List<UpdatedArtistReleasePropertiesDTO> MapArtistReleases(IReadOnlyCollection<AlbumVM> releases);
+    UpdatedTrackPropertiesDTO MapTrack(TrackDetailsVM track);
 }

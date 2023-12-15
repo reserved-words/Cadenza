@@ -8,14 +8,12 @@ BEGIN
 		[SourceId],
 		[TrackIdFromSource]
 	FROM
-		[Queue].[TrackRemovals]
+		[Queue].[TrackRemovalSync]
 	WHERE
 		[SourceId] = @SourceId
-	AND
-		[DateProcessed] IS NULL
 	AND 
-		[DateRemoved] IS NULL
+		[Synced] = 0
 	AND
-		[DateErrored] IS NULL
+		[FailedAttempts] < 3
 
 END

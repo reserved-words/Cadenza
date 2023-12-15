@@ -2,9 +2,12 @@
 
 internal class GetAlbumUpdatesResult
 {
-    public int Id { get; set; }
     public int AlbumId { get; set; }
-    public string PropertyName { get; set; }
-    public string OriginalValue { get; set; }
-    public string UpdatedValue { get; set; }
+    public string Title { get; set; }
+    public string ReleaseType { get; set; }
+    public string Year { get; set; }
+    public int DiscCount { get; set; }
+    public string ArtworkMimeType { get; set; }
+    public byte[] ArtworkContent { get; set; }
+    public string TagList { get; set; }
 }

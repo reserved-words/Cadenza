@@ -1,6 +1,8 @@
 ﻿@inherits EditTrackTabBase
 
-<SubGrid>
+@if (EditableTrack != null)
+{
+    <SubGrid>
 
     <SubGridColumn md="4">
         <SubGridRow RowHeight="@RowHeight.Fixed">
@@ -38,3 +40,4 @@
     </SubGridColumn>
 
 </SubGrid>
+}

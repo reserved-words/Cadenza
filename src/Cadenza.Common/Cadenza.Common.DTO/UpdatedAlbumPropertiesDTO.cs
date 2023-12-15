@@ -2,22 +2,12 @@
 
 public class UpdatedAlbumPropertiesDTO
 {
-    public int Id { get; set; }
-
-    [ItemProperty(ItemProperty.AlbumTitle)]
+    public int AlbumId { get; set; }
     public string Title { get; set; }
-
-    [ItemProperty(ItemProperty.AlbumReleaseType)]
     public ReleaseType ReleaseType { get; set; }
-
-    [ItemProperty(ItemProperty.AlbumReleaseYear)]
     public string Year { get; set; }
-
-    [ItemProperty(ItemProperty.AlbumArtwork)]
     public string ArtworkBase64 { get; set; }
-    [ItemProperty(ItemProperty.AlbumDiscCount)]
     public int DiscCount { get; set; }
 
-    [ItemProperty(ItemProperty.AlbumTags)]
     public TagsDTO Tags { get; set; }
 }

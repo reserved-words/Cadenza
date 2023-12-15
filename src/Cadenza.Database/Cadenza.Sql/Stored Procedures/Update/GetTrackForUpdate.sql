@@ -9,7 +9,8 @@ BEGIN
 		TRK.[Title],
 		TRK.[Year],
 		TRK.[Lyrics],
-		TAG.[TagList]
+		TAG.[TagList],
+		DSC.[TrackCount] [DiscTrackCount]
 	FROM
 		[Library].[Tracks] TRK
 	INNER JOIN

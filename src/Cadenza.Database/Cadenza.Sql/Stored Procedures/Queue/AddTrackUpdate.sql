@@ -1,49 +1,33 @@
 ﻿CREATE PROCEDURE [Queue].[AddTrackUpdate]
-	@TrackId INT,
-	@PropertyName NVARCHAR(50),
-	@OriginalValue NVARCHAR(MAX),
-	@UpdatedValue NVARCHAR(MAX)
+	@TrackId INT
 AS
 BEGIN
 
-	DECLARE @PropertyId INT,
-			@SourceId INT
+	IF NOT EXISTS (SELECT [TrackId] FROM [Queue].[TrackSync] WHERE [TrackId] = @TrackId)
+	BEGIN
 
-	SELECT 
-		@PropertyId = [Id] 
-	FROM
-		[Admin].[TrackProperties]
-	WHERE
-		[Name] = @PropertyName
+		INSERT INTO [Queue].[TrackSync] (
+			[TrackId],
+			[LastUpdated]
+		)
+		VALUES (
+			@TrackId,
+			GETDATE()
+		)
 
-	EXECUTE [Library].[GetTrackSourceId] @TrackId, @SourceId OUTPUT
+	END
+	ELSE
+	BEGIN
 
-	UPDATE
-		[Queue].[TrackUpdates]
-	SET
-		[DateRemoved] = GETDATE()
-	WHERE
-		[TrackId] = @TrackId
-	AND
-		[PropertyId] = @PropertyId
-	AND
-		[DateProcessed] IS NULL
-	AND
-		[DateRemoved] IS NULL
+		UPDATE 
+			[Queue].[TrackSync]
+		SET
+			[LastUpdated] = GETDATE(),
+			[FailedAttempts] = 0,
+			[LastAttempt] = NULL
+		WHERE	
+			[TrackId] = @TrackId
 
-	INSERT INTO [Queue].[TrackUpdates] (
-		[TrackId],
-		[SourceId],
-		[PropertyId],
-		[OriginalValue],
-		[UpdatedValue]
-	)
-	VALUES (
-		@TrackId,
-		@SourceId,
-		@PropertyId,
-		@OriginalValue,
-		@UpdatedValue
-	)
+	END
 
 END

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Services;
+﻿using Cadenza.Common.DTO;
+
+namespace Cadenza.API.Services;
 
 internal class UpdateService : IUpdateService
 {
@@ -11,124 +13,58 @@ internal class UpdateService : IUpdateService
         _updateRepository = updateRepository;
     }
 
-    public async Task UpdateAlbumTracks(UpdateAlbumTracksDTO request)
+    public async Task UpdateTrack(UpdatedTrackPropertiesDTO update)
     {
-        foreach (var originalTrack in request.OriginalTracks)
+        await _updateRepository.UpdateTrack(update);
+        await _queueRepository.AddTrackUpdateRequest(update.TrackId);
+    }
+
+    public async Task UpdateAlbum(AlbumUpdateDTO update)
+    {
+        // TODO: Ideally do this all in one transaction so can roll back all and display one error message if it fails
+
+        if (update.UpdatedAlbum != null)
         {
-            var updatedTrack = request.UpdatedTracks
-                .SingleOrDefault(t => t.TrackId == originalTrack.TrackId);
+            await _updateRepository.UpdateAlbum(update.UpdatedAlbum);
+            await _queueRepository.AddAlbumUpdateRequest(update.AlbumId);
+        }
 
-            if (updatedTrack == null)
+        if (update.UpdatedAlbumTracks != null)
+        {
+            foreach (var updatedTrack in update.UpdatedAlbumTracks)
             {
-                await _queueRepository.AddRemovalRequest(originalTrack.TrackId);
-                await _updateRepository.RemoveTrack(originalTrack.TrackId);
+                await _updateRepository.UpdateAlbumTrack(updatedTrack);
+                await _queueRepository.AddTrackUpdateRequest(updatedTrack.TrackId);
             }
-            else
+        }
+
+        if (update.RemovedTracks != null)
+        {
+            foreach (var removedTrackId in update.RemovedTracks)
             {
-                var trackUpdateRequest = new ItemUpdateRequestDTO
-                {
-                    Id = originalTrack.TrackId,
-                    Type = LibraryItemType.Track,
-                    Updates = GetUpdates(originalTrack, updatedTrack)
-                };
-
-                if (!trackUpdateRequest.Updates.Any())
-                    continue;
-
-                await _queueRepository.AddUpdateRequest(trackUpdateRequest);
-                await _updateRepository.UpdateTrack(trackUpdateRequest);
+                await _queueRepository.AddRemovalRequest(removedTrackId);
+                await _updateRepository.RemoveTrack(removedTrackId);
             }
         }
     }
 
-    public async Task UpdateTrack(UpdateTrackDTO dto)
+    public async Task UpdateArtist(ArtistUpdateDTO update)
     {
-        var request = new ItemUpdateRequestDTO
+        // TODO: Ideally do this all in one transaction so can roll back all and display one error message if it fails
+
+        if (update.UpdatedArtist != null)
         {
-            Id = dto.OriginalTrack.Id,
-            Type = LibraryItemType.Track,
-            Updates = GetUpdates(dto.OriginalTrack, dto.UpdatedTrack)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateTrack(request);
-    }
-
-    public async Task UpdateAlbum(UpdateAlbumDTO dto)
-    {
-        var request = new ItemUpdateRequestDTO
-        {
-            Id = dto.OriginalAlbum.Id,
-            Type = LibraryItemType.Album,
-            Updates = GetUpdates(dto.OriginalAlbum, dto.UpdatedAlbum)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateAlbum(request);
-    }
-
-    public async Task UpdateArtist(UpdateArtistDTO dto)
-    {
-        var request = new ItemUpdateRequestDTO
-        {
-            Id = dto.OriginalArtist.Id,
-            Type = LibraryItemType.Artist,
-            Updates = GetUpdates(dto.OriginalArtist, dto.UpdatedArtist)
-        };
-
-        if (!request.Updates.Any())
-            return;
-
-        await _queueRepository.AddUpdateRequest(request);
-        await _updateRepository.UpdateArtist(request);
-    }
-
-    private List<PropertyUpdateDTO> GetUpdates<T>(T originalItem, T updatedItem)
-    {
-        var updates = new List<PropertyUpdateDTO>();
-
-        var properties = typeof(T).GetProperties();
-
-        foreach (var property in properties)
-        {
-            var itemProperty = property.GetCustomAttributes(false)
-                .OfType<ItemPropertyAttribute>()
-                .SingleOrDefault();
-
-            if (itemProperty == null)
-                continue;
-
-            var originalValue = property.GetValue(originalItem)?.ToString();
-            var updatedValue = property.GetValue(updatedItem)?.ToString();
-
-            if (AreEqual(originalValue, updatedValue))
-                continue;
-
-            updates.Add(new PropertyUpdateDTO
-            {
-                Property = itemProperty.Property,
-                OriginalValue = originalValue,
-                UpdatedValue = updatedValue
-            });
+            await _updateRepository.UpdateArtist(update.UpdatedArtist);
+            await _queueRepository.AddArtistUpdateRequest(update.ArtistId);
         }
 
-        return updates;
-    }
-
-    private static bool AreEqual(string originalValue, string updatedValue)
-    {
-        if (originalValue == null && updatedValue == null)
-            return true;
-
-        if (originalValue == null || updatedValue == null)
-            return false;
-
-        return originalValue == updatedValue;
+        if (update.UpdatedArtistReleases != null)
+        {
+            foreach (var updatedRelease in update.UpdatedArtistReleases)
+            {
+                await _updateRepository.UpdateArtistRelease(updatedRelease);
+                await _queueRepository.AddAlbumUpdateRequest(updatedRelease.AlbumId);
+            }
+        }
     }
 }

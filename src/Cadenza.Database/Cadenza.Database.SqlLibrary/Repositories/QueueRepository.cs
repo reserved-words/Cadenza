@@ -19,38 +19,43 @@ internal class QueueRepository : IQueueRepository
         await _queue.AddTrackRemoval(trackId);
     }
 
-    public async Task AddUpdateRequest(ItemUpdateRequestDTO request)
+    public async Task AddArtistUpdateRequest(int artistId)
     {
-        Func<ItemUpdateRequestDTO, PropertyUpdateDTO, Task> queue = request.Type switch
-        {
-            LibraryItemType.Artist => QueueArtistUpdate,
-            LibraryItemType.Album => QueueAlbumUpdate,
-            LibraryItemType.Track => QueueTrackUpdate,
-            _ => throw new NotImplementedException()
-        };
-
-        foreach (var update in request.Updates)
-        {
-            await queue(request, update);
-        }
+        await _queue.AddArtistUpdate(artistId);
     }
 
-    public async Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source)
+    public async Task AddAlbumUpdateRequest(int albumId)
+    {
+        await _queue.AddAlbumUpdate(albumId);
+    }
+
+    public async Task AddTrackUpdateRequest(int trackId)
+    {
+        await _queue.AddTrackUpdate(trackId);
+    }
+
+    public async Task<List<TrackRemovalSyncDTO>> GetRemovalRequests(LibrarySource source)
     {
         var requests = await _queue.GetTrackRemovals(source);
         return requests.Select(_mapper.MapSyncTrackRemovalRequest).ToList();
     }
 
-    public async Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source)
+    public async Task<List<ArtistUpdateSyncDTO>> GetArtistUpdateRequests(LibrarySource source)
     {
-        var artistUpdates = await _queue.GetArtistUpdates(source);
-        var albumUpdates = await _queue.GetAlbumUpdates(source);
-        var trackUpdates = await _queue.GetTrackUpdates(source);
+        var updates = await _queue.GetArtistUpdates(source);
+        return _mapper.MapArtistUpdates(updates);
+    }
 
-        return _mapper.MapArtistUpdateRequests(artistUpdates)
-            .Concat(_mapper.MapAlbumUpdateRequests(albumUpdates))
-            .Concat(_mapper.MapTrackUpdateRequests(trackUpdates))
-            .ToList();
+    public async Task<List<AlbumUpdateSyncDTO>> GetAlbumUpdateRequests(LibrarySource source)
+    {
+        var updates = await _queue.GetAlbumUpdates(source);
+        return _mapper.MapAlbumUpdates(updates);
+    }
+
+    public async Task<List<TrackUpdateSyncDTO>> GetTrackUpdateRequests(LibrarySource source)
+    {
+        var updates = await _queue.GetTrackUpdates(source);
+        return _mapper.MapTrackUpdates(updates);
     }
 
     public async Task MarkRemovalDone(int requestId)
@@ -63,53 +68,33 @@ internal class QueueRepository : IQueueRepository
         await _queue.MarkTrackRemovalErrored(requestId);
     }
 
-    public async Task MarkUpdateDone(ItemUpdateRequestDTO request)
+    public async Task MarkArtistUpdateDone(int artistId)
     {
-        Func<int, Task> markAsDone = request.Type switch
-        {
-            LibraryItemType.Artist => _queue.MarkArtistUpdateDone,
-            LibraryItemType.Album => _queue.MarkAlbumUpdateDone,
-            LibraryItemType.Track => _queue.MarkTrackUpdateDone,
-            _ => throw new NotImplementedException()
-        };
-
-        foreach (var update in request.Updates)
-        {
-            await markAsDone(update.Id);
-        }
+        await _queue.MarkArtistUpdateDone(artistId);
     }
 
-    public async Task MarkUpdateErrored(ItemUpdateRequestDTO request)
+    public async Task MarkAlbumUpdateDone(int albumId)
     {
-        Func<int, Task> markAsErrored = request.Type switch
-        {
-            LibraryItemType.Artist => _queue.MarkArtistUpdateErrored,
-            LibraryItemType.Album => _queue.MarkAlbumUpdateErrored,
-            LibraryItemType.Track => _queue.MarkTrackUpdateErrored,
-            _ => throw new NotImplementedException()
-        };
-
-        foreach (var update in request.Updates)
-        {
-            await markAsErrored(update.Id);
-        }
+        await _queue.MarkAlbumUpdateDone(albumId);
     }
 
-    private async Task QueueArtistUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    public async Task MarkTrackUpdateDone(int trackId)
     {
-        var artistUpdate = _mapper.MapArtistUpdate(request, update);
-        await _queue.AddArtistUpdate(artistUpdate);
+        await _queue.MarkTrackUpdateDone(trackId);
     }
 
-    private async Task QueueAlbumUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    public async Task MarkArtistUpdateErrored(int artistId)
     {
-        var albumUpdate = _mapper.MapAlbumUpdate(request, update);
-        await _queue.AddAlbumUpdate(albumUpdate);
+        await _queue.MarkArtistUpdateErrored(artistId);
     }
 
-    private async Task QueueTrackUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    public async Task MarkAlbumUpdateErrored(int albumId)
     {
-        var trackUpdate = _mapper.MapTrackUpdate(request, update);
-        await _queue.AddTrackUpdate(trackUpdate);
+        await _queue.MarkAlbumUpdateErrored(albumId);
+    }
+
+    public async Task MarkTrackUpdateErrored(int trackId)
+    {
+        await _queue.MarkTrackUpdateErrored(trackId);
     }
 }

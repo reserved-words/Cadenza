@@ -13,7 +13,7 @@ public class EditTabBase : FluxorComponent
 
     protected void Cancel()
     {
-        Dispatcher.Dispatch(new CancelEditItemRequest(CurrentItem.Value.Type, CurrentItem.Value.Id));
+        Dispatcher.Dispatch(new CancelEditItemRequest());
     }
     protected void Remove()
     {

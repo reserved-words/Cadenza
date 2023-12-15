@@ -2,13 +2,23 @@
 
 public interface IQueueRepository
 {
-    Task AddUpdateRequest(ItemUpdateRequestDTO update);
-    Task<List<ItemUpdateRequestDTO>> GetUpdateRequests(LibrarySource source);
-    Task MarkUpdateDone(ItemUpdateRequestDTO request);
-    Task MarkUpdateErrored(ItemUpdateRequestDTO request);
+    Task AddArtistUpdateRequest(int artistId);
+    Task<List<ArtistUpdateSyncDTO>> GetArtistUpdateRequests(LibrarySource source);
+    Task MarkArtistUpdateDone(int artistId);
+    Task MarkArtistUpdateErrored(int artistId);
+
+    Task AddAlbumUpdateRequest(int albumId);
+    Task<List<AlbumUpdateSyncDTO>> GetAlbumUpdateRequests(LibrarySource source);
+    Task MarkAlbumUpdateDone(int albumId);
+    Task MarkAlbumUpdateErrored(int albumId);
+
+    Task AddTrackUpdateRequest(int trackId);
+    Task<List<TrackUpdateSyncDTO>> GetTrackUpdateRequests(LibrarySource source);
+    Task MarkTrackUpdateDone(int trackId);
+    Task MarkTrackUpdateErrored(int trackId);
 
     Task AddRemovalRequest(int trackId);
-    Task<List<SyncTrackRemovalRequestDTO>> GetRemovalRequests(LibrarySource source);
+    Task<List<TrackRemovalSyncDTO>> GetRemovalRequests(LibrarySource source);
     Task MarkRemovalDone(int requestId);
     Task MarkRemovalErrored(int requestId);
 }

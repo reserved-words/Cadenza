@@ -9,6 +9,18 @@ public static class ItemExtensions
         return new ReadOnlyCollection<T>(items.ToList());
     }
 
+    public static List<AlbumDiscVM> GroupByDisc(this List<AlbumTrackVM> tracks)
+    {
+        return tracks.GroupBy(t => t.DiscNo)
+            .Select(d => new AlbumDiscVM
+            {
+                DiscNo = d.Key,
+                TrackCount = d.First().DiscTrackCount,
+                Tracks = d.OrderBy(t => t.TrackNo).ToList()
+            })
+            .OrderBy(d => d.DiscNo)
+            .ToList();
+    }
 
     public static List<ArtistReleaseGroupVM> GroupByReleaseType(this List<AlbumVM> albums)
     {
