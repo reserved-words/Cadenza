@@ -15,10 +15,16 @@ internal class HistoryRepository : IHistoryRepository
         _mapper = mapper;
     }
 
-    public async Task<List<RecentAlbumDTO>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumDTO>> GetRecentlyAddedAlbums(int maxItems)
     {
-        var data = await _history.GetRecentAlbums(maxItems);
-        return data.Select(_mapper.MapRecentAlbum).ToList();
+        var data = await _history.GetRecentlyAddedAlbums(maxItems);
+        return data.Select(_mapper.MapRecentlyAddedAlbum).ToList();
+    }
+
+    public async Task<List<RecentAlbumDTO>> GetRecentlyPlayedAlbums(int maxItems)
+    {
+        var data = await _history.GetRecentlyPlayedAlbums(maxItems);
+        return data.Select(_mapper.MapRecentlyPlayedAlbum).ToList();
     }
 
     public async Task<List<string>> GetRecentTags(int maxItems)

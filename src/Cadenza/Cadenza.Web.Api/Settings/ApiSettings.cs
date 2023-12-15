@@ -8,6 +8,7 @@ public class ApiEndpoints
 {
     public string GroupingOptions { get; set; }
 
+    public string RecentlyAddedAlbums { get; set; }
     public string RecentAlbumRequests { get; set; }
     public string RecentTagRequests { get; set; }
     public string RecentTracks { get; set; }

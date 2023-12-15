@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [Library].[Albums]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
+    [Added] DATETIME NOT NULL DEFAULT GETDATE(),
     [SourceId] INT NOT NULL, 
     [ArtistId] INT NOT NULL, 
     [Title] NVARCHAR(500) NOT NULL,
