@@ -15,7 +15,14 @@ internal class HistoryApi : IHistoryApi
         _url = url;
     }
 
-    public async Task<List<RecentAlbumVM>> GetRecentAlbums(int maxItems)
+    public async Task<List<RecentAlbumVM>> GetRecentlyAddedAlbums(int maxItems)
+    {
+        var url = $"{_settings.RecentlyAddedAlbums}/{maxItems}";
+        var items = await _apiHelper.Get<List<RecentAlbumDTO>>(url);
+        return items.Select(i => _mapper.Map(i)).ToList();
+    }
+
+    public async Task<List<RecentAlbumVM>> GetRecentlyPlayedAlbums(int maxItems)
     {
         var url = $"{_settings.RecentAlbumRequests}/{maxItems}";
         var items = await _apiHelper.Get<List<RecentAlbumDTO>>(url);

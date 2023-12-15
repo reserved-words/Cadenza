@@ -1,13 +1,13 @@
 ﻿namespace Cadenza.Web.Actions.Effects;
 
-public class PlaylistHistoryEffects
+public class RecentHistoryEffects
 {
     private const int MaxItems = 12;
 
     private readonly IArtworkApi _artworkApi;
     private readonly IHistoryApi _historyApi;
 
-    public PlaylistHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
+    public RecentHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
     {
         _historyApi = historyApi;
         _artworkApi = artworkApi;
@@ -31,7 +31,7 @@ public class PlaylistHistoryEffects
     [EffectMethod]
     public async Task HandleFetchPlaylistHistoryAlbumsRequest(FetchPlaylistHistoryAlbumsRequest action, IDispatcher dispatcher)
     {
-        var result = await _historyApi.GetRecentAlbums(MaxItems);
+        var result = await _historyApi.GetRecentlyPlayedAlbums(MaxItems);
         
         var resultWithImages = result.Select(album => album with
         {
@@ -43,9 +43,23 @@ public class PlaylistHistoryEffects
     }
 
     [EffectMethod]
-    public async Task HandleFetchPlaylistHistoryTagasRequest(FetchPlaylistHistoryTagsRequest action, IDispatcher dispatcher)
+    public async Task HandleFetchPlaylistHistoryTagsRequest(FetchPlaylistHistoryTagsRequest action, IDispatcher dispatcher)
     {
         var result = await _historyApi.GetRecentTags(MaxItems);
         dispatcher.Dispatch(new FetchPlaylistHistoryTagsResult(result));
+    }
+
+    [EffectMethod]
+    public async Task HandleRecentlyAddedAlbumsRequest(FetchRecentlyAddedAlbumsRequest action, IDispatcher dispatcher)
+    {
+        var result = await _historyApi.GetRecentlyAddedAlbums(MaxItems);
+
+        var resultWithImages = result.Select(album => album with
+        {
+            ImageUrl = _artworkApi.GetAlbumArtworkUrl(album.Id)
+        })
+        .ToList();
+
+        dispatcher.Dispatch(new FetchRecentlyAddedAlbumsResult(resultWithImages));
     }
 }

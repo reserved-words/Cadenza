@@ -126,7 +126,7 @@
     <Build Include="Tables\History\PlayedItems.sql" />
     <Build Include="Views\History\vw_PlayedItems.sql" />
     <Build Include="Views\History\vw_PlayedAlbums.sql" />
-    <Build Include="Stored Procedures\History\GetRecentAlbums.sql" />
+    <Build Include="Stored Procedures\History\GetRecentlyPlayedAlbums.sql" />
     <Build Include="Views\History\vw_PlayedTags.sql" />
     <Build Include="Stored Procedures\History\GetRecentTags.sql" />
     <Build Include="Stored Procedures\Queue\AddTrackRemoval.sql" />
@@ -239,6 +239,7 @@
     <Build Include="Tables\Queue\ArtistSync.sql" />
     <Build Include="Tables\Queue\TrackSync.sql" />
     <Build Include="Tables\Queue\TrackRemovalSync.sql" />
+    <Build Include="Stored Procedures\History\GetRecentlyAddedAlbums.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />
