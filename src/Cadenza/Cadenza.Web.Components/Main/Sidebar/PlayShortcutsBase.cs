@@ -4,7 +4,7 @@ public class PlayShortcutsBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }
-    [Inject] public IState<PlaylistHistoryAlbumsState> AlbumHistoryState { get; set; }
+    [Inject] public IState<HistoryRecentlyPlayedAlbumsState> AlbumHistoryState { get; set; }
 
     protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
 

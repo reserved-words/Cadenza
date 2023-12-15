@@ -1,20 +1,15 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Actions.Effects;
+﻿namespace Cadenza.Web.Actions.Effects;
 
 public class RecentPlayHistoryEffects
 {
-    private const int MaxItems = 15;
     private const int MinMinutesPlayed = 4;
     private const int MinPercentagePlayed = 50;
 
-    private readonly IArtworkApi _artworkApi;
     private readonly IHistoryApi _historyApi;
 
-    public RecentPlayHistoryEffects(IHistoryApi historyApi, IArtworkApi artworkApi)
+    public RecentPlayHistoryEffects(IHistoryApi historyApi)
     {
         _historyApi = historyApi;
-        _artworkApi = artworkApi;
     }
 
     [EffectMethod]
@@ -40,24 +35,8 @@ public class RecentPlayHistoryEffects
     [EffectMethod(typeof(UpdateRecentPlayHistoryResult))]
     public Task HandleUpdateRecentPlayHistoryResult(IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
+        dispatcher.Dispatch(new FetchRecentlyPlayedTracksRequest());
         return Task.CompletedTask;
-    }
-
-    [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
-    public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
-    {
-        var result = await _historyApi.GetRecentlyPlayedTracks(MaxItems);
-
-        var list = result.ToList();
-
-        var listWithImages = list.Select(t => t with
-        {
-            ImageUrl = _artworkApi.GetAlbumArtworkUrl(t.AlbumId)
-        })
-        .ToList();
-
-        dispatcher.Dispatch(new FetchRecentPlayHistoryResult(listWithImages));
     }
 
     private async Task RecordPlay(TrackFullVM track, TrackProgress progress)
