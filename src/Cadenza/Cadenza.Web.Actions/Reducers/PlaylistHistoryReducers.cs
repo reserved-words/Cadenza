@@ -17,18 +17,4 @@ public static class PlaylistHistoryReducers
         IsLoading = false,
         Items = action.Result
     };
-
-    [ReducerMethod]
-    public static PlaylistHistoryTagsState ReduceFetchPlaylistHistoryTagsRequest(PlaylistHistoryTagsState state, FetchPlaylistHistoryTagsRequest action) => state with
-    {
-        IsLoading = true,
-        Items = new List<string>()
-    };
-
-    [ReducerMethod]
-    public static PlaylistHistoryTagsState ReduceFetchPlaylistHistoryTagsResult(PlaylistHistoryTagsState state, FetchPlaylistHistoryTagsResult action) => state with
-    {
-        IsLoading = false,
-        Items = action.Result
-    };
 }

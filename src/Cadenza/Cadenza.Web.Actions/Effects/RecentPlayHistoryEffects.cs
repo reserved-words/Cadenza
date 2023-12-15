@@ -47,7 +47,7 @@ public class RecentPlayHistoryEffects
     [EffectMethod(typeof(FetchRecentPlayHistoryRequest))]
     public async Task HandleFetchRecentPlayHistoryRequest(IDispatcher dispatcher)
     {
-        var result = await _historyApi.GetRecentTracks(MaxItems);
+        var result = await _historyApi.GetRecentlyPlayedTracks(MaxItems);
 
         var list = result.ToList();
 

@@ -14,21 +14,6 @@ public class RecentHistoryEffects
     }
 
     [EffectMethod]
-    public Task HandleFetchPlaylistHistoryRequest(FetchPlaylistHistoryRequest action, IDispatcher dispatcher)
-    {
-        if (action.Playlist.Type == PlaylistType.Album)
-        {
-            dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsRequest());
-        }
-        else if (action.Playlist.Type == PlaylistType.Tag)
-        {
-            dispatcher.Dispatch(new FetchPlaylistHistoryTagsRequest());
-        }
-
-        return Task.CompletedTask;
-    }
-
-    [EffectMethod]
     public async Task HandleFetchPlaylistHistoryAlbumsRequest(FetchPlaylistHistoryAlbumsRequest action, IDispatcher dispatcher)
     {
         var result = await _historyApi.GetRecentlyPlayedAlbums(MaxItems);
@@ -40,13 +25,6 @@ public class RecentHistoryEffects
         .ToList();
 
         dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsResult(resultWithImages));
-    }
-
-    [EffectMethod]
-    public async Task HandleFetchPlaylistHistoryTagsRequest(FetchPlaylistHistoryTagsRequest action, IDispatcher dispatcher)
-    {
-        var result = await _historyApi.GetRecentTags(MaxItems);
-        dispatcher.Dispatch(new FetchPlaylistHistoryTagsResult(result));
     }
 
     [EffectMethod]

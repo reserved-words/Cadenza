@@ -45,7 +45,6 @@ public class ApiConnectionEffects
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
         dispatcher.Dispatch(new FetchGroupingsRequest());
         dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsRequest());
-        dispatcher.Dispatch(new FetchPlaylistHistoryTagsRequest());
         dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
         dispatcher.Dispatch(new FetchRecentlyAddedAlbumsRequest());
         dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(HistoryPeriod.Week));
