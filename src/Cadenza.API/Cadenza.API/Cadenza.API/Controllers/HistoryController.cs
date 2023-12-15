@@ -11,10 +11,16 @@ public class HistoryController : ControllerBase
         _repository = repository;
     }
 
+    [HttpGet("RecentlyAddedAlbums/{maxItems}")]
+    public async Task<List<RecentAlbumDTO>> RecentlyAddedAlbums(int maxItems)
+    {
+        return await _repository.GetRecentlyAddedAlbums(maxItems);
+    }
+
     [HttpGet("RecentAlbumRequests/{maxItems}")]
     public async Task<List<RecentAlbumDTO>> RecentAlbumRequests(int maxItems)
     {
-        return await _repository.GetRecentAlbums(maxItems);
+        return await _repository.GetRecentlyPlayedAlbums(maxItems);
     }
 
     [HttpGet("RecentTagRequests/{maxItems}")]

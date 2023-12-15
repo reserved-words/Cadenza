@@ -1,20 +1,19 @@
-﻿CREATE PROCEDURE [History].[GetRecentAlbums]
+﻿CREATE PROCEDURE [History].[GetRecentlyAddedAlbums]
 	@MaxItems INT
 AS
 BEGIN
 
 	SELECT TOP (@MaxItems)
-		PLA.[AlbumId],
+		ALB.[Id] [AlbumId],
 		ALB.[Title] [AlbumTitle],
 		ART.[Name] [ArtistName]
 	FROM
-		[History].[vw_PlayedAlbums] PLA
-	INNER JOIN
-		[Library].[Albums] ALB ON ALB.[Id] = PLA.[AlbumId]
+		[Library].[Albums] ALB
 	INNER JOIN
 		[Library].[Artists] ART ON ART.[Id] = ALB.[ArtistId]
 	ORDER BY
-		[PlayedAt] DESC
+		ALB.[Added] DESC,
+		ALB.[Id] DESC
 
 END
 

@@ -5,7 +5,17 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class HistoryMapper : IHistoryMapper
 {
-    public RecentAlbumDTO MapRecentAlbum(GetRecentAlbumsResult data)
+    public RecentAlbumDTO MapRecentlyAddedAlbum(GetRecentlyAddedAlbumsResult data)
+    {
+        return new RecentAlbumDTO
+        {
+            Id = data.AlbumId,
+            Title = data.AlbumTitle,
+            ArtistName = data.ArtistName
+        };
+    }
+
+    public RecentAlbumDTO MapRecentlyPlayedAlbum(GetRecentlyPlayedAlbumsResult data)
     {
         return new RecentAlbumDTO
         {

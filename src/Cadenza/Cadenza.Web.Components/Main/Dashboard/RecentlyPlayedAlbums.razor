@@ -1,9 +1,9 @@
-﻿@inherits RecentAlbumsBase
+﻿@inherits RecentlyPlayedAlbumsBase
 
-<DashboardCard Title="Recent Albums"
-             IsLoading="@IsLoading"
-             LoadingCaption="Loading recent albums..."
-             ShowPeriodOption="false">
+<DashboardCard Title="Recently Played Albums"
+               IsLoading="@IsLoading"
+               LoadingCaption="Loading recently played albums..."
+               ShowPeriodOption="false">
 
     <MudGrid Spacing="1" Justify="Justify.FlexStart">
         @foreach (var album in RecentAlbums){

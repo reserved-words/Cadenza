@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Database.SqlLibrary.Model.History;
 
-internal class GetRecentAlbumsResult
+internal class GetRecentlyAddedAlbumsResult
 {
     public int AlbumId { get; set; }
     public string AlbumTitle { get; set; }

@@ -8,7 +8,8 @@ internal interface IHistory
     Task<List<GetTopArtistsResult>> GetTopArtists(GetTopArtistsParameter parameter);
     Task<List<GetTopTracksResult>> GetTopTracks(GetTopTracksParameter parameter);
 
-    Task<List<GetRecentAlbumsResult>> GetRecentAlbums(int maxItems);
+    Task<List<GetRecentlyAddedAlbumsResult>> GetRecentlyAddedAlbums(int maxItems);
+    Task<List<GetRecentlyPlayedAlbumsResult>> GetRecentlyPlayedAlbums(int maxItems);
     Task<List<GetRecentTagsResult>> GetRecentTags(int maxItems);
 
     Task InsertNowPlaying(InsertNowPlayingParameter parameters);

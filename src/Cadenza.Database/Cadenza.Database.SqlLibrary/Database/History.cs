@@ -12,9 +12,14 @@ internal class History : IHistory
         _sql = sql.Create(nameof(History));
     }
 
-    public async Task<List<GetRecentAlbumsResult>> GetRecentAlbums(int maxItems)
+    public async Task<List<GetRecentlyAddedAlbumsResult>> GetRecentlyAddedAlbums(int maxItems)
     {
-        return await _sql.Query<GetRecentAlbumsResult>(new { MaxItems = maxItems });
+        return await _sql.Query<GetRecentlyAddedAlbumsResult>(new { MaxItems = maxItems });
+    }
+
+    public async Task<List<GetRecentlyPlayedAlbumsResult>> GetRecentlyPlayedAlbums(int maxItems)
+    {
+        return await _sql.Query<GetRecentlyPlayedAlbumsResult>(new { MaxItems = maxItems });
     }
 
     public async Task<List<GetRecentTagsResult>> GetRecentTags(int maxItems)

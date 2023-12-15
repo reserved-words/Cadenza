@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Components.Main.Dashboard;
 
-public class RecentAlbumsBase : FluxorComponent
+public class RecentlyPlayedAlbumsBase : FluxorComponent
 {
     [Inject] public IState<PlaylistHistoryAlbumsState> AlbumHistoryState { get; set; }
 
