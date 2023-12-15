@@ -1,13 +1,14 @@
 ﻿CREATE PROCEDURE [Queue].[MarkAlbumUpdateDone]
-	@Id INT
+	@AlbumId INT
 AS
 BEGIN
 
 	UPDATE
-		[Queue].[AlbumUpdates]
+		[Queue].[AlbumSync]
 	SET
-		[DateProcessed] = GETDATE()
+		[LastSynced] = GETDATE(),
+		[LastAttempt] = GETDATE()
 	WHERE
-		[Id] = @Id
+		[AlbumId] = @AlbumId
 
 END

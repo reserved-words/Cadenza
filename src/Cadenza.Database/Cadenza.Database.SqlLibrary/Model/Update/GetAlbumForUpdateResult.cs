@@ -6,6 +6,7 @@ internal class GetAlbumForUpdateResult
     public string Title { get; set; }
     public int ReleaseTypeId { get; set; }
     public string Year { get; set; }
+    public int DiscCount { get; set; }
     public string ArtworkMimeType { get; set; }
     public byte[] ArtworkContent { get; set; }
     public string TagList { get; set; }

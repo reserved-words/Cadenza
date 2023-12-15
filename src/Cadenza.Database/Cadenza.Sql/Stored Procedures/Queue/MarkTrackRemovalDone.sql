@@ -4,9 +4,10 @@ AS
 BEGIN
 
 	UPDATE
-		[Queue].[TrackRemovals]
+		[Queue].[TrackRemovalSync]
 	SET
-		[DateProcessed] = GETDATE()
+		[Synced] = 1,
+		[LastAttempt] = GETDATE()
 	WHERE
 		[Id] = @Id
 

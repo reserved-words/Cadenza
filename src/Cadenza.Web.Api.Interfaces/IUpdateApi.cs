@@ -2,8 +2,7 @@
 
 public interface IUpdateApi
 {
-    Task UpdateAlbumTracks(int albumId, IReadOnlyCollection<AlbumDiscVM> originalTracks, IReadOnlyCollection<AlbumDiscVM> updatedTracks);
-    Task UpdateAlbum(AlbumDetailsVM originalAlbum, AlbumDetailsVM updatedAlbum);
-    Task UpdateArtist(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist);
-    Task UpdateTrack(TrackDetailsVM originalTrack, TrackDetailsVM updatedTrack);
+    Task UpdateAlbum(int albumId, AlbumDetailsVM updatedAlbum, IReadOnlyCollection<AlbumTrackVM> updatedTracks, IReadOnlyCollection<int> removedTracks);
+    Task UpdateArtist(int artistId, ArtistDetailsVM updatedArtist, IReadOnlyCollection<AlbumVM> updatedReleases);
+    Task UpdateTrack(TrackDetailsVM updatedTrack);
 }

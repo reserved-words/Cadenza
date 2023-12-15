@@ -4,25 +4,29 @@ AS
 BEGIN
 
 	SELECT 
-		UPD.[Id],
-		UPD.[SourceId],
-		ART.[Id] [ArtistId],
-		PRP.[Name] [PropertyName],
-		UPD.[OriginalValue],
-		UPD.[UpdatedValue]
+		SNC.[ArtistId],
+		ART.[Name],
+		GRP.[Name] [Grouping],
+		ART.[Genre],
+		ART.[City],
+		ART.[State],
+		ART.[Country],
+		IMG.[MimeType] [ImageMimeType],
+		IMG.[Content] [ImageContent],
+		TAG.[TagList]
 	FROM
-		[Queue].[ArtistUpdates] UPD
+		[Queue].[ArtistSync] SNC
 	INNER JOIN
-		[Admin].[ArtistProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
+		[Library].[Artists] ART ON SNC.[ArtistId] = ART.[Id]
 	INNER JOIN
-		[Library].[Artists] ART ON ART.[Id] = UPD.[ArtistId]
+		[Admin].[Groupings] GRP ON GRP.[Id] = ART.[GroupingId]
+	LEFT JOIN
+		[Library].[vw_ArtistTags] TAG ON TAG.[ArtistId] = ART.[Id]
+	LEFT JOIN
+		[Library].[ArtistImages] IMG ON IMG.[ArtistId] = ART.[Id]
 	WHERE
-		UPD.[SourceId] = @SourceId
+		(SNC.[LastSynced] IS NULL OR SNC.[LastSynced] < SNC.[LastUpdated])
 	AND
-		UPD.[DateProcessed] IS NULL
-	AND 
-		UPD.[DateRemoved] IS NULL
-	AND
-		UPD.[DateErrored] IS NULL
+		SNC.[FailedAttempts] < 3
 
 END

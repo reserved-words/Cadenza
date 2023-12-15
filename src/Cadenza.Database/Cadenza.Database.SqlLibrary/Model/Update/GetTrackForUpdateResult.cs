@@ -8,4 +8,5 @@ internal class GetTrackForUpdateResult
     public string Year { get; set; }
     public string Lyrics { get; set; }
     public string TagList { get; set; }
+    public int DiscTrackCount { get; set; }
 }

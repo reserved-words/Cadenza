@@ -9,7 +9,6 @@ internal class EditItemMapper : IEditItemMapper
         return new EditableAlbum
         {
             Id = album.Id,
-            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = album.ReleaseType,
@@ -20,26 +19,30 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public List<EditableAlbumDisc> MapEditableAlbumTracks(IReadOnlyCollection<AlbumDiscVM> tracks)
+    public EditableAlbumDiscs MapEditableAlbumTracks(IReadOnlyCollection<AlbumTrackVM> tracks)
     {
-        return tracks
-            .Select(d => new EditableAlbumDisc
-            {
-                DiscNo = d.DiscNo,
-                TrackCount = d.TrackCount,
-                Tracks = d.Tracks.Select(t => new EditableAlbumTrack
+        return new EditableAlbumDiscs
+        {
+            Discs = tracks
+                .GroupBy(t => t.DiscNo)
+                .Select(d => new EditableAlbumDisc
                 {
-                    TrackId = t.TrackId,
-                    TrackNo = t.TrackNo,
-                    DiscNo = t.DiscNo,
-                    Title = t.Title,
-                    DurationSeconds = t.DurationSeconds,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    IdFromSource = t.IdFromSource
-                }).ToList()
-            })
-            .ToList();
+                    DiscNo = d.Key,
+                    TrackCount = d.First().DiscTrackCount,
+                    Tracks = d.Select(t => new EditableAlbumTrack
+                    {
+                        TrackId = t.TrackId,
+                        IdFromSource = t.IdFromSource,
+                        ArtistId = t.ArtistId,
+                        ArtistName = t.ArtistName,
+                        TrackNo = t.TrackNo,
+                        DiscNo = t.DiscNo,
+                        Title = t.Title,
+                        DurationSeconds = t.DurationSeconds
+                    }).ToList()
+                })
+                .ToList()
+        };
     }
 
     public EditableArtist MapEditableArtist(ArtistDetailsVM artist)
@@ -94,7 +97,6 @@ internal class EditItemMapper : IEditItemMapper
         return new AlbumDetailsVM
         {
             Id = album.Id,
-            ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = album.ReleaseType,
@@ -105,26 +107,27 @@ internal class EditItemMapper : IEditItemMapper
         };
     }
 
-    public IReadOnlyCollection<AlbumDiscVM> MapEditedAlbumTracks(List<EditableAlbumDisc> tracks)
+    public IReadOnlyCollection<AlbumTrackVM> MapEditedAlbumTracks(EditableAlbumDiscs discs)
     {
-        return tracks
-            .Select(d => new AlbumDiscVM
+        var tracks = new List<AlbumTrackVM>();
+
+        foreach (var disc in discs.Discs)
+        {
+            tracks.AddRange(disc.Tracks.Select(t => new AlbumTrackVM
             {
-                DiscNo = d.DiscNo,
-                TrackCount = d.TrackCount,
-                Tracks = d.Tracks.Select(t => new AlbumTrackVM
-                {
-                    TrackId = t.TrackId,
-                    TrackNo = t.TrackNo,
-                    DiscNo = t.DiscNo,
-                    Title = t.Title,
-                    DurationSeconds = t.DurationSeconds,
-                    ArtistId = t.ArtistId,
-                    ArtistName = t.ArtistName,
-                    IdFromSource = t.IdFromSource
-                }).ToList()
-            })
-            .ToList();
+                TrackId = t.TrackId,
+                TrackNo = t.TrackNo,
+                DiscNo = t.DiscNo,
+                DiscTrackCount = disc.TrackCount,
+                Title = t.Title,
+                ArtistId = t.ArtistId,
+                ArtistName = t.ArtistName,
+                IdFromSource = t.IdFromSource,
+                DurationSeconds = t.DurationSeconds
+            }));
+        };
+
+        return tracks;
     }
 
     public ArtistDetailsVM MapEditedArtist(EditableArtist artist)

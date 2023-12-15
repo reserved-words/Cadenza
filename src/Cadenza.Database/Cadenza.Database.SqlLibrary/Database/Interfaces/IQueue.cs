@@ -4,10 +4,10 @@ namespace Cadenza.Database.SqlLibrary.Database.Interfaces;
 
 internal interface IQueue
 {
-    Task AddAlbumUpdate(AddAlbumUpdateParameter data);
-    Task AddArtistUpdate(AddArtistUpdateParameter data);
+    Task AddAlbumUpdate(int albumId);
+    Task AddArtistUpdate(int artistId);
     Task AddTrackRemoval(int trackId);
-    Task AddTrackUpdate(AddTrackUpdateParameter data);
+    Task AddTrackUpdate(int trackId);
 
     Task<List<GetAlbumUpdatesResult>> GetAlbumUpdates(LibrarySource source);
     Task<List<GetArtistUpdatesResult>> GetArtistUpdates(LibrarySource source);

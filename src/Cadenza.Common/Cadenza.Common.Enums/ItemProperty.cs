@@ -8,6 +8,7 @@ public enum ItemProperty
     AlbumReleaseYear,
     AlbumTags,
     AlbumTitle,
+    
     ArtistCity,
     ArtistCountry,
     ArtistGenre,
@@ -15,7 +16,9 @@ public enum ItemProperty
     ArtistImage,
     ArtistState,
     ArtistTags,
+
     TrackDiscNo,
+    TrackDiscTrackCount,
     TrackLyrics,
     TrackNo,
     TrackTags,

@@ -43,19 +43,11 @@ internal class UpdateMapper : IUpdateMapper
 
     public AddDiscParameter MapDisc(SyncTrackDTO track, int albumId)
     {
-        var index = track.DiscNo;
-        if (index <= 0)
-            index = 1;
-
-        var trackCount = track.Album.TrackCounts.Count >= index
-            ? track.Album.TrackCounts[index - 1]
-            : 0;
-
         return new AddDiscParameter
         {
             AlbumId = albumId,
-            DiscNo = index,
-            TrackCount = trackCount
+            DiscNo = track.DiscNo,
+            TrackCount = track.DiscTrackCount
         };
     }
 
@@ -107,21 +99,21 @@ internal class UpdateMapper : IUpdateMapper
         };
     }
 
-    public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
-    {
-        return new UpdateArtistParameter
-        {
-            Id = id,
-            ImageMimeType = artist.ImageMimeType,
-            ImageContent = artist.ImageContent,
-            GroupingId = artist.GroupingId,
-            Genre = artist.Genre,
-            City = artist.City,
-            State = artist.State,
-            Country = artist.Country,
-            TagList = artist.TagList
-        };
-    }
+    //public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
+    //{
+    //    return new UpdateArtistParameter
+    //    {
+    //        Id = id,
+    //        ImageMimeType = artist.ImageMimeType,
+    //        ImageContent = artist.ImageContent,
+    //        GroupingId = artist.GroupingId,
+    //        Genre = artist.Genre,
+    //        City = artist.City,
+    //        State = artist.State,
+    //        Country = artist.Country,
+    //        TagList = artist.TagList
+    //    };
+    //}
 
     public UpdateTrackParameter MapTrackToUpdate(int id, GetTrackForUpdateResult track)
     {
@@ -133,7 +125,8 @@ internal class UpdateMapper : IUpdateMapper
             Title = track.Title,
             Year = track.Year,
             Lyrics = track.Lyrics,
-            TagList = track.TagList
+            TagList = track.TagList,
+            DiscTrackCount = track.DiscTrackCount
         };
     }
 

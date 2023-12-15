@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Reducers;
+﻿using Cadenza.Web.Common.Extensions;
+
+namespace Cadenza.Web.Actions.Reducers;
 
 public static class ViewAlbumReducers
 {
@@ -22,9 +24,23 @@ public static class ViewAlbumReducers
         if (state.Album.Id != action.AlbumId)
             return state;
 
+        var tracks = new List<AlbumTrackVM>();
+
+        foreach (var disc in state.Tracks)
+        {
+            foreach (var track in disc.Tracks)
+            {
+                if (action.RemovedTracks.Contains(track.TrackId))
+                    continue;
+
+                var updatedTrack = action.UpdatedAlbumTracks.SingleOrDefault(t => t.TrackId == track.TrackId) ?? track;
+                tracks.Add(updatedTrack);
+            }
+        }
+
         return state with
         {
-            Tracks = action.UpdatedTracks
+            Tracks = tracks.GroupByDisc()
         };
     }
 
@@ -34,6 +50,16 @@ public static class ViewAlbumReducers
         if (state.Album == null || state.Album.Id != action.UpdatedAlbum.Id)
             return state;
 
-        return state with { Album = action.UpdatedAlbum };
+        var updatedAlbum = state.Album with
+        {
+            Title = action.UpdatedAlbum.Title,
+            ReleaseType = action.UpdatedAlbum.ReleaseType,
+            Year = action.UpdatedAlbum.Year,
+            DiscCount = action.UpdatedAlbum.DiscCount,
+            ArtworkBase64 = action.UpdatedAlbum.ArtworkBase64,
+            Tags = action.UpdatedAlbum.Tags
+        };
+
+        return state with { Album = updatedAlbum };
     }
 }

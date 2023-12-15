@@ -4,25 +4,29 @@ AS
 BEGIN
 
 	SELECT 
-		UPD.[Id],
-		UPD.[SourceId],
-		TRK.[Id] [TrackId],
-		PRP.[Name] [PropertyName],
-		UPD.[OriginalValue],
-		UPD.[UpdatedValue]
+		SNC.[TrackId],
+		TRK.[Title],
+		TRK.[Year],
+		TRK.[Lyrics],
+		DSC.[DiscNo],
+		TRK.[TrackNo],
+		DSC.[TrackCount] [DiscTrackCount],
+		TAG.[TagList]
 	FROM
-		[Queue].[TrackUpdates] UPD
+		[Queue].[TrackSync] SNC
 	INNER JOIN
-		[Admin].[TrackProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
+		[Library].[Tracks] TRK ON SNC.[TrackId] = TRK.[Id]
 	INNER JOIN
-		[Library].[Tracks] TRK ON TRK.[Id] = UPD.[TrackId]
+		[Library].[Discs] DSC ON DSC.[Id] = TRK.[DiscId]
+	INNER JOIN
+		[Library].[Albums] ALB ON ALB.[Id] = DSC.[AlbumId]
+	LEFT JOIN
+		[Library].[vw_TrackTags] TAG ON TAG.[TrackId] = TRK.[Id]
 	WHERE
-		UPD.[SourceId] = @SourceId
+		ALB.[SourceId] = @SourceId
 	AND
-		UPD.[DateProcessed] IS NULL
-	AND 
-		UPD.[DateRemoved] IS NULL
+		(SNC.[LastSynced] IS NULL OR SNC.[LastSynced] < SNC.[LastUpdated])
 	AND
-		UPD.[DateErrored] IS NULL
+		SNC.[FailedAttempts] < 3
 
 END

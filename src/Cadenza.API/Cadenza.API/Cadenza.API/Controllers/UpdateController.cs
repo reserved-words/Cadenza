@@ -12,27 +12,21 @@ public class UpdateController : ControllerBase
         _service = service;
         _repository = repository;
     }
-
-    [HttpDelete("UpdateAlbumTracks")]
-    public async Task UpdateAlbumTracks([FromBody] UpdateAlbumTracksDTO request)
-    {
-        await _service.UpdateAlbumTracks(request);
-    }
-
+    
     [HttpPost("UpdateTrack")]
-    public async Task UpdateTrack([FromBody] UpdateTrackDTO request)
+    public async Task UpdateTrack([FromBody] UpdatedTrackPropertiesDTO request)
     {
         await _service.UpdateTrack(request);
     }
 
     [HttpPost("UpdateArtist")]
-    public async Task UpdateArtist([FromBody] UpdateArtistDTO request)
+    public async Task UpdateArtist([FromBody] ArtistUpdateDTO request)
     {
         await _service.UpdateArtist(request);
     }
 
     [HttpPost("UpdateAlbum")]
-    public async Task UpdateAlbum([FromBody] UpdateAlbumDTO request)
+    public async Task UpdateAlbum([FromBody] AlbumUpdateDTO request)
     {
         await _service.UpdateAlbum(request);
     }

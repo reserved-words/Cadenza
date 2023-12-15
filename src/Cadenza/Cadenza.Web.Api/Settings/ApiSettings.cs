@@ -17,8 +17,6 @@ public class ApiEndpoints
     public string TopArtists { get; set; }
     public string TopTracks { get; set; }
 
-
-    public string UpdateAlbumTracks { get; set; }
     public string UpdateAlbum { get; set; }
     public string UpdateArtist { get; set; }
     public string UpdateTrack { get; set; }

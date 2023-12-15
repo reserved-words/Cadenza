@@ -1,4 +1,6 @@
-﻿@foreach (var disc in Model)
+﻿@inherits EditAlbumTracksBase
+
+@foreach (var disc in Model.Discs)
 {
     <MudCard Class="ma-0 pa-0 mb-2">
         <MudCardHeader>
@@ -58,65 +60,5 @@
 }
 
 @code {
-    [Parameter] public List<EditableAlbumDisc> Model { get; set; }
-
-    protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
-
-    public void OnTrackNoChanged(EditableAlbumTrack track)
-    {
-        SortTracks();
-    }
-
-    public void OnDiscNoChanged(EditableAlbumTrack track)
-    {
-        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
-        if (currentDisc.DiscNo == track.DiscNo)
-            return;
-
-        var newDisc = Model.SingleOrDefault(d => d.DiscNo == track.DiscNo);
-        if (newDisc == null)
-        {
-            newDisc = new EditableAlbumDisc
-            {
-                DiscNo = track.DiscNo,
-                TrackCount = 1,
-                Tracks = new List<EditableAlbumTrack>()
-            };
-            Model.Add(newDisc);
-        }
-
-        currentDisc.Tracks.Remove(track);
-        newDisc.Tracks.Add(track);
-
-        newDisc.TrackCount = Math.Max(newDisc.TrackCount, newDisc.Tracks.Count);
-        currentDisc.TrackCount = Math.Max(currentDisc.TrackCount, currentDisc.Tracks.Count);
-
-        if (!currentDisc.Tracks.Any())
-        {
-            Model.Remove(currentDisc);
-        }
-
-        SortTracks();
-    }
-
-    private void SortTracks()
-    {
-        foreach (var disc in Model)
-        {
-            disc.Tracks = disc.Tracks.OrderBy(t => t.TrackNo).ToList();
-        }
-
-        Model = Model.OrderBy(d => d.DiscNo).ToList();
-    }
-
-    public void OnRemoveTrack(EditableAlbumTrack track)
-    {
-        var currentDisc = Model.Single(d => d.Tracks.Contains(track));
-        currentDisc.Tracks.Remove(track);
-
-        if (!currentDisc.Tracks.Any())
-        {
-            Model.Remove(currentDisc);
-        }
-    }
+    
 }

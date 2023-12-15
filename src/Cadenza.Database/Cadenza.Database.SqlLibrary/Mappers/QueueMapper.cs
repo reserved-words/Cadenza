@@ -5,96 +5,66 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class QueueMapper : IQueueMapper
 {
-    public AddArtistUpdateParameter MapArtistUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    private readonly IImageConverter _imageConverter;
+
+    public QueueMapper(IImageConverter imageConverter)
     {
-        return new AddArtistUpdateParameter
+        _imageConverter = imageConverter;
+    }
+
+    public List<AlbumUpdateSyncDTO> MapAlbumUpdates(List<GetAlbumUpdatesResult> data)
+    {
+
+
+        return data.Select(a => new AlbumUpdateSyncDTO
         {
-            ArtistId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
+            AlbumId = a.AlbumId,
+            Title = a.Title,
+            ReleaseType = a.ReleaseType,
+            Year = a.Year,
+            DiscCount = a.DiscCount,
+            ArtworkBase64 = _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ArtworkContent, a.ArtworkMimeType)),
+            TagList = a.TagList
+        })
+        .ToList();
     }
 
-    public AddAlbumUpdateParameter MapAlbumUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    public List<ArtistUpdateSyncDTO> MapArtistUpdates(List<GetArtistUpdatesResult> data)
     {
-        return new AddAlbumUpdateParameter
+        return data.Select(a => new ArtistUpdateSyncDTO
         {
-            AlbumId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
+            ArtistId = a.ArtistId,
+            Name = a.Name,
+            Grouping = a.Grouping,
+            Genre = a.Genre,
+            City = a.City,
+            State = a.State,
+            Country = a.Country,
+            ImageBase64 = _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ImageContent, a.ImageMimeType)),
+            TagList = a.TagList
+        })
+        .ToList();
     }
 
-    public AddTrackUpdateParameter MapTrackUpdate(ItemUpdateRequestDTO request, PropertyUpdateDTO update)
+    public List<TrackUpdateSyncDTO> MapTrackUpdates(List<GetTrackUpdatesResult> data)
     {
-        return new AddTrackUpdateParameter
+        return data.Select(t => new TrackUpdateSyncDTO
         {
-            TrackId = request.Id,
-            PropertyName = update.Property.ToString(),
-            OriginalValue = update.OriginalValue,
-            UpdatedValue = update.UpdatedValue
-        };
+            TrackId = t.TrackId,
+            Title = t.Title,
+            Year = t.Year,
+            Lyrics = t.Lyrics,
+            DiscNo = t.DiscNo,
+            TrackNo = t.TrackNo,
+            DiscTrackCount = t.DiscTrackCount,
+            TagList = t.TagList
+        })
+        .ToList();
     }
 
-    public List<ItemUpdateRequestDTO> MapAlbumUpdateRequests(List<GetAlbumUpdatesResult> data)
+    public TrackRemovalSyncDTO MapSyncTrackRemovalRequest(GetTrackRemovalsResult data)
     {
-        return data.GroupBy(d => d.AlbumId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Album,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
-    }
-
-    public List<ItemUpdateRequestDTO> MapArtistUpdateRequests(List<GetArtistUpdatesResult> data)
-    {
-        return data.GroupBy(d => d.ArtistId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Artist,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
-    }
-
-    public List<ItemUpdateRequestDTO> MapTrackUpdateRequests(List<GetTrackUpdatesResult> data)
-    {
-        return data.GroupBy(d => d.TrackId)
-            .Select(a => new ItemUpdateRequestDTO
-            {
-                Type = LibraryItemType.Track,
-                Id = a.Key,
-                Updates = a.Select(u => new PropertyUpdateDTO
-                {
-                    Id = u.Id,
-                    Property = Enum.Parse<ItemProperty>(u.PropertyName),
-                    OriginalValue = u.OriginalValue,
-                    UpdatedValue = u.UpdatedValue
-                }).ToList()
-            })
-            .ToList();
-    }
-
-    public SyncTrackRemovalRequestDTO MapSyncTrackRemovalRequest(GetTrackRemovalsResult data)
-    {
-        return new SyncTrackRemovalRequestDTO
+        return new TrackRemovalSyncDTO
         {
             RequestId = data.RequestId,
             TrackIdFromSource = data.TrackIdFromSource

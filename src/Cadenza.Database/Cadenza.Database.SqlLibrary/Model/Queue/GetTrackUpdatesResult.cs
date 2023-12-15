@@ -2,9 +2,12 @@
 
 internal class GetTrackUpdatesResult
 {
-    public int Id { get; set; }
     public int TrackId { get; set; }
-    public string PropertyName { get; set; }
-    public string OriginalValue { get; set; }
-    public string UpdatedValue { get; set; }
+    public string Title { get; set; }
+    public string Year { get; set; }
+    public string Lyrics { get; set; }
+    public int DiscNo { get; set; }
+    public int TrackNo { get; set; }
+    public int DiscTrackCount { get; set; }
+    public string TagList { get; set; }
 }

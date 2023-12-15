@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Cadenza.Common.Enums\Cadenza.Common.Enums.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
+
 </Project>

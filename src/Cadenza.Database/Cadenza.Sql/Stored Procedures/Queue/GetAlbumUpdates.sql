@@ -4,23 +4,29 @@ AS
 BEGIN
 
 	SELECT 
-		UPD.[Id],
-		UPD.[SourceId],
-		UPD.[AlbumId],
-		PRP.[Name] [PropertyName],
-		UPD.[OriginalValue],
-		UPD.[UpdatedValue]
+		SNC.[AlbumId],
+		ALB.[Title],
+		REL.[Name] [ReleaseType],
+		ALB.[Year],
+		ALB.[DiscCount],
+		IMG.[MimeType] [ArtworkMimeType],
+		IMG.[Content] [ArtworkContent],
+		TAG.[TagList]
 	FROM
-		[Queue].[AlbumUpdates] UPD
+		[Queue].[AlbumSync] SNC
 	INNER JOIN
-		[Admin].[AlbumProperties] PRP ON PRP.[Id] = UPD.[PropertyId]
+		[Library].[Albums] ALB ON SNC.[AlbumId] = ALB.[Id]
+	INNER JOIN
+		[Admin].[ReleaseTypes] REL ON REL.[Id] = ALB.[ReleaseTypeId]
+	LEFT JOIN
+		[Library].[vw_AlbumTags] TAG ON TAG.[AlbumId] = ALB.[Id]
+	LEFT JOIN
+		[Library].[AlbumArtwork] IMG ON IMG.[AlbumId] = ALB.[Id]
 	WHERE
-		UPD.[SourceId] = @SourceId
+		ALB.[SourceId] = @SourceId
 	AND
-		UPD.[DateProcessed] IS NULL
-	AND 
-		UPD.[DateRemoved] IS NULL
+		(SNC.[LastSynced] IS NULL OR SNC.[LastSynced] < SNC.[LastUpdated])
 	AND
-		UPD.[DateErrored] IS NULL
+		SNC.[FailedAttempts] < 3
 
 END

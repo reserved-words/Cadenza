@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Api.Services;
+﻿namespace Cadenza.Web.Api.Services;
 
 internal class LibraryApi : ILibraryApi
 {

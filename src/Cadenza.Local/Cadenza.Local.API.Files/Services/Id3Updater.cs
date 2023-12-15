@@ -20,7 +20,7 @@ internal class Id3Updater : IId3Updater
 
         foreach (var update in updates)
         {
-            Update(data, commentData, update.Property, update.UpdatedValue);
+            Update(data, commentData, update.Property, update.NewValue?.ToString());
         }
 
         data.Track.Comment = _commentProcessor.CreateComment(commentData);
@@ -73,6 +73,9 @@ internal class Id3Updater : IId3Updater
                 break;
             case ItemProperty.TrackDiscNo:
                 trackData.Disc.DiscNo = int.Parse(value);
+                break;
+            case ItemProperty.TrackDiscTrackCount:
+                trackData.Disc.TrackCount = int.Parse(value);
                 break;
             case ItemProperty.TrackLyrics:
                 trackData.Track.Lyrics = value;
