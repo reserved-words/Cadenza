@@ -1,4 +1,5 @@
-﻿
+﻿@inherits EditTrackDetailsBase
+
 @if (Model != null)
 {
     <MudTextField MaxLength="100"
@@ -10,8 +11,4 @@
                   @bind-Value="Model.Year"
                   For="@(() => Model.Year)"
                   Mask="@(new PatternMask("0000"))" />
-}
-
-@code {
-    [Parameter] public EditableTrack Model { get; set; }
 }

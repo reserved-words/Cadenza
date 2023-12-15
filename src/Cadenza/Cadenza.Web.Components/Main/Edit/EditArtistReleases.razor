@@ -1,4 +1,5 @@
-﻿
+﻿@inherits EditArtistReleasesBase
+
 @if (Model != null)
 {
     <AppTable Items="@Model">
@@ -25,15 +26,4 @@
             </MudTd>
         </RowTemplate>
     </AppTable>
-}
-
-@code {
-    [Parameter] public List<EditableArtistRelease> Model { get; set; }
-
-    protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
-
-    public void OnRemoveRelease(EditableArtistRelease release)
-    {
-
-    }
 }

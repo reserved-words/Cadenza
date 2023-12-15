@@ -1,4 +1,4 @@
-﻿@inherits FluxorComponent
+﻿@inherits EditAlbumDetailsBase
 
 @if (Model != null)
 {
@@ -27,21 +27,4 @@
                      HideSpinButtons="true"
                      @bind-Value="Model.DiscCount"
                      For="@(() => Model.DiscCount)" />
-}
-
-@code {
-    [Parameter] public EditableAlbum Model { get; set; }
-
-    protected IReadOnlyCollection<ReleaseType> ReleaseTypes => Enum.GetValues<ReleaseType>();
-
-    protected override void OnInitialized()
-    {
-        SubscribeToAction<AlbumUpdateDiscCountRequest>(OnAlbumUpdateDiscCount);
-        base.OnInitialized();
-    }
-
-    private void OnAlbumUpdateDiscCount(AlbumUpdateDiscCountRequest request)
-    {
-        Model.DiscCount = request.DiscCount;
-    }
 }
