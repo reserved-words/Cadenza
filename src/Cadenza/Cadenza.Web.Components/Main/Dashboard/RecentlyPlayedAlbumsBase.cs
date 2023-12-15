@@ -2,9 +2,9 @@
 
 public class RecentlyPlayedAlbumsBase : FluxorComponent
 {
-    [Inject] public IState<PlaylistHistoryAlbumsState> AlbumHistoryState { get; set; }
+    [Inject] public IState<HistoryRecentlyPlayedAlbumsState> State { get; set; }
 
-    protected IReadOnlyCollection<RecentAlbumVM> RecentAlbums => AlbumHistoryState.Value.Items.Take(12).ToList();
+    protected IReadOnlyCollection<RecentAlbumVM> RecentAlbums => State.Value.Items;
 
-    protected bool IsLoading => AlbumHistoryState.Value.IsLoading;
+    protected bool IsLoading => State.Value.IsLoading;
 }

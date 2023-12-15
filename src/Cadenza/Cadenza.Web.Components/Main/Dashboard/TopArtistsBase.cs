@@ -1,27 +1,27 @@
-﻿namespace Cadenza.Web.Components.Main.Dashboard;
+﻿using Cadenza.Web.Common;
+
+namespace Cadenza.Web.Components.Main.Dashboard;
 
 public class TopArtistsBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IState<PlayHistoryArtistsState> PlayHistoryArtistsState { get; set; }
-
-    private const int MaxItems = 8;
+    [Inject] public IState<HistoryTopPlayedArtistsState> State { get; set; }
 
     protected IReadOnlyCollection<TopArtistVM> Items => GetItems();
 
-    protected bool IsLoading => PlayHistoryArtistsState.Value.IsLoading;
-    protected HistoryPeriod Period => PlayHistoryArtistsState.Value.Period;
+    protected bool IsLoading => State.Value.IsLoading;
+    protected HistoryPeriod Period => State.Value.Period;
 
     protected void UpdateItems(HistoryPeriod period)
     {
-        Dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(period));
+        Dispatcher.Dispatch(new FetchTopPlayedArtistsRequest(period));
     }
 
     private IReadOnlyCollection<TopArtistVM> GetItems()
     {
-        var items = new List<TopArtistVM>(PlayHistoryArtistsState.Value.Items.Take(MaxItems));
+        var items = new List<TopArtistVM>(State.Value.Items);
 
-        while (items.Count() < MaxItems)
+        while (items.Count < Constants.MaxTopPlayedArtists)
         {
             items.Add(new TopArtistVM(0, "-", 0, items.Count + 1));
         }

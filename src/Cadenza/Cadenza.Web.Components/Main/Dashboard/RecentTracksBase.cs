@@ -2,9 +2,9 @@
 
 public class RecentTracksBase : FluxorComponent
 {
-    [Inject] public IState<RecentPlayHistoryState> RecentPlayHistoryState { get; set; }
+    [Inject] public IState<HistoryRecentlyPlayedTracksState> State { get; set; }
 
-    public IReadOnlyCollection<RecentTrackVM> Model => RecentPlayHistoryState.Value.Tracks.Take(10).ToList();
+    public IReadOnlyCollection<RecentTrackVM> Model => State.Value.Tracks;
 
-    public bool IsLoading => RecentPlayHistoryState.Value.Tracks == null;
+    public bool IsLoading => State.Value.Tracks == null;
 }

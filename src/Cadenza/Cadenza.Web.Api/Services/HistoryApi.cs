@@ -29,13 +29,7 @@ internal class HistoryApi : IHistoryApi
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<List<string>> GetRecentTags(int maxItems)
-    {
-        var url = $"{_settings.RecentTagRequests}/{maxItems}";
-        return await _apiHelper.Get<List<string>>(url);
-    }
-
-    public async Task<List<RecentTrackVM>> GetRecentTracks(int maxItems)
+    public async Task<List<RecentTrackVM>> GetRecentlyPlayedTracks(int maxItems)
     {
         var url = $"{_settings.RecentTracks}/{maxItems}";
         return await _apiHelper.Get<List<RecentTrackVM>>(url);

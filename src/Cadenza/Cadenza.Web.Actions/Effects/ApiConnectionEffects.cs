@@ -44,13 +44,11 @@ public class ApiConnectionEffects
         DispatchProgressAction(dispatcher);
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
         dispatcher.Dispatch(new FetchGroupingsRequest());
-        dispatcher.Dispatch(new FetchPlaylistHistoryAlbumsRequest());
-        dispatcher.Dispatch(new FetchPlaylistHistoryTagsRequest());
-        dispatcher.Dispatch(new FetchRecentPlayHistoryRequest());
+        dispatcher.Dispatch(new FetchRecentlyPlayedAlbumsRequest());
+        dispatcher.Dispatch(new FetchRecentlyPlayedTracksRequest());
         dispatcher.Dispatch(new FetchRecentlyAddedAlbumsRequest());
-        dispatcher.Dispatch(new FetchPlayHistoryAlbumsRequest(HistoryPeriod.Week));
-        dispatcher.Dispatch(new FetchPlayHistoryArtistsRequest(HistoryPeriod.Week));
-        dispatcher.Dispatch(new FetchPlayHistoryTracksRequest(HistoryPeriod.Week));
+        dispatcher.Dispatch(new FetchTopPlayedAlbumsRequest(HistoryPeriod.Week));
+        dispatcher.Dispatch(new FetchTopPlayedArtistsRequest(HistoryPeriod.Week));
         return Task.CompletedTask;
     }
 
