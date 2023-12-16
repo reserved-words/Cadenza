@@ -1,0 +1,18 @@
+﻿
+<MudButton Class="mt-2" 
+           StartIcon="@Icons.Material.Filled.Settings"
+           OnClick="@OnViewSettings"
+           FullWidth="true" 
+           Variant="@Variant.Filled">
+    Settings
+</MudButton>
+
+@code {
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
+
+    private void OnViewSettings()
+    {
+        Dispatcher.Dispatch(new ViewTabRequest(Tab.Settings));
+    }
+}

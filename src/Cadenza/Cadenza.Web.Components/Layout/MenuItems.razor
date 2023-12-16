@@ -54,14 +54,15 @@
               Disabled="@IsNavigationDisabled" />
 }
 
-<MenuItem Icon="@Icons.Material.Filled.Settings"
-          IconSize="@IconSize"
-          ShowLabel="@ShowLabels"
-          Label="Settings"
-          Tab="@Tab.Settings"
-          OnClickItem="@UpdateActiveTab"
-          Class="@MenuItemClass(Tab.Settings)"
-          Disabled="@IsNavigationDisabled" />
+@if (ActiveTab == Tab.Settings)
+{
+    <MenuItem Icon="@Icons.Material.Filled.Settings"
+              IconSize="@IconSize"
+              ShowLabel="@ShowLabels"
+              Label="Settings"
+              Tab="@Tab.Settings"
+              Class="@MenuItemClass(Tab.Settings)" />
+}
 
 @if (ActiveTab == Tab.Edit)
 {

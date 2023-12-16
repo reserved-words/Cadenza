@@ -20,7 +20,7 @@ public class EditItemEffects
     [EffectMethod]
     public Task HandleCancelEditItemRequest(CancelEditItemRequest action, IDispatcher dispatcher)
     {
-        dispatcher.Dispatch(new ViewEditEndRequest());
+        dispatcher.Dispatch(new ViewResetRequest());
         return Task.CompletedTask;
     }
 
@@ -28,7 +28,7 @@ public class EditItemEffects
     public Task HandleRemoveEditItemRequest(RemoveEditItemRequest action, IDispatcher dispatcher)
     {
         dispatcher.Dispatch(new NotificationErrorRequest("Remove item not implemented yet", null, null));
-        dispatcher.Dispatch(new ViewEditEndRequest());
+        dispatcher.Dispatch(new ViewResetRequest());
         return Task.CompletedTask;
 
     }

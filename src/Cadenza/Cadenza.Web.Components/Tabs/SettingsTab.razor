@@ -1,5 +1,22 @@
-﻿<h3>SettingsTab</h3>
+﻿@inherits SettingsTabBase
 
-@code {
+<TabGrid>
 
-}
+    <TabGridColumn>
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+
+            
+
+        </TabGridRow>
+
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+
+            <MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+                <MudButton OnClick="@Save" Variant="@Variant.Outlined" Color="@Color.Secondary">Save Changes</MudButton>
+                <MudButton OnClick="@Cancel" Variant="@Variant.Outlined" Color="@Color.Default">Cancel Changes</MudButton>
+            </MudContainer>
+
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

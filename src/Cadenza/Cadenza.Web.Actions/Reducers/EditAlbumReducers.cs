@@ -17,7 +17,7 @@ public static class EditAlbumReducers
     };
 
     [ReducerMethod]
-    public static EditAlbumState ReduceViewEditEndRequest(EditAlbumState state, ViewEditEndRequest action) => state with
+    public static EditAlbumState ReduceViewEditEndRequest(EditAlbumState state, ViewResetRequest action) => state with
     {
         IsLoading = false,
         Album = null,

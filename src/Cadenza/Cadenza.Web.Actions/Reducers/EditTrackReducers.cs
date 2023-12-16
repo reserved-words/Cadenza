@@ -16,7 +16,7 @@ public static class EditTrackReducers
     };
 
     [ReducerMethod]
-    public static EditTrackState ReduceViewEditEndRequest(EditTrackState state, ViewEditEndRequest action) => state with
+    public static EditTrackState ReduceViewEditEndRequest(EditTrackState state, ViewResetRequest action) => state with
     {
         IsLoading = false,
         Track = null

@@ -17,7 +17,7 @@ public static class EditArtistReducers
     };
 
     [ReducerMethod]
-    public static EditArtistState ReduceViewEditEndRequest(EditArtistState state, ViewEditEndRequest action) => state with
+    public static EditArtistState ReduceViewEditEndRequest(EditArtistState state, ViewResetRequest action) => state with
     {
         IsLoading = false,
         Artist = null,
