@@ -8,10 +8,12 @@
             <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
             <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
             <MudText Typo="Typo.body2">@Model.Year</MudText>
+            <MudText Typo="Typo.body2">@DurationSeconds.AlbumDuration()</MudText>
         </ChildContent>
     </ItemCard>
 }
 
 @code {
+    [Parameter] public int DurationSeconds { get; set; }
     [Parameter] public RenderFragment Toolbar { get; set; }
 }
