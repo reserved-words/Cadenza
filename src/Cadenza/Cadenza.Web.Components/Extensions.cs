@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Components;
+﻿namespace Cadenza.Web.Components;
 
 public static class Extensions
 {
@@ -23,7 +21,18 @@ public static class Extensions
         return text?.Replace("\n", "<br />", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public static string Duration(this int durationSeconds)
+    public static string AlbumDuration(this int durationSeconds)
+    {
+        var duration = TimeSpan.FromSeconds(durationSeconds);
+        
+        return duration.Hours > 1
+            ? $"{duration.Hours} hours, {duration.Minutes} minutes"
+            : duration.Hours == 1
+            ? $"{duration.Hours} hour, {duration.Minutes} minutes"
+            : $"{duration.Minutes} minutes";
+    }
+
+    public static string TrackDuration(this int durationSeconds)
     {
         var duration = TimeSpan.FromSeconds(durationSeconds);
 
@@ -32,13 +41,13 @@ public static class Extensions
             : duration.ToString(@"mm\:ss");
     }
 
-    public static string Duration(this AlbumTrackVM track)
+    public static string TrackDuration(this AlbumTrackVM track)
     {
-        return track.DurationSeconds.Duration();
+        return track.DurationSeconds.TrackDuration();
     }
 
-    public static string Duration(this TrackDetailsVM track)
+    public static string TrackDuration(this TrackDetailsVM track)
     {
-        return track.DurationSeconds.Duration();
+        return track.DurationSeconds.TrackDuration();
     }
 }

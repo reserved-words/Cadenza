@@ -1,7 +1,7 @@
 ﻿@inherits CurrentTrackProgressBase
 
 <MudStack Row="true" Spacing="2" Class="pa-2">
-    <MudText Typo="Typo.body1">@SecondsPlayed.Duration()</MudText>
+    <MudText Typo="Typo.body1">@SecondsPlayed.TrackDuration()</MudText>
     <MudProgressLinear Value="@Progress" Color="Color.Primary" Class="ma-0" />
-    <MudText Typo="Typo.body1">-@SecondsRemaining.Duration()</MudText>
+        <MudText Typo="Typo.body1">-@SecondsRemaining.TrackDuration()</MudText>
 </MudStack>
