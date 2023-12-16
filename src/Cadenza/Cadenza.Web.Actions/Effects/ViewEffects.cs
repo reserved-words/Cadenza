@@ -30,7 +30,7 @@ public class ViewEffects
         }
         else if (action.Type == PlayerItemType.Grouping)
         {
-            dispatcher.Dispatch(new FetchViewGroupingRequest(new GroupingVM(int.Parse(action.Id), action.Name)));
+            dispatcher.Dispatch(new FetchViewGroupingRequest(new GroupingVM(int.Parse(action.Id), action.Name, false)));
         }
         else if (action.Type == PlayerItemType.Tag)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Web.Components.Tabs;
 
-public class SettingsTabBase : ComponentBase
+public class SettingsTabBase : FluxorComponent
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
