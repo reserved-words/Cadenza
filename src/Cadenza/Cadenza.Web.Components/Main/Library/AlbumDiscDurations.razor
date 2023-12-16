@@ -1,0 +1,22 @@
+﻿@if (DiscDurations != null)
+{
+    <table class="ma-0 mt-3">
+        <tbody>
+            @foreach (var duration in DiscDurations)
+            {
+                <tr>
+                    <td class="pa-0 pr-3">
+                        <MudText Typo="Typo.body2">Disc @duration.Key:</MudText>
+                    </td>
+                    <td class="pa-0">
+                        <MudText Typo="Typo.body2">@duration.Value.AlbumDuration()</MudText>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter] public Dictionary<int, int> DiscDurations { get; set; }
+}

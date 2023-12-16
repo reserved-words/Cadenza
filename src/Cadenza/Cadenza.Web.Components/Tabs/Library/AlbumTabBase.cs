@@ -8,5 +8,5 @@ public class AlbumTabBase : FluxorComponent
     public AlbumDetailsVM Album => ViewAlbumState.Value.Album;
     public IReadOnlyCollection<AlbumDiscVM> Discs => ViewAlbumState.Value.Tracks;
 
-    public int DurationSeconds => Discs.SelectMany(d => d.Tracks).Sum(t => t.DurationSeconds);
+    public Dictionary<int, int> DiscDurations => Discs.ToDictionary(d => d.DiscNo, d => d.Tracks.Sum(t => t.DurationSeconds));
 }
