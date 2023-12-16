@@ -1,0 +1,35 @@
+﻿@inherits SettingsGroupingsBase
+
+<MudTable Items="@EditableGroupings"
+          Dense="true"
+          Breakpoint="Breakpoint.None"
+          Striped="false"
+          Class="ma-0 pa-0"
+          Style="width: 100%;">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Used</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>
+            <MudTextField MaxLength="50"
+                          @bind-Value="context.Name"
+                          For="@(() => context.Name)"
+                          OnBlur="(() => OnGroupingEdited(context))"
+                          Disabled="@context.IsUsed" />
+        </MudTd>
+        <MudTd>
+            <MudCheckBox Checked="@context.IsUsed"
+                         Disabled="true" />
+        </MudTd>
+        <MudTd Class="td-icon">
+            <MudIconButton Size="@Size.Small"
+                           Icon="@Icons.Material.Filled.Delete"
+                           Variant="@Variant.Outlined"
+                           Disabled="@context.IsUsed"
+                           Title="Remove"
+                           OnClick="@(() => OnRemoveGrouping(context))">Remove</MudIconButton>
+        </MudTd>
+    </RowTemplate>
+</MudTable>

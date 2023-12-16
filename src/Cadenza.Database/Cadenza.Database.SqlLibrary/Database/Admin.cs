@@ -1,7 +1,6 @@
 ﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
 using Cadenza.Database.SqlLibrary.Model.Admin;
 using Dapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Data;
 
 namespace Cadenza.Database.SqlLibrary.Database;

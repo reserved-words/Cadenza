@@ -1,5 +1,47 @@
-﻿<h3>SettingsTab</h3>
+﻿@inherits SettingsTabBase
 
-@code {
+<TabGrid>
 
-}
+    <TabGridColumn>
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+
+            <SubGrid>
+
+                <SubGridColumn md="4">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <MudCard>
+                            <MudCardHeader Class="pb-0">
+                                <MudText Typo="@Typo.h5">Edit Groupings</MudText>
+                            </MudCardHeader>
+                            <MudCardContent Class="pa-0 ma-0">
+                                <SettingsGroupings />
+                            </MudCardContent>
+                        </MudCard>
+                    </SubGridRow>
+                </SubGridColumn>
+
+                <SubGridColumn md="4">
+                    <SubGridRow RowHeight="@RowHeight.Full">
+                    </SubGridRow>
+                </SubGridColumn>
+
+                <SubGridColumn md="4">
+                    <SubGridRow RowHeight="@RowHeight.Full">
+                    </SubGridRow>
+                </SubGridColumn>
+
+            </SubGrid>
+
+        </TabGridRow>
+
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+
+            <MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+                <MudButton OnClick="@Save" Variant="@Variant.Outlined" Color="@Color.Secondary">Save Changes</MudButton>
+                <MudButton OnClick="@Cancel" Variant="@Variant.Outlined" Color="@Color.Default">Cancel Changes</MudButton>
+            </MudContainer>
+
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>

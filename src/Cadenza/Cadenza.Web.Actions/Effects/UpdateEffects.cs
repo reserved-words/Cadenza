@@ -8,7 +8,7 @@ public class UpdateEffects
     public Task HandleUpdateFailedAction(UpdateFailedAction action, IDispatcher dispatcher)
     {
         dispatcher.Dispatch(new NotificationErrorRequest($"{action.Type.GetDisplayName()} update failed", action.Error, action.StackTrace));
-        dispatcher.Dispatch(new ViewEditEndRequest());
+        dispatcher.Dispatch(new ViewResetRequest());
         return Task.CompletedTask;
     }
 
@@ -17,7 +17,7 @@ public class UpdateEffects
     {
         dispatcher.Dispatch(new NotificationSuccessRequest($"{action.Type.GetDisplayName()} update succeeded"));
         dispatcher.Dispatch(new SearchItemsUpdateRequest());
-        dispatcher.Dispatch(new ViewEditEndRequest());
+        dispatcher.Dispatch(new ViewResetRequest());
         return Task.CompletedTask;
     }
 }

@@ -2,14 +2,9 @@
 
 public class GroupingDTO
 {
-    public GroupingDTO(int id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
-
     public int Id { get; set; }
     public string Name { get; set; }
+    public bool IsUsed { get; set; }
 
     public override string ToString()
     {

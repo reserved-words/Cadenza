@@ -16,7 +16,7 @@ public static class ViewReducers
         {
             CurrentTab = action.Tab,
             PreviousTab = previousTab,
-            IsNavigationDisabled = false
+            IsNavigationDisabled = action.Tab == Tab.Settings
         };
     }
 
@@ -42,6 +42,9 @@ public static class ViewReducers
     [ReducerMethod]
     public static ViewState ReduceViewEditItemRequest(ViewState state, ViewEditItemRequest action)
     {
+        if (state.IsNavigationDisabled)
+            return state;
+
         var previousTab = state.CurrentTab;
 
         return state with
@@ -54,7 +57,7 @@ public static class ViewReducers
     }
 
     [ReducerMethod]
-    public static ViewState ReduceViewEditEndRequest(ViewState state, ViewEditEndRequest action)
+    public static ViewState ReduceViewEditEndRequest(ViewState state, ViewResetRequest action)
     {
         return state with
         {

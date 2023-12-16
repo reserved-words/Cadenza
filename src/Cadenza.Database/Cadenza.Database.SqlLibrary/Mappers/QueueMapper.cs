@@ -23,7 +23,9 @@ internal class QueueMapper : IQueueMapper
             ReleaseType = a.ReleaseType,
             Year = a.Year,
             DiscCount = a.DiscCount,
-            ArtworkBase64 = _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ArtworkContent, a.ArtworkMimeType)),
+            ArtworkBase64 = a.ArtworkContent == null
+                ? null
+                : _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ArtworkContent, a.ArtworkMimeType)),
             TagList = a.TagList
         })
         .ToList();
@@ -40,7 +42,9 @@ internal class QueueMapper : IQueueMapper
             City = a.City,
             State = a.State,
             Country = a.Country,
-            ImageBase64 = _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ImageContent, a.ImageMimeType)),
+            ImageBase64 = a.ImageContent == null
+                 ? null
+                 : _imageConverter.GetBase64UrlFromImage(new ArtworkImage(a.ImageContent, a.ImageMimeType)),
             TagList = a.TagList
         })
         .ToList();
