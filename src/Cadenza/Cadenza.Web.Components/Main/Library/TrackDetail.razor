@@ -4,7 +4,7 @@
           Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
     <ChildContent>
-        <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Title" />
+        <ItemCardTitle Itemtype="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>
         <MudText Typo="Typo.body1">@Model.Year</MudText>
