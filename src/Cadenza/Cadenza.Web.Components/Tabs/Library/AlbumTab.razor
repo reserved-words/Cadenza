@@ -2,17 +2,13 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Album" Id="@Album.Id.ToString()" Name="@Album.Title">
         <SubGrid>
 
             <SubGridColumn sm="4" md="3">
                 <SubGridRow RowHeight="@RowHeight.Fixed">
                     <AlbumDetail Model="@Album"
-                                 DiscDurations="@DiscDurations">
-                        <Toolbar>
-                            <AlbumToolbar Album="@Album" />
-                        </Toolbar>
-                    </AlbumDetail>
+                                 DiscDurations="@DiscDurations"/>
                 </SubGridRow>
             </SubGridColumn>
 

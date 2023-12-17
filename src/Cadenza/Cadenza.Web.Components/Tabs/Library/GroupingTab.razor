@@ -2,10 +2,7 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
-        <Toolbar>
-            <GroupingToolbar Grouping="@Grouping" />
-        </Toolbar>
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping.Id.ToString()" Name="@Grouping.Name">
         <ChildContent>
             <SubGrid>
 

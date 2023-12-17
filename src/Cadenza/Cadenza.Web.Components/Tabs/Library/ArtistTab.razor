@@ -2,16 +2,12 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Artist" Id="@Artist.Id.ToString()" Name="@Artist.Name">
         <SubGrid>
 
             <SubGridColumn sm="4" md="3">
                 <SubGridRow RowHeight="@RowHeight.Fixed">
-                    <ArtistDetail Model="@Artist">
-                        <Toolbar>
-                            <ArtistToolbar Artist="@Artist" />
-                        </Toolbar>
-                    </ArtistDetail>
+                    <ArtistDetail Model="@Artist" />
                 </SubGridRow>
 
             </SubGridColumn>

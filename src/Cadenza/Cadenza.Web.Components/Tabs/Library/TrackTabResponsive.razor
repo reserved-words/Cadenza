@@ -1,5 +1,5 @@
 ﻿
-<LibraryWrapper Breadcrumbs="@Breadcrumbs">
+<LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Track" Id="@Model.Track.Id.ToString()" Name="@Model.Track.Title">
     <SubGrid>
 
         <SubGridColumn sm="6" md="8">
@@ -12,11 +12,7 @@
                         <SubGridRow RowHeight="@RowHeight.Fixed">
 
                             <TrackDetail Model="@Model.Track"
-                                         Breakpoint="@Breakpoint">
-                                <Toolbar>
-                                    <TrackToolbar Track="@Model.Track" />
-                                </Toolbar>
-                            </TrackDetail>
+                                         Breakpoint="@Breakpoint" />
 
                         </SubGridRow>
 

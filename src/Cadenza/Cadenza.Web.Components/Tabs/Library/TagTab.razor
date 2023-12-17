@@ -2,7 +2,7 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Tag" Id="@Tag" Name="@Tag">
         <SubGrid>
 
             <SubGridColumn md="3">
@@ -20,9 +20,6 @@
                                 }
                             </MudSelect>
                         </ChildContent>
-                        <Toolbar>
-                            <TagToolbar Tag="@Tag" />
-                        </Toolbar>
                     </ItemCard>
 
                 </SubGridRow>
