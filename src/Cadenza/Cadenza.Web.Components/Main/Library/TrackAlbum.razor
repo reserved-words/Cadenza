@@ -9,7 +9,7 @@
                 <AlbumArtworkView Model="@Model" />
             </MudItem>
             <MudItem xs="6" md="12" Class="mt-0 pt-0">
-                <AlbumLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
+                <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
                 <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
                 <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
                 <MudText Typo="@Typo.body1">@Model.Year</MudText>
