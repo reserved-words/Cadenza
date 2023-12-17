@@ -1,9 +1,7 @@
 ﻿
-<AppCard>
-    <HeaderContent>
-        <ItemCardHeader Type="@PlayerItemType.Genre" Heading="@Id" />
-    </HeaderContent>
-</AppCard>
+<ItemCard>
+    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Id" Name="@Id" />
+</ItemCard>
 
 @code {
     [Parameter] public string Id { get; set; }

@@ -8,18 +8,16 @@
             <SubGridColumn md="3">
                 <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                    <ItemCard Type="@PlayerItemType.Tag" Tags="@null">
-                        <ChildContent>
-                            <MudSelect Label="Filter by type"
-                                       @bind-Value="FilterType"
-                                       For="@(() => FilterType)"
-                                       T="@string">
-                                @foreach (var type in FilterTypes.Keys)
-                                {
-                                    <MudSelectItem Value="@type">@type</MudSelectItem>
-                                }
-                            </MudSelect>
-                        </ChildContent>
+                    <ItemCard Tags="@null">
+                        <MudSelect Label="Filter by type"
+                                   @bind-Value="FilterType"
+                                   For="@(() => FilterType)"
+                                   T="@string">
+                            @foreach (var type in FilterTypes.Keys)
+                            {
+                                <MudSelectItem Value="@type">@type</MudSelectItem>
+                            }
+                        </MudSelect>
                     </ItemCard>
 
                 </SubGridRow>

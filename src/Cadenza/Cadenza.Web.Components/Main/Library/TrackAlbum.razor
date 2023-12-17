@@ -1,23 +1,20 @@
 ﻿@inherits AlbumViewBase
 
-<ItemCard Type="@PlayerItemType.Album"
-          Tags="@Model.Tags"
+<ItemCard Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
-    <ChildContent>
-        <MudGrid>
-            <MudItem xs="6" md="12">
-                <AlbumArtworkView Model="@Model" />
-            </MudItem>
-            <MudItem xs="6" md="12" Class="mt-0 pt-0">
-                <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
-                <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
-                <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
-                <MudText Typo="@Typo.body1">@Model.Year</MudText>
-                <MudText Typo="@Typo.body1">@AlbumTrack.DiscPosition()</MudText>
-                <MudText Typo="@Typo.body1">@AlbumTrack.TrackPosition()</MudText>
-            </MudItem>
-        </MudGrid>
-    </ChildContent>
+    <MudGrid>
+        <MudItem xs="6" md="12">
+            <AlbumArtworkView Model="@Model" />
+        </MudItem>
+        <MudItem xs="6" md="12" Class="mt-0 pt-0">
+            <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
+            <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+            <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="@Typo.body1">@Model.Year</MudText>
+            <MudText Typo="@Typo.body1">@AlbumTrack.DiscPosition()</MudText>
+            <MudText Typo="@Typo.body1">@AlbumTrack.TrackPosition()</MudText>
+        </MudItem>
+    </MudGrid>
 </ItemCard>
 
 @code {

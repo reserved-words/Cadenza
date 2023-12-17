@@ -2,13 +2,11 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Artist" Tags="@Model.Tags">
-        <ChildContent>
-            <ArtistImageView Model="@Model" />
-            <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" />
-            <MudText Typo="Typo.body1">@Model.Location()</MudText>
-            <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
-            <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
-        </ChildContent>
+    <ItemCard Tags="@Model.Tags">
+        <ArtistImageView Model="@Model" />
+        <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" />
+        <MudText Typo="Typo.body1">@Model.Location()</MudText>
+        <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
+        <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
     </ItemCard>
 }

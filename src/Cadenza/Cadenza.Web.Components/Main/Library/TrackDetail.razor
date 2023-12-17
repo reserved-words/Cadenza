@@ -1,14 +1,11 @@
 ﻿@inherits TrackViewBase
 
-<ItemCard Type="@PlayerItemType.Track"
-          Tags="@Model.Tags"
+<ItemCard Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
-    <ChildContent>
-        <ItemCardTitle Itemtype="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" />
-        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
-        <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>
-        <MudText Typo="Typo.body1">@Model.Year</MudText>
-    </ChildContent>
+    <ItemCardTitle Itemtype="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" />
+    <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+    <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>
+    <MudText Typo="Typo.body1">@Model.Year</MudText>
 </ItemCard>
 
 @code {

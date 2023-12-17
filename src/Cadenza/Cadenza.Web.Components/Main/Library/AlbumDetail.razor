@@ -2,21 +2,18 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Album" Tags="@Model.Tags">
-        <ChildContent>
-            <AlbumArtworkView Model="@Model" />
-            <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
-            <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
-            <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
-            <MudText Typo="Typo.body2">@Model.Year</MudText>
-            <MudText Typo="Typo.body2">@TotalDuration.AlbumDuration()</MudText>
+    <ItemCard Tags="@Model.Tags">
+        <AlbumArtworkView Model="@Model" />
+        <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
+        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+        <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
+        <MudText Typo="Typo.body2">@Model.Year</MudText>
+        <MudText Typo="Typo.body2">@TotalDuration.AlbumDuration()</MudText>
 
-            @if (DiscDurations.Count > 1)
-            {
-                <AlbumDiscDurations DiscDurations="@DiscDurations" />
-            }
-
-        </ChildContent>
+        @if (DiscDurations.Count > 1)
+        {
+            <AlbumDiscDurations DiscDurations="@DiscDurations" />
+        }
     </ItemCard>
 }
 
