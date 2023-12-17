@@ -1,88 +1,87 @@
-﻿<TabGrid>
+﻿
+<LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Track" Id="@Model.Track.Id.ToString()" Name="@Model.Track.Title">
+    <SubGrid>
 
-    <TabGridColumn sm="6" md="8">
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+        <SubGridColumn sm="6" md="8">
+            <SubGridRow RowHeight="@RowHeight.Fixed">
 
-            <SubGrid>
+                <SubGrid>
 
-                <SubGridColumn sm="12" md="6">
+                    <SubGridColumn sm="12" md="6">
 
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <SubGridRow RowHeight="@RowHeight.Fixed">
 
-                        <TrackDetail Model="@Model.Track"
-                                     Breakpoint="@Breakpoint">
-                            <Toolbar>
-                                <TrackToolbar Track="@Model.Track" />
-                            </Toolbar>
-                        </TrackDetail>
+                            <TrackDetail Model="@Model.Track"
+                                         Breakpoint="@Breakpoint" />
 
-                    </SubGridRow>
+                        </SubGridRow>
 
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
-
-                        <MudDivider Class="xs-only" />
-                        <TrackArtist Model="@Model.Artist"
-                                     Breakpoint="@Breakpoint" />
-
-                    </SubGridRow>
-
-                    @if (Breakpoint == Breakpoint.Sm)
-                    {
                         <SubGridRow RowHeight="@RowHeight.Fixed">
 
                             <MudDivider Class="xs-only" />
-                            <TrackAlbum Model="@Model.Album"
-                                        AlbumTrack="@Model.AlbumTrack"
-                                        Breakpoint="@Breakpoint" />
+                            <TrackArtist Model="@Model.Artist"
+                                         Breakpoint="@Breakpoint" />
 
                         </SubGridRow>
+
+                        @if (Breakpoint == Breakpoint.Sm)
+                        {
+                            <SubGridRow RowHeight="@RowHeight.Fixed">
+
+                                <MudDivider Class="xs-only" />
+                                <TrackAlbum Model="@Model.Album"
+                                            AlbumTrack="@Model.AlbumTrack"
+                                            Breakpoint="@Breakpoint" />
+
+                            </SubGridRow>
+                        }
+
+                    </SubGridColumn>
+
+                    @if (Breakpoint != Breakpoint.Sm)
+                    {
+                        <SubGridColumn md="6">
+                            <SubGridRow RowHeight="@RowHeight.Fixed">
+
+                                <MudDivider Class="xs-only" />
+                                <TrackAlbum Model="@Model.Album"
+                                            AlbumTrack="@Model.AlbumTrack"
+                                            Breakpoint="@Breakpoint" />
+
+                            </SubGridRow>
+                        </SubGridColumn>
                     }
 
-                </SubGridColumn>
+                </SubGrid>
 
-                @if (Breakpoint != Breakpoint.Sm)
+            </SubGridRow>
+        </SubGridColumn>
+
+        <SubGridColumn sm="6" md="4">
+            <SubGridRow RowHeight="@RowHeight.Full">
+
+                @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
                 {
-                    <SubGridColumn md="6">
-                        <SubGridRow RowHeight="@RowHeight.Fixed">
-
-                            <MudDivider Class="xs-only" />
-                            <TrackAlbum Model="@Model.Album"
-                                        AlbumTrack="@Model.AlbumTrack"
-                                        Breakpoint="@Breakpoint" />
-
-                        </SubGridRow>
-                    </SubGridColumn>
+                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                        <MudDivider />
+                        <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
+                            <MudExpansionPanel Text="Lyrics">
+                                <TrackLyrics Model="@Model.Track"
+                                             Breakpoint="@Breakpoint" />
+                            </MudExpansionPanel>
+                        </MudExpansionPanels>
+                    </MudHidden>
                 }
 
-            </SubGrid>
-
-        </TabGridRow>
-    </TabGridColumn>
-
-    <TabGridColumn sm="6" md="4">
-        <TabGridRow RowHeight="@RowHeight.Full">
-
-            @if (!string.IsNullOrWhiteSpace(Model.Track.Lyrics))
-            {
-                <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                    <MudDivider />
-                    <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
-                        <MudExpansionPanel Text="Lyrics">
-                            <TrackLyrics Model="@Model.Track"
-                                     Breakpoint="@Breakpoint" />
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <TrackLyrics Model="@Model.Track"
+                                 Breakpoint="@Breakpoint" />
                 </MudHidden>
-            }
+            </SubGridRow>
+        </SubGridColumn>
 
-            <MudHidden Breakpoint="Breakpoint.Xs">
-                <TrackLyrics Model="@Model.Track"
-                             Breakpoint="@Breakpoint" />
-            </MudHidden>
-        </TabGridRow>
-    </TabGridColumn>
-
-</TabGrid>
+    </SubGrid>
+</LibraryWrapper>
 
 @code {
     [Parameter] public TrackFullVM Model { get; set; }
@@ -91,4 +90,11 @@
     private bool ShowAlbumHeader => Breakpoint != Breakpoint.Xs;
 
     private bool ShowArtistHeader => Breakpoint != Breakpoint.Xs;
+
+    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    {
+        new LibraryBreadcrumb(PlayerItemType.Artist, Model.AlbumArtist.Id, Model.AlbumArtist.Name),
+        new LibraryBreadcrumb(PlayerItemType.Album, Model.Album.Id, Model.Album.Title),
+        new LibraryBreadcrumb(PlayerItemType.Track, Model.Track.Id, Model.Track.Title)
+    };
 }

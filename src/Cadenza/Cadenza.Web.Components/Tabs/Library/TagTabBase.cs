@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.Components.Tabs.Library;
+﻿namespace Cadenza.Web.Components.Tabs.Library;
 
 public class TagTabBase : FluxorComponent
 {
@@ -23,6 +21,12 @@ public class TagTabBase : FluxorComponent
     public IReadOnlyCollection<TaggedItemVM> Items => ViewTagState.Value.Items;
 
     protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
+
+    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    {
+        new LibraryBreadcrumb(PlayerItemType.Tag, Tag, Tag)
+    };
+
     protected string FilterType { get; set; }
 
     protected bool OnFilter(TaggedItemVM item)

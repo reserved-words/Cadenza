@@ -2,27 +2,25 @@
 
 @if (!Loading)
 {
-    <TabGrid>
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Artist" Id="@Artist.Id.ToString()" Name="@Artist.Name">
+        <SubGrid>
 
-        <TabGridColumn sm="4" md="3">
-            <TabGridRow RowHeight="@RowHeight.Fixed">
-                <ArtistDetail Model="@Artist">
-                    <Toolbar>
-                        <ArtistToolbar Artist="@Artist" />
-                    </Toolbar>
-                </ArtistDetail>
-            </TabGridRow>
+            <SubGridColumn sm="4" md="3">
+                <SubGridRow RowHeight="@RowHeight.Fixed">
+                    <ArtistDetail Model="@Artist" />
+                </SubGridRow>
 
-        </TabGridColumn>
+            </SubGridColumn>
 
-        <TabGridColumn sm="8" md="9">
-            <TabGridRow RowHeight="@RowHeight.Full">
+            <SubGridColumn sm="8" md="9">
+                <SubGridRow RowHeight="@RowHeight.Full">
 
-                <MudDivider Class="xs-only" />
-                <ArtistReleases Releases="@Releases" />
+                    <MudDivider Class="xs-only" />
+                    <ArtistReleases Releases="@Releases" />
 
-            </TabGridRow>
-        </TabGridColumn>
+                </SubGridRow>
+            </SubGridColumn>
 
-    </TabGrid>
+        </SubGrid>
+    </LibraryWrapper>
 }

@@ -12,15 +12,9 @@
         <MudText Typo="@Typo.h5">@Heading</MudText>
     </MudPaper>
 
-    @if (Toolbar != null)
-    {
-        @Toolbar
-    }
-
 </MudContainer>
 
 @code {
     [Parameter] public PlayerItemType Type { get; set; }
     [Parameter] public string Heading { get; set; }
-    [Parameter] public RenderFragment Toolbar { get; set; }
 }

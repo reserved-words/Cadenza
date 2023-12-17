@@ -2,9 +2,10 @@
 
 @if (Model != null)
 {
-    <ItemCard Type="@PlayerItemType.Album" Heading="@Model.Title" Tags="@Model.Tags" Toolbar="@Toolbar">
+    <ItemCard Type="@PlayerItemType.Album" Tags="@Model.Tags">
         <ChildContent>
             <AlbumArtworkView Model="@Model" />
+            <ItemCardTitle Itemtype="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
             <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
             <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
             <MudText Typo="Typo.body2">@Model.Year</MudText>
@@ -21,7 +22,6 @@
 
 @code {
     [Parameter] public Dictionary<int, int> DiscDurations { get; set; }
-    [Parameter] public RenderFragment Toolbar { get; set; }
 
     protected int TotalDuration => DiscDurations.Sum(d => d.Value);
 }
