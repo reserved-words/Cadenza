@@ -7,4 +7,9 @@ public class ArtistTabBase : FluxorComponent
     public bool Loading => ViewArtistState.Value.IsLoading;
     public ArtistDetailsVM Artist => ViewArtistState.Value.Artist;
     public IReadOnlyCollection<ArtistReleaseGroupVM> Releases => ViewArtistState.Value.Releases;
+
+    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    {
+        new LibraryBreadcrumb(PlayerItemType.Artist, Artist.Id, Artist.Name)
+    };
 }

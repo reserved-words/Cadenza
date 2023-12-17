@@ -11,7 +11,7 @@ public static class Extensions
             PlayerItemType.Genre => "fas fa-boxes",
             PlayerItemType.Grouping => "fas fa-box",
             PlayerItemType.Tag => "fas fa-tag",
-            PlayerItemType.Track => "fas fa-music",
+            PlayerItemType.Track => "fas fa-file-audio",
             _ => throw new NotImplementedException(),
         };
     }

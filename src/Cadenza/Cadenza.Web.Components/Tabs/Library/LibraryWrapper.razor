@@ -1,0 +1,27 @@
+﻿
+<TabGrid>
+
+    <TabGridColumn>
+
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+
+            <LibraryBreadcrumbs Links="@Breadcrumbs" />
+
+        </TabGridRow>
+
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+
+            @ChildContent
+
+        </TabGridRow>
+
+    </TabGridColumn>
+
+</TabGrid>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public List<LibraryBreadcrumb> Breadcrumbs { get; set; } = new List<LibraryBreadcrumb>();
+    [Parameter] public RenderFragment Toolbar { get; set; }
+}

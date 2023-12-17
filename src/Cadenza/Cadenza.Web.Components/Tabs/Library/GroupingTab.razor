@@ -2,27 +2,30 @@
 
 @if (!Loading)
 {
-    <TabGrid>
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
+        <Toolbar>
+            <GroupingToolbar Grouping="@Grouping" />
+        </Toolbar>
+        <ChildContent>
+            <SubGrid>
 
-        <TabGridColumn sm="4" md="3">
-            <TabGridRow RowHeight="@RowHeight.Fixed">
-                <GroupingDetail Grouping="@Grouping">
-                    <Toolbar>
-                        <GroupingToolbar Grouping="@Grouping" />
-                    </Toolbar>
-                </GroupingDetail>
-            </TabGridRow>
-        </TabGridColumn>
+                <SubGridColumn sm="4" md="3">
+                    <SubGridRow RowHeight="@RowHeight.Fixed">
+                        <GroupingDetail Grouping="@Grouping">
+                        </GroupingDetail>
+                    </SubGridRow>
+                </SubGridColumn>
 
-        <TabGridColumn sm="8" md="9">
-            <TabGridRow RowHeight="@RowHeight.Full">
+                <SubGridColumn sm="8" md="9">
+                    <SubGridRow RowHeight="@RowHeight.Full">
 
-                <MudDivider Class="xs-only" />
-                <GroupingGenres Genres="@Genres" />
+                        <MudDivider Class="xs-only" />
+                        <GroupingGenres Genres="@Genres" />
 
-            </TabGridRow>
-        </TabGridColumn>
+                    </SubGridRow>
+                </SubGridColumn>
 
-    </TabGrid>
-
+            </SubGrid>
+        </ChildContent>
+    </LibraryWrapper>
 }

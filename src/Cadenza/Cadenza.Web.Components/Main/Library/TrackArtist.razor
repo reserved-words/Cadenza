@@ -1,9 +1,7 @@
 ﻿@inherits ArtistViewBase
 
 <ItemCard Type="@PlayerItemType.Artist" 
-          Heading="Artist" 
           Tags="@Model.Tags" 
-          ShowHeader="@ShowHeader"
           Breakpoint="@Breakpoint">
     <ChildContent>
         <MudGrid>
@@ -11,6 +9,10 @@
                 <ArtistImageView Model="@Model" />
             </MudItem>
             <MudItem xs="6">
+@*                 <MudContainer Class="d-flex flex-row pa-0 ma-0" Style="align-items: center;">
+                    <MudIcon Icon="@PlayerItemType.Artist.GetIcon()" Class="mr-2" />
+                    <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+                </MudContainer> *@
                 <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
                 <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />

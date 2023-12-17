@@ -1,19 +1,7 @@
 ﻿
 <MudCard Elevation="@Elevation" Square="@Square">
 
-    @if (ShowHeader)
-    {
-        <MudCardHeader Class="ma-0 px-2 pt-2 pb-0">
-            <ItemCardHeader Type="@Type" Heading="@Heading" Toolbar="@Toolbar" />
-        </MudCardHeader>
-    }
-
     <MudCardContent Class="ma-0 pa-2 pt-0">
-
-        @if (ShowHeader)
-        {
-            <MudDivider Class="mt-0 mb-1" />
-        }
 
         <MudContainer Class="ma-0 pa-2 pt-0">
             @ChildContent
@@ -21,8 +9,7 @@
 
         @if (Tags != null)
         {
-            <MudDivider Class="mt-0 mb-2" />
-            <MudContainer Class="mx-0 mt-3 mb-1 pa-0">
+            <MudContainer Class="mx-0 mt-0 mb-1 pa-0">
                 <TagsView Model="@Tags" />
             </MudContainer>
         }
@@ -33,8 +20,6 @@
 
 @code {
     [Parameter] public PlayerItemType Type { get; set; }
-    [Parameter] public bool ShowHeader { get; set; } = true;
-    [Parameter] public string Heading { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public IReadOnlyCollection<string> Tags { get; set; }
     [Parameter] public RenderFragment Toolbar { get; set; }

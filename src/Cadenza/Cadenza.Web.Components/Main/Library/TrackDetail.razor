@@ -1,11 +1,10 @@
 ﻿@inherits TrackViewBase
 
-<ItemCard Type="@PlayerItemType.Track" 
-          Heading="@Model.Title" 
-          Tags="@Model.Tags" 
-          Toolbar="@Toolbar"
+<ItemCard Type="@PlayerItemType.Track"
+          Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
     <ChildContent>
+        <TrackLink Typo="@Typo.h6" Id="@Model.Id" Title="@Model.Title" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>
         <MudText Typo="Typo.body1">@Model.Year</MudText>
