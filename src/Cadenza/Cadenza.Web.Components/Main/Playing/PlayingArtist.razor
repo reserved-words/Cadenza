@@ -1,16 +1,14 @@
 ﻿@inherits ArtistViewBase
 
 <ItemCard Type="@PlayerItemType.Artist" 
-          Heading="Current Artist" 
-          Tags="@Model.Tags"
-          ShowHeader="@ShowHeader">
+          Tags="@Model.Tags">
     <ChildContent>
         <MudGrid>
             <MudItem xs="6">
                 <ArtistImageView Model="@Model" />
             </MudItem>
             <MudItem xs="6">
-                <ArtistLink Typo="@Typo.h6" Id="@Model.Id" Name="@Model.Name" />
+                <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" />   
                 <MudText Typo="Typo.body1">@Model.Location()</MudText>
                 <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
                 <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />

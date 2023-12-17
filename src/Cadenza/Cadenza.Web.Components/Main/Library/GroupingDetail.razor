@@ -1,11 +1,10 @@
 ﻿
 <AppCard>
     <HeaderContent>
-        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Grouping.Name" Toolbar="@Toolbar" />
+        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Grouping.Name" />
     </HeaderContent>
 </AppCard>
 
 @code {
     [Parameter] public GroupingVM Grouping { get; set; }
-    [Parameter] public RenderFragment Toolbar { get; set; }
 }

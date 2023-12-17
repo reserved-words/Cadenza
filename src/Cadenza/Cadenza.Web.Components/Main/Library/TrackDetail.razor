@@ -1,11 +1,10 @@
 ﻿@inherits TrackViewBase
 
-<ItemCard Type="@PlayerItemType.Track" 
-          Heading="@Model.Title" 
-          Tags="@Model.Tags" 
-          Toolbar="@Toolbar"
+<ItemCard Type="@PlayerItemType.Track"
+          Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
     <ChildContent>
+        <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Title" />
         <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>
         <MudText Typo="Typo.body1">@Model.Year</MudText>
@@ -13,6 +12,5 @@
 </ItemCard>
 
 @code {
-    [Parameter] public RenderFragment Toolbar { get; set; }
     [Parameter] public Breakpoint Breakpoint { get; set; }
 }

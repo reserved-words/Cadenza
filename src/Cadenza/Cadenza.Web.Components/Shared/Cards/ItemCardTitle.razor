@@ -1,0 +1,18 @@
+﻿
+<MudContainer Class="d-flex flex-row pa-0 ma-0" Style="align-items: center;">
+    <MudIcon Icon="@ItemType.GetIcon()" Class="mr-2" />
+    <ActionLink Typo="@Typo.h6" Text="@Name" OnClick="@View"></ActionLink>
+</MudContainer>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    [Parameter] public PlayerItemType ItemType { get; set; }
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Name { get; set; }
+
+    private void View()
+    {
+        Dispatcher.Dispatch(new ViewItemRequest(ItemType, Id.ToString(), Name));
+    }
+}
