@@ -1,9 +1,7 @@
 ﻿
-<AppCard>
-    <HeaderContent>
-        <ItemCardHeader Type="@PlayerItemType.Grouping" Heading="@Grouping.Name" />
-    </HeaderContent>
-</AppCard>
+<ItemCard>
+    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Grouping.Id" Name="@Grouping.Name" />
+</ItemCard>
 
 @code {
     [Parameter] public GroupingVM Grouping { get; set; }

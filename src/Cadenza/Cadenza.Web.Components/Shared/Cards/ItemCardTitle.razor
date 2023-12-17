@@ -8,7 +8,7 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public PlayerItemType ItemType { get; set; }
-    [Parameter] public int Id { get; set; }
+    [Parameter] public object Id { get; set; }
     [Parameter] public string Name { get; set; }
 
     private void View()

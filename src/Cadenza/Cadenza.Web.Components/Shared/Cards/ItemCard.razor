@@ -19,10 +19,8 @@
 
 
 @code {
-    [Parameter] public PlayerItemType Type { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public IReadOnlyCollection<string> Tags { get; set; }
-    [Parameter] public RenderFragment Toolbar { get; set; }
     [Parameter] public Breakpoint Breakpoint { get; set; }
 
     private int Elevation => Breakpoint == Breakpoint.Xs ? 0 : 3;
