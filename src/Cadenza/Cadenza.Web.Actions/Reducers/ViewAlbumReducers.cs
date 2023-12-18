@@ -18,35 +18,6 @@ public static class ViewAlbumReducers
     };
 
     [ReducerMethod]
-    public static ViewAlbumState ReduceAlbumTracksUpdatedAction(ViewAlbumState state, AlbumTracksUpdatedAction action)
-    {
-        if (state.Album.Album.Id != action.AlbumId)
-            return state;
-
-        var tracks = new List<AlbumTrackVM>();
-
-        foreach (var disc in state.Album.Discs)
-        {
-            foreach (var track in disc.Tracks)
-            {
-                if (action.RemovedTracks.Contains(track.TrackId))
-                    continue;
-
-                var updatedTrack = action.UpdatedAlbumTracks.SingleOrDefault(t => t.TrackId == track.TrackId) ?? track;
-                tracks.Add(updatedTrack);
-            }
-        }
-
-        return state with
-        {
-            Album = state.Album with
-            {
-                Discs = tracks.GroupByDisc()
-            }
-        };
-    }
-
-    [ReducerMethod]
     public static ViewAlbumState ReduceAlbumUpdatedAction(ViewAlbumState state, AlbumUpdatedAction action)
     {
         if (state.Album == null || state.Album.Album.Id != action.UpdatedAlbum.Id)
@@ -62,8 +33,8 @@ public static class ViewAlbumReducers
             Tags = action.UpdatedAlbum.Tags
         };
 
-        return state with 
-        { 
+        return state with
+        {
             Album = state.Album with
             {
                 Album = updatedAlbum
