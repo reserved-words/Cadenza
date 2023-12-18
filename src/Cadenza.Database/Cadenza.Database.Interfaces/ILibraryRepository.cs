@@ -9,14 +9,12 @@ public interface ILibraryRepository
     Task<List<TaggedItemDTO>> GetTaggedItems(string tag);
 
     Task<string> GetTrackIdFromSource(int trackId);
-    Task<ArtistDetailsDTO> GetArtist(int id);
-    Task<AlbumDetailsDTO> GetAlbum(int id);
+    Task<ArtistDTO> GetArtist(int id);
+    Task<ArtistFullDTO> GetFullArtist(int id, bool includeAlbumsByOtherArtists);
+    Task<AlbumDTO> GetAlbum(int id);
     Task<AlbumFullDTO> GetAlbumFull(int id);
     Task<TrackDetailsDTO> GetTrack(int id);
     Task<TrackFullDTO> GetTrackFull(int id);
-
-    Task<List<AlbumDTO>> GetArtistAlbums(int artistId);
-    Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId);
 
     Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId);
     Task<List<ArtistDTO>> GetArtistsByGenre(string genre);

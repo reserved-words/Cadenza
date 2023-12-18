@@ -13,27 +13,15 @@ internal class LibraryApi : ILibraryApi
         _mapper = mapper;
     }
 
-    public async Task<AlbumDetailsVM> GetAlbum(int id)
+    public async Task<AlbumVM> GetAlbum(int id)
     {
-        var album = await _apiHelper.Get<AlbumDetailsDTO>(_settings.Album, id);
+        var album = await _apiHelper.Get<AlbumDTO>(_settings.Album, id);
         return _mapper.Map(album);
     }
 
-    public async Task<List<AlbumVM>> GetAlbums(int id)
+    public async Task<ArtistVM> GetArtist(int id)
     {
-        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.ArtistAlbums, id);
-        return albums.Select(a => _mapper.Map(a)).ToList();
-    }
-
-    public async Task<List<AlbumVM>> GetAlbumsFeaturingArtist(int artistId)
-    {
-        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.AlbumsFeaturingArtist, artistId);
-        return albums.Select(a => _mapper.Map(a)).ToList();
-    }
-
-    public async Task<ArtistDetailsVM> GetArtist(int id)
-    {
-        var artist = await _apiHelper.Get<ArtistDetailsDTO>(_settings.Artist, id);
+        var artist = await _apiHelper.Get<ArtistDTO>(_settings.Artist, id);
         return _mapper.Map(artist);
     }
 
@@ -53,6 +41,13 @@ internal class LibraryApi : ILibraryApi
     {
         var album = await _apiHelper.Get<AlbumFullDTO>(_settings.AlbumFull, id);
         return _mapper.Map(album);
+    }
+
+    public async Task<ArtistFullVM> GetFullArtist(int id, bool includeAlbumsByOtherArtists)
+    {
+        var url = $"{_settings.ArtistFull}?id={id}&includeAlbumsByOtherArtists={includeAlbumsByOtherArtists}";
+        var artist = await _apiHelper.Get<ArtistFullDTO>(url);
+        return _mapper.Map(artist);
     }
 
     public async Task<TrackFullVM> GetFullTrack(int id)

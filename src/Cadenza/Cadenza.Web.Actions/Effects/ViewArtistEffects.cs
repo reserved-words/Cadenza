@@ -14,14 +14,12 @@ public class ViewArtistEffects
     [EffectMethod]
     public async Task HandleFetchViewArtistRequest(FetchViewArtistRequest action, IDispatcher dispatcher)
     {
-        var artist = await _api.GetArtist(action.ArtistId);
-        var albumsByArtist = await _api.GetAlbums(action.ArtistId);
-        var albumsFeaturingArtist = await _api.GetAlbumsFeaturingArtist(action.ArtistId);
+        var artist = await _api.GetFullArtist(action.ArtistId, true);
 
-        var releases = albumsByArtist
+        var releases = artist.Albums
             .GroupByReleaseType()
-            .AddAlbumsFeaturingArtist(albumsFeaturingArtist);
+            .AddAlbumsFeaturingArtist(artist.AlbumsFeaturingArtist);
 
-        dispatcher.Dispatch(new FetchViewArtistResult(artist, releases));
+        dispatcher.Dispatch(new FetchViewArtistResult(artist.Artist, releases));
     }
 }

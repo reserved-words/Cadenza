@@ -14,7 +14,7 @@ internal class LibraryRepository : ILibraryRepository
         _library = library;
     }
 
-    public async Task<AlbumDetailsDTO> GetAlbum(int id)
+    public async Task<AlbumDTO> GetAlbum(int id)
     {
         var album = await _library.GetAlbum(id);
         return _mapper.MapAlbum(album);
@@ -34,12 +34,6 @@ internal class LibraryRepository : ILibraryRepository
         return mappedAlbum;
     }
 
-    public async Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId)
-    {
-        var albums = await _library.GetAlbumsFeaturingArtist(artistId);
-        return albums.Select(_mapper.MapAlbum).ToList();
-    }
-
     public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
     {
         return await _library.GetAlbumTrackSourceIds(albumId);
@@ -50,16 +44,32 @@ internal class LibraryRepository : ILibraryRepository
         return await _library.GetTrackSourceIds(source);
     }
 
-    public async Task<ArtistDetailsDTO> GetArtist(int id)
+    public async Task<ArtistDTO> GetArtist(int id)
     {
         var artist = await _library.GetArtist(id);
         return _mapper.MapArtist(artist);
     }
 
-    public async Task<List<AlbumDTO>> GetArtistAlbums(int artistId)
+    public async Task<ArtistFullDTO> GetFullArtist(int id, bool includeAlbumsByOtherArtists)
     {
-        var albums = await _library.GetArtistAlbums(artistId);
-        return albums.Select(_mapper.MapAlbum).ToList();
+
+        var artist = await _library.GetFullArtist(id);
+        var mappedArtist = _mapper.MapArtist(artist);
+
+        var albums = await _library.GetArtistAlbums(id);
+        var mappedAlbums = albums.Select(_mapper.MapAlbum).ToList();
+
+        mappedArtist.Albums = mappedAlbums;
+
+        if (includeAlbumsByOtherArtists)
+        {
+            var otherAlbums = await _library.GetAlbumsFeaturingArtist(id);
+            var mappedOtherAlbums = otherAlbums.Select(_mapper.MapAlbum).ToList();
+
+            mappedArtist.AlbumsFeaturingArtist = mappedOtherAlbums;
+        }
+
+        return mappedArtist;
     }
 
     public async Task<List<ArtistDTO>> GetArtistsByGenre(string genre)

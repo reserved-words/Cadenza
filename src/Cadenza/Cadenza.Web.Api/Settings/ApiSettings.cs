@@ -32,10 +32,9 @@ public class ApiEndpoints
 
     public string Album { get; set; }
     public string AlbumFull { get; set; }
-    public string AlbumsFeaturingArtist { get; set; }
     public string AlbumGenre { get; set; }
     public string Artist { get; set; }
-    public string ArtistAlbums { get; set; }
+    public string ArtistFull { get; set; }
     public string GenreArtists { get; set; }
     public string GroupingArtists { get; set; }
     public string Tag { get; set; }

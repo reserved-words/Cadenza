@@ -12,7 +12,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Album/{id}")]
-    public async Task<AlbumDetailsDTO> Album(int id)
+    public async Task<AlbumDTO> Album(int id)
     {
         return await _repository.GetAlbum(id);
     }
@@ -24,21 +24,15 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Artist/{id}")]
-    public async Task<ArtistDetailsDTO> Artist(int id)
+    public async Task<ArtistDTO> Artist(int id)
     {
         return await _repository.GetArtist(id);
     }
 
-    [HttpGet("Artist/Albums/{id}")]
-    public async Task<List<AlbumDTO>> ArtistAlbums(int id)
+    [HttpGet("Artist/Full")]
+    public async Task<ArtistFullDTO> ArtistFull(int id, bool includeAlbumsByOtherArtists)
     {
-        return await _repository.GetArtistAlbums(id);
-    }
-
-    [HttpGet("Artist/AlbumsFeaturing/{id}")]
-    public async Task<List<AlbumDTO>> AlbumsFeaturingArtist(int id)
-    {
-        return await _repository.GetAlbumsFeaturingArtist(id);
+        return await _repository.GetFullArtist(id, includeAlbumsByOtherArtists);
     }
 
     [HttpGet("Artists/Genre/{id}")]

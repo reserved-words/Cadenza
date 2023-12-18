@@ -242,6 +242,7 @@
     <Build Include="Stored Procedures\History\GetRecentlyAddedAlbums.sql" />
     <Build Include="Stored Procedures\Library\GetTrack.sql" />
     <Build Include="Stored Procedures\Library\GetFullAlbum.sql" />
+    <Build Include="Stored Procedures\Library\GetFullArtist.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

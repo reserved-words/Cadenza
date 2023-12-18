@@ -5,18 +5,16 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class LibraryMapper : ILibraryMapper
 {
-    public AlbumDetailsDTO MapAlbum(GetAlbumResult album)
+    public AlbumDTO MapAlbum(GetAlbumResult album)
     {
-        return new AlbumDetailsDTO
+        return new AlbumDTO
         {
             Id = album.Id,
             ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
-            DiscCount = album.DiscCount,
-            Year = album.Year,
-            Tags = new TagsDTO(album.TagList)
+            Year = album.Year
         };
     }
 
@@ -72,9 +70,20 @@ internal class LibraryMapper : ILibraryMapper
             .ToList();
     }
 
-    public ArtistDetailsDTO MapArtist(GetArtistResult artist)
+    public ArtistDTO MapArtist(GetArtistResult artist)
     {
-        return new ArtistDetailsDTO
+        return new ArtistDTO
+        {
+            Id = artist.Id,
+            Name = artist.Name,
+            Grouping = MapGrouping(artist),
+            Genre = artist.Genre
+        };
+    }
+
+    public ArtistFullDTO MapArtist(GetFullArtistResult artist)
+    {
+        var dto = new ArtistDetailsDTO
         {
             Id = artist.Id,
             Name = artist.Name,
@@ -85,6 +94,8 @@ internal class LibraryMapper : ILibraryMapper
             Country = artist.Country,
             Tags = new TagsDTO(artist.TagList)
         };
+
+        return new ArtistFullDTO { Artist = dto };
     }
 
     public ArtistDTO MapArtist(GetArtistsByGroupingResult artist)
@@ -203,6 +214,16 @@ internal class LibraryMapper : ILibraryMapper
     }
 
     private GroupingDTO MapGrouping(GetArtistResult artist)
+    {
+        return new GroupingDTO
+        {
+            Id = artist.GroupingId,
+            Name = artist.GroupingName,
+            IsUsed = true
+        };
+    }
+
+    private GroupingDTO MapGrouping(GetFullArtistResult artist)
     {
         return new GroupingDTO
         {

@@ -1,5 +1,4 @@
-﻿using Cadenza.Common.Enums.Extensions;
-using Cadenza.Web.Common.Extensions;
+﻿using Cadenza.Web.Common.Extensions;
 
 namespace Cadenza.Web.Actions.Reducers;
 
@@ -25,20 +24,19 @@ public static class ViewArtistReducers
         if (state.Artist.Id != action.ArtistId)
             return state;
 
-        var releases = new List<AlbumVM>();
+        var originalReleases = state.Releases.SelectMany(g => g.Albums);
 
-        foreach (var releaseGroup in state.Releases)
+        var updatedReleases = new List<AlbumVM>();
+
+        foreach (var release in originalReleases)
         {
-            foreach (var album in releaseGroup.Albums)
-            {
-                var updatedAlbum = action.UpdatedArtistReleases.SingleOrDefault(t => t.Id == album.Id) ?? album;
-                releases.Add(updatedAlbum);
-            }
+            var updatedRelease = action.UpdatedArtistReleases.SingleOrDefault(t => t.Id == release.Id) ?? release;
+            updatedReleases.Add(updatedRelease);
         }
 
         return state with
         {
-            Releases = releases.GroupByReleaseType()
+            Releases = updatedReleases.GroupByReleaseType()
         };
     }
 

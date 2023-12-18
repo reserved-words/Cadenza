@@ -2,11 +2,11 @@
 
 internal interface IViewModelMapper
 {
-    AlbumDetailsVM Map(AlbumDetailsDTO dto);
+    // AlbumDetailsVM Map(AlbumDetailsDTO dto);
     AlbumFullVM Map(AlbumFullDTO dto);
     AlbumVM Map(AlbumDTO dto);
     ArtistVM Map(ArtistDTO dto);
-    ArtistDetailsVM Map(ArtistDetailsDTO dto);
+    ArtistFullVM Map(ArtistFullDTO dto);
     GroupingVM Map(GroupingDTO dto);
     RecentAlbumVM Map(RecentAlbumDTO dto);
     SearchItemVM Map(SearchItemDTO dto);
