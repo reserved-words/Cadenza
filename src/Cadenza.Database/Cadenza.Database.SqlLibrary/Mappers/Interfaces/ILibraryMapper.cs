@@ -10,7 +10,9 @@ internal interface ILibraryMapper
     AlbumDTO MapAlbum(GetAlbumsFeaturingArtistResult album);
     TaggedItemDTO MapTaggedItem(GetTaggedItemsResult result);
     ArtistDetailsDTO MapArtist(GetArtistResult artist);
-    AlbumDetailsDTO MapAlbum(GetAlbumResult album, List<GetAlbumDiscsResult> discs);
-    TrackFullDTO MapTrack(GetTrackResult track);
+    AlbumDetailsDTO MapAlbum(GetAlbumResult album);
+    AlbumFullDTO MapAlbum(GetFullAlbumResult album);
+    TrackDetailsDTO MapTrack(GetTrackResult track);
+    TrackFullDTO MapTrack(GetFullTrackResult track);
     List<AlbumDiscDTO> MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks);
 }

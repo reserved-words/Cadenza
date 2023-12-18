@@ -51,7 +51,7 @@ internal class PlaylistCreator : IPlaylistCreator
 
         var tracks = new List<int> { id };
 
-        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Track, $"{track.Track.Title} ({track.Artist.Name})");
+        var playlistId = new PlaylistId(id.ToString(), PlaylistType.Track, $"{track.Title} ({track.ArtistName})");
 
         return new PlaylistDefinition
         {

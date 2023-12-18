@@ -31,12 +31,6 @@ internal class LibraryApi : ILibraryApi
         return albums.Select(a => _mapper.Map(a)).ToList();
     }
 
-    public async Task<List<AlbumDiscVM>> GetAlbumTracks(int id)
-    {
-        var discs = await _apiHelper.Get<List<AlbumDiscDTO>>(_settings.AlbumTracks, id);
-        return discs.Select(d => _mapper.Map(d)).ToList();
-    }
-
     public async Task<ArtistDetailsVM> GetArtist(int id)
     {
         var artist = await _apiHelper.Get<ArtistDetailsDTO>(_settings.Artist, id);
@@ -55,15 +49,27 @@ internal class LibraryApi : ILibraryApi
         return artists.Select(a => _mapper.Map(a)).ToList();
     }
 
+    public async Task<AlbumFullVM> GetFullAlbum(int id)
+    {
+        var album = await _apiHelper.Get<AlbumFullDTO>(_settings.AlbumFull, id);
+        return _mapper.Map(album);
+    }
+
+    public async Task<TrackFullVM> GetFullTrack(int id)
+    {
+        var track = await _apiHelper.Get<TrackFullDTO>(_settings.TrackFull, id);
+        return _mapper.Map(track);
+    }
+
     public async Task<List<TaggedItemVM>> GetTag(string id)
     {
         var items = await _apiHelper.Get<List<TaggedItemDTO>>(_settings.Tag, id);
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<TrackFullVM> GetTrack(int id)
+    public async Task<TrackDetailsVM> GetTrack(int id)
     {
-        var track = await _apiHelper.Get<TrackFullDTO>(_settings.Track, id);
+        var track = await _apiHelper.Get<TrackDetailsDTO>(_settings.Track, id);
         return _mapper.Map(track);
     }
 }

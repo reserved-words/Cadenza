@@ -13,6 +13,6 @@ public class EditTrackEffects
     public async Task HandleFetchEditTrackRequest(FetchEditTrackRequest action, IDispatcher dispatcher)
     {
         var track = await _api.GetTrack(action.TrackId);
-        dispatcher.Dispatch(new FetchEditTrackResult(track.Track));
+        dispatcher.Dispatch(new FetchEditTrackResult(track));
     }
 }

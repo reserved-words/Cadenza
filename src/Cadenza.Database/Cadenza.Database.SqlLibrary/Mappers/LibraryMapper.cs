@@ -5,7 +5,7 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class LibraryMapper : ILibraryMapper
 {
-    public AlbumDetailsDTO MapAlbum(GetAlbumResult album, List<GetAlbumDiscsResult> discs)
+    public AlbumDetailsDTO MapAlbum(GetAlbumResult album)
     {
         return new AlbumDetailsDTO
         {
@@ -128,7 +128,7 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    public TrackFullDTO MapTrack(GetTrackResult track)
+    public TrackFullDTO MapTrack(GetFullTrackResult track)
     {
         return new TrackFullDTO
         {
@@ -222,7 +222,7 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    private GroupingDTO MapArtistGrouping(GetTrackResult track)
+    private GroupingDTO MapArtistGrouping(GetFullTrackResult track)
     {
         return new GroupingDTO
         {
@@ -232,13 +232,67 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    private GroupingDTO MapAlbumArtistGrouping(GetTrackResult track)
+    private GroupingDTO MapAlbumArtistGrouping(GetFullAlbumResult album)
+    {
+        return new GroupingDTO
+        {
+            Id = album.ArtistGroupingId,
+            Name = album.ArtistGroupingName,
+            IsUsed = true
+        };
+    }
+
+    private GroupingDTO MapAlbumArtistGrouping(GetFullTrackResult track)
     {
         return new GroupingDTO
         {
             Id = track.AlbumArtistGroupingId,
             Name = track.AlbumArtistGroupingName,
             IsUsed = true
+        };
+    }
+
+    public AlbumFullDTO MapAlbum(GetFullAlbumResult album)
+    {
+        return new AlbumFullDTO
+        {
+            Album = new AlbumDetailsDTO
+            {
+                Id = album.Id,
+                ArtistId = album.ArtistId,
+                ArtistName = album.ArtistName,
+                Title = album.Title,
+                ReleaseType = (ReleaseType)album.ReleaseTypeId,
+                DiscCount = album.DiscCount,
+                Year = album.Year,
+                Tags = new TagsDTO(album.TagList)
+            },
+            Artist = new ArtistDTO
+            {
+                Id = album.ArtistId,
+                Name = album.ArtistName,
+                Grouping = MapAlbumArtistGrouping(album),
+                Genre = album.ArtistGenre
+            }
+        };
+    }
+
+    public TrackDetailsDTO MapTrack(GetTrackResult track)
+    {
+        return new TrackDetailsDTO
+        {
+            Source = (LibrarySource)track.SourceId,
+            Id = track.Id,
+            IdFromSource = track.IdFromSource,
+            IsLoved = track.IsLoved,
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            AlbumId = track.AlbumId,
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            Year = track.Year,
+            Lyrics = track.Lyrics,
+            Tags = new TagsDTO(track.TagList)
         };
     }
 }

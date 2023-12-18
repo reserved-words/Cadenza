@@ -14,19 +14,18 @@ public static class ViewAlbumReducers
     public static ViewAlbumState ReduceFetchViewAlbumResult(ViewAlbumState state, FetchViewAlbumResult action) => state with
     {
         IsLoading = false,
-        Album = action.Album,
-        Tracks = action.Tracks
+        Album = action.Album
     };
 
     [ReducerMethod]
     public static ViewAlbumState ReduceAlbumTracksUpdatedAction(ViewAlbumState state, AlbumTracksUpdatedAction action)
     {
-        if (state.Album.Id != action.AlbumId)
+        if (state.Album.Album.Id != action.AlbumId)
             return state;
 
         var tracks = new List<AlbumTrackVM>();
 
-        foreach (var disc in state.Tracks)
+        foreach (var disc in state.Album.Discs)
         {
             foreach (var track in disc.Tracks)
             {
@@ -40,17 +39,20 @@ public static class ViewAlbumReducers
 
         return state with
         {
-            Tracks = tracks.GroupByDisc()
+            Album = state.Album with
+            {
+                Discs = tracks.GroupByDisc()
+            }
         };
     }
 
     [ReducerMethod]
     public static ViewAlbumState ReduceAlbumUpdatedAction(ViewAlbumState state, AlbumUpdatedAction action)
     {
-        if (state.Album == null || state.Album.Id != action.UpdatedAlbum.Id)
+        if (state.Album == null || state.Album.Album.Id != action.UpdatedAlbum.Id)
             return state;
 
-        var updatedAlbum = state.Album with
+        var updatedAlbum = state.Album.Album with
         {
             Title = action.UpdatedAlbum.Title,
             ReleaseType = action.UpdatedAlbum.ReleaseType,
@@ -60,6 +62,12 @@ public static class ViewAlbumReducers
             Tags = action.UpdatedAlbum.Tags
         };
 
-        return state with { Album = updatedAlbum };
+        return state with 
+        { 
+            Album = state.Album with
+            {
+                Album = updatedAlbum
+            }
+        };
     }
 }

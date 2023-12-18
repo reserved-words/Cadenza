@@ -46,7 +46,7 @@ public class ViewEffects
         }
         if (action.Type != PlayerItemType.Album)
         {
-            dispatcher.Dispatch(new FetchViewAlbumResult(null, null));
+            dispatcher.Dispatch(new FetchViewAlbumResult(null));
         }
         if (action.Type != PlayerItemType.Track)
         {

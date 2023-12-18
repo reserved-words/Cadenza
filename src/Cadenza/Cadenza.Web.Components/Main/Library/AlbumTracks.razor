@@ -1,19 +1,19 @@
-﻿@if (Discs != null)
+﻿@if (Album.Discs != null)
 {
     <AppCardScrollContainer Elevation="0">
         <ChildContent>
 
-            @if (Discs.Count == 1)
+            @if (Album.Discs.Count == 1)
             {
-                <AlbumDisc Model="@Discs.Single()" AlbumId="@Album.Id" AlbumArtistId="@Album.ArtistId" />
+                <AlbumDisc Model="@Album.Discs.Single()" AlbumId="@Album.Id" AlbumArtistId="@Album.Artist.Id" />
             }
             else
             {
                 <MudTabs ActivePanelIndex="@ActivePanelIndex">
-                    @foreach (var disc in Discs)
+                    @foreach (var disc in Album.Discs)
                     {
                         <MudTabPanel Text="@("Disc " + disc.DiscNo)">
-                            <AlbumDisc Model="@disc" AlbumId="@Album.Id" AlbumArtistId="@Album.ArtistId" />
+                            <AlbumDisc Model="@disc" AlbumId="@Album.Id" AlbumArtistId="@Album.Artist.Id" />
                         </MudTabPanel>
                     }
                 </MudTabs>
@@ -24,8 +24,7 @@
 }
 
 @code {
-    [Parameter] public AlbumDetailsVM Album { get; set; }
-    [Parameter] public IReadOnlyCollection<AlbumDiscVM> Discs { get; set; }
+    [Parameter] public AlbumFullVM Album { get; set; }
 
     private int ActivePanelIndex { get; set; }
 

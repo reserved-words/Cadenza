@@ -10,6 +10,7 @@ public class GenreTabBase : FluxorComponent
 
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
+//        new LibraryBreadcrumb(PlayerItemType.Genre, Genre.Grouping.Id, Genre.Grouping.Name),
         new LibraryBreadcrumb(PlayerItemType.Genre, Genre, Genre)
     };
 }

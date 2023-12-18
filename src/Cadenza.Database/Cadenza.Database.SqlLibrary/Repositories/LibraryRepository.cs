@@ -17,21 +17,27 @@ internal class LibraryRepository : ILibraryRepository
     public async Task<AlbumDetailsDTO> GetAlbum(int id)
     {
         var album = await _library.GetAlbum(id);
+        return _mapper.MapAlbum(album);
+    }
+
+    public async Task<AlbumFullDTO> GetAlbumFull(int id)
+    {
+        var album = await _library.GetFullAlbum(id);
         var discs = await _library.GetAlbumDiscs(id);
-        return _mapper.MapAlbum(album, discs);
+        var tracks = await _library.GetAlbumTracks(id);
+
+        var mappedAlbum = _mapper.MapAlbum(album);
+        var mappedDiscs = _mapper.MapAlbumTracks(id, discs, tracks);
+
+        mappedAlbum.Discs = mappedDiscs;
+
+        return mappedAlbum;
     }
 
     public async Task<List<AlbumDTO>> GetAlbumsFeaturingArtist(int artistId)
     {
         var albums = await _library.GetAlbumsFeaturingArtist(artistId);
         return albums.Select(_mapper.MapAlbum).ToList();
-    }
-
-    public async Task<List<AlbumDiscDTO>> GetAlbumTracks(int id)
-    {
-        var discs = await _library.GetAlbumDiscs(id);
-        var tracks = await _library.GetAlbumTracks(id);
-        return _mapper.MapAlbumTracks(id, discs, tracks);
     }
 
     public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
@@ -79,7 +85,13 @@ internal class LibraryRepository : ILibraryRepository
         return items.Select(_mapper.MapTaggedItem).ToList();
     }
 
-    public async Task<TrackFullDTO> GetTrack(int id)
+    public async Task<TrackFullDTO> GetTrackFull (int id)
+    {
+        var track = await _library.GetFullTrack(id);
+        return _mapper.MapTrack(track);
+    }
+
+    public async Task<TrackDetailsDTO> GetTrack(int id)
     {
         var track = await _library.GetTrack(id);
         return _mapper.MapTrack(track);

@@ -12,8 +12,7 @@ public class ViewAlbumEffects
     [EffectMethod]
     public async Task HandleFetchViewAlbumRequest(FetchViewAlbumRequest action, IDispatcher dispatcher)
     {
-        var album = await _api.GetAlbum(action.AlbumId);
-        var tracks = await _api.GetAlbumTracks(action.AlbumId);
-        dispatcher.Dispatch(new FetchViewAlbumResult(album, tracks));
+        var album = await _api.GetFullAlbum(action.AlbumId);
+        dispatcher.Dispatch(new FetchViewAlbumResult(album));
     }
 }

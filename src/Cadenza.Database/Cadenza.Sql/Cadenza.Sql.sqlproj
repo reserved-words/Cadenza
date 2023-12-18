@@ -186,7 +186,7 @@
     <Build Include="Stored Procedures\Library\GetAlbum.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTracks.sql" />
-    <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetFullTrack.sql" />
     <Build Include="Stored Procedures\Library\GetArtistAlbums.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGenre.sql" />
@@ -240,6 +240,8 @@
     <Build Include="Tables\Queue\TrackSync.sql" />
     <Build Include="Tables\Queue\TrackRemovalSync.sql" />
     <Build Include="Stored Procedures\History\GetRecentlyAddedAlbums.sql" />
+    <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetFullAlbum.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

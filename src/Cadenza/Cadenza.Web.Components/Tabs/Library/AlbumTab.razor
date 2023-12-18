@@ -7,7 +7,7 @@
 
             <SubGridColumn sm="4" md="3">
                 <SubGridRow RowHeight="@RowHeight.Fixed">
-                    <AlbumDetail Model="@Album"
+                    <AlbumDetail Model="@Album.Album"
                                  DiscDurations="@DiscDurations"/>
                 </SubGridRow>
             </SubGridColumn>
@@ -16,8 +16,7 @@
                 <SubGridRow RowHeight="@RowHeight.Full">
 
                     <MudDivider Class="xs-only" />
-                    <AlbumTracks Album="@Album"
-                                 Discs="@Discs" />
+                    <AlbumTracks Album="@Album" />
 
                 </SubGridRow>
 

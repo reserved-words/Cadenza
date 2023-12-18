@@ -47,9 +47,19 @@ internal class Library : ILibrary
         return await _sql.QuerySingle<GetTrackResult>(new { Id = id });
     }
 
+    public async Task<GetFullTrackResult> GetFullTrack(int id)
+    {
+        return await _sql.QuerySingle<GetFullTrackResult>(new { Id = id });
+    }
+
     public async Task<GetAlbumResult> GetAlbum(int id)
     {
         return await _sql.QuerySingle<GetAlbumResult>(new { Id = id });
+    }
+
+    public async Task<GetFullAlbumResult> GetFullAlbum(int id)
+    {
+        return await _sql.QuerySingle<GetFullAlbumResult>(new { Id = id });
     }
 
     public async Task<List<GetAlbumDiscsResult>> GetAlbumDiscs(int id)
