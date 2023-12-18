@@ -2,6 +2,6 @@
 
 namespace Cadenza.Web.State.Actions;
 
-public record FetchViewGenreRequest(string Genre);
+public record FetchViewGenreRequest(string Genre, int GroupingId);
 
-public record FetchViewGenreResult(string Genre, IReadOnlyCollection<ArtistVM> Artists);
+public record FetchViewGenreResult(GenreFullVM Genre);

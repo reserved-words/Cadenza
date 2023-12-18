@@ -7,7 +7,7 @@ SELECT
 		WHEN 0 THEN NULL
 		WHEN 1 THEN CAST(ART.[ArtistId] AS NVARCHAR)
 		WHEN 2 THEN CAST(ALB.[AlbumId] AS NVARCHAR)
-		WHEN 4 THEN GEN.[GenreId]
+		WHEN 4 THEN GEN.[GroupingId] + '|' + GEN.[GenreId]  
 		WHEN 5 THEN CAST(GRP.[GroupingId] AS NVARCHAR)
 		WHEN 6 THEN TAG.[Tag]
 	END [PlaylistItemId]

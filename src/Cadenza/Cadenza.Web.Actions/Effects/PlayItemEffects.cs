@@ -25,7 +25,7 @@ internal class PlayItemEffects
     [EffectMethod]
     public async Task HandlePlayGenreAction(PlayGenreRequest action, IDispatcher dispatcher)
     {
-        var playlist = await _playlistCreator.CreateGenrePlaylist(action.Id);
+        var playlist = await _playlistCreator.CreateGenrePlaylist(action.Genre, action.GroupingId);
         dispatcher.Dispatch(new PlaylistStartRequest(playlist));
     }
 

@@ -96,6 +96,11 @@ internal class ViewModelMapper : IViewModelMapper
         return new AlbumTrackLinkVM(dto.AlbumId, dto.TrackId, dto.DiscNo, dto.TrackNo, dto.DiscCount, dto.TrackCount);
     }
 
+    public GenreFullVM Map(GenreDTO dto)
+    {
+        return new GenreFullVM(dto.Genre, Map(dto.Grouping), dto.Artists.Select(Map).ToList());
+    }
+
     public GroupingVM Map(GroupingDTO dto)
     {
         return new GroupingVM(dto.Id, dto.Name, dto.IsUsed);

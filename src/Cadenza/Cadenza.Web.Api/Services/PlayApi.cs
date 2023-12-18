@@ -26,9 +26,9 @@ internal class PlayApi : IPlayApi
         return await _apiHelper.Get<List<int>>(_settings.PlayArtist, id);
     }
 
-    public async Task<List<int>> PlayGenre(string id)
+    public async Task<List<int>> PlayGenre(string genre, int groupingId)
     {
-        return await _apiHelper.Get<List<int>>(_settings.PlayGenre, id);
+        return await _apiHelper.Get<List<int>>($"{_settings.PlayGenre}?genre={genre}&groupingId={groupingId}");
     }
 
     public async Task<List<int>> PlayGrouping(int id)

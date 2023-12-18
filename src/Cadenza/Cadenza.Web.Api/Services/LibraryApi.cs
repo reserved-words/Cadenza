@@ -25,10 +25,11 @@ internal class LibraryApi : ILibraryApi
         return _mapper.Map(artist);
     }
 
-    public async Task<List<ArtistVM>> GetArtistsByGenre(string id)
+    public async Task<GenreFullVM> GetGenre(string genre, int groupingId)
     {
-        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GenreArtists, id);
-        return artists.Select(a => _mapper.Map(a)).ToList();
+        var url = $"{_settings.Genre}?genre={genre}&groupingId={groupingId}";
+        var dto = await _apiHelper.Get<GenreDTO>(url);
+        return _mapper.Map(dto);
     }
 
     public async Task<List<ArtistVM>> GetArtistsByGrouping(int id)

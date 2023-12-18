@@ -28,9 +28,9 @@ internal class Play : IPlay
         return await _sql.Query<int>(new { Id = id, LogRequest = true });
     }
 
-    public async Task<List<int>> GetGenreTrackIds(string genre)
+    public async Task<List<int>> GetGenreTrackIds(string genre, int groupingId)
     {
-        return await _sql.Query<int>(new { Genre = genre, LogRequest = true });
+        return await _sql.Query<int>(new { Genre = genre, GroupingId = groupingId, LogRequest = true });
     }
 
     public async Task<List<int>> GetGroupingTrackIds(int id)

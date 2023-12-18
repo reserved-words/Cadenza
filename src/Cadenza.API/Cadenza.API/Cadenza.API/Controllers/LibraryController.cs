@@ -35,10 +35,10 @@ public class LibraryController : ControllerBase
         return await _repository.GetFullArtist(id, includeAlbumsByOtherArtists);
     }
 
-    [HttpGet("Artists/Genre/{id}")]
-    public async Task<List<ArtistDTO>> GenreArtists(string id)
+    [HttpGet("Genre")]
+    public async Task<GenreDTO> Genre(string genre, int groupingId)
     {
-        return await _repository.GetArtistsByGenre(id);
+        return await _repository.GetGenre(genre, groupingId);
     }
 
     [HttpGet("Artists/Grouping/{id}")]

@@ -6,7 +6,7 @@ public interface IPlaylistCreator
 {
     Task<PlaylistDefinition> CreateAlbumPlaylist(int id, int startTrackId);
     Task<PlaylistDefinition> CreateArtistPlaylist(int id);
-    Task<PlaylistDefinition> CreateGenrePlaylist(string id);
+    Task<PlaylistDefinition> CreateGenrePlaylist(string genre, int groupingId);
     Task<PlaylistDefinition> CreateGroupingPlaylist(GroupingVM grouping);
     Task<PlaylistDefinition> CreateLibraryPlaylist();
     Task<PlaylistDefinition> CreateTagPlaylist(string id);

@@ -4,7 +4,7 @@ public interface ILibraryApi
 {
     Task<AlbumVM> GetAlbum(int id);
     Task<ArtistVM> GetArtist(int id);
-    Task<List<ArtistVM>> GetArtistsByGenre(string id);
+    Task<GenreFullVM> GetGenre(string genre, int groupingId);
     Task<List<ArtistVM>> GetArtistsByGrouping(int id);
     Task<AlbumFullVM> GetFullAlbum(int id);
     Task<ArtistFullVM> GetFullArtist(int id, bool includeAlbumsByOtherArtists);

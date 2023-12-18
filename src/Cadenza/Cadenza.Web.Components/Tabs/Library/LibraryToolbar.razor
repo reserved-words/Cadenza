@@ -53,7 +53,7 @@
                 Dispatcher.Dispatch(new PlayGroupingRequest(new GroupingVM(int.Parse(Id), Name, true)));
                 break;
             case PlayerItemType.Genre:
-                Dispatcher.Dispatch(new PlayGenreRequest(Id));
+                Dispatcher.Dispatch(new PlayGenreRequest(Name, int.Parse(Id)));
                 break;
             case PlayerItemType.Tag:
                 Dispatcher.Dispatch(new PlayTagRequest(Id));

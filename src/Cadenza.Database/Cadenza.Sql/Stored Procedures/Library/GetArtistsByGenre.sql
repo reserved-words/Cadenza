@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [Library].[GetArtistsByGenre]
-	@Genre NVARCHAR(100)
+	@Genre NVARCHAR(100),
+	@GroupingId INT
 AS
 BEGIN
 
@@ -15,5 +16,7 @@ BEGIN
 		[Admin].[Groupings] GRP ON GRP.[Id] = ART.[GroupingId]
 	WHERE
 		ART.[Genre] = @Genre
+	AND
+		ART.[GroupingId] = @GroupingId
 
 END

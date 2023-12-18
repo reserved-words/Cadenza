@@ -5,13 +5,15 @@ namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class LibraryRepository : ILibraryRepository
 {
+    private readonly IAdmin _admin;
     private readonly ILibraryMapper _mapper;
     private readonly ILibrary _library;
 
-    public LibraryRepository(ILibraryMapper mapper, ILibrary library)
+    public LibraryRepository(ILibraryMapper mapper, ILibrary library, IAdmin admin)
     {
         _mapper = mapper;
         _library = library;
+        _admin = admin;
     }
 
     public async Task<AlbumDTO> GetAlbum(int id)
@@ -52,7 +54,6 @@ internal class LibraryRepository : ILibraryRepository
 
     public async Task<ArtistFullDTO> GetFullArtist(int id, bool includeAlbumsByOtherArtists)
     {
-
         var artist = await _library.GetFullArtist(id);
         var mappedArtist = _mapper.MapArtist(artist);
 
@@ -72,10 +73,20 @@ internal class LibraryRepository : ILibraryRepository
         return mappedArtist;
     }
 
-    public async Task<List<ArtistDTO>> GetArtistsByGenre(string genre)
+    public async Task<GenreDTO> GetGenre(string genre, int groupingId)
     {
-        var artists = await _library.GetArtistsByGenre(genre);
-        return artists.Select(_mapper.MapArtist).ToList();
+        // TODO: Don't need to fetch all groupings here, add proc that returns a single grouping
+        var groupings = await _admin.GetGroupings();
+        var grouping = groupings.Single(g => g.Id == groupingId);
+        var artists = await _library.GetArtistsByGenre(genre, groupingId);
+
+        // TODO: Move to mapper
+        return new GenreDTO
+        {
+            Genre = genre,
+            Grouping = new GroupingDTO { Id = grouping.Id, Name = grouping.Name, IsUsed = grouping.IsUsed },
+            Artists = artists.Select(_mapper.MapArtist).ToList()
+        };
     }
 
     public async Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId)

@@ -2,12 +2,13 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Genre" Id="@Genre" Name="@Genre">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Genre" Id="@Genre.Grouping.Id.ToString()" Name="@Genre.Genre">
         <SubGrid>
 
             <SubGridColumn sm="4" md="3">
                 <SubGridRow RowHeight="@RowHeight.Fixed">
-                    <GenreDetail Id="@Genre" />
+                    <GenreDetail Genre="@Genre.Genre"
+                                 Grouping="@Genre.Grouping" />
                 </SubGridRow>
             </SubGridColumn>
 

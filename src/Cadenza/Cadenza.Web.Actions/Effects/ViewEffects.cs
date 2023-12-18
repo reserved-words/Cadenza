@@ -26,7 +26,7 @@ public class ViewEffects
         }
         else if (action.Type == PlayerItemType.Genre)
         {
-            dispatcher.Dispatch(new FetchViewGenreRequest(action.Id));
+            dispatcher.Dispatch(new FetchViewGenreRequest(action.Name, int.Parse(action.Id)));
         }
         else if (action.Type == PlayerItemType.Grouping)
         {
@@ -54,7 +54,7 @@ public class ViewEffects
         }
         if (action.Type != PlayerItemType.Genre)
         {
-            dispatcher.Dispatch(new FetchViewGenreResult(null, null));
+            dispatcher.Dispatch(new FetchViewGenreResult(null));
         }
         if (action.Type != PlayerItemType.Grouping)
         {

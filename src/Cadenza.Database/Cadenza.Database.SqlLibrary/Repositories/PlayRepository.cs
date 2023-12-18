@@ -26,9 +26,9 @@ internal class PlayRepository : IPlayRepository
         return await _play.GetArtistTrackIds(id);
     }
 
-    public async Task<List<int>> PlayGenre(string id)
+    public async Task<List<int>> PlayGenre(string genre, int groupingId)
     {
-        return await _play.GetGenreTrackIds(id);
+        return await _play.GetGenreTrackIds(genre, groupingId);
     }
 
     public async Task<List<int>> PlayGrouping(int id)

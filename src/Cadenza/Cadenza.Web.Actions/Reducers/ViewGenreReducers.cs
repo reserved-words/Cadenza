@@ -12,7 +12,6 @@ public static class ViewGenreReducers
     public static ViewGenreState ReduceFetchViewGenreResult(ViewGenreState state, FetchViewGenreResult action) => state with
     {
         IsLoading = false,
-        Genre = action.Genre,
-        Artists = action.Artists
+        Genre = action.Genre
     };
 }

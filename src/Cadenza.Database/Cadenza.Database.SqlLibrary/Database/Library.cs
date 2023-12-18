@@ -92,8 +92,8 @@ internal class Library : ILibrary
         return await _sql.Query<GetArtistsByGroupingResult>(new { GroupingId = groupingId });
     }
 
-    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre)
+    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre, int groupingId)
     {
-        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre });
+        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre, GroupingId = groupingId });
     }
 }

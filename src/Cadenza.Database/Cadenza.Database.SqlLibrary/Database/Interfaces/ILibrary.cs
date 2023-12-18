@@ -25,5 +25,5 @@ internal interface ILibrary
     Task<List<GetAlbumsFeaturingArtistResult>> GetAlbumsFeaturingArtist(int artistId);
 
     Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(int groupingId);
-    Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre);
+    Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre, int groupingId);
 }

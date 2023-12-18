@@ -17,5 +17,5 @@ public interface ILibraryRepository
     Task<TrackFullDTO> GetTrackFull(int id);
 
     Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId);
-    Task<List<ArtistDTO>> GetArtistsByGenre(string genre);
+    Task<GenreDTO> GetGenre(string genre, int groupingId);
 }
