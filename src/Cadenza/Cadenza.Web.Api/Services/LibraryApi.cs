@@ -44,6 +44,11 @@ internal class LibraryApi : ILibraryApi
         return _mapper.Map(track);
     }
 
+    public async Task<List<string>> GetGroupings()
+    {
+        return await _apiHelper.Get<List<string>>(_settings.Groupings);
+    }
+
     public async Task<List<TaggedItemVM>> GetTag(string id)
     {
         var items = await _apiHelper.Get<List<TaggedItemDTO>>(_settings.Tag, id);

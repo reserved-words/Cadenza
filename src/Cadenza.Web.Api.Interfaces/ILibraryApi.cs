@@ -7,6 +7,7 @@ public interface ILibraryApi
     Task<AlbumFullVM> GetFullAlbum(int id);
     Task<ArtistFullVM> GetFullArtist(int id, bool includeAlbumsByOtherArtists);
     Task<TrackFullVM> GetFullTrack(int id);
+    Task<List<string>> GetGroupings();
     Task<List<TaggedItemVM>> GetTag(string id);
     Task<TrackDetailsVM> GetTrack(int id);
 }

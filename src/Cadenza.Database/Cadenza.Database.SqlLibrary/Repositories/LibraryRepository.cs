@@ -5,21 +5,13 @@ namespace Cadenza.Database.SqlLibrary.Repositories;
 
 internal class LibraryRepository : ILibraryRepository
 {
-    private readonly IAdmin _admin;
     private readonly ILibraryMapper _mapper;
     private readonly ILibrary _library;
 
-    public LibraryRepository(ILibraryMapper mapper, ILibrary library, IAdmin admin)
+    public LibraryRepository(ILibraryMapper mapper, ILibrary library)
     {
         _mapper = mapper;
         _library = library;
-        _admin = admin;
-    }
-
-    public async Task<AlbumDTO> GetAlbum(int id)
-    {
-        var album = await _library.GetAlbum(id);
-        return _mapper.MapAlbum(album);
     }
 
     public async Task<AlbumFullDTO> GetAlbumFull(int id)
@@ -34,22 +26,6 @@ internal class LibraryRepository : ILibraryRepository
         mappedAlbum.Discs = mappedDiscs;
 
         return mappedAlbum;
-    }
-
-    public async Task<List<string>> GetAlbumTrackSourceIds(int albumId)
-    {
-        return await _library.GetAlbumTrackSourceIds(albumId);
-    }
-
-    public async Task<List<string>> GetAllTracks(LibrarySource source)
-    {
-        return await _library.GetTrackSourceIds(source);
-    }
-
-    public async Task<ArtistDTO> GetArtist(int id)
-    {
-        var artist = await _library.GetArtist(id);
-        return _mapper.MapArtist(artist);
     }
 
     public async Task<ArtistFullDTO> GetFullArtist(int id, bool includeAlbumsByOtherArtists)
@@ -85,11 +61,6 @@ internal class LibraryRepository : ILibraryRepository
         return artists.Select(_mapper.MapArtist).ToList();
     }
 
-    public async Task<List<string>> GetArtistTrackSourceIds(int artistId)
-    {
-        return await _library.GetArtistTrackSourceIds(artistId);
-    }
-
     public async Task<List<TaggedItemDTO>> GetTaggedItems(string tag)
     {
         var items = await _library.GetTaggedItems(tag);
@@ -108,8 +79,8 @@ internal class LibraryRepository : ILibraryRepository
         return _mapper.MapTrack(track);
     }
 
-    public async Task<string> GetTrackIdFromSource(int trackId)
+    public async Task<List<string>> GetGroupings()
     {
-        return await _library.GetTrackIdFromSource(trackId);
+        return await _library.GetGroupings();
     }
 }

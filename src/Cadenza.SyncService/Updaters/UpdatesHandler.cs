@@ -4,12 +4,12 @@ namespace Cadenza.SyncService.Updaters;
 
 internal class UpdatesHandler : IService
 {
-    private readonly ILibraryRepository _musicRepository;
+    private readonly ISyncRepository _musicRepository;
     private readonly IQueueRepository _queueRepository;
     private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
 
-    public UpdatesHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger)
+    public UpdatesHandler(ISyncRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger)
     {
         _musicRepository = musicRepository;
         _queueRepository = queueRepository;

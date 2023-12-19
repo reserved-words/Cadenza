@@ -96,4 +96,10 @@ internal class Library : ILibrary
     {
         return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre, Grouping = grouping });
     }
+
+    public async Task<List<string>> GetGroupings()
+    {
+        var groupings = await _sql.Query<GetGroupingsResult>(null);
+        return groupings.Select(g => g.Grouping).ToList();
+    }
 }

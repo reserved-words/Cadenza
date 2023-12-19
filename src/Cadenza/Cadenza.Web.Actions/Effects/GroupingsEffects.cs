@@ -2,19 +2,17 @@
 
 public class GroupingsEffects
 {
-    // TODO: Fetch used groupings
+    private readonly ILibraryApi _api;
 
-    //private readonly IAdminApi _api;
+    public GroupingsEffects(ILibraryApi api)
+    {
+        _api = api;
+    }
 
-    //public GroupingsEffects(IAdminApi api)
-    //{
-    //    _api = api;
-    //}
-
-    //[EffectMethod]
-    //public async Task HandleFetchGroupingsRequest(FetchGroupingsRequest action, IDispatcher dispatcher)
-    //{
-    //    var result = await _api.GetGroupingOptions();
-    //    dispatcher.Dispatch(new FetchGroupingsResult(result));
-    //}
+    [EffectMethod]
+    public async Task HandleFetchGroupingsRequest(FetchGroupingsRequest action, IDispatcher dispatcher)
+    {
+        var result = await _api.GetGroupings();
+        dispatcher.Dispatch(new FetchGroupingsResult(result));
+    }
 }

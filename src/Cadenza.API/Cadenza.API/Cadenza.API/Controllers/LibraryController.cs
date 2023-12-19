@@ -32,6 +32,12 @@ public class LibraryController : ControllerBase
         return await _repository.GetArtistsByGenre(split.Grouping, split.Genre);
     }
 
+    [HttpGet("Groupings")]
+    public async Task<List<string>> Groupings()
+    {
+        return await _repository.GetGroupings();
+    }
+
     [HttpGet("Artists/Grouping/{grouping}")]
     public async Task<List<ArtistDTO>> GroupingArtists(string grouping)
     {

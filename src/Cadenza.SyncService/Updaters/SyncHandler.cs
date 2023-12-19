@@ -6,15 +6,15 @@ internal class SyncHandler : IService
 {
     private readonly ILogger<UpdatesHandler> _logger;
     private readonly IEnumerable<ISourceRepository> _sources;
-    private readonly ILibraryRepository _libraryRepository;
+    private readonly ISyncRepository _musicRepository;
     private readonly IQueueRepository _queueRepository;
     private readonly IUpdateRepository _updateRepository;
 
-    public SyncHandler(ILibraryRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger, IUpdateRepository updateRepository)
+    public SyncHandler(ISyncRepository musicRepository, IQueueRepository queueRepository, IEnumerable<ISourceRepository> spurces, ILogger<UpdatesHandler> logger, IUpdateRepository updateRepository)
     {
         _sources = spurces;
         _logger = logger;
-        _libraryRepository = musicRepository;
+        _musicRepository = musicRepository;
         _queueRepository = queueRepository;
         _updateRepository = updateRepository;
     }
@@ -27,7 +27,7 @@ internal class SyncHandler : IService
         {
             await ProcessRemovalRequests(repository);
 
-            var dbTracks = await _libraryRepository.GetAllTracks(repository.Source);
+            var dbTracks = await _musicRepository.GetAllTracks(repository.Source);
             var sourceTracks = await repository.GetAllTracks();
 
             await RemoveDbTracksThatAreNotInSource(dbTracks, sourceTracks);

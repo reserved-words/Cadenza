@@ -48,6 +48,7 @@ public static class _Startup
             .AddTransient<IPlayRepository, PlayRepository>()
             .AddTransient<IQueueRepository, QueueRepository>()
             .AddTransient<ISearchRepository, SearchRepository>()
+            .AddTransient<ISyncRepository, SyncRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 
