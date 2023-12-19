@@ -6,6 +6,7 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 internal class UpdateMapper : IUpdateMapper
 {
     private const string DefaultGenre = "None";
+    private const string DefaultGrouping = "None";
 
     private readonly INameComparer _nameComparer;
 
@@ -36,7 +37,7 @@ internal class UpdateMapper : IUpdateMapper
         {
             Name = track.Album.ArtistName,
             CompareName = _nameComparer.GetCompareName(track.Album.ArtistName),
-            GroupingId = 0,
+            Grouping = DefaultGrouping,
             Genre = DefaultGenre
         };
     }
@@ -98,22 +99,6 @@ internal class UpdateMapper : IUpdateMapper
             TagList = album.TagList
         };
     }
-
-    //public UpdateArtistParameter MapArtistToUpdate(int id, GetArtistForUpdateResult artist)
-    //{
-    //    return new UpdateArtistParameter
-    //    {
-    //        Id = id,
-    //        ImageMimeType = artist.ImageMimeType,
-    //        ImageContent = artist.ImageContent,
-    //        GroupingId = artist.GroupingId,
-    //        Genre = artist.Genre,
-    //        City = artist.City,
-    //        State = artist.State,
-    //        Country = artist.Country,
-    //        TagList = artist.TagList
-    //    };
-    //}
 
     public UpdateTrackParameter MapTrackToUpdate(int id, GetTrackForUpdateResult track)
     {

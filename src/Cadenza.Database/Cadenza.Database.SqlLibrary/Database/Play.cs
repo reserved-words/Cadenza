@@ -1,5 +1,4 @@
 ﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
-using Dapper;
 
 namespace Cadenza.Database.SqlLibrary.Database;
 
@@ -28,14 +27,14 @@ internal class Play : IPlay
         return await _sql.Query<int>(new { Id = id, LogRequest = true });
     }
 
-    public async Task<List<int>> GetGenreTrackIds(string genre, int groupingId)
+    public async Task<List<int>> GetGenreTrackIds(string genre, string grouping)
     {
-        return await _sql.Query<int>(new { Genre = genre, GroupingId = groupingId, LogRequest = true });
+        return await _sql.Query<int>(new { Genre = genre, Grouping = grouping, LogRequest = true });
     }
 
-    public async Task<List<int>> GetGroupingTrackIds(int id)
+    public async Task<List<int>> GetGroupingTrackIds(string grouping)
     {
-        return await _sql.Query<int>(new { Id = id, LogRequest = true });
+        return await _sql.Query<int>(new { Grouping = grouping, LogRequest = true });
     }
 
     public async Task<List<int>> GetTagTrackIds(string tag)

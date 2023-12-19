@@ -1,10 +1,10 @@
 ﻿
 <ItemCard>
-    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Grouping.Id" Name="@Genre" />
+    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Grouping" Name="@Genre" />
     <GroupingLink Typo="@Typo.body1" Grouping="@Grouping" />
 </ItemCard>
 
 @code {
     [Parameter] public string Genre { get; set; }
-    [Parameter] public GroupingVM Grouping { get; set; }
+    [Parameter] public string Grouping { get; set; }
 }

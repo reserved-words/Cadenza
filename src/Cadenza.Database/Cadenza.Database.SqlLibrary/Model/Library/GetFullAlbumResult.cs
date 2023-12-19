@@ -10,7 +10,6 @@ public class GetFullAlbumResult
     public string TagList { get; set; }
     public int ArtistId { get; set; }
     public string ArtistName { get; set; }
-    public int ArtistGroupingId { get; set; }
-    public string ArtistGroupingName { get; set; }
+    public string ArtistGrouping { get; set; }
     public string ArtistGenre { get; set; }
 }

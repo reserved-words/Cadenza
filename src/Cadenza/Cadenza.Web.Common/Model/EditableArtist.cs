@@ -5,7 +5,7 @@ public class EditableArtist
     public int Id { get; init; }
     public string Name { get; init; }
 
-    public GroupingVM Grouping { get; set; }
+    public string Grouping { get; set; }
     public string Genre { get; set; }
     public string City { get; set; }
     public string State { get; set; }

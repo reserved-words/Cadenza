@@ -33,7 +33,7 @@ internal class ViewModelMapper : IViewModelMapper
         {
             Id = dto.Id,
             Genre = dto.Genre,
-            Grouping = Map(dto.Grouping),
+            Grouping = dto.Grouping,
             Name = dto.Name
         };
     }
@@ -98,12 +98,7 @@ internal class ViewModelMapper : IViewModelMapper
 
     public GenreFullVM Map(GenreDTO dto)
     {
-        return new GenreFullVM(dto.Genre, Map(dto.Grouping), dto.Artists.Select(Map).ToList());
-    }
-
-    public GroupingVM Map(GroupingDTO dto)
-    {
-        return new GroupingVM(dto.Id, dto.Name, dto.IsUsed);
+        return new GenreFullVM(dto.Genre, dto.Grouping, dto.Artists.Select(Map).ToList());
     }
 
     private IReadOnlyCollection<string> Map(TagsDTO dto)
@@ -162,7 +157,7 @@ internal class ViewModelMapper : IViewModelMapper
         return new ArtistDetailsVM
         {
             Name = dto.Name,
-            Grouping = Map(dto.Grouping),
+            Grouping = dto.Grouping,
             Genre = dto.Genre,
             Id = dto.Id,
             City = dto.City,

@@ -87,13 +87,13 @@ internal class Library : ILibrary
         return await _sql.Query<GetAlbumsFeaturingArtistResult>(new { ArtistId = artistId });
     }
 
-    public async Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(int groupingId)
+    public async Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(string grouping)
     {
-        return await _sql.Query<GetArtistsByGroupingResult>(new { GroupingId = groupingId });
+        return await _sql.Query<GetArtistsByGroupingResult>(new { Grouping = grouping });
     }
 
-    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre, int groupingId)
+    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre, string grouping)
     {
-        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre, GroupingId = groupingId });
+        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre, Grouping = grouping });
     }
 }

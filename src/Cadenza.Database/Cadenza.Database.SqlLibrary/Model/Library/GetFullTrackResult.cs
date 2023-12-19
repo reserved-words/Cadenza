@@ -19,8 +19,7 @@ public class GetFullTrackResult
 
     public int ArtistId { get; set; }
     public string ArtistName { get; set; }
-    public int ArtistGroupingId { get; set; }
-    public string ArtistGroupingName { get; set; }
+    public string ArtistGrouping { get; set; }
     public string ArtistGenre { get; set; }
     public string ArtistCity { get; set; }
     public string ArtistState { get; set; }
@@ -36,8 +35,7 @@ public class GetFullTrackResult
 
     public int AlbumArtistId { get; set; }
     public string AlbumArtistName { get; set; }
-    public int AlbumArtistGroupingId { get; set; }
-    public string AlbumArtistGroupingName { get; set; }
+    public string AlbumArtistGrouping { get; set; }
     public string AlbumArtistGenre { get; set; }
     public string AlbumArtistCity { get; set; }
     public string AlbumArtistState { get; set; }

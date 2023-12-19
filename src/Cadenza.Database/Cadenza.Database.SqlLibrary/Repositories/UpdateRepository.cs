@@ -103,14 +103,10 @@ internal class UpdateRepository : IUpdateRepository
     {
         var artistToUpdate = await _update.GetArtistForUpdate(update.ArtistId);
 
-        // TODO - just pass name to the parameter and sort getting ID within the stored proc
-        var groupings = await _admin.GetGroupings();
-        var grouping = groupings.Single(g => g.Name == update.GroupingName);
-
         var artistUpdateParameter = new UpdateArtistParameter
         {
             Id = update.ArtistId,
-            GroupingId = grouping.Id,
+            Grouping = update.Grouping,
             Genre = update.Genre,
             City = update.City,
             State = update.State,

@@ -12,7 +12,7 @@ public class ViewGroupingEffects
     [EffectMethod]
     public async Task HandleFetchViewGroupingRequest(FetchViewGroupingRequest action, IDispatcher dispatcher)
     {
-        var artists = await _api.GetArtistsByGrouping(action.Grouping.Id);
+        var artists = await _api.GetArtistsByGrouping(action.Grouping);
         var artistsByGenre = ToGroupedDictionary(artists, a => a.Genre ?? "None");
         var genres = artistsByGenre.Keys.ToList();
         dispatcher.Dispatch(new FetchViewGroupingResult(action.Grouping, genres));

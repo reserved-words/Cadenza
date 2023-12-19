@@ -25,16 +25,16 @@ internal class LibraryApi : ILibraryApi
         return _mapper.Map(artist);
     }
 
-    public async Task<GenreFullVM> GetGenre(string genre, int groupingId)
+    public async Task<GenreFullVM> GetGenre(string grouping, string genre)
     {
-        var url = $"{_settings.Genre}?genre={genre}&groupingId={groupingId}";
+        var url = $"{_settings.Genre}?grouping={grouping}&genre={genre}";
         var dto = await _apiHelper.Get<GenreDTO>(url);
         return _mapper.Map(dto);
     }
 
-    public async Task<List<ArtistVM>> GetArtistsByGrouping(int id)
+    public async Task<List<ArtistVM>> GetArtistsByGrouping(string grouping)
     {
-        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, id);
+        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, grouping);
         return artists.Select(a => _mapper.Map(a)).ToList();
     }
 

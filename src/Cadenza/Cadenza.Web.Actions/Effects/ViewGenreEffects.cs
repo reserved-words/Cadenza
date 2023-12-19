@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class ViewGenreEffects
 {
@@ -12,7 +14,8 @@ public class ViewGenreEffects
     [EffectMethod]
     public async Task HandleFetchViewGenreRequest(FetchViewGenreRequest action, IDispatcher dispatcher)
     {
-        var genre = await _api.GetGenre(action.Genre, action.GroupingId);
-        dispatcher.Dispatch(new FetchViewGenreResult(genre));
+        (var grouping, var genre) = action.Id.SplitGenreId();
+        var vm = await _api.GetGenre(grouping, genre);
+        dispatcher.Dispatch(new FetchViewGenreResult(vm));
     }
 }

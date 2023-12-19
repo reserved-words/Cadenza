@@ -28,17 +28,17 @@ public class PlayController : ControllerBase
     }
 
     [HttpGet("Genre")]
-    public async Task<List<int>> Genre(string genre, int groupingId)
+    public async Task<List<int>> Genre(string genre, string grouping)
     {
-        var tracks = await _repository.PlayGenre(genre, groupingId);
+        var tracks = await _repository.PlayGenre(genre, grouping);
         _shuffler.Shuffle(tracks);
         return tracks;
     }
 
     [HttpGet("Grouping/{id}")]
-    public async Task<List<int>> Grouping(int id)
+    public async Task<List<int>> Grouping(string grouping)
     {
-        var tracks = await _repository.PlayGrouping(id);
+        var tracks = await _repository.PlayGrouping(grouping);
         _shuffler.Shuffle(tracks);
         return tracks;
     }

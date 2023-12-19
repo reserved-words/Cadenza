@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.State.Actions;
+﻿namespace Cadenza.Web.State.Actions;
 
 public record FetchGroupingsRequest();
-public record FetchGroupingsResult(IReadOnlyCollection<GroupingVM> Result);
+public record FetchGroupingsResult(IReadOnlyCollection<string> Result);

@@ -36,15 +36,15 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Genre")]
-    public async Task<GenreDTO> Genre(string genre, int groupingId)
+    public async Task<GenreDTO> Genre(string genre, string grouping)
     {
-        return await _repository.GetGenre(genre, groupingId);
+        return await _repository.GetGenre(genre, grouping);
     }
 
-    [HttpGet("Artists/Grouping/{id}")]
-    public async Task<List<ArtistDTO>> GroupingArtists(int id)
+    [HttpGet("Artists/Grouping/{grouping}")]
+    public async Task<List<ArtistDTO>> GroupingArtists(string grouping)
     {
-        return await _repository.GetArtistsByGrouping(id);
+        return await _repository.GetArtistsByGrouping(grouping);
     }
 
     [HttpGet("Tag/{id}")]

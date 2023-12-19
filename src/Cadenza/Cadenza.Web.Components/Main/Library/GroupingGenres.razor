@@ -5,7 +5,7 @@
                   Items="@Genres">
             <RowTemplate>
                 <MudTd>
-                    <GenreLink Typo="@Typo.body1" Genre="@context" GroupingId="@GroupingId" />
+                    <GenreLink Typo="@Typo.body1" Genre="@context" Grouping="@Grouping" />
                 </MudTd>
             </RowTemplate>
         </AppTable>
@@ -13,6 +13,6 @@
 </AppCardScrollContainer>
 
 @code {
-    [Parameter] public int GroupingId { get; set; }
+    [Parameter] public string Grouping { get; set; }
     [Parameter] public IReadOnlyCollection<string> Genres { get; set; }
 }

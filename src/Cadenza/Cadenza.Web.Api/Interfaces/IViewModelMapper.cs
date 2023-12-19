@@ -7,7 +7,6 @@ internal interface IViewModelMapper
     ArtistVM Map(ArtistDTO dto);
     ArtistFullVM Map(ArtistFullDTO dto);
     GenreFullVM Map(GenreDTO dto);
-    GroupingVM Map(GroupingDTO dto);
     RecentAlbumVM Map(RecentAlbumDTO dto);
     SearchItemVM Map(SearchItemDTO dto);
     TaggedItemVM Map(TaggedItemDTO dto);

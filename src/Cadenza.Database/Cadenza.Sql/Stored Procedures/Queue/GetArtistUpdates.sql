@@ -6,7 +6,7 @@ BEGIN
 	SELECT 
 		SNC.[ArtistId],
 		ART.[Name],
-		GRP.[Name] [Grouping],
+		ART.[Grouping],
 		ART.[Genre],
 		ART.[City],
 		ART.[State],
@@ -18,8 +18,6 @@ BEGIN
 		[Queue].[ArtistSync] SNC
 	INNER JOIN
 		[Library].[Artists] ART ON SNC.[ArtistId] = ART.[Id]
-	INNER JOIN
-		[Admin].[Groupings] GRP ON GRP.[Id] = ART.[GroupingId]
 	LEFT JOIN
 		[Library].[vw_ArtistTags] TAG ON TAG.[ArtistId] = ART.[Id]
 	LEFT JOIN

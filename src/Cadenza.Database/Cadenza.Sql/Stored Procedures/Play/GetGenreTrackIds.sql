@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [Play].[GetGenreTrackIds]
 	@Genre NVARCHAR(100),
-	@GroupingId INT,
+	@Grouping NVARCHAR(50),
 	@LogRequest BIT
 AS
 BEGIN
 
 	IF @LogRequest = 1
 	BEGIN
-		EXECUTE [Play].[LogGenreRequest] @Genre, @GroupingId
+		EXECUTE [Play].[LogGenreRequest] @Genre, @Grouping
 	END
 
 	SELECT 
@@ -19,6 +19,6 @@ BEGIN
 	WHERE
 		ART.[Genre] = @Genre
 	AND
-		ART.[GroupingId] = @GroupingId
+		ART.[Grouping] = @Grouping
 
 END

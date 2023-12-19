@@ -6,5 +6,5 @@ public class EditArtistDetailsBase : ComponentBase
 
     [Parameter] public EditableArtist Model { get; set; }
 
-    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings;
+    protected IReadOnlyCollection<string> Groupings => GroupingsState.Value.Groupings;
 }

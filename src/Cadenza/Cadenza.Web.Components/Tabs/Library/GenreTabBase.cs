@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs.Library;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Components.Tabs.Library;
 
 public class GenreTabBase : FluxorComponent
 {
@@ -8,9 +10,12 @@ public class GenreTabBase : FluxorComponent
     public GenreFullVM Genre => ViewGenreState.Value.Genre;
     public IReadOnlyCollection<ArtistVM> Artists => ViewGenreState.Value.Genre.Artists;
 
+    protected string GenreId => (Genre.Grouping, Genre.Genre).GenreId();
+    protected string GenreName => Genre.Genre;
+
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Genre.Grouping.Id, Genre.Grouping.Name),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Genre.Grouping.Id, Genre.Genre)
+        new LibraryBreadcrumb(PlayerItemType.Grouping, Genre.Grouping, Genre.Grouping),
+        new LibraryBreadcrumb(PlayerItemType.Genre, GenreId, GenreName)
     };
 }

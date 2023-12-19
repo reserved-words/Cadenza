@@ -1,4 +1,4 @@
-﻿using Cadenza.Web.Common.ViewModel;
+﻿using Cadenza.Common;
 
 namespace Cadenza.Web.Core.Services;
 
@@ -73,11 +73,11 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateGroupingPlaylist(GroupingVM grouping)
+    public async Task<PlaylistDefinition> CreateGroupingPlaylist(string grouping)
     {
-        var tracks = await _playApi.PlayGrouping(grouping.Id);
+        var tracks = await _playApi.PlayGrouping(grouping);
 
-        var playlistId = new PlaylistId(grouping.Id.ToString(), PlaylistType.Grouping, grouping.Name);
+        var playlistId = new PlaylistId(grouping, PlaylistType.Grouping, grouping);
 
         return new PlaylistDefinition
         {
@@ -86,11 +86,11 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateGenrePlaylist(string genre, int groupingId)
+    public async Task<PlaylistDefinition> CreateGenrePlaylist(string grouping, string genre)
     {
-        var tracks = await _playApi.PlayGenre(genre, groupingId);
+        var tracks = await _playApi.PlayGenre(grouping, genre);
 
-        var playlistId = new PlaylistId(groupingId.ToString(), PlaylistType.Genre, genre);
+        var playlistId = new PlaylistId((grouping, genre).GenreId(), PlaylistType.Genre, genre);
 
         return new PlaylistDefinition
         {

@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.Common
+
 <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Track" Id="@Model.Track.Id.ToString()" Name="@Model.Track.Title">
     <SubGrid>
 
@@ -93,8 +94,8 @@
 
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Model.AlbumArtist.Grouping.Id, Model.AlbumArtist.Grouping.Name),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Model.AlbumArtist.Grouping.Id, Model.AlbumArtist.Genre),
+        new LibraryBreadcrumb(PlayerItemType.Grouping, Model.AlbumArtist.Grouping, Model.AlbumArtist.Grouping),
+        new LibraryBreadcrumb(PlayerItemType.Genre, (Model.AlbumArtist.Grouping, Model.AlbumArtist.Genre).GenreId(), Model.AlbumArtist.Genre),
         new LibraryBreadcrumb(PlayerItemType.Artist, Model.AlbumArtist.Id, Model.AlbumArtist.Name),
         new LibraryBreadcrumb(PlayerItemType.Album, Model.Album.Id, Model.Album.Title),
         new LibraryBreadcrumb(PlayerItemType.Track, Model.Track.Id, Model.Track.Title)

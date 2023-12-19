@@ -4,7 +4,7 @@ public class UpdatedArtistPropertiesDTO
 {
     public int ArtistId { get; set; }
 
-    public string GroupingName { get; set; }
+    public string Grouping { get; set; }
 
     public string Genre { get; set; }
 

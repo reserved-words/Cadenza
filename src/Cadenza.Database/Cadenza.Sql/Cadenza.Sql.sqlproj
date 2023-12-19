@@ -88,7 +88,6 @@
     <Build Include="Tables\Library\TrackTags.sql" />
     <Build Include="Tables\Admin\Sources.sql" />
     <Build Include="Tables\Admin\ReleaseTypes.sql" />
-    <Build Include="Tables\Admin\Groupings.sql" />
     <Build Include="Tables\Library\Discs.sql" />
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
@@ -137,8 +136,6 @@
     <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
-    <Build Include="Stored Procedures\Admin\GetGroupings.sql" />
-    <None Include="SeedData\Groupings.sql" />
     <Build Include="Views\Library\vw_UsedTags.sql" />
     <Build Include="Tables\Admin\Settings.sql" />
     <Build Include="Stored Procedures\Play\GetAllTrackIds.sql" />

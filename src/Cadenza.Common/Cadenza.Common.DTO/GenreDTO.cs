@@ -2,7 +2,8 @@
 
 public class GenreDTO
 {
+    public string GenreId { get; set; }
     public string Genre { get; set; }
-    public GroupingDTO Grouping { get; set; }
+    public string Grouping { get; set; }
     public List<ArtistDTO> Artists { get; set; }
 }

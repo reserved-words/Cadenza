@@ -21,4 +21,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[IX_Scrobbles_TrackId]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f69568cc-7ba4-4f00-812d-27154035df92" ChangeDateTime="12/19/2023 13:35:17">
+    <Property Name="ElementName" Value="[History].[PlayedGenres].[GenreId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[History].[PlayedGenres]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Genre" />
+  </Operation>
 </Operations>

@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Actions.Effects;
 internal class PlayItemEffects
 {
     private readonly IPlaylistCreator _playlistCreator;
@@ -25,7 +27,8 @@ internal class PlayItemEffects
     [EffectMethod]
     public async Task HandlePlayGenreAction(PlayGenreRequest action, IDispatcher dispatcher)
     {
-        var playlist = await _playlistCreator.CreateGenrePlaylist(action.Genre, action.GroupingId);
+        (var grouping, var genre) = action.Id.SplitGenreId();
+        var playlist = await _playlistCreator.CreateGenrePlaylist(grouping, genre);
         dispatcher.Dispatch(new PlaylistStartRequest(playlist));
     }
 

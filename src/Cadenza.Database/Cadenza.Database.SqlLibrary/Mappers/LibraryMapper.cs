@@ -76,7 +76,7 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
+            Grouping = artist.Grouping,
             Genre = artist.Genre
         };
     }
@@ -87,7 +87,7 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
+            Grouping = artist.Grouping,
             Genre = artist.Genre,
             City = artist.City,
             State = artist.State,
@@ -104,7 +104,7 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
+            Grouping = artist.Grouping,
             Genre = artist.Genre
         };
     }
@@ -115,7 +115,7 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
+            Grouping = artist.Grouping,
             Genre = artist.Genre
         };
     }
@@ -162,7 +162,7 @@ internal class LibraryMapper : ILibraryMapper
             {
                 Id = track.ArtistId,
                 Name = track.ArtistName,
-                Grouping = MapArtistGrouping(track),
+                Grouping = track.ArtistGrouping,
                 Genre = track.ArtistGenre,
                 City = track.ArtistCity,
                 State = track.ArtistState,
@@ -184,7 +184,7 @@ internal class LibraryMapper : ILibraryMapper
             {
                 Id = track.AlbumArtistId,
                 Name = track.AlbumArtistName,
-                Grouping = MapAlbumArtistGrouping(track),
+                Grouping = track.AlbumArtistGrouping,
                 Genre = track.AlbumArtistGenre,
                 City = track.AlbumArtistCity,
                 State = track.AlbumArtistState,
@@ -200,76 +200,6 @@ internal class LibraryMapper : ILibraryMapper
                 DiscCount = track.DiscCount,
                 TrackCount = track.TrackCount
             }
-        };
-    }
-
-    private GroupingDTO MapGrouping(GetArtistsByGenreResult artist)
-    {
-        return new GroupingDTO
-        {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapGrouping(GetArtistResult artist)
-    {
-        return new GroupingDTO
-        {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapGrouping(GetFullArtistResult artist)
-    {
-        return new GroupingDTO
-        {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapGrouping(GetArtistsByGroupingResult artist)
-    {
-        return new GroupingDTO
-        {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapArtistGrouping(GetFullTrackResult track)
-    {
-        return new GroupingDTO
-        {
-            Id = track.ArtistGroupingId,
-            Name = track.ArtistGroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapAlbumArtistGrouping(GetFullAlbumResult album)
-    {
-        return new GroupingDTO
-        {
-            Id = album.ArtistGroupingId,
-            Name = album.ArtistGroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapAlbumArtistGrouping(GetFullTrackResult track)
-    {
-        return new GroupingDTO
-        {
-            Id = track.AlbumArtistGroupingId,
-            Name = track.AlbumArtistGroupingName,
-            IsUsed = true
         };
     }
 
@@ -292,7 +222,7 @@ internal class LibraryMapper : ILibraryMapper
             {
                 Id = album.ArtistId,
                 Name = album.ArtistName,
-                Grouping = MapAlbumArtistGrouping(album),
+                Grouping = album.ArtistGrouping,
                 Genre = album.ArtistGenre
             }
         };

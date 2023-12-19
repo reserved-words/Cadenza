@@ -4,7 +4,7 @@ public record ArtistDetailsVM
 {
     public int Id { get; init; }
     public string Name { get; init; }
-    public GroupingVM Grouping { get; init; }
+    public string Grouping { get; init; }
     public string Genre { get; init; }
     public string City { get; init; }
     public string State { get; init; }

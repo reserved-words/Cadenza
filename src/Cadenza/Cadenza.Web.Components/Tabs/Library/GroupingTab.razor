@@ -2,7 +2,7 @@
 
 @if (!Loading)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping.Id.ToString()" Name="@Grouping.Name">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping">
         <ChildContent>
             <SubGrid>
 
@@ -18,7 +18,7 @@
 
                         <MudDivider Class="xs-only" />
                         <GroupingGenres Genres="@Genres"
-                                        GroupingId="@Grouping.Id"/>
+                                        Grouping="@Grouping"/>
 
                     </SubGridRow>
                 </SubGridColumn>

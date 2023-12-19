@@ -21,7 +21,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         return new UpdatedArtistPropertiesDTO
         {
             ArtistId = artist.Id,
-            GroupingName = artist.Grouping.Name,
+            Grouping = artist.Grouping,
             Genre = artist.Genre,
             City = artist.City,
             Country = artist.Country,

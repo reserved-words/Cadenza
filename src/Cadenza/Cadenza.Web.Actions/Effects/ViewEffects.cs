@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Web.Common.Extensions;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class ViewEffects
 {
@@ -26,11 +28,11 @@ public class ViewEffects
         }
         else if (action.Type == PlayerItemType.Genre)
         {
-            dispatcher.Dispatch(new FetchViewGenreRequest(action.Name, int.Parse(action.Id)));
+            dispatcher.Dispatch(new FetchViewGenreRequest(action.Id));
         }
         else if (action.Type == PlayerItemType.Grouping)
         {
-            dispatcher.Dispatch(new FetchViewGroupingRequest(new GroupingVM(int.Parse(action.Id), action.Name, false)));
+            dispatcher.Dispatch(new FetchViewGroupingRequest(action.Id));
         }
         else if (action.Type == PlayerItemType.Tag)
         {

@@ -73,25 +73,21 @@ internal class LibraryRepository : ILibraryRepository
         return mappedArtist;
     }
 
-    public async Task<GenreDTO> GetGenre(string genre, int groupingId)
+    public async Task<GenreDTO> GetGenre(string genre, string grouping)
     {
-        // TODO: Don't need to fetch all groupings here, add proc that returns a single grouping
-        var groupings = await _admin.GetGroupings();
-        var grouping = groupings.Single(g => g.Id == groupingId);
-        var artists = await _library.GetArtistsByGenre(genre, groupingId);
+        var artists = await _library.GetArtistsByGenre(genre, grouping);
 
-        // TODO: Move to mapper
         return new GenreDTO
         {
             Genre = genre,
-            Grouping = new GroupingDTO { Id = grouping.Id, Name = grouping.Name, IsUsed = grouping.IsUsed },
+            Grouping = grouping,
             Artists = artists.Select(_mapper.MapArtist).ToList()
         };
     }
 
-    public async Task<List<ArtistDTO>> GetArtistsByGrouping(int groupingId)
+    public async Task<List<ArtistDTO>> GetArtistsByGrouping(string grouping)
     {
-        var artists = await _library.GetArtistsByGrouping(groupingId);
+        var artists = await _library.GetArtistsByGrouping(grouping);
         return artists.Select(_mapper.MapArtist).ToList();
     }
 

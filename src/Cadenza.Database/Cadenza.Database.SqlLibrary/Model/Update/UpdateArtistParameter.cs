@@ -3,7 +3,7 @@
 internal class UpdateArtistParameter
 {
     public int Id { get; set; }
-    public int GroupingId { get; set; }
+    public string Grouping { get; set; }
     public string Genre { get; set; }
     public string City { get; set; }
     public string State { get; set; }

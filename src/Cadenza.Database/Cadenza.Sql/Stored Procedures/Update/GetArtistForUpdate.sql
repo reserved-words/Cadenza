@@ -4,7 +4,7 @@ AS
 BEGIN
 
 	SELECT 
-		ART.[GroupingId],
+		ART.[Grouping],
 		ART.[Genre],
 		ART.[City],
 		ART.[State],
@@ -14,8 +14,6 @@ BEGIN
 		TAG.[TagList]
 	FROM 
 		[Library].[Artists] ART
-	INNER JOIN
-		[Admin].[Groupings] GRP ON GRP.[Id] = ART.[GroupingId]
 	LEFT JOIN
 		[Library].[vw_ArtistTags] TAG ON TAG.[ArtistId] = ART.[Id]
 	LEFT JOIN

@@ -26,14 +26,14 @@ internal class PlayApi : IPlayApi
         return await _apiHelper.Get<List<int>>(_settings.PlayArtist, id);
     }
 
-    public async Task<List<int>> PlayGenre(string genre, int groupingId)
+    public async Task<List<int>> PlayGenre(string grouping, string genre)
     {
-        return await _apiHelper.Get<List<int>>($"{_settings.PlayGenre}?genre={genre}&groupingId={groupingId}");
+        return await _apiHelper.Get<List<int>>($"{_settings.PlayGenre}?grouping={grouping}&genre={genre}");
     }
 
-    public async Task<List<int>> PlayGrouping(int id)
+    public async Task<List<int>> PlayGrouping(string grouping)
     {
-        return await _apiHelper.Get<List<int>>(_settings.PlayGrouping, id);
+        return await _apiHelper.Get<List<int>>(_settings.PlayGrouping, grouping);
     }
 
     public async Task<List<int>> PlayTag(string id)

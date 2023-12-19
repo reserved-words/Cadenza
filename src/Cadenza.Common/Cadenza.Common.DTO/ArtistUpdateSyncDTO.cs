@@ -9,8 +9,6 @@ public class ArtistUpdateSyncDTO
     public string City { get; set; }
     public string State { get; set; }
     public string Country { get; set; }
-    //public string ImageMimeType { get; set; }
-    //public byte[] ImageContent { get; set; }
     public string ImageBase64 { get; set; }
     public string TagList { get; set; }
 }

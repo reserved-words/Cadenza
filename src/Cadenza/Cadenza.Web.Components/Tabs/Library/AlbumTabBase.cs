@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Tabs.Library;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Components.Tabs.Library;
 
 public class AlbumTabBase : FluxorComponent
 {
@@ -11,8 +13,8 @@ public class AlbumTabBase : FluxorComponent
 
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Album.Artist.Grouping.Id, Album.Artist.Grouping.Name),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Album.Artist.Grouping.Id, Album.Artist.Genre),
+        new LibraryBreadcrumb(PlayerItemType.Grouping, Album.Artist.Grouping, Album.Artist.Grouping),
+        new LibraryBreadcrumb(PlayerItemType.Genre, (Album.Artist.Grouping, Album.Artist.Genre).GenreId(), Album.Artist.Genre),
         new LibraryBreadcrumb(PlayerItemType.Artist, Album.Artist.Id, Album.Artist.Name),
         new LibraryBreadcrumb(PlayerItemType.Album, Album.Album.Id, Album.Album.Title)
     };

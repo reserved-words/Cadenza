@@ -1,15 +1,16 @@
-﻿
+﻿@using Cadenza.Common
+
 <ActionLink Typo="@Typo" Text="@Genre" OnClick="@View"></ActionLink>
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
+    [Parameter] public string Grouping { get; set; }
     [Parameter] public string Genre { get; set; }
-    [Parameter] public int GroupingId { get; set; }
     [Parameter] public Typo Typo { get; set; } = Typo.body1;
 
     private void View()
     {
-        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Genre, GroupingId.ToString(), Genre));
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Genre, (Grouping, Genre).GenreId(), Genre));
     }
 }
