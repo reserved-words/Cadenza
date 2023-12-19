@@ -12,9 +12,8 @@ public class EditArtistEffects
     [EffectMethod]
     public async Task HandleFetchEditArtistRequest(FetchEditArtistRequest action, IDispatcher dispatcher)
     {
-        var artist = await _api.GetArtist(action.ArtistId);
-        var releases = await _api.GetAlbums(action.ArtistId);
-        releases = releases.OrderBy(r => r.ReleaseType).ThenBy(r => r.Year).ToList();
-        dispatcher.Dispatch(new FetchEditArtistResult(artist, releases));
+        var artist = await _api.GetFullArtist(action.ArtistId, false);
+        var releases = artist.Albums.OrderBy(r => r.ReleaseType).ThenBy(r => r.Year).ToList();
+        dispatcher.Dispatch(new FetchEditArtistResult(artist.Artist, releases));
     }
 }

@@ -2,10 +2,11 @@
 
 public interface IPlayApi
 {
-    Task<List<int>> PlayAll();
-    Task<List<int>> PlayAlbum(int id);
-    Task<List<int>> PlayArtist(int id);
-    Task<List<int>> PlayGenre(string id);
-    Task<List<int>> PlayGrouping(int id);
-    Task<List<int>> PlayTag(string id);
+    Task<PlaylistVM> PlayAll();
+    Task<PlaylistVM> PlayAlbum(int id);
+    Task<PlaylistVM> PlayArtist(int id);
+    Task<PlaylistVM> PlayGenre(string genre);
+    Task<PlaylistVM> PlayGrouping(string grouping);
+    Task<PlaylistVM> PlayTag(string id);
+    Task<PlaylistVM> PlayTrack(int id);
 }

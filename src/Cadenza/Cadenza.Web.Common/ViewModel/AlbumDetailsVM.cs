@@ -2,6 +2,6 @@
 
 public record AlbumDetailsVM : AlbumVM
 {
-    public int DiscCount { get; set; }
+    public int DiscCount { get; init; }
     public IReadOnlyCollection<string> Tags { get; init; }
 }

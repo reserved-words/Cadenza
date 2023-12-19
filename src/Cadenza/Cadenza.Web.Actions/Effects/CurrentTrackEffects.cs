@@ -14,7 +14,7 @@ public class CurrentTrackEffects
     {
         var fullTrack = action.TrackId == 0
             ? null
-            : await _api.GetTrack(action.TrackId);
+            : await _api.GetFullTrack(action.TrackId);
 
         var isLast = fullTrack == null
             ? false

@@ -7,8 +7,8 @@ SELECT
 		WHEN 0 THEN NULL
 		WHEN 1 THEN CAST(ART.[ArtistId] AS NVARCHAR)
 		WHEN 2 THEN CAST(ALB.[AlbumId] AS NVARCHAR)
-		WHEN 4 THEN GEN.[GenreId]
-		WHEN 5 THEN CAST(GRP.[GroupingId] AS NVARCHAR)
+		WHEN 4 THEN GEN.[Grouping] + '|' + GEN.[Genre]  
+		WHEN 5 THEN GRP.[Grouping]
 		WHEN 6 THEN TAG.[Tag]
 	END [PlaylistItemId]
 FROM [History].[PlayedItems] PLI

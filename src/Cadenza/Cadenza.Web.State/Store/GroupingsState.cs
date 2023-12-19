@@ -1,9 +1,7 @@
-﻿using Cadenza.Web.Common.ViewModel;
-
-namespace Cadenza.Web.State.Store;
+﻿namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record GroupingsState(bool IsLoading, IReadOnlyCollection<GroupingVM> Groupings)
+public record GroupingsState(bool IsLoading, IReadOnlyCollection<string> Groupings)
 {
-    private static GroupingsState Init() => new GroupingsState(false, new ReadOnlyCollection<GroupingVM>(new List<GroupingVM>()));
+    private static GroupingsState Init() => new GroupingsState(false, new ReadOnlyCollection<string>(new List<string>()));
 }

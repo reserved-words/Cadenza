@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [Play].[LogGenreRequest]
-	@Genre NVARCHAR(100)
+	@Genre NVARCHAR(100),
+	@Grouping NVARCHAR(50)
 AS
 BEGIN
 	
@@ -18,9 +19,11 @@ BEGIN
 
 	INSERT INTO [History].[PlayedGenres] (
 		[PlayedItemId],
-		[GenreId])
+		[Genre],
+		[Grouping])
 	VALUES (
 		@PlayedItemId,
-		@Genre)
+		@Genre,
+		@Grouping)
 
 END

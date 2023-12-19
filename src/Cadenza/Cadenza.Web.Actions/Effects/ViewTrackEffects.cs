@@ -12,7 +12,7 @@ public class ViewTrackEffects
     [EffectMethod]
     public async Task HandleFetchViewTrackRequest(FetchViewTrackRequest action, IDispatcher dispatcher)
     {
-        var track = await _api.GetTrack(action.TrackId);
+        var track = await _api.GetFullTrack(action.TrackId);
         dispatcher.Dispatch(new FetchViewTrackResult(track));
     }
 }

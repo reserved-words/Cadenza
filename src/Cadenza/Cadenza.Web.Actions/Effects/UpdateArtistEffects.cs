@@ -28,6 +28,7 @@ public class UpdateArtistEffects
 
             dispatcher.Dispatch(new UpdateSucceededAction(UpdateType.Artist, action.ArtistId));
             dispatcher.Dispatch(new SearchItemsUpdateRequest());
+            dispatcher.Dispatch(new FetchGroupingsRequest());
         }
         catch (Exception ex)
         {

@@ -3,7 +3,7 @@
 namespace Cadenza.Web.State.Store;
 
 [FeatureState(CreateInitialStateMethodName = nameof(Init))]
-public record ViewGenreState(bool IsLoading, string Genre, IReadOnlyCollection<ArtistVM> Artists)
+public record ViewGenreState(bool IsLoading, GenreFullVM Genre)
 {
-    private static ViewGenreState Init() => new ViewGenreState(true, null, null);
+    private static ViewGenreState Init() => new ViewGenreState(true, null);
 }

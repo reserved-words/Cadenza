@@ -34,7 +34,6 @@ public static class Startup
     private static IServiceCollection AddApiRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<IAdminApi, AdminApi>()
             .AddTransient<IArtworkApi, ArtworkApi>()
             .AddTransient<IFavouritesApi, FavouritesApi>()
             .AddTransient<IHistoryApi, HistoryApi>()

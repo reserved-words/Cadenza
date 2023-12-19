@@ -6,7 +6,7 @@ public class PlayShortcutsBase : FluxorComponent
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }
     [Inject] public IState<HistoryRecentlyPlayedAlbumsState> AlbumHistoryState { get; set; }
 
-    protected IReadOnlyCollection<GroupingVM> Groupings => GroupingsState.Value.Groupings.Where(g => g.IsUsed).ToList();
+    protected IReadOnlyCollection<string> Groupings => GroupingsState.Value.Groupings;
 
     protected Task PlayLibrary()
     {
@@ -14,7 +14,7 @@ public class PlayShortcutsBase : FluxorComponent
         return Task.CompletedTask;
     }
 
-    protected Task PlayGrouping(GroupingVM grouping)
+    protected Task PlayGrouping(string grouping)
     {
         Dispatcher.Dispatch(new PlayGroupingRequest(grouping));
         return Task.CompletedTask;

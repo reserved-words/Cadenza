@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Web.Common.Extensions;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class ViewEffects
 {
@@ -30,7 +32,7 @@ public class ViewEffects
         }
         else if (action.Type == PlayerItemType.Grouping)
         {
-            dispatcher.Dispatch(new FetchViewGroupingRequest(new GroupingVM(int.Parse(action.Id), action.Name, false)));
+            dispatcher.Dispatch(new FetchViewGroupingRequest(action.Id));
         }
         else if (action.Type == PlayerItemType.Tag)
         {
@@ -46,7 +48,7 @@ public class ViewEffects
         }
         if (action.Type != PlayerItemType.Album)
         {
-            dispatcher.Dispatch(new FetchViewAlbumResult(null, null));
+            dispatcher.Dispatch(new FetchViewAlbumResult(null));
         }
         if (action.Type != PlayerItemType.Track)
         {
@@ -54,7 +56,7 @@ public class ViewEffects
         }
         if (action.Type != PlayerItemType.Genre)
         {
-            dispatcher.Dispatch(new FetchViewGenreResult(null, null));
+            dispatcher.Dispatch(new FetchViewGenreResult(null));
         }
         if (action.Type != PlayerItemType.Grouping)
         {

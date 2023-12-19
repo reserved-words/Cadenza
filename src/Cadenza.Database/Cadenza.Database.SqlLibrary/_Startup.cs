@@ -28,7 +28,7 @@ public static class _Startup
     private static IServiceCollection AddMappers(this IServiceCollection services)
     {
         return services
-            .AddTransient<IAdminMapper, AdminMapper>()
+            .AddTransient<IGenreMapper, GenreMapper>()
             .AddTransient<IHistoryMapper, HistoryMapper>()
             .AddTransient<ILastFmMapper, LastFmMapper>()
             .AddTransient<ILibraryMapper, LibraryMapper>()
@@ -48,6 +48,7 @@ public static class _Startup
             .AddTransient<IPlayRepository, PlayRepository>()
             .AddTransient<IQueueRepository, QueueRepository>()
             .AddTransient<ISearchRepository, SearchRepository>()
+            .AddTransient<ISyncRepository, SyncRepository>()
             .AddTransient<IUpdateRepository, UpdateRepository>();
     }
 

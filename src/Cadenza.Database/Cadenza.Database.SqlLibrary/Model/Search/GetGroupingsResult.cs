@@ -2,6 +2,5 @@
 
 internal class GetGroupingsResult
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public string Grouping { get; set; }
 }

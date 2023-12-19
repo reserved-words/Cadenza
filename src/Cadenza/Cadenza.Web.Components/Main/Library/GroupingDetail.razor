@@ -1,8 +1,8 @@
 ﻿
 <ItemCard>
-    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Grouping.Id" Name="@Grouping.Name" />
+    <ItemCardTitle Itemtype="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping" />
 </ItemCard>
 
 @code {
-    [Parameter] public GroupingVM Grouping { get; set; }
+    [Parameter] public string Grouping { get; set; }
 }

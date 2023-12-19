@@ -1,12 +1,12 @@
 ﻿CREATE PROCEDURE [Play].[GetGroupingTrackIds]
-	@Id INT,
+	@Grouping NVARCHAR(50),
 	@LogRequest BIT
 AS
 BEGIN
 
 	IF @LogRequest = 1
 	BEGIN
-		EXECUTE [Play].[LogGroupingRequest] @Id
+		EXECUTE [Play].[LogGroupingRequest] @Grouping
 	END
 
 	SELECT 
@@ -16,6 +16,6 @@ BEGIN
 	INNER JOIN 
 		[Library].[Artists] ART ON ART.[Id] = TRK.[ArtistId]
 	WHERE
-		ART.[GroupingId] = @Id
+		ART.[Grouping] = @Grouping
 
 END

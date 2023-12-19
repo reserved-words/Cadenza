@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.Common;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -11,46 +13,35 @@ public class LibraryController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("Album/{id}")]
-    public async Task<AlbumDetailsDTO> Album(int id)
+    [HttpGet("Album/Full/{id}")]
+    public async Task<AlbumFullDTO> AlbumFull(int id)
     {
-        return await _repository.GetAlbum(id);
+        return await _repository.GetAlbumFull(id);
     }
 
-    [HttpGet("Album/Tracks/{id}")]
-    public async Task<List<AlbumDiscDTO>> AlbumTracks(int id)
+    [HttpGet("Artist/Full")]
+    public async Task<ArtistFullDTO> ArtistFull(int id, bool includeAlbumsByOtherArtists)
     {
-        return await _repository.GetAlbumTracks(id);
+        return await _repository.GetFullArtist(id, includeAlbumsByOtherArtists);
     }
 
-    [HttpGet("Artist/{id}")]
-    public async Task<ArtistDetailsDTO> Artist(int id)
+    [HttpGet("Genre/{genre}")]
+    public async Task<GenreDTO> Genre(string genre)
     {
-        return await _repository.GetArtist(id);
+        var split = genre.SplitGenreId();
+        return await _repository.GetArtistsByGenre(split.Grouping, split.Genre);
     }
 
-    [HttpGet("Artist/Albums/{id}")]
-    public async Task<List<AlbumDTO>> ArtistAlbums(int id)
+    [HttpGet("Groupings")]
+    public async Task<List<string>> Groupings()
     {
-        return await _repository.GetArtistAlbums(id);
+        return await _repository.GetGroupings();
     }
 
-    [HttpGet("Artist/AlbumsFeaturing/{id}")]
-    public async Task<List<AlbumDTO>> AlbumsFeaturingArtist(int id)
+    [HttpGet("Artists/Grouping/{grouping}")]
+    public async Task<List<ArtistDTO>> GroupingArtists(string grouping)
     {
-        return await _repository.GetAlbumsFeaturingArtist(id);
-    }
-
-    [HttpGet("Artists/Genre/{id}")]
-    public async Task<List<ArtistDTO>> GenreArtists(string id)
-    {
-        return await _repository.GetArtistsByGenre(id);
-    }
-
-    [HttpGet("Artists/Grouping/{id}")]
-    public async Task<List<ArtistDTO>> GroupingArtists(int id)
-    {
-        return await _repository.GetArtistsByGrouping(id);
+        return await _repository.GetArtistsByGrouping(grouping);
     }
 
     [HttpGet("Tag/{id}")]
@@ -60,8 +51,14 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Track/{id}")]
-    public async Task<TrackFullDTO> Track(int id)
+    public async Task<TrackDetailsDTO> Track(int id)
     {
         return await _repository.GetTrack(id);
+    }
+
+    [HttpGet("Track/Full/{id}")]
+    public async Task<TrackFullDTO> TrackFull(int id)
+    {
+        return await _repository.GetTrackFull(id);
     }
 }

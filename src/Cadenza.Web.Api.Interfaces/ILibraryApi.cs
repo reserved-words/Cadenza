@@ -2,13 +2,12 @@
 
 public interface ILibraryApi
 {
-    Task<AlbumDetailsVM> GetAlbum(int id);
-    Task<List<AlbumVM>> GetAlbums(int artistId);
-    Task<List<AlbumVM>> GetAlbumsFeaturingArtist(int artistId);
-    Task<List<AlbumDiscVM>> GetAlbumTracks(int albumId);
-    Task<ArtistDetailsVM> GetArtist(int id);
-    Task<List<ArtistVM>> GetArtistsByGenre(string id);
-    Task<List<ArtistVM>> GetArtistsByGrouping(int id);
+    Task<GenreFullVM> GetArtistsByGenre(string genre);
+    Task<List<ArtistVM>> GetArtistsByGrouping(string grouping);
+    Task<AlbumFullVM> GetFullAlbum(int id);
+    Task<ArtistFullVM> GetFullArtist(int id, bool includeAlbumsByOtherArtists);
+    Task<TrackFullVM> GetFullTrack(int id);
+    Task<List<string>> GetGroupings();
     Task<List<TaggedItemVM>> GetTag(string id);
-    Task<TrackFullVM> GetTrack(int id);
+    Task<TrackDetailsVM> GetTrack(int id);
 }

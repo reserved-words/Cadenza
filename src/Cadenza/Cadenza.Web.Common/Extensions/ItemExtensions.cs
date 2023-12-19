@@ -22,7 +22,7 @@ public static class ItemExtensions
             .ToList();
     }
 
-    public static List<ArtistReleaseGroupVM> GroupByReleaseType(this List<AlbumVM> albums)
+    public static List<ArtistReleaseGroupVM> GroupByReleaseType(this IReadOnlyCollection<AlbumVM> albums)
     {
         return albums
             .GroupBy(a => a.ReleaseType.GetGroup())
@@ -33,7 +33,7 @@ public static class ItemExtensions
             .ToList();
     }
 
-    public static List<ArtistReleaseGroupVM> AddAlbumsFeaturingArtist(this List<ArtistReleaseGroupVM> groupedAlbums, List<AlbumVM> byOtherArtists)
+    public static List<ArtistReleaseGroupVM> AddAlbumsFeaturingArtist(this List<ArtistReleaseGroupVM> groupedAlbums, IReadOnlyCollection<AlbumVM> byOtherArtists)
     {
         if (byOtherArtists.Any())
         {

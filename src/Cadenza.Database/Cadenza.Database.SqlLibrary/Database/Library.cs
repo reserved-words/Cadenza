@@ -37,9 +37,9 @@ internal class Library : ILibrary
         return await _sql.Query<GetTaggedItemsResult>(new { Tag = tag });
     }
 
-    public async Task<GetArtistResult> GetArtist(int id)
+    public async Task<GetFullArtistResult> GetFullArtist(int id)
     {
-        return await _sql.QuerySingle<GetArtistResult>(new { Id = id });
+        return await _sql.QuerySingle<GetFullArtistResult>(new { Id = id });
     }
 
     public async Task<GetTrackResult> GetTrack(int id)
@@ -47,9 +47,14 @@ internal class Library : ILibrary
         return await _sql.QuerySingle<GetTrackResult>(new { Id = id });
     }
 
-    public async Task<GetAlbumResult> GetAlbum(int id)
+    public async Task<GetFullTrackResult> GetFullTrack(int id)
     {
-        return await _sql.QuerySingle<GetAlbumResult>(new { Id = id });
+        return await _sql.QuerySingle<GetFullTrackResult>(new { Id = id });
+    }
+
+    public async Task<GetFullAlbumResult> GetFullAlbum(int id)
+    {
+        return await _sql.QuerySingle<GetFullAlbumResult>(new { Id = id });
     }
 
     public async Task<List<GetAlbumDiscsResult>> GetAlbumDiscs(int id)
@@ -72,13 +77,19 @@ internal class Library : ILibrary
         return await _sql.Query<GetAlbumsFeaturingArtistResult>(new { ArtistId = artistId });
     }
 
-    public async Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(int groupingId)
+    public async Task<List<GetArtistsByGroupingResult>> GetArtistsByGrouping(string grouping)
     {
-        return await _sql.Query<GetArtistsByGroupingResult>(new { GroupingId = groupingId });
+        return await _sql.Query<GetArtistsByGroupingResult>(new { Grouping = grouping });
     }
 
-    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre)
+    public async Task<List<GetArtistsByGenreResult>> GetArtistsByGenre(string genre, string grouping)
     {
-        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre });
+        return await _sql.Query<GetArtistsByGenreResult>(new { Genre = genre, Grouping = grouping });
+    }
+
+    public async Task<List<string>> GetGroupings()
+    {
+        var groupings = await _sql.Query<GetGroupingsResult>(null);
+        return groupings.Select(g => g.Grouping).ToList();
     }
 }

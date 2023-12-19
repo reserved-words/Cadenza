@@ -2,9 +2,9 @@
 
 public class GroupingsEffects
 {
-    private readonly IAdminApi _api;
+    private readonly ILibraryApi _api;
 
-    public GroupingsEffects(IAdminApi api)
+    public GroupingsEffects(ILibraryApi api)
     {
         _api = api;
     }
@@ -12,7 +12,7 @@ public class GroupingsEffects
     [EffectMethod]
     public async Task HandleFetchGroupingsRequest(FetchGroupingsRequest action, IDispatcher dispatcher)
     {
-        var result = await _api.GetGroupingOptions();
+        var result = await _api.GetGroupings();
         dispatcher.Dispatch(new FetchGroupingsResult(result));
     }
 }

@@ -2,10 +2,11 @@
 AS
 BEGIN
 
-	SELECT
-		[Id],
-		[Name]
+	SELECT DISTINCT
+		[Grouping]
 	FROM
-		[Admin].[Groupings]
+		[Library].[Artists]
+	ORDER BY
+		[Grouping]
 
 END

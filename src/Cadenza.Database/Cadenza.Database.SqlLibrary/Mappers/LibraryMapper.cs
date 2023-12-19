@@ -5,18 +5,23 @@ namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class LibraryMapper : ILibraryMapper
 {
-    public AlbumDetailsDTO MapAlbum(GetAlbumResult album, List<GetAlbumDiscsResult> discs)
+    private readonly IGenreMapper _genreMapper;
+
+    public LibraryMapper(IGenreMapper genreMapper)
     {
-        return new AlbumDetailsDTO
+        _genreMapper = genreMapper;
+    }
+
+    public AlbumDTO MapAlbum(GetAlbumResult album)
+    {
+        return new AlbumDTO
         {
             Id = album.Id,
             ArtistId = album.ArtistId,
             ArtistName = album.ArtistName,
             Title = album.Title,
             ReleaseType = (ReleaseType)album.ReleaseTypeId,
-            DiscCount = album.DiscCount,
-            Year = album.Year,
-            Tags = new TagsDTO(album.TagList)
+            Year = album.Year
         };
     }
 
@@ -72,19 +77,32 @@ internal class LibraryMapper : ILibraryMapper
             .ToList();
     }
 
-    public ArtistDetailsDTO MapArtist(GetArtistResult artist)
+    public ArtistDTO MapArtist(GetArtistResult artist)
     {
-        return new ArtistDetailsDTO
+        return new ArtistDTO
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
-            Genre = artist.Genre,
+            Grouping = artist.Grouping,
+            Genre = _genreMapper.MapGenreId(artist.Grouping, artist.Genre)
+        };
+    }
+
+    public ArtistFullDTO MapArtist(GetFullArtistResult artist)
+    {
+        var dto = new ArtistDetailsDTO
+        {
+            Id = artist.Id,
+            Name = artist.Name,
+            Grouping = artist.Grouping,
+            Genre = _genreMapper.MapGenreId(artist.Grouping, artist.Genre),
             City = artist.City,
             State = artist.State,
             Country = artist.Country,
             Tags = new TagsDTO(artist.TagList)
         };
+
+        return new ArtistFullDTO { Artist = dto };
     }
 
     public ArtistDTO MapArtist(GetArtistsByGroupingResult artist)
@@ -93,8 +111,8 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
-            Genre = artist.Genre
+            Grouping = artist.Grouping,
+            Genre = _genreMapper.MapGenreId(artist.Grouping, artist.Genre)
         };
     }
 
@@ -104,8 +122,8 @@ internal class LibraryMapper : ILibraryMapper
         {
             Id = artist.Id,
             Name = artist.Name,
-            Grouping = MapGrouping(artist),
-            Genre = artist.Genre
+            Grouping = artist.Grouping,
+            Genre = _genreMapper.MapGenreId(artist.Grouping, artist.Genre),
         };
     }
 
@@ -128,7 +146,7 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    public TrackFullDTO MapTrack(GetTrackResult track)
+    public TrackFullDTO MapTrack(GetFullTrackResult track)
     {
         return new TrackFullDTO
         {
@@ -151,8 +169,8 @@ internal class LibraryMapper : ILibraryMapper
             {
                 Id = track.ArtistId,
                 Name = track.ArtistName,
-                Grouping = MapArtistGrouping(track),
-                Genre = track.ArtistGenre,
+                Grouping = track.ArtistGrouping,
+                Genre = _genreMapper.MapGenreId(track.ArtistGrouping, track.ArtistGenre),
                 City = track.ArtistCity,
                 State = track.ArtistState,
                 Country = track.ArtistCountry,
@@ -173,8 +191,8 @@ internal class LibraryMapper : ILibraryMapper
             {
                 Id = track.AlbumArtistId,
                 Name = track.AlbumArtistName,
-                Grouping = MapAlbumArtistGrouping(track),
-                Genre = track.AlbumArtistGenre,
+                Grouping = track.AlbumArtistGrouping,
+                Genre = _genreMapper.MapGenreId(track.AlbumArtistGrouping, track.AlbumArtistGenre),
                 City = track.AlbumArtistCity,
                 State = track.AlbumArtistState,
                 Country = track.AlbumArtistCountry,
@@ -192,53 +210,57 @@ internal class LibraryMapper : ILibraryMapper
         };
     }
 
-    private GroupingDTO MapGrouping(GetArtistsByGenreResult artist)
+    public AlbumFullDTO MapAlbum(GetFullAlbumResult album)
     {
-        return new GroupingDTO
+        return new AlbumFullDTO
         {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
+            Album = new AlbumDetailsDTO
+            {
+                Id = album.Id,
+                ArtistId = album.ArtistId,
+                ArtistName = album.ArtistName,
+                Title = album.Title,
+                ReleaseType = (ReleaseType)album.ReleaseTypeId,
+                DiscCount = album.DiscCount,
+                Year = album.Year,
+                Tags = new TagsDTO(album.TagList)
+            },
+            Artist = new ArtistDTO
+            {
+                Id = album.ArtistId,
+                Name = album.ArtistName,
+                Grouping = album.ArtistGrouping,
+                Genre = _genreMapper.MapGenreId(album.ArtistGrouping, album.ArtistGenre)
+            }
         };
     }
 
-    private GroupingDTO MapGrouping(GetArtistResult artist)
+    public TrackDetailsDTO MapTrack(GetTrackResult track)
     {
-        return new GroupingDTO
+        return new TrackDetailsDTO
         {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
+            Source = (LibrarySource)track.SourceId,
+            Id = track.Id,
+            IdFromSource = track.IdFromSource,
+            IsLoved = track.IsLoved,
+            ArtistId = track.ArtistId,
+            ArtistName = track.ArtistName,
+            AlbumId = track.AlbumId,
+            Title = track.Title,
+            DurationSeconds = track.DurationSeconds,
+            Year = track.Year,
+            Lyrics = track.Lyrics,
+            Tags = new TagsDTO(track.TagList)
         };
     }
 
-    private GroupingDTO MapGrouping(GetArtistsByGroupingResult artist)
+    public GenreDTO MapGenre(string grouping, string genre, List<GetArtistsByGenreResult> artists)
     {
-        return new GroupingDTO
+        return new GenreDTO
         {
-            Id = artist.GroupingId,
-            Name = artist.GroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapArtistGrouping(GetTrackResult track)
-    {
-        return new GroupingDTO
-        {
-            Id = track.ArtistGroupingId,
-            Name = track.ArtistGroupingName,
-            IsUsed = true
-        };
-    }
-
-    private GroupingDTO MapAlbumArtistGrouping(GetTrackResult track)
-    {
-        return new GroupingDTO
-        {
-            Id = track.AlbumArtistGroupingId,
-            Name = track.AlbumArtistGroupingName,
-            IsUsed = true
+            Genre = _genreMapper.MapGenreId(grouping, genre),
+            Grouping = grouping,
+            Artists = artists.Select(MapArtist).ToList()
         };
     }
 }

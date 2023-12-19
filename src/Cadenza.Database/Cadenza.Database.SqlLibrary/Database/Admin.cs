@@ -1,5 +1,4 @@
 ﻿using Cadenza.Database.SqlLibrary.Database.Interfaces;
-using Cadenza.Database.SqlLibrary.Model.Admin;
 using Dapper;
 using System.Data;
 
@@ -12,11 +11,6 @@ internal class Admin : IAdmin
     public Admin(ISqlAccessFactory sql)
     {
         _sql = sql.Create(nameof(Admin));
-    }
-
-    public async Task<List<GetGroupingsResult>> GetGroupings()
-    {
-        return await _sql.Query<GetGroupingsResult>(null);
     }
 
     public async Task<bool> HasLastFmSessionKey(string username)

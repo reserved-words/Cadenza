@@ -1,4 +1,5 @@
-﻿
+﻿@using Cadenza.Common
+
 @if (_isEditable)
 {
     <MudButton StartIcon="@Icons.Material.Filled.Edit"
@@ -50,7 +51,7 @@
                 Dispatcher.Dispatch(new PlayTrackRequest(int.Parse(Id)));
                 break;
             case PlayerItemType.Grouping:
-                Dispatcher.Dispatch(new PlayGroupingRequest(new GroupingVM(int.Parse(Id), Name, true)));
+                Dispatcher.Dispatch(new PlayGroupingRequest(Id));
                 break;
             case PlayerItemType.Genre:
                 Dispatcher.Dispatch(new PlayGenreRequest(Id));

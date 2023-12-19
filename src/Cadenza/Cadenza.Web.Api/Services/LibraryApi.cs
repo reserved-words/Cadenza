@@ -13,46 +13,40 @@ internal class LibraryApi : ILibraryApi
         _mapper = mapper;
     }
 
-    public async Task<AlbumDetailsVM> GetAlbum(int id)
+    public async Task<GenreFullVM> GetArtistsByGenre(string genre)
     {
-        var album = await _apiHelper.Get<AlbumDetailsDTO>(_settings.Album, id);
+        var dto = await _apiHelper.Get<GenreDTO>(_settings.Genre, genre);
+        return _mapper.Map(dto);
+    }
+
+    public async Task<List<ArtistVM>> GetArtistsByGrouping(string grouping)
+    {
+        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, grouping);
+        return artists.Select(a => _mapper.Map(a)).ToList();
+    }
+
+    public async Task<AlbumFullVM> GetFullAlbum(int id)
+    {
+        var album = await _apiHelper.Get<AlbumFullDTO>(_settings.AlbumFull, id);
         return _mapper.Map(album);
     }
 
-    public async Task<List<AlbumVM>> GetAlbums(int id)
+    public async Task<ArtistFullVM> GetFullArtist(int id, bool includeAlbumsByOtherArtists)
     {
-        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.ArtistAlbums, id);
-        return albums.Select(a => _mapper.Map(a)).ToList();
-    }
-
-    public async Task<List<AlbumVM>> GetAlbumsFeaturingArtist(int artistId)
-    {
-        var albums = await _apiHelper.Get<List<AlbumDTO>>(_settings.AlbumsFeaturingArtist, artistId);
-        return albums.Select(a => _mapper.Map(a)).ToList();
-    }
-
-    public async Task<List<AlbumDiscVM>> GetAlbumTracks(int id)
-    {
-        var discs = await _apiHelper.Get<List<AlbumDiscDTO>>(_settings.AlbumTracks, id);
-        return discs.Select(d => _mapper.Map(d)).ToList();
-    }
-
-    public async Task<ArtistDetailsVM> GetArtist(int id)
-    {
-        var artist = await _apiHelper.Get<ArtistDetailsDTO>(_settings.Artist, id);
+        var url = $"{_settings.ArtistFull}?id={id}&includeAlbumsByOtherArtists={includeAlbumsByOtherArtists}";
+        var artist = await _apiHelper.Get<ArtistFullDTO>(url);
         return _mapper.Map(artist);
     }
 
-    public async Task<List<ArtistVM>> GetArtistsByGenre(string id)
+    public async Task<TrackFullVM> GetFullTrack(int id)
     {
-        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GenreArtists, id);
-        return artists.Select(a => _mapper.Map(a)).ToList();
+        var track = await _apiHelper.Get<TrackFullDTO>(_settings.TrackFull, id);
+        return _mapper.Map(track);
     }
 
-    public async Task<List<ArtistVM>> GetArtistsByGrouping(int id)
+    public async Task<List<string>> GetGroupings()
     {
-        var artists = await _apiHelper.Get<List<ArtistDTO>>(_settings.GroupingArtists, id);
-        return artists.Select(a => _mapper.Map(a)).ToList();
+        return await _apiHelper.Get<List<string>>(_settings.Groupings);
     }
 
     public async Task<List<TaggedItemVM>> GetTag(string id)
@@ -61,9 +55,9 @@ internal class LibraryApi : ILibraryApi
         return items.Select(i => _mapper.Map(i)).ToList();
     }
 
-    public async Task<TrackFullVM> GetTrack(int id)
+    public async Task<TrackDetailsVM> GetTrack(int id)
     {
-        var track = await _apiHelper.Get<TrackFullDTO>(_settings.Track, id);
+        var track = await _apiHelper.Get<TrackDetailsDTO>(_settings.Track, id);
         return _mapper.Map(track);
     }
 }

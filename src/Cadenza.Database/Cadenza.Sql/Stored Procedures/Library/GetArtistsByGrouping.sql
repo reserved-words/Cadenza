@@ -1,19 +1,16 @@
 ﻿CREATE PROCEDURE [Library].[GetArtistsByGrouping]
-	@GroupingId NVARCHAR(100)
+	@Grouping NVARCHAR(50)
 AS
 BEGIN
 
 	SELECT 
 		ART.[Id],
 		ART.[Name],
-		ART.[GroupingId],
-		GRP.[Name] [GroupingName],
+		ART.[Grouping],
 		ART.[Genre]
 	FROM 
 		[Library].[Artists] ART
-	INNER JOIN
-		[Admin].[Groupings] GRP ON GRP.[Id] = ART.[GroupingId]
 	WHERE
-		ART.[GroupingId] = @GroupingId
+		ART.[Grouping] = @Grouping
 
 END

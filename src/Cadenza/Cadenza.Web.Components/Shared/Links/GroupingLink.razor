@@ -1,17 +1,17 @@
 ﻿
 @if (Grouping != null)
 {
-    <ActionLink Typo="@Typo" Text="@Grouping.Name" OnClick="@View"></ActionLink>
+    <ActionLink Typo="@Typo" Text="@Grouping" OnClick="@View"></ActionLink>
 }
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public GroupingVM Grouping { get; set; }
+    [Parameter] public string Grouping { get; set; }
     [Parameter] public Typo Typo { get; set; } = Typo.body1;
 
     private void View()
     {
-        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Grouping, Grouping.Id.ToString(), Grouping.Name));
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Grouping, Grouping, Grouping));
     }
 }

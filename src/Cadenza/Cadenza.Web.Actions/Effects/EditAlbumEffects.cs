@@ -12,10 +12,10 @@ public class EditAlbumEffects
     [EffectMethod]
     public async Task HandleFetchEditAlbumRequest(FetchEditAlbumRequest action, IDispatcher dispatcher)
     {
-        var album = await _api.GetAlbum(action.AlbumId);
-        var discs = await _api.GetAlbumTracks(action.AlbumId);
+        var fullAlbum = await _api.GetFullAlbum(action.AlbumId);
 
-        var tracks = discs.SelectMany(d => d.Tracks).ToList();   
+        var album = fullAlbum.Album;
+        var tracks = fullAlbum.Discs.SelectMany(d => d.Tracks).ToList();   
 
         dispatcher.Dispatch(new FetchEditAlbumResult(album, tracks));
     }

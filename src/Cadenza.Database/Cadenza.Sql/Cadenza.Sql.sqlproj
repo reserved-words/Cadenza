@@ -88,7 +88,6 @@
     <Build Include="Tables\Library\TrackTags.sql" />
     <Build Include="Tables\Admin\Sources.sql" />
     <Build Include="Tables\Admin\ReleaseTypes.sql" />
-    <Build Include="Tables\Admin\Groupings.sql" />
     <Build Include="Tables\Library\Discs.sql" />
     <Build Include="Tables\Admin\ReleaseCategories.sql" />
     <None Include="SeedData\ReleaseTypes.sql" />
@@ -137,8 +136,6 @@
     <Build Include="Stored Procedures\Library\GetAlbumTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
-    <Build Include="Stored Procedures\Admin\GetGroupings.sql" />
-    <None Include="SeedData\Groupings.sql" />
     <Build Include="Views\Library\vw_UsedTags.sql" />
     <Build Include="Tables\Admin\Settings.sql" />
     <Build Include="Stored Procedures\Play\GetAllTrackIds.sql" />
@@ -182,11 +179,9 @@
     <Build Include="Stored Procedures\Search\GetTags.sql" />
     <Build Include="Stored Procedures\Search\GetGroupings.sql" />
     <Build Include="Stored Procedures\Library\GetTaggedItems.sql" />
-    <Build Include="Stored Procedures\Library\GetArtist.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbum.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTracks.sql" />
-    <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetFullTrack.sql" />
     <Build Include="Stored Procedures\Library\GetArtistAlbums.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumsFeaturingArtist.sql" />
     <Build Include="Stored Procedures\Library\GetArtistsByGenre.sql" />
@@ -240,6 +235,14 @@
     <Build Include="Tables\Queue\TrackSync.sql" />
     <Build Include="Tables\Queue\TrackRemovalSync.sql" />
     <Build Include="Stored Procedures\History\GetRecentlyAddedAlbums.sql" />
+    <Build Include="Stored Procedures\Library\GetTrack.sql" />
+    <Build Include="Stored Procedures\Library\GetFullAlbum.sql" />
+    <Build Include="Stored Procedures\Library\GetFullArtist.sql" />
+    <Build Include="Stored Procedures\Library\GetGroupings.sql" />
+    <Build Include="Stored Procedures\Play\GetAlbum.sql" />
+    <Build Include="Stored Procedures\Play\GetTrack.sql" />
+    <Build Include="Stored Procedures\Play\GetArtist.sql" />
+    <Build Include="Stored Procedures\Play\GetGenre.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

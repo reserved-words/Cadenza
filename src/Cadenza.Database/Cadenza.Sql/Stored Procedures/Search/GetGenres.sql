@@ -3,6 +3,7 @@ AS
 BEGIN
 
 	SELECT DISTINCT
+		[Grouping], 
 		[Genre]
 	FROM
 		[Library].[Artists]

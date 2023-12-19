@@ -17,7 +17,7 @@ internal class ChangeDetector : IChangeDetector
     public bool HasArtistChanged(ArtistDetailsVM originalArtist, ArtistDetailsVM updatedArtist)
     {
         return updatedArtist.Name != originalArtist.Name
-            || updatedArtist.Grouping.Name != originalArtist.Grouping.Name
+            || updatedArtist.Grouping != originalArtist.Grouping
             || updatedArtist.Genre != originalArtist.Genre
             || updatedArtist.City != originalArtist.City
             || updatedArtist.State != originalArtist.State

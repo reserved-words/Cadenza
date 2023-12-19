@@ -1,17 +1,19 @@
-﻿CREATE PROCEDURE [Library].[GetAlbum]
+﻿CREATE PROCEDURE [Library].[GetFullAlbum]
 	@Id INT
 AS
 BEGIN
 
 	SELECT 
 		ALB.[Id],
-		ALB.[ArtistId], 
-		ART.[Name] [ArtistName],
 		ALB.[Title],
 		ALB.[ReleaseTypeId],
 		ALB.[Year],
 		ALB.[DiscCount],
-		TAG.[TagList]
+		TAG.[TagList],
+		ALB.[ArtistId], 
+		ART.[Name] [ArtistName],
+		ART.[Grouping] [ArtistGrouping],
+		ART.[Genre] [ArtistGenre]
 	FROM
 		[Library].[Albums] ALB
 	INNER JOIN

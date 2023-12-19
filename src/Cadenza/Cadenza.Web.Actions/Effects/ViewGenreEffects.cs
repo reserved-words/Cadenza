@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Actions.Effects;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Actions.Effects;
 
 public class ViewGenreEffects
 {
@@ -12,8 +14,7 @@ public class ViewGenreEffects
     [EffectMethod]
     public async Task HandleFetchViewGenreRequest(FetchViewGenreRequest action, IDispatcher dispatcher)
     {
-        var artists = await _api.GetArtistsByGenre(action.Genre);
-        var orderedArtists = artists.OrderBy(a => a.Name).ToList();
-        dispatcher.Dispatch(new FetchViewGenreResult(action.Genre, orderedArtists));
+        var genre = await _api.GetArtistsByGenre(action.Id);
+        dispatcher.Dispatch(new FetchViewGenreResult(genre));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Common.ViewModel;
+﻿using Cadenza.Common;
+using Cadenza.Web.Common.ViewModel;
 
 namespace Cadenza.Web.Core.Services;
 
@@ -52,7 +53,7 @@ internal class EditItemMapper : IEditItemMapper
             Id = artist.Id,
             Name = artist.Name,
             Grouping = artist.Grouping,
-            Genre = artist.Genre,
+            Genre = artist.Genre.GetGenreName(),
             Country = artist.Country,
             State = artist.State,
             City = artist.City,
@@ -137,7 +138,7 @@ internal class EditItemMapper : IEditItemMapper
             Id = artist.Id,
             Name = artist.Name,
             Grouping = artist.Grouping,
-            Genre = artist.Genre,
+            Genre = artist.Genre.GenreId(artist.Grouping),
             Country = artist.Country,
             State = artist.State,
             City = artist.City,

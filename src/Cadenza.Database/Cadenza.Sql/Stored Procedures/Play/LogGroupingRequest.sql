@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [Play].[LogGroupingRequest]
-	@GroupingId INT
+	@Grouping NVARCHAR(50)
 AS
 BEGIN
 	
@@ -18,9 +18,9 @@ BEGIN
 
 	INSERT INTO [History].[PlayedGroupings] (
 		[PlayedItemId],
-		[GroupingId])
+		[Grouping])
 	VALUES (
 		@PlayedItemId,
-		@GroupingId)
+		@Grouping)
 
 END

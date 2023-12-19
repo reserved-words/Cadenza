@@ -4,32 +4,6 @@ namespace Cadenza.Web.Api.Helpers;
 
 internal class ViewModelMapper : IViewModelMapper
 {
-
-    public AlbumDetailsVM Map(AlbumDetailsDTO dto)
-    {
-        return new AlbumDetailsVM
-        {
-            ArtistId = dto.ArtistId,
-            ArtistName = dto.ArtistName,
-            Id = dto.Id,
-            ReleaseType = dto.ReleaseType,
-            DiscCount = dto.DiscCount,
-            Tags = Map(dto.Tags),
-            Title = dto.Title,
-            Year = dto.Year
-        };
-    }
-
-    public AlbumDiscVM Map(AlbumDiscDTO dto)
-    {
-        return new AlbumDiscVM
-        {
-            DiscNo = dto.DiscNo,
-            TrackCount = dto.TrackCount,
-            Tracks = dto.Tracks.Select(t => Map(t, dto)).ToList()
-        };
-    }
-
     public AlbumVM Map(AlbumDTO dto)
     {
         return new AlbumVM
@@ -43,29 +17,36 @@ internal class ViewModelMapper : IViewModelMapper
         };
     }
 
+    public AlbumFullVM Map(AlbumFullDTO dto)
+    {
+        return new AlbumFullVM
+        {
+            Album = Map(dto.Album),
+            Artist = Map(dto.Artist),
+            Discs = dto.Discs.Select(Map).ToList()
+        };
+    }
+
     public ArtistVM Map(ArtistDTO dto)
     {
         return new ArtistVM
         {
             Id = dto.Id,
             Genre = dto.Genre,
-            Grouping = Map(dto.Grouping),
+            Grouping = dto.Grouping,
             Name = dto.Name
         };
     }
 
-    public ArtistDetailsVM Map(ArtistDetailsDTO dto)
+    public ArtistFullVM Map(ArtistFullDTO dto)
     {
-        return new ArtistDetailsVM
+        return new ArtistFullVM
         {
-            Name = dto.Name,
-            Grouping = Map(dto.Grouping),
-            Genre = dto.Genre,
-            Id = dto.Id,
-            City = dto.City,
-            Country = dto.Country,
-            State = dto.State,
-            Tags = Map(dto.Tags)
+            Artist = Map(dto.Artist),
+            Albums = dto.Albums.Select(Map).ToList(),
+            AlbumsFeaturingArtist = dto.AlbumsFeaturingArtist == null
+                ? null
+                : dto.AlbumsFeaturingArtist.Select(Map).ToList()
         };
     }
 
@@ -115,9 +96,9 @@ internal class ViewModelMapper : IViewModelMapper
         return new AlbumTrackLinkVM(dto.AlbumId, dto.TrackId, dto.DiscNo, dto.TrackNo, dto.DiscCount, dto.TrackCount);
     }
 
-    public GroupingVM Map(GroupingDTO dto)
+    public GenreFullVM Map(GenreDTO dto)
     {
-        return new GroupingVM(dto.Id, dto.Name, dto.IsUsed);
+        return new GenreFullVM(dto.Genre, dto.Grouping, dto.Artists.Select(Map).ToList());
     }
 
     private IReadOnlyCollection<string> Map(TagsDTO dto)
@@ -143,6 +124,46 @@ internal class ViewModelMapper : IViewModelMapper
             DiscNo = dto.DiscNo,
             DiscTrackCount = disc.TrackCount,
             IdFromSource = dto.IdFromSource
+        };
+    }
+
+    private AlbumDiscVM Map(AlbumDiscDTO dto)
+    {
+        return new AlbumDiscVM
+        {
+            DiscNo = dto.DiscNo,
+            TrackCount = dto.TrackCount,
+            Tracks = dto.Tracks.Select(t => Map(t, dto)).ToList()
+        };
+    }
+
+    private AlbumDetailsVM Map(AlbumDetailsDTO dto)
+    {
+        return new AlbumDetailsVM
+        {
+            ArtistId = dto.ArtistId,
+            ArtistName = dto.ArtistName,
+            Id = dto.Id,
+            ReleaseType = dto.ReleaseType,
+            DiscCount = dto.DiscCount,
+            Tags = Map(dto.Tags),
+            Title = dto.Title,
+            Year = dto.Year
+        };
+    }
+
+    private ArtistDetailsVM Map(ArtistDetailsDTO dto)
+    {
+        return new ArtistDetailsVM
+        {
+            Name = dto.Name,
+            Grouping = dto.Grouping,
+            Genre = dto.Genre,
+            Id = dto.Id,
+            City = dto.City,
+            Country = dto.Country,
+            State = dto.State,
+            Tags = Map(dto.Tags)
         };
     }
 }
