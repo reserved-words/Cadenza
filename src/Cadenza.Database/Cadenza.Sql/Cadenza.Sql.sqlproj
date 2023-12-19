@@ -179,8 +179,6 @@
     <Build Include="Stored Procedures\Search\GetTags.sql" />
     <Build Include="Stored Procedures\Search\GetGroupings.sql" />
     <Build Include="Stored Procedures\Library\GetTaggedItems.sql" />
-    <Build Include="Stored Procedures\Library\GetArtist.sql" />
-    <Build Include="Stored Procedures\Library\GetAlbum.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumDiscs.sql" />
     <Build Include="Stored Procedures\Library\GetAlbumTracks.sql" />
     <Build Include="Stored Procedures\Library\GetFullTrack.sql" />

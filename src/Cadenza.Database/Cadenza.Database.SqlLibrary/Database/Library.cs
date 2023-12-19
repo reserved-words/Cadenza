@@ -37,11 +37,6 @@ internal class Library : ILibrary
         return await _sql.Query<GetTaggedItemsResult>(new { Tag = tag });
     }
 
-    public async Task<GetArtistResult> GetArtist(int id)
-    {
-        return await _sql.QuerySingle<GetArtistResult>(new { Id = id });
-    }
-
     public async Task<GetFullArtistResult> GetFullArtist(int id)
     {
         return await _sql.QuerySingle<GetFullArtistResult>(new { Id = id });
@@ -55,11 +50,6 @@ internal class Library : ILibrary
     public async Task<GetFullTrackResult> GetFullTrack(int id)
     {
         return await _sql.QuerySingle<GetFullTrackResult>(new { Id = id });
-    }
-
-    public async Task<GetAlbumResult> GetAlbum(int id)
-    {
-        return await _sql.QuerySingle<GetAlbumResult>(new { Id = id });
     }
 
     public async Task<GetFullAlbumResult> GetFullAlbum(int id)
