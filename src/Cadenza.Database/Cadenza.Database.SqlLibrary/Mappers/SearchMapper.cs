@@ -1,10 +1,18 @@
-﻿using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
+﻿using Cadenza.Common;
+using Cadenza.Database.SqlLibrary.Mappers.Interfaces;
 using Cadenza.Database.SqlLibrary.Model.Search;
 
 namespace Cadenza.Database.SqlLibrary.Mappers;
 
 internal class SearchMapper : ISearchMapper
 {
+    private readonly IGenreMapper _genreMapper;
+
+    public SearchMapper(IGenreMapper genreMapper)
+    {
+        _genreMapper = genreMapper;
+    }
+
     public SearchItemDTO MapAlbum(GetAlbumsResult result)
     {
         return new SearchItemDTO
@@ -26,13 +34,13 @@ internal class SearchMapper : ISearchMapper
         };
     }
 
-    public SearchItemDTO MapGenre(GetGenresResult result)
+    public SearchItemDTO MapGenre(GetGenresResult result, bool isUniqueGenre)
     {
         return new SearchItemDTO
         {
             Type = PlayerItemType.Genre,
-            Id = result.Genre,
-            Name = result.Genre
+            Id = _genreMapper.MapGenreId(result.Grouping, result.Genre),
+            Name = _genreMapper.MapGenreSearchName(result.Grouping, result.Genre, isUniqueGenre)
         };
     }
 
@@ -41,8 +49,8 @@ internal class SearchMapper : ISearchMapper
         return new SearchItemDTO
         {
             Type = PlayerItemType.Grouping,
-            Id = result.Id.ToString(),
-            Name = result.Name
+            Id = result.Grouping,
+            Name = result.Grouping
         };
     }
 

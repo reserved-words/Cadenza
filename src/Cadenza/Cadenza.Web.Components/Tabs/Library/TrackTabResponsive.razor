@@ -95,7 +95,7 @@
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
         new LibraryBreadcrumb(PlayerItemType.Grouping, Model.AlbumArtist.Grouping, Model.AlbumArtist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, (Model.AlbumArtist.Grouping, Model.AlbumArtist.Genre).GenreId(), Model.AlbumArtist.Genre),
+        new LibraryBreadcrumb(PlayerItemType.Genre, Model.AlbumArtist.Genre, Model.AlbumArtist.Genre.GetGenreDisplayName()),
         new LibraryBreadcrumb(PlayerItemType.Artist, Model.AlbumArtist.Id, Model.AlbumArtist.Name),
         new LibraryBreadcrumb(PlayerItemType.Album, Model.Album.Id, Model.Album.Title),
         new LibraryBreadcrumb(PlayerItemType.Track, Model.Track.Id, Model.Track.Title)

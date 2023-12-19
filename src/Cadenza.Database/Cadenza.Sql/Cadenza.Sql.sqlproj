@@ -240,6 +240,7 @@
     <Build Include="Stored Procedures\Library\GetTrack.sql" />
     <Build Include="Stored Procedures\Library\GetFullAlbum.sql" />
     <Build Include="Stored Procedures\Library\GetFullArtist.sql" />
+    <Build Include="Stored Procedures\Library\GetGroupings.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Library\Artists.sql" />

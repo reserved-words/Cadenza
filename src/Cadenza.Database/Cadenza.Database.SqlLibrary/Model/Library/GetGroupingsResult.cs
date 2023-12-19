@@ -1,4 +1,4 @@
-﻿namespace Cadenza.Database.SqlLibrary.Model.Search;
+﻿namespace Cadenza.Database.SqlLibrary.Model.Library;
 
 internal class GetGroupingsResult
 {

@@ -28,6 +28,7 @@ public static class _Startup
     private static IServiceCollection AddMappers(this IServiceCollection services)
     {
         return services
+            .AddTransient<IGenreMapper, GenreMapper>()
             .AddTransient<IHistoryMapper, HistoryMapper>()
             .AddTransient<ILastFmMapper, LastFmMapper>()
             .AddTransient<ILibraryMapper, LibraryMapper>()

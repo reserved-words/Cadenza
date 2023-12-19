@@ -86,11 +86,11 @@ internal class PlaylistCreator : IPlaylistCreator
         };
     }
 
-    public async Task<PlaylistDefinition> CreateGenrePlaylist(string grouping, string genre)
+    public async Task<PlaylistDefinition> CreateGenrePlaylist(string genre)
     {
-        var tracks = await _playApi.PlayGenre(grouping, genre);
+        var tracks = await _playApi.PlayGenre(genre);
 
-        var playlistId = new PlaylistId((grouping, genre).GenreId(), PlaylistType.Genre, genre);
+        var playlistId = new PlaylistId(genre, PlaylistType.Genre, genre.GetGenreDisplayName(true));
 
         return new PlaylistDefinition
         {

@@ -3,27 +3,24 @@
 @if (!Loading)
 {
     <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping">
-        <ChildContent>
-            <SubGrid>
+        <SubGrid>
 
-                <SubGridColumn sm="4" md="3">
-                    <SubGridRow RowHeight="@RowHeight.Fixed">
-                        <GroupingDetail Grouping="@Grouping">
-                        </GroupingDetail>
-                    </SubGridRow>
-                </SubGridColumn>
+            <SubGridColumn sm="4" md="3">
+                <SubGridRow RowHeight="@RowHeight.Fixed">
+                    <GroupingDetail Grouping="@Grouping">
+                    </GroupingDetail>
+                </SubGridRow>
+            </SubGridColumn>
 
-                <SubGridColumn sm="8" md="9">
-                    <SubGridRow RowHeight="@RowHeight.Full">
+            <SubGridColumn sm="8" md="9">
+                <SubGridRow RowHeight="@RowHeight.Full">
 
-                        <MudDivider Class="xs-only" />
-                        <GroupingGenres Genres="@Genres"
-                                        Grouping="@Grouping"/>
+                    <MudDivider Class="xs-only" />
+                    <GroupingGenres Genres="@Genres" />
 
-                    </SubGridRow>
-                </SubGridColumn>
+                </SubGridRow>
+            </SubGridColumn>
 
-            </SubGrid>
-        </ChildContent>
+        </SubGrid>
     </LibraryWrapper>
 }

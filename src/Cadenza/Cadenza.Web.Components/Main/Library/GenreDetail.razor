@@ -1,6 +1,7 @@
-﻿
+﻿@using Cadenza.Common
+
 <ItemCard>
-    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Grouping" Name="@Genre" />
+    <ItemCardTitle Itemtype="@PlayerItemType.Genre" Id="@Genre" Name="@Genre.GetGenreDisplayName()" />
     <GroupingLink Typo="@Typo.body1" Grouping="@Grouping" />
 </ItemCard>
 

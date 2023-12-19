@@ -14,8 +14,7 @@ public class ViewGenreEffects
     [EffectMethod]
     public async Task HandleFetchViewGenreRequest(FetchViewGenreRequest action, IDispatcher dispatcher)
     {
-        (var grouping, var genre) = action.Id.SplitGenreId();
-        var vm = await _api.GetGenre(grouping, genre);
-        dispatcher.Dispatch(new FetchViewGenreResult(vm));
+        var genre = await _api.GetGenre(action.Id);
+        dispatcher.Dispatch(new FetchViewGenreResult(genre));
     }
 }

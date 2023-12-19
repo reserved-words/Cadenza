@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.Common;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -27,15 +29,16 @@ public class PlayController : ControllerBase
         return tracks;
     }
 
-    [HttpGet("Genre")]
-    public async Task<List<int>> Genre(string genre, string grouping)
+    [HttpGet("Genre/{genre}")]
+    public async Task<List<int>> Genre(string genre)
     {
-        var tracks = await _repository.PlayGenre(genre, grouping);
+        var split = genre.SplitGenreId();
+        var tracks = await _repository.PlayGenre(split.Grouping, split.Genre);
         _shuffler.Shuffle(tracks);
         return tracks;
     }
 
-    [HttpGet("Grouping/{id}")]
+    [HttpGet("Grouping/{grouping}")]
     public async Task<List<int>> Grouping(string grouping)
     {
         var tracks = await _repository.PlayGrouping(grouping);

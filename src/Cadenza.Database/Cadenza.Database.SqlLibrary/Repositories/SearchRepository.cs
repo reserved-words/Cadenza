@@ -28,8 +28,22 @@ internal class SearchRepository : ISearchRepository
 
     public async Task<List<SearchItemDTO>> GetGenres()
     {
-        var albums = await _search.GetGenres();
-        return albums.Select(_mapper.MapGenre).ToList();
+        var genres = await _search.GetGenres();
+        var groupedGenres = genres.GroupBy(g => g.Genre);
+
+        var list = new List<SearchItemDTO>();
+
+        foreach (var group in groupedGenres)
+        {
+            var isUniqueGenre = group.Count() == 1;
+
+            foreach (var genre in group)
+            {
+                list.Add(_mapper.MapGenre(genre, isUniqueGenre));
+            }
+        }
+
+        return list;
     }
 
     public async Task<List<SearchItemDTO>> GetGroupings()

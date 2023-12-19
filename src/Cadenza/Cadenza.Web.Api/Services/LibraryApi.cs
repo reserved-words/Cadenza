@@ -25,10 +25,9 @@ internal class LibraryApi : ILibraryApi
         return _mapper.Map(artist);
     }
 
-    public async Task<GenreFullVM> GetGenre(string grouping, string genre)
+    public async Task<GenreFullVM> GetGenre(string genre)
     {
-        var url = $"{_settings.Genre}?grouping={grouping}&genre={genre}";
-        var dto = await _apiHelper.Get<GenreDTO>(url);
+        var dto = await _apiHelper.Get<GenreDTO>(_settings.Genre, genre);
         return _mapper.Map(dto);
     }
 

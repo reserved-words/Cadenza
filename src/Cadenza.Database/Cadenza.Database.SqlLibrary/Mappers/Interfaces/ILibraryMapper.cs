@@ -16,4 +16,5 @@ internal interface ILibraryMapper
     TrackDetailsDTO MapTrack(GetTrackResult track);
     TrackFullDTO MapTrack(GetFullTrackResult track);
     List<AlbumDiscDTO> MapAlbumTracks(int id, List<GetAlbumDiscsResult> discs, List<GetAlbumTracksResult> tracks);
+    GenreDTO MapGenre(string grouping, string genre, List<GetArtistsByGenreResult> artists);
 }

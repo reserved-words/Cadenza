@@ -73,16 +73,10 @@ internal class LibraryRepository : ILibraryRepository
         return mappedArtist;
     }
 
-    public async Task<GenreDTO> GetGenre(string genre, string grouping)
+    public async Task<GenreDTO> GetGenre(string grouping, string genre)
     {
         var artists = await _library.GetArtistsByGenre(genre, grouping);
-
-        return new GenreDTO
-        {
-            Genre = genre,
-            Grouping = grouping,
-            Artists = artists.Select(_mapper.MapArtist).ToList()
-        };
+        return _mapper.MapGenre(grouping, genre, artists);
     }
 
     public async Task<List<ArtistDTO>> GetArtistsByGrouping(string grouping)

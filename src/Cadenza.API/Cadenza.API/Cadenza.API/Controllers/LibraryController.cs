@@ -1,4 +1,6 @@
-﻿namespace Cadenza.API.Controllers;
+﻿using Cadenza.Common;
+
+namespace Cadenza.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -35,10 +37,11 @@ public class LibraryController : ControllerBase
         return await _repository.GetFullArtist(id, includeAlbumsByOtherArtists);
     }
 
-    [HttpGet("Genre")]
-    public async Task<GenreDTO> Genre(string genre, string grouping)
+    [HttpGet("Genre/{genre}")]
+    public async Task<GenreDTO> Genre(string genre)
     {
-        return await _repository.GetGenre(genre, grouping);
+        var split = genre.SplitGenreId();
+        return await _repository.GetGenre(split.Grouping, split.Genre);
     }
 
     [HttpGet("Artists/Grouping/{grouping}")]
