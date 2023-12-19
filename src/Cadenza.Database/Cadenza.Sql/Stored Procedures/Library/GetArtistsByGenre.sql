@@ -15,5 +15,7 @@ BEGIN
 		ART.[Genre] = @Genre
 	AND
 		ART.[Grouping] = @Grouping
+	ORDER BY
+		ART.[CompareName]
 
 END
