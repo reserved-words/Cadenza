@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Api.Helpers;
+﻿using Cadenza.Common;
+
+namespace Cadenza.Web.Api.Helpers;
 
 internal class DataTransferObjectMapper : IDataTransferObjectMapper
 {
@@ -22,7 +24,7 @@ internal class DataTransferObjectMapper : IDataTransferObjectMapper
         {
             ArtistId = artist.Id,
             Grouping = artist.Grouping,
-            Genre = artist.Genre,
+            Genre = artist.Genre.GetGenreName(),
             City = artist.City,
             Country = artist.Country,
             State = artist.State,

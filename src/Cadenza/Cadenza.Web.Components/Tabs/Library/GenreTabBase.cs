@@ -11,7 +11,7 @@ public class GenreTabBase : FluxorComponent
     public IReadOnlyCollection<ArtistVM> Artists => ViewGenreState.Value.Genre.Artists;
 
     protected string Id => Genre.Genre;
-    protected string DisplayName => Genre.Genre.GetGenreDisplayName();
+    protected string DisplayName => Genre.Genre.GetGenreName();
 
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {

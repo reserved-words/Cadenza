@@ -74,7 +74,7 @@ internal class UpdateMapper : IUpdateMapper
         {
             Name = track.Artist.Name,
             CompareName = _nameComparer.GetCompareName(track.Artist.Name),
-            GroupingName = track.Artist.Grouping,
+            Grouping = track.Artist.Grouping,
             Genre = ValueOrDefault(track.Artist.Genre, DefaultGenre),
             City = track.Artist.City,
             State = track.Artist.State,

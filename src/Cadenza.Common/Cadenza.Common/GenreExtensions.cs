@@ -2,12 +2,15 @@
 
 public static class GenreExtensions
 {
-    public static string GetGenreDisplayName(this string id, bool includeGrouping = false)
+    public static string GenreId(this string genre, string grouping)
     {
-        (var grouping, var genre) = id.SplitGenreId();
-        return includeGrouping
-            ? $"{grouping} - {genre}"
-            : genre;
+        return $"{grouping}|{genre}";
+    }
+
+    public static string GetGenreName(this string id)
+    {
+        (var _, var genre) = id.SplitGenreId();
+        return genre;
     }
 
     public static (string Grouping, string Genre) SplitGenreId(this string id)

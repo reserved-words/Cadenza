@@ -6,14 +6,6 @@
                   ReadOnly="true"
                   Disabled="true"
                   Value="Model.Name" />
-    @* <MudSelect Label="Grouping"
-               @bind-Value="Model.Grouping"
-               For="@(() => Model.Grouping)">
-        @foreach (var grouping in Groupings)
-        {
-            <MudSelectItem Value="@grouping">@grouping</MudSelectItem>
-        }
-    </MudSelect> *@
     <MudTextField MaxLength="50"
                   Label="Grouping"
                   @bind-Value="Model.Grouping"

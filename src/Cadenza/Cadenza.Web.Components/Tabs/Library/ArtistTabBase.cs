@@ -13,7 +13,7 @@ public class ArtistTabBase : FluxorComponent
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
         new LibraryBreadcrumb(PlayerItemType.Grouping, Artist.Grouping, Artist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Artist.Genre, Artist.Genre.GetGenreDisplayName()),
+        new LibraryBreadcrumb(PlayerItemType.Genre, Artist.Genre, Artist.Genre.GetGenreName()),
         new LibraryBreadcrumb(PlayerItemType.Artist, Artist.Id, Artist.Name)
     };
 }

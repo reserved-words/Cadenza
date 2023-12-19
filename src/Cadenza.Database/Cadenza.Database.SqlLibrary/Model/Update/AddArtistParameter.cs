@@ -3,7 +3,6 @@
 internal class AddArtistParameter
 {
     public string CompareName { get; set; }
-    public string GroupingName { get; set; }
     public string ImageMimeType { get; set; }
     public byte[] ImageContent { get; set; }
     public string Name { get; set; }

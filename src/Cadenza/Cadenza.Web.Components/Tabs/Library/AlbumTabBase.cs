@@ -14,7 +14,7 @@ public class AlbumTabBase : FluxorComponent
     protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
     {
         new LibraryBreadcrumb(PlayerItemType.Grouping, Album.Artist.Grouping, Album.Artist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Album.Artist.Genre, Album.Artist.Genre.GetGenreDisplayName()),
+        new LibraryBreadcrumb(PlayerItemType.Genre, Album.Artist.Genre, Album.Artist.Genre.GetGenreName()),
         new LibraryBreadcrumb(PlayerItemType.Artist, Album.Artist.Id, Album.Artist.Name),
         new LibraryBreadcrumb(PlayerItemType.Album, Album.Album.Id, Album.Album.Title)
     };
