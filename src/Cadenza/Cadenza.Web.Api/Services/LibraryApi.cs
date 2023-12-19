@@ -13,19 +13,7 @@ internal class LibraryApi : ILibraryApi
         _mapper = mapper;
     }
 
-    public async Task<AlbumVM> GetAlbum(int id)
-    {
-        var album = await _apiHelper.Get<AlbumDTO>(_settings.Album, id);
-        return _mapper.Map(album);
-    }
-
-    public async Task<ArtistVM> GetArtist(int id)
-    {
-        var artist = await _apiHelper.Get<ArtistDTO>(_settings.Artist, id);
-        return _mapper.Map(artist);
-    }
-
-    public async Task<GenreFullVM> GetGenre(string genre)
+    public async Task<GenreFullVM> GetArtistsByGenre(string genre)
     {
         var dto = await _apiHelper.Get<GenreDTO>(_settings.Genre, genre);
         return _mapper.Map(dto);

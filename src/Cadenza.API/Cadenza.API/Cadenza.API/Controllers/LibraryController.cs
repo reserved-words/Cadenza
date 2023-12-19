@@ -13,22 +13,10 @@ public class LibraryController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("Album/{id}")]
-    public async Task<AlbumDTO> Album(int id)
-    {
-        return await _repository.GetAlbum(id);
-    }
-
     [HttpGet("Album/Full/{id}")]
     public async Task<AlbumFullDTO> AlbumFull(int id)
     {
         return await _repository.GetAlbumFull(id);
-    }
-
-    [HttpGet("Artist/{id}")]
-    public async Task<ArtistDTO> Artist(int id)
-    {
-        return await _repository.GetArtist(id);
     }
 
     [HttpGet("Artist/Full")]
@@ -41,7 +29,7 @@ public class LibraryController : ControllerBase
     public async Task<GenreDTO> Genre(string genre)
     {
         var split = genre.SplitGenreId();
-        return await _repository.GetGenre(split.Grouping, split.Genre);
+        return await _repository.GetArtistsByGenre(split.Grouping, split.Genre);
     }
 
     [HttpGet("Artists/Grouping/{grouping}")]

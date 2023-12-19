@@ -14,7 +14,7 @@ public class ViewGenreEffects
     [EffectMethod]
     public async Task HandleFetchViewGenreRequest(FetchViewGenreRequest action, IDispatcher dispatcher)
     {
-        var genre = await _api.GetGenre(action.Id);
+        var genre = await _api.GetArtistsByGenre(action.Id);
         dispatcher.Dispatch(new FetchViewGenreResult(genre));
     }
 }
