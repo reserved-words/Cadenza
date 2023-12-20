@@ -1,0 +1,10 @@
+﻿<MudContainer Class="d-flex flex-row flex-wrap ma-0 pa-0">
+    @foreach (var artist in Artists)
+    {
+        <ArtistGridItem Artist="@artist" />
+    }
+</MudContainer>
+
+@code {
+    [Parameter] public IReadOnlyCollection<ArtistVM> Artists { get; set; }
+}

@@ -1,15 +1,6 @@
 ﻿
 <AppCardScrollContainer>
-    <ChildContent>
-        <AppTable T="@ArtistVM"
-                  Items="@Artists">
-            <RowTemplate>
-                <MudTd>
-                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
-                </MudTd>
-            </RowTemplate>
-        </AppTable>
-    </ChildContent>
+    <ArtistGrid Artists="@Artists" />
 </AppCardScrollContainer>
 
 @code {
