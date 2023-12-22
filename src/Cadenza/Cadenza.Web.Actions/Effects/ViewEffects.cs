@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Extensions;
-
-namespace Cadenza.Web.Actions.Effects;
+﻿namespace Cadenza.Web.Actions.Effects;
 
 public class ViewEffects
 {

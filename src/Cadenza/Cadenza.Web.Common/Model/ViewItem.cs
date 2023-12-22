@@ -2,14 +2,14 @@
 
 public struct ViewItem
 {
-    public ViewItem(PlayerItemType type, string id, string name)
+    public ViewItem(PlayerItemType? type, string id, string name)
     {
         Type = type;
         Id = id;
         Name = name;
     }
 
-    public PlayerItemType Type { get; }
+    public PlayerItemType? Type { get; }
     public string Id { get; }
     public string Name { get; }
 }

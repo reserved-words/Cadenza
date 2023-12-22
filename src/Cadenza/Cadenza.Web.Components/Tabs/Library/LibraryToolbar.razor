@@ -16,7 +16,7 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public PlayerItemType Type { get; set; }
+    [Parameter] public PlayerItemType? Type { get; set; }
     [Parameter] public string Id { get; set; }
     [Parameter] public string Name { get; set; }
 
@@ -41,6 +41,9 @@
     {
         switch (Type)
         {
+            case null:
+                Dispatcher.Dispatch(new PlayAllRequest());
+                break;
             case PlayerItemType.Artist:
                 Dispatcher.Dispatch(new PlayArtistRequest(int.Parse(Id)));
                 break;

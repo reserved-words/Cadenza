@@ -1,0 +1,20 @@
+﻿
+<AppCardScrollContainer>
+    <HeaderContent>
+        <MudText Typo="@Typo.h6">Groupings</MudText>
+    </HeaderContent>
+    <ChildContent>
+        <AppTable T="@string"
+                  Items="@Groupings">
+            <RowTemplate>
+                <MudTd>
+                    <GroupingLink Typo="@Typo.body1" Grouping="@context" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter] public IReadOnlyCollection<string> Groupings { get; set; }
+}

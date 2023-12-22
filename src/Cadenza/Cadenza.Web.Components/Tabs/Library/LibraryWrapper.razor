@@ -27,7 +27,7 @@
     [Parameter] public RenderFragment ChildContent { get; set; }
 
     [Parameter] public List<LibraryBreadcrumb> Breadcrumbs { get; set; } = new List<LibraryBreadcrumb>();
-    [Parameter] public PlayerItemType Type { get; set; }
+    [Parameter] public PlayerItemType? Type { get; set; }
     [Parameter] public string Id { get; set; }
     [Parameter] public string Name { get; set; }
 }
