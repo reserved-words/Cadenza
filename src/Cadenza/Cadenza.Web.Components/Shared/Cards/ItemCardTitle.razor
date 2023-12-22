@@ -1,7 +1,15 @@
 ﻿
 <MudContainer Class="d-flex flex-row pa-0 ma-0" Style="align-items: center;">
     <MudIcon Icon="@ItemType.GetIcon()" Class="mr-2" />
-    <ActionLink Typo="@Typo.h6" Text="@Name" OnClick="@View"></ActionLink>
+
+    @if (Link)
+    {
+        <ActionLink Typo="@Typo.h6" Text="@Name" OnClick="@View"></ActionLink>
+    }
+    else
+    {
+        <MudText Typo="@Typo.h6">@Name</MudText>
+    }
 </MudContainer>
 
 @code {
@@ -10,6 +18,7 @@
     [Parameter] public PlayerItemType ItemType { get; set; }
     [Parameter] public object Id { get; set; }
     [Parameter] public string Name { get; set; }
+    [Parameter] public bool Link { get; set; } = true;
 
     private void View()
     {

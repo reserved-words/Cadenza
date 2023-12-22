@@ -31,7 +31,7 @@
         if (Links.Count == 0)
             return;
 
-        Dispatcher.Dispatch(new ViewItemRequest(null, null, null));
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Library, null, null));
     }
 
     private void View(LibraryBreadcrumb link)

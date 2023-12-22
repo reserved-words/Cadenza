@@ -2,6 +2,7 @@
 
 public enum PlayerItemType
 {
+    Library = 0,
     Tag = 1,
     Grouping = 2,
     Genre = 3,

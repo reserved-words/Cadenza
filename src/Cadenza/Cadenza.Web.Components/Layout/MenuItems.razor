@@ -5,7 +5,7 @@
 
 @if (IncludeHomeTab)
 {
-    <MenuItem Icon="@Icons.Material.Filled.Home"
+    <MenuItem Icon="@Tab.Home.GetIcon()"
               IconSize="@IconSize"
               ShowLabel="@ShowLabels"
               Label="Home"
@@ -15,7 +15,7 @@
               Disabled="@IsNavigationDisabled" />
 }
 
-<MenuItem Icon="@Icons.Material.Filled.Dashboard"
+<MenuItem Icon="@Tab.Dashboard.GetIcon()"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
           Label="Dashboard"
@@ -24,7 +24,7 @@
           Class="@MenuItemClass(Tab.Dashboard)"
           Disabled="@IsNavigationDisabled" />
 
-<MenuItem Icon="@Icons.Material.Filled.PlaylistPlay"
+<MenuItem Icon="@Tab.CurrentTrack.GetIcon()"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
           Label="Playing"
@@ -33,7 +33,7 @@
           Class="@MenuItemClass(Tab.CurrentTrack)"
           Disabled="@IsNavigationDisabled" />
 
-<MenuItem Icon="@Icons.Material.Filled.FormatListBulleted"
+<MenuItem Icon="@Tab.Library.GetIcon()"
           IconSize="@IconSize"
           ShowLabel="@ShowLabels"
           Label="Library"
@@ -44,7 +44,7 @@
 
 @if (IncludeSearchTab)
 {
-    <MenuItem Icon="@Icons.Material.Filled.Search"
+    <MenuItem Icon="@Tab.Search.GetIcon()"
               IconSize="@IconSize"
               ShowLabel="@ShowLabels"
               Label="Search"
@@ -56,7 +56,7 @@
 
 @if (ActiveTab == Tab.Settings)
 {
-    <MenuItem Icon="@Icons.Material.Filled.Settings"
+    <MenuItem Icon="@Tab.Settings.GetIcon()"
               IconSize="@IconSize"
               ShowLabel="@ShowLabels"
               Label="Settings"
@@ -66,7 +66,7 @@
 
 @if (ActiveTab == Tab.Edit)
 {
-    <MenuItem Icon="@Icons.Material.Filled.Edit"
+    <MenuItem Icon="@Tab.Edit.GetIcon()"
               IconSize="@IconSize"
               ShowLabel="@ShowLabels"
               Label="Edit"
