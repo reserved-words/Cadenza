@@ -1,16 +1,14 @@
-﻿@inherits GenreTabBase
+﻿@inherits GroupingsTabBase
 
-@if (!Loading)
+@if (Groupings != null)
 {
-    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Genre" Id="@Id" Name="@DisplayName">
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
         <SubGrid>
 
             <SubGridColumn sm="12">
                 <SubGridRow RowHeight="@RowHeight.Full">
-
                     <MudDivider Class="xs-only" />
-                    <GenreArtists Grouping="@Genre.Grouping" Genre="@DisplayName" Artists="@Artists" />
-
+                    <GroupingsList Groupings="@Groupings" />
                 </SubGridRow>
             </SubGridColumn>
 

@@ -1,5 +1,8 @@
 ﻿
 <AppCardScrollContainer>
+    <HeaderContent>
+        <ItemCardTitle Itemtype="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping" Link="false" />
+    </HeaderContent>
     <ChildContent>
         <AppTable T="@string"
                   Items="@Genres">
@@ -13,5 +16,6 @@
 </AppCardScrollContainer>
 
 @code {
+    [Parameter] public string Grouping { get; set; }
     [Parameter] public IReadOnlyCollection<string> Genres { get; set; }
 }

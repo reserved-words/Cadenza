@@ -1,7 +1,11 @@
 ﻿
 <ul class="mud-breadcrumbs mud-typography-body1 py-2">
 
-    <li class="mud-breadcrumb-item"><a>Library</a></li>
+    <li class="mud-breadcrumb-item">
+        <MudLink Typo="@Typo.body1" OnClick="@(() => ViewLibrary())" Color="@Color.Surface">
+            Library
+        </MudLink>
+    </li>
 
     @foreach (var link in Links)
     {
@@ -21,6 +25,14 @@
     [Inject] public IDispatcher Dispatcher { get; set; }
 
     [Parameter] public List<LibraryBreadcrumb> Links { get; set; }
+
+    private void ViewLibrary()
+    {
+        if (Links.Count == 0)
+            return;
+
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Library, null, null));
+    }
 
     private void View(LibraryBreadcrumb link)
     {

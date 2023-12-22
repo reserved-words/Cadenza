@@ -1,6 +1,4 @@
-﻿using Cadenza.Web.Common.Extensions;
-
-namespace Cadenza.Web.Actions.Reducers;
+﻿namespace Cadenza.Web.Actions.Reducers;
 
 public static class ViewArtistReducers
 {

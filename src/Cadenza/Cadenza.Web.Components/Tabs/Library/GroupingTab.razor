@@ -5,19 +5,11 @@
     <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping">
         <SubGrid>
 
-            <SubGridColumn sm="4" md="3">
-                <SubGridRow RowHeight="@RowHeight.Fixed">
-                    <GroupingDetail Grouping="@Grouping">
-                    </GroupingDetail>
-                </SubGridRow>
-            </SubGridColumn>
-
-            <SubGridColumn sm="8" md="9">
+            <SubGridColumn sm="12">
                 <SubGridRow RowHeight="@RowHeight.Full">
-
                     <MudDivider Class="xs-only" />
-                    <GroupingGenres Genres="@Genres" />
-
+                    <GroupingGenres Grouping="@Grouping"
+                                    Genres="@Genres" />
                 </SubGridRow>
             </SubGridColumn>
 
