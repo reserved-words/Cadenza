@@ -5,18 +5,11 @@
     <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Genre" Id="@Id" Name="@DisplayName">
         <SubGrid>
 
-            <SubGridColumn sm="4" md="3">
-                <SubGridRow RowHeight="@RowHeight.Fixed">
-                    <GenreDetail Genre="@Genre.Genre"
-                                 Grouping="@Genre.Grouping" />
-                </SubGridRow>
-            </SubGridColumn>
-
-            <SubGridColumn sm="8" md="9">
+            <SubGridColumn sm="12">
                 <SubGridRow RowHeight="@RowHeight.Full">
 
                     <MudDivider Class="xs-only" />
-                    <GenreArtists Artists="@Artists" />
+                    <GenreArtists Grouping="@Genre.Grouping" Genre="@DisplayName" Artists="@Artists" />
 
                 </SubGridRow>
             </SubGridColumn>

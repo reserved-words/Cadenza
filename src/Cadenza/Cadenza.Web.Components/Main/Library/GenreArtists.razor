@@ -1,8 +1,16 @@
 ﻿
 <AppCardScrollContainer>
-    <ArtistGrid Artists="@Artists" />
+    <HeaderContent>
+        <ItemCardTitle Itemtype="@PlayerItemType.Genre" Name="@Genre" Link="false" />
+        <GroupingLink Typo="@Typo.body1" Grouping="@Grouping" />
+    </HeaderContent>
+    <ChildContent>
+        <ArtistGrid Artists="@Artists" />
+    </ChildContent>
 </AppCardScrollContainer>
 
 @code {
+    [Parameter] public string Genre { get; set; }
+    [Parameter] public string Grouping { get; set; }
     [Parameter] public IReadOnlyCollection<ArtistVM> Artists { get; set; }
 }
