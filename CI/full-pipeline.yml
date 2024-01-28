@@ -26,10 +26,6 @@ stages:
   displayName: 'Local Build'
   variables:
   - group: appSettings.local
-  - group: auth.blazor.local
-  - group: auth.service.local
-  - group: auth.mainApi.local
-  - group: auth.localApi.local
     
   jobs:
   - job: build
