@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace Cadenza.Local.API.Controllers;
+﻿namespace Cadenza.Local.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,7 +14,6 @@ public class LibraryController : ControllerBase
     }
 
     [HttpGet("Track/{idBase64}")]
-    [AllowAnonymous] // Override authentication for now - later can improve this
     public async Task<IActionResult> Track(string idBase64)
     {
         var id = _base64Encoder.Decode(idBase64);

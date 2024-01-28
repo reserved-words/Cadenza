@@ -32,22 +32,19 @@ public class HistoryController : ControllerBase
     [HttpGet("RecentTracks/{maxItems}")]
     public async Task<List<RecentTrackDTO>> GetRecentTracks(int maxItems)
     {
-        var username = HttpContext.GetUsername();
-        return await _repository.GetRecentTracks(username, maxItems);
+        return await _repository.GetRecentTracks( maxItems);
     }
 
     [HttpPost("RecordPlay")]
     public async Task RecordPlay(ScrobbleDTO scrobble)
     {
-        var username = HttpContext.GetUsername();
-        await _repository.ScrobbleTrack(scrobble.TrackId, username, scrobble.Timestamp);
+        await _repository.ScrobbleTrack(scrobble.TrackId, scrobble.Timestamp);
     }
 
     [HttpPost("UpdateNowPlaying")]
     public async Task UpdateNowPlaying(NowPlayingDTO nowPlaying)
     {
-        var username = HttpContext.GetUsername();
-        await _repository.UpdateNowPlaying(username, nowPlaying.TrackId, nowPlaying.SecondsRemaining);
+        await _repository.UpdateNowPlaying(nowPlaying.TrackId, nowPlaying.SecondsRemaining);
     }
 
     [HttpGet("TopAlbums")]

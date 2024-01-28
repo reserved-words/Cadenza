@@ -11,9 +11,7 @@ using Cadenza.Apps.API;
 using Cadenza.Common;
 using Cadenza.Local.FileAccess;
 
-const string AuthConfigSectionName = "LocalApiAuthentication";
-
-var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
+var builder = API.CreateBuilder((IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddUtilities()
@@ -26,6 +24,6 @@ var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection servi
         .ConfigureSettings<CurrentlyPlayingSettings>(configuration, "CurrentlyPlaying");
 }, JsonSerialization.SetOptions);
 
-var app = API.CreateApp(builder, AuthConfigSectionName);
+var app = API.CreateApp(builder);
 
 app.Run();

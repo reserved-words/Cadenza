@@ -79,7 +79,6 @@
     <Folder Include="Tables\LastFm" />
     <Folder Include="Stored Procedures\LastFm" />
     <Folder Include="Functions" />
-    <Folder Include="Functions\Admin" />
     <Folder Include="Functions\History" />
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +136,6 @@
     <Build Include="Stored Procedures\Library\GetArtistTrackSourceIds.sql" />
     <Build Include="Stored Procedures\Library\GetTrackSourceId.sql" />
     <Build Include="Views\Library\vw_UsedTags.sql" />
-    <Build Include="Tables\Admin\Settings.sql" />
     <Build Include="Stored Procedures\Play\GetAllTrackIds.sql" />
     <Build Include="Schemas\Play.sql" />
     <Build Include="Stored Procedures\Play\GetGenreTrackIds.sql" />
@@ -191,7 +189,7 @@
     <Build Include="Stored Procedures\History\InsertScrobble.sql" />
     <Build Include="Stored Procedures\History\SyncScrobbles.sql" />
     <Build Include="Views\History\vw_ScrobbleMatches_AlbumArtist.sql" />
-    <Build Include="Tables\Admin\Users.sql" />
+    <Build Include="Tables\Admin\User.sql" />
     <Build Include="Stored Procedures\Admin\SaveLastFmSessionKey.sql" />
     <Build Include="Tables\History\NowPlaying.sql" />
     <Build Include="Stored Procedures\History\InsertNowPlaying.sql" />
@@ -225,7 +223,6 @@
     <Build Include="Views\Library\vw_TrackDetails.sql" />
     <Build Include="Stored Procedures\History\GetTopTracks.sql" />
     <Build Include="Views\History\vw_Scrobbles.sql" />
-    <Build Include="Functions\Admin\GetUserId.sql" />
     <Build Include="Functions\History\GetStartDate.sql" />
     <Build Include="Stored Procedures\History\GetTopAlbums.sql" />
     <Build Include="Stored Procedures\History\GetTopArtists.sql" />

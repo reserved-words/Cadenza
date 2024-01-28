@@ -1,17 +1,7 @@
 ﻿CREATE PROCEDURE [History].[GetRecentTracks]
-	@Username NVARCHAR(100),
 	@MaxItems INT
 AS
 BEGIN
-
-	DECLARE @UserId INT
-
-	SELECT 
-		@UserId = [Id]
-	FROM
-		[Admin].[Users]
-	WHERE
-		[Username] = @Username;
 
 	WITH [Scrobbles] AS (
 		SELECT
@@ -21,8 +11,6 @@ BEGIN
 		FROM
 			[History].[NowPlaying]
 		WHERE
-			[UserId] = @UserId
-		AND
 			DATEADD(SECOND, [SecondsRemaining], [Timestamp]) > GETDATE()
 
 		UNION

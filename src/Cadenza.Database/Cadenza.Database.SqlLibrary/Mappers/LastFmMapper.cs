@@ -10,7 +10,6 @@ internal class LastFmMapper : ILastFmMapper
         return new LovedTrackUpdateDTO
         {
             TrackId = data.TrackId,
-            UserId = data.UserId,
             SessionKey = data.SessionKey,
             IsLoved = data.IsLoved,
             Track = data.Track,
@@ -22,7 +21,6 @@ internal class LastFmMapper : ILastFmMapper
     {
         return new NowPlayingUpdateDTO
         {
-            UserId = data.UserId,
             SessionKey = data.SessionKey,
             Timestamp = data.Timestamp,
             SecondsRemaining = data.SecondsRemaining,

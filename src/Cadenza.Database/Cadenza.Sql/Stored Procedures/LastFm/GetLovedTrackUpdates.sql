@@ -4,7 +4,6 @@ BEGIN
 	
 	SELECT
 		LFM.[TrackId],
-		LFM.[UserId],
 		USR.[LastFmSessionKey] [SessionKey],
 		TRK.[Title] [Track],
 		ART.[Name] [Artist],
@@ -12,7 +11,7 @@ BEGIN
 	FROM
 		[LastFm].[LovedTracks] LFM
 	INNER JOIN
-		[Admin].[Users] USR ON USR.[Id] = LFM.[UserId]
+		[Admin].[User] USR ON USR.[Id] = 1
 	INNER JOIN
 		[Library].[Tracks] TRK ON TRK.[Id] = LFM.[TrackId]
 	INNER JOIN

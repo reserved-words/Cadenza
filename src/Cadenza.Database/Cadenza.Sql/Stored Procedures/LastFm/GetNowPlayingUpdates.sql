@@ -3,7 +3,6 @@ AS
 BEGIN
 	
 	SELECT
-		LFM.[UserId],
 		USR.[LastFmSessionKey] [SessionKey],
 		NPL.[Timestamp],
 		NPL.[SecondsRemaining],
@@ -12,11 +11,11 @@ BEGIN
 		ALB.[Title] [Album],
 		ALA.[Name] [AlbumArtist]
 	FROM
-		[LastFm].[NowPlaying] LFM
+		[Admin].[User] USR
 	INNER JOIN
-		[History].[NowPlaying] NPL ON NPL.[UserId] = LFM.[UserId]
+		[LastFm].[NowPlaying] LFM ON LFM.[Id] = 1
 	INNER JOIN
-		[Admin].[Users] USR ON USR.[Id] = NPL.[UserId]
+		[History].[NowPlaying] NPL ON NPL.[Id] = 1
 	INNER JOIN
 		[Library].[Tracks] TRK ON TRK.[Id] = NPL.[TrackId]
 	INNER JOIN

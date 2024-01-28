@@ -1,20 +1,17 @@
 ﻿CREATE PROCEDURE [History].[InsertNowPlaying]
 	@TrackId INT,
-	@SecondsRemaining INT,
-	@Username NVARCHAR(100)
+	@SecondsRemaining INT
 AS
 BEGIN
 
-	DECLARE @UserId INT = [Admin].[GetUserId](@Username)
-
-	IF NOT EXISTS (SELECT [UserId] FROM [History].[NowPlaying] WHERE [UserId] = @UserId)
+	IF NOT EXISTS (SELECT [Id] FROM [History].[NowPlaying])
 	BEGIN
 		INSERT INTO [History].[NowPlaying] (
-			[UserId],
+			[Id],
 			[Timestamp]
 		)
 		VALUES (
-			@UserId,
+			1,
 			GETDATE()
 		)
 	END
@@ -25,9 +22,7 @@ BEGIN
 		[TrackId] = @TrackId,
 		[Timestamp] = GETDATE(),
 		[SecondsRemaining] = @SecondsRemaining
-	WHERE
-		[UserId] = @UserId
 
-	EXECUTE [LastFm].[QueueNowPlaying] @UserId
+	EXECUTE [LastFm].[QueueNowPlaying]
 
 END

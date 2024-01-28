@@ -33,9 +33,9 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(d => d.Tag).ToList();
     }
 
-    public async Task<List<RecentTrackDTO>> GetRecentTracks(string username, int maxItems)
+    public async Task<List<RecentTrackDTO>> GetRecentTracks(int maxItems)
     {
-        var data = await _history.GetRecentTracks(username, maxItems);
+        var data = await _history.GetRecentTracks(maxItems);
         return data.Select(_mapper.MapRecentTrack).ToList();
     }
 
@@ -60,12 +60,11 @@ internal class HistoryRepository : IHistoryRepository
         return data.Select(d => _mapper.MapTopTrack(d, rank++)).ToList();
     }
 
-    public async Task ScrobbleTrack(int trackId, string username, DateTime scrobbledAt)
+    public async Task ScrobbleTrack(int trackId, DateTime scrobbledAt)
     {
         await _history.InsertScrobble(new InsertScrobbleParameter
         {
             TrackId = trackId, 
-            Username = username,
             ScrobbledAt = scrobbledAt
         });
     }
@@ -75,12 +74,11 @@ internal class HistoryRepository : IHistoryRepository
         await _history.SyncScrobbles();
     }
 
-    public async Task UpdateNowPlaying(string username, int trackId, int secondsRemaining)
+    public async Task UpdateNowPlaying(int trackId, int secondsRemaining)
     {
         await _history.InsertNowPlaying(new InsertNowPlayingParameter
         {
             TrackId = trackId,
-            Username = username,
             SecondsRemaining = secondsRemaining
         });
     }

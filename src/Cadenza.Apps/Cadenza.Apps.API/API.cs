@@ -9,7 +9,6 @@ namespace Cadenza.Apps.API;
 public static class API
 {
     public static WebApplicationBuilder CreateBuilder(
-        string authConfigSectionName,
         Action<IServiceCollection, IConfiguration> registerDependencies,
         Action<JsonSerializerOptions> setJsonOptions)
     {
@@ -20,19 +19,18 @@ public static class API
             .RegisterDependencies(registerDependencies)
             .SetCorsPolicy()
             .RegisterDocumentation()
-            .ConfigureJsonSerialization(setJsonOptions)
-            .ConfigureAuthentication(authConfigSectionName);
+            .ConfigureJsonSerialization(setJsonOptions);
     }
 
-    public static WebApplication CreateApp(WebApplicationBuilder builder, string authConfigSectionName)
+    public static WebApplication CreateApp(WebApplicationBuilder builder)
     {
         var app = builder.Build();
 
         app.UseMiddleware<ErrorHandlingMiddleware>();
-        app.UseAuthentication();
-        app.UseAuthorization();
+        //app.UseAuthentication();
+        //app.UseAuthorization();
         app.UseCors();
-        app.MapControllers().RequireAuthorization(builder.Configuration, authConfigSectionName);
+        app.MapControllers();
         app.AddDocumentation();
         app.AddDocumentationUI();
 

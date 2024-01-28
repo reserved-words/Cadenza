@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [Admin].[HasLastFmSessionKey]
-	@Username NVARCHAR(100),
 	@HasSessionKey BIT OUTPUT
 AS
 BEGIN
@@ -10,8 +9,6 @@ BEGIN
 			ELSE 0
 		END
 	FROM
-		[Admin].[Users]
-	WHERE
-		[Username] = @Username
+		[Admin].[User]
 
 END
