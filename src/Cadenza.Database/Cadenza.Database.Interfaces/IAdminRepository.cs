@@ -2,6 +2,6 @@
 
 public interface IAdminRepository
 {
-    Task<bool> HasLastFmSessionKey(string username);
-    Task SaveLastFmSessionKey(string username, string lastFmUsername, string lastFmSessionKey);
+    Task<bool> HasLastFmSessionKey();
+    Task SaveLastFmSessionKey(string lastFmUsername, string lastFmSessionKey);
 }

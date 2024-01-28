@@ -2,7 +2,6 @@
 
 public class GetNowPlayingUpdatesResult
 {
-    public int UserId { get; set; }
     public string SessionKey { get; set; }
     public DateTime Timestamp { get; set; }
     public int SecondsRemaining { get; set; }

@@ -1,10 +1,9 @@
 ﻿CREATE PROCEDURE [LastFm].[QueueLovedTrack]
-	@UserId INT,
 	@TrackId INT
 AS
 BEGIN
 
-	IF EXISTS (SELECT [TrackId] FROM [LastFm].[LovedTracks] WHERE [UserId] = @UserId AND [TrackId] = @TrackId)
+	IF EXISTS (SELECT [TrackId] FROM [LastFm].[LovedTracks] WHERE [TrackId] = @TrackId)
 	BEGIN
 
 		UPDATE 
@@ -14,8 +13,6 @@ BEGIN
 			[FailedAttempts] = 0,
 			[LastAttempt] = NULL
 		WHERE
-			[UserId] = @UserId 
-		AND
 			[TrackId] = @TrackId
 
 	END
@@ -23,11 +20,9 @@ BEGIN
 	BEGIN
 
 		INSERT INTO [LastFm].[LovedTracks] (
-			[UserId],
 			[TrackId]
 		)
 		VALUES (
-			@UserId,
 			@TrackId
 		)
 

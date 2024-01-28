@@ -1,11 +1,8 @@
 ﻿CREATE PROCEDURE [History].[InsertScrobble]
 	@TrackId INT,
-	@Username NVARCHAR(100),
 	@ScrobbledAt DATETIME
 AS
 BEGIN
-
-	DECLARE @UserId INT = [Admin].[GetUserId](@Username)
 
 	DECLARE @ScrobbleId INT
 
@@ -13,14 +10,12 @@ BEGIN
 
 		INSERT INTO [History].[Scrobbles] (
 			[ScrobbledAt],
-			[UserId],
 			[Track],
 			[Artist],
 			[Album],
 			[AlbumArtist])
 		SELECT
 			@ScrobbledAt,
-			@UserId,
 			TRK.[Title],
 			ART.[Name],
 			ALB.[Title],

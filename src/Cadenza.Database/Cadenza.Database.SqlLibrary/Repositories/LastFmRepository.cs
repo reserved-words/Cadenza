@@ -32,24 +32,24 @@ internal class LastFmRepository : ILastFmRepository
         return data.Select(_mapper.MapNowPlaying).ToList();
     }
 
-    public async Task MarkLovedTrackFailed(int userId, int trackId)
+    public async Task MarkLovedTrackFailed(int trackId)
     {
-        await _lastFm.MarkLovedTrackFailed(userId, trackId);
+        await _lastFm.MarkLovedTrackFailed(trackId);
     }
 
-    public async Task MarkLovedTrackUpdated(int userId, int trackId)
+    public async Task MarkLovedTrackUpdated(int trackId)
     {
-        await _lastFm.MarkLovedTrackUpdated(userId, trackId);
+        await _lastFm.MarkLovedTrackUpdated(trackId);
     }
 
-    public async Task MarkNowPlayingFailed(int userId)
+    public async Task MarkNowPlayingFailed()
     {
-        await _lastFm.MarkNowPlayingFailed(userId);
+        await _lastFm.MarkNowPlayingFailed();
     }
 
-    public async Task MarkNowPlayingUpdated(int userId)
+    public async Task MarkNowPlayingUpdated()
     {
-        await _lastFm.MarkNowPlayingUpdated(userId);
+        await _lastFm.MarkNowPlayingUpdated();
     }
 
     public async Task MarkScrobbled(int scrobbleId)

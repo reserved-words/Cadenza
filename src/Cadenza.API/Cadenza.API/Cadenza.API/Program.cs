@@ -1,4 +1,3 @@
-global using Cadenza.API.Extensions;
 global using Cadenza.API.Interfaces;
 global using Cadenza.Apps;
 global using Cadenza.Apps.API;
@@ -7,7 +6,6 @@ global using Cadenza.Common.Enums;
 global using Cadenza.Common.Model;
 global using Cadenza.Common.Utilities;
 global using Cadenza.Database.Interfaces;
-global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 
 using Cadenza.API.Services;
@@ -17,9 +15,7 @@ using Cadenza.Database.SqlLibrary.Configuration;
 using Cadenza.Common.LastFm;
 using Cadenza.Common.LastFm.Settings;
 
-const string AuthConfigSectionName = "MainApiAuthentication";
-
-var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection services, IConfiguration configuration) =>
+var builder = API.CreateBuilder((IServiceCollection services, IConfiguration configuration) =>
 {
     services
         .AddSqlLibrary()
@@ -36,6 +32,6 @@ var builder = API.CreateBuilder(AuthConfigSectionName, (IServiceCollection servi
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings");
 }, JsonSerialization.SetOptions);
 
-var app = API.CreateApp(builder, AuthConfigSectionName);
+var app = API.CreateApp(builder);
 
 app.Run();

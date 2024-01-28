@@ -34,14 +34,12 @@ public class UpdateController : ControllerBase
     [HttpPost("LoveTrack")]
     public async Task LoveTrack([FromBody] UpdateLovedTrackDTO request)
     {
-        var username = HttpContext.GetUsername();
-        await _repository.LoveTrack(username, request.TrackId);
+        await _repository.LoveTrack(request.TrackId);
     }
 
     [HttpPost("UnloveTrack")]
     public async Task UnloveTrack([FromBody] UpdateLovedTrackDTO request)
     {
-        var username = HttpContext.GetUsername();
-        await _repository.UnloveTrack(username, request.TrackId);
+        await _repository.UnloveTrack(request.TrackId);
     }
 }

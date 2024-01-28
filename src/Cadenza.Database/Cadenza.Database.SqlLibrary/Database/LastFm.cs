@@ -27,24 +27,24 @@ internal class LastFm : ILastFm
         return await _sql.Query<GetNowPlayingUpdatesResult>(null);
     }
 
-    public async Task MarkLovedTrackFailed(int userId, int trackId)
+    public async Task MarkLovedTrackFailed(int trackId)
     {
-        await _sql.Execute(new { UserId = userId, TrackId = trackId });
+        await _sql.Execute(new { TrackId = trackId });
     }
 
-    public async Task MarkLovedTrackUpdated(int userId, int trackId)
+    public async Task MarkLovedTrackUpdated(int trackId)
     {
-        await _sql.Execute(new { UserId = userId, TrackId = trackId });
+        await _sql.Execute(new { TrackId = trackId });
     }
 
-    public async Task MarkNowPlayingFailed(int userId)
+    public async Task MarkNowPlayingFailed()
     {
-        await _sql.Execute(new { UserId = userId });
+        await _sql.Execute(null);
     }
 
-    public async Task MarkNowPlayingUpdated(int userId)
+    public async Task MarkNowPlayingUpdated()
     {
-        await _sql.Execute(new { UserId = userId });
+        await _sql.Execute(null);
     }
 
     public async Task MarkScrobbled(int scrobbleId)

@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [LastFm].[MarkNowPlayingUpdated]
-	@UserId INT
 AS
 BEGIN
 
@@ -8,7 +7,5 @@ BEGIN
 	SET
 		[Synced] = 1,
 		[LastAttempt] = GETDATE()
-	WHERE
-		[UserId] = @UserId
 
 END

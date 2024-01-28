@@ -2,7 +2,6 @@
 
 [Route("api/[controller]")]
 [ApiController]
-[AllowAnonymous] // Override authentication for now - later can improve this
 public class ImageController : ControllerBase
 {
     private readonly IImageRepository _repository;

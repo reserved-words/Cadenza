@@ -29,7 +29,7 @@ internal class LovedTracksUpdater : IService
 
     private async Task TryUpdateLovedTrack(LovedTrackUpdateDTO update)
     {
-        await _repository.MarkLovedTrackUpdated(update.UserId, update.TrackId);
+        await _repository.MarkLovedTrackUpdated(update.TrackId);
 
         var track = new LovedTrack
         {
@@ -38,10 +38,10 @@ internal class LovedTracksUpdater : IService
             IsLoved = update.IsLoved
         };
 
-        await TryUpdateLovedTrack(update.UserId, update.TrackId, update.SessionKey, track);
+        await TryUpdateLovedTrack(update.TrackId, update.SessionKey, track);
     }
 
-    private async Task TryUpdateLovedTrack(int userId, int trackId, string sessionKey, LovedTrack track)
+    private async Task TryUpdateLovedTrack(int trackId, string sessionKey, LovedTrack track)
     {
         try
         {
@@ -49,20 +49,20 @@ internal class LovedTracksUpdater : IService
         }
         catch (Exception ex)
         {
-            await TryMarkLovedTrackFailed(userId, trackId);
-            _logger.LogError(ex, "Failed to update loved track (User ID {0}, Track ID {1})", userId, trackId);
+            await TryMarkLovedTrackFailed(trackId);
+            _logger.LogError(ex, "Failed to update loved track (Track ID {1})", trackId);
         }
     }
 
-    private async Task TryMarkLovedTrackFailed(int userId, int trackId)
+    private async Task TryMarkLovedTrackFailed(int trackId)
     {
         try
         {
-            await _repository.MarkLovedTrackFailed(userId, trackId);
+            await _repository.MarkLovedTrackFailed(trackId);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to mark loved track attempt as failed (User ID {0}, Track ID {1})", userId, trackId);
+            _logger.LogError(ex, "Failed to mark loved track attempt as failed (Track ID {1})", trackId);
         }
     }
 }

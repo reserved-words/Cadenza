@@ -10,8 +10,7 @@ public static class Configuration
         builder.Services
             .ConfigureSettings<AppSettings>(builder.Configuration, "AppSettings")
             .ConfigureSettings<LocalApiSettings>(builder.Configuration, "LocalApi")
-            .ConfigureSettings<ApiSettings>(builder.Configuration, "Api")
-            .ConfigureSettings<AuthenticationSettings>(builder.Configuration, "AppAuthentication");
+            .ConfigureSettings<ApiSettings>(builder.Configuration, "Api");
 
         return builder;
     }

@@ -1,8 +1,6 @@
 ﻿using Cadenza.Common.Http;
-using Cadenza.HttpMessageHandlers;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Api;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace Cadenza._Startup;
 
@@ -12,8 +10,8 @@ public static class Dependencies
     {
         services
             .RegisterExternalHttpHelper()
-            .RegisterApiHttpClient<LocalApiAuthorizationMessageHandler>(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
-            .RegisterApiHttpClient<MainApiAuthorizationMessageHandler>(configuration, HttpClientName.Database, "Api:BaseUrl");
+            .RegisterApiHttpClient(configuration, HttpClientName.Local, "LocalApi:BaseUrl")
+            .RegisterApiHttpClient(configuration, HttpClientName.Database, "Api:BaseUrl");
 
         return services
             .AddApi()
@@ -37,13 +35,10 @@ public static class Dependencies
         return services;
     }
 
-    private static IServiceCollection RegisterApiHttpClient<THandler>(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl)
-        where THandler : AuthorizationMessageHandler
+    private static IServiceCollection RegisterApiHttpClient(this IServiceCollection services, IConfiguration configuration, HttpClientName clientName, string configBaseUrl)
     {
         services
-            .AddTransient<THandler>()
-            .AddHttpClient(clientName.ToString(), client => client.BaseAddress = new Uri(configuration[configBaseUrl]))
-            .AddHttpMessageHandler<THandler>();
+            .AddHttpClient(clientName.ToString(), client => client.BaseAddress = new Uri(configuration[configBaseUrl]));
 
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
           .CreateClient(clientName.ToString()));

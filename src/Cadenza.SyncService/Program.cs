@@ -19,8 +19,6 @@ var builder = Service.CreateBuilder(args, services =>
         .AddUtilities()
         .AddSqlLibrary()
         .AddLastFm()
-        .AddSingleton<IApiTokenCache, ApiTokenCache>()
-        .AddTransient<IApiTokenFetcher, ApiTokenFetcher>()
         .AddTransient<ISyncHttpHelper, SyncHttpHelper>()
         .AddTransient<ISourceRepository, LocalRepository>();
 
@@ -37,8 +35,7 @@ var builder = Service.CreateBuilder(args, services =>
         .ConfigureSettings<LastFmApiSettings>(configuration, "LastFm")
         .ConfigureSettings<SqlLibrarySettings>(configuration, "SqlSettings")
         .ConfigureSettings<FrequencySecondsSettings>(configuration, "FrequencySeconds")
-        .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi")
-        .ConfigureSettings<AuthSettings>(configuration, "SvcAuthentication");
+        .ConfigureSettings<LocalApiSettings>(configuration, "LocalApi");
 
     services.AddHostedService<Worker>();
 });

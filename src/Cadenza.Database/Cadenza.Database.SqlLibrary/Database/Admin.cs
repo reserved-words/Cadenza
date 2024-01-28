@@ -13,17 +13,16 @@ internal class Admin : IAdmin
         _sql = sql.Create(nameof(Admin));
     }
 
-    public async Task<bool> HasLastFmSessionKey(string username)
+    public async Task<bool> HasLastFmSessionKey()
     {
         var parameters = new DynamicParameters();
-        parameters.Add("@Username", username);
         parameters.Add("@HasSessionKey", dbType: DbType.Boolean, direction: ParameterDirection.Output);
         await _sql.Execute(parameters);
         return parameters.Get<bool>("@HasSessionKey");
     }
 
-    public async Task SaveLastFmSessionKey(string username, string lastFmUsername, string lastFmSessionKey)
+    public async Task SaveLastFmSessionKey(string lastFmUsername, string lastFmSessionKey)
     {
-        await _sql.Execute(new { Username = username, LastFmUsername = lastFmUsername, LastFmSessionKey = lastFmSessionKey });
+        await _sql.Execute(new { LastFmUsername = lastFmUsername, LastFmSessionKey = lastFmSessionKey });
     }
 }

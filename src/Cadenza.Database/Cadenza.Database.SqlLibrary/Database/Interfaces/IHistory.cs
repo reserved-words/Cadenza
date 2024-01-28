@@ -14,7 +14,7 @@ internal interface IHistory
 
     Task InsertNowPlaying(InsertNowPlayingParameter parameters);
     Task InsertScrobble(InsertScrobbleParameter parameters);
-    Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(string username, int maxItems);
+    Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(int maxItems);
 
     Task SyncScrobbles();
 }

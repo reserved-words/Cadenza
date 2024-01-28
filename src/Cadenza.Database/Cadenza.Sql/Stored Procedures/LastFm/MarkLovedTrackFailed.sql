@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [LastFm].[MarkLovedTrackFailed]
-	@UserId INT,
 	@TrackId INT
 AS
 BEGIN
@@ -10,8 +9,6 @@ BEGIN
 		[Synced] = 0,
 		[FailedAttempts] = [FailedAttempts] + 1
 	WHERE
-		[UserId] = @UserId
-	AND
 		[TrackId] = @TrackId
 
 END

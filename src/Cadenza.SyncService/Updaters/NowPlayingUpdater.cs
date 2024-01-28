@@ -29,7 +29,7 @@ internal class NowPlayingUpdater : IService
 
     private async Task TryUpdateNowPlaying(NowPlayingUpdateDTO nowPlayingUpdate)
     {
-        await _repository.MarkNowPlayingUpdated(nowPlayingUpdate.UserId);
+        await _repository.MarkNowPlayingUpdated();
 
         // If update was so long ago that the seconds remaining have already passed don't bother updating
         if (nowPlayingUpdate.Timestamp.AddSeconds(nowPlayingUpdate.SecondsRemaining) < DateTime.Now)
@@ -44,10 +44,10 @@ internal class NowPlayingUpdater : IService
             AlbumArtist = nowPlayingUpdate.AlbumArtist
         };
 
-        await TryUpdateNowPlaying(nowPlayingUpdate.UserId, nowPlayingUpdate.SessionKey, nowPlaying);
+        await TryUpdateNowPlaying(nowPlayingUpdate.SessionKey, nowPlaying);
     }
 
-    private async Task TryUpdateNowPlaying(int userId, string sessionKey, NowPlaying nowPlaying)
+    private async Task TryUpdateNowPlaying(string sessionKey, NowPlaying nowPlaying)
     {
         try
         {
@@ -55,20 +55,20 @@ internal class NowPlayingUpdater : IService
         }
         catch (Exception ex)
         {
-            await TryMarkNowPlayingFailed(userId);
-            _logger.LogError(ex, "Failed to update now playing (User ID {0})", userId);
+            await TryMarkNowPlayingFailed();
+            _logger.LogError(ex, "Failed to update now playing");
         }
     }
 
-    private async Task TryMarkNowPlayingFailed(int userId)
+    private async Task TryMarkNowPlayingFailed()
     {
         try
         {
-            await _repository.MarkNowPlayingFailed(userId);
+            await _repository.MarkNowPlayingFailed();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to mark now playing attempt as failed (User ID {0})", userId);
+            _logger.LogError(ex, "Failed to mark now playing attempt as failed");
         }
     }
 }

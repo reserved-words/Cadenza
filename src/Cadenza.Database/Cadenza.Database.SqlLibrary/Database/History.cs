@@ -27,9 +27,9 @@ internal class History : IHistory
         return await _sql.Query<GetRecentTagsResult>(new { MaxItems = maxItems });
     }
 
-    public async Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(string username, int maxItems)
+    public async Task<IEnumerable<GetRecentTracksResult>> GetRecentTracks(int maxItems)
     {
-        return await _sql.Query<GetRecentTracksResult>(new { Username = username, MaxItems = maxItems });
+        return await _sql.Query<GetRecentTracksResult>(new { MaxItems = maxItems });
     }
 
     public async Task<List<GetTopAlbumsResult>> GetTopAlbums(GetTopAlbumsParameter parameter)

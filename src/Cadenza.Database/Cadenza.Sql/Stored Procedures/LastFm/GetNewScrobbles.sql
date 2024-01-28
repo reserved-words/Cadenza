@@ -15,7 +15,7 @@ BEGIN
 	INNER JOIN
 		[History].[Scrobbles] SCR ON SCR.[Id] = LFM.[ScrobbleId]
 	INNER JOIN
-		[Admin].[Users] USR ON USR.[Id] = SCR.[UserId]
+		[Admin].[User] USR ON USR.[Id] = 1
 	WHERE
 		LFM.[Synced] = 0
 	AND

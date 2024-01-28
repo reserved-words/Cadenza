@@ -11,13 +11,13 @@ internal class AdminRepository : IAdminRepository
         _admin = admin;
     }
 
-    public async Task<bool> HasLastFmSessionKey(string username)
+    public async Task<bool> HasLastFmSessionKey()
     {
-        return await _admin.HasLastFmSessionKey(username);
+        return await _admin.HasLastFmSessionKey();
     }
 
-    public async Task SaveLastFmSessionKey(string username, string lastFmUsername, string lastFmSessionKey)
+    public async Task SaveLastFmSessionKey(string lastFmUsername, string lastFmSessionKey)
     {
-        await _admin.SaveLastFmSessionKey(username, lastFmUsername, lastFmSessionKey);
+        await _admin.SaveLastFmSessionKey(lastFmUsername, lastFmSessionKey);
     }
 }

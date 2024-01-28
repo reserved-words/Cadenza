@@ -7,18 +7,15 @@ namespace Cadenza.SyncService.Services;
 internal class SyncHttpHelper : ISyncHttpHelper
 {
     private readonly IHttpRequestSender _httpRequestSender;
-    private readonly IApiTokenFetcher _tokenFetcher;
 
-    public SyncHttpHelper(IHttpRequestSender httpRequestSender, IApiTokenFetcher tokenFetcher)
+    public SyncHttpHelper(IHttpRequestSender httpRequestSender)
     {
         _httpRequestSender = httpRequestSender;
-        _tokenFetcher = tokenFetcher;
     }
 
     public async Task Delete<T>(string url, T data)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, url);
-        await AddAuthToken(request);
 
         if (data != null)
         {
@@ -31,7 +28,6 @@ internal class SyncHttpHelper : ISyncHttpHelper
     public async Task<T> Get<T>(string url) where T : class, new()
     {
         var request = new HttpRequestMessage(HttpMethod.Get, url);
-        await AddAuthToken(request);
 
         var response = await _httpRequestSender.TrySendRequest(request);
 
@@ -41,7 +37,6 @@ internal class SyncHttpHelper : ISyncHttpHelper
     public async Task Post<T>(string url, T data)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, url);
-        await AddAuthToken(request);
 
         if (data != null)
         {
@@ -49,11 +44,5 @@ internal class SyncHttpHelper : ISyncHttpHelper
         }
 
         await _httpRequestSender.TrySendRequest(request);
-    }
-
-    private async Task AddAuthToken(HttpRequestMessage request)
-    {
-        var token = await _tokenFetcher.GetToken();
-        request.Headers.Add("Authorization", $"Bearer {token}");
     }
 }

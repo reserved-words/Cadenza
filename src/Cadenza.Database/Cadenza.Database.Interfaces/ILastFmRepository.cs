@@ -3,12 +3,12 @@
 public interface ILastFmRepository
 {
     Task<List<LovedTrackUpdateDTO>> GetLovedTrackUpdates();
-    Task MarkLovedTrackUpdated(int userId, int trackId);
-    Task MarkLovedTrackFailed(int userId, int trackId);
+    Task MarkLovedTrackUpdated(int trackId);
+    Task MarkLovedTrackFailed(int trackId);
     Task<List<NewScrobbleDTO>> GetNewScrobbles();
     Task MarkScrobbled(int scrobbleId);
     Task MarkScrobbleFailed(int scrobbleId);
     Task<List<NowPlayingUpdateDTO>> GetNowPlayingUpdates();
-    Task MarkNowPlayingUpdated(int userId);
-    Task MarkNowPlayingFailed(int userId);
+    Task MarkNowPlayingUpdated();
+    Task MarkNowPlayingFailed();
 }

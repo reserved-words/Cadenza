@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [LastFm].[MarkNowPlayingFailed]
-	@UserId INT
 AS
 BEGIN
 
@@ -8,7 +7,5 @@ BEGIN
 	SET
 		[Synced] = 0,
 		[FailedAttempts] = [FailedAttempts] + 1
-	WHERE
-		[UserId] = @UserId
 
 END

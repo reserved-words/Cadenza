@@ -29,15 +29,13 @@ public class LastFmController : ControllerBase
     public async Task CreateSession(string token)
     {
         var session = await _sessionService.CreateSession(token);
-        var username = HttpContext.GetUsername();
-        await _repository.SaveLastFmSessionKey(username, session.Username, session.SessionKey);
+        await _repository.SaveLastFmSessionKey(session.Username, session.SessionKey);
     }
 
     [HttpGet("HasSession")]
     public async Task<bool> HasSession()
     {
-        var username = HttpContext.GetUsername();
-        return await _repository.HasLastFmSessionKey(username);
+        return await _repository.HasLastFmSessionKey();
     }
 
     [HttpGet("AlbumArtworkUrl")]
