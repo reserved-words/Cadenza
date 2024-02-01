@@ -80,19 +80,10 @@ stages:
         ArtifactName: 'Cadenza-drop' 
       condition: succeededOrFailed()
       
-- stage: github
-  displayName: 'GitHub'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-  variables:
-  - group: github
-  jobs:
-  - job: export
-    displayName: 'Push to GitHub'
-    steps:
-    - template: Templates/github.yml@self
 
 - stage: laptopBuild1
   displayName: 'Laptop Build 1'
+  dependsOn: localBuild
   variables:
   - group: appSettings.laptop.user1
     
@@ -145,6 +136,7 @@ stages:
 
 - stage: laptopBuild2
   displayName: 'Laptop Build 2'
+  dependsOn: localBuild
   variables:
   - group: appSettings.laptop.user2
     
@@ -194,3 +186,15 @@ stages:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: 'Cadenza-laptop-drop' 
       condition: succeededOrFailed()
+      
+- stage: github
+  displayName: 'GitHub'
+  dependsOn: localBuild
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  variables:
+  - group: github
+  jobs:
+  - job: export
+    displayName: 'Push to GitHub'
+    steps:
+    - template: Templates/github.yml@self
