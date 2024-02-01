@@ -25,8 +25,9 @@ stages:
 - stage: localBuild
   displayName: 'Local Build'
   variables:
+  - name: 'artifactName'
+    value: 'Cadenza-drop'
   - group: appSettings.local
-    
   jobs:
   - job: build
     displayName: 'Build'
@@ -77,7 +78,7 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'Cadenza-drop' 
+        ArtifactName: '$(artifactName)' 
       condition: succeededOrFailed()
       
 
@@ -85,6 +86,8 @@ stages:
   displayName: 'Laptop Build 1'
   dependsOn: localBuild
   variables:
+  - name: 'artifactName'
+    value: 'Cadenza-laptop-drop-user1'
   - group: appSettings.laptop.user1
     
   jobs:
@@ -131,13 +134,15 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'Cadenza-laptop-drop' 
+        ArtifactName: '$(artifactName)' 
       condition: succeededOrFailed()
 
 - stage: laptopBuild2
   displayName: 'Laptop Build 2'
   dependsOn: localBuild
   variables:
+  - name: 'artifactName'
+    value: 'Cadenza-laptop-drop-user2'
   - group: appSettings.laptop.user2
     
   jobs:
@@ -184,7 +189,7 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'Cadenza-laptop-drop' 
+        ArtifactName: '$(artifactName)' 
       condition: succeededOrFailed()
       
 - stage: github
