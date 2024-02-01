@@ -1,5 +1,10 @@
+@inject IConfiguration Config
 
 <Fluxor.Blazor.Web.StoreInitializer />
+
+<HeadContent>
+    <base href="@(Config.GetValue<string>("AppSettings:BasePath"))" />
+</HeadContent>
 
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
