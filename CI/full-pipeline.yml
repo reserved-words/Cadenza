@@ -25,8 +25,9 @@ stages:
 - stage: localBuild
   displayName: 'Local Build'
   variables:
+  - name: 'artifactName'
+    value: 'Cadenza-drop'
   - group: appSettings.local
-    
   jobs:
   - job: build
     displayName: 'Build'
@@ -77,24 +78,17 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'Cadenza-drop' 
+        ArtifactName: '$(artifactName)' 
       condition: succeededOrFailed()
       
-- stage: github
-  displayName: 'GitHub'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-  variables:
-  - group: github
-  jobs:
-  - job: export
-    displayName: 'Push to GitHub'
-    steps:
-    - template: Templates/github.yml@self
 
-- stage: laptopBuild
-  displayName: 'Laptop Build'
+- stage: laptopBuild1
+  displayName: 'Laptop Build 1'
+  dependsOn: localBuild
   variables:
-  - group: appSettings.laptop
+  - name: 'artifactName'
+    value: 'Cadenza-laptop-drop-user1'
+  - group: appSettings.laptop.user1
     
   jobs:
   - job: build
@@ -140,5 +134,72 @@ stages:
       displayName: 'Publish Artifact'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'Cadenza-laptop-drop' 
+        ArtifactName: '$(artifactName)' 
       condition: succeededOrFailed()
+
+- stage: laptopBuild2
+  displayName: 'Laptop Build 2'
+  dependsOn: localBuild
+  variables:
+  - name: 'artifactName'
+    value: 'Cadenza-laptop-drop-user2'
+  - group: appSettings.laptop.user2
+    
+  jobs:
+  - job: build
+    displayName: 'Build'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '$(RestoreBuildProjects)'
+        feedsToUse: 'select'
+        vstsFeed: '$(PackageFeed)'
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: '$(RestoreBuildProjects)'
+        arguments: '--no-restore --configuration $(BuildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Apps'
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: |
+         **/*Cadenza.API.csproj
+         **/*Cadenza.Local.API.csproj
+         **/*Cadenza.Local.SyncService.csproj
+         **/*Cadenza.SyncService.csproj
+         **/Cadenza.csproj
+        arguments: '--no-build --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        zipAfterPublish: false
+    - task: FileTransform@2
+      displayName: 'File Transform'
+      inputs:
+        xmlTransformationRules: ''
+        folderPath: '$(build.artifactstagingdirectory)'
+        jsonTargetFiles: '$(SettingsFiles)'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: '$(artifactName)' 
+      condition: succeededOrFailed()
+      
+- stage: github
+  displayName: 'GitHub'
+  dependsOn: localBuild
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  variables:
+  - group: github
+  jobs:
+  - job: export
+    displayName: 'Push to GitHub'
+    steps:
+    - template: Templates/github.yml@self
