@@ -13,3 +13,16 @@
 <MudHidden Breakpoint="Breakpoint.SmAndDown">
     <Desktop />
 </MudHidden>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ApplicationState> ApplicationState { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (!ApplicationState.Value.Started)
+        {
+            Dispatcher.Dispatch(new ApplicationStartRequest());
+        }
+    }
+}

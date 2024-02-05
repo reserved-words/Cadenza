@@ -6,26 +6,31 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout>
+<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+    @Body
+</MudHidden>
 
-    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+    <MudLayout>
         <MudAppBar Color="Color.Dark" Fixed="true" DisableGutters="true" Dense="true">
             <MainMenu />
         </MudAppBar>
-    </MudHidden>
+        <MudMainContent>
+            @Body
+        </MudMainContent>
+    </MudLayout>
+</MudHidden>
 
-    <MudHidden Breakpoint="Breakpoint.SmAndDown">
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
+    <MudLayout>
         <MudAppBar Elevation="1" DisableGutters="@true">
             <MainMenu />
         </MudAppBar>
         <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
             <Sidebar />
         </MudDrawer>
-    </MudHidden>
-
-    <MudMainContent>
-        @Body
-    </MudMainContent>
-
-</MudLayout>
-
+        <MudMainContent>
+            @Body
+        </MudMainContent>
+    </MudLayout>
+</MudHidden>

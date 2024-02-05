@@ -23,8 +23,6 @@
 
 @code {
 
-    [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IState<ApplicationState> ApplicationState { get; set; }
     [Inject] public IState<ViewState> ViewState { get; set; }
 
     MudTabs tabs;
@@ -42,13 +40,5 @@
             : ViewState.Value.CurrentTab;
 
         tabs.ActivatePanel(switchToTab);
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (!ApplicationState.Value.Started)
-        {
-            Dispatcher.Dispatch(new ApplicationStartRequest());
-        }
     }
 }
