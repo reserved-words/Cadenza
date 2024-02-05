@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HttpMessageHandlers\**" />
+    <Content Remove="HttpMessageHandlers\**" />
+    <EmbeddedResource Remove="HttpMessageHandlers\**" />
+    <None Remove="HttpMessageHandlers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />	
   </ItemGroup>
 
@@ -33,10 +40,6 @@
     <ProjectReference Include="..\Cadenza.Web.Components\Cadenza.Web.Components.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Core\Cadenza.Web.Core.csproj" />
     <ProjectReference Include="..\Cadenza.Web.Source.Local\Cadenza.Web.Source.Local.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="HttpMessageHandlers\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/license-report-config.json" /></VisualStudio></ProjectExtensions>
