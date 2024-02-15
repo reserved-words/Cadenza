@@ -1,0 +1,30 @@
+﻿@using Cadenza.Features.Tabs.Dashboard
+
+@inherits TopArtistsBase
+
+<DashboardCard Title="Top Artists"
+               IsLoading="@IsLoading"
+               LoadingCaption="Loading top artists..."
+               Period="@Period"
+               UpdateItems="@UpdateItems">
+    <AppTable Items="@Items">
+        <RowTemplate>
+            <MudTd Class="td-int">
+                @context.Rank
+            </MudTd>
+            <MudTd>
+                @if (context.Plays > 0)
+                {
+                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                }
+                else
+                {
+                    <MudText Typo="@Typo.body1">@context.Name</MudText>
+                }
+            </MudTd>
+            <MudTd Class="td-int">
+                @context.Plays
+            </MudTd>
+        </RowTemplate>
+    </AppTable>
+</DashboardCard>

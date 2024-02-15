@@ -18,15 +18,7 @@ public class Program
         var currentAssembly = typeof(Program).Assembly;
         var stateAssembly = typeof(PlayStatusState).Assembly;
         var effectsAssembly = typeof(RecentPlayHistoryEffects).Assembly;
-        builder.Services
-            .AddFluxor(options => options.ScanAssemblies(currentAssembly, stateAssembly, effectsAssembly)
-            //.AddMiddleware<LoggingMiddleware>()
-        );
-
-        //builder.Logging.AddFilter((category, level) =>
-        //{
-        //    return category == null || !category.Contains("System.Net.Http.HttpClient");
-        //});
+        builder.Services.AddFluxor(options => options.ScanAssemblies(currentAssembly, stateAssembly, effectsAssembly));
 
         builder.Services.RegisterDependencies(builder.Configuration);
 
