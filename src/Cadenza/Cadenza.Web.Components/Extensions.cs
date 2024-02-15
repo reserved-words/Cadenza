@@ -9,7 +9,7 @@ public static class Extensions
             Tab.CurrentTrack => Icons.Material.Filled.PlaylistPlay,
             Tab.Dashboard => Icons.Material.Filled.Dashboard,
             Tab.Home => Icons.Material.Filled.Home,
-            Tab.Library => Icons.Material.Filled.FormatListBulleted,
+            Tab.Library => "fas fa-folder-tree",
             Tab.Search => Icons.Material.Filled.Search,
             Tab.Edit => Icons.Material.Filled.Edit,
             Tab.Settings => Icons.Material.Filled.Settings,

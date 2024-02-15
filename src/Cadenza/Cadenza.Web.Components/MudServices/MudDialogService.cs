@@ -1,4 +1,5 @@
-﻿using Cadenza.Web.Components.Interfaces;
+﻿using Cadenza.Web.Components.Common.Dialogs;
+using Cadenza.Web.Components.Interfaces;
 using IDialogService = Cadenza.Web.Components.Interfaces.IDialogService;
 
 namespace Cadenza.Web.Components.MudServices;

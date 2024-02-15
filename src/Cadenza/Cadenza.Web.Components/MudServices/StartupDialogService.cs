@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.MudServices;
+﻿using Cadenza.Web.Components.Common.Dialogs;
+
+namespace Cadenza.Web.Components.MudServices;
 
 internal class StartupDialogService : IStartupDialogService
 {

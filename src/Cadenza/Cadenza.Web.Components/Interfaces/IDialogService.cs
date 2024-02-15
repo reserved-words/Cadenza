@@ -1,4 +1,6 @@
-﻿namespace Cadenza.Web.Components.Interfaces;
+﻿using Cadenza.Web.Components.Common.Dialogs;
+
+namespace Cadenza.Web.Components.Interfaces;
 
 public interface IDialogService
 {
