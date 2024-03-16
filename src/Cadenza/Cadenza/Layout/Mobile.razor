@@ -8,34 +8,28 @@
             <MudTabPanel Text="HOME" ID="@(Tab.Home)">
                 <HomeTab />
             </MudTabPanel>
-            <MudTabPanel Text="DASHBOARD" ID="@(Tab.Dashboard)">
-                <DashboardTab />
+            <MudTabPanel Text="RECENT TRACKS" ID="@(Tab.RecentTracks)">
+                
+            </MudTabPanel>
+            <MudTabPanel Text="RECENT ALBUMS" ID="@(Tab.RecentAlbums)">
+
+            </MudTabPanel>
+            <MudTabPanel Text="CHARTS" ID="@(Tab.Charts)">
+
             </MudTabPanel>
             <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
                 <LibraryTab />
-            </MudTabPanel>
-            <MudTabPanel Text="SETTINGS" ID="@(Tab.Settings)">
-                <SettingsTab />
-            </MudTabPanel>
-            <MudTabPanel Text="EDIT" ID="@(Tab.Edit)">
-                <EditTab />
             </MudTabPanel>
 
         </MudTabs>
 
     </MudCardContent>
 
-    <MudCardActions Style="flex-grow: 0;">
-@*         @foreach (var tab in _tabs)
+    <MudCardActions Class="d-flex align-start">
+        @foreach (var tab in _tabs)
         {
-            <MudIconButton Icon="@tab.GetIcon()" Color="Color.Default" OnClick="@(() => View(tab))" />
+            <MudIconButton Class="d-flex flex-1" Icon="@tab.GetIcon()" Color="Color.Default" OnClick="@(() => View(tab))" />
         }
- *@        
-        <MudIconButton Size="@Size.Large" Icon="@Tab.Home.GetIcon()" Color="Color.Default" OnClick="@(() => View(Tab.Home))" />
-        <MudIconButton Size="@Size.Large" Icon="@Icons.Material.Filled.PlaylistPlay" Color="Color.Default" OnClick="@(() => {})" />
-        <MudIconButton Size="@Size.Large" Icon="fas fa-chart-history" Color="Color.Default" OnClick="@(() => {})" />
-        <MudIconButton Size="@Size.Large" Icon="fas fa-compact-disc" Color="Color.Default" OnClick="@(() => {})" />
-        <MudIconButton Size="@Size.Large" Icon="@Tab.Library.GetIcon()" Color="Color.Default" OnClick="@(() => View(Tab.Library))" />
     </MudCardActions>
 
 </MudCard>
@@ -47,7 +41,7 @@
 
     MudTabs tabs;
 
-    private readonly List<Tab> _tabs = [Tab.Home, Tab.Dashboard, Tab.Library];
+    private readonly List<Tab> _tabs = [Tab.Home, Tab.RecentTracks, Tab.RecentAlbums, Tab.Charts, Tab.Library];
 
     protected override void OnInitialized()
     {

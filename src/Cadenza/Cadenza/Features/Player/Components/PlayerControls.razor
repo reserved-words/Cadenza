@@ -1,10 +1,10 @@
 ﻿@inherits PlayerControlsBase
 
 <MudButtonGroup Variant="Variant.Filled" Class="ma-0 pa-0">
-    <MudIconButton Icon="@Icons.Material.Filled.SkipPrevious" OnClick="SkipPrevious" Disabled="@(!CanSkipPrevious)" Class="player-control" />
-    <MudIconButton Icon="@Icons.Material.Filled.PlayArrow" OnClick="Resume" Disabled="@(!CanPlay)" Class="@PlayButtonClass()" />
-    <MudIconButton Icon="@Icons.Material.Filled.Pause" OnClick="Pause" Disabled="@(!CanPause)" Class="@PauseButtonClass()" />
-    <MudIconButton Icon="@Icons.Material.Filled.SkipNext" OnClick="SkipNext" Disabled="@(!CanSkipNext)" Class="player-control" />
+    <MudIconButton Icon="@Icon.SkipPrevious" OnClick="SkipPrevious" Disabled="@(!CanSkipPrevious)" Class="player-control" />
+    <MudIconButton Icon="@Icon.Play" OnClick="Resume" Disabled="@(!CanPlay)" Class="@PlayButtonClass()" />
+    <MudIconButton Icon="@Icon.Pause" OnClick="Pause" Disabled="@(!CanPause)" Class="@PauseButtonClass()" />
+    <MudIconButton Icon="@Icon.SkipNext" OnClick="SkipNext" Disabled="@(!CanSkipNext)" Class="player-control" />
 </MudButtonGroup>
 
 @code {

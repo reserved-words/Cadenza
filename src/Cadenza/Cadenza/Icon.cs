@@ -1,51 +1,46 @@
-﻿using Cadenza.Common.Enums;
-using Cadenza.Web.Common.Enums;
-using MudBlazor;
-using static MudBlazor.Icons;
-
-namespace Cadenza;
+﻿namespace Cadenza;
 
 public static class Icon
 {
-    public const string BandCamp = "fab fa-bandcamp";
-    public const string LastFm = "fab fa-lastfm-square";
-    public const string Wikipedia = "fab fa-wikipedia-w";
-
-    public static readonly string Add = Material.Filled.Add;
-    public static readonly string Archive = Material.Filled.Archive;
-    public static readonly string GridView = Material.Filled.GridView;
-    public static readonly string MarkAsUnread = Material.Filled.MarkAsUnread;
-    public static readonly string MarkAsRead = Material.Filled.MarkChatRead;
-    public static readonly string Delete = Material.Filled.DeleteForever;
-    public static readonly string DropdownMenu = Material.Filled.MoreVert;
-    public static readonly string Finish = Material.Filled.Check;
-    public static readonly string Hide = Material.Filled.CloudDownload;
-    public static readonly string More = Material.Filled.FileDownload;
-    public static readonly string Menu = Material.Filled.Menu;
-    public static readonly string PutAside = Material.Filled.Pause;
-    public static readonly string Queue = Material.Filled.PlaylistAdd;
-    public static readonly string ReadNow = Material.Filled.PlayArrow;
-    public static readonly string Remove = Material.Filled.Remove;
-    public static readonly string Search = Material.Filled.Search;
-    public static readonly string SkipNext = Material.Rounded.SkipNext;
-    public static readonly string SkipPrevious = Material.Rounded.SkipPrevious;
-    public static readonly string TableView = Material.Filled.TableView;
-    public static readonly string Unarchive = Material.Filled.Unarchive;
-    public static readonly string Unhide = Material.Filled.Upgrade;
-    public static readonly string Unqueue = Material.Filled.RemoveFromQueue;
-    public static readonly string View = Material.Filled.LibraryBooks;
+    public static string Album = "fas fa-compact-disc";
+    public static string Artist = "fas fa-users";
+    public static string Dashboard = "fa-solid fa-chart-column";
+    public static string Delete = "fa-solid fa-trash-can";
+    public static string Edit = "fa-solid fa-pencil";
+    public static string Favourite = "fa-solid fa-heart";
+    public static string Genre = "fas fa-boxes";
+    public static string Grouping = "fas fa-box";
+    public static string Home = "fa-solid fa-house";
+    public static string Info = "fa-solid fa-circle-info";
+    public static string Library = "fa-solid fa-folder-tree";
+    public static string NotFavourite = "fa-regular fa-heart";
+    public static string Pause = "fa-solid fa-pause";
+    public static string Play = "fa-solid fa-play";
+    public static string RightArrow = Icons.Material.Filled.KeyboardArrowRight;
+    public static string Search = "fa-solid fa-magnifying-glass";
+    public static string Settings = "fa-solid fa-gear";
+    public static string Shuffle = "fa-solid fa-shuffle";
+    public static string SkipNext = "fa-solid fa-forward-step";
+    public static string SkipPrevious = "fa-solid fa-backward-step";
+    public static string Playing = "fa-solid fa-volume-high";
+    public static string RecentTracks = "fa-solid fa-history";
+    public static string Tag = "fas fa-tag";
+    public static string Track = "fas fa-file-audio";
 
     public static string GetIcon(this Tab tab)
     {
         return tab switch
         {
-            Tab.CurrentTrack => Material.Filled.PlaylistPlay,
-            Tab.Dashboard => Material.Filled.Dashboard,
-            Tab.Home => Material.Filled.Home,
-            Tab.Library => "fas fa-folder-tree",
-            Tab.Search => Material.Filled.Search,
-            Tab.Edit => Material.Filled.Edit,
-            Tab.Settings => Material.Filled.Settings,
+            Tab.CurrentTrack => Playing,
+            Tab.Dashboard => Dashboard,
+            Tab.Home => Home,
+            Tab.Library => Library,
+            Tab.RecentAlbums => Album,
+            Tab.RecentTracks => RecentTracks,
+            Tab.Charts => Dashboard,
+            Tab.Search => Search,
+            Tab.Edit => Edit,
+            Tab.Settings => Settings,
             _ => throw new NotImplementedException(),
         };
     }
@@ -54,13 +49,13 @@ public static class Icon
     {
         return type switch
         {
-            PlayerItemType.Library => Tab.Library.GetIcon(),
-            PlayerItemType.Album => "fas fa-compact-disc",
-            PlayerItemType.Artist => "fas fa-users",
-            PlayerItemType.Genre => "fas fa-boxes",
-            PlayerItemType.Grouping => "fas fa-box",
-            PlayerItemType.Tag => "fas fa-tag",
-            PlayerItemType.Track => "fas fa-file-audio",
+            PlayerItemType.Library => Library,
+            PlayerItemType.Album => Album,
+            PlayerItemType.Artist => Artist,
+            PlayerItemType.Genre => Genre,
+            PlayerItemType.Grouping => Grouping,
+            PlayerItemType.Tag => Tag,
+            PlayerItemType.Track => Track,
             _ => throw new NotImplementedException(),
         };
     }

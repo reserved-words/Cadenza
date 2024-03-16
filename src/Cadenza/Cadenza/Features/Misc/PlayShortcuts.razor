@@ -7,16 +7,18 @@
     Play All
 </MudButton>
 
-<MudMenu FullWidth="true"
-         EndIcon="@Icons.Material.Filled.KeyboardArrowRight"
-         Label="Play Grouping"
-         Variant="Variant.Filled"
-         ActivationEvent="@MouseEvent.LeftClick"
-         Size="@Size.Large"
-         AnchorOrigin="@Origin.BottomRight"
-         TransformOrigin="@Origin.BottomLeft">
-    @foreach (var grouping in Groupings)
-    {
-        <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping</MudMenuItem>
-    }
-</MudMenu>
+<MudHidden Breakpoint="Breakpoint.Xs">
+    <MudMenu FullWidth="true"
+             EndIcon="@Icon.RightArrow"
+             Label="Play Grouping"
+             Variant="Variant.Filled"
+             ActivationEvent="@MouseEvent.LeftClick"
+             Size="@Size.Large"
+             AnchorOrigin="@Origin.BottomRight"
+             TransformOrigin="@Origin.BottomLeft">
+        @foreach (var grouping in Groupings)
+        {
+            <MudMenuItem OnClick="@(() => PlayGrouping(grouping))" Icon="@PlayerItemType.Grouping.GetIcon()">@grouping</MudMenuItem>
+        }
+    </MudMenu>
+</MudHidden>

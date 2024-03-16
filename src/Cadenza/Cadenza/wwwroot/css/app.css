@@ -199,9 +199,6 @@ table tr td.td-int-input .mud-input-control {
 
 .player-card {
   position: relative;
-  height: 320px;
-  max-height: 320px;
-  min-height: 320px;
 }
 
 .mud-card-header-content {

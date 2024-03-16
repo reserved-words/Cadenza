@@ -2,13 +2,13 @@
 
 @if (!IsEnabled)
 {
-    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" Disabled="true" />   
+    <MudIconButton Icon="@Icon.Favourite" Color="Color.Default" Disabled="true" />
 }
 else if (IsFavourite)
 {
-    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="@Unfavourite" />
+    <MudIconButton Icon="@Icon.Favourite" Color="Color.Primary" OnClick="@Unfavourite" />
 }
 else
 {
-    <MudIconButton Icon="@Icons.Material.Filled.FavoriteBorder" OnClick="@Favourite" />
+    <MudIconButton Icon="@Icon.NotFavourite" OnClick="@Favourite" />
 }

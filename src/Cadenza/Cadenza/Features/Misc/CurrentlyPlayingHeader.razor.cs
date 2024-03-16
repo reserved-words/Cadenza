@@ -1,6 +1,4 @@
-﻿using Cadenza;
-
-namespace Cadenza.Features.Misc;
+﻿namespace Cadenza.Features.Misc;
 
 public class CurrentlyPlayingHeaderBase : FluxorComponent
 {
@@ -34,7 +32,7 @@ public class CurrentlyPlayingHeaderBase : FluxorComponent
         var itemType = PlaylistState.Value.Type.GetItemType();
 
         if (!itemType.HasValue)
-            return Icons.Material.Filled.Shuffle;
+            return Cadenza.Icon.Shuffle;
 
         return itemType.Value.GetIcon();
     }
