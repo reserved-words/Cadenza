@@ -76,7 +76,10 @@
 }
 
 <MudSpacer />
-<Search />
+
+<MudContainer MaxWidth="@MaxWidth.Small" Class="flex-grow-1 pa-0 ma-0 mr-3">
+    <Search />
+</MudContainer>
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
