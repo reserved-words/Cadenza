@@ -1,7 +1,7 @@
 ﻿@inherits TrackViewBase
 
 <ItemCard Tags="@Model.Tags">
-    <ItemCardTitle Itemtype="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" />
+    <ItemCardTitle ItemType="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" />
     <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
     <MudText Typo="Typo.body1">@Model.Year</MudText>
     <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>

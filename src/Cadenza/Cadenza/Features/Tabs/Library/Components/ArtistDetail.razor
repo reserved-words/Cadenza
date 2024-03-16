@@ -3,8 +3,9 @@
 @if (Model != null)
 {
     <ItemCard Tags="@Model.Tags">
+
+        <ItemCardTitle ItemType="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" Link="false" Typo="@Typo.h5" MarginBottom="3" />
         <ArtistImageView Model="@Model" />
-        <ItemCardTitle Itemtype="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" />
         <MudText Typo="Typo.body1">@Model.Location()</MudText>
         <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
         <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />

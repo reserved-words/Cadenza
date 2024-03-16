@@ -5,7 +5,7 @@
 
     @if (HeaderContent != null)
     {
-        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+        <MudCardHeader Style="flex-grow: 0;" Class="@HeaderClass">
             <CardHeaderContent>
                 @HeaderContent
             </CardHeaderContent>
@@ -22,4 +22,8 @@
     [Parameter] public int Elevation { get; set; } = 2;
     [Parameter] public RenderFragment HeaderContent { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public int HeaderPaddingTop { get; set; } = 3;
+    [Parameter] public int HeaderPaddingBottom { get; set; } = 3;
+
+    private string HeaderClass => $"px-3 pt-{HeaderPaddingTop} pb-{HeaderPaddingBottom}";
 }
