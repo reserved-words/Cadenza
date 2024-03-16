@@ -1,0 +1,20 @@
+﻿@using Cadenza.Features.Tabs.Dashboard.Components
+
+<TabGrid>
+
+    <TabGridColumn>
+        <TabGridRow RowHeight="@RowHeight.Fixed">
+
+            <MudTabs Centered="true">
+                <MudTabPanel Text="Top Artists">
+                    <TopArtists />
+                </MudTabPanel>
+                <MudTabPanel Text="Top Albums">
+                    <TopAlbums />
+                </MudTabPanel>
+            </MudTabs>
+
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>
