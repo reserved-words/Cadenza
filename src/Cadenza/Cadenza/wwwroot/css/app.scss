@@ -11,7 +11,12 @@ html, body {
     font-size: 12px;
 }
 
+.xs-hide {
+    display: none;
+}
+
 @media (min-width: #{$screen-md-min}) {
+
     .xs-only {
         display: none;
     }

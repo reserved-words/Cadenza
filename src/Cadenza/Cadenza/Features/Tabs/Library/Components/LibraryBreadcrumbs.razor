@@ -14,7 +14,12 @@
         </li>
         <li class="mud-breadcrumb-item">
             <MudLink Typo="@Typo.body1" OnClick="@(() => View(link))" Color="@Color.Surface">
-                @link.Name
+                <MudHidden Breakpoint="@Breakpoint.Xs">
+                    <span>@link.Name</span>
+                </MudHidden>
+                <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                    <span>...</span>
+                </MudHidden>
             </MudLink>
         </li>
     }

@@ -1,17 +1,30 @@
 ﻿@using Cadenza.Common
 
-@if (_isEditable)
-{
-    <MudButton StartIcon="@Icon.Edit"
-               Color="@Color.Primary"
-               Variant="@Variant.Outlined" 
-               OnClick="@OnEdit">Edit</MudButton>
-}
+<MudHidden Breakpoint="@Breakpoint.Xs">
+    @if (_isEditable)
+    {
+        <MudButton StartIcon="@Icon.Edit"
+                   IconSize="@Size.Small"
+                   Color="@Color.Primary"
+                   Variant="@Variant.Outlined"
+                   OnClick="@OnEdit">Edit</MudButton>
+    }
 
-<MudButton StartIcon="@Icon.Play"
-           Color="@Color.Default"
-           Variant="@Variant.Outlined"
-           OnClick="@OnPlay">Play</MudButton>
+    <MudButton StartIcon="@Icon.Play"
+               IconSize="@Size.Small"
+               Color="@Color.Default"
+               Variant="@Variant.Outlined"
+               OnClick="@OnPlay">Play</MudButton>
+</MudHidden>
+
+<MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+    <MudIconButton Class="ma-2"
+                   Icon="@Icon.Play"
+                   Size="@Size.Small"
+                   Color="@Color.Default"
+                   Variant="@Variant.Outlined"
+                   OnClick="@OnPlay">Play</MudIconButton>
+</MudHidden>
 
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
