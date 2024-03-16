@@ -92,12 +92,12 @@
 
     private bool ShowArtistHeader => Breakpoint != Breakpoint.Xs;
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Model.AlbumArtist.Grouping, Model.AlbumArtist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Model.AlbumArtist.Genre, Model.AlbumArtist.Genre.GetGenreName()),
-        new LibraryBreadcrumb(PlayerItemType.Artist, Model.AlbumArtist.Id, Model.AlbumArtist.Name),
-        new LibraryBreadcrumb(PlayerItemType.Album, Model.Album.Id, Model.Album.Title),
-        new LibraryBreadcrumb(PlayerItemType.Track, Model.Track.Id, Model.Track.Title)
+        new LibraryBreadcrumbItem(PlayerItemType.Grouping, Model.AlbumArtist.Grouping, Model.AlbumArtist.Grouping),
+        new LibraryBreadcrumbItem(PlayerItemType.Genre, Model.AlbumArtist.Genre, Model.AlbumArtist.Genre.GetGenreName()),
+        new LibraryBreadcrumbItem(PlayerItemType.Artist, Model.AlbumArtist.Id, Model.AlbumArtist.Name),
+        new LibraryBreadcrumbItem(PlayerItemType.Album, Model.Album.Id, Model.Album.Title),
+        new LibraryBreadcrumbItem(PlayerItemType.Track, Model.Track.Id, Model.Track.Title)
     };
 }

@@ -11,11 +11,11 @@ public class AlbumTabBase : FluxorComponent
 
     protected Dictionary<int, int> DiscDurations => Album.Discs.ToDictionary(d => d.DiscNo, d => d.Tracks.Sum(t => t.DurationSeconds));
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Album.Artist.Grouping, Album.Artist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Album.Artist.Genre, Album.Artist.Genre.GetGenreName()),
-        new LibraryBreadcrumb(PlayerItemType.Artist, Album.Artist.Id, Album.Artist.Name),
-        new LibraryBreadcrumb(PlayerItemType.Album, Album.Album.Id, Album.Album.Title)
+        new LibraryBreadcrumbItem(PlayerItemType.Grouping, Album.Artist.Grouping, Album.Artist.Grouping),
+        new LibraryBreadcrumbItem(PlayerItemType.Genre, Album.Artist.Genre, Album.Artist.Genre.GetGenreName()),
+        new LibraryBreadcrumbItem(PlayerItemType.Artist, Album.Artist.Id, Album.Artist.Name),
+        new LibraryBreadcrumbItem(PlayerItemType.Album, Album.Album.Id, Album.Album.Title)
     };
 }

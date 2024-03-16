@@ -1,33 +1,31 @@
 ﻿
-<AppScrollContainer Elevation="0">
-    <ChildContent>
-        
-        <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
-            <AppTable Items="@Model.Albums">
-                <RowTemplate>
-                    <MudTd Style="max-width: 50px;">
-                        <AlbumArtworkView Model="@context" />
-                    </MudTd>
-                    <MudTd>
-                        <AlbumSummaryView Model="@context" />
-                    </MudTd>
-                </RowTemplate>
-            </AppTable>
-        </MudHidden>
-
-        <MudHidden Breakpoint="@Breakpoint.Xs">
-            <AppGrid Items="@Model.Albums" ItemXs="6">
-                <ImageTemplate>
+<MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+    <AppScrollContainer Elevation="0" Padding="0">
+        <AppTable Items="@Model.Albums">
+            <RowTemplate>
+                <MudTd Style="max-width: 50px;">
                     <AlbumArtworkView Model="@context" />
-                </ImageTemplate>
-                <CaptionTemplate>
+                </MudTd>
+                <MudTd>
                     <AlbumSummaryView Model="@context" />
-                </CaptionTemplate>
-            </AppGrid>
-        </MudHidden>
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </AppScrollContainer>
+</MudHidden>
 
-    </ChildContent>
-</AppScrollContainer>
+<MudHidden Breakpoint="@Breakpoint.Xs">
+    <AppScrollContainer Elevation="0">
+        <AppGrid Items="@Model.Albums" ItemXs="6">
+            <ImageTemplate>
+                <AlbumArtworkView Model="@context" />
+            </ImageTemplate>
+            <CaptionTemplate>
+                <AlbumSummaryView Model="@context" />
+            </CaptionTemplate>
+        </AppGrid>
+    </AppScrollContainer>
+</MudHidden>
 
 @code {
     [Parameter] public ArtistReleaseGroupVM Model { get; set; }

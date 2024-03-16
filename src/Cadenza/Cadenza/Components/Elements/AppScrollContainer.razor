@@ -2,7 +2,7 @@
 <MudPaper Elevation="@Elevation"
           Class="ma-0 fixed-height">
 
-    <MudContainer Class="fixed-height-scroll pa-2 ma-0">
+    <MudContainer Class="@ContainerClass">
        @ChildContent
     </MudContainer>
 
@@ -11,4 +11,7 @@
 @code {
     [Parameter] public int Elevation { get; set; } = 2;
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public int Padding { get; set; } = 2;
+
+    private string ContainerClass => $"fixed-height-scroll pa-{Padding} ma-0";
 }

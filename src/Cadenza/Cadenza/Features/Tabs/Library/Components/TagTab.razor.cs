@@ -22,9 +22,9 @@ public class TagTabBase : FluxorComponent
 
     protected readonly Dictionary<string, PlayerItemType?> FilterTypes = new Dictionary<string, PlayerItemType?>();
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Tag, Tag, Tag)
+        new LibraryBreadcrumbItem(PlayerItemType.Tag, Tag, Tag)
     };
 
     protected string FilterType { get; set; }

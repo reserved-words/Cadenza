@@ -1,27 +1,25 @@
 ﻿
 <ul class="mud-breadcrumbs mud-typography-body1 py-2">
 
-    <li class="mud-breadcrumb-item">
-        <MudLink Typo="@Typo.body1" OnClick="@(() => ViewLibrary())" Color="@Color.Surface">
-            Library
-        </MudLink>
-    </li>
+    <LibraryBreadcrumb Name="Library"
+                       IncludeSeparator="false"
+                       ClickAction="@(() => ViewLibrary())" />
 
-    @foreach (var link in Links)
+    @{
+        var count = Items.Count;
+    }
+
+    @for (var i = 0; i < count; i++)
     {
-        <li aria-hidden="true" class="mud-breadcrumb-separator mud-ltr mud-flip-x-rtl">
-            <span>/</span>
-        </li>
-        <li class="mud-breadcrumb-item">
-            <MudLink Typo="@Typo.body1" OnClick="@(() => View(link))" Color="@Color.Surface">
-                <MudHidden Breakpoint="@Breakpoint.Xs">
-                    <span>@link.Name</span>
-                </MudHidden>
-                <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
-                    <span>...</span>
-                </MudHidden>
-            </MudLink>
-        </li>
+        if (IsBreakpointXs && i == count - 1)
+            break;
+
+        var link = Items[i];
+        var name = IsBreakpointXs ? "..." : link.Name;
+
+        <LibraryBreadcrumb Name="@name"
+                           IncludeSeparator="true"
+                           ClickAction="@(() => View(link))" />
     }
 
 </ul>
@@ -29,19 +27,20 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
 
-    [Parameter] public List<LibraryBreadcrumb> Links { get; set; }
+    [Parameter] public List<LibraryBreadcrumbItem> Items { get; set; }
+    [Parameter] public bool IsBreakpointXs { get; set; }
 
     private void ViewLibrary()
     {
-        if (Links.Count == 0)
+        if (Items.Count == 0)
             return;
 
         Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Library, null, null));
     }
 
-    private void View(LibraryBreadcrumb link)
+    private void View(LibraryBreadcrumbItem link)
     {
-        if (Links.Last() == link)
+        if (Items.Last() == link)
             return;
 
         Dispatcher.Dispatch(new ViewItemRequest(link.Type, link.Id, link.Name));

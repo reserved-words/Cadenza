@@ -10,10 +10,10 @@ public class ArtistTabBase : FluxorComponent
     public ArtistDetailsVM Artist => ViewArtistState.Value.Artist;
     public IReadOnlyCollection<ArtistReleaseGroupVM> Releases => ViewArtistState.Value.Releases;
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Artist.Grouping, Artist.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Artist.Genre, Artist.Genre.GetGenreName()),
-        new LibraryBreadcrumb(PlayerItemType.Artist, Artist.Id, Artist.Name)
+        new LibraryBreadcrumbItem(PlayerItemType.Grouping, Artist.Grouping, Artist.Grouping),
+        new LibraryBreadcrumbItem(PlayerItemType.Genre, Artist.Genre, Artist.Genre.GetGenreName()),
+        new LibraryBreadcrumbItem(PlayerItemType.Artist, Artist.Id, Artist.Name)
     };
 }

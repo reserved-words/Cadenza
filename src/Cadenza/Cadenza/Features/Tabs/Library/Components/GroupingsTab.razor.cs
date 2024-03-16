@@ -6,5 +6,5 @@ public class GroupingsTabBase : FluxorComponent
 
     public IReadOnlyCollection<string> Groupings => State.Value.Groupings;
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>();
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>();
 }

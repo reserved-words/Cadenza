@@ -8,8 +8,8 @@ public class GroupingTabBase : FluxorComponent
     public string Grouping => ViewGroupingState.Value.Grouping;
     public IReadOnlyCollection<string> Genres => ViewGroupingState.Value.Genres;
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Grouping, Grouping)
+        new LibraryBreadcrumbItem(PlayerItemType.Grouping, Grouping, Grouping)
     };
 }

@@ -6,7 +6,14 @@
         <TabGridRow RowHeight="@RowHeight.Fixed">
 
             <MudStack Row="true" Class="ma-0 pa-0">
-                <LibraryBreadcrumbs Links="@Breadcrumbs" />
+                
+                <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                    <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="true" />
+                </MudHidden>
+                <MudHidden Breakpoint="@Breakpoint.Xs">
+                    <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="false" />
+                </MudHidden>
+
                 <MudSpacer />
                 <LibraryToolbar Type="@Type" Id="@Id" Name="@Name" />
             </MudStack>
@@ -26,7 +33,7 @@
 @code {
     [Parameter] public RenderFragment ChildContent { get; set; }
 
-    [Parameter] public List<LibraryBreadcrumb> Breadcrumbs { get; set; } = new List<LibraryBreadcrumb>();
+    [Parameter] public List<LibraryBreadcrumbItem> Breadcrumbs { get; set; } = new List<LibraryBreadcrumbItem>();
     [Parameter] public PlayerItemType? Type { get; set; }
     [Parameter] public string Id { get; set; }
     [Parameter] public string Name { get; set; }

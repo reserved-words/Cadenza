@@ -13,9 +13,9 @@ public class GenreTabBase : FluxorComponent
     protected string Id => Genre.Genre;
     protected string DisplayName => Genre.Genre.GetGenreName();
 
-    protected List<LibraryBreadcrumb> Breadcrumbs => new List<LibraryBreadcrumb>
+    protected List<LibraryBreadcrumbItem> Breadcrumbs => new List<LibraryBreadcrumbItem>
     {
-        new LibraryBreadcrumb(PlayerItemType.Grouping, Genre.Grouping, Genre.Grouping),
-        new LibraryBreadcrumb(PlayerItemType.Genre, Id, DisplayName)
+        new LibraryBreadcrumbItem(PlayerItemType.Grouping, Genre.Grouping, Genre.Grouping),
+        new LibraryBreadcrumbItem(PlayerItemType.Genre, Id, DisplayName)
     };
 }

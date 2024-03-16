@@ -1,15 +1,15 @@
 ﻿namespace Cadenza.Web.Common.Model;
 
-public class LibraryBreadcrumb
+public class LibraryBreadcrumbItem
 {
-    public LibraryBreadcrumb(PlayerItemType type, string id, string name)
+    public LibraryBreadcrumbItem(PlayerItemType type, string id, string name)
     {
         Type = type;
         Id = id;
         Name = name;
     }
 
-    public LibraryBreadcrumb(PlayerItemType type, int id, string name)
+    public LibraryBreadcrumbItem(PlayerItemType type, int id, string name)
         :this(type, id.ToString(), name)
     {
     }
