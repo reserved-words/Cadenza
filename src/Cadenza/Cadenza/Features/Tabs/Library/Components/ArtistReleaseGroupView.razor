@@ -1,14 +1,31 @@
 ﻿
 <AppScrollContainer Elevation="0">
     <ChildContent>
-        <AppGrid Items="@Model.Albums" ItemXs="6">
-            <ImageTemplate>
-                <AlbumArtworkView Model="@context" />
-            </ImageTemplate>
-            <CaptionTemplate>
-                <AlbumSummaryView Model="@context" />
-            </CaptionTemplate>
-        </AppGrid>
+        
+        <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+            <AppTable Items="@Model.Albums">
+                <RowTemplate>
+                    <MudTd Style="max-width: 50px;">
+                        <AlbumArtworkView Model="@context" />
+                    </MudTd>
+                    <MudTd>
+                        <AlbumSummaryView Model="@context" />
+                    </MudTd>
+                </RowTemplate>
+            </AppTable>
+        </MudHidden>
+
+        <MudHidden Breakpoint="@Breakpoint.Xs">
+            <AppGrid Items="@Model.Albums" ItemXs="6">
+                <ImageTemplate>
+                    <AlbumArtworkView Model="@context" />
+                </ImageTemplate>
+                <CaptionTemplate>
+                    <AlbumSummaryView Model="@context" />
+                </CaptionTemplate>
+            </AppGrid>
+        </MudHidden>
+
     </ChildContent>
 </AppScrollContainer>
 

@@ -217,3 +217,7 @@ table tr td.td-int-input .mud-input-control {
   white-space: nowrap;
   overflow-x: hidden;
 }
+
+.mud-expand-panel.mud-panel-expanded {
+  margin: 0;
+}

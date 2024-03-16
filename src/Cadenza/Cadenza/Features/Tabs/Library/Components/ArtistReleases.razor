@@ -1,14 +1,22 @@
 ﻿@if (Releases != null)
 {
     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-        <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
-            @foreach (var group in Releases)
-            {
-                <MudExpansionPanel Text="@group.Group.GetDisplayName()">
-                    <ArtistReleaseGroupView Model="@group" />
-                </MudExpansionPanel>
-            }
-        </MudExpansionPanels>
+        @if (_releaseGroups.Count == 1)
+        {
+            <ArtistReleaseGroupView Model="@_releaseGroups.First()" />
+        }
+        else
+        {
+            <MudExpansionPanels Dense="true" DisableGutters="true" Square="true">
+                @for (var i = 0; i < _releaseGroups.Count; i++)
+                {
+                    var group = _releaseGroups[i];
+                    <MudExpansionPanel Text="@group.Group.GetDisplayName()" IsInitiallyExpanded="@(i == 0)">
+                        <ArtistReleaseGroupView Model="@group" />
+                    </MudExpansionPanel>
+                }
+            </MudExpansionPanels>
+        }
     </MudHidden>
 
     <MudHidden Breakpoint="Breakpoint.Xs">
@@ -25,4 +33,11 @@
 
 @code {
     [Parameter] public IReadOnlyCollection<ArtistReleaseGroupVM> Releases { get; set; }
+
+    private List<ArtistReleaseGroupVM> _releaseGroups = new();
+
+    protected override void OnParametersSet()
+    {
+        _releaseGroups = Releases?.ToList() ?? new List<ArtistReleaseGroupVM>();
+    }
 }
