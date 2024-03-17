@@ -13,7 +13,12 @@ public class Program
 
         builder.RegisterComponents();
 
-        builder.RegisterConfiguration();
+        builder.RegisterConfiguration(); ;
+
+        builder.Logging.AddFilter((category, level) =>
+        {
+            return level >= LogLevel.Warning || !(category?.Contains("System.Net.Http.HttpClient") == true);
+        });
 
         var currentAssembly = typeof(Program).Assembly;
         var stateAssembly = typeof(PlayStatusState).Assembly;

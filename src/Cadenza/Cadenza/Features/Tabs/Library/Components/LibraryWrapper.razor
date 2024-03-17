@@ -3,30 +3,31 @@
 
     <TabGridColumn>
 
-        <TabGridRow RowHeight="@RowHeight.Fixed">
-
-            <MudStack Row="true" Class="ma-0 pa-0">
-                
-                <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
-                    <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="true" />
-                </MudHidden>
-                <MudHidden Breakpoint="@Breakpoint.Xs">
-                    <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="false" />
-                </MudHidden>
-
-                <MudSpacer />
-                <LibraryToolbar Type="@Type" Id="@Id" Name="@Name" />
-            </MudStack>
-
-            <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
-                <MudDivider />
-            </MudHidden>
-
-        </TabGridRow>
-
         <TabGridRow RowHeight="@RowHeight.Stretch">
 
-            @ChildContent
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudStack Row="true" Class="ma-0 pa-0">
+
+                        <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                            <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="true" />
+                        </MudHidden>
+                        <MudHidden Breakpoint="@Breakpoint.Xs">
+                            <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="false" />
+                        </MudHidden>
+
+                        <MudSpacer />
+                        <LibraryToolbar Type="@Type" Id="@Id" Name="@Name" />
+                    </MudStack>
+                    <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                        <MudDivider />
+                    </MudHidden>
+
+                </HeaderContent>
+                <ChildContent>
+                    @ChildContent
+                </ChildContent>
+            </AppCardScrollContainer>
 
         </TabGridRow>
 
