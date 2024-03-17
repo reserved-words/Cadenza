@@ -6,7 +6,7 @@ public static class Icon
     public static string Artist = "fas fa-users";
     public static string Dashboard = "fa-solid fa-chart-column";
     public static string Delete = "fa-solid fa-trash-can";
-    public static string Edit = "fa-solid fa-pencil";
+    public static string Edit = Icons.Material.Filled.Edit;
     public static string Favourite = "fa-solid fa-heart";
     public static string Genre = "fas fa-boxes";
     public static string Grouping = "fas fa-box";

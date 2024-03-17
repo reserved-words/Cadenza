@@ -6,11 +6,19 @@
 }
 <li class="mud-breadcrumb-item">
     <MudLink Typo="@Typo.body1" OnClick="@(() => ClickAction())" Color="@Color.Surface">
-        @Name
+        @if (Name != null)
+        {
+            <MudText Typo="@Typo.body1">@Name</MudText>
+        }
+        else
+        {
+            <MudIcon Icon="@Type.GetIcon()" Size="@Size.Small" />
+        }
     </MudLink>
 </li>
 
 @code {
+    [Parameter] public PlayerItemType Type { get; set; }
     [Parameter] public string Name { get; set; }
     [Parameter] public bool IncludeSeparator { get; set; }
     [Parameter] public Action ClickAction { get; set; }

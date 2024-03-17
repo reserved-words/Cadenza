@@ -22,8 +22,9 @@
     [Parameter] public int Elevation { get; set; } = 2;
     [Parameter] public RenderFragment HeaderContent { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public int HeaderPaddingSides { get; set; } = 3;
     [Parameter] public int HeaderPaddingTop { get; set; } = 3;
     [Parameter] public int HeaderPaddingBottom { get; set; } = 3;
 
-    private string HeaderClass => $"px-3 pt-{HeaderPaddingTop} pb-{HeaderPaddingBottom}";
+    private string HeaderClass => $"px-{HeaderPaddingSides} pt-{HeaderPaddingTop} pb-{HeaderPaddingBottom}";
 }
