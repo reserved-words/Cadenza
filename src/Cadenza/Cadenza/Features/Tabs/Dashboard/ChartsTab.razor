@@ -3,16 +3,30 @@
 <TabGrid>
 
     <TabGridColumn>
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+        <TabGridRow RowHeight="@RowHeight.Stretch">
 
-            <MudTabs Centered="true">
-                <MudTabPanel Text="Top Artists">
-                    <TopArtists />
-                </MudTabPanel>
-                <MudTabPanel Text="Top Albums">
-                    <TopAlbums />
-                </MudTabPanel>
-            </MudTabs>
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="@Typo.h6">Charts</MudText>
+                </HeaderContent>
+
+                <ChildContent>
+
+                    <MudTabs Centered="true">
+                        <MudTabPanel Text="Artists">
+                            <MudContainer Class="ma-0 pa-0 mt-3">
+                                <TopArtists />
+                            </MudContainer>
+                        </MudTabPanel>
+                        <MudTabPanel Text="Albums">
+                            <MudContainer Class="ma-0 pa-0 mt-3">
+                                <TopAlbums />
+                            </MudContainer>
+                        </MudTabPanel>
+                    </MudTabs>
+
+                </ChildContent>
+            </AppCardScrollContainer>
 
         </TabGridRow>
     </TabGridColumn>

@@ -3,16 +3,30 @@
 <TabGrid>
 
     <TabGridColumn>
-        <TabGridRow RowHeight="@RowHeight.Fixed">
+        <TabGridRow RowHeight="@RowHeight.Stretch">
 
-            <MudTabs Centered="true">
-                <MudTabPanel Text="Recently Played">
-                    <RecentlyPlayedAlbums />
-                </MudTabPanel>
-                <MudTabPanel Text="Recently Added">
-                    <RecentlyAddedAlbums />
-                </MudTabPanel>
-            </MudTabs>
+            <AppCardScrollContainer>
+                <HeaderContent>
+                    <MudText Typo="@Typo.h6">Recent Albums</MudText>
+                </HeaderContent>
+
+                <ChildContent>
+
+                    <MudTabs Centered="true">
+                        <MudTabPanel Text="Recently Played">
+                            <MudContainer Class="ma-0 pa-0 mt-3">
+                                <RecentlyPlayedAlbums ShowHeader="false" />
+                            </MudContainer>
+                        </MudTabPanel>
+                        <MudTabPanel Text="Recently Added">
+                            <MudContainer Class="ma-0 pa-0 mt-3">
+                                <RecentlyAddedAlbums ShowHeader="false" />
+                            </MudContainer>
+                        </MudTabPanel>
+                    </MudTabs>
+
+                </ChildContent>
+            </AppCardScrollContainer>
 
         </TabGridRow>
     </TabGridColumn>

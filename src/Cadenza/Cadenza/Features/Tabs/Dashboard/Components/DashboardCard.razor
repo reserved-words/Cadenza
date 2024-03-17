@@ -24,14 +24,14 @@ else if (!Scroll)
     <MudCard Elevation="3"
              Class="ma-0 pa-0 fixed-height"
              Style="display: flex; flex-direction: column;">
-        <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
-            <CardHeaderContent>
-                <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
-                                     Title="@Title"
-                                     OnUpdate="@UpdateItems"
-                                     Period="@Period" />
-            </CardHeaderContent>
-        </MudCardHeader>
+            <MudCardHeader Style="flex-grow: 0;" Class="px-3 pt-2 pb-3">
+                <CardHeaderContent>
+                    <DashboardCardHeader ShowPeriodOption="@ShowPeriodOption"
+                                         Title="@Title"
+                                         OnUpdate="@UpdateItems"
+                                         Period="@Period" />
+                </CardHeaderContent>
+            </MudCardHeader>
         <MudCardContent Style="flex-grow: 1; overflow: hidden;" Class="fixed-height-scroll pa-0 ma-0">
             <MudDivider />
             @ChildContent

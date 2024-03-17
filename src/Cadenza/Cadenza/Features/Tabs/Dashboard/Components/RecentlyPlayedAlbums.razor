@@ -2,7 +2,7 @@
 
 @inherits RecentlyPlayedAlbumsBase
 
-<DashboardCard Title="Recently Played Albums"
+<DashboardCard Title="@(ShowHeader ? "Recently Played Albums" : null)"
                IsLoading="@IsLoading"
                LoadingCaption="Loading recently played albums..."
                ShowPeriodOption="false">
