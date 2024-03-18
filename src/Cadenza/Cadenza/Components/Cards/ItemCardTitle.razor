@@ -4,7 +4,7 @@
 
     @if (Link)
     {
-        <ActionLink Typo="@Typo" Text="@Name" OnClick="@View"></ActionLink>
+        <ItemLink Typo="@Typo" Type="@ItemType" Id="@Id" Name="@Name" />
     }
     else
     {
@@ -23,9 +23,4 @@
     [Parameter] public int MarginBottom { get; set; } = 1;
 
     private string ContainerClass => $"d-flex flex-row pa-0 ma-0 mb-{MarginBottom}";
-    
-    private void View()
-    {
-        Dispatcher.Dispatch(new ViewItemRequest(ItemType, Id.ToString(), Name));
-    }
 }

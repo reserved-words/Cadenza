@@ -55,9 +55,4 @@ public class SearchTabBase : ComponentBase
 
         return Task.CompletedTask;
     }
-
-    protected void OnViewItem(SearchItemVM item)
-    {
-        Dispatcher.Dispatch(new ViewItemRequest(item.Type, item.Id, item.Name));
-    }
 }

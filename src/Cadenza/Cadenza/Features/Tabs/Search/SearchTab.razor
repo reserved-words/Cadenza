@@ -44,7 +44,7 @@
                                 <MudIcon Icon="@context.Type.GetIcon()" Size="@Size.Small" />
                             </MudTd>
                             <MudTd>
-                                <ActionLink Typo="@Typo.body1" Text="@context.Name" OnClick="@(() => OnViewItem(context))"></ActionLink>
+                                <ItemLink Typo="@Typo.body1" Type="@context.Type" Id="@context.Id" Name="@context.Name"></ItemLink>
                             </MudTd>
                             <MudTd>
                                 <MudText Typo="Typo.body1">@context.Artist</MudText>

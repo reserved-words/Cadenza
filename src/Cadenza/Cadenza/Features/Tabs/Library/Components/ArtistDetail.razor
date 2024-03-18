@@ -7,7 +7,7 @@
         <ItemCardTitle ItemType="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" Link="false" Typo="@Typo.h5" MarginBottom="3" />
         <ArtistImageView Model="@Model" />
         <MudText Typo="Typo.body1">@Model.Location()</MudText>
-        <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
-        <GenreLink Typo="@Typo.body2" Genre="@Model.Genre" />
+        <ItemLink Typo="@Typo.body2" Type="@PlayerItemType.Grouping" Id="@Model.Grouping" Name="@Model.Grouping" />
+        <ItemLink Typo="@Typo.body2" Type="@PlayerItemType.Genre" Id="@Model.Genre" Name="@Model.Genre.GetGenreName()" />
     </ItemCard>
 }

@@ -7,22 +7,13 @@ public class CurrentlyPlayingHeaderBase : FluxorComponent
 
     public string PlaylistName => PlaylistState.Value.Name;
 
-    public bool ShowViewLink => PlaylistState.Value.Type != PlaylistType.All;
+    public bool ShowViewLink => PlaylistState.Value.Type != PlaylistType.All && ItemType != null;
 
     public string PlaylistTypeIcon => GetIcon();
 
-    protected void OnView()
-    {
-        if (PlaylistState.Value.Id == null)
-            return;
+    public object Id => PlaylistState.Value.Id;
 
-        var type = PlaylistState.Value.Type.GetItemType();
-
-        if (!type.HasValue)
-            return;
-
-        Dispatcher.Dispatch(new ViewItemRequest(type.Value, PlaylistState.Value.Id, PlaylistState.Value.Name));
-    }
+    public PlayerItemType? ItemType => PlaylistState.Value.Type.GetItemType();
 
     private string GetIcon()
     {

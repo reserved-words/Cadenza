@@ -8,7 +8,7 @@
                   Items="@Genres">
             <RowTemplate>
                 <MudTd>
-                    <GenreLink Typo="@Typo.body1" Genre="@context" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Genre" Id="@context" Name="@context.GetGenreName()" />
                 </MudTd>
             </RowTemplate>
         </AppTable>

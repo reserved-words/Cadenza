@@ -8,12 +8,12 @@
             {
                 <CurrentlyPlayingIcon Class="mr-2 inline" />
             }
-            <TrackLink Typo="@Typo.body1" Id="@context.TrackId" Title="@context.Title" Class="inline" />
+            <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Track" Id="@context.TrackId" Name="@context.Title" Inline="true" />
         </MudTd>
         <MudTd Class="@CellClass(context, false)">
             @if (!IsTrackArtistSameAsAlbumArtist(context))
             {
-                <ArtistLink Typo="@Typo.body1" Id="@context.ArtistId" Name="@context.ArtistName" />
+                <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Artist" Id="@context.ArtistId" Name="@context.ArtistName" />
             }
         </MudTd>
         <MudTd Class="@CellClass(context, true)">@context.TrackDuration()</MudTd>

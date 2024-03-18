@@ -8,7 +8,7 @@
         </MudItem>
         <MudItem xs="8" md="12">
             <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
-            <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+            <ItemLink Typo="Typo.body1" Type="@PlayerItemType.Artist" Id="@Model.ArtistId" Name="@Model.ArtistName" />
             <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
             <MudText Typo="@Typo.body1">@Model.Year</MudText>
             <MudText Typo="@Typo.body1">@AlbumTrack.DiscPosition()</MudText>

@@ -5,7 +5,7 @@
     <ItemCard Tags="@Model.Tags">
         <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" Link="false" Typo="@Typo.h5" MarginBottom="3" />
         <AlbumArtworkView Model="@Model" />
-        <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+        <ItemLink Typo="Typo.body1" Type="@PlayerItemType.Artist" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>
         <MudText Typo="Typo.body2">@Model.Year</MudText>
         <MudText Typo="Typo.body2">@TotalDuration.AlbumDuration()</MudText>

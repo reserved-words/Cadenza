@@ -10,7 +10,7 @@
         }
         @if (ShowViewLink)
         {
-            <ActionLink Typo="Typo.body1" OnClick="@OnView" Text="@PlaylistName" />
+            <ItemLink Typo="@Typo.body1" Type="@ItemType.Value" Id="@Id" Name="@PlaylistName" />
         }
         else
         {
