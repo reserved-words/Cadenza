@@ -1,15 +1,16 @@
 ﻿
-<AppCardHeader>
 
-    <MainContent>
+<MudContainer Class="d-flex flex-row pa-0 ma-0" Style="align-items: center;">
+
+    <MudPaper Elevation="0" Class="flex-grow-1 pa-0 ma-0 d-flex flex-column">
         <MudText Typo="@Typo.h6">@Title</MudText>
         @if (ShowPeriodOption)
         {
             <MudText Typo="@Typo.body1">@Period.GetDisplayName()</MudText>
         }
-    </MainContent>
+    </MudPaper>
 
-    <MenuContent>
+    <MudPaper Elevation="0" Class="flex-grow-0 pa-0 ma-0">
         @if (ShowPeriodOption)
         {
             <MudMenu Icon="@Icon.Settings"
@@ -23,9 +24,9 @@
                 }
             </MudMenu>
         }
-    </MenuContent>
+    </MudPaper>
 
-</AppCardHeader>
+</MudContainer>
 
 @code {
     [Parameter] public HistoryPeriod Period { get; set; }

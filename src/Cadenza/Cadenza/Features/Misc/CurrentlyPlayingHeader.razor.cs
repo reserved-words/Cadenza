@@ -9,7 +9,7 @@ public class CurrentlyPlayingHeaderBase : FluxorComponent
 
     public bool ShowViewLink => PlaylistState.Value.Type != PlaylistType.All;
 
-    public string Icon => GetIcon();
+    public string PlaylistTypeIcon => GetIcon();
 
     protected void OnView()
     {
@@ -29,10 +29,14 @@ public class CurrentlyPlayingHeaderBase : FluxorComponent
         if (PlaylistState.Value.Id == null)
             return null;
 
+        return Icons.Material.Filled.PlaylistPlay;
+
+        // This stuff doesn't work for some reason - for now just return one specific icon
+
         var itemType = PlaylistState.Value.Type.GetItemType();
 
         if (!itemType.HasValue)
-            return Cadenza.Icon.Shuffle;
+            return Icon.Shuffle;
 
         return itemType.Value.GetIcon();
     }
