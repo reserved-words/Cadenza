@@ -3,10 +3,10 @@
 <ItemCard Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
     <MudGrid>
-        <MudItem xs="6" md="12">
+        <MudItem xs="4" md="12">
             <AlbumArtworkView Model="@Model" />
         </MudItem>
-        <MudItem xs="6" md="12">
+        <MudItem xs="8" md="12">
             <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
             <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
             <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>

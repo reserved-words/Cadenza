@@ -3,10 +3,10 @@
 <ItemCard Tags="@Model.Tags" 
           Breakpoint="@Breakpoint">
     <MudGrid>
-        <MudItem xs="6">
+        <MudItem xs="4">
             <ArtistImageView Model="@Model" />
         </MudItem>
-        <MudItem xs="6">
+        <MudItem xs="8">
             <ItemCardTitle ItemType="@PlayerItemType.Artist" Id="@Model.Id" Name="@Model.Name" />
             <MudText Typo="Typo.body1">@Model.Location()</MudText>
             <GroupingLink Typo="@Typo.body2" Grouping="@Model.Grouping" />
