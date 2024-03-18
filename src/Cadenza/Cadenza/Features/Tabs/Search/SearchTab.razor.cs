@@ -15,6 +15,7 @@ public class SearchTabBase : ComponentBase
         ItemTypes.Add(AllTypes, null);
 
         Enum.GetValues<PlayerItemType>()
+            .Where(i => i != PlayerItemType.Library)
             .OrderBy(i => i.ToString())
             .ToList()
             .ForEach(i =>
