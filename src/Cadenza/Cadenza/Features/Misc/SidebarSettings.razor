@@ -1,0 +1,20 @@
+﻿@inherits FluxorComponent
+
+<MudButton Class="mt-2" 
+           StartIcon="@Icon.Settings"
+           OnClick="@OnViewSettings"
+           FullWidth="true" 
+           Disabled="@ViewState.Value.IsNavigationDisabled"
+           Variant="@Variant.Filled">
+    Settings
+</MudButton>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
+
+    private void OnViewSettings()
+    {
+        Dispatcher.Dispatch(new ViewTabRequest(Tab.Settings));
+    }
+}

@@ -1,0 +1,18 @@
+﻿@inherits GroupingTabBase
+
+@if (!Loading)
+{
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping">
+        <SubGrid>
+
+            <SubGridColumn>
+                <SubGridRow RowHeight="@RowHeight.Full">
+                    <MudDivider Class="xs-only" />
+                    <GroupingGenres Grouping="@Grouping"
+                                    Genres="@Genres" />
+                </SubGridRow>
+            </SubGridColumn>
+
+        </SubGrid>
+    </LibraryWrapper>
+}

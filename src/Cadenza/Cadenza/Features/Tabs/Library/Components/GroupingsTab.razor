@@ -1,0 +1,17 @@
+﻿@inherits GroupingsTabBase
+
+@if (Groupings != null)
+{
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs">
+        <SubGrid>
+
+            <SubGridColumn>
+                <SubGridRow RowHeight="@RowHeight.Full">
+                    <MudDivider Class="xs-only" />
+                    <GroupingsList Groupings="@Groupings" />
+                </SubGridRow>
+            </SubGridColumn>
+
+        </SubGrid>
+    </LibraryWrapper>
+}

@@ -1,0 +1,12 @@
+﻿@using Cadenza.Features.Player.Components
+
+@inherits PlayerBase
+
+@*Position relative needed to keep overlay inside card*@
+
+<CurrentTrack Empty="@Empty"
+              Loading="@Loading"
+              Model="@Model" />
+
+<PlayerControls IsLastTrack="@IsLastTrack"
+                IsTrackPopulated="@IsTrackPopulated" />

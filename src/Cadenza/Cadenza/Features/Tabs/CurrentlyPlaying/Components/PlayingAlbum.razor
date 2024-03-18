@@ -1,0 +1,24 @@
+﻿@inherits AlbumViewBase
+
+<ItemCard Tags="@Model.Tags">
+    <MudGrid>
+        <MudItem xs="6" md="12">
+            <AlbumArtworkView Model="@Model" />
+        </MudItem>
+        <MudItem xs="6" md="12" Class="mt-0 pt-0">
+            <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" />
+            <ArtistLink Typo="Typo.body1" Id="@Model.ArtistId" Name="@Model.ArtistName" />
+            <MudText Typo="@Typo.body1">@Model.ReleaseType.GetDisplayName()</MudText>
+            <MudText Typo="@Typo.body1">@Model.Year</MudText>
+            <MudText Typo="@Typo.body1">@AlbumTrack.DiscPosition()</MudText>
+            <MudText Typo="@Typo.body1">@AlbumTrack.TrackPosition()</MudText>
+        </MudItem>
+    </MudGrid>
+</ItemCard>
+
+    @code {
+    [Parameter] public AlbumTrackLinkVM AlbumTrack { get; set; }
+    [Parameter] public Breakpoint Breakpoint { get; set; }
+
+    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
+}

@@ -1,0 +1,20 @@
+﻿
+<AppCardScrollContainer HeaderPaddingTop="4" HeaderPaddingBottom="0">
+    <HeaderContent>
+        <ItemCardTitle ItemType="@PlayerItemType.Library" Name="Groupings" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+    </HeaderContent>
+    <ChildContent>
+        <AppTable T="@string"
+                  Items="@Groupings">
+            <RowTemplate>
+                <MudTd>
+                    <GroupingLink Typo="@Typo.body1" Grouping="@context" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter] public IReadOnlyCollection<string> Groupings { get; set; }
+}

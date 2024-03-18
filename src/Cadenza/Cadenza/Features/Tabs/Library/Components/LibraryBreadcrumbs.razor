@@ -1,0 +1,55 @@
+﻿@{
+    var count = Items.Count;
+}
+
+@if (IsBreakpointXs && count == 0)
+{
+    <MudText Typo="@Typo.h6" Class="ma-2">Library</MudText>
+}
+else
+{
+    <ul class="mud-breadcrumbs mud-typography-body1 py-2">
+
+        <LibraryBreadcrumb Name="@(IsBreakpointXs ? null : "Library")"
+                           IncludeSeparator="false"
+                           ClickAction="@(() => ViewLibrary())" />
+
+        @for (var i = 0; i < count; i++)
+        {
+            if (IsBreakpointXs && i == count - 1)
+                break;
+
+            var link = Items[i];
+            var name = IsBreakpointXs ? null : link.Name;
+
+            <LibraryBreadcrumb Type=@link.Type
+                               Name="@name"
+                               IncludeSeparator="true"
+                               ClickAction="@(() => View(link))" />
+        }
+
+    </ul>
+}
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    [Parameter] public List<LibraryBreadcrumbItem> Items { get; set; }
+    [Parameter] public bool IsBreakpointXs { get; set; }
+
+    private void ViewLibrary()
+    {
+        if (Items.Count == 0)
+            return;
+
+        Dispatcher.Dispatch(new ViewItemRequest(PlayerItemType.Library, null, null));
+    }
+
+    private void View(LibraryBreadcrumbItem link)
+    {
+        if (Items.Last() == link)
+            return;
+
+        Dispatcher.Dispatch(new ViewItemRequest(link.Type, link.Id, link.Name));
+    }
+}

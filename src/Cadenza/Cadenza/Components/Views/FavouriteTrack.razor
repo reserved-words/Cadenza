@@ -1,0 +1,14 @@
+﻿@inherits FavouriteTrackBase
+
+@if (!IsEnabled)
+{
+    <MudIconButton Icon="@Icon.Favourite" Color="Color.Default" Disabled="true" />
+}
+else if (IsFavourite)
+{
+    <MudIconButton Icon="@Icon.Favourite" Color="Color.Primary" OnClick="@Unfavourite" />
+}
+else
+{
+    <MudIconButton Icon="@Icon.NotFavourite" OnClick="@Favourite" />
+}

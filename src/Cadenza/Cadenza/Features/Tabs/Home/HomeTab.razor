@@ -1,0 +1,30 @@
+﻿@using Cadenza.Features.Misc
+@using Cadenza.Features.Player
+
+<TabGrid>
+
+    <TabGridColumn>
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+
+            <MudContainer Class="@ContainerClass">
+                <CurrentlyPlayingHeader />
+            </MudContainer>
+            <MudContainer Class="@ContainerClass">
+                <Player />
+            </MudContainer>
+            <MudSpacer />
+            <MudContainer Class="@ContainerClass">
+                <PlayShortcuts />
+            </MudContainer>
+            <MudContainer Class="@ContainerClass">
+                <Search />
+            </MudContainer>
+
+        </TabGridRow>
+    </TabGridColumn>
+
+</TabGrid>
+
+@code {
+    private const string ContainerClass = "ma-0 pa-0 px-2 my-2";
+}

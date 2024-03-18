@@ -1,0 +1,45 @@
+﻿
+<TabGrid>
+
+    <TabGridColumn>
+
+        <TabGridRow RowHeight="@RowHeight.Stretch">
+
+            <AppCardScrollContainer HeaderPaddingSides="0" HeaderPaddingBottom="0" HeaderPaddingTop="0">
+                <HeaderContent>
+                    <MudStack Row="true" Style="align-items: center;" Class="ma-0 pa-0">
+
+                        <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                            <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="true" />
+                        </MudHidden>
+                        <MudHidden Breakpoint="@Breakpoint.Xs">
+                            <LibraryBreadcrumbs Items="@Breadcrumbs" IsBreakpointXs="false" />
+                        </MudHidden>
+
+                        <MudSpacer />
+                        <LibraryToolbar Type="@Type" Id="@Id" Name="@Name" />
+                    </MudStack>
+                    <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
+                        <MudDivider />
+                    </MudHidden>
+
+                </HeaderContent>
+                <ChildContent>
+                    @ChildContent
+                </ChildContent>
+            </AppCardScrollContainer>
+
+        </TabGridRow>
+
+    </TabGridColumn>
+
+</TabGrid>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public List<LibraryBreadcrumbItem> Breadcrumbs { get; set; } = new List<LibraryBreadcrumbItem>();
+    [Parameter] public PlayerItemType? Type { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public string Name { get; set; }
+}

@@ -1,0 +1,64 @@
+﻿@inherits EditAlbumTracksBase
+
+@foreach (var disc in Model.Discs)
+{
+    <MudCard Class="ma-0 pa-0 mb-2">
+        <MudCardHeader>
+            <MudContainer Class="d-flex flex-row pa-0 ma-0 align-end">
+                <MudText Typo="@Typo.h6"
+                         Class="flex-grow-1">@disc.DiscName</MudText>
+                <MudText Typo="@Typo.body1"
+                         Class="flex-grow-0 mr-3 mb-1">Track Count:</MudText>
+                <MudTextField Class="flex-grow-0"
+                              Style="width: 40px;"
+                              MaxLength="3"
+                              @bind-Value="disc.TrackCount"
+                              For="@(() => disc.TrackCount)" />
+            </MudContainer>
+        </MudCardHeader>
+        <MudCardContent Class="pa-0 ma-0">
+            <AppTable Items="@disc.Tracks">
+                <RowTemplate>
+                    <MudTd Class="td-int-input">
+                        <MudNumericField MaxLength="1"
+                                         HideSpinButtons="true"
+                                         @bind-Value="context.DiscNo"
+                                         For="@(() => context.DiscNo)"
+                                         OnBlur="@(() => OnDiscNoChanged(context))" />
+                    </MudTd>
+                    <MudTd Class="td-int-input">
+                        <MudNumericField MaxLength="3"
+                                         HideSpinButtons="true"
+                                         @bind-Value="context.TrackNo"
+                                         For="@(() => context.TrackNo)"
+                                         OnBlur="@(() => OnTrackNoChanged(context))" />
+                    </MudTd>
+                    <MudTd>
+                        <MudTextField MaxLength="500"
+                                      @bind-Value="context.Title"
+                                      For="@(() => context.Title)" />
+                    </MudTd>
+                    <MudTd>
+                        <MudText Typo="@Typo.body1">@context.ArtistName</MudText>
+                    </MudTd>
+                    <MudTd Class="td-icon">
+                        <MudIcon Size="@Size.Small"
+                                 Icon="@Icon.Info"
+                                 Title="@context.IdFromSource" />
+                    </MudTd>
+                    <MudTd Class="td-icon">
+                        <MudIconButton Size="@Size.Small"
+                                       Icon="@Icon.Delete"
+                                       Variant="@Variant.Outlined"
+                                       Title="Remove"
+                                       OnClick="@(() => OnRemoveTrack(context))">Remove</MudIconButton>
+                    </MudTd>
+                </RowTemplate>
+            </AppTable>
+        </MudCardContent>
+    </MudCard>
+}
+
+@code {
+
+}

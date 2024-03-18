@@ -89,20 +89,14 @@ div.tab-grid-col {
     margin: 0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
 }
 
 @media (min-width: #{$screen-sm-min}) {
     div.tab-grid-col {
         padding: 0 0.5rem;
-    }
-}
-
-@media (min-width: #{$screen-md-min}) {
-    div.tab-grid-col {
-        height: 100%;
-        max-height: 100%;
-        overflow-y: hidden;
     }
 }
 
@@ -120,7 +114,6 @@ div.tab-grid-row {
 div.sub-grid {
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 div.sub-grid-col {

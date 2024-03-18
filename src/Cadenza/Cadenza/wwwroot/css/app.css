@@ -5,6 +5,10 @@ html, body {
   font-size: 12px;
 }
 
+.xs-hide {
+  display: none;
+}
+
 @media (min-width: 960px) {
   .xs-only {
     display: none;
@@ -199,9 +203,6 @@ table tr td.td-int-input .mud-input-control {
 
 .player-card {
   position: relative;
-  height: 320px;
-  max-height: 320px;
-  min-height: 320px;
 }
 
 .mud-card-header-content {
@@ -215,4 +216,8 @@ table tr td.td-int-input .mud-input-control {
   cursor: pointer;
   white-space: nowrap;
   overflow-x: hidden;
+}
+
+.mud-expand-panel.mud-panel-expanded {
+  margin: 0;
 }

@@ -1,0 +1,19 @@
+﻿@inherits GenreTabBase
+
+@if (!Loading)
+{
+    <LibraryWrapper Breadcrumbs="@Breadcrumbs" Type="@PlayerItemType.Genre" Id="@Id" Name="@DisplayName">
+        <SubGrid>
+
+            <SubGridColumn>
+                <SubGridRow RowHeight="@RowHeight.Full">
+
+                    <MudDivider Class="xs-only" />
+                    <GenreArtists Grouping="@Genre.Grouping" Genre="@DisplayName" Artists="@Artists" />
+
+                </SubGridRow>
+            </SubGridColumn>
+
+        </SubGrid>
+    </LibraryWrapper>
+}

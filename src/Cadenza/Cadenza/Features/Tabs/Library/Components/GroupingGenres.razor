@@ -1,0 +1,21 @@
+﻿
+<AppCardScrollContainer HeaderPaddingTop="4" HeaderPaddingBottom="0">
+    <HeaderContent>
+        <ItemCardTitle ItemType="@PlayerItemType.Grouping" Id="@Grouping" Name="@Grouping" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+    </HeaderContent>
+    <ChildContent>
+        <AppTable T="@string"
+                  Items="@Genres">
+            <RowTemplate>
+                <MudTd>
+                    <GenreLink Typo="@Typo.body1" Genre="@context" />
+                </MudTd>
+            </RowTemplate>
+        </AppTable>
+    </ChildContent>
+</AppCardScrollContainer>
+
+@code {
+    [Parameter] public string Grouping { get; set; }
+    [Parameter] public IReadOnlyCollection<string> Genres { get; set; }
+}

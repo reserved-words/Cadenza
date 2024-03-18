@@ -3,9 +3,12 @@
 public enum Tab
 {
     Default,
-    CurrentTrack,
-    Dashboard,
     Home,
+    Dashboard,
+    RecentAlbums,
+    RecentTracks,
+    Charts,
+    CurrentTrack,
     Library,
     Search,
     Edit,

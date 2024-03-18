@@ -1,6 +1,10 @@
 ﻿using Cadenza.Common.Http;
 using Cadenza.Web.Common.Enums;
 using Cadenza.Web.Api;
+using MudBlazor.Services;
+using MudBlazor;
+using Cadenza.Services;
+using Cadenza.Interfaces;
 
 namespace Cadenza._Startup;
 
@@ -50,5 +54,24 @@ public static class Dependencies
     {
         return services
             .AddTransient<INavigation, NavigationInterop>();
+    }
+
+    private static IServiceCollection AddComponents(this IServiceCollection services)
+    {
+        return services
+            .AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 10000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            })
+            .AddTransient<Interfaces.IDialogService, MudDialogService>()
+            .AddTransient<IStartupDialogService, MudStartupDialogService>()
+            .AddTransient<INotificationService, MudNotificationService>();
     }
 }
