@@ -1,65 +1,21 @@
-﻿
-<MudCard Style="height: 100%; display: flex; flex-direction: column;">
+﻿@inherits TabsLayoutBase
 
-    <MudCardContent Class="fixed-height-scroll pa-0" Style="flex-grow: 1;">
+<MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
 
-        <MudTabs KeepPanelsAlive="true" Class="main-tabs" @ref="tabs">
+    <MudTabPanel Text="HOME" ID="@(Tab.Home)">
+        <HomeTab />
+    </MudTabPanel>
+    <MudTabPanel Text="RECENT TRACKS" ID="@(Tab.RecentTracks)">
+        <RecentTracksTab />
+    </MudTabPanel>
+    <MudTabPanel Text="RECENT ALBUMS" ID="@(Tab.RecentAlbums)">
+        <RecentAlbumsTab />
+    </MudTabPanel>
+    <MudTabPanel Text="CHARTS" ID="@(Tab.Charts)">
+        <ChartsTab />
+    </MudTabPanel>
+    <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
+        <LibraryTab />
+    </MudTabPanel>
 
-            <MudTabPanel Text="HOME" ID="@(Tab.Home)">
-                <HomeTab />
-            </MudTabPanel>
-            <MudTabPanel Text="RECENT TRACKS" ID="@(Tab.RecentTracks)">
-                <RecentTracksTab />
-            </MudTabPanel>
-            <MudTabPanel Text="RECENT ALBUMS" ID="@(Tab.RecentAlbums)">
-                <RecentAlbumsTab />
-            </MudTabPanel>
-            <MudTabPanel Text="CHARTS" ID="@(Tab.Charts)">
-                <ChartsTab />
-            </MudTabPanel>
-            <MudTabPanel Text="LIBRARY" ID="@(Tab.Library)">
-                <LibraryTab />
-            </MudTabPanel>
-
-        </MudTabs>
-
-    </MudCardContent>
-
-    <MudCardActions Class="d-flex align-start">
-        @foreach (var tab in _tabs)
-        {
-            <MudIconButton Class="d-flex flex-1" Icon="@tab.GetIcon()" Color="Color.Default" OnClick="@(() => View(tab))" />
-        }
-    </MudCardActions>
-
-</MudCard>
-
-@code {
-
-    [Inject] public IDispatcher Dispatcher { get; set; }
-    [Inject] public IState<ViewState> ViewState { get; set; }
-
-    MudTabs tabs;
-
-    private readonly List<Tab> _tabs = [Tab.Home, Tab.RecentTracks, Tab.RecentAlbums, Tab.Charts, Tab.Library];
-
-    protected override void OnInitialized()
-    {
-        ViewState.StateChanged += ViewState_StateChanged;
-        base.OnInitialized();
-    }
-
-    private void View(Tab tab)
-    {
-        Dispatcher.Dispatch(new ViewTabRequest(tab));
-    }
-
-    private void ViewState_StateChanged(object sender, EventArgs args)
-    {
-        var switchToTab = ViewState.Value.CurrentTab == Tab.Default
-            ? Tab.Home
-            : ViewState.Value.CurrentTab;
-
-        tabs.ActivatePanel(switchToTab);
-    }
-}
+</MudTabs>
