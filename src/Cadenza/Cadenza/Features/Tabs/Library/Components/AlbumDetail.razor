@@ -3,7 +3,7 @@
 @if (Model != null)
 {
     <ItemCard Tags="@Model.Tags">
-        <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+        <ItemCardTitle ItemType="@PlayerItemType.Album" Id="@Model.Id" Name="@Model.Title" Link="false" Typo="@Typo.h5" mb="3" />
         <AlbumArtworkView Model="@Model" />
         <ItemLink Typo="Typo.body1" Type="@PlayerItemType.Artist" Id="@Model.ArtistId" Name="@Model.ArtistName" />
         <MudText Typo="Typo.body2">@Model.ReleaseType.GetDisplayName()</MudText>

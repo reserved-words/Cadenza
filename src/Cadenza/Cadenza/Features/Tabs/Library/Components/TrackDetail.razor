@@ -2,7 +2,7 @@
 
 <ItemCard Tags="@Model.Tags"
           Breakpoint="@Breakpoint">
-    <ItemCardTitle ItemType="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+    <ItemCardTitle ItemType="@PlayerItemType.Track" Id="@Model.Id" Name="@Model.Title" Link="false" Typo="@Typo.h5" mb="3" />
     <ItemLink Typo="Typo.body1" Type="@PlayerItemType.Artist" Id="@Model.ArtistId" Name="@Model.ArtistName" />
     <MudText Typo="Typo.body1">@Model.Year</MudText>
     <MudText Typo="Typo.body1">@Model.TrackDuration()</MudText>

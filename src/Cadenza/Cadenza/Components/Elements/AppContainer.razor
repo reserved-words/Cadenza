@@ -1,0 +1,37 @@
+﻿
+<MudContainer Class="@ContainerClass">
+    @ChildContent
+</MudContainer>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public int pa { get; set; } = 0;
+    [Parameter] public int? px { get; set; } = null;
+    [Parameter] public int? py { get; set; } = null;
+    [Parameter] public int? pt { get; set; } = null;
+    [Parameter] public int? pl { get; set; } = null;
+    [Parameter] public int? pr { get; set; } = null;
+    [Parameter] public int? pb { get; set; } = null;
+
+    private string ContainerClass => ConstructContainerClass();
+
+    private string ConstructContainerClass()
+    {
+        return $"ma-0 pa-{pa}"
+            + Padding("px", px)
+            + Padding("py", py)
+            + Padding("pl", pl)
+            + Padding("pr", pr)
+            + Padding("pt", pt)
+            + Padding("pb", pb);
+    }
+
+    private string Padding(string name, int? value)
+    {
+        if (value is null)
+            return "";
+
+        return $" {name}-{value}";
+    }
+}
