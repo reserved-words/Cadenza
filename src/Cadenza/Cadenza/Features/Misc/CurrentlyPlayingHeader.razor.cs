@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Features.Misc;
 
-public class CurrentlyPlayingHeaderBase : FluxorComponent
+public partial class CurrentlyPlayingHeader
 {
     [Inject] public IState<PlaylistState> PlaylistState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }

@@ -1,4 +1,4 @@
-﻿@inherits SearchBase
+﻿@inherits FluxorComponent
 
 <MudToolBar DisableGutters="true">
 
@@ -49,9 +49,3 @@
     }
 
 </MudToolBar>
-
-@code {
-    [Inject] public IState<ViewState> ViewState { get; set; }
-
-    protected bool Disabled => ViewState.Value.IsNavigationDisabled;
-}

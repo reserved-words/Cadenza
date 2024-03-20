@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Features.Tabs.Search;
 
-public class SearchTabBase : ComponentBase
+public partial class SearchTab
 {
     private const string AllTypes = "All";
 
@@ -8,9 +8,14 @@ public class SearchTabBase : ComponentBase
     [Inject] public IState<SearchItemsState> SearchItemsState { get; set; }
 
 
-    protected readonly Dictionary<string, PlayerItemType?> ItemTypes = new Dictionary<string, PlayerItemType?>();
+    protected readonly Dictionary<string, PlayerItemType?> ItemTypes = [];
 
-    public SearchTabBase()
+    protected List<SearchItemVM> Results { get; set; } = [];
+
+    protected string SearchText { get; set; }
+    protected string SearchType { get; set; }
+
+    protected override void OnInitialized()
     {
         ItemTypes.Add(AllTypes, null);
 
@@ -25,11 +30,6 @@ public class SearchTabBase : ComponentBase
 
         OnClear();
     }
-
-    protected List<SearchItemVM> Results { get; set; } = new List<SearchItemVM>();
-
-    protected string SearchText { get; set; }
-    protected string SearchType { get; set; }
 
     protected void OnClear()
     {

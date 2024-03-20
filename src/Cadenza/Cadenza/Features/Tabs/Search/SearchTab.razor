@@ -1,14 +1,14 @@
-﻿@inherits SearchTabBase
-
+﻿
 <TabGrid>
 
     <TabGridColumn md="3">
         <TabGridRow RowHeight="@RowHeight.Full">
-            <MudCard Elevation="3" Class="pa-3">
-                <MudCardHeader Class="pa-0">
+
+            <MudCard Elevation="3">
+                <MudCardHeader>
                     <MudText Typo="Typo.h6">Search Criteria</MudText>
                 </MudCardHeader>
-                <MudCardContent Class="pa-0">
+                <MudCardContent>
                     <MudTextField Label="Search"
                                   @bind-Value="SearchText"
                                   For="@(() => SearchText)" />
@@ -22,11 +22,12 @@
                         }
                     </MudSelect>
                     <MudStack Row="true" Class="mt-3">
-                        <MudButton OnClick="@OnSearch">Search</MudButton>
-                        <MudButton OnClick="@OnClear">Clear</MudButton>
+                        <MudButton Variant="@Variant.Outlined" OnClick="@OnSearch">Search</MudButton>
+                        <MudButton Variant="@Variant.Outlined" OnClick="@OnClear">Clear</MudButton>
                     </MudStack>
                 </MudCardContent>
             </MudCard>
+
         </TabGridRow>
     </TabGridColumn>
 
