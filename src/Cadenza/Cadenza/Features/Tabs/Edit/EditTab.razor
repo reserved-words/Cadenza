@@ -4,10 +4,9 @@
 
 @if (CurrentItem != null)
 {
-
     <TabGrid>
-
         <TabGridColumn>
+
             <TabGridRow RowHeight="@RowHeight.Stretch">
 
                 @if (CurrentItem.Value.Type == LibraryItemType.Album)
@@ -34,8 +33,7 @@
                 </AppButtonContainer>
 
             </TabGridRow>
+
         </TabGridColumn>
-
     </TabGrid>
-
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Features.Tabs.CurrentlyPlaying;
 
-public class CurrentlyPlayingTabBase : FluxorComponent
+public partial class CurrentlyPlayingTab
 {
     [Inject] public IState<CurrentTrackState> CurrentTrackState { get; set; }
 

@@ -13,9 +13,3 @@
         </MudItem>
     </MudGrid>
 </ItemCard>
-
-@code {
-    [Parameter] public Breakpoint Breakpoint { get; set; }
-
-    private bool ShowHeader => Breakpoint != Breakpoint.Xs;
-}
