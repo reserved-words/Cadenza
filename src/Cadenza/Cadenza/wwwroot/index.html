@@ -10,13 +10,16 @@
     <script>
 
         // Hacky workaround for issue when deployed to IIS
+        console.log(window.location.pathname);
         var path = window.location.pathname.split('/');
+        console.log(path);
+        console.log(path.length);
         var baseElement = document.getElementsByTagName('base')[0];
-        if (path.length > 2) {
-            base.setAttribute('href', '/' + path[1] + '/');
+        if (window.location.href.indexOf('localhost:')) {
+            baseElement.setAttribute('href', '/');
         }
         else {
-            baseElement.setAttribute('href', '/');
+            baseElement.setAttribute('href', '/' + path[0] + '/');
         }
 
     </script>
