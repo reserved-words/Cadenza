@@ -2,10 +2,6 @@
 
 <Fluxor.Blazor.Web.StoreInitializer />
 
-<HeadContent>
-    <base href="@(Config.GetValue<string>("AppSettings:BasePath"))" />
-</HeadContent>
-
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
