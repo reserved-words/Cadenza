@@ -15,7 +15,7 @@
         console.log(path);
         console.log(path.length);
         var baseElement = document.getElementsByTagName('base')[0];
-        if (window.location.href.indexOf('localhost:')) {
+        if (window.location.href.indexOf('localhost:') > 0) {
             baseElement.setAttribute('href', '/');
         }
         else {
