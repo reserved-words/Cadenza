@@ -4,10 +4,9 @@
 
 @if (CurrentItem != null)
 {
-
     <TabGrid>
-
         <TabGridColumn>
+
             <TabGridRow RowHeight="@RowHeight.Stretch">
 
                 @if (CurrentItem.Value.Type == LibraryItemType.Album)
@@ -27,15 +26,14 @@
 
             <TabGridRow RowHeight="@RowHeight.Fixed">
 
-                <MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+                <AppButtonContainer>
                     <MudButton OnClick="@Remove" Variant="@Variant.Outlined" Color="@Color.Primary">@RemoveCaption</MudButton>
                     <MudButton OnClick="@Save" Variant="@Variant.Outlined" Color="@Color.Secondary">@SaveCaption</MudButton>
                     <MudButton OnClick="@Cancel" Variant="@Variant.Outlined" Color="@Color.Default">@CancelCaption</MudButton>
-                </MudContainer>
+                </AppButtonContainer>
 
             </TabGridRow>
+
         </TabGridColumn>
-
     </TabGrid>
-
 }

@@ -1,0 +1,8 @@
+﻿
+<MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+    @ChildContent
+</MudContainer>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Features.Misc;
 
-public class PlayShortcutsBase : FluxorComponent
+public partial class PlayShortcuts
 {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<GroupingsState> GroupingsState { get; set; }

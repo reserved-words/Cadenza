@@ -1,12 +1,12 @@
 ﻿@inherits FluxorComponent
 
-<MudContainer Class="mx-0 my-2 pa-0">
+<AppContainer py="2">
     <MudText Typo=@Typo.body1>@Title</MudText>
     <MudText Typo=@Typo.body2>@Message</MudText>
     <MudProgressLinear Indeterminate="@Indeterminate"
                        Value="@Progress"
                        Color="@Color" />
-</MudContainer>
+</AppContainer>
 
 @code 
 {

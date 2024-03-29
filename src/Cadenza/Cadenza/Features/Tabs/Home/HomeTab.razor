@@ -6,25 +6,21 @@
     <TabGridColumn>
         <TabGridRow RowHeight="@RowHeight.Stretch">
 
-            <MudContainer Class="@ContainerClass">
+            <AppContainer pa="2">
                 <CurrentlyPlayingHeader />
-            </MudContainer>
-            <MudContainer Class="@ContainerClass">
+            </AppContainer>
+            <AppContainer pa="2">
                 <Player />
-            </MudContainer>
+            </AppContainer>
             <MudSpacer />
-            <MudContainer Class="@ContainerClass">
+            <AppContainer pa="2">
                 <PlayShortcuts />
-            </MudContainer>
-            <MudContainer Class="@ContainerClass">
-                <Search />
-            </MudContainer>
+            </AppContainer>
+            <AppContainer pa="2">
+                <SearchBar />
+            </AppContainer>
 
         </TabGridRow>
     </TabGridColumn>
 
 </TabGrid>
-
-@code {
-    private const string ContainerClass = "ma-0 pa-0 px-2 my-2";
-}

@@ -1,13 +1,13 @@
-﻿using Cadenza.Web.Common.ViewModel;
+﻿namespace Cadenza.Features.Misc;
 
-namespace Cadenza.Features.Misc;
-
-public class SearchBase : FluxorComponent
+public partial class SearchBar
 {
+    [Inject] public IState<ViewState> ViewState { get; set; }
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<SearchItemsState> SearchItemsState { get; set; }
 
     protected bool IsLoading => SearchItemsState.Value.IsLoading;
+    protected bool Disabled => ViewState.Value.IsNavigationDisabled;
 
     private SearchItemVM _result;
 

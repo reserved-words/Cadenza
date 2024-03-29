@@ -1,5 +1,5 @@
 ﻿
-<MudPaper Elevation="@Elevation"
+<MudPaper Elevation="0"
           Class="ma-0 fixed-height">
 
     <MudContainer Class="@ContainerClass">
@@ -9,7 +9,6 @@
 </MudPaper>
 
 @code {
-    [Parameter] public int Elevation { get; set; } = 2;
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public int Padding { get; set; } = 2;
 

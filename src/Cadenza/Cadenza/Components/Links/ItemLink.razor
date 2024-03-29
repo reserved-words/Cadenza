@@ -1,0 +1,21 @@
+﻿
+<MudLink Typo="@Typo" OnClick="@(() => View())" Color="@Color.Surface" Class="@LinkClass" Style="display: block;" title="@Name">
+    @Name
+</MudLink>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    [Parameter] public Typo Typo { get; set; }
+    [Parameter] public PlayerItemType Type { get; set; }
+    [Parameter] public object Id { get; set; }
+    [Parameter] public string Name { get; set; }
+    [Parameter] public bool Inline { get; set; }
+
+    private string LinkClass => Inline ? "inline" : "";
+
+    private void View()
+    {
+        Dispatcher.Dispatch(new ViewItemRequest(Type, Id.ToString(), Name));
+    }
+}

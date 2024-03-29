@@ -1,14 +1,14 @@
 ﻿
 <AppCardScrollContainer HeaderPaddingTop="4" HeaderPaddingBottom="0">
     <HeaderContent>
-        <ItemCardTitle ItemType="@PlayerItemType.Genre" Name="@Genre" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+        <ItemCardTitle ItemType="@PlayerItemType.Genre" Name="@Genre" Link="false" Typo="@Typo.h5" mb="3" />
     </HeaderContent>
     <ChildContent>
         <AppTable T="@ArtistVM"
                   Items="@Artists">
             <RowTemplate>
                 <MudTd>
-                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Artist" Id="@context.Id" Name="@context.Name" />
                 </MudTd>
             </RowTemplate>
         </AppTable>

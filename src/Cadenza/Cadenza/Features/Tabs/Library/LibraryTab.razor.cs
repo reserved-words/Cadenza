@@ -1,6 +1,6 @@
 ﻿namespace Cadenza.Features.Tabs.Library;
 
-public class LibraryTabBase : FluxorComponent
+public partial class LibraryTab
 {
     [Inject] public IState<ViewState> ViewState { get; set; }
 

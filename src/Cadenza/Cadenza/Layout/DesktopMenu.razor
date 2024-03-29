@@ -1,0 +1,67 @@
+﻿@inherits FluxorComponent
+
+@using Cadenza.Web.Actions
+@using Cadenza.Web.State.Store
+@using Cadenza.Features.Misc
+
+@foreach (var tab in _permanentTabs)
+{
+    <DesktopMenuItem Tab="@tab"
+                     OnClickItem="@UpdateActiveTab"
+                     IsActive="@((ActiveTab == tab))"
+                     Disabled="@IsNavigationDisabled" />
+}
+
+@foreach (var tab in _transientTabs)
+{
+    if (ActiveTab == tab)
+    {
+        <DesktopMenuItem Tab="@tab"
+                         IsActive="true" />
+    }
+}
+
+<MudSpacer />
+
+<MudContainer MaxWidth="@MaxWidth.Small" Class="flex-grow-1 pa-0 ma-0 mr-3">
+    <SearchBar />
+</MudContainer>
+
+@code {
+    [Inject] public IDispatcher Dispatcher { get; set; }
+    [Inject] public IState<ViewState> ViewState { get; set; }
+
+    private readonly List<Tab> _permanentTabs = [Tab.Dashboard, Tab.CurrentTrack, Tab.Library, Tab.Search];
+    private readonly List<Tab> _transientTabs = [Tab.Settings, Tab.Edit];
+
+    private Tab ActiveTab { get; set; }
+
+    private bool IsNavigationDisabled;
+
+    protected override void OnInitialized()
+    {
+        ViewState.StateChanged += ViewState_StateChanged;
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        ActiveTab = Tab.Dashboard;
+        base.OnParametersSet();
+    }
+
+    private void ViewState_StateChanged(object sender, EventArgs args)
+    {
+        IsNavigationDisabled = ViewState.Value.IsNavigationDisabled;
+
+        ActiveTab = ViewState.Value.CurrentTab == Tab.Default
+            ? Tab.Dashboard
+            : ViewState.Value.CurrentTab;
+    }
+
+    private void UpdateActiveTab(Tab tab)
+    {
+        Dispatcher.Dispatch(new ViewTabRequest(tab));
+    }
+}
+

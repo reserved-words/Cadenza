@@ -15,7 +15,7 @@
             <MudTd>
                 @if (context.Plays > 0)
                 {
-                    <ArtistLink Typo="@Typo.body1" Id="@context.Id" Name="@context.Name" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Artist" Id="@context.Id" Name="@context.Name" />
                 }
                 else
                 {

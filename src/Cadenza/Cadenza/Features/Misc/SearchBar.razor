@@ -1,4 +1,4 @@
-﻿@inherits SearchBase
+﻿@inherits FluxorComponent
 
 <MudToolBar DisableGutters="true">
 
@@ -26,7 +26,7 @@
                     <MudIcon Icon="@e.Type.GetIcon()"
                              Class="mb-n1 mr-2"
                              Color="@Color.Surface" />
-                    <MudContainer Class="pa-0 ma-0">
+                    <AppContainer>
                         <MudText Color=Color.Surface
                                  Typo="@Typo.body1"
                                  Class="pa-0 ma-0">
@@ -42,16 +42,10 @@
                                  Class="pa-0 ma-0">
                             @e.AlbumDisplay
                         </MudText>
-                    </MudContainer>
+                    </AppContainer>
                 </MudContainer>
             </ItemTemplate>
         </MudAutocomplete>
     }
 
 </MudToolBar>
-
-@code {
-    [Inject] public IState<ViewState> ViewState { get; set; }
-
-    protected bool Disabled => ViewState.Value.IsNavigationDisabled;
-}

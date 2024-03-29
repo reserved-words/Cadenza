@@ -17,7 +17,7 @@
             <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
 
                 <MudTd>
-                    <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Track" Id="@context.Id" Name="@context.Title" />
                     <MudText Typo="@Typo.body2">@context.Artist</MudText>
 
                         @if (context.NowPlaying)
@@ -35,7 +35,7 @@
             <MudHidden Breakpoint="Breakpoint.SmAndDown">
 
                 <MudTd>
-                    <TrackLink Typo="@Typo.body1" Id="@context.Id" Title="@context.Title" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Track" Id="@context.Id" Name="@context.Title" />
                     <MudText Typo="@Typo.body2">@context.Artist</MudText>
                     </MudTd>
 

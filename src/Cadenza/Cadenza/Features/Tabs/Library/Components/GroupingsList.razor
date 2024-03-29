@@ -1,14 +1,14 @@
 ﻿
 <AppCardScrollContainer HeaderPaddingTop="4" HeaderPaddingBottom="0">
     <HeaderContent>
-        <ItemCardTitle ItemType="@PlayerItemType.Library" Name="Groupings" Link="false" Typo="@Typo.h5" MarginBottom="3" />
+        <ItemCardTitle ItemType="@PlayerItemType.Library" Name="Groupings" Link="false" Typo="@Typo.h5" mb="3" />
     </HeaderContent>
     <ChildContent>
         <AppTable T="@string"
                   Items="@Groupings">
             <RowTemplate>
                 <MudTd>
-                    <GroupingLink Typo="@Typo.body1" Grouping="@context" />
+                    <ItemLink Typo="@Typo.body1" Type="@PlayerItemType.Grouping" Id="@context" Name="@context" />
                 </MudTd>
             </RowTemplate>
         </AppTable>

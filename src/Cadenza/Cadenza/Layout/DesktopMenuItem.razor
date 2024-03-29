@@ -1,0 +1,16 @@
+﻿
+<MudButton StartIcon="@Tab.GetIcon()" OnClick="@OnClick" Class="@MenuItemClass" Size="@Size.Medium" Disabled="@Disabled">@Tab.GetDisplayName()</MudButton>
+
+@code {
+    [Parameter] public Tab Tab { get; set; }
+    [Parameter] public bool IsActive { get; set; }
+    [Parameter] public Action<Tab> OnClickItem { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+
+    private void OnClick()
+    {
+        OnClickItem(Tab);
+    }
+
+    private string MenuItemClass => "cdz-menu " + (IsActive ? "cdz-menu-active" : "");
+}

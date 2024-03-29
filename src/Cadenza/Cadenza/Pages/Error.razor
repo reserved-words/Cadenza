@@ -1,3 +1,11 @@
 ﻿@page "/error"
 
-<ErrorView ErrorMessage="An unexpected error occurred" />
+<MudCard>
+    <MudCardHeader>
+        <MudText Typo="@Typo.h3">Error</MudText>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText Typo="@Typo.body1">An unexpected error occurred</MudText>
+    </MudCardContent>
+</MudCard>
+

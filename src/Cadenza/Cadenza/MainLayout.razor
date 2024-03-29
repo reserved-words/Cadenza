@@ -6,28 +6,26 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-    @Body
-</MudHidden>
-
-<MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+<MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
     <MudLayout>
-        <MudAppBar Color="Color.Dark" Fixed="true" DisableGutters="true" Dense="true">
-            <MainMenu />
-        </MudAppBar>
-        <MudMainContent>
-            @Body
-        </MudMainContent>
+        <MudCard Style="height: 100%; display: flex; flex-direction: column;">
+            <MudCardContent Class="fixed-height-scroll pa-0" Style="flex-grow: 1;">
+                @Body
+            </MudCardContent>
+            <MudCardActions Class="d-flex align-start">
+                <MobileMenu />
+            </MudCardActions>
+        </MudCard>
     </MudLayout>
 </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.SmAndDown">
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
     <MudLayout>
         <MudAppBar Elevation="1" DisableGutters="@true">
-            <MainMenu />
+            <DesktopMenu />
         </MudAppBar>
-        <MudDrawer Open="@true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
-            <Sidebar />
+        <MudDrawer Open="true" Elevation="2" Class="ma-0 pa-0 flex flex-column">
+            <DesktopSidebar />
         </MudDrawer>
         <MudMainContent>
             @Body

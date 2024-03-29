@@ -1,6 +1,6 @@
 ﻿
 <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
-    <AppScrollContainer Elevation="0" Padding="0">
+    <AppScrollContainer Padding="0">
         <AppTable Items="@Model.Albums">
             <RowTemplate>
                 <MudTd Style="max-width: 50px;">
@@ -15,8 +15,8 @@
 </MudHidden>
 
 <MudHidden Breakpoint="@Breakpoint.Xs">
-    <AppScrollContainer Elevation="0">
-        <AppGrid Items="@Model.Albums" ItemXs="6">
+    <AppScrollContainer>
+        <AppGrid Items="@Model.Albums">
             <ImageTemplate>
                 <AlbumArtworkView Model="@context" />
             </ImageTemplate>

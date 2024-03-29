@@ -1,5 +1,4 @@
-﻿@inherits SettingsTabBase
-
+﻿
 <TabGrid>
 
     <TabGridColumn>
@@ -28,10 +27,10 @@
 
         <TabGridRow RowHeight="@RowHeight.Fixed">
 
-            <MudContainer Class="d-flex justify-center flex-grow-1 gap-2">
+            <AppButtonContainer>
                 <MudButton OnClick="@Save" Variant="@Variant.Outlined" Color="@Color.Secondary">Save Changes</MudButton>
                 <MudButton OnClick="@Cancel" Variant="@Variant.Outlined" Color="@Color.Default">Cancel Changes</MudButton>
-            </MudContainer>
+            </AppButtonContainer>
 
         </TabGridRow>
     </TabGridColumn>

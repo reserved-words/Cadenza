@@ -5,7 +5,7 @@
 
 <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
     <MudTd>
-        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+        <ItemLink Typo="@Typo.body1" Type="@Model.Type" Id="@Model.Id" Name="@Model.Name"></ItemLink>
         <MudText Typo="Typo.body2">@Model.Artist</MudText>
         <MudText Typo="Typo.body2">@Model.AlbumDisplay</MudText>
     </MudTd>
@@ -13,7 +13,7 @@
 
 <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
     <MudTd>
-        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+        <ItemLink Typo="@Typo.body1" Type="@Model.Type" Id="@Model.Id" Name="@Model.Name"></ItemLink>
 
         @if (Model.Type == PlayerItemType.Track)
         {
@@ -34,7 +34,7 @@
 
 <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
     <MudTd>
-        <ActionLink Typo="@Typo.body1" Text="@Model.Name" OnClick="@(() => OnViewItem(Model))"></ActionLink>
+        <ItemLink Typo="@Typo.body1" Type="@Model.Type" Id="@Model.Id" Name="@Model.Name"></ItemLink>
     </MudTd>
     <MudTd>
         <MudText Typo="Typo.body2">@Model.Artist</MudText>
@@ -46,5 +46,4 @@
 
 @code {
     [Parameter] public TaggedItemVM Model { get; set; }
-    [Parameter] public Action<TaggedItemVM> OnViewItem { get; set; }
 }

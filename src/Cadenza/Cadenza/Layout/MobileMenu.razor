@@ -1,0 +1,17 @@
+﻿
+@foreach (var tab in _tabs)
+{
+    <MudIconButton Class="d-flex flex-1" Icon="@tab.GetIcon()" Color="Color.Default" OnClick="@(() => View(tab))" />
+}
+
+@code 
+{
+    [Inject] public IDispatcher Dispatcher { get; set; }
+
+    private readonly List<Tab> _tabs = [Tab.Home, Tab.RecentTracks, Tab.RecentAlbums, Tab.Charts, Tab.Library];
+
+    private void View(Tab tab)
+    {
+        Dispatcher.Dispatch(new ViewTabRequest(tab));
+    }
+}
