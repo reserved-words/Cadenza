@@ -7,19 +7,19 @@ class AudioHelpers {
     }
 
     static async dotNetPlay() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('JSPlay');
+        await AudioHelpers.dotNetHelper.invokeMethodAsync('Resume');
     }
 
     static async dotNetPause() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('JSPause');
+        await AudioHelpers.dotNetHelper.invokeMethodAsync('Pause');
     }
 
     static async dotNetPrevious() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('JSPrevious');
+        await AudioHelpers.dotNetHelper.invokeMethodAsync('SkipPrevious');
     }
 
     static async dotNetNext() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('JSNext');
+        await AudioHelpers.dotNetHelper.invokeMethodAsync('SkipNext');
     }
 }
 

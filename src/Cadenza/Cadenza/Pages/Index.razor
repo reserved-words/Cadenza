@@ -13,7 +13,6 @@
 @code {
     [Inject] public IDispatcher Dispatcher { get; set; }
     [Inject] public IState<ApplicationState> ApplicationState { get; set; }
-    [Inject] public IJSRuntime JSRuntime { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -21,51 +20,5 @@
         {
             Dispatcher.Dispatch(new ApplicationStartRequest());
         }
-    }
-
-    private string name;
-    private DotNetObjectReference<Index> dotNetHelper;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            dotNetHelper = DotNetObjectReference.Create(this);
-            await JSRuntime.InvokeVoidAsync("AudioHelpers.setDotNetHelper", dotNetHelper);
-        }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (dotNetHelper is not null)
-        {
-            dotNetHelper.Dispose();
-        }
-
-        base.Dispose(disposing);
-    }
-
-    [JSInvokable]
-    public async Task JSPlay()
-    {
-        Dispatcher.Dispatch(new PlayerControlsResumeRequest());
-    }
-
-    [JSInvokable]
-    public async Task JSPause()
-    {
-        Dispatcher.Dispatch(new PlayerControlsPauseRequest());
-    }
-
-    [JSInvokable]
-    public async Task JSNext()
-    {
-        Dispatcher.Dispatch(new PlayerControlsNextRequest());
-    }
-
-    [JSInvokable]
-    public async Task JSPrevious()
-    {
-        Dispatcher.Dispatch(new PlayerControlsPreviousRequest());
     }
 }
