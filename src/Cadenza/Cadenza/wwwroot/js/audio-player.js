@@ -1,11 +1,65 @@
 ﻿
+class BrowserPlayerControls {
+    static dotNetHelper;
 
-var play = function (url){
+    static setDotNetHelper(value) {
+        BrowserPlayerControls.dotNetHelper = value;
+    }
+
+    static async resume() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('Resume');
+    }
+
+    static async pause() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('Pause');
+    }
+
+    static async previous() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('SkipPrevious');
+    }
+
+    static async next() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('SkipNext');
+    }
+}
+
+window.BrowserPlayerControls = BrowserPlayerControls;
+
+
+var play = function (url, track, artist, playlist, artworkUrl){
 
     var a = document.getElementById("audioPlayer");
 
     if (url) {
         a.src = url;
+
+        if ('mediaSession' in navigator) {
+
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: track,
+                artist: artist,
+                album: playlist,
+                artwork: [
+/*                    { src: artworkUrl, sizes: '96x96', type: 'image/png' }*/
+                ]
+            });
+
+            navigator.mediaSession.setActionHandler('play', function () {
+                window.BrowserPlayerControls.resume();
+            });
+
+            navigator.mediaSession.setActionHandler('pause', function () {
+                window.BrowserPlayerControls.pause();
+            });
+
+            navigator.mediaSession.setActionHandler('previoustrack', function () {
+                window.BrowserPlayerControls.previous();
+            });
+
+            navigator.mediaSession.setActionHandler('nexttrack', function () {
+                window.BrowserPlayerControls.next();
+            });
+        }
     }
 
     a.play();

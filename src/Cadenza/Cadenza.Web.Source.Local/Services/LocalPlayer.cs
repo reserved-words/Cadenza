@@ -27,11 +27,11 @@ internal class LocalPlayer : ISourcePlayer
         return await _audioPlayer.Pause();
     }
 
-    public async Task Play(string id)
+    public async Task Play(string id, string track, string artist, string playlist, string artworkUrl)
     {
         var idBase64 = _base64Encoder.Encode(id);
         var uri = string.Format($"{_settings.BaseUrl}{_settings.Endpoints.PlayTrackUrl}", idBase64);
-        await _audioPlayer.Play(uri);
+        await _audioPlayer.Play(uri, track, artist, playlist, artworkUrl);
     }
 
     public async Task<TrackProgress> Stop()
