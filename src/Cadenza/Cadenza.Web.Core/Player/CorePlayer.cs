@@ -4,17 +4,21 @@ internal class CorePlayer : IPlayer
 {
     private readonly List<ISourcePlayer> _sourcePlayers;
     private readonly IState<CurrentTrackState> _currentTrackState;
+    private readonly IState<PlaylistState> _playlistState;
 
-    public CorePlayer(IEnumerable<ISourcePlayer> sourcePlayers, IState<CurrentTrackState> currentTrackState)
+    public CorePlayer(IEnumerable<ISourcePlayer> sourcePlayers, IState<CurrentTrackState> currentTrackState, IState<PlaylistState> playlistState)
     {
         _sourcePlayers = sourcePlayers.ToList();
         _currentTrackState = currentTrackState;
+        _playlistState = playlistState;
     }
 
     public async Task Play()
     {
         var service = GetSourcePlayer();
-        await service.Play(_currentTrackState.Value.Track.IdFromSource);
+        var currentTrack = _currentTrackState.Value.Track;
+        var playlist = _playlistState.Value.Name;
+        await service.Play(currentTrack.IdFromSource, currentTrack.Track.Title, currentTrack.Track.ArtistName, playlist, "");
     }
 
     public async Task<int> Pause()
