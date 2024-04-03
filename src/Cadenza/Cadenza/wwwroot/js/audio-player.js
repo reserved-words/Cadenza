@@ -1,29 +1,29 @@
 ﻿
-class AudioHelpers {
+class BrowserPlayerControls {
     static dotNetHelper;
 
     static setDotNetHelper(value) {
-        AudioHelpers.dotNetHelper = value;
+        BrowserPlayerControls.dotNetHelper = value;
     }
 
-    static async dotNetPlay() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('Resume');
+    static async resume() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('Resume');
     }
 
-    static async dotNetPause() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('Pause');
+    static async pause() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('Pause');
     }
 
-    static async dotNetPrevious() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('SkipPrevious');
+    static async previous() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('SkipPrevious');
     }
 
-    static async dotNetNext() {
-        await AudioHelpers.dotNetHelper.invokeMethodAsync('SkipNext');
+    static async next() {
+        await BrowserPlayerControls.dotNetHelper.invokeMethodAsync('SkipNext');
     }
 }
 
-window.AudioHelpers = AudioHelpers;
+window.BrowserPlayerControls = BrowserPlayerControls;
 
 
 var play = function (url, track, artist, playlist, artworkUrl){
@@ -45,19 +45,19 @@ var play = function (url, track, artist, playlist, artworkUrl){
             });
 
             navigator.mediaSession.setActionHandler('play', function () {
-                window.AudioHelpers.dotNetPlay();
+                window.BrowserPlayerControls.resume();
             });
 
             navigator.mediaSession.setActionHandler('pause', function () {
-                window.AudioHelpers.dotNetPause();
+                window.BrowserPlayerControls.pause();
             });
 
             navigator.mediaSession.setActionHandler('previoustrack', function () {
-                window.AudioHelpers.dotNetPrevious();
+                window.BrowserPlayerControls.previous();
             });
 
             navigator.mediaSession.setActionHandler('nexttrack', function () {
-                window.AudioHelpers.dotNetNext();
+                window.BrowserPlayerControls.next();
             });
         }
     }

@@ -27,7 +27,7 @@ public partial class PlayerControls : ComponentBase, IDisposable
         if (firstRender)
         {
             _dotNetHelper = DotNetObjectReference.Create(this);
-            await JSRuntime.InvokeVoidAsync("AudioHelpers.setDotNetHelper", _dotNetHelper);
+            await JSRuntime.InvokeVoidAsync("BrowserPlayerControls.setDotNetHelper", _dotNetHelper);
         }
     }
 
@@ -36,6 +36,7 @@ public partial class PlayerControls : ComponentBase, IDisposable
     {
         CanPlay = true;
         CanPause = false;
+        StateHasChanged();
         Dispatcher.Dispatch(new PlayerControlsPauseRequest());
     }
 
@@ -44,6 +45,7 @@ public partial class PlayerControls : ComponentBase, IDisposable
     {
         CanPlay = false;
         CanPause = true;
+        StateHasChanged();
         Dispatcher.Dispatch(new PlayerControlsResumeRequest());
     }
 
